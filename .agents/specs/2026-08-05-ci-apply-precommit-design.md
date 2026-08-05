@@ -13,7 +13,7 @@
 ## Goals
 
 1. `ci --check` is the canonical, strict, non-mutating PR and pre-flight gate. It fails on mechanical drift with a `Fix: tools/run <target> --apply` (or `tools/run ci --apply`) message and fails on non-mechanical issues with a manual remediation message.
-2. `ci --apply` runs the same checks as `ci --check`, but for every check that is mechanically fixable it first runs the `apply` step and then re-checks. It still fails if a check has no mechanical fix.
+2. `ci --apply` runs the same checks as `ci --check` by performing an `apply` pass for every `ci` dependency, then a `check` pass with the same `Ctx` but `mode="check"`. It still fails if a check has no mechanical fix.
 3. The pre-commit hook runs `ci --apply --allow-shared-checkout`, stages all resulting changes, then runs `ci --check` to prove the commit is clean.
 4. `validate` no longer treats an uncommitted working tree as an error. It only checks whitespace, authority-asset validity, and `AGENTS.md` / `INDEX.md` consistency.
 5. `--allow-shared-checkout` is honored and passed down through `ci --apply` to the individual `apply` calls.
@@ -22,29 +22,56 @@
 
 - Changing the draft/ready PR policy or the `AGENTS.md` validation command list.
 - Adding new `apply` logic to `review-preflight` (it remains a read-only check).
-- Refactoring the `Task` model beyond the minimum needed for `apply-then-check`.
+- Refactoring `tools/run.py` beyond the minimum needed for the apply-then-check pass.
 
 ## Design
 
 ### `tools/run.py`
 
-#### `Task` dataclass
+#### `dataclasses.replace` import
 
-Add `check_after_apply: bool = False`. When `mode == "apply"` and this flag is `True`, `run_targets` will run the `apply` steps followed by the `check` steps for that task.
-
-Set `check_after_apply=True` only for the `ci` task. Individual `tools/run mesh --apply` remains apply-only; `ci --apply` is the only combined apply-then-check command.
+Update `from dataclasses import dataclass` to `from dataclasses import dataclass, replace` so `run_targets` can build a `mode="check"` context from the `apply` context for the re-check pass.
 
 #### `_run_validate`
 
-Remove the `if ctx.mode == "check": _git_diff_exit_code(ctx)` block. Keep `_git_diff_check(ctx)` so whitespace errors in the current diff are still caught.
+Remove the `if ctx.mode == "check": _git_diff_exit_code(ctx)` block. Keep `_git_diff_check(ctx)` so whitespace errors in the current diff are still caught. After this change `_run_validate` behaves identically in `apply` and `check` modes and no longer considers whether the working tree is committed.
 
-Update the `validate` task's `fix` string from `tools/run marketplace --apply` to `tools/run validate --apply` (which re-runs the validators; whitespace and authority errors are manual).
+#### `validate` task
 
-Update the `argparse` epilog to no longer tell users to avoid running `ci --check` on an uncommitted working tree. Instead, describe `ci --check` as the strict PR gate and `ci --apply` as the mechanical fix command.
+Update the `fix` string from `tools/run marketplace --apply` to `tools/run validate --apply`.
 
 #### `run_targets`
 
-Change the step selection so that in `apply` mode, for a `Task` with `check_after_apply=True`, it runs `task.apply` then `task.check`. For all other tasks it runs only `task.apply`.
+Change the function so that when `ctx.mode == "apply"` it first runs the `apply` steps for every target in the resolved list, then creates a new `Ctx(..., mode="check")` with `dataclasses.replace` and runs the `check` steps for every target. When `ctx.mode == "check"` it runs only the `check` pass.
+
+This makes `tools/run <target> --apply` re-check the same target, and it makes `tools/run ci --apply` run the exact same checks as `tools/run ci --check` after applying fixes.
+
+```python
+def run_targets(targets: list[str], ctx: Ctx) -> None:
+    def _run_steps(target: str, task: Task, steps: tuple[Callable[[Ctx], None], ...], run_ctx: Ctx) -> None:
+        if not steps:
+            return
+        print(f"[tools/run] === {target} ({run_ctx.mode})")
+        for step in steps:
+            try:
+                step(run_ctx)
+            except Exception as exc:
+                fix = _lint_fix(run_ctx) if target == "lint" else task.fix
+                raise RunnerError(target, fix, exc) from exc
+
+    for target in targets:
+        task = _TASKS[target]
+        _run_steps(target, task, task.apply, ctx)
+    if ctx.mode == "apply":
+        check_ctx = replace(ctx, mode="check")
+        for target in targets:
+            task = _TASKS[target]
+            _run_steps(target, task, task.check, check_ctx)
+```
+
+#### `argparse` epilog
+
+Replace the epilog to describe `ci --check` as the strict non-mutating CI/PR gate and `ci --apply` as the mechanical-fix command, and remove the warning about not running `ci --check` on an uncommitted working tree.
 
 ### `.git/hooks/pre-commit`
 
@@ -58,6 +85,7 @@ cd "$REPO_ROOT"
 
 "$REPO_ROOT/tools/run" ci --apply --allow-shared-checkout
 git add -A
+
 exec "$REPO_ROOT/tools/run" ci --check
 ```
 
@@ -65,17 +93,17 @@ This applies all mechanical fixes, stages the regenerated and formatted changes,
 
 ### `tests/test_run_cli.py`
 
-Update the `ci`/`validate` tests to match the new behavior:
+Add or update tests to match the new behavior:
 
-- `ci --check` no longer fails merely because the working tree has uncommitted changes.
-- `ci --apply` runs the `check` steps for all `ci` dependencies (or at least the `review-preflight` check, since it has no `apply`).
-- The `validate` `fix` message is `tools/run validate --apply`.
+1. `test_validate_fix_message` — assert a `validate` failure prints `Fix: tools/run validate --apply`.
+2. `test_ci_apply_runs_review_preflight_check` — assert `tools/run ci --apply` eventually invokes `tools/review_preflight.py --check` (the non-mechanical `review-preflight` has no `apply` step, so the re-check pass must run it).
+3. `test_validate_does_not_call_git_diff_exit_code` — assert `_run_validate(ctx)` with `mode="check"` never calls `_git_diff_exit_code`, guarding against accidental re-introduction of the working-tree cleanliness check.
 
 ## Interfaces and contracts
 
 - `tools/run ci --check` — mutates nothing; returns non-zero on any drift or violation.
-- `tools/run ci --apply` — mutates generated/derived surfaces; returns non-zero on any violation that cannot be mechanically fixed.
-- `tools/run <target> --apply` (non-`ci`) — remains the existing apply-only command for the individual target.
+- `tools/run ci --apply` — mutates generated/derived surfaces and then re-checks them; returns non-zero on any violation that cannot be mechanically fixed.
+- `tools/run <target> --apply` — runs the `apply` steps for the target and then its `check` steps. `review-preflight` only runs the `check` step because it has no `apply`.
 - `validate` — no longer cares whether the working tree is committed; only validates content and whitespace.
 
 ## Cross-repo consumer considerations
@@ -93,5 +121,5 @@ None. This is a repo-local tooling change.
 ## Risks and tradeoffs
 
 - `git add -A` in the pre-commit hook will stage any untracked file, not just generated ones. This is acceptable because the repo's `.gitignore` keeps scratch and temporary files out, and the doctrine is that the working tree should not hold intentionally untracked repo files.
-- Running `ci --apply` on every commit is slower than the old mesh-only pre-commit. The tradeoff is that the agent never needs to manually run `marketplace --apply` or `lint --apply` before committing.
+- `ci --apply` is slower than the old mesh-only pre-commit because it runs a full `apply` pass followed by a full `check` pass. The tradeoff is that the agent never needs to manually run `marketplace --apply` or `lint --apply` before committing and `ci --apply` is now a faithful preview of `ci --check`.
 - `ci --apply` will run `lint --apply` (ruff fix/format) on every commit, which may auto-correct style. This is desirable mechanical behavior.
