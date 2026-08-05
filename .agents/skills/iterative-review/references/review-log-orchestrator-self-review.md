@@ -31,7 +31,7 @@ reviewers.
 
 ```json
 {
-  "orchestrator_predict_findings_fixed": 0,
-  "orchestrator_predict_items_uncertain": 0
+  "orchestrator_self_review_findings_fixed": 0,
+  "orchestrator_self_review_items_uncertain": 0
 }
 ```

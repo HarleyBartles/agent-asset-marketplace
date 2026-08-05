@@ -42,7 +42,7 @@ Use when the review must consider the entire branch or a large, multi-file diff.
 - `<diff_path>`: path to the prepared branch diff.
 - `<pr_description>` (optional): the pull-request description for context.
 - `<review-log-orchestrator-self-review>` (required for the first pass): the orchestrator's prediction log. Use this as the starting checklist.
-- `<review-log-skills>`, `<review-log-marketplace>`, `<review-log-security>` (required for `lens-dispatch` or `regression-scan`): the lens review reports. These are the primary finding set for their scopes.
+- `<review-log-*.md>` (required for `lens-dispatch` or `regression-scan`): the lens review reports produced in the current round. At minimum this includes `review-log-skills.md`, `review-log-marketplace.md`, `review-log-security.md`, `review-log-plans.md`, `review-log-mesh.md`, and `review-log-scripts.md`. These are the primary finding set for their scopes.
 - `<regression_diff_path>` (optional): the fix diff only, used for `regression-scan`. When provided, read this and the immediately touched files, not the full branch.
 
 ## How to dispatch this reviewer

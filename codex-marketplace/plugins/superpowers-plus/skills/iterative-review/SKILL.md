@@ -91,28 +91,24 @@ Compare the branch diff to the plan, spec, PR body, and linked issues. If the im
 
 ### `orchestrator-self-review`
 
-This is the cheapest non-deterministic review. For each relevant `.agents/agents/reviewer-*.md` profile, read the `## Checklist` and apply it to the full diff mechanically. Fix what you can fix with high confidence. Record uncertain items in `review-log-orchestrator-self-review.md` in the off-repo scratch. Update `scan_findings` after the fixes.
+This is the cheapest non-deterministic review. For each relevant `.agents/agents/reviewer-*.md` profile, read the `## Checklist` and the `## Applies to` section, then apply the checklist to the full diff mechanically. Use `## Applies to` only to decide relevance; the prediction pass still scans the full diff for checklist patterns. Fix what you can fix with high confidence. Record uncertain items in `review-log-orchestrator-self-review.md` in the off-repo scratch. Update `scan_findings` after the fixes.
 
 **`orchestrator-self-review` is not a pass.** A clean orchestrator-self-review means the predictable issues are already fixed and the remaining known-unknowns are documented. It does **not** mean the PR is ready. Always proceed to `lens-dispatch` unless the PR has zero changed files or the consumer's CI preflight alone is the required gate for that PR.
 
 ### `lens-dispatch`
 
-This node is mandatory. Dispatch the relevant lens reviewers in parallel, each with:
-- the full branch `<diff_path>`,
-- `<pr_description>`,
-- `<scan_findings>`,
-- `review-log-orchestrator-self-review.md`.
+This node is mandatory. Dispatch only the lens reviewers whose `## Applies to` rules match the PR, plus the mandatory `reviewer-strong` whole-branch pass.
 
-Use `run_subagent` to dispatch each lens. Read the corresponding `.agents/agents/reviewer-*.md` profile and use its content as the subagent task. Set the off-repo workspace as the subagent's working directory.
+1. Discover every `.agents/agents/reviewer-*.md` file in the consumer repo. This set is the portable profiles shipped by the marketplace pack plus any repo-local `.agents/agents/reviewer-*.md` overrides.
+2. For each lens profile, read its `## Applies to` section. Match the rules in this order:
+   - If an `inputs` entry is provided by the orchestrator (e.g. `<plan_path>` for `reviewer-plans`), dispatch the lens.
+   - If a `globs` pattern matches a changed file in the diff, dispatch the lens.
+   - If a `keywords` string appears in the diff or in `<pr_description>`, dispatch the lens.
+3. Build the input package for each matching lens: full branch `<diff_path>`, `<pr_description>`, `<scan_findings>`, `review-log-orchestrator-self-review.md`, and any lens-specific inputs (`<plan_path>`, `<spec_path>`, `<roadmap_path>` for `reviewer-plans`).
+4. Use `run_subagent` to dispatch each selected lens. Read the corresponding `.agents/agents/reviewer-*.md` profile and use its content as the subagent task. Set the off-repo workspace as the subagent's working directory.
+5. `reviewer-strong` always runs after the lens reviews with the full diff, PR description, and all `review-log-<lens>.md` files.
 
-Before dispatching, decide which lenses are relevant by reading each `reviewer-*.md` file and checking its `## Applies to` section against the PR:
-
-1. Glob match: if any changed file in `<diff_path>` matches a glob under `## Applies to` for that lens, dispatch the lens.
-2. Keyword match: if the PR title/body or `<pr_description>` contains a keyword listed under `## Applies to`, dispatch the lens.
-3. Input match: if the orchestrator provides an input listed under `## Applies to` for that lens (e.g. `<plan_path>` for `reviewer-plans`), dispatch the lens.
-4. Default dispatch: if no lens matches via glob, keyword, or input, fall back to the portable `reviewer` for focused tasks and `reviewer-strong` for full-branch reviews, then always dispatch `reviewer-strong`.
-
-`reviewer-strong` always runs after the dispatched lenses.
+If no lens matches the PR, still dispatch `reviewer-strong` for the whole-branch pass.
 
 If you cannot run subagents (e.g. `run_subagent` is unavailable, fails, or is explicitly stopped), this is a `blocked` node — do not proceed to `ready` and do not claim the review is complete. Record the blocker and hand to a human.
 

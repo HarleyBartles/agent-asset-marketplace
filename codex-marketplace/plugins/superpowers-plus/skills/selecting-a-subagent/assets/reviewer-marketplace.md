@@ -25,7 +25,7 @@ Use this section to decide whether `reviewer-marketplace` should be dispatched f
   - `tools/run.py`
   - `plugin-roots.json`
   - `bundle-manifest.json`
-  - `repo-index.json`
+  - `repo-index/**`
   - `codex-marketplace/manifest.json`
   - `.agents/plugins/marketplace.json`
   - `codex-marketplace/**`

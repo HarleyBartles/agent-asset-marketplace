@@ -100,7 +100,7 @@ For example, copy `assets/implementer.md` to
 | `SKILL.md`/reference/prompt-robustness lens | `reviewer-skills` |
 | `codex-marketplace`/tooling/pack lens | `reviewer-marketplace` |
 | Plans, specs, roadmaps, or `.agents/plans` and `.agents/specs` changes | `reviewer-plans` |
-| `INDEX.md`, `repo-index/`, generated mesh, or `repo-standards` surfaces | `reviewer-mesh` |
+| `INDEX.md`, generated mesh, or `repo-standards` surfaces | `reviewer-mesh` |
 | Script safety, CLI compliance, shebangs, or `--check`/`--apply` classification | `reviewer-scripts` |
 | Small, tightly focused reviews or coherent single-responsibility re-review diffs | `reviewer-fast` |
 | Repo-specific lens (e.g. `reviewer-marketplace` in `<consumer_repo>`) | `.agents/agents/reviewer-<lens>.md` (see below) |
