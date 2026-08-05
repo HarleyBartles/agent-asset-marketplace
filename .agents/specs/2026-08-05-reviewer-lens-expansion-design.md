@@ -174,6 +174,11 @@ Update the `lens-dispatch` node:
 
 `orchestrator-self-review` already reads each lens's `## Checklist`; ensure it also reads the `## Applies to` section for lens selection.
 
+Update the fix-and-re-review loop:
+- After a finding is fixed and `ci --check` passes in `re-preflight`, `targeted-re-review` must run `reviewer-fast` on the fix diff as a cheap gate before scheduling a full whole-branch `reviewer-strong`.
+- For non-trivial fixes, `regression-scan` also begins with a widened `reviewer-fast` pass on the touched area. Only if the cheap fast pass finds a new issue does `reviewer-strong` run on that area to confirm and classify it.
+- This keeps the final `strong-review` whole-branch pass from being wasted on focused fixes that `reviewer-fast` can validate.
+
 Remove the current hard-coded "In this repo, the canonical lenses are..." list. Replace it with the dynamic selection rules.
 
 ### Marketplace pack (if applicable)

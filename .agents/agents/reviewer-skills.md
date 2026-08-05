@@ -41,7 +41,7 @@ Use this checklist during `orchestrator-self-review` and as the core of the diff
 5. **Script path safety** — scripts that `Push-Location` or `cd` resolve output paths to absolute before changing directory; PowerShell/Bash writing UTF-8 for `read` do not emit a BOM.
 6. **Prompt robustness** — read-only subagent prompts do not instruct `git`, `exec`, or `find_file_by_name` to recreate missing packages or mutate files.
 7. **Generated skill hygiene** — in consumer repos, no hand-edits to installed `.agents/skills/` files.
-8. **Cross-repo portability** — portable skill `SKILL.md` and `references` do not embed consumer-repo specifics (`rooms-mostly`, `agent-asset-marketplace`, Windows drive letters, `Z:/`, `C:/`, `hbart`, user home paths, branch/PR slugs, or other repo/tenant/persona references). Generic placeholders (`<worktree>`, `<consumer_repo>`, `<workspace>`) are fine; named repo examples and absolute local paths are not.
+8. **Cross-repo portability** — portable skill `SKILL.md` and `references` do not embed consumer-repo specifics (named repo aliases like `<repo_alias_1>` or `<repo_alias_2>`, Windows drive letters, `Z:/`, `C:/`, `<user>` handles, user home paths, branch/PR slugs, or other repo/tenant/persona references). Generic placeholders (`<worktree>`, `<consumer_repo>`, `<workspace>`, `<repo_name>`, `<repo_alias>`) are fine; named repo examples and absolute local paths are not.
 
 ## Invariants
 
@@ -84,7 +84,7 @@ Write `review-log-skills.md` in the off-repo scratch. Begin with a brief `## Inp
    - Examples that use `python`, `python3`, or `py` to invoke a module without the `py -3` qualifier.
    - PowerShell/Bash scripts that `Push-Location` or `cd` and then write to a relative path without resolving it first.
    - Read-only subagent prompts that force the subagent to run `git` or `exec` to recreate a missing diff, or to mutate files.
-   - Portable `SKILL.md` or `references` that embed consumer-repo specifics such as named repo aliases (`rooms-mostly`, `agent-asset-marketplace`), Windows drive letters (`Z:/`, `C:/`), user paths, branch names, or PR slugs.
+   - Portable `SKILL.md` or `references` that embed consumer-repo specifics such as named repo aliases (`<repo_alias_1>`, `<repo_alias_2>`), Windows drive letters (`Z:/`, `C:/`), user paths, branch names, or PR slugs.
 5. Use `grep` and `find_file_by_name` to confirm canonical paths and patterns.
 6. Report only skill/reference/prose issues. Cite `file:line`, severity, and remediation.
 7. End with `reviewer-skills: N issue(s)` or `reviewer-skills: clean`.
