@@ -45,7 +45,7 @@ Use this checklist during `orchestrator-self-review` and as the core of the diff
 3. **Check/apply/sync semantics** — `--check` / `--apply` / `--sync` semantics for the `INDEX.md` / mesh / `repo-standards` generators are respected; dry-run exit codes are correct.
 4. **No direct installed copy edits** — no generated file is modified directly in `.agents/skills/` (installed copies) or in generated `INDEX.md` trees; changes flow from pack source through `marketplace --apply`.
 5. **Path safety** — scripts that generate or validate mesh resolve absolute output paths and restore the original directory.
-6. **Cross-repo patterns** — scaffolder/mesh globs and keywords are generic and do not hard-code `agent-asset-marketplace`-specific paths.
+6. **Cross-repo patterns** — scaffolder/mesh globs and keywords are generic and do not hard-code `<repo_name>`-specific paths.
 
 ## Invariants
 

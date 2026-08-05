@@ -2,16 +2,14 @@
 name: reviewer-strong
 description: Vendor-provided subagent profile for full branch or PR diff review.
 model: swe-1-7
+# Do not change the length of this list; keep it at six entries so the write tool is surfaced.
 allowed-tools:
+- write
+- exec
 - read
 - grep
 - find_file_by_name
 - glob
-- exec
-- mcp_list_servers
-- mcp_list_tools
-- mcp_call_tool
-- write
 ---
 
 # Reviewer Strong
@@ -62,16 +60,14 @@ The orchestrator dispatches this profile with `run_subagent` (or the consumer's 
 ## Write the report (mandatory `write` tool)
 
 1. After reading the required inputs, compose the report in plain UTF-8.
-2. Call the `write` tool with `file_path=<log_path>` and the full report content.
-   - Do not use `exec`, Python, `Tee-Object`, `Out-File`, shell redirects, or any other method to create the report file.
-   - The `write` tool creates new files and overwrites existing ones; use it directly.
+2. Call the `write` tool with `file_path=<log_path>` and the full report content. The `write` tool is the only way to create the report file.
 3. The report must begin with `## Inputs` and `## Per-lens sign-off` sections, then list findings with `file:line`, severity, description, and remediation. End with `reviewer-strong: N issue(s)` or `reviewer-strong: clean`.
 4. After `write` succeeds, your final response must be exactly one line: `reviewer-strong: N issue(s)` or `reviewer-strong: clean`. Do not output the report body or any other text.
 
 ## What not to do
 
 - Do not modify repo files or run mutating commands. You may write only the off-repo report at `<log_path>`.
-- You may use `exec` only for non-mutating `git` queries and canonical verification, and `mcp_call_tool` only for non-mutating lookups. Do not use `exec`, Python, `mcp_call_tool`, or any other tool to write the report.
+- You may use `exec` only for non-mutating `git` queries and canonical verification. Do not use `exec`, Python, or any other tool to write the report.
 - Do not resolve the diff yourself; the orchestrator must provide `<diff_path>`.
 - If the prepared diff package is missing or the `diff_path` is not a file, report that and stop; do not use `git` or `exec` to recreate it.
 - Do not use `glob` to enumerate files; it can produce large, unhelpful overflow output and is unnecessary when paths are supplied.
