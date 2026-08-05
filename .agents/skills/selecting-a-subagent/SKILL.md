@@ -150,8 +150,6 @@ or `reviewer-tests.md` for a test harness. These are not part of the portable pa
 When `iterative-review` runs, it should read each `.agents/agents/reviewer-*.md`
 profile, evaluate the `## Applies to` section against the diff, PR description, and
 any provided inputs, and dispatch only the matching lenses plus `reviewer-strong`.
-`reviewer-references` is deprecated and split into `reviewer-skills` (portable)
-and repo-local lenses authored by the consumer.
 
 ## Vendor and third-party profiles
 
