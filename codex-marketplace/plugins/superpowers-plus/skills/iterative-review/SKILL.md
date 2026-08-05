@@ -58,9 +58,7 @@ Follow the `review-state-graph.md` reference. The graph routes the orchestrator 
    - `<diff_path>`: the full branch diff via `.agents/skills/subagent-workspace/scripts/review-package - <base> <branch> "$workspace/iterative-review-<pr_number>/review-<base7>..<head7>.diff"`.
    - `<pr_description>`: the PR title, body, and linked issue/spec context as a UTF-8 file.
    - Optional `<issue_context>`: Linear/GitHub issue or spec text as a UTF-8 file.
-   - `<scan_findings>`: the consumer repo's canonical preflight output as a file. Use the command named in `AGENTS.md` or `.devin/rules`:
-     - This repo: `py -3 tools/run.py review-preflight --check --base-ref <base>` then `py -3 tools/run.py ci --check`.
-     - `rooms-mostly`: `scripts/ci-preflight.ps1 -Check` and its `AGENTS.md` checks.
+   - `<scan_findings>`: the consumer repo's canonical preflight output as a file. Use the command named in the consumer's `AGENTS.md` or `.devin/rules`, or the installed `capture_preflight.py` helper: `py -3 .agents/skills/iterative-review/scripts/capture_preflight.py --worktree <worktree> --output <scan_findings_path>`.
 4. Validate that every input file is valid UTF-8 (and, where applicable, without a BOM) before dispatching subagents. Subagents cannot read malformed inputs. If a file is not valid UTF-8, regenerate it from a known-UTF-8 source such as `review-package`/`review-package.ps1` rather than a raw shell redirect.
 
 ## Following the graph
