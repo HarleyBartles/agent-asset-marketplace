@@ -50,12 +50,10 @@ def test_allow_shared_checkout_requires_apply():
 def test_resolve_ci_order():
     targets = run.resolve_targets(["ci"])
     assert targets.index("lint") < targets.index("repo-standards") < targets.index("marketplace")
-    assert targets.index("inventory") < targets.index("project")
-    assert targets.index("project") < targets.index("installed-skills")
+    assert targets.index("inventory") < targets.index("installed-skills")
     assert targets.index("installed-skills") < targets.index("repo-index")
     assert targets.index("repo-index") < targets.index("mesh")
-    assert targets.index("mesh") < targets.index("catalog")
-    assert targets.index("catalog") < targets.index("validate")
+    assert targets.index("mesh") < targets.index("validate")
     assert targets[-1] == "ci"
 
 
@@ -67,8 +65,7 @@ def test_resolve_multiple_targets_deduped():
     targets = run.resolve_targets(["mesh", "installed-skills"])
     assert "mesh" in targets
     assert "installed-skills" in targets
-    assert targets.index("project") < targets.index("installed-skills")
-    assert targets.index("project") < targets.index("repo-index") < targets.index("mesh")
+    assert targets.index("installed-skills") < targets.index("repo-index") < targets.index("mesh")
 
 
 def test_runner_forwards_allow_shared_checkout(monkeypatch):
@@ -78,7 +75,6 @@ def test_runner_forwards_allow_shared_checkout(monkeypatch):
         calls.append(cmd)
 
     monkeypatch.setattr(run, "_run", fake_run)
-    monkeypatch.setattr(run, "_prune_stale_projected_plugin_roots", lambda: None)
     monkeypatch.setattr(run, "_git_diff_check", lambda ctx: None)
     monkeypatch.setattr(run, "_git_diff_exit_code", lambda ctx: None)
 
@@ -230,3 +226,50 @@ def test_read_only_tasks_do_not_advertise_apply():
             assert f"tools/run {name} --apply" not in task.fix, (
                 f"{name} is read-only but its fix advertises tools/run {name} --apply"
             )
+
+
+def test_validate_fix_message(monkeypatch):
+    def boom(cmd, ctx):
+        raise subprocess.CalledProcessError(1, cmd)
+
+    monkeypatch.setattr(run, "_run", boom)
+
+    ctx = run.Ctx(mode="check", base_ref=None, allow_shared=False, verbose=False)
+    with pytest.raises(run.RunnerError) as exc_info:
+        run.run_targets(["validate"], ctx)
+    assert "target 'validate' failed" in str(exc_info.value)
+    assert "Fix: tools/run validate --apply" in str(exc_info.value)
+
+
+def test_ci_apply_runs_review_preflight_check(monkeypatch):
+    calls = []
+
+    def fake_run(cmd, ctx):
+        calls.append(" ".join(cmd))
+
+    monkeypatch.setattr(run, "_run", fake_run)
+    monkeypatch.setattr(run, "_git_diff_check", lambda ctx: None)
+    monkeypatch.setattr(run, "_git_diff_exit_code", lambda ctx: None)
+
+    ctx = run.Ctx(mode="apply", base_ref=None, allow_shared=True, verbose=False)
+    run.run_targets(run.resolve_targets(["ci"]), ctx)
+
+    review_preflight_calls = [c for c in calls if "tools/review_preflight.py" in c]
+    assert review_preflight_calls
+    assert "--check" in review_preflight_calls[0]
+
+
+def test_validate_does_not_call_git_diff_exit_code(monkeypatch):
+    calls = []
+
+    def fake_git_diff_exit_code(ctx):
+        calls.append("git_diff_exit_code")
+
+    monkeypatch.setattr(run, "_git_diff_exit_code", fake_git_diff_exit_code)
+    monkeypatch.setattr(run, "_git_diff_check", lambda ctx: None)
+    monkeypatch.setattr(run, "_run", lambda cmd, ctx: None)
+
+    ctx = run.Ctx(mode="check", base_ref=None, allow_shared=False, verbose=False)
+    run._run_validate(ctx)
+
+    assert "git_diff_exit_code" not in calls
