@@ -21,7 +21,7 @@ whole branch is in scope.
 
 ## Checklist
 
-Use this checklist during `orchestrator-predict` and as the core of the review:
+Use this checklist during `orchestrator-self-review` and as the core of the review:
 
 1. **Security / secrets exposure (CWE-200).** Scan for real identifiers or secrets that should not be in source: 17–20 digit snowflake IDs, tokens, API keys, email addresses, private IP addresses, or any value redacted elsewhere. Use `<PLACEHOLDER>` or env-var instructions.
 2. **SKILL.md frontmatter schema.** `license` must be a top-level field; `name` and `description` must be top-level; `metadata` must not silently swallow fields or contain unexpected keys.
@@ -41,17 +41,17 @@ Use when the review must consider the entire branch or a large, multi-file diff.
 
 - `<diff_path>`: path to the prepared branch diff.
 - `<pr_description>` (optional): the pull-request description for context.
-- `<review-log-orchestrator-prediction>` (required for the first pass): the orchestrator's prediction log. Use this as the starting checklist.
+- `<review-log-orchestrator-self-review>` (required for the first pass): the orchestrator's prediction log. Use this as the starting checklist.
 - `<review-log-skills>`, `<review-log-marketplace>`, `<review-log-security>` (required for `lens-dispatch` or `regression-scan`): the lens review reports. These are the primary finding set for their scopes.
 - `<regression_diff_path>` (optional): the fix diff only, used for `regression-scan`. When provided, read this and the immediately touched files, not the full branch.
 
 ## How to dispatch this reviewer
 
-The orchestrator dispatches this profile with `run_subagent` (or the consumer's equivalent subagent mechanism). Use this file's content as the subagent `task`, substituting the concrete input paths. Set the off-repo scratch directory as the subagent's working directory. The first `strong-review` needs all lens logs; `regression-scan` may need only the originating lens log and the fix diff.
+The orchestrator dispatches this profile with `run_subagent` (or the consumer's equivalent subagent mechanism). The `task` should list the concrete input paths and the off-repo output path. Do not ask the subagent to read this profile; the profile body is the injected instruction set. Set the off-repo scratch directory as the subagent's working directory. The first `strong-review` needs all lens logs; `regression-scan` may need only the originating lens log and the fix diff.
 
 ## How to review
 
-- Start by reading all provided `review-log-*.md` files and `<review-log-orchestrator-prediction>`. Treat the lens reports as the primary finding set for their scopes. Do not re-derive those findings unless you disagree with a conclusion or need to verify a citation.
+- Start by reading all provided `review-log-*.md` files and `<review-log-orchestrator-self-review>`. Treat the lens reports as the primary finding set for their scopes. Do not re-derive those findings unless you disagree with a conclusion or need to verify a citation.
 - Then read `<diff_path>` and `<pr_description>`. Focus on: gaps the lenses missed, contradictions between lens findings, contradictions between the diff and the PR description/spec/plan, and design/scope issues no single lens can see.
 - `read` truncates long files and returns a `<truncation_notice>` with an overflow file path. If this happens, continue by reading the overflow file or by re-reading the same file with `offset` and `limit` to page through it.
 - Use `grep` to locate file boundaries (e.g., `^diff --git`) or specific patterns before reading a chunk. This keeps the review focused and avoids loading the entire diff into context at once.

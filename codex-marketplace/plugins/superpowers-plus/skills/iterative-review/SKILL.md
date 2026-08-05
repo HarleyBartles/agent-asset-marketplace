@@ -44,7 +44,7 @@ Follow the `review-state-graph.md` reference. The graph routes the orchestrator 
 - `selecting-a-subagent` skill for choosing lens profiles.
 - `references/review-state-graph.md` for the canonical graph, node table, and edge conditions.
 - `references/review-metrics-schema.json` for the metrics to collect.
-- `references/review-log-orchestrator-prediction.md` for the prediction log template.
+- `references/review-log-orchestrator-self-review.md` for the prediction log template.
 - The relevant `.agents/agents/reviewer-*.md` lens profiles for the current repository.
 
 ## Setup
@@ -83,11 +83,11 @@ If the preflight reports deterministic findings, fix them and return to `preflig
 
 Compare the branch diff to the plan, spec, PR body, and linked issues. If the implemented scope has drifted, update the documents to match the real diff or fix the diff to match the documents. Commit the scope-honesty update. Reviewers must read an honest description of scope, not discover scope creep line-by-line.
 
-### `orchestrator-predict`
+### `orchestrator-self-review`
 
-This is the cheapest non-deterministic review. For each relevant `.agents/agents/reviewer-*.md` profile, read the `## Checklist` and apply it to the full diff mechanically. Fix what you can fix with high confidence. Record uncertain items in `review-log-orchestrator-prediction.md` in the off-repo scratch. Update `scan_findings` after the fixes.
+This is the cheapest non-deterministic review. For each relevant `.agents/agents/reviewer-*.md` profile, read the `## Checklist` and apply it to the full diff mechanically. Fix what you can fix with high confidence. Record uncertain items in `review-log-orchestrator-self-review.md` in the off-repo scratch. Update `scan_findings` after the fixes.
 
-**`orchestrator-predict` is not a pass.** A clean orchestrator-predict means the predictable issues are already fixed and the remaining known-unknowns are documented. It does **not** mean the PR is ready. Always proceed to `lens-dispatch` unless the PR has zero changed files or the consumer's CI preflight alone is the required gate for that PR.
+**`orchestrator-self-review` is not a pass.** A clean orchestrator-self-review means the predictable issues are already fixed and the remaining known-unknowns are documented. It does **not** mean the PR is ready. Always proceed to `lens-dispatch` unless the PR has zero changed files or the consumer's CI preflight alone is the required gate for that PR.
 
 ### `lens-dispatch`
 
@@ -95,7 +95,7 @@ This node is mandatory. Dispatch the relevant lens reviewers in parallel, each w
 - the full branch `<diff_path>`,
 - `<pr_description>`,
 - `<scan_findings>`,
-- `review-log-orchestrator-prediction.md`.
+- `review-log-orchestrator-self-review.md`.
 
 Use `run_subagent` to dispatch each lens. Read the corresponding `.agents/agents/reviewer-*.md` profile and use its content as the subagent task. Set the off-repo workspace as the subagent's working directory.
 
@@ -113,7 +113,7 @@ Lens reviewers should use the prediction log as the primary checklist and not re
 
 ### `strong-review`
 
-This node is mandatory. Dispatch `reviewer-strong` with the full diff, PR description, `issue_context`, `scan_findings`, `review-log-orchestrator-prediction.md`, and all `review-log-*.md` files. Its job is to combine lens findings, look for gaps and contradictions, and review design/scope. It writes `review-log-strong.md`.
+This node is mandatory. Dispatch `reviewer-strong` with the full diff, PR description, `issue_context`, `scan_findings`, `review-log-orchestrator-self-review.md`, and all `review-log-*.md` files. Its job is to combine lens findings, look for gaps and contradictions, and review design/scope. It writes `review-log-strong.md`.
 
 Use `run_subagent` with the `.agents/agents/reviewer-strong.md` profile. `reviewer-strong` must always see the lens logs; do not let it run on the diff alone.
 
@@ -191,8 +191,8 @@ At every `metrics-track` and at `ready` or `blocked`, write or update `review-me
 ## Common Mistakes
 
 - Treating the skill as a fixed list of rounds. Use the graph.
-- Skipping `orchestrator-predict` and dispatching lens reviewers immediately. That is the most expensive way to catch predictable issues.
-- Using a clean `orchestrator-predict` as an excuse to skip `lens-dispatch` or `strong-review`. It is not a pass.
+- Skipping `orchestrator-self-review` and dispatching lens reviewers immediately. That is the most expensive way to catch predictable issues.
+- Using a clean `orchestrator-self-review` as an excuse to skip `lens-dispatch` or `strong-review`. It is not a pass.
 - Claiming subagents are unavailable and proceeding to `ready` without `lens-dispatch` or `strong-review`. If `run_subagent` cannot be used, the review is `blocked`.
 - Skipping `re-preflight` after a fix. A fix can re-introduce deterministic issues.
 - Skipping `regression-scan` for a non-trivial fix. A fix can cause a new issue in an adjacent area.

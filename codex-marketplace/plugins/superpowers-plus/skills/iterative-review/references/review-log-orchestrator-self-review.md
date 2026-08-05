@@ -1,6 +1,6 @@
 # Orchestrator prediction log
 
-Use this off-repo scratch file during the `orchestrator-predict` node. Record
+Use this off-repo scratch file during the `orchestrator-self-review` node. Record
 which `.agents/agents/reviewer-*.md` profiles were checked, which predictable
 findings were fixed, and which uncertain items are being sent to the lens
 reviewers.

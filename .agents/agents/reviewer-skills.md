@@ -32,7 +32,7 @@ Use this section to decide whether `reviewer-skills` should be dispatched for a 
 
 ## Checklist
 
-Use this checklist during `orchestrator-predict` and as the core of the diff review:
+Use this checklist during `orchestrator-self-review` and as the core of the diff review:
 
 1. **SKILL.md frontmatter schema** — `license`, `name`, `description` are top-level; `license` is not under `metadata`; `metadata` only contains permitted skill-policy keys: `source-id`, `source-path`, `provenance-name`, `source-category`, `status`, `owner`, `scope`, `use_when`, `do_not_use_when`, `related_skills`.
 2. **SKILL.md metadata block** — a missing `metadata:` key is allowed; reject present `metadata: `, `metadata: null`, `metadata: ~`, `metadata: {}`, and any unexpected keys.
@@ -57,14 +57,14 @@ Use this checklist during `orchestrator-predict` and as the core of the diff rev
 - `<diff_path>` — path to a prepared diff file (e.g. `git diff --no-color <base>...<branch>` output written to a file).
 - `<pr_description>` (optional) — the PR title, body, and any linked issue/spec context.
 - `<scan_findings>` (optional) — the consumer repo's preflight output.
-- `<review-log-orchestrator-prediction>` (optional) — the orchestrator's prediction log. Read it and use it as a checklist; do not duplicate items the orchestrator already fixed.
+- `<review-log-orchestrator-self-review>` (optional) — the orchestrator's prediction log. Read it and use it as a checklist; do not duplicate items the orchestrator already fixed.
 - `<regression_diff_path>` (optional) — the fix diff only, used for `regression-scan`. When provided, scan this diff and the immediately touched files, not the full branch.
 
 Do not generate the diff yourself. The orchestrator owns diff preparation.
 
 ## How to dispatch this reviewer
 
-The orchestrator dispatches this profile with `run_subagent` (or the consumer's equivalent subagent mechanism). Use this file's content as the subagent `task`, substituting the concrete input paths. Set the off-repo scratch directory as the subagent's working directory.
+The orchestrator dispatches this profile with `run_subagent` (or the consumer's equivalent subagent mechanism). The `task` should list the concrete input paths and the off-repo output path. Do not ask the subagent to read this profile; the profile body is the injected instruction set. Set the off-repo scratch directory as the subagent's working directory.
 
 ## What to write
 

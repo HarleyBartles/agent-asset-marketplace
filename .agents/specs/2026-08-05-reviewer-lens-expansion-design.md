@@ -46,7 +46,7 @@ The `iterative-review` skill now routes through a state graph. It still describe
 1. **In-isolation review:** Read `<plan_path>` / `<spec_path>` only. Validate completeness, consistency, clarity, scope, YAGNI, buildability.
 2. **PR compliance review:** Read the diff plus the governing plan/spec/roadmap. Flag scope drift, missing / added / renamed / dropped surfaces, roadmap-order violations, and traceability gaps.
 
-**Checklist** (used by `orchestrator-predict` and as the core of the diff review):
+**Checklist** (used by `orchestrator-self-review` and as the core of the diff review):
 
 - No TODOs, TBD, placeholders, or incomplete sections.
 - No internal contradictions.
@@ -160,7 +160,7 @@ Add to the dispatch table:
 - `reviewer-mesh` — scaffolder / mesh / `repo-standards` / `INDEX.md` lens.
 - `reviewer-scripts` — script / CLI safety and compliance lens.
 
-Document that each profile's `## Checklist` and `## Applies to` sections are the source of truth for `orchestrator-predict` and `lens-dispatch`. Do not point to `reviewer-known-findings.md`; it no longer exists.
+Document that each profile's `## Checklist` and `## Applies to` sections are the source of truth for `orchestrator-self-review` and `lens-dispatch`. Do not point to `reviewer-known-findings.md`; it no longer exists.
 
 ### `iterative-review/SKILL.md` (source in `codex-marketplace/plugins/superpowers-plus/skills/iterative-review/SKILL.md`)
 
@@ -172,7 +172,7 @@ Update the `lens-dispatch` node:
 4. Dispatch the matching lenses in parallel. `reviewer-strong` remains mandatory and always runs with the collected logs.
 5. If no lenses match, still run `reviewer-strong` on the diff; a pure refactor with no special lens still needs a whole-branch pass.
 
-`orchestrator-predict` already reads each lens's `## Checklist`; ensure it also reads the `## Applies to` section for lens selection.
+`orchestrator-self-review` already reads each lens's `## Checklist`; ensure it also reads the `## Applies to` section for lens selection.
 
 Remove the current hard-coded "In this repo, the canonical lenses are..." list. Replace it with the dynamic selection rules.
 

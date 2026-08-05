@@ -12,8 +12,8 @@ flowchart TD
     preflight -->|red| fast-fix
     fast-fix --> preflight
     preflight -->|green| scope-honesty
-    scope-honesty --> orchestrator-predict
-    orchestrator-predict --> lens-dispatch
+    scope-honesty --> orchestrator-self-review
+    orchestrator-self-review --> lens-dispatch
     lens-dispatch --> strong-review
     strong-review -->|clean| ready
     strong-review -->|findings| metrics-track
@@ -36,8 +36,8 @@ flowchart TD
 | `preflight` | `tools/run.py ci --check` | Run deterministic pattern checks on the branch before any subagent. |
 | `fast-fix` | orchestrator | Fix a deterministic preflight finding. |
 | `scope-honesty` | orchestrator | Compare the diff to the plan, spec, PR body, and linked issues. Fix drift. |
-| `orchestrator-predict` | orchestrator | Apply each relevant `.agents/agents/reviewer-*.md` `## Checklist` to the diff; fix predictable items; record uncertain items in `review-log-orchestrator-prediction.md`. |
-| `lens-dispatch` | parallel subagents | Run the relevant lens reviewers with the prediction log as input. This node is mandatory; do not route around it because the orchestrator-predict was clean. |
+| `orchestrator-self-review` | orchestrator | Apply each relevant `.agents/agents/reviewer-*.md` `## Checklist` to the diff; fix predictable items; record uncertain items in `review-log-orchestrator-self-review.md`. |
+| `lens-dispatch` | parallel subagents | Run the relevant lens reviewers with the prediction log as input. This node is mandatory; do not route around it because the orchestrator-self-review was clean. |
 | `strong-review` | `reviewer-strong` | Whole-branch pass that combines lens logs, finds gaps, contradictions, and design issues. |
 | `metrics-track` | orchestrator | Record the finding, the node that discovered it, the round number, and the node where it resolves. This node does not block. |
 | `finding-fix` | orchestrator + implementer subagent | Resolve one finding and commit the fix. |
@@ -55,8 +55,8 @@ flowchart TD
 | `preflight` | `fast-fix` | Any deterministic finding from `review-preflight`. |
 | `fast-fix` | `preflight` | Always; re-run preflight after the fix. |
 | `preflight` | `scope-honesty` | `ci --check` passes. |
-| `scope-honesty` | `orchestrator-predict` | Drift corrected or no drift. |
-| `orchestrator-predict` | `lens-dispatch` | Always; the orchestrator's prediction is not a substitute for lens review. The only exception is a PR with zero changed files. |
+| `scope-honesty` | `orchestrator-self-review` | Drift corrected or no drift. |
+| `orchestrator-self-review` | `lens-dispatch` | Always; the orchestrator's prediction is not a substitute for lens review. The only exception is a PR with zero changed files. |
 | `lens-dispatch` | `strong-review` | All lens logs are available. |
 | `strong-review` | `ready` | `reviewer-strong` reports `reviewer-strong: clean`. |
 | `strong-review` | `metrics-track` | `reviewer-strong` or lens review reports findings. |
@@ -72,7 +72,7 @@ flowchart TD
 
 ## Round counting
 
-A "round" is one complete traversal through `lens-dispatch` or `strong-review` that produces findings. `orchestrator-predict` is not a round because it is orchestrator-time. The first `lens-dispatch` is round 1. The first `strong-review` is round 2. A `regression-scan` that finds a new issue starts a new round at `metrics-track`.
+A "round" is one complete traversal through `lens-dispatch` or `strong-review` that produces findings. `orchestrator-self-review` is not a round because it is orchestrator-time. The first `lens-dispatch` is round 1. The first `strong-review` is round 2. A `regression-scan` that finds a new issue starts a new round at `metrics-track`.
 
 ## `review-metrics.json` schema
 
@@ -85,7 +85,7 @@ A "round" is one complete traversal through `lens-dispatch` or `strong-review` t
   },
   "findings_by_node": {
     "preflight": 0,
-    "orchestrator-predict": 0,
+    "orchestrator-self-review": 0,
     "lens-security": 0,
     "lens-skills": 0,
     "lens-marketplace": 0,
@@ -118,7 +118,7 @@ A "round" is one complete traversal through `lens-dispatch` or `strong-review` t
 }
 ```
 
-## `review-log-orchestrator-prediction.md` template
+## `review-log-orchestrator-self-review.md` template
 
 Use this off-repo scratch file to record what the orchestrator could predict
 and fix, and what it left for the lens reviewers.
@@ -161,7 +161,7 @@ The orchestrator writes all review inputs and logs to the off-repo `iterative-re
 
 - `review-<base7>..<head7>.diff`
 - `pr_description.txt`
-- `review-log-orchestrator-prediction.md`
+- `review-log-orchestrator-self-review.md`
 - `review-log-skills.md`
 - `review-log-marketplace.md`
 - `review-log-security.md`

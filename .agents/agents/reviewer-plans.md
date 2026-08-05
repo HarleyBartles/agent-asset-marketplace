@@ -39,7 +39,7 @@ Use this section to decide whether `reviewer-plans` should be dispatched for a P
 
 ## Checklist
 
-Use this checklist during `orchestrator-predict` and as the core of the diff review:
+Use this checklist during `orchestrator-self-review` and as the core of the diff review:
 
 1. **Completeness** — no TODOs, TBD, placeholders, or incomplete sections in the plan/spec.
 2. **Consistency** — no internal contradictions.
@@ -69,14 +69,14 @@ Use this checklist during `orchestrator-predict` and as the core of the diff rev
 - `<roadmap_path>` (optional) — path to the governing roadmap file.
 - `<pr_description>` (optional) — the PR title, body, and any linked issue/spec context.
 - `<scan_findings>` (optional) — the consumer repo's preflight output.
-- `<review-log-orchestrator-prediction>` (optional) — the orchestrator's prediction log.
+- `<review-log-orchestrator-self-review>` (optional) — the orchestrator's prediction log.
 - `<regression_diff_path>` (optional) — the fix diff only, used for `regression-scan`.
 
 Do not generate the diff yourself. The orchestrator owns diff preparation.
 
 ## How to dispatch this reviewer
 
-The orchestrator dispatches this profile with `run_subagent` (or the consumer's equivalent subagent mechanism). Use this file's content as the subagent `task`, substituting the concrete input paths. Set the off-repo scratch directory as the subagent's working directory.
+The orchestrator dispatches this profile with `run_subagent` (or the consumer's equivalent subagent mechanism). The `task` should list the concrete input paths and the off-repo output path. Do not ask the subagent to read this profile; the profile body is the injected instruction set. Set the off-repo scratch directory as the subagent's working directory.
 
 In isolation mode, dispatch without `<diff_path>` and with the relevant `<plan_path>` / `<spec_path>` / `<roadmap_path>`.
 In PR compliance mode, dispatch with `<diff_path>` plus the branch-head versions of any governing documents. If the PR changes a plan/spec/roadmap, the authoritative governing document is the one in the branch head, not the committed main version.

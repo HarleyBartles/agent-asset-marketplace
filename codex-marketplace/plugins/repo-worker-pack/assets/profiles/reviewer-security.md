@@ -32,7 +32,7 @@ Use this section to decide whether `reviewer-security` should be dispatched for 
 
 ## Checklist
 
-Use this checklist during `orchestrator-predict` and as the core of the diff review:
+Use this checklist during `orchestrator-self-review` and as the core of the diff review:
 
 1. **Discord/Slack/Matrix snowflake IDs** — 17–20 digit numbers, especially next to `guild_id`, `server_id`, `channel_id`, `user_id`, `tenant_id`, or `discord`.
 2. **Credentials and secrets** — `api_key`, `token`, `secret`, `password`, `private_key`, `credential` with a real-looking value.
@@ -55,14 +55,14 @@ Use this checklist during `orchestrator-predict` and as the core of the diff rev
 - `<diff_path>` — path to a prepared diff file (e.g. `git diff --no-color <base>...<branch>` output written to a file).
 - `<pr_description>` (optional) — the PR title, body, and any linked issue/spec context.
 - `<scan_findings>` (optional) — the consumer repo's preflight output, so you can cross-check rather than rediscover.
-- `<review-log-orchestrator-prediction>` (optional) — the orchestrator's prediction log. Read it and use it as a checklist; do not duplicate items the orchestrator already fixed.
+- `<review-log-orchestrator-self-review>` (optional) — the orchestrator's prediction log. Read it and use it as a checklist; do not duplicate items the orchestrator already fixed.
 - `<regression_diff_path>` (optional) — the fix diff only, used for `regression-scan`. When provided, scan this diff and the immediately touched files, not the full branch.
 
 Do not generate the diff yourself. The orchestrator owns diff preparation.
 
 ## How to dispatch this reviewer
 
-The orchestrator dispatches this profile with `run_subagent` (or the consumer's equivalent subagent mechanism). Use this file's content as the subagent `task`, substituting the concrete input paths. Set the off-repo scratch directory as the subagent's working directory.
+The orchestrator dispatches this profile with `run_subagent` (or the consumer's equivalent subagent mechanism). The `task` should list the concrete input paths and the off-repo output path. Do not ask the subagent to read this profile; the profile body is the injected instruction set. Set the off-repo scratch directory as the subagent's working directory.
 
 ## What to write
 

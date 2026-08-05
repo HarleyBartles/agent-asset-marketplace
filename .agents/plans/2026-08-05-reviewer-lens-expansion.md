@@ -108,7 +108,7 @@ Use this section to decide whether `reviewer-plans` should be dispatched for a P
 
 ## Checklist
 
-Use this checklist during `orchestrator-predict` and as the core of the diff review:
+Use this checklist during `orchestrator-self-review` and as the core of the diff review:
 
 1. **Completeness** — no TODOs, TBD, placeholders, or incomplete sections in the plan/spec.
 2. **Consistency** — no internal contradictions.
@@ -138,14 +138,14 @@ Use this checklist during `orchestrator-predict` and as the core of the diff rev
 - `<roadmap_path>` (optional) — path to the governing roadmap file.
 - `<pr_description>` (optional) — the PR title, body, and any linked issue/spec context.
 - `<scan_findings>` (optional) — the consumer repo's preflight output.
-- `<review-log-orchestrator-prediction>` (optional) — the orchestrator's prediction log.
+- `<review-log-orchestrator-self-review>` (optional) — the orchestrator's prediction log.
 - `<regression_diff_path>` (optional) — the fix diff only, used for `regression-scan`.
 
 Do not generate the diff yourself. The orchestrator owns diff preparation.
 
 ## How to dispatch this reviewer
 
-The orchestrator dispatches this profile with `run_subagent` (or the consumer's equivalent subagent mechanism). Use this file's content as the subagent `task`, substituting the concrete input paths. Set the off-repo scratch directory as the subagent's working directory.
+The orchestrator dispatches this profile with `run_subagent` (or the consumer's equivalent subagent mechanism). The `task` should list the concrete input paths and the off-repo output path. Do not ask the subagent to read this profile; the profile body is the injected instruction set. Set the off-repo scratch directory as the subagent's working directory.
 
 In isolation mode, dispatch without `<diff_path>` and with the relevant `<plan_path>` / `<spec_path>` / `<roadmap_path>`.
 In PR compliance mode, dispatch with `<diff_path>` plus the relevant governing document paths.
@@ -233,7 +233,7 @@ git commit -m "Add portable reviewer-mesh lens profile"
 Use the spec checklist and the same frontmatter/structure as `reviewer-plans.md` and `reviewer-mesh.md`. The profile must:
 - Declare `## Applies to` with `globs` for `**/scripts/**`, `**/tools/**`, `**/*.py`, `**/*.sh`, `**/*.ps1`, and `**/*.bash`.
 - Declare `## Checklist` covering CLI flag contracts, read-only/mutating/mixed classification, exit-code hygiene, shebang/invocation, path safety, and cross-skill script path existence.
-- Require only `<diff_path>` and optional `<pr_description>` / `<scan_findings>` / `<review-log-orchestrator-prediction>` inputs.
+- Require only `<diff_path>` and optional `<pr_description>` / `<scan_findings>` / `<review-log-orchestrator-self-review>` inputs.
 - Write `review-log-scripts.md` to the off-repo scratch.
 - Append the `## Stop condition and loop breaker` section from Task 9 to the end of the file.
 
@@ -452,9 +452,9 @@ git commit -m "Update selecting-a-subagent dispatch table for reviewer-plans, re
 - Consumes: current `lens-dispatch` node text.
 - Produces: a dynamic `lens-dispatch` node that reads `## Applies to`.
 
-- [x] **Step 5.1: Update `orchestrator-predict` to read `## Applies to`**
+- [x] **Step 5.1: Update `orchestrator-self-review` to read `## Applies to`**
 
-Locate the `orchestrator-predict` node. Replace the sentence that says it should only read `## Checklist` with one that also reads `## Applies to`:
+Locate the `orchestrator-self-review` node. Replace the sentence that says it should only read `## Checklist` with one that also reads `## Applies to`:
 
 ```text
 old_string: |
@@ -475,7 +475,7 @@ old_string: |
   - the full branch `<diff_path>`,
   - `<pr_description>`,
   - `<scan_findings>`,
-  - `review-log-orchestrator-prediction.md`.
+  - `review-log-orchestrator-self-review.md`.
 
   Use `run_subagent` to dispatch each lens. Read the corresponding `.agents/agents/reviewer-*.md` profile and use its content as the subagent task. Set the off-repo workspace as the subagent's working directory. In this repo, the canonical lenses are:
   - `reviewer-skills` for `SKILL.md`, reference files, and prompt robustness.
@@ -495,7 +495,7 @@ new_string: |
      - If an `inputs` entry is provided by the orchestrator (e.g. `<plan_path>` for `reviewer-plans`), dispatch the lens.
      - If a `globs` pattern matches a changed file in the diff, dispatch the lens.
      - If a `keywords` string appears in the diff or in `<pr_description>`, dispatch the lens.
-  3. Build the input package for each matching lens: full branch `<diff_path>`, `<pr_description>`, `<scan_findings>`, `review-log-orchestrator-prediction.md`, and any lens-specific inputs (`<plan_path>`, `<spec_path>`, `<roadmap_path>` for `reviewer-plans`).
+  3. Build the input package for each matching lens: full branch `<diff_path>`, `<pr_description>`, `<scan_findings>`, `review-log-orchestrator-self-review.md`, and any lens-specific inputs (`<plan_path>`, `<spec_path>`, `<roadmap_path>` for `reviewer-plans`).
   4. Use `run_subagent` to dispatch each selected lens. Read the corresponding `.agents/agents/reviewer-*.md` profile and use its content as the subagent task. Set the off-repo workspace as the subagent's working directory.
   5. `reviewer-strong` always runs after the lens reviews with the full diff, PR description, and all `review-log-<lens>.md` files.
 

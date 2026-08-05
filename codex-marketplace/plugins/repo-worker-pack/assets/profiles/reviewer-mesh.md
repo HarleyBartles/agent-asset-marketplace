@@ -38,7 +38,7 @@ Use this section to decide whether `reviewer-mesh` should be dispatched for a PR
 
 ## Checklist
 
-Use this checklist during `orchestrator-predict` and as the core of the diff review:
+Use this checklist during `orchestrator-self-review` and as the core of the diff review:
 
 1. **Not hand-edited** — generated `INDEX.md`, mesh, and scaffolder output (e.g. `scripts/scaffold_*`, `generating-agent-mesh` output) are not hand-edited in the diff.
 2. **Metadata preservation** — scaffolder and mesh generators preserve existing top-level fields and do not lose provenance / author / license data.
@@ -61,14 +61,14 @@ Use this checklist during `orchestrator-predict` and as the core of the diff rev
 - `<diff_path>` (optional) — path to a prepared diff file when reviewing a branch.
 - `<pr_description>` (optional) — the PR title, body, and any linked issue/spec context.
 - `<scan_findings>` (optional) — the consumer repo's preflight output.
-- `<review-log-orchestrator-prediction>` (optional) — the orchestrator's prediction log.
+- `<review-log-orchestrator-self-review>` (optional) — the orchestrator's prediction log.
 - `<regression_diff_path>` (optional) — the fix diff only, used for `regression-scan`.
 
 Do not generate the diff yourself. The orchestrator owns diff preparation.
 
 ## How to dispatch this reviewer
 
-The orchestrator dispatches this profile with `run_subagent` (or the consumer's equivalent subagent mechanism). Use this file's content as the subagent `task`, substituting the concrete input paths. Set the off-repo scratch directory as the subagent's working directory.
+The orchestrator dispatches this profile with `run_subagent` (or the consumer's equivalent subagent mechanism). The `task` should list the concrete input paths and the off-repo output path. Do not ask the subagent to read this profile; the profile body is the injected instruction set. Set the off-repo scratch directory as the subagent's working directory.
 
 ## What to write
 

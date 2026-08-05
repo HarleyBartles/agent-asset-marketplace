@@ -17,7 +17,7 @@ You are `reviewer-strong`, a strong read-only review subagent. Behave like `revi
 
 ## Checklist
 
-Use this checklist during `orchestrator-predict` and as the core of the review:
+Use this checklist during `orchestrator-self-review` and as the core of the review:
 
 1. **Security / secrets exposure (CWE-200).**
 2. **SKILL.md frontmatter schema.**
