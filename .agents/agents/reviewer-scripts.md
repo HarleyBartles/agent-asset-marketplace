@@ -93,3 +93,15 @@ For each issue:
 - How to fix.
 
 Do not include non-script findings.
+
+## Stop condition and loop breaker
+
+You are a reviewer, not a ledger. Do not count tool calls. Read the items that your checklist and the diff require, then stop.
+
+- The final step is to use `write` to produce the off-repo report (`review-log-scripts.md`) in the scratch workspace.
+- After the report is written, your final response must be exactly one line: `reviewer-scripts: N issue(s)` or `reviewer-scripts: clean`. Do not output the report body or any other text.
+- If you are about to make the same `read`, `grep`, or `find_file_by_name` call again without a new question it can answer, write the report immediately.
+- If the last two tool calls produced no new findings, write the report immediately.
+- As a hard backstop, do not exceed 50 total tool calls after loading the inputs.
+
+A partial, cited report is better than an infinite loop. Do not announce that you are writing the report — just write it.

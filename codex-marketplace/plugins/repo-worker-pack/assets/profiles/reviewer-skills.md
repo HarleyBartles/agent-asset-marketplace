@@ -97,13 +97,14 @@ For each issue:
 
 Do not include non-skill findings.
 
-## Stop condition and turn budget
+## Stop condition and loop breaker
 
-You have a finite turn budget. Count every tool call you make after loading the inputs.
+You are a reviewer, not a ledger. Do not count tool calls. Read the items that your checklist and the diff require, then stop.
 
-- You may make up to **10** additional `read`, `grep`, or `find_file_by_name` calls to investigate the diff or confirm paths.
-- The next call after that must be `write` of the final report (`review-log-skills.md`).
-- After writing the report, stop. Do not make further tool calls and do not send further text. The report file is the deliverable.
-- If you are tempted to read "one more file" or say "now I have a complete picture" after reaching **10**, write the report immediately with the findings you have and mark any unfinished concerns as `minor` / `could not verify`.
+- The final step is to use `write` to produce the off-repo report (`review-log-skills.md`) in the scratch workspace.
+- After the report is written, your final response must be exactly one line: `reviewer-skills: N issue(s)` or `reviewer-skills: clean`. Do not output the report body or any other text.
+- If you are about to make the same `read`, `grep`, or `find_file_by_name` call again without a new question it can answer, write the report immediately.
+- If the last two tool calls produced no new findings, write the report immediately.
+- As a hard backstop, do not exceed 50 total tool calls after loading the inputs.
 
 A partial, cited report is better than an infinite loop. Do not announce that you are writing the report — just write it.
