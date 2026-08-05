@@ -178,7 +178,9 @@ Remove the current hard-coded "In this repo, the canonical lenses are..." list. 
 
 ### Marketplace pack (if applicable)
 
-The portable runtime profiles live in `.agents/agents/` after installation. Their canonical product source is `codex-marketplace/plugins/repo-worker-pack/assets/profiles/` per the 2026-08-04 review-robustness design. Add `reviewer-plans.md`, `reviewer-mesh.md`, and `reviewer-scripts.md` there if that pack is still the source of truth for `.agents/agents/` copies, then regenerate with `py -3 tools/run.py marketplace --apply` before publishing. The implementation plan must verify whether the pack needs an update.
+The portable runtime profiles live in `.agents/agents/` after installation. Their canonical product source is now the `selecting-a-subagent` skill: `codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/assets/` ships the `.md` profile assets. Add `reviewer-plans.md`, `reviewer-mesh.md`, and `reviewer-scripts.md` there (and remove the now-deprecated `reviewer-scaffolders` profile), then regenerate with `py -3 tools/run.py marketplace --apply` before publishing.
+
+To make the shipped `.md` files discoverable in consumer repos, add `scripts/install_profiles.py` to the `selecting-a-subagent` skill. The helper installs the shipped profiles into the consumer repo's `.agents/agents/` directory, overwriting only changed shipped profiles and leaving any locally managed `.agents/agents/reviewer-*.md` files untouched. Update `selecting-a-subagent/SKILL.md` to document the helper and keep the manual global Devin Desktop profile path as an alternative.
 
 ## Cross-repo consumer considerations
 
