@@ -104,9 +104,9 @@ This node is mandatory. Dispatch only the lens reviewers whose `## Applies to` r
    - If an `inputs` entry is provided by the orchestrator (e.g. `<plan_path>` for `reviewer-plans`), dispatch the lens.
    - If a `globs` pattern matches a changed file in the diff, dispatch the lens.
    - If a `keywords` string appears in the diff or in `<pr_description>`, dispatch the lens.
-3. Build the input package for each matching lens: full branch `<diff_path>`, `<pr_description>`, `<scan_findings>`, `review-log-orchestrator-self-review.md`, and any lens-specific inputs (`<plan_path>`, `<spec_path>`, `<roadmap_path>` for `reviewer-plans`).
-4. Use `run_subagent` to dispatch each selected lens. Read the corresponding `.agents/agents/reviewer-*.md` profile and use its content as the subagent task. Set the off-repo workspace as the subagent's working directory.
-5. `reviewer-strong` always runs after the lens reviews with the full diff, PR description, and all `review-log-<lens>.md` files.
+3. Build the input package for each matching lens: full branch `<diff_path>`, `<pr_description>`, `<scan_findings>`, `review-log-orchestrator-self-review.md`, and any lens-specific inputs (`<plan_path>`, `<spec_path>`, `<roadmap_path>` for `reviewer-plans`). Assign each lens a concrete `<log_path>` such as `$scratch/review-log-<lens>.md`.
+4. Use `run_subagent` to dispatch each selected lens. Read the corresponding `.agents/agents/reviewer-*.md` profile and use its content as the subagent task. Pass the `<log_path>` in the subagent `task` so the reviewer writes to that exact file. Set the off-repo workspace as the subagent's working directory.
+5. `reviewer-strong` always runs after the lens reviews with the full diff, PR description, all `review-log-<lens>.md` files, and its own `<log_path>` (e.g. `$scratch/review-log-strong.md`).
 
 If no lens matches the PR, still dispatch `reviewer-strong` for the whole-branch pass.
 
@@ -122,7 +122,7 @@ This node is mandatory. Before dispatching `reviewer-strong`, re-run the UTF-8 b
 py -3 .agents/skills/iterative-review/scripts/normalize_review_inputs.py --apply <scratch_dir>
 ```
 
-Then dispatch `reviewer-strong` with the full diff, PR description, `issue_context`, `scan_findings`, `review-log-orchestrator-self-review.md`, and all `review-log-*.md` files. Its job is to combine lens findings, look for gaps and contradictions, and review design/scope. It writes `review-log-strong.md`.
+Then dispatch `reviewer-strong` with the full diff, PR description, `issue_context`, `scan_findings`, `review-log-orchestrator-self-review.md`, all `review-log-*.md` files, and `<log_path>` set to `$scratch/review-log-strong.md`. Its job is to combine lens findings, look for gaps and contradictions, and review design/scope. It must use the `write` tool to write the report to `<log_path>`.
 
 Use `run_subagent` with the `.agents/agents/reviewer-strong.md` profile. `reviewer-strong` must always see the lens logs; do not let it run on the diff alone.
 
@@ -144,10 +144,11 @@ Re-run the consumer's canonical preflight over the post-fix range. If it reports
 
 ### `targeted-re-review`
 
-Before spending a full whole-branch `reviewer-strong` pass, dispatch `reviewer-fast` with a tight scope:
+Before spending a full whole-branch `reviewer-strong` pass, dispatch `reviewer-fast` with a tight scope and a concrete `<log_path>` (e.g. `$scratch/review-log-fast.md`):
 - the original finding,
 - the fix diff (e.g. `HEAD~N..HEAD` or `origin/main..HEAD` if the fixes are the latest commits),
-- the relevant slice of the full branch diff.
+- the relevant slice of the full branch diff,
+- `<log_path>` where `reviewer-fast` must use the `write` tool to write its report.
 
 Use `reviewer-fast` to verify the original finding is resolved and to look for obvious new issues in the fix. Do not broaden into a whole-branch review here.
 
@@ -157,7 +158,7 @@ Confirm the original finding is resolved. Then:
 
 ### `regression-scan`
 
-Widen the scope to the fix and immediate surrounding area. First dispatch `reviewer-fast` on that widened diff to catch cheap regressions. If `reviewer-fast` is clean, go to `strong-review` for the final whole-branch pass. If `reviewer-fast` finds a new issue, dispatch `reviewer-strong` on the touched area to confirm and classify it; then return to `metrics-track` so it is recorded as a regression.
+Widen the scope to the fix and immediate surrounding area. First dispatch `reviewer-fast` on that widened diff, with `<log_path>` set to `$scratch/review-log-fast.md`, to catch cheap regressions. If `reviewer-fast` is clean, go to `strong-review` for the final whole-branch pass. If `reviewer-fast` finds a new issue, dispatch `reviewer-strong` on the touched area, with its own `<log_path>` (e.g. `$scratch/review-log-strong.md`), to confirm and classify it; then return to `metrics-track` so it is recorded as a regression.
 
 ### `ready`
 
