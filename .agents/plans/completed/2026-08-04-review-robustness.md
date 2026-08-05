@@ -799,7 +799,7 @@ git commit -m "Add review-robustness runbook"
 ## Task 7: Final validation and PR update
 
 **Files:**
-- Modify: `.agents/specs/2026-08-04-review-robustness-design.md` if the plan changed the design.
+- Modify: `.agents/specs/completed/2026-08-04-review-robustness-design.md` if the plan changed the design.
 - Modify: PR body to include the final head SHA.
 
 **Interfaces:**
