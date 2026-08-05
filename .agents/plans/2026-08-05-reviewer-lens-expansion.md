@@ -40,7 +40,7 @@ Expected: `selecting-a-subagent` and `iterative-review` directories are present.
 
 - [x] **Step 0.2: Confirm the pack profile source path**
 
-Run: `Get-ChildItem 'codex-marketplace\plugins\repo-worker-pack\assets\profiles\' | Select-Object -ExpandProperty Name`
+Run: `Get-ChildItem 'codex-marketplace\plugins\superpowers-plus\skills\selecting-a-subagent\assets\' | Select-Object -ExpandProperty Name`
 Expected: Existing profiles (`reviewer.md`, `reviewer-fast.md`, `reviewer-strong.md`, `reviewer-security.md`, `reviewer-skills.md`, `reviewer-marketplace.md`) are present.
 
 - [x] **Step 0.3: Commit the baseline verification**
@@ -183,7 +183,7 @@ Append the `## Stop condition and loop breaker` section from Task 9 to the end o
 If the pack at `codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/assets/` is the source of truth for `.agents/agents/` runtime profiles, copy the file you just created into that directory:
 
 ```bash
-cp ".agents\agents\reviewer-plans.md" "codex-marketplace\plugins\repo-worker-pack\assets\profiles\reviewer-plans.md"
+cp ".agents\agents\reviewer-plans.md" "codex-marketplace\plugins\superpowers-plus\skills\selecting-a-subagent\assets\reviewer-plans.md"
 ```
 
 - [x] **Step 1.3: Commit the new profile**
@@ -217,7 +217,7 @@ It is the canonical scaffolder/mesh lens and absorbs the old `reviewer-scaffolde
 - [x] **Step 2.2: Add `reviewer-mesh.md` to the repo-worker-pack profile source**
 
 ```bash
-cp ".agents\agents\reviewer-mesh.md" "codex-marketplace\plugins\repo-worker-pack\assets\profiles\reviewer-mesh.md"
+cp ".agents\agents\reviewer-mesh.md" "codex-marketplace\plugins\superpowers-plus\skills\selecting-a-subagent\assets\reviewer-mesh.md"
 ```
 
 - [x] **Step 2.3: Commit the new profile**
@@ -365,9 +365,9 @@ new_string: |
 - [x] **Step 3.4: Copy the updated profiles to the pack source**
 
 ```bash
-cp ".agents\agents\reviewer-skills.md" "codex-marketplace\plugins\repo-worker-pack\assets\profiles\reviewer-skills.md"
-cp ".agents\agents\reviewer-security.md" "codex-marketplace\plugins\repo-worker-pack\assets\profiles\reviewer-security.md"
-cp ".agents\agents\reviewer-marketplace.md" "codex-marketplace\plugins\repo-worker-pack\assets\profiles\reviewer-marketplace.md"
+cp ".agents\agents\reviewer-skills.md" "codex-marketplace\plugins\superpowers-plus\skills\selecting-a-subagent\assets\reviewer-skills.md"
+cp ".agents\agents\reviewer-security.md" "codex-marketplace\plugins\superpowers-plus\skills\selecting-a-subagent\assets\reviewer-security.md"
+cp ".agents\agents\reviewer-marketplace.md" "codex-marketplace\plugins\superpowers-plus\skills\selecting-a-subagent\assets\reviewer-marketplace.md"
 ```
 
 - [x] **Step 3.5: Commit the applies-to updates**
@@ -667,6 +667,11 @@ Expected: `py -3 .agents/skills/selecting-a-subagent/scripts/install_profiles.py
 Run: replace the manual-copy-only instructions with the helper command and keep the global Devin Desktop path as an alternative.
 Expected: `py -3 tools/run.py ci --check` passes.
 
+- [x] **Step 10.3: Normalize `implementer.md` and `implementer-strong.md` as part of the consolidation**
+
+Run: move the duplicated `codex-marketplace/plugins/repo-worker-pack/assets/profiles/implementer*.md` files into the canonical `selecting-a-subagent/assets/` directory and restore their vendor baseline content. The marketplace helper and `installed-skills` will keep the repo-local `.agents/agents/` copies in sync.
+Expected: `py -3 tools/run.py ci --check` passes and the diff shows only the expected implementer content changes.
+
 ---
 
 ### Task 11: Publish the branch as a draft PR
@@ -678,17 +683,17 @@ Expected: `py -3 tools/run.py ci --check` passes.
 - Consumes: green `ci --check`.
 - Produces: open draft PR URL.
 
-- [x] **Step 10.1: Push the branch**
+- [x] **Step 11.1: Push the branch**
 
 ```bash
 git push -u origin feat/reviewer-lens-expansion
 ```
 
-- [x] **Step 10.2: Open a draft PR**
+- [x] **Step 11.2: Open a draft PR**
 
 Use `gh pr create --draft` with title `feat: reviewer lens expansion (plans, mesh, dynamic dispatch)` and a body that lists the spec, plan, and completed plan/spec moves.
 
-- [x] **Step 10.3: Record publication proof**
+- [x] **Step 11.3: Record publication proof**
 
 Capture the PR URL and the head SHA. Return them as the publication proof for this work.
 

@@ -31,7 +31,9 @@ def _default_target() -> Path:
 def _profile_paths(directory: Path) -> list[Path]:
     if not directory.is_dir():
         return []
-    return sorted(p for p in directory.iterdir() if p.is_file() and p.suffix == ".md")
+    # reviewer-marketplace is repo-local; consumers author their own, do not ship it.
+    excluded = {"reviewer-marketplace.md"}
+    return sorted(p for p in directory.iterdir() if p.is_file() and p.suffix == ".md" and p.name not in excluded)
 
 
 def _needs_sync(source: Path, target: Path) -> bool:
@@ -130,7 +132,7 @@ def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument(
         "--check",
         action="store_true",
-        help="validate the script and exit without installing",
+        help="report profile drift without installing (default)",
     )
     return parser.parse_args(argv)
 

@@ -180,7 +180,9 @@ Remove the current hard-coded "In this repo, the canonical lenses are..." list. 
 
 The portable runtime profiles live in `.agents/agents/` after installation. Their canonical product source is now the `selecting-a-subagent` skill: `codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/assets/` ships the `.md` profile assets. Add `reviewer-plans.md`, `reviewer-mesh.md`, and `reviewer-scripts.md` there (and remove the now-deprecated `reviewer-scaffolders` profile), then regenerate with `py -3 tools/run.py marketplace --apply` before publishing.
 
-To make the shipped `.md` files discoverable in consumer repos, add `scripts/install_profiles.py` to the `selecting-a-subagent` skill. The helper installs the shipped profiles into the consumer repo's `.agents/agents/` directory, overwriting only changed shipped profiles and leaving any locally managed `.agents/agents/reviewer-*.md` files untouched. Update `selecting-a-subagent/SKILL.md` to document the helper and keep the manual global Devin Desktop profile path as an alternative.
+To make the shipped `.md` files discoverable in consumer repos, add `scripts/install_profiles.py` to the `selecting-a-subagent` skill. The helper installs the shipped profiles into the consumer repo's `.agents/agents/` directory, overwriting only changed shipped profiles and leaving any locally managed `.agents/agents/reviewer-*.md` files untouched. `reviewer-marketplace.md` is repo-local and must not be installed by the helper; consumers author their own `reviewer-marketplace.md` or omit it. Update `selecting-a-subagent/SKILL.md` to document the helper and keep the manual global Devin Desktop profile path as an alternative.
+
+As part of the source consolidation, the `implementer.md` and `implementer-strong.md` profiles move from `repo-worker-pack` to `selecting-a-subagent/assets/` and are restored to their vendor baselines; this is not a functional scope change.
 
 ## Cross-repo consumer considerations
 
