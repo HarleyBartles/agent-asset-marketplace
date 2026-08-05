@@ -1,4 +1,4 @@
-﻿# Version History for Base Doctrine
+# Version History for Base Doctrine
 
 - Historical version: `v1.1`
 - Historical source id: `gpt-base-doctrine-v1.1`

@@ -74,7 +74,7 @@ Write `review-log-strong.md` in the off-repo scratch. Begin with `## Inputs` and
 
 You are a reviewer, not a ledger. Do not count tool calls. Read the items that your checklist and the diff require, then stop.
 
-- The final step is to use `write` to produce the off-repo report (`review-log-strong.md`) in the scratch workspace.
+- The final step is to use `write` to produce the off-repo report (`review-log-strong.md`) in the scratch workspace. The report must be plain UTF-8 (no BOM). Do not use `Tee-Object`, `Out-File` without `-Encoding utf8`, or shell redirects that can emit UTF-16.
 - After the report is written, your final response must be exactly one line: `reviewer-strong: N issue(s)` or `reviewer-strong: clean`. Do not output the report body or any other text.
 - If you are about to make the same `read`, `grep`, or `find_file_by_name` call again without a new question it can answer, write the report immediately.
 - If the last two tool calls produced no new findings, write the report immediately.

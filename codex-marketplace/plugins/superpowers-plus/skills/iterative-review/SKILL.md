@@ -69,6 +69,14 @@ Read `references/review-state-graph.md` and execute the graph. This section is a
 
 Collect the inputs above. The orchestrator owns the workspace.
 
+After writing `scan_findings`, `pr_description`, and any optional `issue_context` files, run the UTF-8 backstop helper to normalize any inputs that shell redirects or `Tee-Object` may have emitted as UTF-16 or UTF-8-with-BOM:
+
+```
+py -3 .agents/skills/iterative-review/scripts/normalize_review_inputs.py --apply <scratch_dir>
+```
+
+Replace `<scratch_dir>` with the off-repo workspace path. This rewrites all `.md`, `.txt`, and `.json` files to plain UTF-8 in place.
+
 ### `preflight`
 
 Run the consumer's canonical preflight on the branch. Do not proceed until `ci --check` or its equivalent is clean or its findings are converted to a `fast-fix` and re-checked.
@@ -112,7 +120,13 @@ Lens reviewers should use the prediction log as the primary checklist and not re
 
 ### `strong-review`
 
-This node is mandatory. Dispatch `reviewer-strong` with the full diff, PR description, `issue_context`, `scan_findings`, `review-log-orchestrator-self-review.md`, and all `review-log-*.md` files. Its job is to combine lens findings, look for gaps and contradictions, and review design/scope. It writes `review-log-strong.md`.
+This node is mandatory. Before dispatching `reviewer-strong`, re-run the UTF-8 backstop helper on the scratch directory to ensure every lens report is plain UTF-8:
+
+```
+py -3 .agents/skills/iterative-review/scripts/normalize_review_inputs.py --apply <scratch_dir>
+```
+
+Then dispatch `reviewer-strong` with the full diff, PR description, `issue_context`, `scan_findings`, `review-log-orchestrator-self-review.md`, and all `review-log-*.md` files. Its job is to combine lens findings, look for gaps and contradictions, and review design/scope. It writes `review-log-strong.md`.
 
 Use `run_subagent` with the `.agents/agents/reviewer-strong.md` profile. `reviewer-strong` must always see the lens logs; do not let it run on the diff alone.
 

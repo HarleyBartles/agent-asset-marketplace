@@ -8,13 +8,15 @@ state at every `metrics-track`.
 
 ```mermaid
 flowchart TD
-    setup --> preflight
+    setup --> normalize-inputs
+    normalize-inputs --> preflight
     preflight -->|red| fast-fix
     fast-fix --> preflight
     preflight -->|green| scope-honesty
     scope-honesty --> orchestrator-self-review
     orchestrator-self-review --> lens-dispatch
-    lens-dispatch --> strong-review
+    lens-dispatch --> normalize-inputs
+    normalize-inputs --> strong-review
     strong-review -->|clean| ready
     strong-review -->|findings| metrics-track
     metrics-track --> finding-fix
@@ -33,6 +35,7 @@ flowchart TD
 | Node | Actor | Purpose |
 |---|---|---|
 | `setup` | orchestrator | Prepare the workspace, diff, PR context, and `scan_findings`. |
+| `normalize-inputs` | orchestrator | Run `normalize_review_inputs.py --apply` on the scratch directory so every downstream file is plain UTF-8. |
 | `preflight` | `tools/run.py ci --check` | Run deterministic pattern checks on the branch before any subagent. |
 | `fast-fix` | orchestrator | Fix a deterministic preflight finding. |
 | `scope-honesty` | orchestrator | Compare the diff to the plan, spec, PR body, and linked issues. Fix drift. |
@@ -51,13 +54,15 @@ flowchart TD
 
 | From | To | Condition |
 |---|---|---|
-| `setup` | `preflight` | Always. |
+| `setup` | `normalize-inputs` | Always. |
+| `normalize-inputs` | `preflight` | Always. |
 | `preflight` | `fast-fix` | Any deterministic finding from `review-preflight`. |
 | `fast-fix` | `preflight` | Always; re-run preflight after the fix. |
 | `preflight` | `scope-honesty` | `ci --check` passes. |
 | `scope-honesty` | `orchestrator-self-review` | Drift corrected or no drift. |
 | `orchestrator-self-review` | `lens-dispatch` | Always; the orchestrator's prediction is not a substitute for lens review. The only exception is a PR with zero changed files. |
-| `lens-dispatch` | `strong-review` | All lens logs are available. |
+| `lens-dispatch` | `normalize-inputs` | All lens logs are available. |
+| `normalize-inputs` | `strong-review` | UTF-8 backstop has run on the scratch directory. |
 | `strong-review` | `ready` | `reviewer-strong` reports `reviewer-strong: clean`. |
 | `strong-review` | `metrics-track` | `reviewer-strong` or lens review reports findings. |
 | `metrics-track` | `finding-fix` | Always; choose the next finding to fix. |
