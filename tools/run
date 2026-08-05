@@ -2,17 +2,18 @@
 set -euo pipefail
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 
-PYTHON=""
-for bin in python3 python; do
-    if command -v "$bin" >/dev/null 2>&1; then
-        PYTHON="$bin"
-        break
-    fi
-done
+PYTHON=()
+if command -v py >/dev/null 2>&1; then
+    PYTHON=(py -3)
+elif command -v python3 >/dev/null 2>&1; then
+    PYTHON=(python3)
+elif command -v python >/dev/null 2>&1; then
+    PYTHON=(python)
+fi
 
-if [ -z "$PYTHON" ]; then
+if [ ${#PYTHON[@]} -eq 0 ]; then
     echo "No Python interpreter found" >&2
     exit 1
 fi
 
-exec "$PYTHON" "$REPO_ROOT/tools/run.py" "$@"
+exec "${PYTHON[@]}" "$REPO_ROOT/tools/run.py" "$@"

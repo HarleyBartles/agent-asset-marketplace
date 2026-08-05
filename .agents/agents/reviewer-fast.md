@@ -63,3 +63,14 @@ Evaluate **only**:
 3. whether the fix is consistent with the immediate surrounding context.
 
 Do not broaden the review to the whole branch. Do not re-evaluate parts of the branch the fix does not touch. Keep findings brief, concrete, and actionable, with specific file and line citations.
+
+## Stop condition and turn budget
+
+You have a finite turn budget. Count every tool call you make after loading the inputs.
+
+- You may make up to **6** additional `read`, `grep`, or `find_file_by_name` calls to investigate the diff or confirm paths.
+- The next call after that must be `write` of the final report (`review-log-fast.md`).
+- After writing the report, stop. Do not make further tool calls and do not send further text. The report file is the deliverable.
+- If you are tempted to read "one more file" or say "now I have a complete picture" after reaching **6**, write the report immediately with the findings you have and mark any unfinished concerns as `minor` / `could not verify`.
+
+A partial, cited report is better than an infinite loop. Do not announce that you are writing the report — just write it.

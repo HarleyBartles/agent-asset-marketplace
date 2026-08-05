@@ -9,7 +9,7 @@ import shlex
 import shutil
 import subprocess
 import sys
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from pathlib import Path
 from typing import Callable
 
@@ -281,8 +281,6 @@ def _run_validate(ctx: Ctx) -> None:
     _run([sys.executable, "tools/validate_authority_assets.py"], ctx)
     _run([sys.executable, "tools/validate_agents_md.py"], ctx)
     _git_diff_check(ctx)
-    if ctx.mode == "check":
-        _git_diff_exit_code(ctx)
 
 
 def _apply_marketplace(ctx: Ctx) -> None:
@@ -405,7 +403,7 @@ _TASKS: dict[str, Task] = {
         deps=("mesh",),
         apply=(_run_validate,),
         check=(_run_validate,),
-        fix="tools/run marketplace --apply",
+        fix="tools/run validate --apply",
     ),
     "archive-links": Task(
         apply=(_apply_archive_links,),
@@ -466,18 +464,28 @@ def _lint_fix(ctx: Ctx) -> str:
 
 
 def run_targets(targets: list[str], ctx: Ctx) -> None:
-    for target in targets:
-        task = _TASKS[target]
-        steps = task.apply if ctx.mode == "apply" else task.check
+    def _run_steps(target: str, task: Task, steps: tuple[Callable[[Ctx], None], ...], run_ctx: Ctx) -> None:
         if not steps:
-            continue
-        print(f"[tools/run] === {target} ({ctx.mode})")
+            return
+        print(f"[tools/run] === {target} ({run_ctx.mode})")
         for step in steps:
             try:
-                step(ctx)
+                step(run_ctx)
             except Exception as exc:
-                fix = _lint_fix(ctx) if target == "lint" else task.fix
+                fix = _lint_fix(run_ctx) if target == "lint" else task.fix
                 raise RunnerError(target, fix, exc) from exc
+
+    for target in targets:
+        task = _TASKS[target]
+        if ctx.mode == "apply":
+            _run_steps(target, task, task.apply, ctx)
+        else:
+            _run_steps(target, task, task.check, ctx)
+    if ctx.mode == "apply":
+        check_ctx = replace(ctx, mode="check")
+        for target in targets:
+            task = _TASKS[target]
+            _run_steps(target, task, task.check, check_ctx)
 
 
 def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
@@ -485,9 +493,9 @@ def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         description="Dependency-aware task runner for the agent-asset-marketplace",
         epilog=(
             "Targets: " + ", ".join(_TASKS.keys()) + "\n"
-            "ci --check is the full non-mutating CI gate; do not run it on an uncommitted "
-            "working tree. Edit, run the relevant <target> --apply, stage, commit, "
-            "and let the pre-commit hook run ci --check. See .devin/rules/tools.md."
+            "ci --check is the full non-mutating CI/PR gate.\n"
+            "ci --apply runs the same checks but applies mechanical fixes first.\n"
+            "For a single target, run `tools/run <target> --apply`. See .devin/rules/tools.md."
         ),
     )
     parser.add_argument(
