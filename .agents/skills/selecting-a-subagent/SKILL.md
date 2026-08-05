@@ -17,8 +17,8 @@ metadata:
   - Use when recommending a child model, reasoning level, or context mode.
   - Use when retrying failed work by changing model, reasoning, or context.
   - Use when choosing a custom subagent profile such as `reviewer`, `reviewer-fast`,
-    `reviewer-strong`, `reviewer-security`, `reviewer-skills`, `reviewer-marketplace`,
-    `reviewer-plans`, `reviewer-mesh`, `reviewer-scripts`, `implementer`, or
+    `reviewer-strong`, `reviewer-security`, `reviewer-skills`, `reviewer-plans`,
+    `reviewer-mesh`, `reviewer-scripts`, `implementer`, or
     `implementer-strong`.
   - Use when selecting an implementation, code-review, architecture-review, or adjudication
     agent.
@@ -87,8 +87,12 @@ individual `.md` files manually to the runtime search path:
 For example, copy `assets/implementer.md` to
 `~/.config/devin/agents/implementer.md`, and do the same for `reviewer`,
 `reviewer-fast`, `reviewer-strong`, `reviewer-security`, `reviewer-skills`,
-`reviewer-marketplace`, `reviewer-plans`, `reviewer-mesh`, `reviewer-scripts`,
-`implementer`, and `implementer-strong`.
+`reviewer-plans`, `reviewer-mesh`, `reviewer-scripts`, `implementer`, and
+`implementer-strong`.
+
+Do not copy repo-local `<lens>.md` profiles from the pack. The consumer repo
+authors its own `.agents/agents/reviewer-<lens>.md` files (or omits them) for its
+own domain-specific surfaces.
 
 ## Common custom subagent profile dispatch
 
@@ -98,12 +102,11 @@ For example, copy `assets/implementer.md` to
 | Full branch/PR diff review where the whole branch is in scope | `reviewer-strong` |
 | Security and PII lens in a full-branch/PR diff | `reviewer-security` |
 | `SKILL.md`/reference/prompt-robustness lens | `reviewer-skills` |
-| `codex-marketplace`/tooling/pack lens | `reviewer-marketplace` |
 | Plans, specs, roadmaps, or `.agents/plans` and `.agents/specs` changes | `reviewer-plans` |
 | `INDEX.md`, generated mesh, or `repo-standards` surfaces | `reviewer-mesh` |
 | Script safety, CLI compliance, shebangs, or `--check`/`--apply` classification | `reviewer-scripts` |
 | Small, tightly focused reviews or coherent single-responsibility re-review diffs | `reviewer-fast` |
-| Repo-specific lens (e.g. `reviewer-marketplace` in `<consumer_repo>`) | `.agents/agents/reviewer-<lens>.md` (see below) |
+| Repo-specific lens for surfaces not covered by the portable set | `.agents/agents/reviewer-<lens>.md` (see below) |
 | Bounded implementation / bugfix | `implementer` |
 | Implementation that needs more reasoning or broader context | `implementer-strong` |
 
@@ -115,21 +118,20 @@ reviewer profile. The reviewer subagent does not resolve the diff itself.
 Every lens profile in `.agents/agents/reviewer-*.md` (portable or repo-local)
 should include a `## Applies to` section with:
 
+- `inputs:` — required and optional `run_subagent` placeholders.
 - `globs:` — path globs that, if matched in the diff, make the lens relevant.
 - `keywords:` — keyword triggers that make the lens relevant.
-- `inputs:` — required and optional `run_subagent` placeholders.
 
 When selecting one or more lenses for a PR or a branch diff, read the relevant
 profile files and match them in this order:
 
-1. Glob match: if any changed file matches a glob, the lens applies.
-2. Keyword match: if the PR title/body or diff summary contains a keyword, the
-   lens applies.
-3. Input match: if the orchestrator provides an input listed under `## Applies to`
+1. Input match: if the orchestrator provides an input listed under `## Applies to`
    for that lens (e.g. `<plan_path>` for `reviewer-plans`), the lens applies.
-4. Default dispatch: if neither the diff, the PR description, nor the provided
-   inputs triggers a lens, fall back to the portable `reviewer` for focused tasks
-   and `reviewer-strong` for full-branch reviews.
+2. Glob match: if any changed file matches a glob, the lens applies.
+3. Keyword match: if the PR title/body or diff summary contains a keyword, the
+   lens applies.
+4. Default dispatch: if none of the above triggers a lens, dispatch `reviewer-strong`
+   for the whole-branch pass.
 
 Prefer the least escalated lens that covers the diff. For broad, multi-surface
 branches, include all matching lenses rather than a single generalist.
@@ -141,16 +143,15 @@ A consumer repo can extend the portable lens set by authoring a hand-edited
 marketplace; they are repo-local and take precedence over vendor profiles.
 
 Use this when the repo has domain-specific surfaces that a generic lens cannot
-cover. For example, `<consumer_repo>` provides `.agents/agents/reviewer-marketplace.md`
-to review `codex-marketplace`, `new_plugin.py`, and pack-generation surfaces. A
-different consumer might add `reviewer-domains.md` for domain canon, or `reviewer-tests.md`
-for a test harness.
+cover. For example, one consumer might add a `.agents/agents/reviewer-marketplace.md`
+lens for pack generation, another might add `reviewer-domains.md` for domain canon,
+or `reviewer-tests.md` for a test harness. These are not part of the portable pack.
 
 When `iterative-review` runs, it should read each `.agents/agents/reviewer-*.md`
 profile, evaluate the `## Applies to` section against the diff, PR description, and
 any provided inputs, and dispatch only the matching lenses plus `reviewer-strong`.
 `reviewer-references` is deprecated and split into `reviewer-skills` (portable)
-and `reviewer-marketplace` (repo-local).
+and repo-local lenses authored by the consumer.
 
 ## Vendor and third-party profiles
 

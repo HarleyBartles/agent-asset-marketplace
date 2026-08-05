@@ -100,7 +100,7 @@ Narrow to this repo's `codex-marketplace` and marketplace tooling:
 
 - `tools/new_plugin.py` exit codes and default enablement.
 - `tools/run.py` target wiring and `ci` dependency correctness.
-- `plugin-roots.json`, `bundle-manifest.json`, `repo-index.json`, `codex-marketplace/manifest.json`, `.agents/plugins/marketplace.json`.
+- `plugin-roots.json`, `bundle-manifest.json`, `repo-index/**`, `codex-marketplace/manifest.json`, `.agents/plugins/marketplace.json`.
 - Scaffolder or generator that overwrites existing top-level metadata.
 
 Remove generic scaffolder / mesh checks that now belong to `reviewer-mesh`.

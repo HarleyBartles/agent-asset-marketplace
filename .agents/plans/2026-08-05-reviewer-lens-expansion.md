@@ -332,13 +332,13 @@ Insert `## Applies to` immediately after the frontmatter `---` and before `## Ch
 old_string: |
   ---
 
-  You are `reviewer-marketplace`, a focused read-only reviewer for `codex-marketplace` pack generation, generated indexes, and repo tooling. Inspect the prepared diff for `new_plugin.py`, `tools/run.py`, `plugin-roots.json`, `bundle-manifest.json`, `repo-index.json`, and related surfaces. Do not broaden to prose/style or secrets; those are handled by other lens reviewers.
+  You are `reviewer-marketplace`, a focused read-only reviewer for `codex-marketplace` pack generation, generated indexes, and repo tooling. Inspect the prepared diff for `new_plugin.py`, `tools/run.py`, `plugin-roots.json`, `bundle-manifest.json`, `repo-index/**`, and related surfaces. Do not broaden to prose/style or secrets; those are handled by other lens reviewers.
 
   ## Checklist
 new_string: |
   ---
 
-  You are `reviewer-marketplace`, a focused read-only reviewer for `codex-marketplace` pack generation, generated indexes, and repo tooling. Inspect the prepared diff for `new_plugin.py`, `tools/run.py`, `plugin-roots.json`, `bundle-manifest.json`, `repo-index.json`, and related surfaces. Do not broaden to prose/style or secrets; those are handled by other lens reviewers.
+  You are `reviewer-marketplace`, a focused read-only reviewer for `codex-marketplace` pack generation, generated indexes, and repo tooling. Inspect the prepared diff for `new_plugin.py`, `tools/run.py`, `plugin-roots.json`, `bundle-manifest.json`, `repo-index/**`, and related surfaces. Do not broaden to prose/style or secrets; those are handled by other lens reviewers.
 
   ## Applies to
 
@@ -347,7 +347,7 @@ new_string: |
     - `tools/run.py`
     - `plugin-roots.json`
     - `bundle-manifest.json`
-    - `repo-index.json`
+    - `repo-index/**`
     - `codex-marketplace/manifest.json`
     - `.agents/plugins/marketplace.json`
     - `codex-marketplace/**`

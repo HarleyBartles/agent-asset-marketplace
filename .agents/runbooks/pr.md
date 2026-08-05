@@ -57,13 +57,14 @@ Run the fastest, cheapest checks first so that `iterative-review` and Devin auto
 
 4. **Iterative review graph (`lens-dispatch` and `strong-review` nodes).**
    - Only after preflight is green and pre-emptive fixes are committed, run the review graph. This is mandatory:
-     - `reviewer-plans` for `.agents/plans`, `.agents/specs`, and roadmap honesty.
-     - `reviewer-mesh` for mesh/INDEX/scaffold/generated-surface integrity.
-     - `reviewer-skills` for `SKILL.md`, reference files, and prompt robustness.
-     - `reviewer-marketplace` for `codex-marketplace` pack generation and marketplace tooling.
-     - `reviewer-scripts` for `tools/` and script/CLI changes.
-     - `reviewer-security` for secrets and real identifiers.
      - `reviewer-strong` for whole-branch design, scope, and gaps in the lens logs.
+     - The remaining lenses are dispatched dynamically based on their `## Applies to` rules. The available set is:
+       - `reviewer-plans` for `.agents/plans`, `.agents/specs`, and roadmap honesty.
+       - `reviewer-mesh` for mesh/INDEX/scaffold/generated-surface integrity.
+       - `reviewer-skills` for `SKILL.md`, reference files, and prompt robustness.
+       - `reviewer-marketplace` for `codex-marketplace` pack generation and marketplace tooling (repo-local).
+       - `reviewer-scripts` for `tools/` and script/CLI changes.
+       - `reviewer-security` for secrets and real identifiers.
    - If you cannot dispatch subagents, the review is `blocked`. Do not claim the PR is ready because `orchestrator-self-review` was clean.
    - For each finding, use `receiving-code-review` before applying.
 
