@@ -30,7 +30,7 @@ The `iterative-review` skill now routes through a state graph. It still describe
 
 ## Contract and file targets
 
-### New portable profile: `.agents/agents/reviewer-plans.md`
+### New portable profile: `codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/assets/reviewer-plans.md`
 
 **Inputs**
 
@@ -59,7 +59,7 @@ The `iterative-review` skill now routes through a state graph. It still describe
 
 **Output:** `review-log-plans.md` with `file:line`, severity, description, and remediation. End with `reviewer-plans: N issue(s)` or `reviewer-plans: clean`.
 
-### New portable profile: `.agents/agents/reviewer-mesh.md`
+### New portable profile: `codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/assets/reviewer-mesh.md`
 
 **Inputs**
 
@@ -76,7 +76,7 @@ The `iterative-review` skill now routes through a state graph. It still describe
 
 **Output:** `review-log-mesh.md` with the same `file:line`, severity, description, and remediation format.
 
-### New portable profile: `.agents/agents/reviewer-scripts.md`
+### New portable profile: `codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/assets/reviewer-scripts.md`
 
 **Inputs**
 
@@ -161,7 +161,7 @@ Document that each profile's `## Checklist` and `## Applies to` sections are the
 
 Update the `lens-dispatch` node:
 
-1. Discover all `reviewer-*.md profiles in the Devin Desktop agents search path` files in the consumer repo. This set includes the portable profiles shipped by the repo-worker pack plus any repo-local overrides.
+1. Discover all `reviewer-*.md` profiles in the Devin Desktop agents search path files in the consumer repo. This set includes the portable profiles shipped by the repo-worker pack plus any repo-local overrides.
 2. For each profile, read its `## Applies to` section and its `## Checklist`.
 3. Match the diff, `pr_description`, and any provided plan / spec / roadmap paths against the `globs`, `keywords`, and `inputs` rules.
 4. Dispatch the matching lenses in parallel. `reviewer-strong` remains mandatory and always runs with the collected logs.

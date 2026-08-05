@@ -73,13 +73,16 @@ Custom profiles may declare `model:` in their `.md` profile file. The runtime ho
 ### Vendor and third-party profiles
 
 Marketplace packs can ship third-party subagent `.md` profile assets under
-`assets/profiles/`. The `refreshing-installed-skills` script copies those
-profiles into `.agents/agents/`, so they appear in the Devin Desktop search
-path documented above. A repo-local `.devin/agents/<name>.md` override wins
-over a vendor profile of the same name, but the installer does not create,
-modify, or remove `.devin/agents/`. A vendor profile wins over a built-in
-custom profile when no override exists. See `vendor-profile-packaging.md` for
-the packaging contract and the full consumer search-path order.
+`assets/profiles/`. First-party portable profiles are maintained in
+`codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/assets/`
+and installed to the user-global agents directory by
+`install_profiles.py --apply`.
+
+A repo-local `.devin/agents/<name>.md` override wins over a user-global or
+plugin-installed profile of the same name, but the installer does not create,
+modify, or remove `.devin/agents/`. Plugin-local profiles staged in `.agents/agents/`
+by other marketplace tooling are also considered. See `vendor-profile-packaging.md`
+for the packaging contract and the full consumer search-path order.
 
 ### What not to do
 

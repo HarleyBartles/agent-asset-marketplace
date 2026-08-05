@@ -1,7 +1,7 @@
 # Orchestrator self-review log
 
 Use this off-repo scratch file during the `orchestrator-self-review` node. Record
-which `reviewer-*.md profiles in the Devin Desktop agents search path` profiles were checked, which predictable
+which `reviewer-*.md` profiles in the Devin Desktop agents search path profiles were checked, which predictable
 findings were fixed, and which uncertain items are being sent to the lens
 reviewers.
 

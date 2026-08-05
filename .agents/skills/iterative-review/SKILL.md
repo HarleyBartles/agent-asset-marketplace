@@ -126,7 +126,7 @@ py -3 .agents/skills/iterative-review/scripts/normalize_review_inputs.py --apply
 
 Then dispatch `reviewer-strong` with the full diff, PR description, `issue_context`, `scan_findings`, `review-log-orchestrator-self-review.md`, all `review-log-*.md` files, and `<log_path>` set to `$scratch/review-log-strong.md`. Its job is to combine lens findings, look for gaps and contradictions, and review design/scope. It must use the `write` tool to write the report to `<log_path>`.
 
-Use `run_subagent` with the `.agents/agents/reviewer-strong.md` profile. `reviewer-strong` must always see the lens logs; do not let it run on the diff alone.
+Use `run_subagent` with the `reviewer-strong` profile from the Devin Desktop agents search path. `reviewer-strong` must always see the lens logs; do not let it run on the diff alone.
 
 If `reviewer-strong` reports `reviewer-strong: clean` and the preflight is clean, proceed to `ready`. Otherwise, proceed to `metrics-track`.
 

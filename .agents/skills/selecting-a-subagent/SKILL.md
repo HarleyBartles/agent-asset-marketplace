@@ -108,7 +108,7 @@ reviewer profile. The reviewer subagent does not resolve the diff itself.
 
 ## Lens dispatch from `## Applies to`
 
-Every lens profile in `reviewer-*.md profiles in the Devin Desktop agents search path` (portable or repo-local)
+Every lens profile in `reviewer-*.md` profiles in the Devin Desktop agents search path (portable or repo-local)
 should include a `## Applies to` section with:
 
 - `inputs:` — required and optional `run_subagent` placeholders.
@@ -147,29 +147,28 @@ lenses plus `reviewer-strong`.
 
 ## Vendor and third-party profiles
 
-Marketplace packs can ship third-party subagent `.md` profile assets under
-`assets/profiles/`. The `refreshing-installed-skills` script copies those
-profiles into the consumer's agent search path at `.agents/agents/` only
-when a file of the same name does not already exist, and records them in
-`.agents/skills/.provenance.json` under a `vendorProfiles` array.
+This skill ships first-party portable subagent `.md` profiles under
+`codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/assets/`.
+Run `py -3 .agents/skills/selecting-a-subagent/scripts/install_profiles.py --apply`
+to copy them to the Devin Desktop user-global agents directory
+(`~/.config/devin/agents/` or `%APPDATA%\devin\agents\` on Windows). Use
+`--target <dir>` to install elsewhere; the default target is the canonical
+surface for shared, portable profiles.
 
-When choosing a profile, apply the Devin Desktop agents search path in this order;
-the first match wins:
+When choosing a profile, apply the Devin Desktop agents search path; later
+directories in this list override earlier ones:
 
-1. User-global profiles (`~/.config/devin/agents/` or `%APPDATA%\devin\agents\` on Windows).
-2. `.devin/agents/<name>.md` user- or repo-local overrides.
-3. `.agents/agents/<name>.md` plugin-installed vendor profiles.
-4. Built-in profiles documented in `references/devin-desktop-profile.md`.
+1. Built-in profiles documented in `references/devin-desktop-profile.md`.
+2. User-global profiles (`~/.config/devin/agents/` or `%APPDATA%\devin\agents\` on Windows).
+3. `.devin/agents/<name>.md` user- or repo-local hand-authored overrides.
+4. `.agents/agents/<name>.md` plugin-local or vendor profiles.
 
 No skill should create or pressure the consumer to create `.devin/agents/`.
-`.agents/agents/` remains the canonical surface for plugin-installed third-party
-profiles.
+`.agents/agents/` remains available for plugin-local or vendor profiles staged by
+other marketplace tooling.
 
-Prefer a vendor profile when a pack ships one that matches the task role
-(e.g. a pack-provided `reviewer.md`) and no repo-local override exists. Prefer
-a repo-local override when the repo needs behavior the vendor profile does not
-capture. See `references/vendor-profile-packaging.md` for the packaging
-contract and the consumer search-path order.
+See `references/vendor-profile-packaging.md` for the packaging contract and the
+full consumer search-path order.
 
 ## Common pressure
 

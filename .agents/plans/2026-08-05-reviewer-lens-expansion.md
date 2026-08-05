@@ -4,13 +4,13 @@
 
 **Goal:** Add `reviewer-plans`, `reviewer-mesh`, and `reviewer-scripts` portable subagent profiles, add `## Applies to` dispatch rules to lens profiles, update `selecting-a-subagent` and `iterative-review` to use those rules, and package the changes.
 
-**Architecture:** Each `reviewer-*.md` profile owns its own `## Checklist`, `## Applies to`, and `## Stop condition and loop breaker` sections. `iterative-review` discovers every `reviewer-*.md profiles in the Devin Desktop agents search path` at run time, reads its `## Applies to`, and dispatches only the lenses whose globs/keywords/inputs match the PR. `selecting-a-subagent` documents the contract. `reviewer-marketplace` is already repo-local and scoped to this repo; no rewrite is needed beyond confirming it does not duplicate `reviewer-mesh`. `reviewer-mesh` is the canonical portable lens for generated `INDEX.md`, mesh, scaffolder output, and `repo-standards` surfaces; it replaces the separate `reviewer-scaffolders` profile.
+**Architecture:** Each `reviewer-*.md` profile owns its own `## Checklist`, `## Applies to`, and `## Stop condition and loop breaker` sections. `iterative-review` discovers every `reviewer-*.md` profiles in the Devin Desktop agents search path at run time, reads its `## Applies to`, and dispatches only the lenses whose globs/keywords/inputs match the PR. `selecting-a-subagent` documents the contract. `reviewer-marketplace` is already repo-local and scoped to this repo; no rewrite is needed beyond confirming it does not duplicate `reviewer-mesh`. `reviewer-mesh` is the canonical portable lens for generated `INDEX.md`, mesh, scaffolder output, and `repo-standards` surfaces; it replaces the separate `reviewer-scaffolders` profile.
 
 **Tech Stack:** Devin Desktop custom subagent `.md` profiles, `codex-marketplace` plugin source, `py -3 tools/run.py` for regeneration/validation.
 
 **Global Constraints**
 - Portable skill sources are edited under `codex-marketplace/plugins/superpowers-plus/skills/`; `.agents/skills/` are generated installed copies.
-- `reviewer-*.md profiles in the Devin Desktop agents search path` runtime profiles are the consumer-visible surface; their canonical product source is `codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/assets/`.
+- `reviewer-*.md` profiles in the Devin Desktop agents search path runtime profiles are the consumer-visible surface; their canonical product source is `codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/assets/`.
 - Do not reintroduce `reviewer-known-findings.md` or any shared findings ledger; each lens owns its own `## Checklist`.
 - This branch already moves completed plans/specs to `.agents/plans/completed/` and `.agents/specs/completed/`; do not modify those historical files.
 
@@ -24,8 +24,8 @@
 ### Task 0: Verify the existing lens profiles and source-of-truth locations
 
 **Files:**
-- Read: `.agents/agents/reviewer-skills.md`
-- Read: `.agents/agents/reviewer-security.md`
+- Read: `codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/assets/reviewer-skills.md`
+- Read: `codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/assets/reviewer-security.md`
 - Read: `.agents/agents/reviewer-marketplace.md`
 - Read: `codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/SKILL.md`
 - Read: `codex-marketplace/plugins/superpowers-plus/skills/iterative-review/SKILL.md`
@@ -57,10 +57,10 @@ git commit -m "Verify baseline for reviewer lens expansion work"
 
 ---
 
-### Task 1: Create or update `.agents/agents/reviewer-plans.md`
+### Task 1: Create or update `codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/assets/reviewer-plans.md`
 
 **Files:**
-- Create: `.agents/agents/reviewer-plans.md`
+- Create: `codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/assets/reviewer-plans.md`
 
 **Interfaces:**
 - Consumes: spec `Contract and file targets` for `reviewer-plans`.
@@ -194,17 +194,17 @@ Run: `git status --short`
 Expected: `reviewer-plans.md` is staged.
 
 ```bash
-git add .agents/agents/reviewer-plans.md
+git add codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/assets/reviewer-plans.md
 git add codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/assets/reviewer-plans.md
 git commit -m "Add portable reviewer-plans lens profile"
 ```
 
 ---
 
-### Task 2: Create `.agents/agents/reviewer-mesh.md`
+### Task 2: Create `codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/assets/reviewer-mesh.md`
 
 **Files:**
-- Create: `.agents/agents/reviewer-mesh.md`
+- Create: `codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/assets/reviewer-mesh.md`
 
 **Interfaces:**
 - Consumes: spec `Contract and file targets` for `reviewer-mesh`.
@@ -213,7 +213,7 @@ git commit -m "Add portable reviewer-plans lens profile"
 - [x] **Step 2.1: Copy the `reviewer-mesh` profile from the pack source**
 
 Use the pack source at `codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/assets/reviewer-mesh.md`.
-It is the canonical scaffolder/mesh lens and absorbs the old `reviewer-scaffolders` responsibilities; do not hand-edit `.agents/agents/reviewer-mesh.md`.
+It is the canonical scaffolder/mesh lens and absorbs the old `reviewer-scaffolders` responsibilities; do not hand-edit `codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/assets/reviewer-mesh.md`.
 
 
 - [x] **Step 2.2: Add `reviewer-mesh.md` to the repo-worker-pack profile source**
@@ -225,7 +225,7 @@ cp ".agents\agents\reviewer-mesh.md" "codex-marketplace\plugins\superpowers-plus
 - [x] **Step 2.3: Commit the new profile**
 
 ```bash
-git add .agents/agents/reviewer-mesh.md
+git add codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/assets/reviewer-mesh.md
 git add codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/assets/reviewer-mesh.md
 git commit -m "Add portable reviewer-mesh lens profile"
 ```
@@ -241,13 +241,13 @@ Use the spec checklist and the same frontmatter/structure as `reviewer-plans.md`
 
 - [x] **Step 2.5: Run `py -3 tools/run.py marketplace --apply`**
 
-Expected: `.agents/agents/reviewer-scripts.md` is installed from the pack source and `.provenance.json` is updated.
+Expected: `codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/assets/reviewer-scripts.md` is installed from the pack source and `.provenance.json` is updated.
 
 - [x] **Step 2.6: Commit the new profile**
 
 ```bash
 git add codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/assets/reviewer-scripts.md
-git add .agents/agents/reviewer-scripts.md
+git add codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/assets/reviewer-scripts.md
 git commit -m "Add portable reviewer-scripts lens profile"
 ```
 
@@ -256,8 +256,8 @@ git commit -m "Add portable reviewer-scripts lens profile"
 ### Task 3: Add `## Applies to` sections to the existing portable lens profiles
 
 **Files:**
-- Modify: `.agents/agents/reviewer-skills.md`
-- Modify: `.agents/agents/reviewer-security.md`
+- Modify: `codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/assets/reviewer-skills.md`
+- Modify: `codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/assets/reviewer-security.md`
 - Modify: `.agents/agents/reviewer-marketplace.md`
 
 **Interfaces:**
@@ -375,8 +375,8 @@ cp ".agents\agents\reviewer-marketplace.md" "codex-marketplace\plugins\superpowe
 - [x] **Step 3.5: Commit the applies-to updates**
 
 ```bash
-git add .agents/agents/reviewer-skills.md
-git add .agents/agents/reviewer-security.md
+git add codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/assets/reviewer-skills.md
+git add codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/assets/reviewer-security.md
 git add .agents/agents/reviewer-marketplace.md
 git add codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/assets/reviewer-skills.md
 git add codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/assets/reviewer-security.md
@@ -460,9 +460,9 @@ Locate the `orchestrator-self-review` node. Replace the sentence that says it sh
 
 ```text
 old_string: |
-  This is the cheapest non-deterministic review. For each relevant `reviewer-*.md profiles in the Devin Desktop agents search path` profile, read the `## Checklist` and apply it to the full diff mechanically.
+  This is the cheapest non-deterministic review. For each relevant `reviewer-*.md` profiles in the Devin Desktop agents search path profile, read the `## Checklist` and apply it to the full diff mechanically.
 new_string: |
-  This is the cheapest non-deterministic review. For each relevant `reviewer-*.md profiles in the Devin Desktop agents search path` profile, read the `## Checklist` and the `## Applies to` section, then apply the checklist to the full diff mechanically. Use `## Applies to` only to decide relevance; the prediction pass still scans the full diff for checklist patterns.
+  This is the cheapest non-deterministic review. For each relevant `reviewer-*.md` profiles in the Devin Desktop agents search path profile, read the `## Checklist` and the `## Applies to` section, then apply the checklist to the full diff mechanically. Use `## Applies to` only to decide relevance; the prediction pass still scans the full diff for checklist patterns.
 ```
 
 - [x] **Step 5.2: Replace the `lens-dispatch` node with dynamic selection**
@@ -479,7 +479,7 @@ old_string: |
   - `<scan_findings>`,
   - `review-log-orchestrator-self-review.md`.
 
-  Use `run_subagent` to dispatch each lens. Read the corresponding `reviewer-*.md profiles in the Devin Desktop agents search path` profile and use its content as the subagent task. Set the off-repo workspace as the subagent's working directory. In this repo, the canonical lenses are:
+  Use `run_subagent` to dispatch each lens. Read the corresponding `reviewer-*.md` profiles in the Devin Desktop agents search path profile and use its content as the subagent task. Set the off-repo workspace as the subagent's working directory. In this repo, the canonical lenses are:
   - `reviewer-skills` for `SKILL.md`, reference files, and prompt robustness.
   - `reviewer-marketplace` for generated surfaces, pack generation, and this-repo tooling.
   - `reviewer-security` for secrets and real identifiers.
@@ -492,13 +492,13 @@ new_string: |
 
   This node is mandatory. Dispatch only the lens reviewers whose `## Applies to` rules match the PR, plus the mandatory `reviewer-strong` whole-branch pass.
 
-  1. Discover every `reviewer-*.md profiles in the Devin Desktop agents search path` file in the consumer repo. This set is the portable profiles shipped by the marketplace pack plus any repo-local `reviewer-*.md profiles in the Devin Desktop agents search path` overrides.
+  1. Discover every `reviewer-*.md` profiles in the Devin Desktop agents search path file in the consumer repo. This set is the portable profiles shipped by the marketplace pack plus any repo-local `reviewer-*.md` profiles in the Devin Desktop agents search path overrides.
   2. For each lens profile, read its `## Applies to` section. Match the rules in this order:
      - If an `inputs` entry is provided by the orchestrator (e.g. `<plan_path>` for `reviewer-plans`), dispatch the lens.
      - If a `globs` pattern matches a changed file in the diff, dispatch the lens.
      - If a `keywords` string appears in the diff or in `<pr_description>`, dispatch the lens.
   3. Build the input package for each matching lens: full branch `<diff_path>`, `<pr_description>`, `<scan_findings>`, `review-log-orchestrator-self-review.md`, and any lens-specific inputs (`<plan_path>`, `<spec_path>`, `<roadmap_path>` for `reviewer-plans`).
-  4. Use `run_subagent` to dispatch each selected lens. Read the corresponding `reviewer-*.md profiles in the Devin Desktop agents search path` profile and use its content as the subagent task. Set the off-repo workspace as the subagent's working directory.
+  4. Use `run_subagent` to dispatch each selected lens. Read the corresponding `reviewer-*.md` profiles in the Devin Desktop agents search path profile and use its content as the subagent task. Set the off-repo workspace as the subagent's working directory.
   5. `reviewer-strong` always runs after the lens reviews with the full diff, PR description, and all `review-log-<lens>.md` files.
 
   If no lens matches the PR, still dispatch `reviewer-strong` for the whole-branch pass.
@@ -531,7 +531,7 @@ Commit the update.
 **Files:**
 - Regenerate: `.agents/skills/selecting-a-subagent/SKILL.md`
 - Regenerate: `.agents/skills/iterative-review/SKILL.md`
-- Regenerate: `reviewer-*.md profiles in the Devin Desktop agents search path` (from pack)
+- Regenerate: `reviewer-*.md` profiles in the Devin Desktop agents search path (from pack)
 - Regenerate: `INDEX.md` files in `.agents/plans/`, `.agents/specs/`, etc.
 
 **Interfaces:**
@@ -541,7 +541,7 @@ Commit the update.
 - [x] **Step 6.1: Run marketplace regeneration**
 
 Run: `py -3 tools/run.py marketplace --apply`
-Expected: New `.agents/agents/reviewer-plans.md`, `reviewer-mesh.md`, and `reviewer-scripts.md` appear (or are confirmed up to date) and the `.agents/skills/selecting-a-subagent/SKILL.md` and `.agents/skills/iterative-review/SKILL.md` are updated to match the `codex-marketplace` source.
+Expected: New `codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/assets/reviewer-plans.md`, `reviewer-mesh.md`, and `reviewer-scripts.md` appear (or are confirmed up to date) and the `.agents/skills/selecting-a-subagent/SKILL.md` and `.agents/skills/iterative-review/SKILL.md` are updated to match the `codex-marketplace` source.
 
 - [x] **Step 6.2: Run mesh regeneration**
 
@@ -629,7 +629,7 @@ Expected: The spec ratifies the model changes and the staging tool's behavior.
 
 **Files:**
 - Edit: all `codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/assets/reviewer-*.md`
-- Edit: `reviewer-*.md profiles in the Devin Desktop agents search path` via `marketplace --apply`
+- Edit: `reviewer-*.md` profiles in the Devin Desktop agents search path via `marketplace --apply`
 
 **Interfaces:**
 - Consumes: the stop-condition contract in the spec.
@@ -654,7 +654,7 @@ A partial, cited report is better than an infinite loop. Do not announce that yo
 ```
 
 Run: `py -3 tools/run.py marketplace --apply`
-Expected: installed `reviewer-*.md profiles in the Devin Desktop agents search path` copies match the pack source and include the stop-condition section.
+Expected: installed `reviewer-*.md` profiles in the Devin Desktop agents search path copies match the pack source and include the stop-condition section.
 
 ---
 

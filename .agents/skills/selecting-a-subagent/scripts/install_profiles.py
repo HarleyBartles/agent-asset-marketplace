@@ -28,7 +28,10 @@ def _default_source() -> Path:
 
 def _default_target() -> Path:
     if os.name == "nt":
-        return Path(os.environ.get("APPDATA", Path.home())) / "devin" / "agents"
+        appdata = os.environ.get("APPDATA")
+        if not appdata:
+            appdata = Path.home() / "AppData" / "Roaming"
+        return Path(appdata) / "devin" / "agents"
     return Path.home() / ".config" / "devin" / "agents"
 
 
