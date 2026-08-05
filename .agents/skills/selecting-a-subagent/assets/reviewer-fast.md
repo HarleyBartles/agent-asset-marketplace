@@ -1,5 +1,6 @@
 ---
 name: reviewer-fast
+runtime: devin-desktop
 description: Vendor-provided subagent profile for small, tightly focused reviews or fix re-reviews.
 model: swe-1-6
 allowed-tools:
