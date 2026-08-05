@@ -68,7 +68,7 @@ Reviewer dispatches must pass a prepared `<diff_path>` and optional `<pr_descrip
 
 Custom profiles may declare `model:` in their `.md` profile file. The runtime honors that model when the subagent is launched. Do not pass a `model:` argument to `run_subagent`; the tool has no such parameter.
 
-Custom subagents are not granted the `write` tool, even if listed in their `allowed-tools`. To create new files from a custom subagent, use `exec` with a shell redirect or another allowed mechanism.
+Custom subagents may list `write` in `allowed-tools`, but the tool is only usable when the runtime's resolved model exposes it. Pinning a profile to a model that exposes `write` (e.g., `reviewer-strong` on `glm-5-2`) ensures the `write` tool is available. Do not rely on `write` if the profile is not pinned to a model known to expose it.
 
 ### Vendor and third-party profiles
 

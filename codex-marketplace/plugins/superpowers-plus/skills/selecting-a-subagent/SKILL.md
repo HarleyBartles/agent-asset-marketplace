@@ -140,9 +140,10 @@ cover. For example, one consumer might add a `.agents/agents/reviewer-marketplac
 lens for pack generation, another might add `reviewer-domains.md` for domain canon,
 or `reviewer-tests.md` for a test harness. These are not part of the portable pack.
 
-When `iterative-review` runs, it should read each `.agents/agents/reviewer-*.md`
-profile, evaluate the `## Applies to` section against the diff, PR description, and
-any provided inputs, and dispatch only the matching lenses plus `reviewer-strong`.
+When `iterative-review` runs, it should discover each `reviewer-*.md` profile from
+ the Devin Desktop agents search path, evaluate the `## Applies to` section against
+the diff, PR description, and any provided inputs, and dispatch only the matching
+lenses plus `reviewer-strong`.
 
 ## Vendor and third-party profiles
 
@@ -152,18 +153,17 @@ profiles into the consumer's agent search path at `.agents/agents/` only
 when a file of the same name does not already exist, and records them in
 `.agents/skills/.provenance.json` under a `vendorProfiles` array.
 
-When choosing a profile, apply this precedence:
+When choosing a profile, apply the Devin Desktop agents search path in this order;
+the first match wins:
 
-1. Repo-local override (a hand-authored `.agents/agents/<name>.md` or a
-   `.devin/agents/<name>.md` user-local override) wins.
-2. Vendor profile installed from a marketplace pack (`.agents/agents/`).
-3. Built-in custom profiles documented in
-   `references/devin-desktop-profile.md` and the dispatch profiles above.
-4. User-global profiles (`~/.config/devin/agents/` or
-   `%APPDATA%\devin\agents\` on Windows).
+1. User-global profiles (`~/.config/devin/agents/` or `%APPDATA%\devin\agents\` on Windows).
+2. `.devin/agents/<name>.md` user- or repo-local overrides.
+3. `.agents/agents/<name>.md` plugin-installed vendor profiles.
+4. Built-in profiles documented in `references/devin-desktop-profile.md`.
 
 No skill should create or pressure the consumer to create `.devin/agents/`.
-`.agents/agents/` is the canonical surface for plugin-installed profiles.
+`.agents/agents/` remains the canonical surface for plugin-installed third-party
+profiles.
 
 Prefer a vendor profile when a pack ships one that matches the task role
 (e.g. a pack-provided `reviewer.md`) and no repo-local override exists. Prefer
