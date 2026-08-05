@@ -2,9 +2,9 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use /subagent-driven-development (recommended) or /executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Add `reviewer-plans` and `reviewer-scaffolders` portable subagent profiles, add `## Applies to` dispatch rules to lens profiles, update `selecting-a-subagent` and `iterative-review` to use those rules, and package the changes.
+**Goal:** Add `reviewer-plans`, `reviewer-mesh`, and `reviewer-scripts` portable subagent profiles, add `## Applies to` dispatch rules to lens profiles, update `selecting-a-subagent` and `iterative-review` to use those rules, and package the changes.
 
-**Architecture:** Each `reviewer-*.md` profile owns its own `## Checklist` and `## Applies to` sections. `iterative-review` discovers every `.agents/agents/reviewer-*.md` at run time, reads its `## Applies to`, and dispatches only the lenses whose globs/keywords/inputs match the PR. `selecting-a-subagent` documents the contract. `reviewer-marketplace` is already repo-local and scoped to this repo; no rewrite is needed beyond confirming it does not duplicate `reviewer-scaffolders`.
+**Architecture:** Each `reviewer-*.md` profile owns its own `## Checklist` and `## Applies to` sections. `iterative-review` discovers every `.agents/agents/reviewer-*.md` at run time, reads its `## Applies to`, and dispatches only the lenses whose globs/keywords/inputs match the PR. `selecting-a-subagent` documents the contract. `reviewer-marketplace` is already repo-local and scoped to this repo; no rewrite is needed beyond confirming it does not duplicate `reviewer-mesh`.
 
 **Tech Stack:** Devin Desktop custom subagent `.md` profiles, `codex-marketplace` plugin source, `py -3 tools/run.py` for regeneration/validation.
 
@@ -197,20 +197,20 @@ git commit -m "Add portable reviewer-plans lens profile"
 
 ---
 
-### Task 2: Create `.agents/agents/reviewer-scaffolders.md`
+### Task 2: Create `.agents/agents/reviewer-mesh.md`
 
 **Files:**
-- Create: `.agents/agents/reviewer-scaffolders.md`
+- Create: `.agents/agents/reviewer-mesh.md`
 
 **Interfaces:**
-- Consumes: spec `Contract and file targets` for `reviewer-scaffolders`.
-- Produces: a portable `reviewer-scaffolders` lens profile.
+- Consumes: spec `Contract and file targets` for `reviewer-mesh`.
+- Produces: a portable `reviewer-mesh` lens profile.
 
 - [ ] **Step 2.1: Write the file with the following exact content**
 
 ```markdown
 ---
-name: reviewer-scaffolders
+name: reviewer-mesh
 runtime: devin-desktop
 description: Portable scaffolder and mesh lens — generated INDEX.md, scaffolder output, and repo-standards surface hygiene.
 model: swe-1-6
@@ -225,11 +225,11 @@ allowed-tools:
   - write
 ---
 
-You are `reviewer-scaffolders`, a focused read-only reviewer for scaffolder output, generated `INDEX.md` / mesh files, and `repo-standards` tooling. Inspect the prepared diff for hand-edits to generated files, scaffolder path conventions, and `--check` / `--apply` semantics. Do not broaden to `SKILL.md` frontmatter or secrets; those are handled by other lens reviewers.
+You are `reviewer-mesh`, a focused read-only reviewer for scaffolder output, generated `INDEX.md` / mesh files, and `repo-standards` tooling. Inspect the prepared diff for hand-edits to generated files, scaffolder path conventions, and `--check` / `--apply` semantics. Do not broaden to `SKILL.md` frontmatter or secrets; those are handled by other lens reviewers.
 
 ## Applies to
 
-Use this section to decide whether `reviewer-scaffolders` should be dispatched for a PR.
+Use this section to decide whether `reviewer-mesh` should be dispatched for a PR.
 
 - globs:
   - `**/INDEX.md`
@@ -259,7 +259,7 @@ Use this checklist during `orchestrator-predict` and as the core of the diff rev
 
 ## Invariants
 
-- You are read-only. Do not modify repo files or run build/install/write commands. You may write the off-repo `review-log-scaffolders.md` report.
+- You are read-only. Do not modify repo files or run build/install/write commands. You may write the off-repo `review-log-mesh.md` report.
 - You may use `exec` for non-mutating `git` queries and canonical verification commands, and `mcp_call_tool` for non-mutating lookups. Use these only to resolve refs or confirm state — not to generate the diff, not to fetch a missing package, and not to install/change anything.
 - If the prepared diff package is missing or the `diff_path` is not a file, report that and stop; do not use `git` or `exec` to recreate it.
 - Cite specific files and line numbers for every issue you find.
@@ -282,7 +282,7 @@ The orchestrator dispatches this profile with `run_subagent` (or the consumer's 
 
 ## What to write
 
-Write `review-log-scaffolders.md` in the off-repo scratch. Begin with a brief `## Inputs` section, then list findings with `file:line`, severity, description, and remediation. End with `reviewer-scaffolders: N issue(s)` or `reviewer-scaffolders: clean`.
+Write `review-log-mesh.md` in the off-repo scratch. Begin with a brief `## Inputs` section, then list findings with `file:line`, severity, description, and remediation. End with `reviewer-mesh: N issue(s)` or `reviewer-mesh: clean`.
 
 ## Procedure
 
@@ -292,7 +292,7 @@ Write `review-log-scaffolders.md` in the off-repo scratch. Begin with a brief `#
 4. Inspect the diff for the `## Checklist` patterns.
 5. Use `grep` and `find_file_by_name` to confirm canonical paths and patterns.
 6. Report only scaffolder/mesh issues. Cite `file:line`, severity, and remediation.
-7. End with `reviewer-scaffolders: N issue(s)` or `reviewer-scaffolders: clean`.
+7. End with `reviewer-mesh: N issue(s)` or `reviewer-mesh: clean`.
 
 ## Output format
 
@@ -305,18 +305,50 @@ For each issue:
 Do not include non-scaffolder findings.
 ```
 
-- [ ] **Step 2.2: Add `reviewer-scaffolders.md` to the repo-worker-pack profile source**
+- [ ] **Step 2.2: Add `reviewer-mesh.md` to the repo-worker-pack profile source**
 
 ```bash
-cp ".agents\agents\reviewer-scaffolders.md" "codex-marketplace\plugins\repo-worker-pack\assets\profiles\reviewer-scaffolders.md"
+cp ".agents\agents\reviewer-mesh.md" "codex-marketplace\plugins\repo-worker-pack\assets\profiles\reviewer-mesh.md"
 ```
 
 - [ ] **Step 2.3: Commit the new profile**
 
 ```bash
-git add .agents/agents/reviewer-scaffolders.md
-git add codex-marketplace/plugins/repo-worker-pack/assets/profiles/reviewer-scaffolders.md
-git commit -m "Add portable reviewer-scaffolders lens profile"
+git add .agents/agents/reviewer-mesh.md
+git add codex-marketplace/plugins/repo-worker-pack/assets/profiles/reviewer-mesh.md
+git commit -m "Add portable reviewer-mesh lens profile"
+```
+
+---
+
+### Task 2.5: Create `.agents/agents/reviewer-scripts.md`
+
+**Files:**
+- Create: `codex-marketplace/plugins/repo-worker-pack/assets/profiles/reviewer-scripts.md`
+- Create (after `marketplace --apply`): `.agents/agents/reviewer-scripts.md`
+
+**Interfaces:**
+- Consumes: spec `Contract and file targets` for `reviewer-scripts`.
+- Produces: a portable `reviewer-scripts` lens profile that reviews new or changed scripts and CLI tooling.
+
+- [ ] **Step 2.5.1: Write the portable `reviewer-scripts.md` pack source**
+
+Use the spec checklist and the same frontmatter/structure as `reviewer-plans.md` and `reviewer-mesh.md`. The profile must:
+- Declare `## Applies to` with `globs` for `**/scripts/**`, `**/tools/**`, `**/*.py`, `**/*.sh`, `**/*.ps1`, and `**/*.bash`.
+- Declare `## Checklist` covering CLI flag contracts, read-only/mutating/mixed classification, exit-code hygiene, shebang/invocation, path safety, and cross-skill script path existence.
+- Require only `<diff_path>` and optional `<pr_description>` / `<scan_findings>` / `<review-log-orchestrator-prediction>` inputs.
+- Write `review-log-scripts.md` to the off-repo scratch.
+
+- [ ] **Step 2.5.2: Run `py -3 tools/run.py marketplace --apply`**
+
+Expected: `.agents/agents/reviewer-scripts.md` is installed from the pack source and `.provenance.json` is updated.
+
+- [ ] **Step 2.5.3: Commit the new profile**
+
+```bash
+git add codex-marketplace/plugins/repo-worker-pack/assets/profiles/reviewer-scripts.md
+git add .agents/agents/reviewer-scripts.md
+git commit -m "Add portable reviewer-scripts lens profile"
 ```
 
 ---
@@ -461,7 +493,7 @@ git commit -m "Add Applies to dispatch rules to existing lens profiles"
 
 **Interfaces:**
 - Consumes: current dispatch table.
-- Produces: dispatch table with `reviewer-plans` and `reviewer-scaffolders` and `## Applies to` documentation.
+- Produces: dispatch table with `reviewer-plans`, `reviewer-mesh`, `reviewer-scripts`, and `## Applies to` documentation.
 
 - [ ] **Step 4.1: Add the new profiles to the dispatch table**
 
@@ -474,7 +506,8 @@ old_string: |
   | Small, tightly focused reviews or coherent single-responsibility re-review diffs | `reviewer-fast` |
 new_string: |
   | `SKILL.md`/reference/prompt-robustness lens | `reviewer-skills` |
-  | Scaffolder/mesh/`INDEX.md` lens | `reviewer-scaffolders` |
+  | Scaffolder/mesh/`INDEX.md` lens | `reviewer-mesh` |
+  | New or changed scripts / CLI tooling | `reviewer-scripts` |
   | `codex-marketplace`/tooling/pack lens | `reviewer-marketplace` |
   | Plan/spec/roadmap review and PR compliance | `reviewer-plans` |
   | Small, tightly focused reviews or coherent single-responsibility re-review diffs | `reviewer-fast` |
@@ -507,7 +540,7 @@ new_string: |
 
 ```bash
 git add codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/SKILL.md
-git commit -m "Update selecting-a-subagent dispatch table for reviewer-plans and reviewer-scaffolders"
+git commit -m "Update selecting-a-subagent dispatch table for reviewer-plans, reviewer-mesh, and reviewer-scripts"
 ```
 
 ---
@@ -599,7 +632,7 @@ git commit -m "Make iterative-review lens dispatch dynamic with Applies to rules
 - [ ] **Step 6.1: Run marketplace regeneration**
 
 Run: `py -3 tools/run.py marketplace --apply`
-Expected: New `.agents/agents/reviewer-plans.md` and `reviewer-scaffolders.md` appear (or are confirmed up to date) and the `.agents/skills/selecting-a-subagent/SKILL.md` and `.agents/skills/iterative-review/SKILL.md` are updated to match the `codex-marketplace` source.
+Expected: New `.agents/agents/reviewer-plans.md`, `reviewer-mesh.md`, and `reviewer-scripts.md` appear (or are confirmed up to date) and the `.agents/skills/selecting-a-subagent/SKILL.md` and `.agents/skills/iterative-review/SKILL.md` are updated to match the `codex-marketplace` source.
 
 - [ ] **Step 6.2: Run mesh regeneration**
 
@@ -638,7 +671,7 @@ Expected: Passes. If it fails, fix the cause, re-run the relevant `--apply` targ
 
 Create an off-repo scratch diff that touches `.agents/specs/` but not `tools/` or `codex-marketplace/`. Run a local `iterative-review` dry-run that reads the updated `lens-dispatch` rules (or manually invoke the selection logic) and confirm:
 - `reviewer-plans` is selected because the diff touches `.agents/specs/`.
-- `reviewer-scaffolders` is selected if the diff touches `INDEX.md` or `repo-standards`.
+- `reviewer-mesh` is selected if the diff touches `INDEX.md` or `repo-standards`.
 - `reviewer-marketplace` is **not** selected for a docs-only PR.
 - `reviewer-strong` is always selected.
 
