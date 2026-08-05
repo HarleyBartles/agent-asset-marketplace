@@ -125,9 +125,11 @@ profile files and match them in this order:
 1. Glob match: if any changed file matches a glob, the lens applies.
 2. Keyword match: if the PR title/body or diff summary contains a keyword, the
    lens applies.
-3. Default dispatch: if neither the diff nor the PR description triggers a lens,
-   fall back to the portable `reviewer` for focused tasks and `reviewer-strong`
-   for full-branch reviews.
+3. Input match: if the orchestrator provides an input listed under `## Applies to`
+   for that lens (e.g. `<plan_path>` for `reviewer-plans`), the lens applies.
+4. Default dispatch: if neither the diff, the PR description, nor the provided
+   inputs triggers a lens, fall back to the portable `reviewer` for focused tasks
+   and `reviewer-strong` for full-branch reviews.
 
 Prefer the least escalated lens that covers the diff. For broad, multi-surface
 branches, include all matching lenses rather than a single generalist.

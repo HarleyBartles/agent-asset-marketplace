@@ -171,6 +171,9 @@ The orchestrator writes all review inputs and logs to the off-repo `iterative-re
 - `review-log-skills.md`
 - `review-log-marketplace.md`
 - `review-log-security.md`
+- `review-log-plans.md`
+- `review-log-mesh.md`
+- `review-log-scripts.md`
 - `review-log-strong.md`
 - `review-log-<lens>-<round>.md` for re-review rounds
 - `review-metrics.json`

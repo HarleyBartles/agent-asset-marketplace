@@ -102,6 +102,7 @@ Before dispatching, decide which lenses are relevant by reading each `reviewer-*
 1. Glob match: if any changed file in `<diff_path>` matches a glob under `## Applies to` for that lens, dispatch the lens.
 2. Keyword match: if the PR title/body or `<pr_description>` contains a keyword listed under `## Applies to`, dispatch the lens.
 3. Input match: if the orchestrator provides an input listed under `## Applies to` for that lens (e.g. `<plan_path>` for `reviewer-plans`), dispatch the lens.
+4. Default dispatch: if no lens matches via glob, keyword, or input, fall back to the portable `reviewer` for focused tasks and `reviewer-strong` for full-branch reviews, then always dispatch `reviewer-strong`.
 
 `reviewer-strong` always runs after the dispatched lenses.
 

@@ -25,7 +25,7 @@ def _default_source() -> Path:
 
 
 def _default_target() -> Path:
-    return _skill_root().parents[2] / "agents"
+    return _skill_root().parents[1] / "agents"
 
 
 def _profile_paths(directory: Path) -> list[Path]:
@@ -103,9 +103,7 @@ def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
             "Install the selecting-a-subagent shipped .md profile assets into "
             "the consumer repository's .agents/agents directory."
         ),
-        epilog=(
-            "(mixed: default is a read-only preview; --apply writes to --target.)"
-        ),
+        epilog=("(mixed: default is a read-only preview; --apply writes to --target.)"),
     )
     parser.add_argument(
         "--source",
@@ -139,9 +137,12 @@ def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
 
 def main(argv: list[str] | None = None) -> int:
     args = _parse_args(argv)
-    if args.check:
-        return 0
-    return _install(args.source, args.target, args.apply, args.diff)
+    if args.apply and args.check:
+        print("error: --apply and --check are mutually exclusive", file=sys.stderr)
+        return 1
+    if args.apply:
+        return _install(args.source, args.target, apply=True, show_diff=args.diff)
+    return _install(args.source, args.target, apply=False, show_diff=args.diff)
 
 
 if __name__ == "__main__":
