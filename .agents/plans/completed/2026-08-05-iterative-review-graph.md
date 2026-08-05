@@ -2,7 +2,7 @@
 
 ## Spec
 
-`.agents/specs/2026-08-05-iterative-review-graph-design.md`
+`.agents/specs/completed/2026-08-05-iterative-review-graph-design.md`
 
 ## Goal
 
