@@ -1,7 +1,7 @@
 ---
 name: reviewer-mesh
 runtime: devin-desktop
-description: Portable generated-mesh and scaffolder lens — reviews INDEX.md files, generated mesh, scaffolder output, and repo-standards surfaces.
+description: Portable generated-mesh and scaffolder lens — reviews `INDEX.md` files, generated mesh, scaffolder output, and repo-standards surfaces.
 model: glm-5-2
 allowed-tools:
   - read

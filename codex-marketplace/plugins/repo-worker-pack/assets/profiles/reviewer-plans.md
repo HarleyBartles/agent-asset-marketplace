@@ -79,7 +79,7 @@ Do not generate the diff yourself. The orchestrator owns diff preparation.
 The orchestrator dispatches this profile with `run_subagent` (or the consumer's equivalent subagent mechanism). Use this file's content as the subagent `task`, substituting the concrete input paths. Set the off-repo scratch directory as the subagent's working directory.
 
 In isolation mode, dispatch without `<diff_path>` and with the relevant `<plan_path>` / `<spec_path>` / `<roadmap_path>`.
-In PR compliance mode, dispatch with `<diff_path>` plus the relevant governing document paths.
+In PR compliance mode, dispatch with `<diff_path>` plus the branch-head versions of any governing documents. If the PR changes a plan/spec/roadmap, the authoritative governing document is the one in the branch head, not the committed main version.
 
 ## What to write
 
@@ -89,7 +89,7 @@ Write `review-log-plans.md` in the off-repo scratch. Begin with a brief `## Inpu
 
 1. If `<scan_findings>` is provided, read it first and do not duplicate its findings; verify the preflight caught the pattern in the right place.
 2. If `<pr_description>` is provided, read it for scope.
-3. If any of `<plan_path>`, `<spec_path>`, or `<roadmap_path>` is provided, read them in that order and keep them as the governing scope.
+3. If any of `<plan_path>`, `<spec_path>`, or `<roadmap_path>` is provided, read them in that order and keep them as the governing scope. The authoritative plan/spec/roadmap is the version in the branch being reviewed, not the version committed to the upstream base. If the PR changes the governing document, the branch head state wins over `origin/main`.
 4. If `<diff_path>` is provided, read it. If it truncates, use the overflow file or re-read with `offset` and `limit`.
 5. Apply the `## Checklist`.
 6. Use `grep` and `find_file_by_name` to confirm canonical paths and traceability claims.

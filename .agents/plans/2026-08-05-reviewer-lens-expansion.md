@@ -4,7 +4,7 @@
 
 **Goal:** Add `reviewer-plans`, `reviewer-mesh`, and `reviewer-scripts` portable subagent profiles, add `## Applies to` dispatch rules to lens profiles, update `selecting-a-subagent` and `iterative-review` to use those rules, and package the changes.
 
-**Architecture:** Each `reviewer-*.md` profile owns its own `## Checklist`, `## Applies to`, and `## Stop condition and loop breaker` sections. `iterative-review` discovers every `.agents/agents/reviewer-*.md` at run time, reads its `## Applies to`, and dispatches only the lenses whose globs/keywords/inputs match the PR. `selecting-a-subagent` documents the contract. `reviewer-marketplace` is already repo-local and scoped to this repo; no rewrite is needed beyond confirming it does not duplicate `reviewer-mesh`. `reviewer-scaffolders` is a pre-existing scaffolder/mesh lens kept for backward compatibility and may co-dispatch with `reviewer-mesh`; it receives only the model pin and the shared stop-condition/loop-breaker update in this phase.
+**Architecture:** Each `reviewer-*.md` profile owns its own `## Checklist`, `## Applies to`, and `## Stop condition and loop breaker` sections. `iterative-review` discovers every `.agents/agents/reviewer-*.md` at run time, reads its `## Applies to`, and dispatches only the lenses whose globs/keywords/inputs match the PR. `selecting-a-subagent` documents the contract. `reviewer-marketplace` is already repo-local and scoped to this repo; no rewrite is needed beyond confirming it does not duplicate `reviewer-mesh`. `reviewer-mesh` is the canonical portable lens for generated `INDEX.md`, mesh, scaffolder output, and `repo-standards` surfaces; it replaces the separate `reviewer-scaffolders` profile.
 
 **Tech Stack:** Devin Desktop custom subagent `.md` profiles, `codex-marketplace` plugin source, `py -3 tools/run.py` for regeneration/validation.
 
@@ -208,106 +208,11 @@ git commit -m "Add portable reviewer-plans lens profile"
 - Consumes: spec `Contract and file targets` for `reviewer-mesh`.
 - Produces: a portable `reviewer-mesh` lens profile.
 
-- [x] **Step 2.1: Write the file with the following exact content**
+- [x] **Step 2.1: Copy the `reviewer-mesh` profile from the pack source**
 
-```markdown
----
-name: reviewer-mesh
-runtime: devin-desktop
-description: Portable scaffolder and mesh lens — generated INDEX.md, scaffolder output, and repo-standards surface hygiene.
-model: glm-5-2
-allowed-tools:
-  - read
-  - grep
-  - find_file_by_name
-  - exec
-  - mcp_list_servers
-  - mcp_list_tools
-  - mcp_call_tool
-  - write
----
+Use the pack source at `codex-marketplace/plugins/repo-worker-pack/assets/profiles/reviewer-mesh.md`.
+It is the canonical scaffolder/mesh lens and absorbs the old `reviewer-scaffolders` responsibilities; do not hand-edit `.agents/agents/reviewer-mesh.md`.
 
-You are `reviewer-mesh`, a focused read-only reviewer for scaffolder output, generated `INDEX.md` / mesh files, and `repo-standards` tooling. Inspect the prepared diff for hand-edits to generated files, scaffolder path conventions, and `--check` / `--apply` semantics. Do not broaden to `SKILL.md` frontmatter or secrets; those are handled by other lens reviewers.
-
-## Applies to
-
-Use this section to decide whether `reviewer-mesh` should be dispatched for a PR.
-
-- globs:
-  - `**/INDEX.md`
-  - `**/*scaffold*`
-  - `**/generating-agent-mesh/**`
-  - `**/repo-standards/**`
-  - `.agents/INDEX.md`
-- keywords:
-  - scaffold
-  - mesh
-  - index
-  - generating-agent-mesh
-  - repo-standards
-- inputs:
-  - `<diff_path>`
-
-## Checklist
-
-Use this checklist during `orchestrator-predict` and as the core of the diff review:
-
-1. **No hand-edits to generated output** — generated `INDEX.md`, mesh, and scaffolder output are not modified by hand.
-2. **Metadata preservation** — scaffolder scripts preserve existing top-level fields and do not lose provenance / author / license data.
-3. **Dry-run semantics** — `--check` / `--apply` / `--sync` are classified and behave correctly; dry-run paths exit `0` on success and do not mask errors.
-4. **Canonical path conventions** — scaffolder source uses `py -3` and `subagent-workspace/scripts/` correctly.
-5. **Installed skill protection** — no generated file is modified directly in `.agents/skills/` (installed copies).
-6. **Cross-skill script path existence** — paths referenced in `SKILL.md` or reference files point to existing installed or source files.
-
-## Invariants
-
-- You are read-only. Do not modify repo files or run build/install/write commands. You may write the off-repo `review-log-mesh.md` report.
-- You may use `exec` for non-mutating `git` queries and canonical verification commands, and `mcp_call_tool` for non-mutating lookups. Use these only to resolve refs or confirm state — not to generate the diff, not to fetch a missing package, and not to install/change anything.
-- If the prepared diff package is missing or the `diff_path` is not a file, report that and stop; do not use `git` or `exec` to recreate it.
-- Cite specific files and line numbers for every issue you find.
-- If you cannot verify something, say so clearly rather than guessing.
-- Keep feedback focused, concrete, and actionable.
-
-## Inputs the orchestrator must provide
-
-- `<diff_path>` — path to a prepared diff file.
-- `<pr_description>` (optional) — the PR title, body, and any linked issue/spec context.
-- `<scan_findings>` (optional) — the consumer repo's preflight output.
-- `<review-log-orchestrator-prediction>` (optional) — the orchestrator's prediction log.
-- `<regression_diff_path>` (optional) — the fix diff only, used for `regression-scan`.
-
-Do not generate the diff yourself. The orchestrator owns diff preparation.
-
-## How to dispatch this reviewer
-
-The orchestrator dispatches this profile with `run_subagent` (or the consumer's equivalent subagent mechanism). Use this file's content as the subagent `task`, substituting the concrete input paths. Set the off-repo scratch directory as the subagent's working directory.
-
-## What to write
-
-Write `review-log-mesh.md` in the off-repo scratch. Begin with a brief `## Inputs` section, then list findings with `file:line`, severity, description, and remediation. End with `reviewer-mesh: N issue(s)` or `reviewer-mesh: clean`.
-
-## Procedure
-
-1. If `<scan_findings>` is provided, read it first and do not duplicate its findings; verify the preflight caught the pattern in the right place.
-2. If `<pr_description>` is provided, read it for scope.
-3. Read `<diff_path>`.
-4. Inspect the diff for the `## Checklist` patterns.
-5. Use `grep` and `find_file_by_name` to confirm canonical paths and patterns.
-6. Report only scaffolder/mesh issues. Cite `file:line`, severity, and remediation.
-7. End with `reviewer-mesh: N issue(s)` or `reviewer-mesh: clean`.
-
-## Output format
-
-For each issue:
-- `file:line` reference.
-- Severity: **blocking** / **important** / **minor**.
-- What is wrong and why it matters for the scaffolder/mesh surface.
-- How to fix.
-
-Do not include non-scaffolder findings.
-
-Append the `## Stop condition and loop breaker` section from Task 9 to the end of the file.
-```
 
 - [x] **Step 2.2: Add `reviewer-mesh.md` to the repo-worker-pack profile source**
 
@@ -427,13 +332,13 @@ Insert `## Applies to` immediately after the frontmatter `---` and before `## Ch
 old_string: |
   ---
 
-  You are `reviewer-marketplace`, a focused read-only reviewer for the agent-asset-marketplace scaffolders, generated indexes, and repo tooling. Inspect the prepared diff for `new_plugin.py`, `tools/run.py`, `plugin-roots.json`, `bundle-manifest.json`, `repo-index.json`, and related surfaces. Do not broaden to prose/style or secrets; those are handled by other lens reviewers.
+  You are `reviewer-marketplace`, a focused read-only reviewer for `codex-marketplace` pack generation, generated indexes, and repo tooling. Inspect the prepared diff for `new_plugin.py`, `tools/run.py`, `plugin-roots.json`, `bundle-manifest.json`, `repo-index.json`, and related surfaces. Do not broaden to prose/style or secrets; those are handled by other lens reviewers.
 
   ## Checklist
 new_string: |
   ---
 
-  You are `reviewer-marketplace`, a focused read-only reviewer for the agent-asset-marketplace scaffolders, generated indexes, and repo tooling. Inspect the prepared diff for `new_plugin.py`, `tools/run.py`, `plugin-roots.json`, `bundle-manifest.json`, `repo-index.json`, and related surfaces. Do not broaden to prose/style or secrets; those are handled by other lens reviewers.
+  You are `reviewer-marketplace`, a focused read-only reviewer for `codex-marketplace` pack generation, generated indexes, and repo tooling. Inspect the prepared diff for `new_plugin.py`, `tools/run.py`, `plugin-roots.json`, `bundle-manifest.json`, `repo-index.json`, and related surfaces. Do not broaden to prose/style or secrets; those are handled by other lens reviewers.
 
   ## Applies to
 
@@ -495,7 +400,7 @@ Use `edit` to replace the `reviewer-marketplace` row with the same row plus the 
 ```text
 old_string: |
   | `SKILL.md`/reference/prompt-robustness lens | `reviewer-skills` |
-  | `codex-marketplace`/tooling/scaffolder lens | `reviewer-marketplace` |
+  | `codex-marketplace`/tooling/pack lens | `reviewer-marketplace` |
   | Small, tightly focused reviews or coherent single-responsibility re-review diffs | `reviewer-fast` |
 new_string: |
   | `SKILL.md`/reference/prompt-robustness lens | `reviewer-skills` |
@@ -574,7 +479,7 @@ old_string: |
 
   Use `run_subagent` to dispatch each lens. Read the corresponding `.agents/agents/reviewer-*.md` profile and use its content as the subagent task. Set the off-repo workspace as the subagent's working directory. In this repo, the canonical lenses are:
   - `reviewer-skills` for `SKILL.md`, reference files, and prompt robustness.
-  - `reviewer-marketplace` for scaffolders, generated surfaces, and this-repo tooling.
+  - `reviewer-marketplace` for generated surfaces, pack generation, and this-repo tooling.
   - `reviewer-security` for secrets and real identifiers.
 
   If you cannot run subagents (e.g. `run_subagent` is unavailable, fails, or is explicitly stopped), this is a `blocked` node — do not proceed to `ready` and do not claim the review is complete. Record the blocker and hand to a human.
@@ -759,7 +664,7 @@ git push -u origin feat/reviewer-lens-expansion
 
 - [x] **Step 10.2: Open a draft PR**
 
-Use `gh pr create --draft` with title `feat: reviewer lens expansion (plans, scaffolders, dynamic dispatch)` and a body that lists the spec, plan, and completed plan/spec moves.
+Use `gh pr create --draft` with title `feat: reviewer lens expansion (plans, mesh, dynamic dispatch)` and a body that lists the spec, plan, and completed plan/spec moves.
 
 - [x] **Step 10.3: Record publication proof**
 

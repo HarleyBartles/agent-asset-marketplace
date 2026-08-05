@@ -120,7 +120,7 @@ To make model selection explicit and remove the `inherit` model, every custom re
 - `reviewer-fast`: `swe-1-6`
 - `reviewer`: `glm-5-2`
 - `reviewer-strong`: `swe-1-7`
-- `reviewer-security`, `reviewer-marketplace`, `reviewer-skills`, `reviewer-scaffolders`, `reviewer-plans`, `reviewer-mesh`, `reviewer-scripts`: `glm-5-2`
+- `reviewer-security`, `reviewer-marketplace`, `reviewer-skills`, `reviewer-plans`, `reviewer-mesh`, `reviewer-scripts`: `glm-5-2`
 
 ### Runtime staging tool
 
@@ -135,9 +135,7 @@ To make model selection explicit and remove the `inherit` model, every custom re
 - No directory is created in `--check` mode; the main checkout is only mutated when `--apply` is approved.
 - `tools/run.py runtime-agents` maps `ctx.allow_shared` to the script's `--allow-shared-checkout` and `--yes` flags.
 
-### `reviewer-scaffolders` relationship
 
-`reviewer-scaffolders` is a pre-existing scaffolder/mesh lens kept for backward compatibility. The new `reviewer-mesh` is the canonical portable lens for generated `INDEX.md`, mesh, and `repo-standards` surfaces. Both may be dispatched for the same PR; `reviewer-scaffolders` additionally emphasizes cross-skill script path existence and scaffolder output conventions.
 
 ### Reviewer stop condition / loop breaker
 
@@ -150,12 +148,16 @@ Every `reviewer-*.md` profile must end with a `## Stop condition and loop breake
 - Breaks the review if the last two tool calls produced no new findings.
 - Uses a hard backstop of no more than 50 total tool calls after loading inputs.
 
+### `reviewer-mesh` absorbs `reviewer-scaffolders`
+
+`reviewer-mesh` is the canonical portable lens for all generated mesh, scaffolder output, `INDEX.md`, and `repo-standards` surfaces. The separate `reviewer-scaffolders` profile is removed; any scaffolder review responsibilities it held now belong to `reviewer-mesh`. Consumer repos should dispatch `reviewer-mesh` for `**/*scaffold*` and `**/*mesh*` patterns.
+
 ### `selecting-a-subagent/SKILL.md` (source in `codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/SKILL.md`)
 
 Add to the dispatch table:
 
 - `reviewer-plans` — plan/spec review and PR compliance.
-- `reviewer-mesh` — scaffolder / mesh / repo-standards lens.
+- `reviewer-mesh` — scaffolder / mesh / `repo-standards` / `INDEX.md` lens.
 - `reviewer-scripts` — script / CLI safety and compliance lens.
 
 Document that each profile's `## Checklist` and `## Applies to` sections are the source of truth for `orchestrator-predict` and `lens-dispatch`. Do not point to `reviewer-known-findings.md`; it no longer exists.
