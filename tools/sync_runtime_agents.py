@@ -234,7 +234,10 @@ def _sync_profiles(apply: bool, allow_shared: bool, yes: bool) -> int:
 
 def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Sync subagent profiles from the current worktree to the main checkout for the runtime.",
+        description=(
+            "Sync subagent profiles from the current worktree to the main checkout "
+            "for the runtime. (mixed: --check is read-only, --apply is mutating.)"
+        ),
         epilog="Use --apply to copy files; --check (the default) only reports drift.",
     )
     parser.add_argument(

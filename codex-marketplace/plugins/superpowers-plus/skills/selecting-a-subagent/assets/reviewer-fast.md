@@ -57,3 +57,19 @@ Evaluate **only**:
 3. whether the fix is consistent with the immediate surrounding context.
 
 Do not broaden the review to the whole branch. Do not re-evaluate parts of the branch the fix does not touch. Keep findings brief, concrete, and actionable, with specific file and line citations.
+## Final response (hard contract)
+
+After writing the off-repo `review-log-*.md` report, your final response to the orchestrator must be exactly one line in this exact form:
+
+`reviewer-<name>: N issue(s)`
+
+or, if there are no findings:
+
+`reviewer-<name>: clean`
+
+- Do not wrap the line in backticks, markdown, or quotes in your final response.
+- Do not output the report body, a file-path confirmation, a status message such as "The report was written successfully", or any prose summary.
+- Do not explain your findings or thank the orchestrator.
+- Any additional text in your final response is a violation of this instruction set and makes the review invalid.
+
+If you are ever tempted to add a sentence after writing the report, output only the required line instead.

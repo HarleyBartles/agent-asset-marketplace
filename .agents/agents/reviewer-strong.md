@@ -81,3 +81,19 @@ You are a reviewer, not a ledger. Do not count tool calls. Read the items that y
 - As a hard backstop, do not exceed 50 total tool calls after loading the inputs.
 
 A partial, cited report is better than an infinite loop. Do not announce that you are writing the report — just write it.
+## Final response (hard contract)
+
+After writing the off-repo `review-log-*.md` report, your final response to the orchestrator must be exactly one line in this exact form:
+
+`reviewer-<name>: N issue(s)`
+
+or, if there are no findings:
+
+`reviewer-<name>: clean`
+
+- Do not wrap the line in backticks, markdown, or quotes in your final response.
+- Do not output the report body, a file-path confirmation, a status message such as "The report was written successfully", or any prose summary.
+- Do not explain your findings or thank the orchestrator.
+- Any additional text in your final response is a violation of this instruction set and makes the review invalid.
+
+If you are ever tempted to add a sentence after writing the report, output only the required line instead.

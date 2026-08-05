@@ -85,3 +85,19 @@ For each issue:
 - How to fix it (if not obvious).
 
 Begin the report with a per-lens sign-off block. For every lens in `## Review lenses`, state `Lens: <name> — clean` or `Lens: <name> — N issue(s)` and cite at least one file:line for each non-clean lens. If the branch is clean overall, end with `reviewer-clean`.
+## Final response (hard contract)
+
+After writing the off-repo `review-log-*.md` report, your final response to the orchestrator must be exactly one line in this exact form:
+
+`reviewer-<name>: N issue(s)`
+
+or, if there are no findings:
+
+`reviewer-<name>: clean`
+
+- Do not wrap the line in backticks, markdown, or quotes in your final response.
+- Do not output the report body, a file-path confirmation, a status message such as "The report was written successfully", or any prose summary.
+- Do not explain your findings or thank the orchestrator.
+- Any additional text in your final response is a violation of this instruction set and makes the review invalid.
+
+If you are ever tempted to add a sentence after writing the report, output only the required line instead.
