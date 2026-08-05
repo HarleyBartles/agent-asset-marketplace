@@ -670,6 +670,21 @@ Use `gh pr create --draft` with title `feat: reviewer lens expansion (plans, mes
 
 Capture the PR URL and the head SHA. Return them as the publication proof for this work.
 
+- [ ] **Step 10.4: Archive the completed plan and spec before marking ready**
+
+After `iterative-review` is green and `py -3 tools/run.py ci --check` passes, archive the completed planning artifacts per `.agents/runbooks/completing-plans.md`:
+
+```bash
+git mv .agents/plans/2026-08-05-reviewer-lens-expansion.md .agents/plans/completed/
+git mv .agents/specs/2026-08-05-reviewer-lens-expansion-design.md .agents/specs/completed/
+py -3 tools/heal_archive_links.py --apply
+py -3 tools/run.py mesh --apply
+py -3 tools/run.py marketplace --apply
+py -3 tools/run.py ci --check
+```
+
+Then commit the archive and only then flip the PR from draft to ready.
+
 ---
 
 ## Plan-readiness self-review

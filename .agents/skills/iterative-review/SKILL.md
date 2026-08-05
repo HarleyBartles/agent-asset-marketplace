@@ -150,7 +150,17 @@ Dispatch `reviewer-strong` with the fix diff and immediate surrounding area. Its
 
 ### `ready`
 
-When `strong-review` reports `reviewer-strong: clean` and the preflight is clean, run `py -3 tools/run.py ci --check` (or the consumer's equivalent) and flip the PR to ready after a clean CI pass.
+When `strong-review` reports `reviewer-strong: clean` and the preflight is clean:
+
+1. Run `py -3 tools/run.py ci --check` (or the consumer's equivalent). Do not proceed if it fails.
+2. If the PR completes the plan/spec/roadmap it set out to implement, archive the completed planning artifacts per `.agents/runbooks/completing-plans.md`:
+   - `git mv .agents/plans/<plan-name>.md .agents/plans/completed/`
+   - `git mv .agents/specs/<spec-name>.md .agents/specs/completed/`
+   - Move any related roadmaps or research files referenced by the plan.
+   - Run `py -3 tools/heal_archive_links.py --apply`, `py -3 tools/run.py mesh --apply`, and `py -3 tools/run.py marketplace --apply`.
+   - Re-run `py -3 tools/run.py ci --check` after the archive step.
+   - Commit the archive with `git commit -m "archive: complete <plan-name>"`.
+3. Only then flip the PR from draft to ready.
 
 ### `blocked`
 
@@ -189,3 +199,4 @@ At every `metrics-track` and at `ready` or `blocked`, write or update `review-me
 - Letting `reviewer-fast` or `targeted-re-review` drift into a full branch review. Keep the input tightly scoped to the fix.
 - Blindly applying reviewer findings without verification. Use `receiving-code-review` for each finding.
 - Skipping CI after the reviewer loop. The reviewer "green" signal is not the draft/ready gate.
+- Flipping a PR to ready without archiving the completed plan/spec/roadmap it implements. The ready state should represent the completed plan, including the moved planning artifacts.
