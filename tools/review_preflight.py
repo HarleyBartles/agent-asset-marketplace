@@ -85,9 +85,7 @@ def _source_paths() -> set[str]:
     return _SOURCE_PATHS
 
 
-_CANONICAL_PATHS = re.compile(
-    r"`(?:\.agents/skills/([^`\s]+)|subagent-workspace/scripts/([^`\s]+))`"
-)
+_CANONICAL_PATHS = re.compile(r"`(?:\.agents/skills/([^`\s]+)|subagent-workspace/scripts/([^`\s]+))`")
 
 
 def _scan_canonical_paths(path: Path, content: str, findings: list[str]) -> None:
@@ -111,11 +109,7 @@ def _scan_canonical_paths(path: Path, content: str, findings: list[str]) -> None
             else:
                 prefix = "subagent-workspace/scripts/"
                 target = ROOT / ".agents/skills/subagent-workspace/scripts" / rel
-            if (
-                target.is_file()
-                or target.with_suffix(".ps1").is_file()
-                or target.with_suffix(".sh").is_file()
-            ):
+            if target.is_file() or target.with_suffix(".ps1").is_file() or target.with_suffix(".sh").is_file():
                 continue
             # Fall back to the source plugin tree for paths not yet installed.
             source = _source_paths()

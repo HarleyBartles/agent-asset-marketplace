@@ -261,3 +261,18 @@
 - [x] **Step 1:** Add a "Before you start" section to `iterative-review/SKILL.md` requiring the orchestrator to read `references/review-state-graph.md` first.
 - [x] **Step 2:** Sync the installed skill copy with `py -3 .agents/skills/refreshing-installed-skills/scripts/refresh_installed_skills.py --apply --force --allow-shared-checkout`.
 - [x] **Step 3:** Commit and push the update.
+
+---
+
+### Task 12: Review-preflight fast-fix
+
+**Files:**
+- `tools/review_preflight.py`
+
+**Interfaces:**
+- Consumes: `py -3 tools/run.py review-preflight --check` output showing 51 warnings
+- Produces: `review-preflight` passes with 0 issues
+
+- [x] **Step 1:** Allow `use_instead` and `use_with` skill metadata keys.
+- [x] **Step 2:** Skip placeholder/glob path references (`*`, `<`/`>`) and completed historical plans/specs.
+- [x] **Step 3:** Commit and push the update.

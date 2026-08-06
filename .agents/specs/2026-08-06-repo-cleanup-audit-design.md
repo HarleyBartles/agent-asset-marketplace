@@ -67,6 +67,7 @@ Remove stale, redundant, and split-brain repository surfaces that no longer serv
   - `.agents/plugins/AGENTS.md`
   - `.agents/docs/AGENTS.md` and root `AGENTS.md` routing pointers to `mesh-policy.md` and `repo-runbook-policy.md` must be re-pointed to `.agents/doctrine/`
 - Update `codex-marketplace/plugins/superpowers-plus/skills/iterative-review/SKILL.md` to add a "Before you start" signpost requiring the orchestrator to read `references/review-state-graph.md` before dispatching any subagents or deciding which lenses apply.
+- Update `tools/review_preflight.py` to tolerate placeholder/glob path references, completed historical plans/specs, and the `use_instead`/`use_with` skill metadata keys so the review preflight is clean.
 
 ### 6. Re-generate pressure-test results
 
