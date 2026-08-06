@@ -34,9 +34,7 @@ def main() -> int:
         text=True,
         check=True,
     )
-    agents_files = [
-        p for p in result.stdout.split("\0") if p and p.endswith("AGENTS.md")
-    ]
+    agents_files = [p for p in result.stdout.split("\0") if p and p.endswith("AGENTS.md")]
 
     disallowed = [p for p in agents_files if p not in ALLOWED_AGENTS_MD]
     if disallowed:

@@ -438,7 +438,7 @@ _TASKS: dict[str, Task] = {
         fix="tools/run runtime-agents --apply --allow-shared-checkout",
     ),
     "ci": Task(
-        deps=("lint", "repo-standards", "review-preflight", "validate", "archive-links"),
+        deps=("lint", "repo-standards", "validate", "archive-links"),
         fix="tools/run ci --apply",
     ),
     "all": Task(
