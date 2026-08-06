@@ -17,7 +17,7 @@
 
 ## Reference
 
-The full design is in `.agents/specs/2026-08-06-iterative-review-reduce-churn-design.md`. The `edit` steps in this plan provide the exact `old_string` and `new_string` for each file change.
+The full design is in `.agents/specs/completed/2026-08-06-iterative-review-reduce-churn-design.md`. The `edit` steps in this plan provide the exact `old_string` and `new_string` for each file change.
 
 ---
 
@@ -751,7 +751,7 @@ git commit -m "feat(repo-standards): harden pre-commit to apply, stage tracked c
 
 ## Plan-Readiness Self-Review
 
-- [ ] **Spec coverage:** Every design section in `.agents/specs/2026-08-06-iterative-review-reduce-churn-design.md` maps to one or more tasks above.
+- [ ] **Spec coverage:** Every design section in `.agents/specs/completed/2026-08-06-iterative-review-reduce-churn-design.md` maps to one or more tasks above.
 - [ ] **Placeholder scan:** No `TBD`, `TODO`, or vague instructions remain.
 - [ ] **Source facts verified:** Paths, skill names, and commands were read from the current source tree.
 - [ ] **CI gate:** The final task runs `py -3 tools/run.py ci --check` on the staged tree before the last commit.
