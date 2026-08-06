@@ -1,7 +1,7 @@
 ---
 description: "Docs discovery guidance"
 trigger: glob
-globs: "docs/**"
+globs: ".agents/docs/**"
 ---
 ## Scope
 
