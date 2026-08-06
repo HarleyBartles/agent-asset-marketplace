@@ -10,6 +10,10 @@ Remove stale, redundant, and split-brain repository surfaces that no longer serv
 
 - Delete `adapters/`. The overlay adaptation machinery has been retired; the tree now contains only generated indexes and a stale `__pycache__` directory.
 - Delete `generated/`. The zip-export lane is retired and no tooling writes here; the directory only contains a generated `INDEX.md`.
+- Delete `docs/overlay-adapter-policy.md` — the overlay machinery is retired.
+- Delete `.devin/rules/adapters.md` and `.agents/doctrine/adapters.md` — retired with the `adapters/` tree.
+- Re-point `.devin/rules/docs.md` and `.devin/rules/docs-contracts.md` to `.agents/docs/` and `.agents/docs/contracts/` instead of the old `docs/` tree; do **not** delete them.
+- Remove `adapters` and `generated` entries from `.gitignore`.
 
 ### 2. Consolidate docs and doctrine
 
@@ -26,7 +30,6 @@ Remove stale, redundant, and split-brain repository surfaces that no longer serv
   - `custody-and-marketplace-doctrine.md` (moved from `docs/`)
   - `non-repo-locations-policy.md` (moved from `docs/`)
   - `skill-standards-policy.md` (moved from `docs/`)
-  - delete `docs/overlay-adapter-policy.md` — the overlay machinery is retired
 - Delete the root `docs/` tree after its remaining children are moved to `.agents/docs/` or `.agents/doctrine/`.
 
 ### 3. Rehome and prune provenance
@@ -43,11 +46,30 @@ Remove stale, redundant, and split-brain repository surfaces that no longer serv
 
 ### 4. Reference refresh and validation
 
-- Update hard-coded references to the moved/removed paths.
-- Delete `.devin/rules/adapters.md` and `.agents/doctrine/adapters.md`.
-- Remove `adapters` and `generated` entries from `.gitignore`.
+- Update hard-coded references to the moved/removed paths in root `AGENTS.md`, `README.md`, `REVIEW.md`, `CONTRIBUTING.md`, `.agents/docs/AGENTS.md`, `.agents/doctrine/docs.md`, `.agents/doctrine/docs-contracts.md`, runbooks, skill sources, and repo tooling.
 - Run `py -3 tools/run.py mesh --apply` to regenerate `INDEX.md` files and prune removed surfaces.
 - Run `py -3 tools/run.py ci --check` for final validation.
+
+### 5. Audit follow-up
+
+- Delete the redundant/empty surfaces found in the cleanup audit:
+  - `.agents/docs/superpowers/` (only a `.gitignore`)
+  - `scripts/` (only a generated `INDEX.md`)
+  - `tests/pressure/handoff-gates/` if no prompts are recorded
+- Remove or rewrite active `adapters/` and `generated/` references in:
+  - `.agents/docs/unslop/profile.md`
+  - `.agents/doctrine/codex-marketplace.md`
+  - `.agents/doctrine/codex-plugins.md`
+  - `.agents/doctrine/marketplace-worker-doctrine.md`
+  - `.agents/doctrine/sources.md`
+  - `.agents/runbooks/code-style.md`
+  - `.agents/runbooks/marketplace-generation.md`
+  - `.agents/plugins/AGENTS.md`
+  - `.agents/docs/AGENTS.md` and root `AGENTS.md` routing pointers to `mesh-policy.md` and `repo-runbook-policy.md` must be re-pointed to `.agents/doctrine/`
+
+### 6. Re-generate pressure-test results
+
+For each skill that ships pressure-test scenarios under `tests/pressure/<skill>/prompts/` but has an otherwise empty result directory, run the pressure-test scenarios with subagents and record the results as `tests/pressure/<skill>/README.md`, `green.md`, and `red.md`.
 
 ## Non-goals
 
@@ -66,20 +88,20 @@ Remove stale, redundant, and split-brain repository surfaces that no longer serv
 
 The following files carry hard-coded references to the moved or removed surfaces and must be edited manually (the mesh generator cannot rewrite prose inside AGENTS.md or skills):
 
-- `AGENTS.md` — `mesh-policy.md`, `repo-runbook-policy.md`, `non-repo-locations-policy.md` links.
-- `README.md` — `.agents/doctrine/mesh-policy.md` link.
-- `REVIEW.md` and `CONTRIBUTING.md` — `.agents/doctrine/repo-runbook-policy.md` links.
-- `.agents/docs/AGENTS.md` — scope from "agent doctrine, mesh policy, and other agent-facing docs" to the new docs-only scope.
+- `AGENTS.md` — `mesh-policy.md`, `repo-runbook-policy.md`, `non-repo-locations-policy.md` links must be re-pointed to `.agents/doctrine/`.
+- `README.md` — `.agents/docs/mesh-policy.md` link.
+- `REVIEW.md` and `CONTRIBUTING.md` — `.agents/docs/repo-runbook-policy.md` links.
+- `.agents/docs/AGENTS.md` — scope from "agent doctrine, mesh policy, and other agent-facing docs" to the new docs-only scope; routing pointers to `mesh-policy.md` and `repo-runbook-policy.md` must point into `.agents/doctrine/`.
 - `.agents/doctrine/docs.md` and `.agents/doctrine/docs-contracts.md` — re-scope to `.agents/docs/` and `.agents/docs/contracts/`.
-- `.agents/doctrine/adapters.md` and `.devin/rules/adapters.md` — delete with `adapters/`.
-- `.devin/rules/docs.md` and `.devin/rules/docs-contracts.md` — delete (no more `docs/` surface to trigger).
-- `.agents/doctrine/skill-standards-policy.md` — remove `docs/overlay-adapter-policy.md` cross-reference before moving to `.agents/doctrine/`.
+- `.devin/rules/adapters.md` and `.agents/doctrine/adapters.md` — delete with `adapters/`.
+- `.devin/rules/docs.md` and `.devin/rules/docs-contracts.md` — re-point to `.agents/docs/` and `.agents/docs/contracts/`, not deleted.
+- `docs/skill-standards-policy.md` — remove `docs/overlay-adapter-policy.md` cross-reference before moving to `.agents/doctrine/`.
 - `codex-marketplace/plugins/superpowers-plus/skills/publishing-source/SKILL.md` and `references/publishing-decisions.md` — remove `adapters/codex/` references.
-- `tools/validate_agents_md.py` — `.agents/doctrine/mesh-policy.md` string.
-- `codex-marketplace/plugins/repo-worker-pack/skills/repo-standards/scripts/scaffold_*.py`, `repo_standards.py`, `SKILL.md`, `references/repository-shape-standard.md`, `references/repository-runbook-standard.md`, `agents/openai.yaml` — `.agents/doctrine/repo-runbook-policy.md` references.
-- `codex-marketplace/plugins/superpowers-plus/skills/using-superpowers-plus/references/repo-doctrine.md` — `.agents/doctrine/mesh-policy.md` references.
-- `codex-marketplace/plugins/mcp-usage-pack/references/codex-marketplace-compatibility.md` and `codex-marketplace/plugins/superpowers-plus/references/codex-marketplace-compatibility.md` — `.agents/docs/contracts/*` relative paths.
-- `codex-marketplace/plugins/superpowers-plus/skills/writing-skills/references/skill-authoring-checklist.md` and `.agents/skills/writing-skills/references/skill-authoring-checklist.md` — `.agents/docs/contracts/*` references.
+- `tools/validate_agents_md.py` — `.agents/docs/mesh-policy.md` string.
+- `codex-marketplace/plugins/repo-worker-pack/skills/repo-standards/scripts/scaffold_*.py`, `repo_standards.py`, `SKILL.md`, `references/repository-shape-standard.md`, `references/repository-runbook-standard.md`, `agents/openai.yaml` — `.agents/docs/repo-runbook-policy.md` references.
+- `codex-marketplace/plugins/superpowers-plus/skills/using-superpowers-plus/references/repo-doctrine.md` — `.agents/docs/mesh-policy.md` references.
+- `codex-marketplace/plugins/mcp-usage-pack/references/codex-marketplace-compatibility.md` and `codex-marketplace/plugins/superpowers-plus/references/codex-marketplace-compatibility.md` — `docs/contracts/*` relative paths.
+- `codex-marketplace/plugins/superpowers-plus/skills/writing-skills/references/skill-authoring-checklist.md` and `.agents/skills/writing-skills/references/skill-authoring-checklist.md` — `docs/contracts/*` references.
 - `tests/test_shared_checkout.py` — `repo_root / "adapters"` search root can remain because it already skips missing directories.
 - `provenance/INDEX.md` and generated `INDEX.md` files — will refresh via `tools/run.py mesh --apply` after the manual edits.
 

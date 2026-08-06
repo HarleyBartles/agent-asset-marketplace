@@ -2,7 +2,7 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use /subagent-driven-development (recommended) or /executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Remove retired `adapters/` and `generated/`, consolidate `docs/` and `.agents/docs/` into a single docs tree and `.agents/doctrine/` into a single doctrine tree, and rehome the `using-playwright-mcp` pressure-test evidence, keeping `py -3 tools/run.py ci --check` green.
+**Goal:** Remove retired `adapters/` and `generated/`, consolidate `docs/` and `.agents/docs/` into a single docs tree and `.agents/doctrine/` into a single doctrine tree, rehome the `using-playwright-mcp` pressure-test evidence, address all surfaces found in the post-execution audit, re-generate pressure-test results for skills that ship scenarios, and keep `py -3 tools/run.py ci --check` green.
 
 **Architecture:** Pure repath/rename cleanup with reference rewrites. Source truth for skill content in `codex-marketplace/plugins/` is not edited except for path references. Generated surfaces (indexes, marketplace manifest, installed skills) are refreshed via `tools/run.py mesh --apply` after the manual source moves.
 
@@ -24,20 +24,21 @@
 - Delete: `generated/` (entire tree)
 - Delete: `.devin/rules/adapters.md`
 - Delete: `.agents/doctrine/adapters.md`
-- Delete: `.devin/rules/docs.md`
-- Delete: `.devin/rules/docs-contracts.md`
 - Delete: `docs/overlay-adapter-policy.md`
+- Re-point: `.devin/rules/docs.md` to `.agents/docs/`
+- Re-point: `.devin/rules/docs-contracts.md` to `.agents/docs/contracts/`
 - Modify: `.gitignore` (remove `generated/*`, `!generated/.gitignore`, `!generated/INDEX.md`, `!generated/reports/`, `!generated/reports/.gitignore`)
-- Modify: `.agents/doctrine/skill-standards-policy.md` (remove `docs/overlay-adapter-policy.md` cross-reference before it moves)
+- Modify: `docs/skill-standards-policy.md` (remove `docs/overlay-adapter-policy.md` cross-reference before it moves)
 
 **Interfaces:**
 - Consumes: `.agents/specs/2026-08-06-repo-cleanup-audit-design.md`
-- Produces: a tree with no `adapters/`, `generated/`, or `docs/overlay-adapter-policy.md`
+- Produces: a tree with no `adapters/`, `generated/`, or `docs/overlay-adapter-policy.md`, and `.devin/rules` docs pointers routed to `.agents/docs/`
 
-- [ ] **Step 1:** `git rm -r adapters/ generated/ .devin/rules/adapters.md .agents/doctrine/adapters.md .devin/rules/docs.md .devin/rules/docs-contracts.md docs/overlay-adapter-policy.md`
-- [ ] **Step 2:** Edit `.gitignore` to remove the `generated/*` block.
-- [ ] **Step 3:** Edit `.agents/doctrine/skill-standards-policy.md` to remove the `docs/overlay-adapter-policy.md` reference and update `.agents/docs/contracts/*` links to `.agents/docs/contracts/*`.
-- [ ] **Step 4:** `git status` and commit `Task 1: Remove retired surface trees`.
+- [x] **Step 1:** `git rm -r adapters/ generated/ .devin/rules/adapters.md .agents/doctrine/adapters.md docs/overlay-adapter-policy.md`
+- [x] **Step 2:** Edit `.devin/rules/docs.md` and `.devin/rules/docs-contracts.md` to route to `.agents/docs/` and `.agents/docs/contracts/`.
+- [x] **Step 3:** Edit `.gitignore` to remove the `generated/*` block.
+- [x] **Step 4:** Edit `docs/skill-standards-policy.md` to remove the `docs/overlay-adapter-policy.md` reference and update `docs/contracts/*` links to `.agents/docs/contracts/*`.
+- [x] **Step 5:** `git status` and commit `Task 1: Remove retired surface trees`.
 
 ---
 
@@ -45,25 +46,25 @@
 
 **Files:**
 - Move to `.agents/docs/`:
-  - `.agents/docs/contracts/` → `.agents/docs/contracts/`
-  - `.agents/docs/unslop/` → `.agents/docs/unslop/`
+  - `docs/contracts/` → `.agents/docs/contracts/`
+  - `docs/unslop/` → `.agents/docs/unslop/`
 - Move to `.agents/doctrine/`:
-  - `.agents/doctrine/custody-and-marketplace-doctrine.md`
-  - `.agents/doctrine/non-repo-locations-policy.md`
-  - `.agents/doctrine/skill-standards-policy.md` (after Task 1 overlay reference removal)
+  - `docs/custody-and-marketplace-doctrine.md`
+  - `docs/non-repo-locations-policy.md`
+  - `docs/skill-standards-policy.md` (after Task 1 overlay reference removal)
 - Delete root `docs/` when empty.
 
 **Interfaces:**
 - Consumes: Task 1 (no `docs/overlay-adapter-policy.md`)
 - Produces: `docs/` empty and ready for deletion
 
-- [ ] **Step 1:** `git mv docs/contracts .agents/docs/contracts`
-- [ ] **Step 2:** `git mv docs/unslop .agents/docs/unslop`
-- [ ] **Step 3:** `git mv .agents/doctrine/custody-and-marketplace-doctrine.md .agents/doctrine/`
-- [ ] **Step 4:** `git mv .agents/doctrine/non-repo-locations-policy.md .agents/doctrine/`
-- [ ] **Step 5:** `git mv .agents/doctrine/skill-standards-policy.md .agents/doctrine/`
-- [ ] **Step 6:** `git rm docs/INDEX.md` and `rmdir docs/`
-- [ ] **Step 7:** Commit `Task 2: Rehome docs/ contents`.
+- [x] **Step 1:** `git mv docs/contracts .agents/docs/contracts`
+- [x] **Step 2:** `git mv docs/unslop .agents/docs/unslop`
+- [x] **Step 3:** `git mv docs/custody-and-marketplace-doctrine.md .agents/doctrine/`
+- [x] **Step 4:** `git mv docs/non-repo-locations-policy.md .agents/doctrine/`
+- [x] **Step 5:** `git mv docs/skill-standards-policy.md .agents/doctrine/`
+- [x] **Step 6:** `git rm docs/INDEX.md` and `rmdir docs/`
+- [x] **Step 7:** Commit `Task 2: Rehome docs/ contents`.
 
 ---
 
@@ -71,11 +72,11 @@
 
 **Files:**
 - Move to `.agents/doctrine/`:
-  - `.agents/doctrine/mesh-policy.md`
-  - `.agents/doctrine/repo-runbook-policy.md`
-  - `.agents/doctrine/repo-local-plugin-marketplace.md`
-  - `.agents/doctrine/marketplace-worker-doctrine.md`
-  - `.agents/doctrine/project-gate-over-plugin-flattening.md`
+  - `.agents/docs/mesh-policy.md`
+  - `.agents/docs/repo-runbook-policy.md`
+  - `.agents/docs/repo-local-plugin-marketplace.md`
+  - `.agents/docs/marketplace-worker-doctrine.md`
+  - `.agents/docs/project-gate-over-plugin-flattening.md`
 - Keep in `.agents/docs/`:
   - `.agents/docs/AGENTS.md` (rewrite scope)
   - `.agents/docs/INDEX.md` (regenerated by mesh)
@@ -86,13 +87,13 @@
 - Consumes: Task 2 (root `docs/` gone)
 - Produces: `.agents/docs/` contains only docs; `.agents/doctrine/` contains all doctrine
 
-- [ ] **Step 1:** `git mv .agents/doctrine/mesh-policy.md .agents/doctrine/`
-- [ ] **Step 2:** `git mv .agents/doctrine/repo-runbook-policy.md .agents/doctrine/`
-- [ ] **Step 3:** `git mv .agents/doctrine/repo-local-plugin-marketplace.md .agents/doctrine/`
-- [ ] **Step 4:** `git mv .agents/doctrine/marketplace-worker-doctrine.md .agents/doctrine/`
-- [ ] **Step 5:** `git mv .agents/doctrine/project-gate-over-plugin-flattening.md .agents/doctrine/`
-- [ ] **Step 6:** Rewrite `.agents/docs/AGENTS.md` to scope `.agents/docs/` as docs only.
-- [ ] **Step 7:** Commit `Task 3: Consolidate doctrine under .agents/doctrine/`.
+- [x] **Step 1:** `git mv .agents/docs/mesh-policy.md .agents/doctrine/`
+- [x] **Step 2:** `git mv .agents/docs/repo-runbook-policy.md .agents/doctrine/`
+- [x] **Step 3:** `git mv .agents/docs/repo-local-plugin-marketplace.md .agents/doctrine/`
+- [x] **Step 4:** `git mv .agents/docs/marketplace-worker-doctrine.md .agents/doctrine/`
+- [x] **Step 5:** `git mv .agents/docs/project-gate-over-plugin-flattening.md .agents/doctrine/`
+- [x] **Step 6:** Rewrite `.agents/docs/AGENTS.md` to scope `.agents/docs/` as docs only.
+- [x] **Step 7:** Commit `Task 3: Consolidate doctrine under .agents/doctrine/`.
 
 ---
 
@@ -124,10 +125,10 @@
 - Consumes: Tasks 1–3 (paths now exist in final locations)
 - Produces: No broken `docs/`, `.agents/docs/`, `.agents/doctrine/`, `adapters/`, or `generated/` links in authored surfaces
 
-- [ ] **Step 1:** Search for `docs/` references in the above files and rewrite to `.agents/docs/` or `.agents/doctrine/` as appropriate (e.g. `.agents/docs/contracts/*` → `.agents/docs/contracts/*`, `.agents/doctrine/skill-standards-policy.md` → `.agents/doctrine/skill-standards-policy.md`, `docs/overlay-adapter-policy.md` removed).
-- [ ] **Step 2:** Search for `.agents/doctrine/mesh-policy.md` and `.agents/doctrine/repo-runbook-policy.md` references and rewrite to `.agents/doctrine/mesh-policy.md` and `.agents/doctrine/repo-runbook-policy.md`.
-- [ ] **Step 3:** Search for `adapters/codex/` and `adapters/` references and remove/update them.
-- [ ] **Step 4:** Commit `Task 4: Update path references`.
+- [x] **Step 1:** Search for `docs/` references in the above files and rewrite to `.agents/docs/` or `.agents/doctrine/` as appropriate (e.g. `docs/contracts/*` → `.agents/docs/contracts/*`, `docs/skill-standards-policy.md` → `.agents/doctrine/skill-standards-policy.md`, `docs/overlay-adapter-policy.md` removed).
+- [x] **Step 2:** Search for `.agents/docs/mesh-policy.md` and `.agents/docs/repo-runbook-policy.md` references and rewrite to `.agents/doctrine/mesh-policy.md` and `.agents/doctrine/repo-runbook-policy.md`.
+- [x] **Step 3:** Search for `adapters/codex/` and `adapters/` references and remove/update them.
+- [x] **Step 4:** Commit `Task 4: Update path references`.
 
 ---
 
@@ -147,12 +148,12 @@
 - Consumes: Tasks 1–4 (clean tree)
 - Produces: `provenance/` no longer contains pressure-test results or historical closeout markdown
 
-- [ ] **Step 1:** `git rm provenance/2026-08-01-agents-md-migration-audit.md provenance/2026-08-04-mark-skill-authoring-retired.md provenance/2026-08-04-report-hygiene-retired.md provenance/2026-08-04-review-branch-diff-retired.md`
-- [ ] **Step 2:** `mkdir tests/pressure/using-playwright-mcp`
-- [ ] **Step 3:** `git mv provenance/using-playwright-mcp-pressure-test-proof.md tests/pressure/using-playwright-mcp/README.md`
-- [ ] **Step 4:** `git mv provenance/pressure-test-red.md tests/pressure/using-playwright-mcp/red.md`
-- [ ] **Step 5:** `git mv provenance/pressure-test-green.md tests/pressure/using-playwright-mcp/green.md`
-- [ ] **Step 6:** Commit `Task 5: Rehome and prune provenance`.
+- [x] **Step 1:** `git rm provenance/2026-08-01-agents-md-migration-audit.md provenance/2026-08-04-mark-skill-authoring-retired.md provenance/2026-08-04-report-hygiene-retired.md provenance/2026-08-04-review-branch-diff-retired.md`
+- [x] **Step 2:** `mkdir tests/pressure/using-playwright-mcp`
+- [x] **Step 3:** `git mv provenance/using-playwright-mcp-pressure-test-proof.md tests/pressure/using-playwright-mcp/README.md`
+- [x] **Step 4:** `git mv provenance/pressure-test-red.md tests/pressure/using-playwright-mcp/red.md`
+- [x] **Step 5:** `git mv provenance/pressure-test-green.md tests/pressure/using-playwright-mcp/green.md`
+- [x] **Step 6:** Commit `Task 5: Rehome and prune provenance`.
 
 ---
 
@@ -165,10 +166,10 @@
 - Consumes: Tasks 1–5 (source tree in final shape)
 - Produces: All derived surfaces current and all canonical checks passing
 
-- [ ] **Step 1:** `py -3 tools/run.py mesh --apply`
-- [ ] **Step 2:** `py -3 tools/run.py ci --check`
-- [ ] **Step 3:** If either fails, fix the offending source or reference and repeat from Step 1.
-- [ ] **Step 4:** Commit `Task 6: Regenerate indexes and pass CI`.
+- [x] **Step 1:** `py -3 tools/run.py mesh --apply`
+- [x] **Step 2:** `py -3 tools/run.py ci --check`
+- [x] **Step 3:** If either fails, fix the offending source or reference and repeat from Step 1.
+- [x] **Step 4:** Commit `Task 6: Regenerate indexes and pass CI`.
 
 ---
 
@@ -179,8 +180,68 @@
 
 **Interfaces:**
 - Consumes: Task 6 (clean, validated branch)
-- Produces: Draft PR with branch name and head SHA
+- Produces: Draft PR with branch name and full head SHA
 
-- [ ] **Step 1:** `git push -u origin cleanup/remove-adapters-generated`
-- [ ] **Step 2:** `gh pr create --draft --title "Repo cleanup: remove retired surfaces, consolidate docs/doctrine, rehome provenance" --body "..."`
-- [ ] **Step 3:** Report the PR URL and head SHA.
+- [x] **Step 1:** `git push -u origin cleanup/remove-adapters-generated`
+- [x] **Step 2:** `gh pr create --draft --title "Repo cleanup: remove retired surfaces, consolidate docs/doctrine, rehome provenance" --body "..."`
+- [x] **Step 3:** Report the PR URL and head SHA.
+
+---
+
+### Task 8: Audit follow-up — remove redundant surfaces and clean retired references
+
+**Files:**
+- Delete: `.agents/docs/superpowers/` (only a `.gitignore`)
+- Delete: `scripts/` (only a generated `INDEX.md`)
+- Delete or record: `tests/pressure/handoff-gates/` (empty `prompts/` dir, no recorded results)
+- Modify: `.agents/docs/unslop/profile.md`
+- Modify: `.agents/doctrine/codex-marketplace.md`
+- Modify: `.agents/doctrine/codex-plugins.md`
+- Modify: `.agents/doctrine/marketplace-worker-doctrine.md`
+- Modify: `.agents/doctrine/sources.md`
+- Modify: `.agents/runbooks/code-style.md`
+- Modify: `.agents/runbooks/marketplace-generation.md`
+- Modify: `.agents/plugins/AGENTS.md`
+- Modify: `.agents/docs/AGENTS.md` and root `AGENTS.md` — routing pointers to `mesh-policy.md` and `repo-runbook-policy.md` must point into `.agents/doctrine/`
+
+**Interfaces:**
+- Consumes: Audit results and the current clean tree
+- Produces: No references to the retired `adapters/` or `generated/` surfaces in active files; no empty/redundant directories
+
+- [ ] **Step 1:** `git rm -r .agents/docs/superpowers/ scripts/ tests/pressure/handoff-gates/` (keep `handoff-gates` if it is intentionally reserved for future pressure tests).
+- [ ] **Step 2:** Search active files for `adapters/` and `generated/` references; remove or rewrite them.
+- [ ] **Step 3:** Update `.agents/docs/AGENTS.md` and root `AGENTS.md` routing pointers to `.agents/doctrine/mesh-policy.md` and `.agents/doctrine/repo-runbook-policy.md`.
+- [ ] **Step 4:** `py -3 tools/run.py mesh --apply`
+- [ ] **Step 5:** `py -3 tools/run.py ci --check`
+- [ ] **Step 6:** Commit `Task 8: Audit follow-up`.
+
+---
+
+### Task 9: Re-generate pressure-test results for skills with scenarios
+
+**Files:**
+- Skills under `codex-marketplace/plugins/` that ship `tests/pressure/<skill>/prompts/*.md` but lack `README.md`, `green.md`, or `red.md`
+
+**Interfaces:**
+- Consumes: Active skill pressure-test scenarios
+- Produces: Recorded pressure-test results under `tests/pressure/<skill>/`
+
+- [ ] **Step 1:** List `tests/pressure/<skill>/` directories that have `prompts/` but no `README.md`/`green.md`/`red.md`.
+- [ ] **Step 2:** For each such skill, invoke the pressure-test scenario with subagents and capture the output.
+- [ ] **Step 3:** Write `README.md` (summary), `green.md` (successful case), and `red.md` (failure case) for each skill.
+- [ ] **Step 4:** Commit `Task 9: Re-generate pressure-test results`.
+
+---
+
+### Task 10: Re-validate and publish updated PR
+
+**Files:**
+- None (GitHub PR)
+
+**Interfaces:**
+- Consumes: Tasks 8 and 9
+- Produces: Updated draft PR with additional commits
+
+- [ ] **Step 1:** `py -3 tools/run.py ci --check`
+- [ ] **Step 2:** `git push` the additional commits to `cleanup/remove-adapters-generated`
+- [ ] **Step 3:** Verify the PR URL and head SHA are current.
