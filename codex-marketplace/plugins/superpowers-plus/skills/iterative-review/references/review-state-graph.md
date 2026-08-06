@@ -15,6 +15,7 @@ flowchart TD
     lens-dispatch --> normalize-inputs --> strong-review
     strong-review -->|clean| ready
     strong-review -->|findings| metrics-track
+    strong-review -->|contested / load-bearing| blocked
 
     metrics-track --> finding-fix
     finding-fix --> re-preflight
