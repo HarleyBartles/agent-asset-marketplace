@@ -3,16 +3,6 @@ name: reviewer
 runtime: devin-desktop
 description: Vendor-provided subagent profile for focused, read-only code review.
 model: glm-5-2
-allowed-tools:
-- read
-- grep
-- find_file_by_name
-- glob
-- exec
-- mcp_list_servers
-- mcp_list_tools
-- mcp_call_tool
-- write
 ---
 
 # Reviewer

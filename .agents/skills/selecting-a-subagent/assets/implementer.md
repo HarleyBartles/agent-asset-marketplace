@@ -2,12 +2,6 @@
 name: implementer
 description: Vendor-provided subagent profile for bounded implementation and bugfix work.
 model: inherit
-allowed-tools:
-- read
-- grep
-- find_file_by_name
-- exec
-- edit
 ---
 
 # Implementer

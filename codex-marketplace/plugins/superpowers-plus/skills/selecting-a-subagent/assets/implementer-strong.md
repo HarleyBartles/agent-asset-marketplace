@@ -2,12 +2,6 @@
 name: implementer-strong
 description: Vendor-provided subagent profile for implementation that needs more reasoning or broader context.
 model: inherit
-allowed-tools:
-- read
-- grep
-- find_file_by_name
-- exec
-- edit
 ---
 
 # Implementer Strong
