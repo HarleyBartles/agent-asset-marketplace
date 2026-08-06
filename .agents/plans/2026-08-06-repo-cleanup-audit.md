@@ -2,7 +2,7 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use /subagent-driven-development (recommended) or /executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Remove retired `adapters/` and `generated/`, consolidate `docs/` and `.agents/docs/` into a single docs tree and `.agents/doctrine/` into a single doctrine tree, rehome the `using-playwright-mcp` pressure-test evidence, address all surfaces found in the post-execution audit, re-generate pressure-test results for skills that ship scenarios, and keep `py -3 tools/run.py ci --check` green.
+**Goal:** Remove retired `adapters/` and `generated/`, consolidate `docs/` and `.agents/docs/` into a single docs tree and `.agents/doctrine/` into a single doctrine tree, rehome the `using-playwright-mcp` pressure-test evidence, address all surfaces found in the post-execution audit, and keep `py -3 tools/run.py ci --check` green.
 
 **Architecture:** Pure repath/rename cleanup with reference rewrites. Source truth for skill content in `codex-marketplace/plugins/` is not edited except for path references. Generated surfaces (indexes, marketplace manifest, installed skills) are refreshed via `tools/run.py mesh --apply` after the manual source moves.
 
@@ -208,16 +208,18 @@
 - Consumes: Audit results and the current clean tree
 - Produces: No references to the retired `adapters/` or `generated/` surfaces in active files; no empty/redundant directories
 
-- [ ] **Step 1:** `git rm -r .agents/docs/superpowers/ scripts/ tests/pressure/handoff-gates/` (keep `handoff-gates` if it is intentionally reserved for future pressure tests).
-- [ ] **Step 2:** Search active files for `adapters/` and `generated/` references; remove or rewrite them.
-- [ ] **Step 3:** Update `.agents/docs/AGENTS.md` and root `AGENTS.md` routing pointers to `.agents/doctrine/mesh-policy.md` and `.agents/doctrine/repo-runbook-policy.md`.
-- [ ] **Step 4:** `py -3 tools/run.py mesh --apply`
-- [ ] **Step 5:** `py -3 tools/run.py ci --check`
-- [ ] **Step 6:** Commit `Task 8: Audit follow-up`.
+- [x] **Step 1:** `git rm -r .agents/docs/superpowers/ scripts/`; keep `tests/pressure/handoff-gates/` because it is reserved for future pressure tests.
+- [x] **Step 2:** Search active files for `adapters/` and `generated/` references; remove or rewrite them.
+- [x] **Step 3:** Update `.agents/docs/AGENTS.md`, root `AGENTS.md`, and `.agents/runbooks/design.md` routing pointers to `.agents/doctrine/mesh-policy.md` and `.agents/doctrine/repo-runbook-policy.md`.
+- [x] **Step 4:** `py -3 tools/run.py mesh --apply`
+- [x] **Step 5:** `py -3 tools/run.py ci --check`
+- [x] **Step 6:** Commit `Task 8: Audit follow-up`.
 
 ---
 
-### Task 9: Re-generate pressure-test results for skills with scenarios
+### Task 9: [Deferred] Re-generate pressure-test results for skills with scenarios
+
+This task is **not in scope for this PR**. It is recorded here for a follow-up plan if the missing `README.md`/`green.md`/`red.md` surfaces under `tests/pressure/<skill>/` need to be filled in later.
 
 **Files:**
 - Skills under `codex-marketplace/plugins/` that ship `tests/pressure/<skill>/prompts/*.md` but lack `README.md`, `green.md`, or `red.md`
@@ -239,12 +241,12 @@
 - None (GitHub PR)
 
 **Interfaces:**
-- Consumes: Tasks 8 and 9
+- Consumes: Tasks 1–8 and 11–13
 - Produces: Updated draft PR with additional commits
 
-- [ ] **Step 1:** `py -3 tools/run.py ci --check`
-- [ ] **Step 2:** `git push` the additional commits to `cleanup/remove-adapters-generated`
-- [ ] **Step 3:** Verify the PR URL and head SHA are current.
+- [x] **Step 1:** `py -3 tools/run.py ci --check`
+- [x] **Step 2:** `git push` the additional commits to `cleanup/remove-adapters-generated`
+- [x] **Step 3:** Verify the PR URL and head SHA are current.
 
 ---
 
@@ -276,3 +278,18 @@
 - [x] **Step 1:** Allow `use_instead` and `use_with` skill metadata keys.
 - [x] **Step 2:** Skip placeholder/glob path references (`*`, `<`/`>`) and completed historical plans/specs.
 - [x] **Step 3:** Commit and push the update.
+
+---
+
+### Task 13: Remove review-preflight from the canonical CI task dependency graph
+
+**Files:**
+- `tools/run.py`
+
+**Interfaces:**
+- Consumes: Decision that `review-preflight` is a manual review lint and should not block commits
+- Produces: `ci` task no longer depends on `review-preflight`
+
+- [x] **Step 1:** Remove `review-preflight` from the `ci` task `deps` tuple.
+- [x] **Step 2:** Keep the `review-preflight` task available for `iterative-review` and manual runs.
+- [x] **Step 3:** Commit and push.

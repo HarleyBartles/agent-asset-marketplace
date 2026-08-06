@@ -8,8 +8,8 @@ Read it with the root [AGENTS.md](../AGENTS.md), the local mesh policy in
 ## Execution model
 
 - Edit first-party source files directly when first-party behavior changes.
-- Treat third-party source custody as immutable; do not edit the retained provenance record to change behavior. Use the relevant adapter under `adapters/**` and regenerate the plugin distribution instead.
-- Edit third-party adapters, and plugin or manifest source surfaces, as the source of truth for bundled behavior.
+- Treat third-party source custody as immutable; do not edit the retained provenance record to change behavior. Update the canonical plugin source or bundle manifest and regenerate the plugin distribution instead.
+- Edit canonical plugin or manifest source surfaces as the source of truth for bundled behavior.
 - Reproject the marketplace and generated outputs with the checked-in deterministic tooling.
 - Reproject the repo-wide `INDEX.md` mesh with the checked-in deterministic
   tooling.
