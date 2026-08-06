@@ -31,7 +31,7 @@
 - Modify: `docs/skill-standards-policy.md` (remove `docs/overlay-adapter-policy.md` cross-reference before it moves)
 
 **Interfaces:**
-- Consumes: `.agents/specs/2026-08-06-repo-cleanup-audit-design.md`
+- Consumes: `.agents/specs/completed/2026-08-06-repo-cleanup-audit-design.md`
 - Produces: a tree with no `adapters/`, `generated/`, or `docs/overlay-adapter-policy.md`, and `.devin/rules` docs pointers routed to `.agents/docs/`
 
 - [x] **Step 1:** `git rm -r adapters/ generated/ .devin/rules/adapters.md .agents/doctrine/adapters.md docs/overlay-adapter-policy.md`
