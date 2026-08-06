@@ -8,26 +8,32 @@ state at every `metrics-track`.
 
 ```mermaid
 flowchart TD
-    setup --> normalize-inputs
-    normalize-inputs --> preflight
-    preflight -->|red| fast-fix
-    fast-fix --> preflight
-    preflight -->|green| scope-honesty
-    scope-honesty --> orchestrator-self-review
+    setup --> normalize-inputs --> preflight
+    preflight -->|red| fast-fix --> preflight
+    preflight -->|green| scope-honesty --> orchestrator-self-review
     orchestrator-self-review --> lens-dispatch
-    lens-dispatch --> normalize-inputs
-    normalize-inputs --> strong-review
+    lens-dispatch --> normalize-inputs --> strong-review
     strong-review -->|clean| ready
     strong-review -->|findings| metrics-track
+
     metrics-track --> finding-fix
     finding-fix --> re-preflight
-    re-preflight -->|red| fast-fix
-    re-preflight -->|green| targeted-re-review
-    targeted-re-review -->|trivial fix + clean fast| strong-review
-    targeted-re-review -->|non-trivial or fast finds issue| regression-scan
-    regression-scan -->|fast clean| strong-review
-    regression-scan -->|fast finds issue, strong confirms new| metrics-track
-    strong-review -->|contested / load-bearing| blocked
+    re-preflight -->|red| fast-fix --> re-preflight
+    re-preflight -->|green| reviewer-fixes
+
+    reviewer-fixes -->|original fixed, no regressions| resolved-ledger
+    reviewer-fixes -->|original not fixed| finding-fix
+    reviewer-fixes -->|new issue, same lens/blast radius| metrics-track
+    reviewer-fixes -->|non-trivial or cross-cutting| regression-scan
+
+    regression-scan -->|clean| resolved-ledger
+    regression-scan -->|new confirmed| metrics-track
+
+    resolved-ledger -->|more open findings| finding-fix
+    resolved-ledger -->|all findings resolved| final-strong
+    final-strong -->|clean| ready
+    final-strong -->|findings| metrics-track
+    final-strong -->|contested / load-bearing| blocked
 ```
 
 ## Nodes
@@ -36,17 +42,19 @@ flowchart TD
 |---|---|---|
 | `setup` | orchestrator | Prepare the workspace, diff, PR context, and `scan_findings`. |
 | `normalize-inputs` | orchestrator | Run `normalize_review_inputs.py --apply` on the scratch directory so every downstream file is plain UTF-8. |
-| `preflight` | `tools/run.py ci --check` | Run deterministic pattern checks on the branch before any subagent. |
-| `fast-fix` | orchestrator | Fix a deterministic preflight finding. |
+| `preflight` | consumer CI preflight | Run deterministic pattern checks on the branch before any subagent. |
+| `fast-fix` | orchestrator or implementer | Fix a deterministic preflight finding; trivial items the orchestrator can fix, mechanical items an `implementer`. |
 | `scope-honesty` | orchestrator | Compare the diff to the plan, spec, PR body, and linked issues. Fix drift. |
 | `orchestrator-self-review` | orchestrator | Apply each relevant `reviewer-*.md` profile's `## Checklist` to the diff (resolving each name through the Devin Desktop agents search path); fix predictable items; record uncertain items in `review-log-orchestrator-self-review.md`. |
 | `lens-dispatch` | parallel subagents | Run the relevant lens reviewers with the prediction log as input. This node is mandatory; do not route around it because the orchestrator-self-review was clean. |
 | `strong-review` | `reviewer-strong` | Whole-branch pass that combines lens logs, finds gaps, contradictions, and design issues. |
-| `metrics-track` | orchestrator | Record the finding, the node that discovered it, the round number, and the node where it resolves. This node does not block. |
-| `finding-fix` | orchestrator + implementer subagent | Resolve one finding and commit the fix. |
+| `metrics-track` | orchestrator | Record the finding, the node that discovered it, the round number, the node where it resolves, and the `regression_class`. This node does not block. |
+| `finding-fix` | `implementer` subagent | Resolve one finding with the lens's checklist and a concrete brief, then commit. |
 | `re-preflight` | `tools/run.py ci --check` | Re-run the deterministic checks on the post-fix range. |
-| `targeted-re-review` | `reviewer-fixes` | Cheap gate to confirm the original finding is resolved on the fix diff before a whole-branch `reviewer-strong`. |
-| `regression-scan` | `reviewer-fixes` on the touched area, then `reviewer-strong` on the touched area only if the fast pass finds a new issue | Check for new issues a non-trivial fix introduced. The initial fast pass keeps this node cheap. |
+| `reviewer-fixes` | `reviewer-fixes` subagent | Cheap lens-aware re-review of the fix blast radius. Verifies the original finding and applies the originating lens's `## Checklist` to the changed files only. |
+| `regression-scan` | `reviewer-strong` on the touched area | For non-trivial or cross-cutting fixes, confirm and classify any new issue the fix introduced. |
+| `resolved-ledger` | orchestrator | Bookkeeping node that marks a finding resolved and records `resolved_at_node` and `resolved_at_round` in `review-metrics.json`. |
+| `final-strong` | `reviewer-strong` | One whole-branch pass after all queued findings are resolved. Confirms no remaining gaps, contradictions, or design issues. |
 | `ready` | orchestrator | Final `ci --check`; wait for remote CI to pass; mark the PR ready. |
 | `blocked` | orchestrator | Human escalation for contested or load-bearing findings the orchestrator cannot resolve. |
 
@@ -68,16 +76,24 @@ flowchart TD
 | `metrics-track` | `finding-fix` | Always; choose the next finding to fix. |
 | `finding-fix` | `re-preflight` | Fix is committed. |
 | `re-preflight` | `fast-fix` | A new deterministic issue appears. |
-| `re-preflight` | `targeted-re-review` | `ci --check` passes. |
-| `targeted-re-review` | `strong-review` | The fix is trivial and the cheap `reviewer-fixes` pass on the fix diff is clean. |
-| `targeted-re-review` | `regression-scan` | The fix is non-trivial (multi-file, generated surfaces, security/tooling boundary, or changes a public interface) or `reviewer-fixes` finds a new issue. |
-| `regression-scan` | `metrics-track` | `reviewer-strong` on the touched area confirms a new issue introduced by the fix. |
-| `regression-scan` | `strong-review` | The widened `reviewer-fixes` pass on the touched area is clean. |
+| `fast-fix` | `re-preflight` | Always; re-run preflight after the fix. |
+| `re-preflight` | `reviewer-fixes` | `ci --check` passes. |
+| `reviewer-fixes` | `resolved-ledger` | The original finding is fixed and `reviewer-fixes` is clean. |
+| `reviewer-fixes` | `finding-fix` | The original finding is not fixed. |
+| `reviewer-fixes` | `metrics-track` | `reviewer-fixes` finds a new same-lens/blast-radius issue. |
+| `reviewer-fixes` | `regression-scan` | The fix is non-trivial (multi-file, generated surfaces, security/tooling boundary, or changes a public interface). |
+| `regression-scan` | `resolved-ledger` | `reviewer-strong` on the touched area is clean. |
+| `regression-scan` | `metrics-track` | `reviewer-strong` on the touched area confirms a new issue. |
+| `resolved-ledger` | `finding-fix` | More findings remain in the queue. |
+| `resolved-ledger` | `final-strong` | All findings are resolved. |
+| `final-strong` | `ready` | `reviewer-strong` reports `reviewer-strong: clean`. |
+| `final-strong` | `metrics-track` | `reviewer-strong` reports findings. |
+| `final-strong` | `blocked` | A finding is contested or load-bearing. |
 | `strong-review` | `blocked` | A finding is contested or load-bearing and the orchestrator cannot resolve it. |
 
 ## Round counting
 
-A "round" is one complete traversal through `lens-dispatch` or `strong-review` that produces findings. `orchestrator-self-review` and cheap `reviewer-fixes` gates (`targeted-re-review` and the fast phase of `regression-scan`) are not rounds because they are cheap gates. The first `lens-dispatch` is round 1. The first `strong-review` is round 2. A `regression-scan` that confirms a new issue with `reviewer-strong` starts a new round at `metrics-track`.
+A "round" is one complete traversal through `lens-dispatch` or `strong-review` (including `final-strong`) that produces findings. `orchestrator-self-review`, `reviewer-fixes`, and `resolved-ledger` are not rounds because they are cheap or bookkeeping nodes. The first `lens-dispatch` is round 1. The first `strong-review` is round 2. A `regression-scan` or `final-strong` that confirms a new issue starts a new round at `metrics-track`.
 
 ## `review-metrics.json` schema
 
@@ -106,7 +122,7 @@ A "round" is one complete traversal through `lens-dispatch` or `strong-review` t
       "lens": "reviewer-skills",
       "discovered_at_node": "lens-dispatch",
       "discovered_at_round": 1,
-      "resolved_at_node": "targeted-re-review",
+      "resolved_at_node": "resolved-ledger",
       "resolved_at_round": 2,
       "severity": "important"
     }
