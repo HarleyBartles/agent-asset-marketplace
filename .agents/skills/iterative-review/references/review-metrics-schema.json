@@ -43,7 +43,7 @@
           "resolved_at_node": {"type": "string"},
           "resolved_at_round": {"type": "integer", "minimum": 1},
           "regression_of": {"type": "string"},
-          "regression_class": {"type": "string"},
+          "regression_class": {"type": "string", "enum": ["same-lens-blast-radius", "cross-lens-blast-radius", "outside-blast-radius"]},
           "severity": {"type": "string", "enum": ["blocking", "important", "minor"]}
         }
       }
@@ -52,14 +52,14 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["fix_for", "new_finding", "discovered_at_node", "discovered_at_round", "severity"],
+        "required": ["fix_for", "new_finding", "discovered_at_node", "discovered_at_round", "regression_class", "severity"],
         "properties": {
           "fix_for": {"type": "string"},
           "new_finding": {"type": "string"},
           "discovered_at_node": {"type": "string"},
           "discovered_at_round": {"type": "integer", "minimum": 1},
           "lens": {"type": "string"},
-          "regression_class": {"type": "string"},
+          "regression_class": {"type": "string", "enum": ["same-lens-blast-radius", "cross-lens-blast-radius", "outside-blast-radius"]},
           "severity": {"type": "string", "enum": ["blocking", "important", "minor"]}
         }
       }
