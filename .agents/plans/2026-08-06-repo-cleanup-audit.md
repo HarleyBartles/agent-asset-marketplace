@@ -245,3 +245,19 @@
 - [ ] **Step 1:** `py -3 tools/run.py ci --check`
 - [ ] **Step 2:** `git push` the additional commits to `cleanup/remove-adapters-generated`
 - [ ] **Step 3:** Verify the PR URL and head SHA are current.
+
+---
+
+### Task 11: Update iterative-review skill signpost
+
+**Files:**
+- `codex-marketplace/plugins/superpowers-plus/skills/iterative-review/SKILL.md`
+- `references/review-state-graph.md` (referenced, not modified)
+
+**Interfaces:**
+- Consumes: Audit observation that the graph was not being read before the walkthrough
+- Produces: `SKILL.md` text directing the orchestrator to read `references/review-state-graph.md` before dispatching any subagents or deciding which lenses apply
+
+- [x] **Step 1:** Add a "Before you start" section to `iterative-review/SKILL.md` requiring the orchestrator to read `references/review-state-graph.md` first.
+- [x] **Step 2:** Sync the installed skill copy with `py -3 .agents/skills/refreshing-installed-skills/scripts/refresh_installed_skills.py --apply --force --allow-shared-checkout`.
+- [x] **Step 3:** Commit and push the update.

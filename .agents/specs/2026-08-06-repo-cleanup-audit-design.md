@@ -66,6 +66,7 @@ Remove stale, redundant, and split-brain repository surfaces that no longer serv
   - `.agents/runbooks/marketplace-generation.md`
   - `.agents/plugins/AGENTS.md`
   - `.agents/docs/AGENTS.md` and root `AGENTS.md` routing pointers to `mesh-policy.md` and `repo-runbook-policy.md` must be re-pointed to `.agents/doctrine/`
+- Update `codex-marketplace/plugins/superpowers-plus/skills/iterative-review/SKILL.md` to add a "Before you start" signpost requiring the orchestrator to read `references/review-state-graph.md` before dispatching any subagents or deciding which lenses apply.
 
 ### 6. Re-generate pressure-test results
 
