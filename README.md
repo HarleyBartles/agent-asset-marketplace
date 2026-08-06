@@ -1,93 +1,46 @@
 # agent-asset-marketplace
 
-Canonical source of truth for an agent/plugin asset marketplace.
+The canonical source of truth for agent-facing marketplace assets, starting with Codex plugins and portable skills.
 
-This repository represents an agent/plugin asset marketplace.
+## What this is
 
-Codex plugin first.
+This repository publishes market-consumable assets for agents: plugins, skills, runbooks, and validation tooling. It is not a research ledger or a mirror of upstream docs. Every tracked file either ships to a marketplace or supports the traceability, provenance, and validation that lets a consumer trust what ships.
 
-Primary deliverables are market-consumable assets, especially Codex plugin-market
-assets where applicable. Supporting surfaces such as provenance, ledgers, indexes,
-and validation helpers exist to preserve source, traceability, and review
-context. They do not substitute for vendored marketplace assets.
+The primary outputs are:
 
-The repo-wide navigation mesh lives in [INDEX.md](INDEX.md) and the agent
-mesh lives in [.agents/AGENTS.md](.agents/AGENTS.md) with policy in
-[.agents/doctrine/mesh-policy.md](.agents/doctrine/mesh-policy.md).
+- `codex-marketplace/plugins/` — Codex plugin source assets (the market-facing product).
+- `.agents/skills/` — portable skills and runbooks that consumer repos can install.
+- `provenance/` — source-custody, license, and attribution records for third-party assets.
+- `tools/` — scripts that validate the marketplace inventory, plugin manifests, and repo mesh.
 
-The active marketplace root inventory is editable at
-`codex-marketplace/plugin-roots.json`. Workers should update that inventory,
-the relevant plugin files, and then run `py -3 tools/run.py marketplace --apply`
-for a full regeneration and `py -3 tools/run.py ci --check` to prove the
-marketplace registry, Codex marketplace manifest, and repo index are current.
+## How to use this repo
 
-The boring goal for upstream drains is simple: take useful upstream plugin-market
-assets and put them into this repo's plugin market when rights and source shape
-allow it. Preserve license, attribution, source mapping, and validation evidence
-alongside the assets.
+1. Clone the repository.
+2. Make changes in the appropriate plugin or skill source tree.
+3. Regenerate generated surfaces: `py -3 tools/run.py marketplace --apply`
+4. Validate the tree: `py -3 tools/run.py ci --check`
+5. Commit and push. Open a draft PR for ordinary work; direct-main pushes are only for authorized maintenance.
 
-A repository-browser-discoverable markdown note is not a completed marketplace
-asset.
+## How to navigate
 
-## Source of truth
+- Start at [INDEX.md](INDEX.md) for the generated repo-wide navigation mesh.
+- Read [AGENTS.md](AGENTS.md) for repository doctrine and worker expectations.
+- Read [`.agents/doctrine/mesh-policy.md`](.agents/doctrine/mesh-policy.md) for the canonical mesh contract that governs how surfaces are organized and validated.
 
-This repo is the authoring and review source of truth for marketplace assets.
+## Adding or updating assets
 
-Deployment targets, exports, and runtime packaging outputs are downstream artifacts. They should be derived from the tracked sources here, never edited as the primary copy.
+- Keep upstream plugin boundaries by default.
+- Copy legally re-vendorable third-party assets into `codex-marketplace/plugins/<plugin>/` with provenance evidence.
+- Update `codex-marketplace/plugin-roots.json` when the active plugin set changes.
+- Run `py -3 tools/run.py marketplace --apply` to update `codex-marketplace/manifest.json`, `.agents/plugins/marketplace.json`, and bundle manifests.
+- Run `py -3 tools/run.py ci --check` before claiming the tree is green.
 
-## Marketplace asset flow
+## Trust and provenance
 
-Market-facing Codex/plugin assets live under the marketplace/plugin surfaces in this repo.
-For this normalized pass, the active plugin set is defined in
-`codex-marketplace/plugin-roots.json` and includes the plugin roots
-under `codex-marketplace/plugins/`.
+- Preserve license and attribution evidence for every imported asset.
+- Do not store secrets or credentials in this repository.
+- Treat provenance notes as supporting evidence, not as a substitute for shipping real marketplace assets.
 
-Expected flow:
+## License
 
-1. Preserve upstream plugin/package boundaries by default.
-2. Copy legally re-vendorable third-party plugin assets into the marketplace/plugin route with provenance and license evidence.
-3. Update the marketplace/runtime registry or manifest required for the asset to be discoverable/installable.
-4. Use `provenance/` to prove origin, rights, and custody.
-5. Validate the repo and publish through GitHub before claiming completion.
-
-Repacking upstream skills into a new synthetic plugin is not the default drain route. Do that only when an issue explicitly asks for a curated derivative bundle and defines the transformation contract.
-
-## Third-party source custody
-
-1. Keep the canonical marketplace source layout in this repo.
-2. Store plugin and agent metadata in the marketplace source directories.
-3. Keep `codex-marketplace/manifest.json` and the bundle manifests aligned with
-   the actual plugin source tree.
-4. Preserve provenance alongside any adapted or vendored plugin asset when the
-   retained plugin actually depends on it.
-
-The marketplace source tree includes real market-consumable plugin assets under
-`codex-marketplace/plugins/`, with `codex-marketplace/manifest.json` exposing
-the active protected plugin inventory, including the Codex-facing
-`superpowers` plugin.
-
-`codex-marketplace/plugins/<plugin>/skills/<name>/` is the canonical editable
-first-party skill custody. `provenance/<record>.md` tracks third-party source
-attribution, snapshots, and custody evidence.
-
-## Provenance, license, and trust
-
-`provenance/` tracks where assets came from, what license or usage constraints apply, what was copied or excluded, and what validation or trust assumptions apply.
-
-A provenance note can support marketplace preservation. It is not completion by itself unless the issue explicitly asks for provenance-only work or every scoped asset has a concrete blocker.
-
-Default posture:
-
-- preserve attribution and license evidence;
-- do not store secrets or credentials;
-- do not assume an imported asset is safe without review;
-- keep trust notes explicit and lightweight;
-- keep source maps strong enough that a reviewer can connect upstream paths to repo-held assets.
-
-## Directory map
-
-- `codex-marketplace/` - marketplace source layout and active plugin source shape.
-- `.agents/plugins/` - runtime plugin marketplace registry when used by current tooling.
-- `provenance/` - retained license, attribution, source-map, reconciliation, and trust records.
-- `tools/` - helper scripts and validation tooling.
-- `repo-index/` - machine-readable navigation metadata for repo traversal and future corpus prep.
+Assets in this repository are MIT licensed unless the individual file or provenance record states otherwise. See `provenance/` for third-party source-custody details and any per-asset exceptions.
