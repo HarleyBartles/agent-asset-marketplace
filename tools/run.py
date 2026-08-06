@@ -9,7 +9,7 @@ import shlex
 import shutil
 import subprocess
 import sys
-from dataclasses import dataclass, replace
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Callable
 
@@ -280,7 +280,8 @@ def _check_mesh(ctx: Ctx) -> None:
 def _run_validate(ctx: Ctx) -> None:
     _run([sys.executable, "tools/validate_authority_assets.py"], ctx)
     _run([sys.executable, "tools/validate_agents_md.py"], ctx)
-    _git_diff_check(ctx)
+    if ctx.mode == "check":
+        _git_diff_check(ctx)
 
 
 def _apply_marketplace(ctx: Ctx) -> None:
@@ -504,11 +505,6 @@ def run_targets(targets: list[str], ctx: Ctx) -> None:
             _run_steps(target, task, task.apply, ctx)
         else:
             _run_steps(target, task, task.check, ctx)
-    if ctx.mode == "apply":
-        check_ctx = replace(ctx, mode="check")
-        for target in targets:
-            task = _TASKS[target]
-            _run_steps(target, task, task.check, check_ctx)
 
 
 def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
@@ -517,7 +513,7 @@ def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         epilog=(
             "Targets: " + ", ".join(_TASKS.keys()) + "\n"
             "ci --check is the full non-mutating CI/PR gate.\n"
-            "ci --apply runs the same checks but applies mechanical fixes first.\n"
+            "ci --apply regenerates mechanical artifacts so the pre-commit hook can stage them.\n"
             "For a single target, run `tools/run <target> --apply`. See .devin/rules/tools.md."
         ),
     )
