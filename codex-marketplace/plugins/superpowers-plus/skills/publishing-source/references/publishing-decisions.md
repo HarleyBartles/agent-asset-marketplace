@@ -12,7 +12,7 @@ change, then hand off to the owning skill for the mechanics.
 | Ordinary repo work (default) | Pull request into main | `using-github-mcp` (PR open) | PR URL + branch + head SHA |
 | Branch closeout after PR review | Merge + branch delete | `finishing-a-development-branch` | Merge commit SHA or PR URL |
 | Versioned release of merged source | Tag + GitHub release | `release-engineering` + `using-github-mcp` | Tag URL + release URL |
-| Marketplace pack change (sources/, adapters/, registry) | Regenerate + PR | `publishing-source` decides; `repo-worker-base` hygiene | PR URL + regenerated-surface commit SHA |
+| Marketplace pack change (sources/, registry) | Regenerate + PR | `publishing-source` decides; `repo-worker-base` hygiene | PR URL + regenerated-surface commit SHA |
 | Pack export artifact (installable archive) | Export archive from regenerated bundle | `release-engineering` | Export artifact hash + source commit SHA |
 
 ## Selection rules

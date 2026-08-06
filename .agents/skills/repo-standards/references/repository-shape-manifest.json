@@ -41,7 +41,7 @@
     },
     {
       "id": "repo-runbook-policy",
-      "path": ".agents/docs/repo-runbook-policy.md",
+      "path": ".agents/doctrine/repo-runbook-policy.md",
       "kind": "file",
       "source": null,
       "scaffold": "scaffold_repo_runbook_policy.py",

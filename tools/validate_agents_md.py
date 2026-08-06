@@ -44,7 +44,7 @@ def main() -> int:
         for p in disallowed:
             print(f"  - {p}", file=sys.stderr)
         print(
-            "Scoped law must be in .devin/rules/*.md; see .agents/docs/mesh-policy.md.",
+            "Scoped law must be in .devin/rules/*.md; see .agents/doctrine/mesh-policy.md.",
             file=sys.stderr,
         )
         return 1

@@ -87,7 +87,7 @@ DEFAULT_REPO_INDEX: dict[str, Any] = {
         },
         {
             "name": "docs-unslop-profile",
-            "path": "docs/unslop/profile.md",
+            "path": ".agents/docs/unslop/profile.md",
             "purpose": "Canonical repo unslop profile for anti-slop custody and discovery.",
             "surface_kind": "hand-authored",
             "nearest_scoped_agents_md": ".devin/rules/docs.md",

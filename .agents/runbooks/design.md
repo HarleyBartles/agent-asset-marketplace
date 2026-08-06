@@ -8,7 +8,7 @@ A design that ignores the repo's standards will produce specs that do not hand o
 
 - **[`../docs/mesh-policy.md`](../docs/mesh-policy.md)** - how AGENTS.md, README, and INDEX.md surfaces are supposed to work
 - **[`AGENTS.md`](../../AGENTS.md)** - repository source-of-truth and publication rules
-- **[`docs/custody-and-marketplace-doctrine.md`](../../docs/custody-and-marketplace-doctrine.md)** - source custody rules, provenance modes, plugin curation rules
+- **[`.agents/doctrine/custody-and-marketplace-doctrine.md`](../../.agents/doctrine/custody-and-marketplace-doctrine.md)** - source custody rules, provenance modes, plugin curation rules
 
 ## Design Spec Expectations
 

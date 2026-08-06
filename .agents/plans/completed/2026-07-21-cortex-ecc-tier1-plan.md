@@ -9,9 +9,9 @@ Convert the 30 currently projected Claude-Cortex and ECC third-party skill remna
 - Design spec: `.agents/superpowers/specs/2026-07-21-cortex-ecc-remnant-clearance-design.md`
 - Retained upstream inventory: `.agents/superpowers/specs/2026-07-21-cortex-ecc-retained-upstream-inventory.md`
 - Custody/projection doctrine: `docs/custody-and-projection-doctrine.md`
-- Skill standards: `docs/skill-standards-policy.md`
-- OpenAI agent contract: `docs/contracts/openai-agent-yaml.md`
-- Frontmatter contract: `docs/contracts/skill-frontmatter.md`
+- Skill standards: `.agents/doctrine/skill-standards-policy.md`
+- OpenAI agent contract: `.agents/docs/contracts/openai-agent-yaml.md`
+- Frontmatter contract: `.agents/docs/contracts/skill-frontmatter.md`
 - Tooling: `tools/AGENTS.md`
 
 ## Worktree

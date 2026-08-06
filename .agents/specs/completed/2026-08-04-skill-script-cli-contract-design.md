@@ -86,4 +86,4 @@ to record the `vendorProfiles` provenance.
 
 - `sources/first_party/skills/refreshing-installed-skills/scripts/refresh_installed_skills.py`
   already follows the `check`/`apply` pattern and is the reference shape.
-- `docs/skill-standards-policy.md` should be updated to include this contract.
+- `.agents/doctrine/skill-standards-policy.md` should be updated to include this contract.

@@ -15,7 +15,7 @@
 **Files:**
 - Modify: `tools/skill_zip_artifacts.py`
 - Modify: `tools/skill_overlay_materializer.py`
-- Modify: `docs/contracts/openai-agent-yaml.md`
+- Modify: `.agents/docs/contracts/openai-agent-yaml.md`
 - Modify: `tests/test_skill_overlay_materializer.py`
 - Modify: `tests/test_validate_marketplace.py`
 

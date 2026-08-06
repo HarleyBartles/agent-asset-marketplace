@@ -32,10 +32,8 @@ py -3 codex-marketplace/plugins/superpowers-plus/skills/writing-skills/scripts/n
 - Generated marketplace and installed skill surfaces are downstream outputs;
   do not edit them directly.
 
-See [`docs/skill-standards-policy.md`](../../docs/skill-standards-policy.md)
-for marketplace standards and marketplace metadata, and
-[`docs/overlay-adapter-policy.md`](../../docs/overlay-adapter-policy.md) for
-third-party overlay and adapter triggers.
+See [`.agents/doctrine/skill-standards-policy.md`](../../.agents/doctrine/skill-standards-policy.md)
+for marketplace standards and marketplace metadata.
 
 ## Generated-surface commands
 

@@ -18,10 +18,10 @@
 
 ---
 
-### Task 1: Update `docs/skill-standards-policy.md`
+### Task 1: Update `.agents/doctrine/skill-standards-policy.md`
 
 **Files:**
-- Modify: `docs/skill-standards-policy.md`
+- Modify: `.agents/doctrine/skill-standards-policy.md`
 
 Add a `### Scope notes` subsection under the skill body / reference guidance section with the following text:
 

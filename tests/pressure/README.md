@@ -74,5 +74,5 @@ py -3 tools/run.py ci --check
 
 ## References
 
-- `docs/skill-standards-policy.md` — policy and advisory.
+- `.agents/doctrine/skill-standards-policy.md` — policy and advisory.
 - `codex-marketplace/plugins/superpowers-plus/skills/writing-skills/testing-skills-with-subagents.md` — RED/GREEN methodology.

@@ -170,8 +170,8 @@ This repository uses two distinct layers for the ECC Superpowers bundle:
 - Installation/export layer is derived from the projection and is produced only by canonical tooling.
 - The custody flow is `source custody -> projection layer -> installation/export layer`.
 - The projected ECC skills are materialized from `sources/third_party/ecc/upstream/skills/...`.
-- Frontmatter contract: [docs/contracts/skill-frontmatter.md](../../../docs/contracts/skill-frontmatter.md)
-- OpenAI agent contract: [docs/contracts/openai-agent-yaml.md](../../../docs/contracts/openai-agent-yaml.md)
+- Frontmatter contract: [.agents/docs/contracts/skill-frontmatter.md](../../../.agents/docs/contracts/skill-frontmatter.md)
+- OpenAI agent contract: [.agents/docs/contracts/openai-agent-yaml.md](../../../.agents/docs/contracts/openai-agent-yaml.md)
 
 The split is deliberate:
 
@@ -221,8 +221,8 @@ This repository uses three distinct layers for the ECC Superpowers bundle:
 - Installation/export layer is derived from the secondary projection and is produced only by canonical tooling.
 - The custody flow is `source custody -> primary projection -> secondary projection -> installation/export layer`.
 - The projected ECC skills are mirrored from `codex-marketplace/plugins/superpowers-ecc/skills/...`.
-- Frontmatter contract: [docs/contracts/skill-frontmatter.md](../../../docs/contracts/skill-frontmatter.md)
-- OpenAI agent contract: [docs/contracts/openai-agent-yaml.md](../../../docs/contracts/openai-agent-yaml.md)
+- Frontmatter contract: [.agents/docs/contracts/skill-frontmatter.md](../../../.agents/docs/contracts/skill-frontmatter.md)
+- OpenAI agent contract: [.agents/docs/contracts/openai-agent-yaml.md](../../../.agents/docs/contracts/openai-agent-yaml.md)
 
 The split is deliberate:
 
@@ -272,8 +272,8 @@ This repository uses two distinct layers for the Claude-Cortex bundle:
 - Installation/export layer is derived from the projection and is produced only by canonical tooling.
 - The custody flow is `source custody -> projection layer -> installation/export layer`.
 - The projected Claude-Cortex skills are materialized from `sources/third_party/codex-cortex/upstream/skills/...` per the first-party selection ledger.
-- Frontmatter contract: [docs/contracts/skill-frontmatter.md](../../../docs/contracts/skill-frontmatter.md)
-- OpenAI agent contract: [docs/contracts/openai-agent-yaml.md](../../../docs/contracts/openai-agent-yaml.md)
+- Frontmatter contract: [.agents/docs/contracts/skill-frontmatter.md](../../../.agents/docs/contracts/skill-frontmatter.md)
+- OpenAI agent contract: [.agents/docs/contracts/openai-agent-yaml.md](../../../.agents/docs/contracts/openai-agent-yaml.md)
 
 The split is deliberate:
 
@@ -323,8 +323,8 @@ This repository uses two distinct layers for the repo worker base bundle:
 - Installation/export layer is derived from the projection and is produced only by canonical tooling.
 - The custody flow is `source custody -> projection layer -> installation/export layer`.
 - The projected skills are materialized from `sources/first_party/core/...`.
-- Frontmatter contract: [docs/contracts/skill-frontmatter.md](../../../docs/contracts/skill-frontmatter.md)
-- OpenAI agent contract: [docs/contracts/openai-agent-yaml.md](../../../docs/contracts/openai-agent-yaml.md)
+- Frontmatter contract: [.agents/docs/contracts/skill-frontmatter.md](../../../.agents/docs/contracts/skill-frontmatter.md)
+- OpenAI agent contract: [.agents/docs/contracts/openai-agent-yaml.md](../../../.agents/docs/contracts/openai-agent-yaml.md)
 
 The split is deliberate:
 
@@ -371,8 +371,8 @@ This repository uses two distinct layers for the dotnet-kit bundle:
 - Installation/export layer is derived from the projection and is produced only by canonical tooling.
 - The custody flow is `source custody -> projection layer -> installation/export layer`.
 - The projected dotnet skills are materialized from `sources/third_party/dotnet-claude-kit/upstream/skills/...` per the first-party selection ledger.
-- Frontmatter contract: [docs/contracts/skill-frontmatter.md](../../../docs/contracts/skill-frontmatter.md)
-- OpenAI agent contract: [docs/contracts/openai-agent-yaml.md](../../../docs/contracts/openai-agent-yaml.md)
+- Frontmatter contract: [.agents/docs/contracts/skill-frontmatter.md](../../../.agents/docs/contracts/skill-frontmatter.md)
+- OpenAI agent contract: [.agents/docs/contracts/openai-agent-yaml.md](../../../.agents/docs/contracts/openai-agent-yaml.md)
 
 The split is deliberate:
 
@@ -423,8 +423,8 @@ This repository uses three distinct layers for the API contracts bundle:
 - Installation/export layer is derived from the secondary projection and is produced only by canonical tooling.
 - The custody flow is `source custody -> primary projection -> secondary projection -> installation/export layer`.
 - The projected API contract skills are mirrored from `codex-marketplace/plugins/codex-cortex/skills/...`.
-- Frontmatter contract: [docs/contracts/skill-frontmatter.md](../../../docs/contracts/skill-frontmatter.md)
-- OpenAI agent contract: [docs/contracts/openai-agent-yaml.md](../../../docs/contracts/openai-agent-yaml.md)
+- Frontmatter contract: [.agents/docs/contracts/skill-frontmatter.md](../../../.agents/docs/contracts/skill-frontmatter.md)
+- OpenAI agent contract: [.agents/docs/contracts/openai-agent-yaml.md](../../../.agents/docs/contracts/openai-agent-yaml.md)
 
 The split is deliberate:
 
@@ -476,8 +476,8 @@ This repository uses three distinct layers for the architecture bundle:
 - Installation/export layer is derived from the secondary projection and is produced only by canonical tooling.
 - The custody flow is `source custody -> primary projection -> secondary projection -> installation/export layer`.
 - The projected architecture skills are mirrored from `codex-marketplace/plugins/codex-cortex/skills/...`.
-- Frontmatter contract: [docs/contracts/skill-frontmatter.md](../../../docs/contracts/skill-frontmatter.md)
-- OpenAI agent contract: [docs/contracts/openai-agent-yaml.md](../../../docs/contracts/openai-agent-yaml.md)
+- Frontmatter contract: [.agents/docs/contracts/skill-frontmatter.md](../../../.agents/docs/contracts/skill-frontmatter.md)
+- OpenAI agent contract: [.agents/docs/contracts/openai-agent-yaml.md](../../../.agents/docs/contracts/openai-agent-yaml.md)
 
 The split is deliberate:
 
@@ -528,8 +528,8 @@ This repository uses two distinct layers for the language patterns bundle:
 - Installation/export layer is derived from the projection and is produced only by canonical tooling.
 - The custody flow is `source custody -> projection layer -> installation/export layer`.
 - The projected language pattern skills are materialized from `sources/third_party/codex-cortex/upstream/skills/...` per the first-party selection ledger.
-- Frontmatter contract: [docs/contracts/skill-frontmatter.md](../../../docs/contracts/skill-frontmatter.md)
-- OpenAI agent contract: [docs/contracts/openai-agent-yaml.md](../../../docs/contracts/openai-agent-yaml.md)
+- Frontmatter contract: [.agents/docs/contracts/skill-frontmatter.md](../../../.agents/docs/contracts/skill-frontmatter.md)
+- OpenAI agent contract: [.agents/docs/contracts/openai-agent-yaml.md](../../../.agents/docs/contracts/openai-agent-yaml.md)
 
 The split is deliberate:
 
@@ -580,8 +580,8 @@ This repository uses two distinct layers for the security bundle:
 - Installation/export layer is derived from the projection and is produced only by canonical tooling.
 - The custody flow is `source custody -> projection layer -> installation/export layer`.
 - The projected security skills are materialized from `sources/third_party/codex-cortex/upstream/skills/...` and `sources/third_party/ecc/upstream/skills/...` per the first-party selection ledger.
-- Frontmatter contract: [docs/contracts/skill-frontmatter.md](../../../docs/contracts/skill-frontmatter.md)
-- OpenAI agent contract: [docs/contracts/openai-agent-yaml.md](../../../docs/contracts/openai-agent-yaml.md)
+- Frontmatter contract: [.agents/docs/contracts/skill-frontmatter.md](../../../.agents/docs/contracts/skill-frontmatter.md)
+- OpenAI agent contract: [.agents/docs/contracts/openai-agent-yaml.md](../../../.agents/docs/contracts/openai-agent-yaml.md)
 
 The split is deliberate:
 
@@ -631,8 +631,8 @@ This repository uses two distinct layers for the frontend bundle:
 - Installation/export layer is derived from the projection and is produced only by canonical tooling.
 - The custody flow is `source custody -> projection layer -> installation/export layer`.
 - The projected frontend skills are materialized from `sources/third_party/codex-cortex/upstream/skills/...` per the first-party selection ledger.
-- Frontmatter contract: [docs/contracts/skill-frontmatter.md](../../../docs/contracts/skill-frontmatter.md)
-- OpenAI agent contract: [docs/contracts/openai-agent-yaml.md](../../../docs/contracts/openai-agent-yaml.md)
+- Frontmatter contract: [.agents/docs/contracts/skill-frontmatter.md](../../../.agents/docs/contracts/skill-frontmatter.md)
+- OpenAI agent contract: [.agents/docs/contracts/openai-agent-yaml.md](../../../.agents/docs/contracts/openai-agent-yaml.md)
 
 The split is deliberate:
 

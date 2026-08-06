@@ -46,7 +46,7 @@ The implementation target is **94 flat zips**, one per unique `canonical_name`. 
 | `tests/test_generator_check_modes.py` | `project_skills` tests; updated `update_skill_artifacts` check test; removed `validate_generated_drift` test. |
 | `tests/test_validate_marketplace.py` | Updated projection-materializer command; `skill_validation` imports. |
 | `tests/test_skill_overlay_materializer.py` | `skill_validation` import. |
-| `tools/AGENTS.md`, `codex-marketplace/AGENTS.md`, `codex-marketplace/plugins/AGENTS.md`, `docs/custody-and-projection-doctrine.md`, `docs/overlay-adapter-policy.md`, `docs/unslop/profile.md`, `README.md`, `codex-marketplace/README.md`, `repo-index/README.md`, `.agents/guides/marketplace-generation-guide.md`, `provenance/house-skills.md`, `tools/README.md` | Remove `adapters/gpt/`, per-pack zip path, `registry.json`, obsolete tool references. |
+| `tools/AGENTS.md`, `codex-marketplace/AGENTS.md`, `codex-marketplace/plugins/AGENTS.md`, `docs/custody-and-projection-doctrine.md`, `docs/overlay-adapter-policy.md`, `.agents/docs/unslop/profile.md`, `README.md`, `codex-marketplace/README.md`, `repo-index/README.md`, `.agents/guides/marketplace-generation-guide.md`, `provenance/house-skills.md`, `tools/README.md` | Remove `adapters/gpt/`, per-pack zip path, `registry.json`, obsolete tool references. |
 | `adapters/gpt/` | Deleted entirely. |
 | `tools/materialize_projection.py`, `tools/skill_zip_artifacts.py`, `tools/skill_gpt_exports.py`, `tools/export_skill_zips.py`, `tools/validate_export_skill_zips.py`, `tools/validate_generated_drift.py`, `tools/package_skill_zips.py` | Deleted after moving function. |
 
@@ -1355,7 +1355,7 @@ py -3 -c "from validate_skill_zips import main; print('OK')"
 - Modify `codex-marketplace/plugins/AGENTS.md:21-23`
 - Modify `docs/custody-and-projection-doctrine.md:106-116`, `123-146`, `171-175`, `184-200`
 - Modify `docs/overlay-adapter-policy.md:31-65`
-- Modify `docs/unslop/profile.md:14`
+- Modify `.agents/docs/unslop/profile.md:14`
 - Modify `README.md:18-31`
 - Modify `codex-marketplace/README.md:34-47`
 - Modify `repo-index/README.md:48-54`
@@ -1644,7 +1644,7 @@ package, it should not be projected at all (set `import_status` or
 `content_mode` to `skipped`/`blocked` in the bundle manifest).
 ```
 
-**Step 7: Update `docs/unslop/profile.md`**
+**Step 7: Update `.agents/docs/unslop/profile.md`**
 
 old_string:
 ```markdown

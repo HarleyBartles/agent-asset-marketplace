@@ -8,7 +8,7 @@ Make first-party skill boundaries actionable and document the pattern, while con
 
 1. `handoff-gates`
 2. `working-with-epics`
-3. `docs/skill-standards-policy.md`
+3. `.agents/doctrine/skill-standards-policy.md`
 4. `writing-with-clarity`
 
 ## Non-goals
@@ -50,7 +50,7 @@ Edit `sources/first_party/skills/working-with-epics/assets/authority/source-map.
 Edit the `do_not_use_when` frontmatter in `SKILL.md`:
 - Add a scope-notes pointer to any item that benefits from expansion.
 
-### `docs/skill-standards-policy.md`
+### `.agents/doctrine/skill-standards-policy.md`
 
 Add a **Scope notes convention** section:
 - When a first-party skill has real but non-primary boundary cases, create `references/scope-notes.md`.

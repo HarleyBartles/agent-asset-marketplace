@@ -57,10 +57,10 @@
 
 ---
 
-### Task 2: Update `.agents/docs/mesh-policy.md`
+### Task 2: Update `.agents/doctrine/mesh-policy.md`
 
 **Files:**
-- Modify: `.agents/docs/mesh-policy.md` (draft already exists in this worktree)
+- Modify: `.agents/doctrine/mesh-policy.md` (draft already exists in this worktree)
 
 **Interfaces:**
 - Consumes: the current `mesh-policy.md` and Devin documentation
@@ -191,7 +191,7 @@
 ### Task 6: Update repo guides and routing
 
 **Files:**
-- Modify: `.agents/docs/repo-runbook-policy.md`
+- Modify: `.agents/doctrine/repo-runbook-policy.md`
 - Modify or create: the `.agents/guides/` files named in the audit (for example, `.agents/guides/marketplace-tooling-guide.md`)
 
 **Interfaces:**
@@ -292,7 +292,7 @@
   ```text
   docs(mesh): migrate scoped law from AGENTS.md to .devin/rules
 
-  - Update .agents/docs/mesh-policy.md to reflect Devin Local's always-on
+  - Update .agents/doctrine/mesh-policy.md to reflect Devin Local's always-on
     AGENTS.md loading and the correct use of .devin/rules/*.md for scoped rules.
   - Thin root AGENTS.md to always-on law only.
   - Add .devin/rules/*.md for scoped directory rules.

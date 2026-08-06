@@ -41,7 +41,7 @@
 | `tools/install_agent_skills.py` | Preserve and validate local `mark-*` skills during marketplace refresh |
 | `tools/validate_authority_assets.py` | Validate cold authority manifests, maps, citations, and lane/source shape |
 | `.agents/skills/AGENTS.md` | Route the two skill-tree custody lanes |
-| `docs/skill-standards-policy.md` | Marketplace-specific standards plus local-skill pointer |
+| `.agents/doctrine/skill-standards-policy.md` | Marketplace-specific standards plus local-skill pointer |
 | `.agents/guides/skill-authoring-guide.md` | Local authoring commands and handoff route |
 | `tests/test_install_agent_skills.py` | Installer no-op and local-lane preservation regression tests |
 | `tests/test_mark_skill_authoring_contract.py` | Local skill shape, lane, template, and scaffolder contract tests |
@@ -482,7 +482,7 @@ git commit -m "feat: validate source-backed skill authority evidence"
 
 **Files:**
 
-- Modify: `docs/skill-standards-policy.md`
+- Modify: `.agents/doctrine/skill-standards-policy.md`
 - Modify: `.agents/guides/skill-authoring-guide.md`
 - Create or modify: `tests/test_mark_skill_authoring_contract.py`
 - Modify only if a regression test proves it necessary: `tools/normalize_first_party_skill_sources.py`
@@ -512,7 +512,7 @@ import normalize_first_party_skill_sources as normalize  # noqa: E402
 
 
 def test_local_guidance_routes_to_mark_skill_authoring():
-    standards = (ROOT / "docs/skill-standards-policy.md").read_text(encoding="utf-8")
+    standards = (ROOT / ".agents/doctrine/skill-standards-policy.md").read_text(encoding="utf-8")
     guide = (ROOT / ".agents/guides/skill-authoring-guide.md").read_text(encoding="utf-8")
     assert "mark-skill-authoring" in standards
     assert "mark-skill-authoring" in guide
@@ -554,7 +554,7 @@ py -3 -m pytest tests/test_mark_skill_authoring_contract.py -q
 
 Expected: the guidance assertions fail until the two local documents are routed to `mark-skill-authoring`; the normalizer regression passes against the existing implementation.
 
-- [x] **Step 3: Update `docs/skill-standards-policy.md`.**
+- [x] **Step 3: Update `.agents/doctrine/skill-standards-policy.md`.**
 
 Keep marketplace standards authoritative for first-party source custody, frontmatter, projection metadata, word limits, and marketplace validation. Add this routing paragraph near the opening standards section:
 
@@ -611,7 +611,7 @@ Expected: tests pass; the stale-reference search returns no active-document matc
 - [x] **Step 6: Commit guidance reconciliation.**
 
 ```text
-git add docs/skill-standards-policy.md .agents/guides/skill-authoring-guide.md tests/test_mark_skill_authoring_contract.py
+git add .agents/doctrine/skill-standards-policy.md .agents/guides/skill-authoring-guide.md tests/test_mark_skill_authoring_contract.py
 git commit -m "docs: route skill authoring through local mark skill"
 ```
 

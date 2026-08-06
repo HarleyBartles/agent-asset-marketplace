@@ -1107,7 +1107,7 @@ chore(tools): point tool callers and repo-index metadata at tools/run
 
 ## Task 7: Update CI, pre-commit, and repo-runbook-policy exceptions
 
-**Files:** `.github/workflows/marketplace-validation.yml`, `.git/hooks/pre-commit` (create), `.agents/docs/repo-runbook-policy.md`
+**Files:** `.github/workflows/marketplace-validation.yml`, `.git/hooks/pre-commit` (create), `.agents/doctrine/repo-runbook-policy.md`
 
 ### 7a. `.github/workflows/marketplace-validation.yml`
 
@@ -1187,7 +1187,7 @@ EOF
 chmod +x .git/hooks/pre-commit
 ```
 
-### 7c. `.agents/docs/repo-runbook-policy.md`
+### 7c. `.agents/doctrine/repo-runbook-policy.md`
 
 Old block:
 ```markdown
@@ -1309,7 +1309,7 @@ and `PROJECTION.md` surfaces.
 
 ## Routing pointers
 
-- `../.agents/docs/mesh-policy.md` before changing generator or validator behavior
+- `../.agents/doctrine/mesh-policy.md` before changing generator or validator behavior
 - `../.agents/guides/planning-guide.md` before planning tool changes
 - `../.agents/guides/implementing-guide.md` before implementing tool changes
 - `../.agents/guides/marketplace-generation-guide.md` before changing marketplace regeneration behavior
@@ -1421,7 +1421,7 @@ Keep tooling minimal and focused on validation or lightweight asset handling.
 
 Run the following script from the repo root. It updates command references in
 `codex-marketplace/AGENTS.md`, `.agents/guides/*.md`, and
-`docs/skill-standards-policy.md` to use `tools/run`.
+`.agents/doctrine/skill-standards-policy.md` to use `tools/run`.
 
 ```python
 from pathlib import Path
@@ -1437,7 +1437,7 @@ FILES = [
     ROOT / ".agents/guides/planning-guide.md",
     ROOT / ".agents/guides/marketplace-generation-guide.md",
     ROOT / "codex-marketplace/AGENTS.md",
-    ROOT / "docs/skill-standards-policy.md",
+    ROOT / ".agents/doctrine/skill-standards-policy.md",
 ]
 
 REPLACEMENTS = [

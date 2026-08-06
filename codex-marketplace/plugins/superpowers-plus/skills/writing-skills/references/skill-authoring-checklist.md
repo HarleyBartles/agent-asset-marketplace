@@ -21,8 +21,8 @@ Use this checklist when creating, reviewing, or refreshing a skill.
 
 ## 4. Validate
 
-- [ ] Frontmatter passes `docs/contracts/skill-frontmatter.md`.
-- [ ] `agents/openai.yaml` passes `docs/contracts/openai-agent-yaml.md`.
+- [ ] Frontmatter passes `.agents/docs/contracts/skill-frontmatter.md`.
+- [ ] `agents/openai.yaml` passes `.agents/docs/contracts/openai-agent-yaml.md`.
 - [ ] Bundled scripts support `--help` and `--check` per the skill-bundled CLI contract.
 - [ ] `tools/run marketplace --apply` installs cleanly.
 - [ ] `tools/run ci --check` passes.

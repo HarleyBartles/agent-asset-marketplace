@@ -4,7 +4,7 @@ Use this reference when working with marketplace generation, validation, and reg
 
 ## Before You Begin: Read the Standards
 
-- **[`docs/custody-and-marketplace-doctrine.md`](../../docs/custody-and-marketplace-doctrine.md)** — source custody rules, provenance modes, plugin curation rules
+- **[`.agents/doctrine/custody-and-marketplace-doctrine.md`](../../.agents/doctrine/custody-and-marketplace-doctrine.md)** — source custody rules, provenance modes, plugin curation rules
 - **[`.devin/rules/tools.md`](../../.devin/rules/tools.md)** — marketplace generation and validation tooling
 
 ## Canonical Tooling

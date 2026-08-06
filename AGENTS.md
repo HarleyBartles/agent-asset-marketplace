@@ -4,7 +4,7 @@
 
 This repository is the source of truth for agent-facing assets. It is an agent asset marketplace, not just a research ledger.
 
-The primary durable output is market-consumable assets; support surfaces exist to help them, not substitute for them. Codex plugin first; generated GPT-safe skill zips second. The tracked agent mesh lives under `.agents/`. Root `AGENTS.md` is the local law node; `.agents/docs/mesh-policy.md` is the canonical mesh statement.
+The primary durable output is market-consumable assets; support surfaces exist to help them, not substitute for them. Codex plugin first; generated GPT-safe skill zips second. The tracked agent mesh lives under `.agents/`. Root `AGENTS.md` is the local law node; `.agents/doctrine/mesh-policy.md` is the canonical mesh statement.
 ## Source-of-truth split
 
 GitHub and the repository tree prove file state, landed assets, manifests, source snapshots, provenance notes, validation scripts, and playbooks.
@@ -30,19 +30,19 @@ For ordinary worker execution, prefer a PR into `main`.
 Open pull requests as **draft**; keep them in draft while iterating and validating. Flip to ready for review only after self-review is complete and `py -3 tools/run.py ci --check` passes. See `.agents/runbooks/pr.md` and `.devin/rules/pr.md`.
 ## Build and test commands
 
-Canonical: `py -3 tools/run.py ci --check` and `py -3 tools/run.py marketplace --apply`. Use `py -3 .agents/skills/selecting-a-subagent/scripts/install_profiles.py --apply` to install portable subagent profiles to the user-global agents directory; use `py -3 tools/run.py runtime-agents --apply --allow-shared-checkout` only for repo-local `.agents/agents/` profiles when working in a worktree; see `docs/non-repo-locations-policy.md`.
+Canonical: `py -3 tools/run.py ci --check` and `py -3 tools/run.py marketplace --apply`. Use `py -3 .agents/skills/selecting-a-subagent/scripts/install_profiles.py --apply` to install portable subagent profiles to the user-global agents directory; use `py -3 tools/run.py runtime-agents --apply --allow-shared-checkout` only for repo-local `.agents/agents/` profiles when working in a worktree; see `.agents/doctrine/non-repo-locations-policy.md`.
 ## Security considerations
 
 Apply the `security-review` profile from `/unslop-profiles` to relevant work and review the security lenses in `.agents/runbooks/security.md`.
 ## Routing pointers
 
-- [Mesh policy](.agents/docs/mesh-policy.md)
+- [Mesh policy](.agents/doctrine/mesh-policy.md)
 - Scoped law lives in `.devin/rules/*.md` (including [PR workflow](.devin/rules/pr.md))
 - [Worker guidance](.agents/runbooks/repo-doctrine.md)
 - [Implementing workflow](.agents/runbooks/implementing.md)
-- [Runbook stage routing](.agents/runbooks/AGENTS.md), [repo runbook policy](.agents/docs/repo-runbook-policy.md), and [completing plans](.agents/runbooks/completing-plans.md)
+- [Runbook stage routing](.agents/runbooks/AGENTS.md), [repo runbook policy](.agents/doctrine/repo-runbook-policy.md), and [completing plans](.agents/runbooks/completing-plans.md)
 - [Completed plans doctrine](.agents/doctrine/completed-plans.md) and [completed plans rule](.devin/rules/completed-plans.md) for the in-flight vs completed boundary
-- [Worktree and scratch policy](docs/non-repo-locations-policy.md)
+- [Worktree and scratch policy](.agents/doctrine/non-repo-locations-policy.md)
 
 ## Maintenance responsibility
 

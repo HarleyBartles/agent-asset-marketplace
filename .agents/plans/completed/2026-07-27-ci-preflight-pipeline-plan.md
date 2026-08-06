@@ -182,7 +182,7 @@ Find the routing table entry:
 
 ```markdown
 | How a repo's shape should be checked/applied | [references/repository-shape-standard.md](references/repository-shape-standard.md) and [references/repository-shape-manifest.json](references/repository-shape-manifest.json) |
-| The repo's local guide mappings | `.agents/docs/repo-runbook-policy.md` in the consuming repo |
+| The repo's local guide mappings | `.agents/doctrine/repo-runbook-policy.md` in the consuming repo |
 ```
 
 Replace it with:
@@ -190,7 +190,7 @@ Replace it with:
 ```markdown
 | How a repo's shape should be checked/applied | [references/repository-shape-standard.md](references/repository-shape-standard.md) and [references/repository-shape-manifest.json](references/repository-shape-manifest.json) |
 | How preflight, pre-commit, and CI relate | [references/ci-validation-pipeline.md](references/ci-validation-pipeline.md) |
-| The repo's local guide mappings | `.agents/docs/repo-runbook-policy.md` in the consuming repo |
+| The repo's local guide mappings | `.agents/doctrine/repo-runbook-policy.md` in the consuming repo |
 ```
 
 - [x] **Step 7: Verify the skill changes**

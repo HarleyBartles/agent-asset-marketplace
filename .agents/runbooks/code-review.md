@@ -16,7 +16,7 @@ When the diff touches vendored skills, prompts, or scripts that install into oth
 
 ## Architecture and Doctrine
 
-Reviewers must check the repo's architectural choices in `docs/custody-and-marketplace-doctrine.md`. If code and skills disagree, the skills win. Invoke `/repo-worker-base` and `/base-doctrine` when the work touches marketplace generation, validation, or tooling.
+Reviewers must check the repo's architectural choices in `.agents/doctrine/custody-and-marketplace-doctrine.md`. If code and skills disagree, the skills win. Invoke `/repo-worker-base` and `/base-doctrine` when the work touches marketplace generation, validation, or tooling.
 
 If marketplace configuration or source custody changed, regenerate with `tools/run marketplace --apply` and validate with `tools/run ci --check`.
 

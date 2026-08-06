@@ -101,18 +101,18 @@ and must not become competing skill-authoring authorities:
 | Surface | Current responsibility | Disposition |
 | --- | --- | --- |
 | `superpowers-plus:writing-skills` | General skill-authoring technique, skill TDD, discovery, and forward testing | Retain as third-party source; compose with `authoring-skills`; do not overlay |
-| `docs/skill-standards-policy.md` | First-party marketplace standards, local frontmatter, metadata, word limits, and installable-skill requirements | Retain as a thin repository-specific policy; move portable authoring rules to `authoring-skills` and link to it |
+| `.agents/doctrine/skill-standards-policy.md` | First-party marketplace standards, local frontmatter, metadata, word limits, and installable-skill requirements | Retain as a thin repository-specific policy; move portable authoring rules to `authoring-skills` and link to it |
 | `.agents/guides/skill-authoring-guide.md` | Local authoring entrypoint, source paths, commands, and testing handoff | Retain as a thin local guide; remove duplicated generic standards and point to `authoring-skills` plus the local policy |
 | `sources/first_party/skills/repo-worker-base/SKILL.md` | Portable repo-work routing and Superpowers composition | Do not add skill-authoring doctrine; only add `authoring-skills` to composition where a repo-worker route genuinely needs it |
 | `sources/first_party/skills/repo-worker-base/references/design-baseline.md` | Portable design-stage baseline | Retain; it owns design-stage evidence and handoff, not skill-authoring content |
 | `.agents/guides/design-guide.md` | Repository-specific design-spec paths, required sections, and handoff confidence | Retain; `authoring-skills` must follow it when the new skill is authored here |
 | `docs/overlay-adapter-policy.md` | Third-party adaptation and overlay rules | Retain; add only a cross-reference if needed, never duplicate first-party source-grounded rules |
-| `docs/contracts/skill-frontmatter.md` | Installable projection frontmatter contract | Retain as the projection contract; `authoring-skills` references it rather than restating it |
+| `.agents/docs/contracts/skill-frontmatter.md` | Installable projection frontmatter contract | Retain as the projection contract; `authoring-skills` references it rather than restating it |
 | `.agents/skills/writing-skills/` | Installed third-party projection/cache | Do not edit; it is not a repository-local authoring authority |
 
 The cleanup rule is simple: one rule has one authoritative home. The
 `authoring-skills` skill owns portable method and source-grounded custody;
-`docs/skill-standards-policy.md` owns this repository's stricter standards;
+`.agents/doctrine/skill-standards-policy.md` owns this repository's stricter standards;
 `.agents/guides/skill-authoring-guide.md` owns only local navigation and
 commands; projection contracts and third-party adaptation policies retain
 their existing owners.
@@ -142,7 +142,7 @@ publication gates.
 The local policy surfaces will link to the portable skill and retain only
 their local delta. In particular:
 
-- `docs/skill-standards-policy.md` keeps the marketplace's required metadata,
+- `.agents/doctrine/skill-standards-policy.md` keeps the marketplace's required metadata,
   canonical source paths, first-party MIT choice, projection frontmatter,
   local word limits, and local validation commands.
 - `.agents/guides/skill-authoring-guide.md` keeps the local read order,
@@ -334,7 +334,7 @@ first-party metadata and the companion declaration.
 
 The implementation must also repair the local authoring guidance split:
 
-1. Update `docs/skill-standards-policy.md` to introduce
+1. Update `.agents/doctrine/skill-standards-policy.md` to introduce
    `authoring-skills` as the portable companion and retain only marketplace
    standards and local deltas.
 2. Update `.agents/guides/skill-authoring-guide.md` to become a thin local
@@ -417,7 +417,7 @@ That checker is future work, not a prerequisite for the authoring contract.
 The first implementation must treat guidance placement as a source-custody
 change, not as additive documentation work. Before adding new prose to
 `authoring-skills`, classify each existing rule in
-`docs/skill-standards-policy.md` and `.agents/guides/skill-authoring-guide.md`
+`.agents/doctrine/skill-standards-policy.md` and `.agents/guides/skill-authoring-guide.md`
 as either portable or repository-specific.
 
 Portable rules move or are summarized in `authoring-skills`; local rules stay
@@ -453,7 +453,7 @@ After this design is approved, the implementation plan should be staged as:
 
 1. Add and test the `authoring-skills` canonical skill, references, and
    templates.
-2. Reconcile `docs/skill-standards-policy.md` and
+2. Reconcile `.agents/doctrine/skill-standards-policy.md` and
    `.agents/guides/skill-authoring-guide.md` into the ownership split.
 3. Extend metadata normalization and validation for `use_with`.
 4. Add the skill to `repo-worker-pack` through the registry.

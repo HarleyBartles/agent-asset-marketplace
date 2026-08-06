@@ -4,7 +4,7 @@ Use this runbook for Python and Markdown conventions in `agent-asset-marketplace
 
 ## Before you begin
 
-- Read [`docs/skill-standards-policy.md`](../../docs/skill-standards-policy.md) for skill shape standards.
+- Read [`.agents/doctrine/skill-standards-policy.md`](../../.agents/doctrine/skill-standards-policy.md) for skill shape standards.
 - Read [`.devin/rules/tools.md`](../../.devin/rules/tools.md) for tooling conventions.
 
 ## When to use
@@ -15,7 +15,7 @@ Use this runbook for Python and Markdown conventions in `agent-asset-marketplace
 ## Repo-specific guidance
 
 - Write all text files with LF line endings. Use `with path.open("w", encoding="utf-8", newline="\n") as f: f.write(content)` for new code; `Path.read_text(newline=...)` requires Python 3.13, so do not use it in scripts that must run under Python 3.12.
-- Follow `docs/skill-standards-policy.md` for skill frontmatter and metadata fields.
+- Follow `.agents/doctrine/skill-standards-policy.md` for skill frontmatter and metadata fields.
 - Keep Markdown headings descriptive of the reader's task.
 - Use code formatting for literal commands, paths, identifiers, and values; do not use code formatting for emphasis.
 - Prefer active voice and concise sentences in human-facing prose.

@@ -18,7 +18,7 @@ The rooms-* skills carry retired named-agent bindings (Chris, Albert, Brian, Der
 - rooms-source-partitioning → **merged into rooms-project-doctrine**
 - rooms-zoom-outs-buster
 
-Plus their `references/` files and the `docs/skill-standards-policy.md` update for the human-operator naming standard.
+Plus their `references/` files and the `.agents/doctrine/skill-standards-policy.md` update for the human-operator naming standard.
 
 ## Changes
 
@@ -93,7 +93,7 @@ Only 3 skills exceed 500 words (body excluding frontmatter):
 
 ### 7. Skill-standards-policy update
 
-Add "Referring to the human operator" section to `docs/skill-standards-policy.md`:
+Add "Referring to the human operator" section to `.agents/doctrine/skill-standards-policy.md`:
 - Use "your human partner" when referring to the person the agent is working with.
 - Do not use "user", "Harley", or other named individuals.
 - Keeps skills portable across operators.

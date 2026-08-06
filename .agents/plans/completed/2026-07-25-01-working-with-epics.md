@@ -11,7 +11,7 @@
 ## Global Constraints
 
 - First-party skill source lives in `sources/first_party/skills/<skill-name>/`.
-- `SKILL.md` body must be under 500 words (per `docs/skill-standards-policy.md`).
+- `SKILL.md` body must be under 500 words (per `.agents/doctrine/skill-standards-policy.md`).
 - First-party `SKILL.md` must include `metadata` with canonical identity, `use_when`, `do_not_use_when`, `related_skills`, and `license: MIT`.
 - `SKILL.md` body text must be free of inline citations; authority evidence lives in `assets/authority/CITATIONS.md`.
 - Third-party source in `sources/third_party/` is immutable; behavior changes go through `adapters/codex/superpowers-plus/`.

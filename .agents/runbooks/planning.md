@@ -6,7 +6,7 @@ Use this reference when planning work in the agent-asset-marketplace repo — be
 
 A plan that doesn't account for the repo's standards will produce implementations that fail review. Read these before planning:
 
-- **[`docs/custody-and-marketplace-doctrine.md`](../../docs/custody-and-marketplace-doctrine.md)** — source custody rules, provenance modes, plugin curation rules
+- **[`.agents/doctrine/custody-and-marketplace-doctrine.md`](../../.agents/doctrine/custody-and-marketplace-doctrine.md)** — source custody rules, provenance modes, plugin curation rules
 - **[`AGENTS.md`](../../AGENTS.md)** — repository source-of-truth and publication rules
 - **[`.devin/rules/tools.md`](../../.devin/rules/tools.md)** — marketplace generation and validation tooling
 

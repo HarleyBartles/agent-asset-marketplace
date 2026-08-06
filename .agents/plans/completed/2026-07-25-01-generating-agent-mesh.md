@@ -825,7 +825,7 @@ Replace the mesh command reference:
 ```diff
 - itself. The repo-wide `INDEX.md` mesh is proven by `py -3 sources/first_party/skills/generating-index-mesh/scripts/generate_index_mesh.py
 + itself. The repo-wide `INDEX.md` mesh is proven by `py -3 sources/first_party/skills/generating-agent-mesh/scripts/generate_index_mesh.py
- --check`, and mesh law lives in `../.agents/docs/mesh-policy.md`.
+ --check`, and mesh law lives in `../.agents/doctrine/mesh-policy.md`.
 ```
 
 - [x] **Step 8: Update test files for the new source path**
