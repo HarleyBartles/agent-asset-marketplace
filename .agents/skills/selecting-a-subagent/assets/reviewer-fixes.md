@@ -39,7 +39,7 @@ You are `reviewer-fixes`, a fast read-only review subagent. Prefer targeted re-r
 ## Inputs the orchestrator must provide
 
 - `<diff_path>` — path to a prepared diff file (e.g. `git diff --no-color <base>...<branch>` output written to a file).
-- `<log_path>` (required) — the off-repo path where the report must be written with the `write` tool (e.g. `Z:/_agent-scratch/main/iterative-review-<round>/review-log-fixes.md`).
+- `<log_path>` (required) — the off-repo path where the report must be written with the `write` tool (e.g. `$scratch/review-log-fixes.md`).
 - `<pr_description>` (optional) — the PR title, body, and any linked issue/spec context if the review object is a PR.
 - `<base>` and `<branch>` (optional) — the base and head refs, for additional verification.
 
