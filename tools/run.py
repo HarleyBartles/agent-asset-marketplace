@@ -512,9 +512,9 @@ def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         description="Dependency-aware task runner for the agent-asset-marketplace",
         epilog=(
             "Targets: " + ", ".join(_TASKS.keys()) + "\n"
-            "ci --check is the full non-mutating CI/PR gate.\n"
-            "ci --apply regenerates mechanical artifacts so the pre-commit hook can stage them.\n"
-            "For a single target, run `tools/run <target> --apply`. See .devin/rules/tools.md."
+            "ci --check is the full non-mutating CI/PR verification gate.\n"
+            "ci --apply regenerates mechanical artifacts; run ci --check to verify the result.\n"
+            "For a single target, run `py -3 tools/run.py <target> --apply`. See .devin/rules/tools.md."
         ),
     )
     parser.add_argument(
