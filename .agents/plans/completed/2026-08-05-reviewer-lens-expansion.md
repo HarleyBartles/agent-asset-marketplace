@@ -14,7 +14,7 @@
 - Do not reintroduce `reviewer-known-findings.md` or any shared findings ledger; each lens owns its own `## Checklist`.
 - This branch already moves completed plans/specs to `.agents/plans/completed/` and `.agents/specs/completed/`; do not modify those historical files.
 
-**Spec:** `.agents/specs/2026-08-05-reviewer-lens-expansion-design.md`
+**Spec:** `.agents/specs/completed/2026-08-05-reviewer-lens-expansion-design.md`
 **Spec handoff rating:** 9/10
 
 > **In-session pivot (2026-08-05):** While validating the new lens profiles, we discovered that `swe-1-7` subagents do not expose the `write` tool even when it is listed in `allowed-tools`. To make the reviewer profiles usable immediately, the shared portable `.md` profiles are now installed into the Devin Desktop user-global agents directory (`~/.config/devin/agents` / `%APPDATA%\devin\agents`) rather than each repo's `.agents/agents/`. `reviewer-strong` is pinned to `glm-5-2` so it retains `write`/`exec`. The per-repo `runtime-agents` sync to main is no longer required for portable profiles.
@@ -597,7 +597,7 @@ If the smoke test or CI exposed fixes, commit them as separate fix commits. Othe
 - Edit: `tools/sync_runtime_agents.py`
 - Edit: `tools/run.py`
 - Edit: `AGENTS.md`, `.agents/runbooks/implementing.md`, `docs/non-repo-locations-policy.md`
-- Edit: `.agents/specs/2026-08-05-reviewer-lens-expansion-design.md` to ratify these additions.
+- Edit: `.agents/specs/completed/2026-08-05-reviewer-lens-expansion-design.md` to ratify these additions.
 
 **Interfaces:**
 - Consumes: the custom reviewer profiles and the need to test new/updated subagent profiles from a linked worktree.
@@ -620,7 +620,7 @@ Expected: `py -3 tools/run.py ci --check` passes and the staging command is docu
 
 - [x] **Step 8.4: Update the design spec**
 
-Run: add the `Reviewer model tier pinning` and `Runtime staging tool` contract sections to `.agents/specs/2026-08-05-reviewer-lens-expansion-design.md`.
+Run: add the `Reviewer model tier pinning` and `Runtime staging tool` contract sections to `.agents/specs/completed/2026-08-05-reviewer-lens-expansion-design.md`.
 Expected: The spec ratifies the model changes and the staging tool's behavior.
 
 ---
@@ -714,7 +714,7 @@ After `iterative-review` is green and `py -3 tools/run.py ci --check` passes, ar
 
 ```bash
 git mv .agents/plans/2026-08-05-reviewer-lens-expansion.md .agents/plans/completed/
-git mv .agents/specs/2026-08-05-reviewer-lens-expansion-design.md .agents/specs/completed/
+git mv .agents/specs/completed/2026-08-05-reviewer-lens-expansion-design.md .agents/specs/completed/
 py -3 tools/heal_archive_links.py --apply
 
 ---
