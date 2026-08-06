@@ -69,9 +69,9 @@ Remove stale, redundant, and split-brain repository surfaces that no longer serv
 - Update `codex-marketplace/plugins/superpowers-plus/skills/iterative-review/SKILL.md` to add a "Before you start" signpost requiring the orchestrator to read `references/review-state-graph.md` before dispatching any subagents or deciding which lenses apply.
 - Update `tools/review_preflight.py` to tolerate placeholder/glob path references, completed historical plans/specs, and the `use_instead`/`use_with` skill metadata keys so the review preflight is clean.
 
-### 6. Out of scope for this PR (follow-up work)
+### 6. Re-generate pressure-test results
 
-- Re-generate pressure-test results for skills that ship `tests/pressure/<skill>/prompts/` scenarios but lack `README.md`, `green.md`, or `red.md` records. This is deferred to a follow-up plan.
+- For `handoff-gates`, run the recorded pressure-test scenarios with isolated subagents, capture the outputs, and write `tests/pressure/handoff-gates/README.md`, `green.md`, and `red.md`.
 
 ### 7. CI tooling
 

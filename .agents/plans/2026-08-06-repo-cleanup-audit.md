@@ -219,21 +219,20 @@
 
 ---
 
-### Task 9: [Deferred] Re-generate pressure-test results for skills with scenarios
-
-This task is **not in scope for this PR**. It is recorded here for a follow-up plan if the missing `README.md`/`green.md`/`red.md` surfaces under `tests/pressure/<skill>/` need to be filled in later.
+### Task 9: Re-generate pressure-test results for skills with scenarios
 
 **Files:**
-- Skills under `codex-marketplace/plugins/` that ship `tests/pressure/<skill>/prompts/*.md` but lack `README.md`, `green.md`, or `red.md`
+- `tests/pressure/handoff-gates/prompts/*.md` (scenarios already present)
+- `tests/pressure/handoff-gates/README.md`, `green.md`, `red.md` (new)
 
 **Interfaces:**
 - Consumes: Active skill pressure-test scenarios
 - Produces: Recorded pressure-test results under `tests/pressure/<skill>/`
 
-- [ ] **Step 1:** List `tests/pressure/<skill>/` directories that have `prompts/` but no `README.md`/`green.md`/`red.md`.
-- [ ] **Step 2:** For each such skill, invoke the pressure-test scenario with subagents and capture the output.
-- [ ] **Step 3:** Write `README.md` (summary), `green.md` (successful case), and `red.md` (failure case) for each skill.
-- [ ] **Step 4:** Commit `Task 9: Re-generate pressure-test results`.
+- [x] **Step 1:** List `tests/pressure/<skill>/` directories that have `prompts/` but no `README.md`/`green.md`/`red.md`.
+- [x] **Step 2:** For `handoff-gates`, invoke the pressure-test scenarios with isolated subagents and capture the output.
+- [x] **Step 3:** Write `README.md` (summary), `green.md` (with-skill cases), and `red.md` (baseline no-skill case) for `handoff-gates`.
+- [x] **Step 4:** Commit `Task 9: Re-generate pressure-test results`.
 
 ---
 
@@ -243,7 +242,7 @@ This task is **not in scope for this PR**. It is recorded here for a follow-up p
 - None (GitHub PR)
 
 **Interfaces:**
-- Consumes: Tasks 1–8 and 11–13
+- Consumes: Tasks 1–13
 - Produces: Updated draft PR with additional commits
 
 - [x] **Step 1:** `py -3 tools/run.py ci --check`
