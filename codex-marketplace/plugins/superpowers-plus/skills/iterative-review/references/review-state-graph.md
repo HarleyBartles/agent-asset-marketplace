@@ -18,6 +18,7 @@ flowchart TD
 
     metrics-track --> finding-fix
     finding-fix --> re-preflight
+    finding-fix -->|round cap exceeded| blocked
     re-preflight -->|red| fast-fix --> re-preflight
     re-preflight -->|green| reviewer-fixes
 
@@ -75,6 +76,7 @@ flowchart TD
 | `strong-review` | `metrics-track` | `reviewer-strong` or lens review reports findings. |
 | `metrics-track` | `finding-fix` | Always; choose the next finding to fix. |
 | `finding-fix` | `re-preflight` | Fix is committed. |
+| `finding-fix` | `blocked` | Round cap exceeded: `implementer-strong` on round 4 still fails. |
 | `re-preflight` | `fast-fix` | A new deterministic issue appears. |
 | `fast-fix` | `re-preflight` | Always; re-run preflight after the fix. |
 | `re-preflight` | `reviewer-fixes` | `ci --check` passes. |
@@ -133,6 +135,8 @@ A "round" is one complete traversal through `lens-dispatch` or `strong-review` (
       "new_finding": "F2",
       "discovered_at_node": "regression-scan",
       "discovered_at_round": 2,
+      "lens": "reviewer-security",
+      "regression_class": "outside-blast-radius",
       "severity": "blocking"
     }
   ],

@@ -237,6 +237,7 @@ For every post-fix finding, set `regression_class` from the decision table in th
 ## Invariants
 
 - Follow the graph in `references/review-state-graph.md`. Do not follow a round list.
+- The initial `strong-review` is reachable only through `lens-dispatch`; there is no edge from `setup`, `preflight`, `fast-fix`, or `orchestrator-self-review` directly to `strong-review`. If `lens-dispatch` is skipped, unavailable, or produces no logs, the review is `blocked`.
 - This skill does not modify review files or PR state beyond the scope-honesty preflight.
 - The orchestrator owns the scope-honesty preflight, all verification, the `resolved-ledger`, and the final decision to flip the PR to ready. `implementer` subagents own the fix edits under the orchestrator's brief.
 - All review inputs, logs, metrics, and fix-diffs are written to the off-repo scratch directory; they are never committed to the repo.
