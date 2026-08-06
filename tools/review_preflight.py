@@ -103,7 +103,7 @@ def _scan_canonical_paths(path: Path, content: str, findings: list[str]) -> None
             continue
         for match in _CANONICAL_PATHS.finditer(line):
             rel = match.group(1) or match.group(2)
-            if not rel or "..." in rel:
+            if not rel or "..." in rel or "*" in rel or "<" in rel or ">" in rel:
                 continue
             if match.group(1):
                 prefix = ".agents/skills/"
@@ -262,6 +262,8 @@ def _scan_skill_metadata(path: Path, content: str, findings: list[str]) -> None:
         "use_when",
         "do_not_use_when",
         "related_skills",
+        "use_instead",
+        "use_with",
     }
     for key in metadata:
         if key not in allowed:
@@ -387,6 +389,10 @@ def _scan_file(path: Path, findings: list[str]) -> None:
     # The test fixtures intentionally contain the patterns the preflight flags;
     # do not scan the preflight's own test files.
     if "tests" in path.parts:
+        return
+    # Completed plans and specs are historical; do not enforce current
+    # conventions against them.
+    if "completed" in path.parts:
         return
     try:
         content = path.read_text(encoding="utf-8")
