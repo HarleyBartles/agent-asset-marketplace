@@ -103,7 +103,7 @@ Subagent (general-purpose):
     - Is the test output pristine (no stray warnings or noise)?
 
     **Lens-profile pre-review (required):**
-    - Read the relevant `.agents/agents/reviewer-*.md` `## Checklist` profiles for the surfaces you touched (e.g. `reviewer-skills` for `SKILL.md` and reference files, `reviewer-marketplace` for scaffolders and generated surfaces, `reviewer-security` for secrets/PII, `reviewer-strong` for whole-branch design).
+    - Read the relevant `reviewer-*.md` profiles in the Devin Desktop agents search path `## Checklist` profiles for the surfaces you touched (e.g. `reviewer-skills` for `SKILL.md` and reference files, `reviewer-marketplace` for scaffolders and generated surfaces, `reviewer-security` for secrets/PII, `reviewer-strong` for whole-branch design).
     - Run each checklist mechanically against your diff.
     - Fix any predictable findings before reporting back. Do not produce code you expect a reviewer to catch and fix.
     - This pre-review is not a substitute for the `iterative-review` lens/strong dispatch on the final PR.

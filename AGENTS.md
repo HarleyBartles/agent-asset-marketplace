@@ -30,9 +30,7 @@ For ordinary worker execution, prefer a PR into `main`.
 Open pull requests as **draft**; keep them in draft while iterating and validating. Flip to ready for review only after self-review is complete and `py -3 tools/run.py ci --check` passes. See `.agents/runbooks/pr.md` and `.devin/rules/pr.md`.
 ## Build and test commands
 
-Canonical: `py -3 tools/run.py ci --check` and `py -3 tools/run.py marketplace --apply`.
-
-For the full command matrix, see `.devin/rules/tools.md` after migration. For the implementation workflow, see `.agents/runbooks/implementing.md`.
+Canonical: `py -3 tools/run.py ci --check` and `py -3 tools/run.py marketplace --apply`. Use `py -3 .agents/skills/selecting-a-subagent/scripts/install_profiles.py --apply` to install portable subagent profiles to the user-global agents directory; use `py -3 tools/run.py runtime-agents --apply --allow-shared-checkout` only for repo-local `.agents/agents/` profiles when working in a worktree; see `docs/non-repo-locations-policy.md`.
 ## Security considerations
 
 Apply the `security-review` profile from `/unslop-profiles` to relevant work and review the security lenses in `.agents/runbooks/security.md`.

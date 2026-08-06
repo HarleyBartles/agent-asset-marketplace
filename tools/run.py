@@ -363,6 +363,21 @@ def _check_review_preflight(ctx: Ctx) -> None:
     _run(cmd, ctx)
 
 
+def _apply_runtime_agents(ctx: Ctx) -> None:
+    cmd = [
+        sys.executable,
+        "tools/sync_runtime_agents.py",
+        "--apply",
+    ]
+    if ctx.allow_shared:
+        cmd.extend(["--allow-shared-checkout", "--yes"])
+    _run(cmd, ctx)
+
+
+def _check_runtime_agents(ctx: Ctx) -> None:
+    _run([sys.executable, "tools/sync_runtime_agents.py", "--check"], ctx)
+
+
 _TASKS: dict[str, Task] = {
     "lint": Task(apply=(_run_lint,), check=(_run_lint,), fix="tools/run lint --apply"),
     "repo-standards": Task(
@@ -413,6 +428,14 @@ _TASKS: dict[str, Task] = {
     "review-preflight": Task(
         check=(_check_review_preflight,),
         fix="review-preflight findings are manual; run `tools/review_preflight.py --check` to see them",
+    ),
+    # runtime-agents is intentionally excluded from the `ci` deps because it
+    # stages files into the main checkout, which is a local, mutating
+    # operation. It remains available for repo-local profile staging only.
+    "runtime-agents": Task(
+        apply=(_apply_runtime_agents,),
+        check=(_check_runtime_agents,),
+        fix="tools/run runtime-agents --apply --allow-shared-checkout",
     ),
     "ci": Task(
         deps=("lint", "repo-standards", "review-preflight", "validate", "archive-links"),

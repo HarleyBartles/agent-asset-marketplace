@@ -43,15 +43,19 @@ The `.md` profile assets under `assets/` are Devin Desktop custom profiles. They
 are not used by Codex; for Codex, use `references/codex-multi-agent-v1-profile.md`
 or `references/codex-multi-agent-v2-profile.md`.
 
-Devin Desktop searches the following locations, in order: `~/.config/devin/agents/` (or `%APPDATA%\devin\agents\` on Windows) for user-global profiles, `.devin/agents/` for user/repo-local hand-authored overrides, and `.agents/agents/` for plugin-local profiles installed by marketplace packs. Each profile is a named `.md` file: `reviewer.md`, `reviewer-fast.md`, `reviewer-strong.md`, `implementer.md`, `implementer-strong.md`, etc. A skill can dispatch to a custom profile using the `profile:` argument to `run_subagent`.
+Devin Desktop searches the following locations, in order: `~/.config/devin/agents/` (or `%APPDATA%\devin\agents\` on Windows) for user-global profiles, `.devin/agents/` for user/repo-local hand-authored overrides, and `.agents/agents/` for plugin-local profiles installed by marketplace packs. Each profile is a named `.md` file: `reviewer.md`, `reviewer-fixes.md`, `reviewer-strong.md`, `implementer.md`, `implementer-strong.md`, etc. A skill can dispatch to a custom profile using the `profile:` argument to `run_subagent`.
 
-The marketplace installer only writes to `.agents/agents/`. `.devin/agents/` is reserved for user-managed, repo-local overrides that should not be created, modified, or removed by any skill.
+The `selecting-a-subagent` helper installs shipped profiles to the user-global
+agents directory by default. `.devin/agents/` is reserved for user-managed,
+repo-local overrides that should not be created, modified, or removed by any
+skill; `.agents/agents/` remains available for plugin-local profiles installed
+by other marketplace tooling.
 
 | Task | Dispatch |
 |---|---|
 | Most reviews, architecture challenges, and focused re-reviews | `run_subagent profile: reviewer` |
 | Full branch/PR diff review where the whole branch is in scope | `run_subagent profile: reviewer-strong` |
-| Small, tightly focused reviews or coherent single-responsibility re-review diffs | `run_subagent profile: reviewer-fast` |
+| Small, tightly focused reviews or coherent single-responsibility re-review diffs | `run_subagent profile: reviewer-fixes` |
 | Bounded implementation / bugfix | `run_subagent profile: implementer` |
 | Implementation that needs more reasoning or broader context | `run_subagent profile: implementer-strong` |
 
@@ -64,18 +68,21 @@ Reviewer dispatches must pass a prepared `<diff_path>` and optional `<pr_descrip
 
 Custom profiles may declare `model:` in their `.md` profile file. The runtime honors that model when the subagent is launched. Do not pass a `model:` argument to `run_subagent`; the tool has no such parameter.
 
-Custom subagents are not granted the `write` tool, even if listed in their `allowed-tools`. To create new files from a custom subagent, use `exec` with a shell redirect or another allowed mechanism.
+Custom profiles may declare `model:` in their `.md` profile file. The runtime honors that model when the subagent is launched, but the tool set is also constrained by the profile `name` and is cached; edits may not take effect until the IDE is restarted. `allowed-tools` describes the expected tool set, but the runtime may expose fewer tools. For example, `reviewer-strong` on `glm-5-2` has `exec`, `grep`, `read`, `find_file_by_name`, and `write`; `reviewer-fixes` on `swe-1-6` has the same tools. To create an off-repo file from a profile that does not expose `write`, use `exec`.
 
 ### Vendor and third-party profiles
 
 Marketplace packs can ship third-party subagent `.md` profile assets under
-`assets/profiles/`. The `refreshing-installed-skills` script copies those
-profiles into `.agents/agents/`, so they appear in the Devin Desktop search
-path documented above. A repo-local `.devin/agents/<name>.md` override wins
-over a vendor profile of the same name, but the installer does not create,
-modify, or remove `.devin/agents/`. A vendor profile wins over a built-in
-custom profile when no override exists. See `vendor-profile-packaging.md` for
-the packaging contract and the full consumer search-path order.
+`assets/profiles/`. First-party portable profiles are maintained in
+`codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/assets/`
+and installed to the user-global agents directory by
+`install_profiles.py --apply`.
+
+A repo-local `.devin/agents/<name>.md` override wins over a user-global or
+plugin-installed profile of the same name, but the installer does not create,
+modify, or remove `.devin/agents/`. Plugin-local profiles staged in `.agents/agents/`
+by other marketplace tooling are also considered. See `vendor-profile-packaging.md`
+for the packaging contract and the full consumer search-path order.
 
 ### What not to do
 

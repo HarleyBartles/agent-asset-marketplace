@@ -54,7 +54,7 @@ role.
 |---|---|
 | `reviewer` | `gpt-5.6-terra` at `high` |
 | `reviewer-strong` | `gpt-5.6-sol` at `high` |
-| `reviewer-fast` | `gpt-5.4` at `low` or `medium` |
+| `reviewer-fixes` | `gpt-5.4` at `low` or `medium` |
 | `implementer` | `gpt-5.4` at `medium` |
 | `implementer-strong` | `gpt-5.6-terra` at `high` |
 

@@ -24,13 +24,13 @@ The `iterative-review` skill now routes through a state graph. It still describe
 ## Non-goals (out of scope for this phase)
 
 - New repo-local lenses for `adventures-of-patch`, `portfolio`, or `wild-bunch` (PPTX, frontend, .NET, game, assets).
-- Changing the `reviewer`, `reviewer-fast`, `reviewer-strong`, or `reviewer-security` profiles beyond dispatch selection.
+- Adding new repo-local or portable lens profiles beyond `reviewer-plans`, `reviewer-mesh`, `reviewer-scripts`, and the explicit model-tier pinning listed below.
 - A fully machine-parseable YAML schema for `applies_to`. The first version is a documented `## Applies to` section in each profile that `iterative-review` reads and matches with `grep` / `glob`.
 - Reintroducing `reviewer-known-findings.md` or any other shared findings ledger.
 
 ## Contract and file targets
 
-### New portable profile: `.agents/agents/reviewer-plans.md`
+### New portable profile: `codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/assets/reviewer-plans.md`
 
 **Inputs**
 
@@ -46,7 +46,7 @@ The `iterative-review` skill now routes through a state graph. It still describe
 1. **In-isolation review:** Read `<plan_path>` / `<spec_path>` only. Validate completeness, consistency, clarity, scope, YAGNI, buildability.
 2. **PR compliance review:** Read the diff plus the governing plan/spec/roadmap. Flag scope drift, missing / added / renamed / dropped surfaces, roadmap-order violations, and traceability gaps.
 
-**Checklist** (used by `orchestrator-predict` and as the core of the diff review):
+**Checklist** (used by `orchestrator-self-review` and as the core of the diff review):
 
 - No TODOs, TBD, placeholders, or incomplete sections.
 - No internal contradictions.
@@ -59,7 +59,7 @@ The `iterative-review` skill now routes through a state graph. It still describe
 
 **Output:** `review-log-plans.md` with `file:line`, severity, description, and remediation. End with `reviewer-plans: N issue(s)` or `reviewer-plans: clean`.
 
-### New portable profile: `.agents/agents/reviewer-mesh.md`
+### New portable profile: `codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/assets/reviewer-mesh.md`
 
 **Inputs**
 
@@ -76,7 +76,7 @@ The `iterative-review` skill now routes through a state graph. It still describe
 
 **Output:** `review-log-mesh.md` with the same `file:line`, severity, description, and remediation format.
 
-### New portable profile: `.agents/agents/reviewer-scripts.md`
+### New portable profile: `codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/assets/reviewer-scripts.md`
 
 **Inputs**
 
@@ -100,12 +100,12 @@ Narrow to this repo's `codex-marketplace` and marketplace tooling:
 
 - `tools/new_plugin.py` exit codes and default enablement.
 - `tools/run.py` target wiring and `ci` dependency correctness.
-- `plugin-roots.json`, `bundle-manifest.json`, `repo-index.json`, `codex-marketplace/manifest.json`, `.agents/plugins/marketplace.json`.
+- `plugin-roots.json`, `bundle-manifest.json`, `repo-index/**`, `codex-marketplace/manifest.json`, `.agents/plugins/marketplace.json`.
 - Scaffolder or generator that overwrites existing top-level metadata.
 
 Remove generic scaffolder / mesh checks that now belong to `reviewer-mesh`.
 
-### `## Applies to` contract in every `reviewer-*.md`
+### `## Applies to` contract in every lens profile
 
 Each lens profile must declare an `## Applies to` section containing:
 
@@ -113,39 +113,94 @@ Each lens profile must declare an `## Applies to` section containing:
 - `keywords`: a list of path/keyword strings; presence in the diff or PR description indicates relevance.
 - `inputs`: named inputs whose presence forces dispatch (e.g. `reviewer-plans` dispatches if `<plan_path>` is provided even when the diff alone does not match the globs).
 
+### Reviewer model tier pinning
+
+To make model selection explicit and remove the `inherit` model, every custom reviewer profile is pinned to a single three-tier model value:
+
+- `reviewer-fixes`: `swe-1-6` (grants `write`/`exec`)
+- `reviewer`: `glm-5-2`
+- `reviewer-strong`: `glm-5-2` (keeps `write`/`exec` for the off-repo review report)
+- `reviewer-security`, `reviewer-marketplace`, `reviewer-skills`, `reviewer-plans`, `reviewer-mesh`, `reviewer-scripts`: `glm-5-2`
+
+`reviewer-strong` was moved off `swe-1-7` because the `swe-1-7` subagent base tool set does not include `write`, even when `allowed-tools` lists it. `glm-5-2` and `swe-1-6` include `write`/`exec` by default.
+
+### Runtime staging tool (deprecated for portable profiles)
+
+`tools/sync_runtime_agents.py` originally copied the current worktree's `.agents/agents/*.md` profiles to the main checkout so the Devin Desktop runtime could resolve new or changed profiles while the feature branch was in progress. Because the shared portable profiles now live in the user-global agents directory, this staging step is no longer required for `reviewer*.md` assets; the user-global copy is available to all sessions immediately after `install_profiles.py --apply`.
+
+The script remains in the repo for any future repo-local profile staging needs, but the standard workflow for the portable lens set is `install_profiles.py --apply` to the global directory.
+
+
+
+### Reviewer stop condition / loop breaker
+
+Every `reviewer-*.md` profile must end with a `## Stop condition and loop breaker` section that:
+
+- Instructs the subagent not to count tool calls.
+- Makes the final step `write` of the off-repo `review-log-<lens>.md` report.
+- Requires the final response to be exactly one line: `<profile>: N issue(s)` or `<profile>: clean`.
+- Breaks the review if the same `read`/`grep`/`find_file_by_name` call is about to be repeated without a new question it can answer.
+- Breaks the review if the last two tool calls produced no new findings.
+- Uses a hard backstop of no more than 50 total tool calls after loading inputs.
+
+### `reviewer-mesh` absorbs `reviewer-scaffolders`
+
+`reviewer-mesh` is the canonical portable lens for all generated mesh, scaffolder output, `INDEX.md`, and `repo-standards` surfaces. The separate `reviewer-scaffolders` profile is removed; any scaffolder review responsibilities it held now belong to `reviewer-mesh`. Consumer repos should dispatch `reviewer-mesh` for `**/*scaffold*` and `**/*mesh*` patterns.
+
 ### `selecting-a-subagent/SKILL.md` (source in `codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/SKILL.md`)
 
 Add to the dispatch table:
 
 - `reviewer-plans` — plan/spec review and PR compliance.
-- `reviewer-mesh` — scaffolder / mesh / repo-standards lens.
+- `reviewer-mesh` — scaffolder / mesh / `repo-standards` / `INDEX.md` lens.
 - `reviewer-scripts` — script / CLI safety and compliance lens.
 
-Document that each profile's `## Checklist` and `## Applies to` sections are the source of truth for `orchestrator-predict` and `lens-dispatch`. Do not point to `reviewer-known-findings.md`; it no longer exists.
+Document that each profile's `## Checklist` and `## Applies to` sections are the source of truth for `orchestrator-self-review` and `lens-dispatch`. Do not point to `reviewer-known-findings.md`; it no longer exists.
 
 ### `iterative-review/SKILL.md` (source in `codex-marketplace/plugins/superpowers-plus/skills/iterative-review/SKILL.md`)
 
 Update the `lens-dispatch` node:
 
-1. Discover all `.agents/agents/reviewer-*.md` files in the consumer repo. This set includes the portable profiles shipped by the repo-worker pack plus any repo-local overrides.
+1. Discover all `reviewer-*.md` profiles in the Devin Desktop agents search path files in the consumer repo. This set includes the portable profiles shipped by the repo-worker pack plus any repo-local overrides.
 2. For each profile, read its `## Applies to` section and its `## Checklist`.
 3. Match the diff, `pr_description`, and any provided plan / spec / roadmap paths against the `globs`, `keywords`, and `inputs` rules.
 4. Dispatch the matching lenses in parallel. `reviewer-strong` remains mandatory and always runs with the collected logs.
 5. If no lenses match, still run `reviewer-strong` on the diff; a pure refactor with no special lens still needs a whole-branch pass.
 
-`orchestrator-predict` already reads each lens's `## Checklist`; ensure it also reads the `## Applies to` section for lens selection.
+`orchestrator-self-review` already reads each lens's `## Checklist`; ensure it also reads the `## Applies to` section for lens selection.
+
+Update the fix-and-re-review loop:
+- After a finding is fixed and `ci --check` passes in `re-preflight`, `targeted-re-review` must run `reviewer-fixes` on the fix diff as a cheap gate before scheduling a full whole-branch `reviewer-strong`.
+- For non-trivial fixes, `regression-scan` also begins with a widened `reviewer-fixes` pass on the touched area. Only if the cheap fast pass finds a new issue does `reviewer-strong` run on that area to confirm and classify it.
+- This keeps the final `strong-review` whole-branch pass from being wasted on focused fixes that `reviewer-fixes` can validate.
 
 Remove the current hard-coded "In this repo, the canonical lenses are..." list. Replace it with the dynamic selection rules.
 
 ### Marketplace pack (if applicable)
 
-The portable runtime profiles live in `.agents/agents/` after installation. Their canonical product source is `codex-marketplace/plugins/repo-worker-pack/assets/profiles/` per the 2026-08-04 review-robustness design. Add `reviewer-plans.md`, `reviewer-mesh.md`, and `reviewer-scripts.md` there if that pack is still the source of truth for `.agents/agents/` copies, then regenerate with `py -3 tools/run.py marketplace --apply` before publishing. The implementation plan must verify whether the pack needs an update.
+The portable runtime profiles are installed into the Devin Desktop user-global agents directory (`~/.config/devin/agents` on macOS/Linux, `%APPDATA%\devin\agents` on Windows). Devin Desktop searches this path first, before `.devin/agents/` and `.agents/agents/`. Their canonical product source is the `selecting-a-subagent` skill: `codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/assets/` ships the `.md` profile assets.
+
+To make the shipped `.md` files discoverable in consumer repos, `scripts/install_profiles.py` is provided in the `selecting-a-subagent` skill. The helper installs the shipped profiles into the user-global agents directory by default, overwriting only changed shipped profiles and leaving any other files in the target directory untouched. Use `--target` to install into a different directory, such as a consumer repo's `.agents/agents/` directory. `reviewer-marketplace.md` is repo-local and must not be installed by the helper; consumers author their own `reviewer-marketplace.md` or omit it. Update `selecting-a-subagent/SKILL.md` and `references/devin-desktop-profile.md` to document the new default target.
+
+`.agents/agents/` is reserved for repo-local lens profiles and overrides; the shared portable profiles are not copied there by the marketplace installer.
+
+As part of the source consolidation, the `implementer.md` and `implementer-strong.md` profiles move from `repo-worker-pack` to `selecting-a-subagent/assets/` and are restored to their vendor baselines; this is not a functional scope change.
+
+### UTF-8 artifact contract
+
+All iterative-review inputs, reports, and metrics live in the off-repo scratch. They must be plain UTF-8 (no BOM) so that downstream subagents can `read` and `grep` them reliably.
+
+- The `iterative-review` skill ships `scripts/normalize_review_inputs.py`. The orchestrator must run it with `--apply` on the scratch directory after `setup` (to normalize `scan_findings`, `pr_description`, `issue_context`, etc.) and again after `lens-dispatch` (to normalize `review-log-*.md` files) before dispatching `reviewer-strong`.
+- The helper rewrites UTF-16LE/BE and UTF-8-with-BOM files in place; `--check` reports drift without writing.
+- The canonical `reviewer-*.md` profiles carry a hard contract in `## Stop condition and loop breaker` requiring subagents to use the `write` tool and forbidding PowerShell `Tee-Object`, `Out-File` without `-Encoding utf8`, and any shell redirect that can emit UTF-16.
 
 ## Cross-repo consumer considerations
 
-- `rooms-mostly` consumes the portable `reviewer`, `reviewer-fast`, `reviewer-strong`, `reviewer-security`, `reviewer-skills`, and now `reviewer-plans` and `reviewer-mesh`. Its repo-local set is currently empty; it may add `reviewer-obsidian` later.
+- `rooms-mostly` consumes the portable `reviewer`, `reviewer-fixes`, `reviewer-strong`, `reviewer-security`, `reviewer-skills`, and now `reviewer-plans` and `reviewer-mesh`. Its repo-local set is currently empty; it may add `reviewer-obsidian` later.
 - `reviewer-mesh` must not hard-code `agent-asset-marketplace` paths. Its `globs` / `keywords` must use generic patterns (`**/*scaffold*`, `**/*mesh*`, `**/INDEX.md`, `**/repo-standards/**`) that also match `rooms-mostly`.
 - `reviewer-plans` must not hard-code the `agent-asset-marketplace` plan directory. It accepts arbitrary plan / spec / roadmap paths.
+
+
 
 ## Validation
 

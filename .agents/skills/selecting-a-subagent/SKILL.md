@@ -16,9 +16,10 @@ metadata:
   - Use when creating or selecting a named subagent configuration.
   - Use when recommending a child model, reasoning level, or context mode.
   - Use when retrying failed work by changing model, reasoning, or context.
-  - Use when choosing a custom subagent profile such as `reviewer`, `reviewer-fast`,
-    `reviewer-strong`, `reviewer-security`, `reviewer-skills`, `reviewer-marketplace`,
-    `implementer`, or `implementer-strong`.
+  - Use when choosing a custom subagent profile such as `reviewer`, `reviewer-fixes`,
+    `reviewer-strong`, `reviewer-security`, `reviewer-skills`, `reviewer-plans`,
+    `reviewer-mesh`, `reviewer-scripts`, `implementer`, or
+    `implementer-strong`.
   - Use when selecting an implementation, code-review, architecture-review, or adjudication
     agent.
   do_not_use_when:
@@ -66,16 +67,25 @@ The `.md` profile assets in `assets/` are Devin Desktop custom profiles. They ar
 not used by Codex; for Codex, use the `references/codex-multi-agent-v1-profile.md`
 or `references/codex-multi-agent-v2-profile.md` mappings.
 
-If you want to use the Devin Desktop custom profiles, install the corresponding
-`.md` profile assets into a Devin Desktop profile search path:
+If you want to use the Devin Desktop custom profiles, run the helper to install
+the shipped `.md` assets into the user-global Devin Desktop agents directory:
 
-- macOS/Linux: `~/.config/devin/agents/<profile>.md`
-- Windows: `%APPDATA%\devin\agents\<profile>.md`
+```
+py -3 .agents/skills/selecting-a-subagent/scripts/install_profiles.py --apply
+```
 
-For example, copy `assets/implementer.md` to
-`~/.config/devin/agents/implementer.md`, and do the same for `reviewer`,
-`reviewer-fast`, `reviewer-strong`, `reviewer-security`, `reviewer-skills`,
-`reviewer-marketplace`, `implementer`, and `implementer-strong`.
+The helper overwrites shipped profiles only when they have changed and leaves any
+other files in the target directory untouched. The default target is:
+
+- macOS/Linux: `~/.config/devin/agents/`
+- Windows: `%APPDATA%\devin\agents\`
+
+Use `--target` to install to a different directory, such as a consumer
+repository's `.agents/agents/` directory.
+
+Do not install repo-local `<lens>.md` profiles from the pack. The consumer repo
+authors its own `.agents/agents/reviewer-<lens>.md` files (or omits them) for its
+own domain-specific surfaces.
 
 ## Common custom subagent profile dispatch
 
@@ -85,14 +95,39 @@ For example, copy `assets/implementer.md` to
 | Full branch/PR diff review where the whole branch is in scope | `reviewer-strong` |
 | Security and PII lens in a full-branch/PR diff | `reviewer-security` |
 | `SKILL.md`/reference/prompt-robustness lens | `reviewer-skills` |
-| `codex-marketplace`/tooling/scaffolder lens | `reviewer-marketplace` |
-| Small, tightly focused reviews or coherent single-responsibility re-review diffs | `reviewer-fast` |
-| Repo-specific lens (e.g. `reviewer-marketplace` in `agent-asset-marketplace`) | `.agents/agents/reviewer-<lens>.md` (see below) |
+| Plans, specs, roadmaps, or `.agents/plans` and `.agents/specs` changes | `reviewer-plans` |
+| `INDEX.md`, generated mesh, or `repo-standards` surfaces | `reviewer-mesh` |
+| Script safety, CLI compliance, shebangs, or `--check`/`--apply` classification | `reviewer-scripts` |
+| Small, tightly focused reviews or coherent single-responsibility re-review diffs | `reviewer-fixes` |
+| Repo-specific lens for surfaces not covered by the portable set | `.agents/agents/reviewer-<lens>.md` (see below) |
 | Bounded implementation / bugfix | `implementer` |
 | Implementation that needs more reasoning or broader context | `implementer-strong` |
 
 The orchestrator must provide a `<diff_path>` and optional `<pr_description>` to any
 reviewer profile. The reviewer subagent does not resolve the diff itself.
+
+## Lens dispatch from `## Applies to`
+
+Every lens profile in `reviewer-*.md` profiles in the Devin Desktop agents search path (portable or repo-local)
+should include a `## Applies to` section with:
+
+- `inputs:` — required and optional `run_subagent` placeholders.
+- `globs:` — path globs that, if matched in the diff, make the lens relevant.
+- `keywords:` — keyword triggers that make the lens relevant.
+
+When selecting one or more lenses for a PR or a branch diff, read the relevant
+profile files and match them in this order:
+
+1. Input match: if the orchestrator provides an input listed under `## Applies to`
+   for that lens (e.g. `<plan_path>` for `reviewer-plans`), the lens applies.
+2. Glob match: if any changed file matches a glob, the lens applies.
+3. Keyword match: if the PR title/body or diff summary contains a keyword, the
+   lens applies.
+4. Default dispatch: if none of the above triggers a lens, dispatch `reviewer-strong`
+   for the whole-branch pass.
+
+Prefer the least escalated lens that covers the diff. For broad, multi-surface
+branches, include all matching lenses rather than a single generalist.
 
 ## Repo-specific lens profiles
 
@@ -101,43 +136,39 @@ A consumer repo can extend the portable lens set by authoring a hand-edited
 marketplace; they are repo-local and take precedence over vendor profiles.
 
 Use this when the repo has domain-specific surfaces that a generic lens cannot
-cover. For example, `agent-asset-marketplace` provides `.agents/agents/reviewer-marketplace.md`
-to review `codex-marketplace`, `new_plugin.py`, and scaffolder surfaces. A
-different consumer might add `reviewer-domains.md` for domain canon, or `reviewer-tests.md`
-for a test harness.
+cover. For example, one consumer might add a `.agents/agents/reviewer-marketplace.md`
+lens for pack generation, another might add `reviewer-domains.md` for domain canon,
+or `reviewer-tests.md` for a test harness. These are not part of the portable pack.
 
-When `iterative-review` runs, it should dispatch all portable lenses
-(`reviewer-security`, `reviewer-skills`) plus any `.agents/agents/reviewer-*.md`
-profiles that the repo's `AGENTS.md` declares as active. `reviewer-references` is
-deprecated and split into `reviewer-skills` (portable) and `reviewer-marketplace`
-(repo-local).
+When `iterative-review` runs, it should discover each `reviewer-*.md` profile from
+ the Devin Desktop agents search path, evaluate the `## Applies to` section against
+the diff, PR description, and any provided inputs, and dispatch only the matching
+lenses plus `reviewer-strong`.
 
 ## Vendor and third-party profiles
 
-Marketplace packs can ship third-party subagent `.md` profile assets under
-`assets/profiles/`. The `refreshing-installed-skills` script copies those
-profiles into the consumer's agent search path at `.agents/agents/` only
-when a file of the same name does not already exist, and records them in
-`.agents/skills/.provenance.json` under a `vendorProfiles` array.
+This skill ships first-party portable subagent `.md` profiles under
+`codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/assets/`.
+Run `py -3 .agents/skills/selecting-a-subagent/scripts/install_profiles.py --apply`
+to copy them to the Devin Desktop user-global agents directory
+(`~/.config/devin/agents/` or `%APPDATA%\devin\agents\` on Windows). Use
+`--target <dir>` to install elsewhere; the default target is the canonical
+surface for shared, portable profiles.
 
-When choosing a profile, apply this precedence:
+When choosing a profile, apply the Devin Desktop agents search path; later
+directories in this list override earlier ones:
 
-1. Repo-local override (a hand-authored `.agents/agents/<name>.md` or a
-   `.devin/agents/<name>.md` user-local override) wins.
-2. Vendor profile installed from a marketplace pack (`.agents/agents/`).
-3. Built-in custom profiles documented in
-   `references/devin-desktop-profile.md` and the dispatch profiles above.
-4. User-global profiles (`~/.config/devin/agents/` or
-   `%APPDATA%\devin\agents\` on Windows).
+1. Built-in profiles documented in `references/devin-desktop-profile.md`.
+2. User-global profiles (`~/.config/devin/agents/` or `%APPDATA%\devin\agents\` on Windows).
+3. `.devin/agents/<name>.md` user- or repo-local hand-authored overrides.
+4. `.agents/agents/<name>.md` plugin-local or vendor profiles.
 
 No skill should create or pressure the consumer to create `.devin/agents/`.
-`.agents/agents/` is the canonical surface for plugin-installed profiles.
+`.agents/agents/` remains available for plugin-local or vendor profiles staged by
+other marketplace tooling.
 
-Prefer a vendor profile when a pack ships one that matches the task role
-(e.g. a pack-provided `reviewer.md`) and no repo-local override exists. Prefer
-a repo-local override when the repo needs behavior the vendor profile does not
-capture. See `references/vendor-profile-packaging.md` for the packaging
-contract and the consumer search-path order.
+See `references/vendor-profile-packaging.md` for the packaging contract and the
+full consumer search-path order.
 
 ## Common pressure
 

@@ -1,65 +1,55 @@
-# Vendor and third-party profile packaging
+# Portable and vendor profile packaging
 
 ## Canonical location
 
-Third-party subagent `.md` profile assets live under `assets/profiles/` inside
-an installable pack. For example:
+First-party portable subagent `.md` profile assets live in
+`codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/assets/`.
+For example:
 
 ```
-codex-marketplace/plugins/<pack-name>/
+codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/
   assets/
-    profiles/
-      reviewer.md
-      implementer-strong.md
+    reviewer.md
+    reviewer-fixes.md
+    reviewer-strong.md
+    implementer.md
+    implementer-strong.md
 ```
 
-This reuses the existing pack-level `assets/` surface. Do not create a
-dedicated top-level `vendor-profiles/` directory or split profile assets into a
-parallel tree.
+Third-party marketplace packs may also ship `.md` profile assets under their own
+pack `assets/profiles/` directory.
 
-## Why `assets/profiles/`
+## Installation
 
-- The Codex plugin pack already exposes pack-level assets (`assets/icon.svg`,
-  `assets/app-icon.png`, etc.). Profiles are pack-level assets, not skill bodies.
-- The Devin Desktop search paths already expect `.md` profile assets under
-  `assets/` (see `devin-desktop-profile.md`).
-- Marketplace regeneration already copies `assets/` into the bundled plugin
-  tree; extending `refreshing-installed-skills` to copy `assets/profiles/*.md` is
-  a narrow addition rather than a new marketplace bundle lane.
+First-party portable profiles are installed to the Devin Desktop user-global
+agents directory by `install_profiles.py`:
+
+```bash
+py -3 .agents/skills/selecting-a-subagent/scripts/install_profiles.py --apply
+```
+
+The default target is `~/.config/devin/agents/` on macOS/Linux and
+`%APPDATA%\devin\agents\` on Windows. Use `--target <dir>` to install to a
+different path. Do not commit the user-global directory to a repo.
 
 ## Consumer search paths
 
-A consumer worktree uses the same precedence documented in
-`devin-desktop-profile.md`:
+Devin Desktop searches the following locations; a later path in this list
+overrides an earlier one:
 
-1. User/repo-local override: `.devin/agents/` (user-managed; never created by skills)
-2. Plugin-local (from installed packs): `.agents/agents/` (the canonical marketplace surface)
-3. User-global: `~/.config/devin/agents/` (or `%APPDATA%\devin\agents\` on Windows)
+1. Built-in profiles documented in `devin-desktop-profile.md`.
+2. User-global: `~/.config/devin/agents/` (or `%APPDATA%\devin\agents\` on Windows).
+3. `.devin/agents/` — user- or repo-local hand-authored overrides.
+4. `.agents/agents/` — plugin-local or third-party vendor profiles.
 
 No skill should create or pressure a consumer to create `.devin/agents/`.
-That directory is reserved for repo-local user-managed overrides.
 
-## Installation behavior
+## Packaging contract
 
-A vendor profile is copied to `.agents/agents/` only when no file of the same
-name already exists. If the consumer repo already has `reviewer.md`, the pack's
-`reviewer.md` is not installed. This preserves repo-owned profiles while still
-enabling fresh consumer worktrees to receive a pack's default set. Marketplace
-profiles live in `.agents/agents/`; repo-local overrides live in `.devin/agents/`.
-
-## Provenance
-
-`refresh_installed_skills` records installed vendor profiles in
-`.agents/skills/.provenance.json` under a `vendorProfiles` array. Each entry:
-
-```json
-{
-  "plugin": "<pack-name>",
-  "sourcePath": "codex-marketplace/plugins/<pack-name>/assets/profiles",
-  "profiles": ["reviewer.md", "implementer-strong.md"]
-}
-```
-
-This keeps the record of which plugin installed which profiles next to the
-marketplace skill manifest, on the same surface as `syncedPlugins` and
-`localSkills`.
+- First-party portable profiles are source-custodied in the `selecting-a-subagent`
+  pack `assets/` directory.
+- Pack `assets/profiles/` is reserved for third-party vendor profiles.
+- The `install_profiles.py` installer records no provenance entry for first-party
+  profiles; the canonical source is the pack tree. Other marketplace tooling that
+  stages vendor profiles into `.agents/agents/` may track them in the consumer's
+  `.agents/skills/.provenance.json` under a `vendorProfiles` array.

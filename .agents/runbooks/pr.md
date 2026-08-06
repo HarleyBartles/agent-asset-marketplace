@@ -49,19 +49,23 @@ Run the fastest, cheapest checks first so that `iterative-review` and Devin auto
    - Compare the branch diff to the PR description, the linked spec, and any linked plan.
    - If the implemented scope differs, update the spec/plan or PR body to match before reviewers see the diff.
 
-3. **Orchestrator pre-emptive review (`orchestrator-predict` node).**
-   - Do not dispatch reviewers to catch what you can see yourself. Before `lens-dispatch`, the orchestrating agent reads the branch diff and the relevant `.agents/agents/reviewer-*.md` `## Checklist`. The profile is the checklist for both the orchestrator and the subagent reviewer.
+3. **Orchestrator pre-emptive review (`orchestrator-self-review` node).**
+   - Do not dispatch reviewers to catch what you can see yourself. Before `lens-dispatch`, the orchestrating agent reads the branch diff and the relevant `reviewer-*.md` profiles in the Devin Desktop agents search path `## Checklist`. The profile is the checklist for both the orchestrator and the subagent reviewer.
    - For each lens, ask: *What would this lens flag that I can fix with high confidence?* Apply those fixes now.
-   - Record the predicted and pre-emptively fixed classes in `review-log-orchestrator-prediction.md` in the off-repo scratch.
-   - A clean `orchestrator-predict` is not a pass. You must still run `lens-dispatch` and `strong-review`.
+   - Record the predicted and pre-emptively fixed classes in `review-log-orchestrator-self-review.md` in the off-repo scratch.
+   - A clean `orchestrator-self-review` is not a pass. You must still run `lens-dispatch` and `strong-review`.
 
 4. **Iterative review graph (`lens-dispatch` and `strong-review` nodes).**
    - Only after preflight is green and pre-emptive fixes are committed, run the review graph. This is mandatory:
-     - `reviewer-skills` for SKILL.md, reference files, and prompt robustness.
-     - `reviewer-marketplace` for scaffolders, generated surfaces, and this-repo tooling.
-     - `reviewer-security` for secrets and real identifiers.
      - `reviewer-strong` for whole-branch design, scope, and gaps in the lens logs.
-   - If you cannot dispatch subagents, the review is `blocked`. Do not claim the PR is ready because `orchestrator-predict` was clean.
+     - The remaining lenses are dispatched dynamically based on their `## Applies to` rules. The available set is:
+       - `reviewer-plans` for `.agents/plans`, `.agents/specs`, and roadmap honesty.
+       - `reviewer-mesh` for mesh/INDEX/scaffold/generated-surface integrity.
+       - `reviewer-skills` for `SKILL.md`, reference files, and prompt robustness.
+       - `reviewer-marketplace` for `codex-marketplace` pack generation and marketplace tooling (repo-local).
+       - `reviewer-scripts` for `tools/` and script/CLI changes.
+       - `reviewer-security` for secrets and real identifiers.
+   - If you cannot dispatch subagents, the review is `blocked`. Do not claim the PR is ready because `orchestrator-self-review` was clean.
    - For each finding, use `receiving-code-review` before applying.
 
 5. **Fix and re-preflight (`re-preflight` node).**
