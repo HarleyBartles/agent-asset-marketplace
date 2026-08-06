@@ -55,7 +55,7 @@ Remove stale, redundant, and split-brain repository surfaces that no longer serv
 - Delete the redundant/empty surfaces found in the cleanup audit:
   - `.agents/docs/superpowers/` (only a `.gitignore`)
   - `scripts/` (only a generated `INDEX.md`)
-  - `tests/pressure/handoff-gates/` if no prompts are recorded
+  - `tests/pressure/handoff-gates/` only if no prompts are recorded; in this branch prompts are recorded, so it is retained.
 - Remove or rewrite active `adapters/` and `generated/` references in:
   - `.agents/docs/unslop/profile.md`
   - `.agents/doctrine/codex-marketplace.md`
@@ -104,12 +104,15 @@ The following files carry hard-coded references to the moved or removed surfaces
 - `docs/skill-standards-policy.md` — remove `docs/overlay-adapter-policy.md` cross-reference before moving to `.agents/doctrine/`.
 - `codex-marketplace/plugins/superpowers-plus/skills/publishing-source/SKILL.md` and `references/publishing-decisions.md` — remove `adapters/codex/` references.
 - `tools/validate_agents_md.py` — `.agents/docs/mesh-policy.md` string.
+- `tools/generate_repo_index.py` — hard-coded `docs/unslop/profile.md` string in the default repo index.
+- `tests/pressure/README.md` — `docs/skill-standards-policy.md` reference.
 - `codex-marketplace/plugins/repo-worker-pack/skills/repo-standards/scripts/scaffold_*.py`, `repo_standards.py`, `SKILL.md`, `references/repository-shape-standard.md`, `references/repository-runbook-standard.md`, `agents/openai.yaml` — `.agents/docs/repo-runbook-policy.md` references.
 - `codex-marketplace/plugins/superpowers-plus/skills/using-superpowers-plus/references/repo-doctrine.md` — `.agents/docs/mesh-policy.md` references.
 - `codex-marketplace/plugins/mcp-usage-pack/references/codex-marketplace-compatibility.md` and `codex-marketplace/plugins/superpowers-plus/references/codex-marketplace-compatibility.md` — `docs/contracts/*` relative paths.
 - `codex-marketplace/plugins/superpowers-plus/skills/writing-skills/references/skill-authoring-checklist.md` and `.agents/skills/writing-skills/references/skill-authoring-checklist.md` — `docs/contracts/*` references.
 - `tests/test_shared_checkout.py` — `repo_root / "adapters"` search root can remain because it already skips missing directories.
 - `provenance/INDEX.md` and generated `INDEX.md` files — will refresh via `tools/run.py mesh --apply` after the manual edits.
+- Completed plans and specs under `.agents/plans/completed/` and `.agents/specs/completed/` — `archive-links` will heal any moved `docs/` references during `mesh --apply`; these are historical context and are not live patterns.
 
 ## Trade-offs / risks
 

@@ -108,6 +108,8 @@
 - Modify: `.agents/doctrine/docs.md`
 - Modify: `.agents/doctrine/docs-contracts.md`
 - Modify: `tools/validate_agents_md.py`
+- Modify: `tools/generate_repo_index.py`
+- Modify: `tests/pressure/README.md`
 - Modify: `codex-marketplace/plugins/superpowers-plus/skills/publishing-source/SKILL.md`
 - Modify: `codex-marketplace/plugins/superpowers-plus/skills/publishing-source/references/publishing-decisions.md`
 - Modify: `codex-marketplace/plugins/repo-worker-pack/skills/repo-standards/SKILL.md`
@@ -123,9 +125,9 @@
 
 **Interfaces:**
 - Consumes: Tasks 1–3 (paths now exist in final locations)
-- Produces: No broken `docs/`, `.agents/docs/`, `.agents/doctrine/`, `adapters/`, or `generated/` links in authored surfaces
+- Produces: No broken `docs/`, `.agents/docs/`, `.agents/doctrine/`, `adapters/`, or `generated/` links in authored surfaces; `archive-links` check stays green.
 
-- [x] **Step 1:** Search for `docs/` references in the above files and rewrite to `.agents/docs/` or `.agents/doctrine/` as appropriate (e.g. `docs/contracts/*` → `.agents/docs/contracts/*`, `docs/skill-standards-policy.md` → `.agents/doctrine/skill-standards-policy.md`, `docs/overlay-adapter-policy.md` removed).
+- [x] **Step 1:** Search for `docs/` references in the above files and rewrite to `.agents/docs/` or `.agents/doctrine/` as appropriate (e.g. `docs/contracts/*` → `.agents/docs/contracts/*`, `docs/skill-standards-policy.md` → `.agents/doctrine/skill-standards-policy.md`, `docs/overlay-adapter-policy.md` removed). Also allow `tools/run.py mesh --apply` to refresh cross-references in completed plans/specs so `archive-links` passes.
 - [x] **Step 2:** Search for `.agents/docs/mesh-policy.md` and `.agents/docs/repo-runbook-policy.md` references and rewrite to `.agents/doctrine/mesh-policy.md` and `.agents/doctrine/repo-runbook-policy.md`.
 - [x] **Step 3:** Search for `adapters/codex/` and `adapters/` references and remove/update them.
 - [x] **Step 4:** Commit `Task 4: Update path references`.
@@ -208,7 +210,7 @@
 - Consumes: Audit results and the current clean tree
 - Produces: No references to the retired `adapters/` or `generated/` surfaces in active files; no empty/redundant directories
 
-- [x] **Step 1:** `git rm -r .agents/docs/superpowers/ scripts/`; keep `tests/pressure/handoff-gates/` because it is reserved for future pressure tests.
+- [x] **Step 1:** `git rm -r .agents/docs/superpowers/ scripts/`; keep `tests/pressure/handoff-gates/` because it contains recorded prompt files and is reserved for future pressure tests.
 - [x] **Step 2:** Search active files for `adapters/` and `generated/` references; remove or rewrite them.
 - [x] **Step 3:** Update `.agents/docs/AGENTS.md`, root `AGENTS.md`, and `.agents/runbooks/design.md` routing pointers to `.agents/doctrine/mesh-policy.md` and `.agents/doctrine/repo-runbook-policy.md`.
 - [x] **Step 4:** `py -3 tools/run.py mesh --apply`
