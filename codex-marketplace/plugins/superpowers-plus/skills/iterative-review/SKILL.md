@@ -197,21 +197,31 @@ If more findings remain in the queue, choose the next one and go to `finding-fix
 
 Run one whole-branch `reviewer-strong` pass after all findings are resolved. It receives the full branch diff, PR description, all lens logs, the `resolved-ledger` of fixed findings, and the `regression_class` records. Its job is to confirm there are no remaining gaps, contradictions, or design issues.
 
-If `reviewer-strong` reports `reviewer-strong: clean` and the preflight is clean, go to `ready`. If it reports findings, go to `metrics-track` to start a new fix loop. If it reports a contested or load-bearing finding, go to `blocked`.
+If `reviewer-strong` reports `reviewer-strong: clean` and the preflight is clean, go to `closeout`. If it reports findings, go to `metrics-track` to start a new fix loop. If it reports a contested or load-bearing finding, go to `blocked`.
+
+### `closeout`
+
+After `reviewer-strong: clean`, decide whether the PR closes the plan/spec/roadmap it set out to implement. If it does, archive the completed planning artifacts per `.agents/runbooks/completing-plans.md` before flipping the PR to ready:
+
+1. Identify the plan and spec named in the PR body, linked issues, or the branch's `.agents/plans/` and `.agents/specs/` files.
+2. Confirm the plan is complete: every top-level checkbox is checked or the plan records the implementation PR.
+3. `git mv .agents/plans/<plan-name>.md .agents/plans/completed/`
+4. If the plan lists a spec: `git mv .agents/specs/<spec-name>.md .agents/specs/completed/`
+5. Move any related roadmaps or research files referenced by the plan.
+6. Run `py -3 tools/heal_archive_links.py --apply` and `py -3 tools/check_archive_links.py`.
+7. Run `py -3 tools/run.py mesh --apply` and `py -3 tools/run.py marketplace --apply`.
+8. Run `py -3 tools/run.py ci --check`. Do not proceed if it fails.
+9. Commit the archive with `git commit -m "archive: complete <plan-name>"`.
+
+If the PR does not close any plan/spec/roadmap, skip the move and go to `ready`.
 
 ### `ready`
 
-When `final-strong` reports `reviewer-strong: clean` and the preflight is clean:
+After `closeout` (with or without archive moves):
 
 1. Run `py -3 tools/run.py ci --check` (or the consumer's equivalent). Do not proceed if it fails.
-2. If the PR completes the plan/spec/roadmap it set out to implement, archive the completed planning artifacts per `.agents/runbooks/completing-plans.md`:
-   - `git mv .agents/plans/<plan-name>.md .agents/plans/completed/`
-   - `git mv .agents/specs/<spec-name>.md .agents/specs/completed/`
-   - Move any related roadmaps or research files referenced by the plan.
-   - Run `py -3 tools/heal_archive_links.py --apply`, `py -3 tools/run.py mesh --apply`, and `py -3 tools/run.py marketplace --apply`.
-   - Re-run `py -3 tools/run.py ci --check` after the archive step.
-   - Commit the archive with `git commit -m "archive: complete <plan-name>"`.
-3. Only then flip the PR from draft to ready.
+2. Flip the PR from draft to ready with `gh pr ready <pr_number>`.
+3. Wait for remote CI to pass. Use `gh pr checks <pr_number> --watch` or the equivalent consumer command. Do not merge until the PR is green.
 
 ### `blocked`
 

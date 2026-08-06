@@ -13,7 +13,7 @@ flowchart TD
     preflight -->|green| scope-honesty --> orchestrator-self-review
     orchestrator-self-review --> lens-dispatch
     lens-dispatch --> normalize-inputs --> strong-review
-    strong-review -->|clean| ready
+    strong-review -->|clean| closeout
     strong-review -->|findings| metrics-track
     strong-review -->|contested / load-bearing| blocked
 
@@ -33,9 +33,10 @@ flowchart TD
 
     resolved-ledger -->|more open findings| finding-fix
     resolved-ledger -->|all findings resolved| final-strong
-    final-strong -->|clean| ready
+    final-strong -->|clean| closeout
     final-strong -->|findings| metrics-track
     final-strong -->|contested / load-bearing| blocked
+    closeout --> ready
 ```
 
 ## Nodes
@@ -57,7 +58,8 @@ flowchart TD
 | `regression-scan` | `reviewer-strong` on the touched area | For non-trivial or cross-cutting fixes, confirm and classify any new issue the fix introduced. |
 | `resolved-ledger` | orchestrator | Bookkeeping node that marks a finding resolved and records `resolved_at_node` and `resolved_at_round` in `review-metrics.json`. |
 | `final-strong` | `reviewer-strong` | One whole-branch pass after all queued findings are resolved. Confirms no remaining gaps, contradictions, or design issues. |
-| `ready` | orchestrator | Final `ci --check`; wait for remote CI to pass; mark the PR ready. |
+| `closeout` | orchestrator | After `reviewer-strong: clean`, archive completed plans/specs/roadmaps per `.agents/runbooks/completing-plans.md` if the PR closes them. |
+| `ready` | orchestrator | Final `ci --check`; flip the PR from draft to ready; wait for remote CI to pass. |
 | `blocked` | orchestrator | Human escalation for contested or load-bearing findings the orchestrator cannot resolve. |
 
 ## Edges
@@ -73,7 +75,7 @@ flowchart TD
 | `orchestrator-self-review` | `lens-dispatch` | Always; the orchestrator's prediction is not a substitute for lens review. The only exception is a PR with zero changed files. |
 | `lens-dispatch` | `normalize-inputs` | All lens logs are available. |
 | `normalize-inputs` | `strong-review` | UTF-8 backstop has run on the scratch directory. |
-| `strong-review` | `ready` | `reviewer-strong` reports `reviewer-strong: clean`. |
+| `strong-review` | `closeout` | `reviewer-strong` reports `reviewer-strong: clean`. |
 | `strong-review` | `metrics-track` | `reviewer-strong` or lens review reports findings. |
 | `metrics-track` | `finding-fix` | Always; choose the next finding to fix. |
 | `finding-fix` | `re-preflight` | Fix is committed. |
@@ -89,9 +91,10 @@ flowchart TD
 | `regression-scan` | `metrics-track` | `reviewer-strong` on the touched area confirms a new issue. |
 | `resolved-ledger` | `finding-fix` | More findings remain in the queue. |
 | `resolved-ledger` | `final-strong` | All findings are resolved. |
-| `final-strong` | `ready` | `reviewer-strong` reports `reviewer-strong: clean`. |
+| `final-strong` | `closeout` | `reviewer-strong` reports `reviewer-strong: clean`. |
 | `final-strong` | `metrics-track` | `reviewer-strong` reports findings. |
 | `final-strong` | `blocked` | A finding is contested or load-bearing. |
+| `closeout` | `ready` | Archives (if any) are committed and the local tree passes `ci --check`. |
 | `strong-review` | `blocked` | A finding is contested or load-bearing and the orchestrator cannot resolve it. |
 
 ## Round counting
