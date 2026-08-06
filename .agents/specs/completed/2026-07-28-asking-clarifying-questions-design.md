@@ -36,7 +36,7 @@ is the lawful next step.
    `writing-plans`, `executing-plans`, `handoff-gates`, and other mid-flight
    surfaces.
 5. Observe the first-party skill source format and
-   `docs/skill-standards-policy.md` frontmatter and body rules.
+   `.agents/doctrine/skill-standards-policy.md` frontmatter and body rules.
 6. Make the skill testable with subagent pressure scenarios.
 
 ## Non-goals
@@ -262,4 +262,4 @@ policy:
   `py -3 tools/rebuild_marketplace.py` and `bash scripts/ci-preflight.sh --check`
   must pass.
 - **Skill body**: `SKILL.md` body will be under 500 words and include all
-  required frontmatter fields per `docs/skill-standards-policy.md`.
+  required frontmatter fields per `.agents/doctrine/skill-standards-policy.md`.

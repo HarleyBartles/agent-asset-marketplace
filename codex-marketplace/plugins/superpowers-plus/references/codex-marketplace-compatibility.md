@@ -18,8 +18,8 @@ This note applies to the active Codex distribution of the first-party Superpower
 - The retained upstream source snapshot is reference-only. Do not fold Codex-safe wording, frontmatter normalization, marketplace policy, or adaptation into the retained provenance record.
 - Keep only the latest retained upstream source snapshot in provenance. Older version directories are replaced, not accumulated.
 - Installation and export artifacts are derived from the plugin tree. Do not hand-edit generated zips or registry entries.
-- Frontmatter contract: [docs/contracts/skill-frontmatter.md](../../../docs/contracts/skill-frontmatter.md)
-- OpenAI agent contract: [docs/contracts/openai-agent-yaml.md](../../../docs/contracts/openai-agent-yaml.md)
+- Frontmatter contract: [.agents/docs/contracts/skill-frontmatter.md](../../../.agents/docs/contracts/skill-frontmatter.md)
+- OpenAI agent contract: [.agents/docs/contracts/openai-agent-yaml.md](../../../.agents/docs/contracts/openai-agent-yaml.md)
 - Do not place first-party expert or domain skills directly in the Superpowers+ plugin.
 - Do not use this plugin as a dumping ground for House Skills, project doctrine, verification experts, GitHub/Linear mechanics, or other first-party expert surfaces.
 - Do not use this plugin as a dumping ground for retired workflow doctrine; defer that routing to follow-up reworking instead.

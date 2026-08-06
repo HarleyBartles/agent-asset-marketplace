@@ -38,7 +38,7 @@ There is no first-party skill that covers multiple SQL engines or cross-engine d
 - `decomposition.references` use `content_mode: licensed_adaptation` when operational guidance is adapted from a vendored source, and `content_mode: first_party_synthesis` when the guidance is clean-room synthesis supported only by citations. For `skills-with-mixed-source`, `source_sections` entries are prefixed with the source label (e.g., `postgresql: Server Administration`, `sqlite: WAL Mode`) when the reference is derived from a vendored source.
 - Existing lanes stay unchanged: `skills-with-source` continues to accept a single vendored source and a `CITATIONS.md` for supplementary references, and `skills-with-citation` continues to prohibit vendored source.
 - `tools/validate_authority_assets.py` is extended to accept the new lane and validate the mapping shape.
-- `mark-skill-authoring/references/source-grounded-authoring.md` and `docs/skill-standards-policy.md` are updated to document the lane.
+- `mark-skill-authoring/references/source-grounded-authoring.md` and `.agents/doctrine/skill-standards-policy.md` are updated to document the lane.
 
 ## Skill 1: database-engines
 

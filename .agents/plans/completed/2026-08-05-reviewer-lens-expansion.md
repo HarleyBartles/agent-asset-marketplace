@@ -596,7 +596,7 @@ If the smoke test or CI exposed fixes, commit them as separate fix commits. Othe
 - Edit: `codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/assets/reviewer-*.md`
 - Edit: `tools/sync_runtime_agents.py`
 - Edit: `tools/run.py`
-- Edit: `AGENTS.md`, `.agents/runbooks/implementing.md`, `docs/non-repo-locations-policy.md`
+- Edit: `AGENTS.md`, `.agents/runbooks/implementing.md`, `.agents/doctrine/non-repo-locations-policy.md`
 - Edit: `.agents/specs/completed/2026-08-05-reviewer-lens-expansion-design.md` to ratify these additions.
 
 **Interfaces:**
@@ -615,7 +615,7 @@ Expected: `py -3 tools/run.py runtime-agents --check` reports drift without writ
 
 - [x] **Step 8.3: Wire `runtime-agents` into `tools/run.py` and docs**
 
-Run: add the `runtime-agents` target; update `AGENTS.md`, `.agents/runbooks/implementing.md`, and `docs/non-repo-locations-policy.md` to document the staging flow.
+Run: add the `runtime-agents` target; update `AGENTS.md`, `.agents/runbooks/implementing.md`, and `.agents/doctrine/non-repo-locations-policy.md` to document the staging flow.
 Expected: `py -3 tools/run.py ci --check` passes and the staging command is documented.
 
 - [x] **Step 8.4: Update the design spec**

@@ -1,6 +1,6 @@
 # Repo Doctrine Runbook
 
-This runbook contains the worker procedures and reference pointers that were previously in the root `AGENTS.md` and `tools/AGENTS.md` (now `.devin/rules/tools.md`). It is a runbook, not operative law; the root `AGENTS.md` and `.agents/docs/mesh-policy.md` remain the rule surfaces.
+This runbook contains the worker procedures and reference pointers that were previously in the root `AGENTS.md` and `tools/AGENTS.md` (now `.devin/rules/tools.md`). It is a runbook, not operative law; the root `AGENTS.md` and `.agents/doctrine/mesh-policy.md` remain the rule surfaces.
 
 ## Testing instructions
 
@@ -8,7 +8,7 @@ This repo uses test-driven development. See `.agents/runbooks/testing.md` and in
 
 ## Code style guidelines
 
-Skill and marketplace shape standards are in `docs/skill-standards-policy.md`.
+Skill and marketplace shape standards are in `.agents/doctrine/skill-standards-policy.md`.
 General code style and writing conventions are in `.agents/runbooks/code-style.md`.
 
 ## Review guidelines

@@ -4,7 +4,7 @@ Use this reference when working with marketplace generation, validation, and reg
 
 ## Before You Begin: Read the Standards
 
-- **[`docs/custody-and-marketplace-doctrine.md`](../../docs/custody-and-marketplace-doctrine.md)** — source custody rules, provenance modes, plugin curation rules
+- **[`.agents/doctrine/custody-and-marketplace-doctrine.md`](../../.agents/doctrine/custody-and-marketplace-doctrine.md)** — source custody rules, provenance modes, plugin curation rules
 - **[`.devin/rules/tools.md`](../../.devin/rules/tools.md)** — marketplace generation and validation tooling
 
 ## Canonical Tooling
@@ -33,7 +33,6 @@ Use this when you have made changes to plugin skill files, bundle manifests, plu
 - `codex-marketplace/plugin-roots.json` — discovered active plugin roots
 - `codex-marketplace/plugins/<plugin>/skills/<skill>/` — canonical skill source trees
 - `provenance/<record>.md` — retained upstream source provenance
-- `adapters/codex/<pack>/<skill>/` — adaptation overlays for third-party skills
 
 #### Execution flow
 
@@ -116,7 +115,6 @@ You must run the full marketplace regeneration (`tools/run marketplace --apply`)
 
 - Canonical plugin skills under `codex-marketplace/plugins/<plugin>/skills/`
 - Retained upstream provenance under `provenance/`
-- Codex adapter/overlay files under `adapters/codex/`
 - Bundle manifests in plugin `references/`
 - Plugin manifests under `codex-marketplace/plugins/<plugin>/.codex-plugin/`
 
@@ -139,7 +137,6 @@ If a plugin pack lacks a manifest-driven generator/validator path, add one to `t
 
 The editable custody inputs for marketplace generation are:
 - Canonical skill trees under `codex-marketplace/plugins/<plugin>/skills/`
-- Codex overlay/adapter trees under `adapters/codex/`
 - Provenance records under `provenance/`
 - Plugin metadata under `codex-marketplace/plugins/<plugin>/.codex-plugin/`
 

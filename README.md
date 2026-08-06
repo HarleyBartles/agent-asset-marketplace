@@ -13,7 +13,7 @@ context. They do not substitute for vendored marketplace assets.
 
 The repo-wide navigation mesh lives in [INDEX.md](INDEX.md) and the agent
 mesh lives in [.agents/AGENTS.md](.agents/AGENTS.md) with policy in
-[.agents/docs/mesh-policy.md](.agents/docs/mesh-policy.md).
+[.agents/doctrine/mesh-policy.md](.agents/doctrine/mesh-policy.md).
 
 The active marketplace root inventory is editable at
 `codex-marketplace/plugin-roots.json`. Workers should update that inventory,

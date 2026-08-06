@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Scaffold the repo's .agents/docs/repo-runbook-policy.md mapping file."""
+"""Scaffold the repo's .agents/doctrine/repo-runbook-policy.md mapping file."""
 
 from __future__ import annotations
 
@@ -35,11 +35,7 @@ def _template_path() -> Path:
 
 def _has_required_boilerplate(content: str) -> bool:
     lines = [line.strip() for line in content.splitlines()]
-    return (
-        "# Repo Runbook Policy" in lines
-        and "## Standard-to-local mapping" in lines
-        and "## Exceptions" in lines
-    )
+    return "# Repo Runbook Policy" in lines and "## Standard-to-local mapping" in lines and "## Exceptions" in lines
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -58,7 +54,7 @@ exit codes:
   0  repo-runbook-policy.md is present/valid or was written
   1  drift detected, template missing, or write failed"""
     parser = argparse.ArgumentParser(
-        description="Scaffold the repo's .agents/docs/repo-runbook-policy.md mapping file.",
+        description="Scaffold the repo's .agents/doctrine/repo-runbook-policy.md mapping file.",
         epilog=epilog,
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )
@@ -75,7 +71,7 @@ exit codes:
     args = parser.parse_args(argv)
 
     repo_root = _repo_root()
-    policy_path = repo_root / ".agents" / "docs" / "repo-runbook-policy.md"
+    policy_path = repo_root / ".agents" / "doctrine" / "repo-runbook-policy.md"
     template = _template_path()
     if not template.is_file():
         print(f"ERROR: template not found: {template}", file=sys.stderr)

@@ -20,8 +20,7 @@ marketplace plugin pack surfaces that matter for validation and review.
 - Use the `marketplace_plugins` entries to jump from a protected plugin name
   to the plugin manifest, license evidence, bundle manifest, skills path, and
   known provenance references.
-- The canonical repo unslop profile lives at `docs/unslop/profile.md`; treat
-  `provenance/unslop-profile.md` as retired once the move lands.
+- The canonical repo unslop profile lives at `.agents/docs/unslop/profile.md`.
 - Treat the index as navigation metadata only. It helps you find repo truth;
   it does not replace manifests, ledgers, provenance files, or the files on
   disk themselves.

@@ -11,7 +11,7 @@ Mesh-wise, this scope owns marketplace source and plugin-curation law, not repo-
 
 The active plugin roots in this scope are defined by `codex-marketplace/plugin-roots.json` and validated against the protected marketplace manifests and plugin surfaces.
 
-The canonical skill source lives under `codex-marketplace/plugins/<plugin>/skills/`; third-party upstream provenance is recorded under `provenance/` and any adaptation overlays live under `adapters/codex/`.
+The canonical skill source lives under `codex-marketplace/plugins/<plugin>/skills/`; third-party upstream provenance is recorded under `provenance/`.
 
 The marketplace plugin roots are the canonical install surface. Use `py -3 tools/run.py marketplace --apply` to regenerate all derived surfaces, `py -3 tools/run.py marketplace --check` to verify freshness, and `py -3 tools/run.py ci --check` as the non-mutating CI gate. `py -3 tools/run.py mesh --check` proves the repo-wide navigation mesh is current.
 

@@ -72,7 +72,7 @@ git commit -m "feat: remove visual brainstorming companion runtime"
   - `.agents/superpowers/plans/` → `.agents/plans/`
 - Edit:
   - `tools/generate_repo_index.py` — repoint the protected spec/plan paths.
-  - `docs/skill-standards-policy.md` — repoint references to spec/plan locations.
+  - `.agents/doctrine/skill-standards-policy.md` — repoint references to spec/plan locations.
   - `sources/first_party/skills/writing-plans/SKILL.md` — repoint the plan save path.
   - `sources/first_party/skills/brainstorming/SKILL.md` — repoint the spec save path.
   - `sources/first_party/skills/working-with-epics/SKILL.md` — repoint the roadmap path.
@@ -116,7 +116,7 @@ This catches any hardcoded path the indexer still expects.
 - [ ] **Step 6: Commit.**
 
 ```bash
-git add .agents/specs .agents/plans .agents/superpowers sources/first_party/skills tools/generate_repo_index.py docs/skill-standards-policy.md
+git add .agents/specs .agents/plans .agents/superpowers sources/first_party/skills tools/generate_repo_index.py .agents/doctrine/skill-standards-policy.md
 git diff --stat
 git commit -m "refactor: move specs and plans out of .agents/superpowers/"
 ```

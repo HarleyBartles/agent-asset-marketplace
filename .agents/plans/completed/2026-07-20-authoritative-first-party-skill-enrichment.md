@@ -16,7 +16,7 @@
 - Mega-pack duplicates in `codex-cortex`, `everything-codex-code`, `house-skills`, `unslop-plus`, and `game-studio` are retained as provenance collections this pass.
 - Only one new plugin root: `dotnet-pack` replacing `dotnet-kit`.
 - `MARK-352` produces a decision matrix only; it does not implement additional skills.
-- All first-party skills use MIT license and the canonical first-party frontmatter from `docs/skill-standards-policy.md`.
+- All first-party skills use MIT license and the canonical first-party frontmatter from `.agents/doctrine/skill-standards-policy.md`.
 - Operational `SKILL.md` body is under 500 words; no inline citations.
 - Source-backed skills store vendored source in `assets/authority/reference-source/` and record `content_sha256`.
 - Citation-backed skills keep no vendored source; evidence is in `assets/authority/CITATIONS.md`.
@@ -2098,8 +2098,8 @@ This repository uses two distinct layers for the dotnet-pack bundle:
 - Installation/export layer is derived from the projection and is produced only by canonical tooling.
 - The custody flow is `source custody -> projection layer -> installation/export layer`.
 - The projected skill is materialized from `sources/first_party/skills/dotnet/` per the registry.
-- Frontmatter contract: [docs/contracts/skill-frontmatter.md](../../../docs/contracts/skill-frontmatter.md)
-- OpenAI agent contract: [docs/contracts/openai-agent-yaml.md](../../../docs/contracts/openai-agent-yaml.md)
+- Frontmatter contract: [.agents/docs/contracts/skill-frontmatter.md](../../../.agents/docs/contracts/skill-frontmatter.md)
+- OpenAI agent contract: [.agents/docs/contracts/openai-agent-yaml.md](../../../.agents/docs/contracts/openai-agent-yaml.md)
 
 The split is deliberate:
 

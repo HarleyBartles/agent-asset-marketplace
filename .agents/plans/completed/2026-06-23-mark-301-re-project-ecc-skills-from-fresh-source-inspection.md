@@ -111,8 +111,8 @@ The selected set is fixed after plan approval. Task 1 may only confirm it from c
 - Inspect: `provenance/security-pack.md`
 - Inspect: `provenance/repo-worker-base.md`
 - Inspect: `docs/custody-and-projection-doctrine.md`
-- Inspect: `docs/contracts/openai-agent-yaml.md`
-- Inspect: `docs/contracts/skill-frontmatter.md`
+- Inspect: `.agents/docs/contracts/openai-agent-yaml.md`
+- Inspect: `.agents/docs/contracts/skill-frontmatter.md`
 
 - [ ] **Step 1: Verify the custody snapshot is the exact pinned upstream state**
 
@@ -343,7 +343,7 @@ If it cannot, do not inject a generic stub.
 Expected result:
 
 - `agents/openai.yaml` exists only where it adds real value
-- the file parses as YAML and satisfies the current contract in `docs/contracts/openai-agent-yaml.md`
+- the file parses as YAML and satisfies the current contract in `.agents/docs/contracts/openai-agent-yaml.md`
 - metadata fields such as `skill_name`, `plugin`, `source_category`, `upstream_name`, `upstream_version`, `projection_plugin`, and `content_mode` are all populated with nonblank values where present
 
 - [ ] **Step 4: Refresh pack-level provenance notes for the new selected set**

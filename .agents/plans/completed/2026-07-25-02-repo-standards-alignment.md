@@ -33,7 +33,7 @@ Rewrite the `## Required surfaces` section to match the router + mesh model:
 - `.agents/plugins/marketplace.json` with `repo.local_skill_prefixes` configured.
 - `scripts/ci-preflight.sh` and `scripts/ci-preflight.ps1` for the default preflight bundle.
 - `.git/hooks/pre-commit` wired to `scripts/ci-preflight.sh --check`.
-- `.agents/docs/repo-runbook-policy.md` mapping the repo to the cross-repo guide standard.
+- `.agents/doctrine/repo-runbook-policy.md` mapping the repo to the cross-repo guide standard.
 - `REVIEW.md` at the repo root as the review entry point.
 - `CONTRIBUTING.md` at the repo root as the substantive contributor entry point.
 - `.gitignore` containing the `.agents/superpowers/sdd/**` and `!.agents/superpowers/sdd/.gitignore` rule.
@@ -106,7 +106,7 @@ Add a `root-agents-md` surface and a `guides-agents-md` surface, plus `scaffold`
     },
     {
       "id": "repo-runbook-policy",
-      "path": ".agents/docs/repo-runbook-policy.md",
+      "path": ".agents/doctrine/repo-runbook-policy.md",
       "kind": "file",
       "source": null,
       "scaffold": "scaffold_repo_guide_policy.py",
@@ -366,7 +366,7 @@ Update `interface.short_description` and `interface.default_prompt` to mention `
 
 **Files:**
 - Modify: `AGENTS.md` (source repo root)
-- Modify: `.agents/docs/repo-runbook-policy.md`
+- Modify: `.agents/doctrine/repo-runbook-policy.md`
 - Modify: `.agents/plugins/marketplace.json` (if migration needed)
 - Modify: `REVIEW.md` and `CONTRIBUTING.md` (if drift from templates)
 
@@ -414,7 +414,7 @@ This file is the repository's primary worker doctrine. When repo conventions, ma
 
 For each topic that is no longer a root heading, ensure the routed target contains equivalent guidance. The routed targets are already present (`.agents/guides/*.md`, `REVIEW.md`, `CONTRIBUTING.md`). The main work is removing duplication from `AGENTS.md` and adding missing routing pointers.
 
-### Step 3: Update `.agents/docs/repo-runbook-policy.md`
+### Step 3: Update `.agents/doctrine/repo-runbook-policy.md`
 
 Add a note under `## Standard-to-local mapping` that root `AGENTS.md` is a router and that the canonical topics are covered by the union of root sections and the listed guides.
 

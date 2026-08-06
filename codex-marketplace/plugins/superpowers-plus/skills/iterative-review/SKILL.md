@@ -27,6 +27,10 @@ license: MIT
 
 This skill is a first-party skill authored for this repository. It is not derived from an upstream snapshot.
 
+## Before you start
+
+The canonical sequence, node responsibilities, and edge conditions are defined in `references/review-state-graph.md`. Read that file **before** you dispatch any subagent or decide which lenses apply. The body below is an annotated walkthrough, not a replacement for the graph. Most questions about ordering (e.g. which node runs before `lens-dispatch`, whether `strong-review` can be skipped, and what happens when a lens finds an issue) are answered by the graph.
+
 # Iterative Review
 
 Run the review state graph on a draft PR before it is marked ready for CI and human review.

@@ -1,7 +1,7 @@
 ---
 description: "Contract doc routing"
 trigger: glob
-globs: "docs/contracts/**"
+globs: ".agents/docs/contracts/**"
 ---
 ## Scope
 

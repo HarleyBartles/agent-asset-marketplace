@@ -52,7 +52,7 @@ description: >-
 ## Design principles
 
 - **One skill per core domain**, not one per upstream skill.
-- **Skill body under 500 words** per `docs/skill-standards-policy.md`; detailed
+- **Skill body under 500 words** per `.agents/doctrine/skill-standards-policy.md`; detailed
   guidance lives in `references/operational-guidance.md`.
 - **Authority is explicit** in `assets/authority/authority.yaml` and
   `assets/authority/CITATIONS.md`.

@@ -4,7 +4,7 @@
 
 **Goal:** Create the portable `repo-guide-standard` skill, add it to `repo-worker-pack`, make `agent-asset-marketplace` the first fully-aligned exemplar by creating the missing guide docs and wiring root surfaces, normalize `.agents/superpowers/sdd/` directory hygiene, and make `.agents/superpowers/specs/` a repo-resident indexed surface.
 
-**Architecture:** Add a first-party source skill `repo-guide-standard` that defines the cross-repo guide layout, invocation, workflow order, and handoff requirements. Each repo keeps a local `.agents/docs/repo-runbook-policy.md` overlay. In `agent-asset-marketplace`, update `AGENTS.md` canonical headings, create four new `.agents/guides/*.md` files, update routing/index surfaces, normalize `.agents/superpowers/sdd/` `.gitignore` hygiene, make `specs/` repo-resident and indexed, and add a `repo-worker-base` reference that carries the superpowers directory-hygiene rule.
+**Architecture:** Add a first-party source skill `repo-guide-standard` that defines the cross-repo guide layout, invocation, workflow order, and handoff requirements. Each repo keeps a local `.agents/doctrine/repo-runbook-policy.md` overlay. In `agent-asset-marketplace`, update `AGENTS.md` canonical headings, create four new `.agents/guides/*.md` files, update routing/index surfaces, normalize `.agents/superpowers/sdd/` `.gitignore` hygiene, make `specs/` repo-resident and indexed, and add a `repo-worker-base` reference that carries the superpowers directory-hygiene rule.
 
 **Tech Stack:** Markdown skill sources, JSON bundle registry, Python marketplace generators (`py -3 tools/rebuild_marketplace.py`, `py -3 tools/check_marketplace.py`, `py -3 tools/generate_index_mesh.py`).
 
@@ -31,7 +31,7 @@
 - `sources/first_party/skills/repo-guide-standard/agents/openai.yaml` — Codex-facing wrapper metadata.
 - `sources/first_party/skills/repo-guide-standard/references/repository-guide-standard.md` — canonical cross-repo guide standard.
 - `codex-marketplace/custody-pack-registry.json` — add `repo-guide-standard` and `repo-worker-base` reference to `repo-worker-pack`.
-- `.agents/docs/repo-runbook-policy.md` — repo-local guide mapping overlay.
+- `.agents/doctrine/repo-runbook-policy.md` — repo-local guide mapping overlay.
 - `.agents/guides/{security,testing,pr,code-style}-guide.md` — new topical guides.
 - `AGENTS.md` — reorder canonical headings and add routing pointer.
 - `REVIEW.md` — substantive review entry point.
@@ -296,14 +296,14 @@ license: MIT
 
 This skill is the portable baseline for repo-local guides. It defines the cross-repo layout of root `AGENTS.md` headings, root pointer files, the `.agents/guides/` set, and the workflow order and Superpowers routing for each stage.
 
-Each repo supplies a thin overlay at `.agents/docs/repo-runbook-policy.md` that maps the standard to local files and records any exceptions. Local guides in `.agents/guides/` contain only repo-specific paths, commands, exclusions, CI, and exceptions.
+Each repo supplies a thin overlay at `.agents/doctrine/repo-runbook-policy.md` that maps the standard to local files and records any exceptions. Local guides in `.agents/guides/` contain only repo-specific paths, commands, exclusions, CI, and exceptions.
 
 ## Read when
 
 | Need | Read |
 | --- | --- |
 | How a repo's guides should be laid out | [references/repository-guide-standard.md](references/repository-guide-standard.md) |
-| The repo's local guide mappings | `.agents/docs/repo-runbook-policy.md` in the consuming repo |
+| The repo's local guide mappings | `.agents/doctrine/repo-runbook-policy.md` in the consuming repo |
 | Repo hygiene (worktree, branch, validation, publication) | `/repo-worker-base` |
 
 ## Composition contract
@@ -362,7 +362,7 @@ For each stage:
 
 1. Invoke `/repo-guide-standard` and read `references/repository-guide-standard.md`.
 2. Invoke `/repo-worker-base` for worktree, branch, validation, and publication boundaries.
-3. Read the repo's `.agents/docs/repo-runbook-policy.md` to find the local guide path.
+3. Read the repo's `.agents/doctrine/repo-runbook-policy.md` to find the local guide path.
 4. Read the repo-local guide for that stage.
 5. Route to the correct Superpowers skill:
    - design -> `/brainstorming`
@@ -377,7 +377,7 @@ For each stage:
 interface:
   display_name: Repo Guide Standard
   short_description: Use when reading, creating, updating, or aligning repo guides and their workflow order.
-  default_prompt: Read references/repository-guide-standard.md, then the repo's .agents/docs/repo-runbook-policy.md, then the specific local guide. Use repo-worker-base for worktree, branch, validation, and publication. Route to the matching Superpowers skill for the stage.
+  default_prompt: Read references/repository-guide-standard.md, then the repo's .agents/doctrine/repo-runbook-policy.md, then the specific local guide. Use repo-worker-base for worktree, branch, validation, and publication. Route to the matching Superpowers skill for the stage.
 policy:
   allow_implicit_invocation: true
 ```
@@ -433,7 +433,7 @@ Additional `<topic>-guide.md` files may live in `.agents/guides/`. They must be 
 
 ## Local overlay policy
 
-Each repo keeps `.agents/docs/repo-runbook-policy.md`. It must:
+Each repo keeps `.agents/doctrine/repo-runbook-policy.md`. It must:
 
 - State that the repo follows `repo-guide-standard`.
 - Map standard guide names to local paths.
@@ -451,7 +451,7 @@ design -> planning -> implementing -> review
 At each stage:
 
 1. Read this standard.
-2. Read the repo's `.agents/docs/repo-runbook-policy.md`.
+2. Read the repo's `.agents/doctrine/repo-runbook-policy.md`.
 3. Invoke `/repo-worker-base` for worktree, branch, validation, and publication boundaries.
 4. Read the repo-local guide for the stage.
 5. Route to the matching Superpowers skill:
@@ -557,11 +557,11 @@ git commit -m "Add repo-guide-standard to repo-worker-pack."
 ### Task 3: Create local policy doc and update scoped AGENTS.md files
 
 **Files:**
-- Create: `.agents/docs/repo-runbook-policy.md`
+- Create: `.agents/doctrine/repo-runbook-policy.md`
 - Modify: `.agents/docs/AGENTS.md`
 - Modify: `docs/AGENTS.md`
 
-- [x] **Step 1: Create `.agents/docs/repo-runbook-policy.md` with exact content**
+- [x] **Step 1: Create `.agents/doctrine/repo-runbook-policy.md` with exact content**
 
 ```markdown
 # Repo Guide Policy
@@ -609,7 +609,7 @@ Replace the `## Routing pointers` block with:
 - `INDEX.md` for docs-owned doctrine surfaces
 - `repo-runbook-policy.md` for this repo's mapping to the cross-repo guide standard
 - `../guides/AGENTS.md` for guide-stage routing
-- `../../docs/contracts/AGENTS.md` for contract-doc routing when docs-owned contracts are the target
+- `../../.agents/docs/contracts/AGENTS.md` for contract-doc routing when docs-owned contracts are the target
 ```
 
 - [x] **Step 3: Update `docs/AGENTS.md` routing pointers**
@@ -625,14 +625,14 @@ Replace the `## Routing pointers` block with:
 - `non-repo-locations-policy.md` for worktree and scratch file placement
 - `unslop/profile.md` for the canonical repo unslop profile
 - `contracts/AGENTS.md` for the contract-doc subtree
-- `../.agents/docs/mesh-policy.md` for the repo mesh policy
-- `../.agents/docs/repo-runbook-policy.md` for the repo's guide standard mapping
+- `../.agents/doctrine/mesh-policy.md` for the repo mesh policy
+- `../.agents/doctrine/repo-runbook-policy.md` for the repo's guide standard mapping
 ```
 
 - [x] **Step 4: Commit policy and routing changes**
 
 ```bash
-git add .agents/docs/repo-runbook-policy.md .agents/docs/AGENTS.md docs/AGENTS.md
+git add .agents/doctrine/repo-runbook-policy.md .agents/docs/AGENTS.md docs/AGENTS.md
 git commit -m "Add repo-runbook-policy and wire scoped AGENTS.md routing."
 ```
 
@@ -660,7 +660,7 @@ The primary durable output is market-consumable assets. Support surfaces such as
 
 Codex plugin first; generated GPT-safe skill zips second.
 
-The tracked agent mesh lives under `.agents/`. Root `AGENTS.md` is the local law node; `.agents/AGENTS.md` and `.agents/docs/mesh-policy.md` carry the repo-local mesh doctrine; docs-owned guidance lives under `docs/`; and generated `INDEX.md` files carry navigation only.
+The tracked agent mesh lives under `.agents/`. Root `AGENTS.md` is the local law node; `.agents/AGENTS.md` and `.agents/doctrine/mesh-policy.md` carry the repo-local mesh doctrine; docs-owned guidance lives under `docs/`; and generated `INDEX.md` files carry navigation only.
 
 ## Source-of-truth split
 
@@ -693,7 +693,7 @@ This repo uses test-driven development. See [`.agents/guides/testing-guide.md`](
 
 ## Code style guidelines
 
-Skill and marketplace shape standards are in [`docs/skill-standards-policy.md`](docs/skill-standards-policy.md).
+Skill and marketplace shape standards are in [`.agents/doctrine/skill-standards-policy.md`](.agents/doctrine/skill-standards-policy.md).
 General code style and writing conventions are in [`.agents/guides/code-style-guide.md`](.agents/guides/code-style-guide.md).
 
 ## Review guidelines
@@ -716,9 +716,9 @@ Apply the `security-review` profile from `/unslop-plus` to relevant work and rev
 
 ## Routing pointers
 
-- `.agents/docs/repo-runbook-policy.md` for this repo's mapping to the cross-repo guide standard
+- `.agents/doctrine/repo-runbook-policy.md` for this repo's mapping to the cross-repo guide standard
 - `.agents/AGENTS.md` for tracked agent doctrine and local agent-facing deltas
-- `.agents/docs/mesh-policy.md` for mesh-specific law
+- `.agents/doctrine/mesh-policy.md` for mesh-specific law
 - `docs/AGENTS.md` for docs-owned guidance
 - `tools/AGENTS.md` for generators and validators
 - `codex-marketplace/AGENTS.md` for marketplace source/projection law
@@ -727,7 +727,7 @@ Apply the `security-review` profile from `/unslop-plus` to relevant work and rev
 - `provenance/AGENTS.md` for provenance and trust evidence
 
 MUST READ when creating a worktree, placing scratch files, or writing temp
-artifacts: `docs/non-repo-locations-policy.md`.
+artifacts: `.agents/doctrine/non-repo-locations-policy.md`.
 
 ## Maintenance responsibility
 
@@ -746,7 +746,7 @@ This file is the review entry point for `agent-asset-marketplace`. It contains f
 ## Before you review
 
 - Read root [`AGENTS.md`](./AGENTS.md) `## Publication proof for repo work`.
-- Read [`.agents/docs/repo-runbook-policy.md`](./.agents/docs/repo-runbook-policy.md) for this repo's guide mappings.
+- Read [`.agents/doctrine/repo-runbook-policy.md`](./.agents/doctrine/repo-runbook-policy.md) for this repo's guide mappings.
 - Invoke `/repo-guide-standard` and `/repo-worker-base`.
 
 ## First-class review concerns
@@ -779,7 +779,7 @@ This guide is the contributor entry point for `agent-asset-marketplace`. It rout
 ## Before you begin
 
 - Read root [`AGENTS.md`](./AGENTS.md) for source-of-truth and publication rules.
-- Read [`.agents/docs/repo-runbook-policy.md`](./.agents/docs/repo-runbook-policy.md) for this repo's mapping to the cross-repo guide standard.
+- Read [`.agents/doctrine/repo-runbook-policy.md`](./.agents/doctrine/repo-runbook-policy.md) for this repo's mapping to the cross-repo guide standard.
 - Invoke `/repo-guide-standard` and `/repo-worker-base` before starting work.
 
 ## Contributor workflow
@@ -933,7 +933,7 @@ Use this guide for Python and Markdown conventions in `agent-asset-marketplace`.
 
 ## Before you begin
 
-- Read [`docs/skill-standards-policy.md`](../../docs/skill-standards-policy.md) for skill shape standards.
+- Read [`.agents/doctrine/skill-standards-policy.md`](../../.agents/doctrine/skill-standards-policy.md) for skill shape standards.
 - Read [`tools/AGENTS.md`](../../tools/AGENTS.md) for tooling conventions.
 
 ## When to use
@@ -944,7 +944,7 @@ Use this guide for Python and Markdown conventions in `agent-asset-marketplace`.
 ## Repo-specific guidance
 
 - Write all text files with LF line endings. Use `with path.open("w", encoding="utf-8", newline="\n") as f: f.write(content)` for new code; `Path.read_text(newline=...)` requires Python 3.13, so do not use it in scripts that must run under Python 3.12.
-- Follow `docs/skill-standards-policy.md` for skill frontmatter and metadata fields.
+- Follow `.agents/doctrine/skill-standards-policy.md` for skill frontmatter and metadata fields.
 - Keep Markdown headings descriptive of the reader's task.
 - Use code formatting for literal commands, paths, identifiers, and values; do not use code formatting for emphasis.
 - Prefer active voice and concise sentences in human-facing prose.
@@ -1046,11 +1046,11 @@ Expected: push succeeds.
 
 If no PR exists:
 ```bash
-gh pr create --title "Add repo-guide-standard skill, align guide surfaces, and normalize superpowers directory hygiene" --body "Implement repo-guide-standard portable skill, add it to repo-worker-pack, create .agents/docs/repo-runbook-policy.md, add four new .agents/guides/*.md files, align root AGENTS.md/REVIEW.md/CONTRIBUTING.md routing, normalize .agents/superpowers/sdd and specs .gitignore hygiene, update tools/generate_index_mesh.py to skip gitignored directories, and add the repo-worker-base superpowers-directory-hygiene reference. Marketplace and index mesh regenerated."
+gh pr create --title "Add repo-guide-standard skill, align guide surfaces, and normalize superpowers directory hygiene" --body "Implement repo-guide-standard portable skill, add it to repo-worker-pack, create .agents/doctrine/repo-runbook-policy.md, add four new .agents/guides/*.md files, align root AGENTS.md/REVIEW.md/CONTRIBUTING.md routing, normalize .agents/superpowers/sdd and specs .gitignore hygiene, update tools/generate_index_mesh.py to skip gitignored directories, and add the repo-worker-base superpowers-directory-hygiene reference. Marketplace and index mesh regenerated."
 ```
 If PR exists:
 ```bash
-gh pr edit --title "Add repo-guide-standard skill, align guide surfaces, and normalize superpowers directory hygiene" --body "Implement repo-guide-standard portable skill, add it to repo-worker-pack, create .agents/docs/repo-runbook-policy.md, add four new .agents/guides/*.md files, align root AGENTS.md/REVIEW.md/CONTRIBUTING.md routing, normalize .agents/superpowers/sdd and specs .gitignore hygiene, update tools/generate_index_mesh.py to skip gitignored directories, and add the repo-worker-base superpowers-directory-hygiene reference. Marketplace and index mesh regenerated."
+gh pr edit --title "Add repo-guide-standard skill, align guide surfaces, and normalize superpowers directory hygiene" --body "Implement repo-guide-standard portable skill, add it to repo-worker-pack, create .agents/doctrine/repo-runbook-policy.md, add four new .agents/guides/*.md files, align root AGENTS.md/REVIEW.md/CONTRIBUTING.md routing, normalize .agents/superpowers/sdd and specs .gitignore hygiene, update tools/generate_index_mesh.py to skip gitignored directories, and add the repo-worker-base superpowers-directory-hygiene reference. Marketplace and index mesh regenerated."
 ```
 Expected: PR URL returned.
 
@@ -1079,7 +1079,7 @@ You need to update the testing guide. Do not edit any files. Report the exact se
 Expected response path:
 1. `/repo-guide-standard`
 2. `/repo-worker-base`
-3. `.agents/docs/repo-runbook-policy.md`
+3. `.agents/doctrine/repo-runbook-policy.md`
 4. `.agents/guides/testing-guide.md`
 5. `/executing-plans` or `/subagent-driven-development`
 

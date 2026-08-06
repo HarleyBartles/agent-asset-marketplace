@@ -51,7 +51,7 @@
 - `sources/first_party/skills/writing-with-clarity/references/source/` — remove.
 - `codex-marketplace/custody-pack-registry.json` — retire `postgres` and third-party `database-design-patterns`, add first-party replacements.
 - `.agents/skills/mark-skill-authoring/references/source-grounded-authoring.md` — document the new lane.
-- `docs/skill-standards-policy.md` — document the new lane.
+- `.agents/doctrine/skill-standards-policy.md` — document the new lane.
 
 ## Task 1: Extend validator and add tests for `skills-with-mixed-source`
 
@@ -2123,7 +2123,7 @@ git commit -m "refactor(writing-with-clarity): migrate source to standard author
 **Files:**
 - Modify: `codex-marketplace/custody-pack-registry.json`
 - Modify: `.agents/skills/mark-skill-authoring/references/source-grounded-authoring.md`
-- Modify: `docs/skill-standards-policy.md`
+- Modify: `.agents/doctrine/skill-standards-policy.md`
 
 **Interfaces:**
 - Consumes: first-party skill sources created in Tasks 4 and 5.
@@ -2387,7 +2387,7 @@ review, records retrieval details, and approves any refresh before the skill
 changes.
 ```
 
-- [ ] **Step 3: Update `docs/skill-standards-policy.md`**
+- [ ] **Step 3: Update `.agents/doctrine/skill-standards-policy.md`**
 
 Insert the following section immediately after the `## Local skills` section. The old block is the existing `## Local skills` section; the new block is the same section followed by the new `## Authority and source custody` section.
 
@@ -2436,7 +2436,7 @@ record derivation boundaries, attribution, and review in
 - [ ] **Step 4: Commit**
 
 ```bash
-git add codex-marketplace/custody-pack-registry.json .agents/skills/mark-skill-authoring/references/source-grounded-authoring.md docs/skill-standards-policy.md
+git add codex-marketplace/custody-pack-registry.json .agents/skills/mark-skill-authoring/references/source-grounded-authoring.md .agents/doctrine/skill-standards-policy.md
 git commit -m "chore(registry): retire third-party database skills, add first-party replacements and mixed-source policy docs"
 ```
 
@@ -2530,7 +2530,7 @@ Run:
 
 ```bash
 git add sources/first_party/skills/database-engines/ sources/first_party/skills/database-design-patterns/ sources/first_party/skills/writing-with-clarity/
-git add codex-marketplace/custody-pack-registry.json .agents/skills/mark-skill-authoring/references/source-grounded-authoring.md docs/skill-standards-policy.md
+git add codex-marketplace/custody-pack-registry.json .agents/skills/mark-skill-authoring/references/source-grounded-authoring.md .agents/doctrine/skill-standards-policy.md
 git add tools/validate_authority_assets.py tests/test_validate_authority_assets.py
 ```
 

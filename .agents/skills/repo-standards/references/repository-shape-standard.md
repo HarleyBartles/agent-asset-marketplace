@@ -8,7 +8,7 @@ This file describes the surfaces `repo-standards` checks and can apply. It is th
 - `.agents/plugins/marketplace.json` with `repo.local_skill_prefixes` configured.
 - `scripts/ci-preflight.ps1` and `scripts/ci-preflight.sh` - a required, repo-owned preflight script. See [ci-validation-pipeline.md](ci-validation-pipeline.md) for the contract.
 - `.git/hooks/pre-commit` wired to `scripts/ci-preflight.sh --check`.
-- `.agents/docs/repo-runbook-policy.md` mapping the repo to `repo-standards`.
+- `.agents/doctrine/repo-runbook-policy.md` mapping the repo to `repo-standards`.
 - `REVIEW.md` at the repo root pointing to the review runbook and required skill invocations.
 - `CONTRIBUTING.md` at the repo root as the contributor entry point.
 - `.gitignore` at the repo root, free of stale `.agents/superpowers/sdd/**` or `!.agents/superpowers/sdd/.gitignore` rules.
@@ -37,7 +37,7 @@ The `## Routing pointers` section must list resolvable links to the scoped surfa
 
 Use these idempotent scripts to create missing user-content surfaces. The agent remains responsible for repo-specific content.
 
-- `scaffold-repo-runbook-policy` generates `.agents/docs/repo-runbook-policy.md` from the standard template.
+- `scaffold-repo-runbook-policy` generates `.agents/doctrine/repo-runbook-policy.md` from the standard template.
 - `scaffold-runbooks` generates missing `.agents/runbooks/*.md` files from `repo-runbook-policy.md` and the optional `.agents/runbooks/AGENTS.md` router.
 - `scaffold-review` generates `REVIEW.md`.
 - `scaffold-contributing` generates `CONTRIBUTING.md`.
@@ -56,7 +56,7 @@ Use these idempotent scripts to create missing user-content surfaces. The agent 
 
 ## Exceptions
 
-Repos may record surface exceptions in the `## Exceptions` section of `.agents/docs/repo-runbook-policy.md` using the surface `id` (one per line). `repo-standards --check` and `--apply` skip those surfaces.
+Repos may record surface exceptions in the `## Exceptions` section of `.agents/doctrine/repo-runbook-policy.md` using the surface `id` (one per line). `repo-standards --check` and `--apply` skip those surfaces.
 
 ## Local overrides
 

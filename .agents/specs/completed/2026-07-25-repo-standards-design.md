@@ -36,7 +36,7 @@ Make `repo-standards` (renamed from `repo-guide-standard`) the portable authorit
 - Rename source directory `sources/first_party/skills/repo-guide-standard/` to `sources/first_party/skills/repo-standards/`.
 - Rename skill frontmatter `name` to `repo-standards`; update `description`, `scope`, and `use_with` to include `inspecting-the-environment`.
 - Keep `references/repository-guide-standard.md` as the prose standard and add `references/repository-shape-manifest.json` as the checked source of truth.
-- Update `.agents/docs/repo-runbook-policy.md` to reference `repo-standards` and list the shape manifest mapping (file may be renamed in a later pass if desired).
+- Update `.agents/doctrine/repo-runbook-policy.md` to reference `repo-standards` and list the shape manifest mapping (file may be renamed in a later pass if desired).
 - The core script `repo_standards.py` lives at `repo-standards/scripts/repo_standards.py`; wrappers are `repo-standards.sh` and `repo-standards.ps1`.
 - Modes:
   - `repo-standards check` — compare the current repo against `repository-shape-manifest.json`; report missing/extra/drift; exit non-zero when non-compliant.

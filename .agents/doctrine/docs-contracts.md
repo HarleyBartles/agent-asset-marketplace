@@ -1,10 +1,10 @@
 
 ## Scope
 
-`docs/contracts/`
+`.agents/docs/contracts/`
 
 This scope covers the docs-owned contract surfaces that define markdown and YAML contracts for the marketplace and skill marketplace bundles.
 
-Defer to `docs.md` for the broader docs-routing context and to `.agents/docs/mesh-policy.md` for mesh-specific law.
+Defer to `docs.md` for the broader docs-routing context and to `.agents/doctrine/mesh-policy.md` for mesh-specific law.
 
 Keep this scope short. It exists to route agents to the right contract doc.

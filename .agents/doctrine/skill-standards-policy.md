@@ -9,15 +9,13 @@ This policy is stricter than upstream sources where noted; otherwise the upstrea
 
 Use the first-party [`writing-skills`](../../codex-marketplace/plugins/superpowers-plus/skills/writing-skills/SKILL.md) skill when creating or reviewing a skill. It owns the authoring lanes, custody-aware scaffolding, authority evidence, scholarly citations, and clean-room boundaries. See `writing-skills/references/local-and-marketplace-custody.md` and `writing-skills/references/source-grounded-authoring.md` for the authoring lanes and `writing-skills/scripts/new_skill.py` for the scaffolder.
 
-For third-party skill adaptation and overlay adapter triggers, see `docs/overlay-adapter-policy.md`.
-
 ## External references
 
 - [agentskills.io specification](https://agentskills.io/specification)
 - `superpowers-plus:writing-skills`
-- `docs/contracts/skill-frontmatter.md`
-- `docs/contracts/openai-agent-yaml.md`
-- `docs/custody-and-marketplace-doctrine.md`
+- `.agents/docs/contracts/skill-frontmatter.md`
+- `.agents/docs/contracts/openai-agent-yaml.md`
+- `custody-and-marketplace-doctrine.md`
 
 ## Directory structure
 
@@ -48,7 +46,7 @@ Authority lanes are defined in `assets/authority/authority.yaml`:
 
 ## SKILL.md frontmatter
 
-See `docs/contracts/skill-frontmatter.md` for the base shape and parsing rules.
+See `.agents/docs/contracts/skill-frontmatter.md` for the base shape and parsing rules.
 
 This repo adds:
 
@@ -79,7 +77,7 @@ Required for skills bundled into a Codex marketplace plugin.
 - `policy.allow_implicit_invocation` must be explicit (boolean).
 - Add `dependencies` only when the skill actually needs them.
 
-See `docs/contracts/openai-agent-yaml.md` for the full contract.
+See `.agents/docs/contracts/openai-agent-yaml.md` for the full contract.
 
 ## Bundled scripts
 

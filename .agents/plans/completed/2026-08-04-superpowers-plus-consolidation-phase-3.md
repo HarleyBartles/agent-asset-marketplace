@@ -42,7 +42,7 @@ No parallel execution is expected; one subagent (or the orchestrator) runs each 
 - Read:
   - `sources/first_party/skills/*/scripts/*`
   - `tools/AGENTS.md`
-  - `docs/skill-standards-policy.md`
+  - `.agents/doctrine/skill-standards-policy.md`
 - Create:
   - `Z:\_agent-scratch\consolidate-superpowers-plus-phase-3\2026-08-04-skill-script-audit.md` (off-repo scratch, not committed)
 
@@ -111,7 +111,7 @@ The known first-party skill scripts are under these directories:
 **Interfaces:**
 - Every updated script follows the contract from `.agents/specs/completed/2026-08-04-skill-script-cli-contract-design.md`.
 - Each script's `SKILL.md` references the script and its safe invocation.
-- `docs/skill-standards-policy.md` is updated to require the contract for all new skill scripts.
+- `.agents/doctrine/skill-standards-policy.md` is updated to require the contract for all new skill scripts.
 
 **Scope definition:**
 
@@ -132,7 +132,7 @@ Scaffolders and one-off utilities may be deferred if they are not invoked from a
 
   Under a new or existing "Bundled scripts" section, list each script, its purpose, and the canonical safe invocation (`<script> --check` or `<script> --help`).
 
-- [x] **Step 3: Update `docs/skill-standards-policy.md`.**
+- [x] **Step 3: Update `.agents/doctrine/skill-standards-policy.md`.**
 
   Add the skill-bundled script CLI contract to the skill authoring standards. Reference the spec and `refresh_installed_skills.py` as the reference shape.
 
@@ -345,17 +345,17 @@ In `refresh_installed_skills.py` the relevant helpers are `def _vendor_profiles_
 **Files:**
 - Edit:
   - `docs/code-review-guide.md`
-  - `docs/skill-standards-policy.md`
+  - `.agents/doctrine/skill-standards-policy.md`
   - `sources/first_party/skills/requesting-code-review/SKILL.md` (if it references the guide)
   - `sources/first_party/skills/writing-skills/SKILL.md` (if it references the policy)
 - Create:
   - `docs/code-review-guide.md` delta entries, or move detail to `.agents/guides/code-review-guide.md` if applicable
-  - `docs/skill-standards-policy.md` delta entries
+  - `.agents/doctrine/skill-standards-policy.md` delta entries
 
 **Consumes:** Task 6 (fold `mark-skill-authoring`) and Task 2 (script contract standard, which updates `skill-standards-policy.md`).
 
 **Interfaces:**
-- `docs/code-review-guide.md` and `docs/skill-standards-policy.md` are reduced to deltas from the root `AGENTS.md` and skill-specific references. Remove duplicated guidance; point to canonical skills instead.
+- `docs/code-review-guide.md` and `.agents/doctrine/skill-standards-policy.md` are reduced to deltas from the root `AGENTS.md` and skill-specific references. Remove duplicated guidance; point to canonical skills instead.
 - No information is lost; it is moved to the appropriate skill `SKILL.md` or `references/` file.
 
 - [x] **Step 1: Audit duplication in both guides.**

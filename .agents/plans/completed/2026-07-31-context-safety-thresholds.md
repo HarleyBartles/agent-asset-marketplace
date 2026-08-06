@@ -13,7 +13,7 @@
 - Source of truth: `sources/first_party/skills/context-safety/SKILL.md` and `sources/first_party/skills/context-safety/agents/openai.yaml`.
 - Do not hand-edit generated projection files under `.agents/skills/context-safety/`; regenerate from source.
 - Keep canonical identity fields stable (`name`, `source-id`, `source-path`, `provenance-name`, `source-category`, `status`, `owner`).
-- Follow `docs/skill-standards-policy.md`: descriptions and `use_when` describe triggers, not workflow.
+- Follow `.agents/doctrine/skill-standards-policy.md`: descriptions and `use_when` describe triggers, not workflow.
 - All generated surfaces stay in sync with canonical source.
 - All commands assume the worktree root as the working directory, except where a command explicitly references an absolute path.
 

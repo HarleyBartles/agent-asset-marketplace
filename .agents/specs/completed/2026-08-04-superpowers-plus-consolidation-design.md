@@ -100,7 +100,7 @@ to the right stage guide and skill.
   SDO, frontmatter, directory shape).
 - `writing-skills/references/source-grounded-authoring.md` holds the generic
   authority/citation/decomposition rules.
-- `docs/skill-standards-policy.md` becomes the thin marketplace delta for
+- `.agents/doctrine/skill-standards-policy.md` becomes the thin marketplace delta for
   `agents/openai.yaml`, canonical metadata, and accepted lanes.
 - `mark-skill-authoring` is retired; its scaffolder becomes
   `tools/new_skill.py` or `writing-skills/scripts/new-skill.py`.
@@ -169,7 +169,7 @@ targets belong in the Plan 1 task list.
 - `sources/first_party/skills/bootstrap-router/` — retire after content is absorbed.
 - `sources/first_party/skills/repo-worker-base/SKILL.md` — remove routing-classification language; keep baseline handoff.
 - `tools/generate_repo_index.py` — repoint `.agents/superpowers/plans` and `.agents/superpowers/specs`.
-- `docs/skill-standards-policy.md` — repoint `.agents/superpowers/plans` and `.agents/superpowers/specs`.
+- `.agents/doctrine/skill-standards-policy.md` — repoint `.agents/superpowers/plans` and `.agents/superpowers/specs`.
 - `.agents/superpowers/specs/` → `.agents/specs/`.
 - `.agents/superpowers/plans/` → `.agents/plans/`.
 - `codex-marketplace/plugins/superpowers-plus/references/bundle-manifest.json` — regenerate after retirements.

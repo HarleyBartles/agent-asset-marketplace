@@ -25,7 +25,10 @@ def _stripped_env() -> dict[str, str]:
 def _repo_root() -> Path:
     result = subprocess.run(
         ["git", "rev-parse", "--show-toplevel"],
-        capture_output=True, text=True, check=True, env=_stripped_env(),
+        capture_output=True,
+        text=True,
+        check=True,
+        env=_stripped_env(),
     )
     return Path(result.stdout.strip())
 
@@ -55,7 +58,10 @@ _SCRIPT_NAME = "repo-standards"
 def _is_submodule(repo_root: Path) -> bool:
     result = subprocess.run(
         ["git", "rev-parse", "--show-superproject-working-tree"],
-        cwd=repo_root, capture_output=True, text=True, env=_stripped_env(),
+        cwd=repo_root,
+        capture_output=True,
+        text=True,
+        env=_stripped_env(),
     )
     return result.returncode == 0 and result.stdout.strip()
 
@@ -77,7 +83,7 @@ def _manifest_path() -> Path:
 
 def _load_exceptions(repo_root: Path) -> set[str]:
     exceptions: set[str] = set()
-    policy = repo_root / ".agents" / "docs" / "repo-runbook-policy.md"
+    policy = repo_root / ".agents" / "doctrine" / "repo-runbook-policy.md"
     if not policy.is_file():
         return exceptions
     text = policy.read_text(encoding="utf-8")
@@ -185,9 +191,7 @@ def _check_surface(repo_root: Path, surface: dict[str, object], exceptions: set[
             findings.append(f"missing submodule entry: {rel}")
             return findings
         submodule_git = repo_root / rel / ".git"
-        submodule_module_dir = (
-            repo_root / ".git" / "modules" / rel.replace("/", "-")
-        )
+        submodule_module_dir = repo_root / ".git" / "modules" / rel.replace("/", "-")
         if not submodule_git.exists() and not submodule_module_dir.exists():
             findings.append(f"submodule not initialized: {rel}")
         return findings
@@ -293,19 +297,15 @@ exit codes:
   1  drift detected, apply aborted, or an error occurred
 
 The manifest is read from references/repository-shape-manifest.json inside the
-repo-standards skill. Exceptions declared in .agents/docs/repo-runbook-policy.md
+repo-standards skill. Exceptions declared in .agents/doctrine/repo-runbook-policy.md
 under the ## Exceptions heading are skipped."""
     parser = argparse.ArgumentParser(
         description="Check or apply the repo-standards surface manifest.",
         epilog=epilog,
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )
-    parser.add_argument(
-        "--check", action="store_true", help="report drift only; do not write"
-    )
-    parser.add_argument(
-        "--apply", action="store_true", help="create missing surfaces"
-    )
+    parser.add_argument("--check", action="store_true", help="report drift only; do not write")
+    parser.add_argument("--apply", action="store_true", help="create missing surfaces")
     parser.add_argument(
         "--yes",
         action="store_true",

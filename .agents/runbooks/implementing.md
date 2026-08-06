@@ -6,7 +6,7 @@ Use this reference when implementing work in the agent-asset-marketplace repo �
 
 Read these standards documents before writing any code:
 
-- **[`docs/custody-and-marketplace-doctrine.md`](../../docs/custody-and-marketplace-doctrine.md)** — source custody rules, provenance modes, plugin curation rules
+- **[`.agents/doctrine/custody-and-marketplace-doctrine.md`](../../.agents/doctrine/custody-and-marketplace-doctrine.md)** — source custody rules, provenance modes, plugin curation rules
 - **[`.devin/rules/tools.md`](../../.devin/rules/tools.md)** — marketplace generation and validation tooling
 
 ## Skills to Invoke

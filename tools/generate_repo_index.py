@@ -18,7 +18,11 @@ ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_REPO_INDEX: dict[str, Any] = {
     "schema_version": 1,
     "repo_name": "agent-asset-marketplace",
-    "description": "Navigation metadata for the agent asset marketplace. This file is an index of repo zones and marketplace plugin packs, not the source of truth itself.",
+    "description": (
+        "Navigation metadata for the agent asset marketplace. "
+        "This file is an index of repo zones and marketplace plugin packs, "
+        "not the source of truth itself."
+    ),
     "marketplace_root_inventory_path": "codex-marketplace/plugin-roots.json",
     "marketplace_registry_path": ".agents/plugins/marketplace.json",
     "codex_marketplace_manifest_path": "codex-marketplace/manifest.json",
@@ -87,7 +91,7 @@ DEFAULT_REPO_INDEX: dict[str, Any] = {
         },
         {
             "name": "docs-unslop-profile",
-            "path": "docs/unslop/profile.md",
+            "path": ".agents/docs/unslop/profile.md",
             "purpose": "Canonical repo unslop profile for anti-slop custody and discovery.",
             "surface_kind": "hand-authored",
             "nearest_scoped_agents_md": ".devin/rules/docs.md",
