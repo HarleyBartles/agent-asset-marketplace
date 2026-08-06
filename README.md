@@ -43,4 +43,6 @@ The primary outputs are:
 
 ## License
 
-Assets in this repository are MIT licensed unless the individual file or provenance record states otherwise. See `provenance/` for third-party source-custody details and any per-asset exceptions.
+This repository is released under the MIT License. See [LICENSE](LICENSE) for the full text.
+
+Individual assets may carry their own license notice or provenance record. See `provenance/` for third-party source-custody details and any per-asset exceptions.
