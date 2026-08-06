@@ -9,7 +9,6 @@ This policy is stricter than upstream sources where noted; otherwise the upstrea
 
 Use the first-party [`writing-skills`](../../codex-marketplace/plugins/superpowers-plus/skills/writing-skills/SKILL.md) skill when creating or reviewing a skill. It owns the authoring lanes, custody-aware scaffolding, authority evidence, scholarly citations, and clean-room boundaries. See `writing-skills/references/local-and-marketplace-custody.md` and `writing-skills/references/source-grounded-authoring.md` for the authoring lanes and `writing-skills/scripts/new_skill.py` for the scaffolder.
 
-
 ## External references
 
 - [agentskills.io specification](https://agentskills.io/specification)
