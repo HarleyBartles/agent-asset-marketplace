@@ -41,7 +41,7 @@ Use when a draft PR exists and needs an automated subagent review loop before be
 
 ## Core Pattern
 
-Follow the `review-state-graph.md` reference. The graph routes the orchestrator through deterministic preflight, orchestrator prediction, parallel lens review, `reviewer-strong` whole-branch review, fix, re-preflight, targeted re-review, and conditional regression-scan. Every finding records the node and round that discovered it. There are no fixed "Round N" steps.
+Follow the `review-state-graph.md` reference. The graph routes the orchestrator through deterministic preflight, `orchestrator-self-review`, parallel `lens-dispatch`, `reviewer-strong` whole-branch review, `finding-fix` by an `implementer`, `re-preflight`, lens-aware `reviewer-fixes`, `resolved-ledger`, conditional `regression-scan`, and a final `reviewer-strong`. Every finding records the node and round that discovered it. There are no fixed "Round N" steps.
 
 ## Required reading
 
@@ -142,43 +142,86 @@ For each finding, record the node that discovered it, the round, the lens, and t
 
 ### `finding-fix`
 
-For each finding, use `receiving-code-review` to verify it, then fix it. Commit the fix. The fix should be narrow.
+For each finding, the orchestrator first uses `receiving-code-review` to verify it. Then it builds a task brief and dispatches an `implementer` subagent:
+
+- `original_finding` — the exact finding text and severity, with file and line citations.
+- `lens` — the originating `reviewer-*.md` lens, e.g. `reviewer-security`.
+- `lens_checklist` — the `## Checklist` section from that lens profile.
+- `diff_slice` — the relevant slice of the full branch diff that the finding touches.
+- `fix_constraints` — what not to break, which tests to run, and the consumer's `ci --check` command.
+
+The `implementer` edits, runs the consumer's preflight, and commits. The orchestrator verifies the commit and the report, then moves to `re-preflight`.
+
+Use `implementer` for rounds 1–3. If a finding fails `reviewer-fixes` three times, escalate to `implementer-strong` for round 4. If it still fails, route to `blocked`.
 
 ### `re-preflight`
 
-Re-run the consumer's canonical preflight over the post-fix range. If it reports new deterministic issues, go to `fast-fix`. If it is clean, go to `targeted-re-review`.
+Re-run the consumer's canonical preflight over the post-fix range. If it reports new deterministic issues, go to `fast-fix`. If it is clean, go to `reviewer-fixes`.
 
-### `targeted-re-review`
+### `reviewer-fixes`
 
-Before spending a full whole-branch `reviewer-strong` pass, dispatch `reviewer-fixes` with a tight scope and a concrete `<log_path>` (e.g. `$scratch/review-log-fixes.md`):
-- the original finding,
-- the fix diff (e.g. `HEAD~N..HEAD` or `origin/main..HEAD` if the fixes are the latest commits),
-- the relevant slice of the full branch diff,
+Before spending a full whole-branch `reviewer-strong` pass, dispatch `reviewer-fixes` with the following lens-aware package and a concrete `<log_path>` (e.g. `$scratch/review-log-fixes.md`):
+- `original_finding` — the issue the fix is addressing.
+- `fix_diff_path` — the prepared fix diff (`git diff <pre-fix-sha>...<post-fix-sha>`).
+- `full_diff_slice_path` — the relevant slices of the full branch diff that the fix touches (the blast radius).
+- `lens` — the originating `reviewer-*.md` lens.
+- `lens_checklist` — the `## Checklist` from that lens.
 - `<log_path>` where `reviewer-fixes` must use the `write` tool to write its report.
 
-Use `reviewer-fixes` to verify the original finding is resolved and to look for obvious new issues in the fix. Do not broaden into a whole-branch review here.
+`reviewer-fixes` verifies the original finding is resolved and applies the originating lens's `## Checklist` to the blast radius only. It is not a whole-branch review.
 
 Confirm the original finding is resolved. Then:
-- If the fix is trivial (single file, same concern, no cross-cutting impact) and `reviewer-fixes` is clean, go to `strong-review`.
-- If the fix is non-trivial (multi-file, generated surfaces, security/tooling boundary, public interface change) or `reviewer-fixes` finds any new issue, go to `regression-scan`.
+- If the original finding is fixed and `reviewer-fixes` is clean, go to `resolved-ledger`.
+- If the original finding is not fixed, go back to `finding-fix` for the same finding.
+- If `reviewer-fixes` finds a new same-lens/blast-radius issue, record it in `metrics-track` with `regression_class: same-lens-blast-radius`.
+- If the fix is non-trivial (multi-file, generated surfaces, security/tooling boundary, public interface change), go to `regression-scan` even if `reviewer-fixes` is clean.
 
 ### `regression-scan`
 
-Widen the scope to the fix and immediate surrounding area. First dispatch `reviewer-fixes` on that widened diff, with `<log_path>` set to `$scratch/review-log-fixes.md`, to catch cheap regressions. If `reviewer-fixes` is clean, go to `strong-review` for the final whole-branch pass. If `reviewer-fixes` finds a new issue, dispatch `reviewer-strong` on the touched area, with its own `<log_path>` (e.g. `$scratch/review-log-strong.md`), to confirm and classify it; then return to `metrics-track` so it is recorded as a regression.
+For non-trivial or cross-cutting fixes, widen the scope to the fix and immediate surrounding area. Dispatch `reviewer-strong` on the touched area with `<log_path>` set to `$scratch/review-log-strong.md`. Its job is to confirm and classify any new issue the fix introduced.
+
+If `reviewer-strong` on the touched area is clean, go to `resolved-ledger`. If it finds a new issue, classify it:
+- `same-lens-blast-radius` if the issue is in the same lens and in the blast radius.
+- `cross-lens-blast-radius` if the issue is in a different lens and in the blast radius.
+- `outside-blast-radius` if the issue is outside the blast radius.
+
+Record the new finding in `metrics-track` with `regression_class` and `regression_of` set to the original finding, then return to `finding-fix`.
+
+### `resolved-ledger`
+
+This is an orchestrator bookkeeping node, not a subagent dispatch. When `reviewer-fixes` or `regression-scan` is clean, mark the original finding `resolved` and record the `resolved_at_node` and `resolved_at_round` in `review-metrics.json`.
+
+If more findings remain in the queue, choose the next one and go to `finding-fix`. If the queue is empty, go to `final-strong`.
+
+### `final-strong`
+
+Run one whole-branch `reviewer-strong` pass after all findings are resolved. It receives the full branch diff, PR description, all lens logs, the `resolved-ledger` of fixed findings, and the `regression_class` records. Its job is to confirm there are no remaining gaps, contradictions, or design issues.
+
+If `reviewer-strong` reports `reviewer-strong: clean` and the preflight is clean, go to `closeout`. If it reports findings, go to `metrics-track` to start a new fix loop. If it reports a contested or load-bearing finding, go to `blocked`.
+
+### `closeout`
+
+After `reviewer-strong: clean`, decide whether the PR closes the plan/spec/roadmap it set out to implement. If it does, archive the completed planning artifacts per `.agents/runbooks/completing-plans.md` before flipping the PR to ready:
+
+1. Identify the plan and spec named in the PR body, linked issues, or the branch's `.agents/plans/` and `.agents/specs/` files.
+2. Confirm the plan is complete: every top-level checkbox is checked or the plan records the implementation PR.
+3. `git mv .agents/plans/<plan-name>.md .agents/plans/completed/`
+4. If the plan lists a spec: `git mv .agents/specs/<spec-name>.md .agents/specs/completed/`
+5. Move any related roadmaps or research files referenced by the plan.
+6. Run `py -3 tools/heal_archive_links.py --apply` and `py -3 tools/check_archive_links.py`.
+7. Run `py -3 tools/run.py mesh --apply` and `py -3 tools/run.py marketplace --apply`.
+8. Run `py -3 tools/run.py ci --check`. Do not proceed if it fails.
+9. Commit the archive with `git commit -m "archive: complete <plan-name>"`.
+
+If the PR does not close any plan/spec/roadmap, skip the move and go to `ready`.
 
 ### `ready`
 
-When `strong-review` reports `reviewer-strong: clean` and the preflight is clean:
+After `closeout` (with or without archive moves):
 
 1. Run `py -3 tools/run.py ci --check` (or the consumer's equivalent). Do not proceed if it fails.
-2. If the PR completes the plan/spec/roadmap it set out to implement, archive the completed planning artifacts per `.agents/runbooks/completing-plans.md`:
-   - `git mv .agents/plans/<plan-name>.md .agents/plans/completed/`
-   - `git mv .agents/specs/<spec-name>.md .agents/specs/completed/`
-   - Move any related roadmaps or research files referenced by the plan.
-   - Run `py -3 tools/heal_archive_links.py --apply`, `py -3 tools/run.py mesh --apply`, and `py -3 tools/run.py marketplace --apply`.
-   - Re-run `py -3 tools/run.py ci --check` after the archive step.
-   - Commit the archive with `git commit -m "archive: complete <plan-name>"`.
-3. Only then flip the PR from draft to ready.
+2. Flip the PR from draft to ready with `gh pr ready <pr_number>`.
+3. Wait for remote CI to pass. Use `gh pr checks <pr_number> --watch` or the equivalent consumer command. Do not merge until the PR is green.
 
 ### `blocked`
 
@@ -186,11 +229,14 @@ Use only when the orchestrator cannot resolve a contested or load-bearing findin
 
 ## Recording `review-metrics.json`
 
-At every `metrics-track` and at `ready` or `blocked`, write or update `review-metrics.json` in the off-repo scratch. The schema is in `references/review-metrics-schema.json`. This file is evidence for:
+At every `metrics-track` and at `ready`, `resolved-ledger`, or `blocked`, write or update `review-metrics.json` in the off-repo scratch. The schema is in `references/review-metrics-schema.json`. This file is evidence for:
 
 - **Fast catch**: `findings_by_node.preflight` should dominate.
 - **Early catch**: most lens/strong findings should appear at low `discovered_at_round` values.
 - **No sloppy fixes**: `regressions` should be low relative to `rounds_per_finding`.
+- **Tunable regressions**: the `regression_class` distribution tells us whether late findings are due to weak lens review (`outside-blast-radius`), shoddy same-lens fixes (`same-lens-blast-radius`), or cross-cutting regressions (`cross-lens-blast-radius`).
+
+For every post-fix finding, set `regression_class` from the decision table in the design spec (`## Concrete regression_class assignment`). Also set `regression_of` on the `rounds_per_finding` entry for the new finding.
 
 ## Inputs the orchestrator must provide
 
@@ -201,8 +247,9 @@ At every `metrics-track` and at `ready` or `blocked`, write or update `review-me
 ## Invariants
 
 - Follow the graph in `references/review-state-graph.md`. Do not follow a round list.
+- The initial `strong-review` is reachable only through `lens-dispatch`; there is no edge from `setup`, `preflight`, `fast-fix`, or `orchestrator-self-review` directly to `strong-review`. If `lens-dispatch` is skipped, unavailable, or produces no logs, the review is `blocked`.
 - This skill does not modify review files or PR state beyond the scope-honesty preflight.
-- The orchestrator owns the scope-honesty preflight, all fixes, and the final decision to flip the PR to ready.
+- The orchestrator owns the scope-honesty preflight, all verification, the `resolved-ledger`, and the final decision to flip the PR to ready. `implementer` subagents own the fix edits under the orchestrator's brief.
 - All review inputs, logs, metrics, and fix-diffs are written to the off-repo scratch directory; they are never committed to the repo.
 - CI must pass before leaving draft.
 
@@ -214,7 +261,7 @@ At every `metrics-track` and at `ready` or `blocked`, write or update `review-me
 - Claiming subagents are unavailable and proceeding to `ready` without `lens-dispatch` or `strong-review`. If `run_subagent` cannot be used, the review is `blocked`.
 - Skipping `re-preflight` after a fix. A fix can re-introduce deterministic issues.
 - Skipping `regression-scan` for a non-trivial fix. A fix can cause a new issue in an adjacent area.
-- Letting `reviewer-fixes` or `targeted-re-review` drift into a full branch review. Keep the input tightly scoped to the fix.
+- Letting `reviewer-fixes` drift into a full branch review. Keep the input tightly scoped to the fix.
 - Blindly applying reviewer findings without verification. Use `receiving-code-review` for each finding.
 - Skipping CI after the reviewer loop. The reviewer "green" signal is not the draft/ready gate.
 - Flipping a PR to ready without archiving the completed plan/spec/roadmap it implements. The ready state should represent the completed plan, including the moved planning artifacts.
