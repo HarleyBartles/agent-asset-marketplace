@@ -59,13 +59,18 @@ The Devin Desktop agents search path is: user-global `~/.config/devin/agents/` (
 
 1. Determine `<base>` and `<branch>` (or `<head_sha>`) for the draft PR.
 2. Create the off-repo scratch workspace and an empty `review-metrics.json` in it.
-3. Run the mechanical next-node validator:
+3. Run the mechanical next-node discovery (read-only):
    ```
    py -3 .agents/skills/iterative-review/scripts/next_node.py --metrics <scratch_dir>/review-metrics.json
    ```
-4. Open `references/node-<node>.md` for the node printed by `next_node.py` and follow it exactly.
-5. Return to step 3 after the node is done.
-6. Stop when `next_node.py` prints `ready` or `blocked`.
+   Capture the first line of output as `<node>`.
+4. Validate and advance the router to the discovered node before running its recipe:
+   ```
+   py -3 .agents/skills/iterative-review/scripts/next_node.py --propose <node> --metrics <scratch_dir>/review-metrics.json
+   ```
+5. Open `references/node-<node>.md` for the just-proposed node and follow it exactly.
+6. Return to step 3 after the node is done.
+7. Stop when `next_node.py` prints `ready` or `blocked`.
 
 ## Recording `review-metrics.json`
 

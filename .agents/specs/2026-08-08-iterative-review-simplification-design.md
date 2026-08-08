@@ -96,11 +96,12 @@ Initial set (all nodes in `references/review-state-graph.md`):
 
 ## Acceptance criteria
 
-1. `iterative-review/SKILL.md` is reduced to the 6-step orchestrator above.
+1. `iterative-review/SKILL.md` is reduced to the orchestrator surface and a pointer to `references/review-state-graph.md`.
 2. Every current node section in `SKILL.md` is extracted into a `references/node-<name>.md` file that matches the template.
-3. `next_node.py` still validates the graph and can still be called with `--propose`.
+3. `next_node.py` is a stateful router: discovery (no `--propose`) is read-only; `--propose <node>` advances `current_node`/`previous_node` when the proposed node is the single allowed next node.
 4. `py -3 tools/run.py ci --check` passes after the refactor.
-5. A test walkthrough of a trivial PR follows the new structure successfully.
+5. A test walkthrough of a trivial PR follows the new structure and `next_node.py` advances through the expected nodes in order.
+6. The `fix_round >= 4` threshold in `next_node.py` correctly routes `finding-fix` to `blocked`.
 
 ## Implementation sketch
 
@@ -148,6 +149,6 @@ Map the existing `### <node>` sections in `SKILL.md` directly into the new `refe
 
 ## Out of scope
 
-- Changing the graph itself.
-- Adding new scripts or new subagent profiles.
+- Changing the graph topology (nodes/edges) itself.
+- Adding new scripts or new subagent profiles beyond making `next_node.py` routable.
 - Changing `reviewer-strong.md` or the `final-strong` guard.

@@ -1,16 +1,17 @@
 #!/usr/bin/env python3
 """next_node.py — mechanical next-node validator for the iterative-review graph.
 
-Contract:
-- --help                  prints usage
-- --check                 self-check; exits 0
-- --metrics <path>        path to review-metrics.json
-- --ledger <path>         path to review-log-resolved-ledger.md
-- --propose <node>        if given, exits 0 only if <node> is the allowed next node
+Classification (read-only/mutating/mixed): mixed.
+- --check                 read-only self-check; exits 0
+- --metrics <path>        discovery (read-only) or commit gate (mutating)
+- --ledger <path>         path to review-log-resolved-ledger.md (default: sibling of --metrics)
+- --propose <node>        commit gate; if <node> is the allowed next node, exits 0 and
+                          writes current_node/previous_node to review-metrics.json
+- no --propose            read-only discovery; prints the allowed next node
 
-The orchestrator must call this before every run_subagent dispatch and must not
-proceed if it exits 1. The script is the mechanical source of truth for the
-graph; it returns the single allowed next node given the state in
+The orchestrator must call this before any node recipe (use --propose to advance
+state) and must not proceed if it exits 1. The script is the mechanical source of
+truth for the graph; it returns the single allowed next node given the state in
 review-metrics.json.
 """
 

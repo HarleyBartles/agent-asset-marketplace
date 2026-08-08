@@ -174,12 +174,16 @@
   }
   ```
 
-- [ ] **Step 2: Run `next_node.py` and verify it returns `setup`**
+- [ ] **Step 2: Run discovery and verify it returns `setup`**
   Run: `py -3 .agents/skills/iterative-review/scripts/next_node.py --metrics <temp>/review-metrics.json`
-  Expected: prints `setup` because `review-metrics.json` is new and the ledger is missing.
+  Expected: prints `setup` because `current_node` is empty.
 
-- [ ] **Step 3: Advance through a few synthetic nodes and verify the reference files open correctly**
-  Manually update `review-metrics.json` with `findings_by_node.preflight: 0` and re-run `next_node.py` to see it move to `preflight`. Open `references/node-preflight.md` and confirm it contains the preflight recipe.
+- [ ] **Step 3: Advance through a few synthetic nodes using `--propose` and verify the reference files open correctly**
+  Run: `py -3 .agents/skills/iterative-review/scripts/next_node.py --propose setup --metrics <temp>/review-metrics.json` (exits 0, advances `current_node` to `setup`).
+  Re-run discovery: it should print `normalize-inputs` (transition from `setup`).
+  Run: `py -3 .agents/skills/iterative-review/scripts/next_node.py --propose normalize-inputs --metrics <temp>/review-metrics.json` (exits 0).
+  Seed `findings_by_node.preflight: 0` and run: `py -3 .agents/skills/iterative-review/scripts/next_node.py --propose preflight --metrics <temp>/review-metrics.json` (exits 0).
+  Open `references/node-preflight.md` and confirm it contains the preflight recipe.
 
 - [ ] **Step 4: Record the smoke test result in the scratch directory or a short note**
   No source code change needed. This step is for confidence only.
@@ -191,7 +195,7 @@
 
 | Spec acceptance criterion | Task |
 |---|---|
-| `SKILL.md` is reduced to the 6-step orchestrator | Task 2 |
+| `SKILL.md` is reduced to the orchestrator surface | Task 2 |
 | Every current node section becomes a `references/node-<name>.md` file | Task 1 |
 | `next_node.py` is a stateful graph router with `current_node`/`previous_node` and `--propose` validation | Task 5 (smoke test) + script changes per spec section 5 |
 | `ci --check` passes after refactor | Task 1–4 |

@@ -12,13 +12,12 @@ Re-run the consumer's canonical preflight after a fix to catch newly introduced 
 1. Re-run the consumer's canonical preflight over the post-fix range.
 2. Update `review-metrics.json`:
    - `findings_by_node.re-preflight` = number of new deterministic findings (0 if clean)
-   - `current_node` = `re-preflight`
 3. If it reports new deterministic issues, go to `fast-fix`.
 4. If it is clean, go to `reviewer-fixes`.
 
 ## Outputs
 - Updated `<scan_findings>`
-- `review-metrics.json` with `findings_by_node.re-preflight` and `current_node: re-preflight`
+- `review-metrics.json` with `findings_by_node.re-preflight`
 
 ## Next check
 py -3 .agents/skills/iterative-review/scripts/next_node.py --metrics <scratch_dir>/review-metrics.json
