@@ -4,6 +4,10 @@ This is the canonical control-flow graph for the `iterative-review` skill. The
 orchestrator follows the graph from `setup` to `ready` or `blocked`, recording
 state at every `metrics-track`.
 
+Canonical node recipes live in `references/node-*.md` files (one per node in this
+directory, named `node-<node>.md`), and the orchestrator uses `next_node.py` to
+discover the current node. See `node-next-node.md` for the validation recipe.
+
 ## Mermaid graph
 
 ```mermaid
@@ -43,26 +47,26 @@ flowchart TD
 
 ## Nodes
 
-| Node | Actor | Purpose |
-|---|---|---|
-| `setup` | orchestrator | Prepare the workspace, diff, PR context, and `scan_findings`. |
-| `normalize-inputs` | orchestrator | Run `normalize_review_inputs.py --apply` on the scratch directory so every downstream file is plain UTF-8. |
-| `preflight` | consumer CI preflight | Run deterministic pattern checks on the branch before any subagent. |
-| `fast-fix` | orchestrator or implementer | Fix a deterministic preflight finding; trivial items the orchestrator can fix, mechanical items an `implementer`. |
-| `scope-honesty` | orchestrator | Compare the diff to the plan, spec, PR body, and linked issues. Fix drift. |
-| `orchestrator-self-review` | orchestrator | Apply each relevant `reviewer-*.md` profile's `## Checklist` to the diff (resolving each name through the Devin Desktop agents search path); fix predictable items; record uncertain items in `review-log-orchestrator-self-review.md`. |
-| `lens-dispatch` | parallel subagents | Run the relevant lens reviewers with the prediction log as input. This node is mandatory; do not route around it because the orchestrator-self-review was clean. |
-| `lens-triage` | orchestrator | Decide the fate of each lens finding: `blocking/important` findings enter the fast fix loop, `trivial/deferred` findings are left for `final-strong`, and `contested/load-bearing` findings are `blocked`. If no findings, proceed to `final-strong`. |
-| `metrics-track` | orchestrator | Record the finding, the node that discovered it, the round number, the node where it resolves, and the `regression_class`. This node does not block. |
-| `finding-fix` | `implementer` subagent | Resolve one finding with the lens's checklist and a concrete brief, then commit. |
-| `re-preflight` | `tools/run.py ci --check` | Re-run the deterministic checks on the post-fix range. |
-| `reviewer-fixes` | `reviewer-fixes` subagent | Cheap lens-aware re-review of the fix blast radius. Verifies the original finding and applies the originating lens's `## Checklist` to the changed files only. |
-| `regression-scan` | `reviewer-strong` on the touched area | For non-trivial or cross-cutting fixes, confirm and classify any new issue the fix introduced. |
-| `resolved-ledger` | orchestrator | Bookkeeping node that marks a finding resolved and records `resolved_at_node` and `resolved_at_round` in `review-metrics.json`. When the queue is empty, runs `resolved_ledger.py --apply` to produce `review-log-resolved-ledger.md` before `final-strong`. |
-| `final-strong` | `reviewer-strong` | One whole-branch pass after all queued findings are resolved. Requires `review-log-resolved-ledger.md` and a clean `review-metrics.json`; `reviewer-strong` refuses if either is missing or shows unresolved `important`/`blocking` findings or regressions. Confirms no remaining gaps, contradictions, or design issues. |
-| `closeout` | orchestrator | After `reviewer-strong: clean`, archive completed plans/specs/roadmaps per `.agents/runbooks/completing-plans.md` if the PR closes them. |
-| `ready` | orchestrator | Final `ci --check`; flip the PR from draft to ready; wait for remote CI to pass. |
-| `blocked` | orchestrator | Human escalation for contested or load-bearing findings the orchestrator cannot resolve. |
+| Node | Actor | Recipe | Purpose |
+|---|---|---|---|
+| `setup` | orchestrator | [node-setup.md](node-setup.md) | Prepare the workspace, diff, PR context, and `scan_findings`. |
+| `normalize-inputs` | orchestrator | [node-normalize-inputs.md](node-normalize-inputs.md) | Run `normalize_review_inputs.py --apply` on the scratch directory so every downstream file is plain UTF-8. |
+| `preflight` | consumer CI preflight | [node-preflight.md](node-preflight.md) | Run deterministic pattern checks on the branch before any subagent. |
+| `fast-fix` | orchestrator or implementer | [node-fast-fix.md](node-fast-fix.md) | Fix a deterministic preflight finding; trivial items the orchestrator can fix, mechanical items an `implementer`. |
+| `scope-honesty` | orchestrator | [node-scope-honesty.md](node-scope-honesty.md) | Compare the diff to the plan, spec, PR body, and linked issues. Fix drift. |
+| `orchestrator-self-review` | orchestrator | [node-orchestrator-self-review.md](node-orchestrator-self-review.md) | Apply each relevant `reviewer-*.md` profile's `## Checklist` to the diff (resolving each name through the Devin Desktop agents search path); fix predictable items; record uncertain items in `review-log-orchestrator-self-review.md`. |
+| `lens-dispatch` | parallel subagents | [node-lens-dispatch.md](node-lens-dispatch.md) | Run the relevant lens reviewers with the prediction log as input. This node is mandatory; do not route around it because the orchestrator-self-review was clean. |
+| `lens-triage` | orchestrator | [node-lens-triage.md](node-lens-triage.md) | Decide the fate of each lens finding: `blocking/important` findings enter the fast fix loop, `trivial/deferred` findings are left for `final-strong`, and `contested/load-bearing` findings are `blocked`. If no findings, proceed to `final-strong`. |
+| `metrics-track` | orchestrator | [node-metrics-track.md](node-metrics-track.md) | Record the finding, the node that discovered it, the round number, the node where it resolves, and the `regression_class`. This node does not block. |
+| `finding-fix` | `implementer` subagent | [node-finding-fix.md](node-finding-fix.md) | Resolve one finding with the lens's checklist and a concrete brief, then commit. |
+| `re-preflight` | `tools/run.py ci --check` | [node-re-preflight.md](node-re-preflight.md) | Re-run the deterministic checks on the post-fix range. |
+| `reviewer-fixes` | `reviewer-fixes` subagent | [node-reviewer-fixes.md](node-reviewer-fixes.md) | Cheap lens-aware re-review of the fix blast radius. Verifies the original finding and applies the originating lens's `## Checklist` to the changed files only. |
+| `regression-scan` | `reviewer-strong` on the touched area | [node-regression-scan.md](node-regression-scan.md) | For non-trivial or cross-cutting fixes, confirm and classify any new issue the fix introduced. |
+| `resolved-ledger` | orchestrator | [node-resolved-ledger.md](node-resolved-ledger.md) | Bookkeeping node that marks a finding resolved and records `resolved_at_node` and `resolved_at_round` in `review-metrics.json`. When the queue is empty, runs `resolved_ledger.py --apply` to produce `review-log-resolved-ledger.md` before `final-strong`. |
+| `final-strong` | `reviewer-strong` | [node-final-strong.md](node-final-strong.md) | One whole-branch pass after all queued findings are resolved. Requires `review-log-resolved-ledger.md` and a clean `review-metrics.json`; `reviewer-strong` refuses if either is missing or shows unresolved `important`/`blocking` findings or regressions. Confirms no remaining gaps, contradictions, or design issues. |
+| `closeout` | orchestrator | [node-closeout.md](node-closeout.md) | After `reviewer-strong: clean`, archive completed plans/specs/roadmaps per `.agents/runbooks/completing-plans.md` if the PR closes them. |
+| `ready` | orchestrator | [node-ready.md](node-ready.md) | Final `ci --check`; flip the PR from draft to ready; wait for remote CI to pass. |
+| `blocked` | orchestrator | [node-blocked.md](node-blocked.md) | Human escalation for contested or load-bearing findings the orchestrator cannot resolve. |
 
 ## Edges
 
