@@ -190,11 +190,27 @@ Record the new finding in `metrics-track` with `regression_class` and `regressio
 
 This is an orchestrator bookkeeping node, not a subagent dispatch. When `reviewer-fixes` or `regression-scan` is clean, mark the original finding `resolved` and record the `resolved_at_node` and `resolved_at_round` in `review-metrics.json`.
 
-If more findings remain in the queue, choose the next one and go to `finding-fix`. If the queue is empty, go to `final-strong`.
+When the queue is empty, run the resolved-ledger evidence gate before proceeding to `final-strong`:
+
+```
+py -3 .agents/skills/iterative-review/scripts/resolved_ledger.py --apply --metrics <scratch_dir>/review-metrics.json
+```
+
+This command writes `review-log-resolved-ledger.md` only when every `important`/`blocking` finding has a `resolved_at_node` and `regressions` is empty. If the command exits 1, do not proceed to `final-strong` and return to `finding-fix` or `regression-scan`.
+
+If more findings remain in the queue, choose the next one and go to `finding-fix`. If the queue is empty, go to `resolved-ledger` then `final-strong`.
 
 ### `final-strong`
 
-Run one whole-branch `reviewer-strong` pass after all `blocking/important` findings are resolved. It also covers any `trivial/deferred` findings the `lens-triage` decided to defer. It receives the full branch diff, PR description, all lens logs, the `resolved-ledger` of fixed findings, and the `regression_class` records. Its job is to confirm there are no remaining gaps, contradictions, or design issues.
+Run one whole-branch `reviewer-strong` pass after all `blocking/important` findings are resolved. It also covers any `trivial/deferred` findings the `lens-triage` decided to defer. Its job is to confirm there are no remaining gaps, contradictions, or design issues.
+
+Before dispatching `reviewer-strong`, run the `next_node` validator with the exact node you intend to dispatch:
+
+```
+py -3 .agents/skills/iterative-review/scripts/next_node.py --propose final-strong --metrics <scratch_dir>/review-metrics.json
+```
+
+If it exits 1, the orchestrator must not dispatch `reviewer-strong` and must route to the allowed node instead. If it exits 0, build the `reviewer-strong` input package with the full branch diff, PR description, all lens logs, `review-log-resolved-ledger.md`, `review-metrics.json`, and `<log_path>`.
 
 If `reviewer-strong` reports `reviewer-strong: clean` and the preflight is clean, go to `closeout`. If it reports findings, go to `metrics-track` to start a new fix loop. If it reports a contested or load-bearing finding, go to `blocked`.
 

@@ -58,7 +58,7 @@ flowchart TD
 | `re-preflight` | `tools/run.py ci --check` | Re-run the deterministic checks on the post-fix range. |
 | `reviewer-fixes` | `reviewer-fixes` subagent | Cheap lens-aware re-review of the fix blast radius. Verifies the original finding and applies the originating lens's `## Checklist` to the changed files only. |
 | `regression-scan` | `reviewer-strong` on the touched area | For non-trivial or cross-cutting fixes, confirm and classify any new issue the fix introduced. |
-| `resolved-ledger` | orchestrator | Bookkeeping node that marks a finding resolved and records `resolved_at_node` and `resolved_at_round` in `review-metrics.json`. |
+| `resolved-ledger` | orchestrator | Bookkeeping node that marks a finding resolved and records `resolved_at_node` and `resolved_at_round` in `review-metrics.json`. When the queue is empty, runs `resolved_ledger.py --apply` to produce `review-log-resolved-ledger.md` before `final-strong`. |
 | `final-strong` | `reviewer-strong` | One whole-branch pass after all queued findings are resolved. Confirms no remaining gaps, contradictions, or design issues. |
 | `closeout` | orchestrator | After `reviewer-strong: clean`, archive completed plans/specs/roadmaps per `.agents/runbooks/completing-plans.md` if the PR closes them. |
 | `ready` | orchestrator | Final `ci --check`; flip the PR from draft to ready; wait for remote CI to pass. |
