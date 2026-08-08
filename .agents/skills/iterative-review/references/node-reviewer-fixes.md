@@ -4,29 +4,30 @@
 Verify a fix against the originating lens's checklist, tightly scoped to the blast radius.
 
 ## Inputs
-- `original_finding`
-- `fix_diff_path` (`git diff <pre-fix-sha>...<post-fix-sha>`)
-- `full_diff_slice_path` (blast radius slices of the full branch diff)
-- `lens` and `lens_checklist` from the originating `reviewer-*.md`
-- Concrete `<log_path>` (e.g., `$scratch/review-log-fixes.md`)
+- `review-log-<lens>.md` from the original lens that produced the finding
+- `review-log-implementer-report.md` (if an `implementer` fixed the finding) or the inline fix diff
+- The affected file(s) only — do not re-review the whole branch
 
 ## Recipe
-1. `run_subagent` `reviewer-fixes` with the lens-aware package and the `<log_path>`.
-2. Confirm the original finding is resolved.
-3. Update `review-metrics.json`:
-   - Set `non_trivial_fix: true` if the fix is non-trivial (multi-file, generated surfaces, security/tooling boundary, public interface change); otherwise clear it.
-   - Set `contested: true` on the finding if it is contested or load-bearing.
-   - Set `regression_class` and `regression_of` when a new issue is found.
-4. Route by result:
-   - Fixed and clean -> `resolved-ledger`
-   - Not fixed -> `finding-fix` for the same finding
-   - New same-lens/blast-radius issue -> `metrics-track`
-   - Non-trivial fix -> `regression-scan`
-   - Contested or load-bearing -> `blocked`
+1. Load the original lens checklist from `review-log-<lens>.md`.
+2. Re-apply that checklist to the changed surface and one step of blast radius only.
+3. Confirm the original finding is resolved and no new same-lens issues appear in the blast radius.
+4. Write `review-log-reviewer-fixes.md` and end it with exactly one of:
+   - `reviewer-fixes: PASS`
+   - `reviewer-fixes: FAIL`
+5. On `PASS`:
+   - On the original finding's `rounds_per_finding` entry, set `resolved_at_node: "reviewer-fixes"` and `resolved_at_round` to the current `fix_round` value.
+   - Set `non_trivial_fix: false`.
+   - Clear any `contested` and `regressions` entries tied to this resolved finding.
+   - Route to `resolved-ledger`.
+6. On `FAIL`, do **not** increment `fix_round` (`finding-fix` owns that on the next pass):
+   - Mark the original finding as unresolved, or record the new issue in `regressions` with `regression_of` linking back.
+   - Route back to `finding-fix`.
 
 ## Outputs
-- Write `review-log-fixes.md`
-- `review-metrics.json` with `non_trivial_fix`, `contested`, `regression_class`, and `regression_of` as appropriate
+- `review-log-reviewer-fixes.md` ending with exactly one of:
+  - `reviewer-fixes: PASS`
+  - `reviewer-fixes: FAIL`
 
 ## Next check
-py -3 .agents/skills/iterative-review/scripts/next_node.py --metrics <scratch_dir>/review-metrics.json
+py -3 .agents/skills/iterative-review/scripts/next_node.py --json --metrics <scratch_dir>/review-metrics.json
