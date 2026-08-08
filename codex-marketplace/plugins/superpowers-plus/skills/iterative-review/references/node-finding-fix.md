@@ -21,7 +21,7 @@ Verify and fix a single `blocking/important` lens finding using an `implementer`
 
 ## Outputs
 - Commit containing the fix
-- Updated `rounds_per_finding` in `review-metrics.json`
+- Updated `rounds_per_finding` in `review-metrics.json`: increment `fix_round` for the finding being fixed and set `current_node: finding-fix`
 
 ## Next check
 py -3 .agents/skills/iterative-review/scripts/next_node.py --metrics <scratch_dir>/review-metrics.json

@@ -12,7 +12,7 @@
 
 - Only edit the canonical source in `codex-marketplace/plugins/superpowers-plus/skills/iterative-review/`; regenerate `.agents/skills/` with `py -3 tools/run.py installed-skills --apply`.
 - Every commit must pass `py -3 tools/run.py ci --check`.
-- Do not change the graph, the scripts, the `reviewer-*.md` profiles, or the `reviewer-strong` guard.
+- Do not change the `reviewer-*.md` profiles or the `reviewer-strong` guard. The graph and `next_node.py` may be updated to make the new per-node reference surface routable, with matching changes to `review-metrics-schema.json`.
 - Work in a feature branch/worktree; do not commit to `main` directly.
 
 ---

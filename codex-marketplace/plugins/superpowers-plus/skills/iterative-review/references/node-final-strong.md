@@ -13,15 +13,10 @@ Run one whole-branch `reviewer-strong` pass after all `blocking/important` findi
 - `<log_path>`
 
 ## Recipe
-1. Run the routing validator:
-   ```
-   py -3 .agents/skills/iterative-review/scripts/next_node.py --propose final-strong --metrics <scratch_dir>/review-metrics.json
-   ```
-2. If exit 1, do not dispatch `reviewer-strong`; route to the allowed node.
-3. If exit 0, build the input package and `run_subagent` `reviewer-strong` to the `<log_path>`.
-4. If `reviewer-strong: clean` and the preflight is clean, go to `closeout`.
-5. If findings are reported, go to `metrics-track` to start a new fix loop.
-6. If a `contested` or `load-bearing` finding is reported, go to `blocked`.
+1. Build the input package and `run_subagent` `reviewer-strong` to the `<log_path>`. The transition to `final-strong` was already validated by the previous `next_node.py` call.
+2. If `reviewer-strong: clean` and the preflight is clean, go to `closeout`.
+3. If findings are reported, update `rounds_per_finding` in `review-metrics.json` and go to `metrics-track` to start a new fix loop.
+4. If a `contested` or `load-bearing` finding is reported, set `contested: true` on the finding and go to `blocked`.
 
 ## Outputs
 - Write `review-log-strong.md`

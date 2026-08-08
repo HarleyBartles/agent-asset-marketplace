@@ -45,15 +45,19 @@ Each `references/node-<name>.md` is a self-contained recipe for a single graph n
 - `## Outputs` — files to write and `review-metrics.json` fields to update.
 - `## Next check` — the `next_node.py` command to run before leaving.
 
-Initial set:
+Initial set (all nodes in `references/review-state-graph.md`):
 
 - `node-setup.md`
+- `node-normalize-inputs.md`
 - `node-preflight.md`
 - `node-fast-fix.md`
+- `node-scope-honesty.md`
 - `node-orchestrator-self-review.md`
 - `node-lens-dispatch.md`
 - `node-lens-triage.md`
+- `node-metrics-track.md`
 - `node-finding-fix.md`
+- `node-re-preflight.md`
 - `node-reviewer-fixes.md`
 - `node-regression-scan.md`
 - `node-resolved-ledger.md`
@@ -61,6 +65,7 @@ Initial set:
 - `node-closeout.md`
 - `node-ready.md`
 - `node-blocked.md`
+- `node-next-node.md`
 
 ### 3. `next_node.py` is the single source of truth for routing
 
@@ -69,11 +74,16 @@ Initial set:
 ### 4. What does not change
 
 - `references/review-state-graph.md` stays the canonical graph.
-- `references/review-metrics-schema.json` stays the metrics contract.
 - `references/review-log-orchestrator-self-review.md` and `references/review-log-resolved-ledger.md` stay.
-- `scripts/next_node.py`, `scripts/resolved_ledger.py`, and `scripts/normalize_review_inputs.py` stay as-is.
+- `scripts/resolved_ledger.py` and `scripts/normalize_review_inputs.py` stay as-is.
 - The `reviewer-*.md` subagent profiles stay as-is.
 - The consumer's `ci --check` contract stays as-is.
+
+### 5. What changes to support the thin orchestrator
+
+- `scripts/next_node.py` becomes a stateful router that advances `current_node` and `previous_node` in `review-metrics.json` and validates all graph transitions.
+- `references/review-metrics-schema.json` gains `current_node`, `previous_node`, `contested`, `fix_round`, and `non_trivial_fix` fields so the router can make conditional decisions.
+- `references/node-*.md` recipes update `review-metrics.json` with the fields the router expects before each `next_node.py` call.
 
 ### 5. Benefits
 

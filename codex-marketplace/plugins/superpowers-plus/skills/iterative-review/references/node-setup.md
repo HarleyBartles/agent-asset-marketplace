@@ -19,7 +19,7 @@ Collect and normalize the off-repo review inputs for the draft PR.
    - Optional `<issue_context>` as a UTF-8 file
    - `<scan_findings>` from the consumer's canonical preflight
 5. Validate every input file is valid UTF-8 (no BOM).
-6. Create an empty `review-metrics.json` in `<scratch_dir>`.
+6. Ensure `review-metrics.json` exists in `<scratch_dir>`. Do not overwrite it if `next_node.py` has already populated `current_node` and `previous_node`.
 7. Run `py -3 .agents/skills/iterative-review/scripts/normalize_review_inputs.py --apply <scratch_dir>`.
 
 ## Outputs
@@ -27,7 +27,7 @@ Collect and normalize the off-repo review inputs for the draft PR.
 - `pr_description`
 - Optional `issue_context`
 - `scan_findings`
-- Empty `review-metrics.json`
+- `review-metrics.json` (ensure it exists; preserve any `current_node`/`previous_node` already written by `next_node.py`)
 
 ## Next check
 py -3 .agents/skills/iterative-review/scripts/next_node.py --metrics <scratch_dir>/review-metrics.json
