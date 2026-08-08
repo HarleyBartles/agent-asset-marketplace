@@ -10,7 +10,7 @@ Usage: scaffold-all.sh [--check] [--force]
 
 Runs the standard repo-standards scaffolds in order:
   scaffold-repo-runbook-policy, scaffold-runbooks, scaffold-review,
-  scaffold-contributing, scaffold-ci-preflight, scaffold-gitignore,
+  scaffold-contributing, scaffold-gitignore,
   scaffold-agents-md, scaffold-marketplace-json
 
 Options:
@@ -23,7 +23,7 @@ USAGE
     exit 0
 fi
 
-for script in scaffold-repo-runbook-policy scaffold-runbooks scaffold-review scaffold-contributing scaffold-ci-preflight scaffold-gitignore scaffold-agents-md scaffold-marketplace-json; do
+for script in scaffold-repo-runbook-policy scaffold-runbooks scaffold-review scaffold-contributing scaffold-gitignore scaffold-agents-md scaffold-marketplace-json; do
     echo "==> running ${script}"
     "${SCRIPT_DIR}/${script}.sh" "$@"
 done
