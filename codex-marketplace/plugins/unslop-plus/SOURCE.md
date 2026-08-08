@@ -56,5 +56,3 @@ The `unslop-engine` skill adapts the upstream idea (sample collection, pattern d
 - Package validator checks required GPT skill files and rejects forbidden shipped runtime instructions.
 - Output validator checks `unslop-output/` for manifest, prompts, samples, counted analysis, draft profile strength, and visual evidence status.
 - Repo marketplace validation checks the plugin manifest, registry entry, and bundle manifest.
-
-- Upstream MIT notice: `skills/unslop-engine/LICENSE.upstream`.
