@@ -1,7 +1,7 @@
 ---
 description: "Third-party source custody"
 trigger: glob
-globs: "provenance/**"
+globs: "codex-marketplace/plugins/*/SOURCE.md"
 ---
 ## Scope
 

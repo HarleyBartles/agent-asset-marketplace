@@ -137,7 +137,7 @@ If a plugin pack lacks a manifest-driven generator/validator path, add one to `t
 
 The editable custody inputs for marketplace generation are:
 - Canonical skill trees under `codex-marketplace/plugins/<plugin>/skills/`
-- Provenance records under `provenance/`
+- Per-pack provenance records under `codex-marketplace/plugins/<plugin>/SOURCE.md`
 - Plugin metadata under `codex-marketplace/plugins/<plugin>/.codex-plugin/`
 
 Generated surfaces (manifests, bundle manifests, repo index, index mesh, installed skills) must stay derived from these inputs.
