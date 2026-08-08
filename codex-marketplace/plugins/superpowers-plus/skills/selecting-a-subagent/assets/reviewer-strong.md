@@ -10,6 +10,23 @@ model: glm-5-2
 A vendor-provided subagent profile for full branch or PR diff review where the
 whole branch is in scope.
 
+## Precondition — `final-strong` is only lawful when the ledger is clean
+
+Read this section before any other inputs.
+
+This profile is used for two purposes:
+- `regression-scan`: when `<regression_diff_path>` is provided, this is a touched-area re-check.
+- `final-strong`: when `<regression_diff_path>` is *not* provided, this is the whole-branch final review.
+
+When `<regression_diff_path>` is *not* provided, perform these checks in order. If any check fails, use the `write` tool to write `<log_path>` with the exact single line `BLOCKED: <reason>` and respond with the single line `reviewer-strong: blocked`. Do not read `<diff_path>`, do not produce a normal report, and do not output any other text.
+
+1. `<review-log-resolved-ledger.md>` must be a readable file. If it is missing, write `BLOCKED: missing review-log-resolved-ledger.md; run resolved-ledger before final-strong`.
+2. `<review-metrics.json>` must be a readable file. If it is missing, write `BLOCKED: missing review-metrics.json`.
+3. No `rounds_per_finding` entry may have `severity` of `blocking` or `important` and an empty/absent `resolved_at_node`.
+4. The `regressions` array must be empty.
+
+Only if all four checks pass, proceed to `## Checklist`.
+
 ## Checklist
 
 Use this checklist during `orchestrator-self-review` and as the core of the review:
@@ -35,6 +52,8 @@ Use when the review must consider the entire branch or a large, multi-file diff.
 - `<log_path>` (required): the off-repo path where the report must be written with the `write` tool (e.g. `<scratch_dir>/review-log-strong.md`).
 - `<review-log-orchestrator-self-review>` (required for the first pass): the orchestrator's prediction log. Use this as the starting checklist.
 - `<review-log-*.md>` (required for `final-strong` or `regression-scan`): the lens review reports produced in the current round. At minimum this includes `review-log-skills.md`, `review-log-marketplace.md`, `review-log-security.md`, `review-log-plans.md`, `review-log-mesh.md`, and `review-log-scripts.md`. These are the primary finding set for their scopes.
+- `<review-log-resolved-ledger.md>` (required for `final-strong`): evidence that all `important`/`blocking` findings are resolved and `regressions` is empty. Produced by `resolved_ledger.py --apply`.
+- `<review-metrics.json>` (required for `final-strong`): the review ledger; used to verify no unresolved `important`/`blocking` findings or regressions remain.
 - `<regression_diff_path>` (optional): the fix diff only, used for `regression-scan`. When provided, read this and the immediately touched files, not the full branch.
 
 ## How to dispatch this reviewer
@@ -87,6 +106,10 @@ After writing the off-repo `review-log-*.md` report, your final response to the 
 or, if there are no findings:
 
 `reviewer-<name>: clean`
+
+or, if the `## Precondition` block has already been violated and `<log_path>` has been written with `BLOCKED: ...`:
+
+`reviewer-<name>: blocked`
 
 - Do not wrap the line in backticks, markdown, or quotes in your final response.
 - Do not output the report body, a file-path confirmation, a status message such as "The report was written successfully", or any prose summary.
