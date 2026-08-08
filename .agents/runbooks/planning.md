@@ -64,7 +64,7 @@ Before executing a plan, run through this checklist. Each item is a general prin
 
 If the plan touches vendored skills, prompts, or scripts that install into other repos, verify:
 - the plan does not hardcode this repo's `tools/run *` targets or paths that consumers do not share;
-- the plan names the consumer's canonical commands (e.g. `tools/run ci --check` in this repo, `scripts/ci-preflight.ps1 -Check` in Rooms-Mostly, or the consumer's `tools/run skills --apply`);
+- the plan names the consumer's canonical commands (e.g. `tools/run.py ci --check` in this repo or the consumer's `tools/run.py skills --apply`);
 - each SDD task prompt is reviewed for repo-specific assumptions before handoff.
 
 ## Execution Confidence Assessment (required before reporting ready)

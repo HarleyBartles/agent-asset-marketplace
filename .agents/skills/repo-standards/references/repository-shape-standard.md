@@ -6,8 +6,8 @@ This file describes the surfaces `repo-standards` checks and can apply. It is th
 
 - `.agents/plugins/marketplace-source` as a git submodule pointing at the marketplace source.
 - `.agents/plugins/marketplace.json` with `repo.local_skill_prefixes` configured.
-- `scripts/ci-preflight.ps1` and `scripts/ci-preflight.sh` - a required, repo-owned preflight script. See [ci-validation-pipeline.md](ci-validation-pipeline.md) for the contract.
-- `.git/hooks/pre-commit` wired to `scripts/ci-preflight.sh --check`.
+- `tools/run.py` - the repo's canonical `ci` (and other) task runner. See [ci-validation-pipeline.md](ci-validation-pipeline.md) for the contract.
+- `.git/hooks/pre-commit` wired to `tools/run.py ci --apply`.
 - `.agents/doctrine/repo-runbook-policy.md` mapping the repo to `repo-standards`.
 - `REVIEW.md` at the repo root pointing to the review runbook and required skill invocations.
 - `CONTRIBUTING.md` at the repo root as the contributor entry point.
@@ -41,7 +41,6 @@ Use these idempotent scripts to create missing user-content surfaces. The agent 
 - `scaffold-runbooks` generates missing `.agents/runbooks/*.md` files from `repo-runbook-policy.md` and the optional `.agents/runbooks/AGENTS.md` router.
 - `scaffold-review` generates `REVIEW.md`.
 - `scaffold-contributing` generates `CONTRIBUTING.md`.
-- `scaffold-ci-preflight` generates `scripts/ci-preflight.sh` and `scripts/ci-preflight.ps1` from the skill templates.
 - `scaffold-gitignore` removes any stale `.agents/superpowers/sdd/**` root `.gitignore` rule and any obsolete `.agents/superpowers/sdd/.gitignore` directory.
 - `scaffold-agents-md` scaffolds or validates root `AGENTS.md` as a router.
 - `scaffold-marketplace-json` scaffolds or validates `.agents/plugins/marketplace.json` with `repo.local_skill_prefixes`.
