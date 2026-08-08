@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import argparse
 from datetime import date
 from pathlib import Path
 import hashlib
@@ -548,5 +549,18 @@ def validate_authority_assets(root: Path) -> int:
     return int(has_errors)
 
 
+def main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(
+        description="Validate recorded local authority evidence without performing network checks. (read-only)"
+    )
+    parser.add_argument(
+        "--check",
+        action="store_true",
+        help="run the validation (default)",
+    )
+    parser.parse_args(argv)
+    return validate_authority_assets(ROOT)
+
+
 if __name__ == "__main__":
-    raise SystemExit(validate_authority_assets(ROOT))
+    raise SystemExit(main())

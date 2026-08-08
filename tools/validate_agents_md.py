@@ -8,6 +8,7 @@ genuinely always-on law.
 
 from __future__ import annotations
 
+import argparse
 import subprocess
 import sys
 from pathlib import Path
@@ -26,7 +27,16 @@ ALLOWED_AGENTS_MD = {
 MAX_ROOT_LINES = 55
 
 
-def main() -> int:
+def main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(
+        description="Validate that only the allow-listed AGENTS.md files remain in the repo. (read-only)"
+    )
+    parser.add_argument(
+        "--check",
+        action="store_true",
+        help="run the validation (default)",
+    )
+    parser.parse_args(argv)
     result = subprocess.run(
         ["git", "ls-files", "-z"],
         cwd=ROOT,

@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import argparse
 from pathlib import Path
 
 from marketplace_utils import (
@@ -256,7 +257,16 @@ def validate_repo_index() -> dict:
     return repo_index
 
 
-def main() -> int:
+def main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(
+        description="Validate the repo navigation index against the current marketplace surfaces. (read-only)"
+    )
+    parser.add_argument(
+        "--check",
+        action="store_true",
+        help="run the validation (default)",
+    )
+    parser.parse_args(argv)
     validate_repo_index()
     return 0
 

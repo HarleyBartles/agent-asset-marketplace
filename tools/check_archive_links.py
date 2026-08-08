@@ -79,7 +79,12 @@ def _old_active_path(completed: Path) -> Path | None:
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
-        description="Check for stale archive links after moving plans and specs to completed/.",
+        description="Check for stale archive links after moving plans and specs to completed/. (read-only)",
+    )
+    parser.add_argument(
+        "--check",
+        action="store_true",
+        help="report stale archive links without writing (default)",
     )
     parser.parse_args(argv)
 
