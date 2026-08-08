@@ -83,6 +83,20 @@ py -3 .agents/skills/iterative-review/scripts/normalize_review_inputs.py --apply
 
 Replace `<scratch_dir>` with the off-repo workspace path. This rewrites all `.md`, `.txt`, and `.json` files to plain UTF-8 in place.
 
+### `next-node`
+
+Before every `run_subagent` dispatch, call the routing validator to confirm the proposed node is allowed by the graph:
+
+```
+py -3 .agents/skills/iterative-review/scripts/next_node.py --propose <node> --metrics <scratch_dir>/review-metrics.json
+```
+
+- If it exits 0, dispatch is allowed.
+- If it exits 1, the orchestrator must not dispatch the subagent and must route to the allowed node printed in the output.
+- If no `--propose` is given, the script prints the single allowed next node.
+
+The orchestrator may also call `next_node.py` without `--propose` at the start of each turn to discover the next node. The validator is the mechanical source of truth for the graph; do not override it.
+
 ### `preflight`
 
 Run the consumer's canonical preflight on the branch. Do not proceed until `ci --check` or its equivalent is clean or its findings are converted to a `fast-fix` and re-checked.
