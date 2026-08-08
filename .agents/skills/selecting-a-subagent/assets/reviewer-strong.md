@@ -39,7 +39,7 @@ Use when the review must consider the entire branch or a large, multi-file diff.
 
 ## How to dispatch this reviewer
 
-The orchestrator dispatches this profile with `run_subagent` (or the consumer's equivalent subagent mechanism). The `task` must include the concrete `<diff_path>`, any lens logs, and the `<log_path>` where the report must be written. Do not ask the subagent to read this profile; the profile body is the injected instruction set. Set the off-repo scratch directory as the subagent's working directory. The first `strong-review` needs all lens logs; `regression-scan` may need only the originating lens log and the fix diff.
+The orchestrator dispatches this profile with `run_subagent` (or the consumer's equivalent subagent mechanism). The `task` must include the concrete `<diff_path>`, any lens logs, and the `<log_path>` where the report must be written. Do not ask the subagent to read this profile; the profile body is the injected instruction set. Set the off-repo scratch directory as the subagent's working directory. The `final-strong` pass needs all lens logs; `regression-scan` may need only the originating lens log and the fix diff.
 
 ## How to review
 
