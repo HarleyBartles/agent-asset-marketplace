@@ -29,7 +29,7 @@ This skill is a first-party skill authored for this repository. It is not derive
 
 ## Before you start
 
-The canonical sequence, node responsibilities, and edge conditions are defined in `references/review-state-graph.md`. Read that file **before** you dispatch any subagent or decide which lenses apply. The body below is an annotated walkthrough, not a replacement for the graph. Most questions about ordering (e.g. which node runs before `lens-dispatch`, whether `strong-review` can be skipped, and what happens when a lens finds an issue) are answered by the graph.
+Read `references/review-state-graph.md` first; it defines the canonical graph and routing. Then run the orchestrator below one node at a time.
 
 # Iterative Review
 
@@ -50,26 +50,22 @@ Follow the `review-state-graph.md` reference. The graph routes the orchestrator 
 - `references/review-metrics-schema.json` for the metrics to collect.
 - `references/review-log-orchestrator-self-review.md` for the prediction log template.
 - `references/review-log-resolved-ledger.md` for the evidence file required by `final-strong`.
+- `references/node-*.md` for the per-node recipes. Do not read ahead; open only the `references/node-<node>.md` file named by `next_node.py`.
 - The relevant `reviewer-*.md` lens profiles for the current repository.
 
 The Devin Desktop agents search path is: user-global `~/.config/devin/agents/` (or `%APPDATA%\devin\agents\` on Windows), then `.devin/agents/`, then `.agents/agents/`. Discover `reviewer-*.md` files from that combined path; `.devin/agents/` and `.agents/agents/` take precedence over user-global.
 
-## Setup
+## Following the graph
 
 1. Determine `<base>` and `<branch>` (or `<head_sha>`) for the draft PR.
-2. Resolve the off-repo scratch workspace by running `.agents/skills/subagent-workspace/scripts/sdd-workspace` with no plan file:
-   - Bash: `bash .agents/skills/subagent-workspace/scripts/sdd-workspace`
-   - PowerShell: `powershell .agents/skills/subagent-workspace/scripts/sdd-workspace.ps1`
-   This prints a path like `<main-checkout>/../_agent-scratch/<branch>/`. Create an `iterative-review-<pr_number>` subdirectory inside it. All review inputs and logs live off-repo.
-3. Materialize inputs in the off-repo `iterative-review-<pr_number>` directory:
-   - `<diff_path>`: the full branch diff via `.agents/skills/subagent-workspace/scripts/review-package - <base> <branch> "$workspace/iterative-review-<pr_number>/review-<base7>..<head7>.diff"`.
-   - `<pr_description>`: the PR title, body, and linked issue/spec context as a UTF-8 file.
-   - Optional `<issue_context>`: Linear/GitHub issue or spec text as a UTF-8 file.
-   - `<scan_findings>`: the consumer repo's canonical preflight output as a file. Use the command named in the consumer's `AGENTS.md` or `.devin/rules` and write the output to a UTF-8 file (e.g., `py -3 tools/run.py review-preflight --check` and `py -3 tools/run.py ci --check` for this repo).
-4. Validate that every input file is valid UTF-8 (and, where applicable, without a BOM) before dispatching subagents. Subagents cannot read malformed inputs. If a file is not valid UTF-8, regenerate it from a known-UTF-8 source such as `review-package`/`review-package.ps1` rather than a raw shell redirect.
-5. After `setup`, create an empty `review-metrics.json` in the off-repo scratch. At every `metrics-track`, `resolved-ledger`, and `blocked` node, update it. `next_node.py` and the `reviewer-strong` guard use this file as the source of truth for the graph state.
-
-
+2. Create the off-repo scratch workspace and an empty `review-metrics.json` in it.
+3. Run the mechanical next-node validator:
+   ```
+   py -3 .agents/skills/iterative-review/scripts/next_node.py --metrics <scratch_dir>/review-metrics.json
+   ```
+4. Open `references/node-<node>.md` for the node printed by `next_node.py` and follow it exactly.
+5. Return to step 3 after the node is done.
+6. Stop when `next_node.py` prints `ready` or `blocked`.
 
 ## Recording `review-metrics.json`
 
