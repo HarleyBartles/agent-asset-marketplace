@@ -8,7 +8,7 @@ Mark findings resolved and generate the resolved-ledger evidence gate.
 - Off-repo `<scratch_dir>`
 
 ## Recipe
-1. When `reviewer-fixes` or `regression-scan` is clean, mark the original finding `resolved` and record `resolved_at_node` and `resolved_at_round` in `review-metrics.json`.
+1. When `reviewer-fixes` or `regression-scan` is clean, verify/update `resolved_at_node` to `resolved-ledger` and `resolved_at_round` to the current round, then record them in `review-metrics.json`.
 2. When the queue is empty, run:
    ```
    py -3 .agents/skills/iterative-review/scripts/resolved_ledger.py --apply --metrics <scratch_dir>/review-metrics.json

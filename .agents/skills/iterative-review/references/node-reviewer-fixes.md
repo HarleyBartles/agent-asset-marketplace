@@ -16,6 +16,7 @@ Verify a fix against the originating lens's checklist, tightly scoped to the bla
    - `reviewer-fixes: PASS`
    - `reviewer-fixes: FAIL`
 5. On `PASS`:
+   - On the original finding's `rounds_per_finding` entry, set `resolved_at_node: "reviewer-fixes"` and `resolved_at_round` to the current `fix_round` value.
    - Set `non_trivial_fix: false`.
    - Clear any `contested` and `regressions` entries tied to this resolved finding.
    - Route to `resolved-ledger`.
