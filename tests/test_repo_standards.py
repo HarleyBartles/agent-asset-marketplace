@@ -308,7 +308,6 @@ def test_repo_standards_check_invalid_agents_md(tmp_path: Path) -> None:
         "- marketplace-source-submodule\n"
         "- marketplace-json\n"
         "- tools-run\n"
-
         "- pre-commit-hook\n"
         "- repo-runbook-policy\n"
         "- runbooks-agents-md\n"
@@ -504,7 +503,6 @@ def test_repo_standards_apply_force_overwrites_drifted_contributing(tmp_path: Pa
         "- marketplace-source-submodule\n"
         "- marketplace-json\n"
         "- tools-run\n"
-
         "- pre-commit-hook\n"
         "- repo-runbook-policy\n"
         "- runbooks-agents-md\n"
@@ -646,7 +644,6 @@ def test_repo_standards_apply_in_shared_checkout_with_flag_succeeds(tmp_path: Pa
         "- marketplace-source-submodule\n"
         "- marketplace-json\n"
         "- tools-run\n"
-
         "- pre-commit-hook\n"
         "- repo-runbook-policy\n"
         "- runbooks-agents-md\n"
@@ -759,4 +756,4 @@ def test_pre_commit_hook_template_uses_apply_then_check(tmp_path: Path) -> None:
     hook = repo / ".git" / "hooks" / "pre-commit"
     assert hook.is_file(), "pre-commit hook was not installed"
     text = hook.read_text(encoding="utf-8")
-    assert 'tools/run.py ci --apply' in text, text
+    assert "tools/run.py ci --apply" in text, text
