@@ -49,6 +49,7 @@ Follow the `review-state-graph.md` reference. The graph routes the orchestrator 
 - `references/review-state-graph.md` for the canonical graph, node table, and edge conditions.
 - `references/review-metrics-schema.json` for the metrics to collect.
 - `references/review-log-orchestrator-self-review.md` for the prediction log template.
+- `references/review-log-resolved-ledger.md` for the evidence file required by `final-strong`.
 - The relevant `reviewer-*.md` lens profiles for the current repository.
 
 The Devin Desktop agents search path is: user-global `~/.config/devin/agents/` (or `%APPDATA%\devin\agents\` on Windows), then `.devin/agents/`, then `.agents/agents/`. Discover `reviewer-*.md` files from that combined path; `.devin/agents/` and `.agents/agents/` take precedence over user-global.
@@ -66,6 +67,7 @@ The Devin Desktop agents search path is: user-global `~/.config/devin/agents/` (
    - Optional `<issue_context>`: Linear/GitHub issue or spec text as a UTF-8 file.
    - `<scan_findings>`: the consumer repo's canonical preflight output as a file. Use the command named in the consumer's `AGENTS.md` or `.devin/rules` and write the output to a UTF-8 file (e.g., `py -3 tools/run.py review-preflight --check` and `py -3 tools/run.py ci --check` for this repo).
 4. Validate that every input file is valid UTF-8 (and, where applicable, without a BOM) before dispatching subagents. Subagents cannot read malformed inputs. If a file is not valid UTF-8, regenerate it from a known-UTF-8 source such as `review-package`/`review-package.ps1` rather than a raw shell redirect.
+5. After `setup`, create an empty `review-metrics.json` in the off-repo scratch. At every `metrics-track`, `resolved-ledger`, and `blocked` node, update it. `next_node.py` and the `reviewer-strong` guard use this file as the source of truth for the graph state.
 
 ## Following the graph
 
@@ -255,6 +257,8 @@ After `closeout` (with or without archive moves):
 ### `blocked`
 
 Use only when the orchestrator cannot resolve a contested or load-bearing finding. Record the blocker in `review-metrics.json` and hand to a human. The human may say "carry on"; if so, resume from `metrics-track`.
+
+If `next_node.py` or `resolved_ledger.py` returns a `BLOCKED` result, treat that as a graph error: do not override it, do not dispatch `final-strong` out of order, and do not claim the review is complete. Resume from the allowed node.
 
 ## Recording `review-metrics.json`
 
