@@ -412,8 +412,13 @@ def validate_no_legacy_manifest_shapes() -> None:
 
 
 
-def _parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Validate the local marketplace registry and bundle surfaces")
+def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description="Validate the local marketplace registry. (read-only)")
+    parser.add_argument(
+        "--check",
+        action="store_true",
+        help="run the validation (default)",
+    )
     parser.add_argument(
         "--phase",
         choices=("inventory", "project", "index", "all"),
@@ -497,8 +502,8 @@ def validate_all(*, skip_freshness: bool = False) -> None:
 
 
 
-def main() -> int:
-    args = _parse_args()
+def main(argv: list[str] | None = None) -> int:
+    args = _parse_args(argv)
     phase_runners = {
         "inventory": lambda: validate_inventory(skip_freshness=args.skip_freshness_checks),
         "project": lambda: validate_project(skip_freshness=args.skip_freshness_checks),

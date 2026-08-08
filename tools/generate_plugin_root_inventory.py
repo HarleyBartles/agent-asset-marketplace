@@ -102,28 +102,29 @@ def _write_inventory(path: Path, inventory: dict[str, Any]) -> None:
     path.write_text(json.dumps(inventory, indent=2, ensure_ascii=False) + "\n", encoding="utf-8", newline="\n")
 
 
-def main() -> int:
-    parser = argparse.ArgumentParser(description="Generate or validate the active marketplace plugin-root inventory")
+def main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(description="Generate or validate the plugin-root inventory. (mixed)")
     parser.add_argument("--check", action="store_true", help="validate without writing")
-    args = parser.parse_args()
+    parser.add_argument("--apply", action="store_true", help="write the plugin-root inventory")
+    args = parser.parse_args(argv)
 
     expected = _render_inventory(reconcile_plugin_root_inventory())
-    if args.check:
-        if not PLUGIN_ROOT_INVENTORY_PATH.exists():
-            raise FileNotFoundError(PLUGIN_ROOT_INVENTORY_PATH)
-        current = load_json(PLUGIN_ROOT_INVENTORY_PATH)
-        if current != expected:
-            raise ValueError(
-                f"{PLUGIN_ROOT_INVENTORY_PATH.relative_to(ROOT)} is stale; "
-                "run py -3 tools/generate_plugin_root_inventory.py"
-            )
-        print(f"OK {PLUGIN_ROOT_INVENTORY_PATH.relative_to(ROOT)}")
-        print("OK plugin root inventory: current")
+    if args.apply:
+        _write_inventory(PLUGIN_ROOT_INVENTORY_PATH, expected)
+        print(f"Wrote {PLUGIN_ROOT_INVENTORY_PATH.relative_to(ROOT)}")
+        print("OK plugin root inventory: generated")
         return 0
 
-    _write_inventory(PLUGIN_ROOT_INVENTORY_PATH, expected)
-    print(f"Wrote {PLUGIN_ROOT_INVENTORY_PATH.relative_to(ROOT)}")
-    print("OK plugin root inventory: generated")
+    if not PLUGIN_ROOT_INVENTORY_PATH.exists():
+        raise FileNotFoundError(PLUGIN_ROOT_INVENTORY_PATH)
+    current = load_json(PLUGIN_ROOT_INVENTORY_PATH)
+    if current != expected:
+        raise ValueError(
+            f"{PLUGIN_ROOT_INVENTORY_PATH.relative_to(ROOT)} is stale; "
+            "run py -3 tools/generate_plugin_root_inventory.py --apply"
+        )
+    print(f"OK {PLUGIN_ROOT_INVENTORY_PATH.relative_to(ROOT)}")
+    print("OK plugin root inventory: current")
     return 0
 
 

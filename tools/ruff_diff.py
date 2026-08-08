@@ -156,7 +156,12 @@ def _lint_file(base_ref: str | None, path: Path) -> list[str]:
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
-        description="Run ruff on the diff and report only added/modified-line findings."
+        description="Run ruff on the diff and report only added/modified-line findings. (read-only)"
+    )
+    parser.add_argument(
+        "--check",
+        action="store_true",
+        help="run the diff lint (default)",
     )
     parser.add_argument(
         "--changed-from",

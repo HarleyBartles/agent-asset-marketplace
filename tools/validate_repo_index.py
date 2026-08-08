@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import argparse
 from pathlib import Path
 
 from marketplace_utils import (
@@ -104,13 +105,13 @@ def validate_repo_index() -> dict:
         raise ValueError("repo-index validation block is missing")
     if validation.get("marketplace") != "py -3 tools/validate_marketplace.py":
         raise ValueError("repo-index marketplace validation command mismatch")
-    if validation.get("marketplace_generate") != "py -3 tools/generate_marketplace.py":
+    if validation.get("marketplace_generate") != "py -3 tools/generate_marketplace.py --apply":
         raise ValueError("repo-index marketplace_generate command mismatch")
     if validation.get("marketplace_check") != "py -3 tools/generate_marketplace.py --check":
         raise ValueError("repo-index marketplace_check command mismatch")
     if validation.get("repo_index") != "py -3 tools/validate_repo_index.py":
         raise ValueError("repo-index repo_index validation command mismatch")
-    if validation.get("repo_index_generate") != "py -3 tools/generate_repo_index.py":
+    if validation.get("repo_index_generate") != "py -3 tools/generate_repo_index.py --apply":
         raise ValueError("repo-index repo_index_generate command mismatch")
     if validation.get("repo_index_check") != "py -3 tools/generate_repo_index.py --check":
         raise ValueError("repo-index repo_index_check command mismatch")
@@ -256,7 +257,16 @@ def validate_repo_index() -> dict:
     return repo_index
 
 
-def main() -> int:
+def main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(
+        description="Validate the repo navigation index against the current marketplace surfaces. (read-only)"
+    )
+    parser.add_argument(
+        "--check",
+        action="store_true",
+        help="run the validation (default)",
+    )
+    parser.parse_args(argv)
     validate_repo_index()
     return 0
 

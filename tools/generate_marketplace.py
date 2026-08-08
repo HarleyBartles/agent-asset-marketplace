@@ -26,13 +26,14 @@ def _check_freshness(path, expected_text: str) -> None:
         raise FileNotFoundError(path)
     current_text = path.read_text(encoding="utf-8")
     if current_text != expected_text:
-        raise ValueError(f"{path.relative_to(ROOT)} is stale; run py -3 tools/generate_marketplace.py")
+        raise ValueError(f"{path.relative_to(ROOT)} is stale; run py -3 tools/generate_marketplace.py --apply")
 
 
-def main() -> int:
-    parser = argparse.ArgumentParser(description="Generate or validate the local Codex marketplace registry export")
+def main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(description="Generate or validate the Codex marketplace export. (mixed)")
     parser.add_argument("--check", action="store_true", help="validate without writing")
-    args = parser.parse_args()
+    parser.add_argument("--apply", action="store_true", help="write the marketplace manifest")
+    args = parser.parse_args(argv)
 
     plugin_manifests = [load_json(spec["manifest_path"]) for spec in MARKETPLACE_PLUGIN_SPECS]
 
@@ -41,24 +42,24 @@ def main() -> int:
         raise ValueError("Unexpected marketplace manifest shape")
 
     rendered = _render_manifest(expected)
-    if args.check:
-        _check_freshness(MARKETPLACE_PATH, rendered)
-        _check_freshness(CODEX_MARKETPLACE_MANIFEST_PATH, rendered)
-        print(f"OK {MARKETPLACE_PATH.relative_to(ROOT)}")
-        print(f"OK {CODEX_MARKETPLACE_MANIFEST_PATH.relative_to(ROOT)}")
-        print("OK marketplace: .agents/plugins/marketplace.json and codex-marketplace/manifest.json are current")
+    if args.apply:
+        MARKETPLACE_PATH.parent.mkdir(parents=True, exist_ok=True)
+        with MARKETPLACE_PATH.open("w", encoding="utf-8", newline="\n") as handle:
+            handle.write(rendered)
+
+        CODEX_MARKETPLACE_MANIFEST_PATH.parent.mkdir(parents=True, exist_ok=True)
+        with CODEX_MARKETPLACE_MANIFEST_PATH.open("w", encoding="utf-8", newline="\n") as handle:
+            handle.write(rendered)
+
+        print(f"Wrote {MARKETPLACE_PATH.relative_to(ROOT)}")
+        print(f"Wrote {CODEX_MARKETPLACE_MANIFEST_PATH.relative_to(ROOT)}")
         return 0
 
-    MARKETPLACE_PATH.parent.mkdir(parents=True, exist_ok=True)
-    with MARKETPLACE_PATH.open("w", encoding="utf-8", newline="\n") as handle:
-        handle.write(rendered)
-
-    CODEX_MARKETPLACE_MANIFEST_PATH.parent.mkdir(parents=True, exist_ok=True)
-    with CODEX_MARKETPLACE_MANIFEST_PATH.open("w", encoding="utf-8", newline="\n") as handle:
-        handle.write(rendered)
-
-    print(f"Wrote {MARKETPLACE_PATH.relative_to(ROOT)}")
-    print(f"Wrote {CODEX_MARKETPLACE_MANIFEST_PATH.relative_to(ROOT)}")
+    _check_freshness(MARKETPLACE_PATH, rendered)
+    _check_freshness(CODEX_MARKETPLACE_MANIFEST_PATH, rendered)
+    print(f"OK {MARKETPLACE_PATH.relative_to(ROOT)}")
+    print(f"OK {CODEX_MARKETPLACE_MANIFEST_PATH.relative_to(ROOT)}")
+    print("OK marketplace: .agents/plugins/marketplace.json and codex-marketplace/manifest.json are current")
     return 0
 
 

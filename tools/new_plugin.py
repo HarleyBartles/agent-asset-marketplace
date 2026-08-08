@@ -367,9 +367,9 @@ def _sync_bundle_manifest(pack_name: str) -> None:
     print(f"Synced bundle manifest for {pack_name}: {len(entries)} skill(s)")
 
 
-def main() -> int:
-    parser = argparse.ArgumentParser(description="Scaffold a new Codex marketplace plugin pack.")
-    parser.add_argument("name", help="Pack name, e.g. 'mcp-usage-pack'")
+def main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(description="Scaffold a new Codex marketplace plugin pack. (mutating)")
+    parser.add_argument("name", nargs="?", help="Pack name, e.g. 'mcp-usage-pack'")
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument("--check", action="store_true", help="Dry-run report only")
     group.add_argument("--apply", action="store_true", help="Actually create the pack and register it")
@@ -377,7 +377,13 @@ def main() -> int:
     parser.add_argument(
         "--allow-shared-checkout", action="store_true", help="Allow scaffolding from a shared main checkout"
     )
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
+
+    if args.name is None:
+        if args.check:
+            return 0
+        print("error: pack name is required unless using --check", file=sys.stderr)
+        return 2
 
     if (args.apply or args.sync) and not shared_checkout.approve_mutation(
         REPO_ROOT, "new_plugin.py", args.allow_shared_checkout

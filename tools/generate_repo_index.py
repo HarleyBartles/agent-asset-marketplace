@@ -29,8 +29,8 @@ DEFAULT_REPO_INDEX: dict[str, Any] = {
     "validation": {
         "marketplace": "py -3 tools/validate_marketplace.py",
         "repo_index": "py -3 tools/validate_repo_index.py",
-        "repo_index_generate": "py -3 tools/generate_repo_index.py",
-        "marketplace_generate": "py -3 tools/generate_marketplace.py",
+        "repo_index_generate": "py -3 tools/generate_repo_index.py --apply",
+        "marketplace_generate": "py -3 tools/generate_marketplace.py --apply",
         "marketplace_check": "py -3 tools/generate_marketplace.py --check",
         "repo_index_check": "py -3 tools/generate_repo_index.py --check",
     },
@@ -164,27 +164,29 @@ def _write_json(path: Path, data: dict[str, Any]) -> None:
     path.write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n", encoding="utf-8", newline="\n")
 
 
-def main() -> int:
-    parser = argparse.ArgumentParser(description="Generate or validate the repo navigation index")
+def main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(description="Generate or validate the repo index. (mixed)")
     parser.add_argument("--check", action="store_true", help="validate without writing")
-    args = parser.parse_args()
+    parser.add_argument("--apply", action="store_true", help="write the repo index")
+    args = parser.parse_args(argv)
 
     repo_index = build_repo_index()
     rendered = json.dumps(repo_index, indent=2, ensure_ascii=False) + "\n"
 
-    if args.check:
-        if not REPO_INDEX_PATH.exists():
-            raise FileNotFoundError(REPO_INDEX_PATH)
-        current = REPO_INDEX_PATH.read_text(encoding="utf-8")
-        if current != rendered:
-            raise ValueError(f"{REPO_INDEX_PATH.relative_to(ROOT)} is stale; run py -3 tools/generate_repo_index.py")
-        print(f"OK {REPO_INDEX_PATH.relative_to(ROOT)}")
-        print("OK repo index: current")
+    if args.apply:
+        _write_json(REPO_INDEX_PATH, repo_index)
+        print(f"Wrote {REPO_INDEX_PATH.relative_to(ROOT)}")
+        print("OK repo index: generated")
         return 0
 
-    _write_json(REPO_INDEX_PATH, repo_index)
-    print(f"Wrote {REPO_INDEX_PATH.relative_to(ROOT)}")
-    print("OK repo index: generated")
+    if not REPO_INDEX_PATH.exists():
+        raise FileNotFoundError(REPO_INDEX_PATH)
+    current = REPO_INDEX_PATH.read_text(encoding="utf-8")
+    if current != rendered:
+        stale_path = REPO_INDEX_PATH.relative_to(ROOT)
+        raise ValueError(f"{stale_path} is stale; run py -3 tools/generate_repo_index.py --apply")
+    print(f"OK {REPO_INDEX_PATH.relative_to(ROOT)}")
+    print("OK repo index: current")
     return 0
 
 

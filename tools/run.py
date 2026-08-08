@@ -197,7 +197,7 @@ def _validate_marketplace_phase_step(phase: str, ctx: Ctx) -> None:
 
 
 def _apply_inventory(ctx: Ctx) -> None:
-    _run([sys.executable, "tools/generate_plugin_root_inventory.py"], ctx)
+    _run([sys.executable, "tools/generate_plugin_root_inventory.py", "--apply"], ctx)
     _prune_stale_plugin_roots()
     _validate_marketplace_phase_step("inventory", ctx)
 
@@ -230,7 +230,7 @@ def _check_installed_skills(ctx: Ctx) -> None:
 
 
 def _apply_repo_index(ctx: Ctx) -> None:
-    _run([sys.executable, "tools/generate_repo_index.py"], ctx)
+    _run([sys.executable, "tools/generate_repo_index.py", "--apply"], ctx)
     _validate_marketplace_phase_step("index", ctx)
 
 
@@ -280,12 +280,13 @@ def _check_mesh(ctx: Ctx) -> None:
 def _run_validate(ctx: Ctx) -> None:
     _run([sys.executable, "tools/validate_authority_assets.py"], ctx)
     _run([sys.executable, "tools/validate_agents_md.py"], ctx)
+    _run([sys.executable, "tools/validate_tool_cli.py"], ctx)
     if ctx.mode == "check":
         _git_diff_check(ctx)
 
 
 def _apply_marketplace(ctx: Ctx) -> None:
-    _run([sys.executable, "tools/generate_marketplace.py"], ctx)
+    _run([sys.executable, "tools/generate_marketplace.py", "--apply"], ctx)
     _run([sys.executable, "tools/validate_marketplace.py", "--phase", "all"], ctx)
     _run([sys.executable, ".agents/skills/repo-standards/scripts/deploy_vendor_profiles.py", "--apply"], ctx)
 
@@ -509,7 +510,7 @@ def run_targets(targets: list[str], ctx: Ctx) -> None:
 
 def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Dependency-aware task runner for the agent-asset-marketplace",
+        description="Dependency-aware task runner for the agent-asset-marketplace. (mixed)",
         epilog=(
             "Targets: " + ", ".join(_TASKS.keys()) + "\n"
             "ci --check is the full non-mutating CI/PR verification gate.\n"
