@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""next_node.py — mechanical next-node validator for the iterative-review graph.
+"""next_node.py  -  mechanical next-node validator for the iterative-review graph.
 
 Classification (read-only/mutating/mixed): mixed.
 - --check                 read-only self-check; exits 0
@@ -250,14 +250,14 @@ def main(argv: list[str] | None = None) -> int:
         else:
             print(f"{node}\n# {reason}")
     elif args.propose == node:
-        print(f"ALLOWED: {args.propose} — {reason}")
+        print(f"ALLOWED: {args.propose}  -  {reason}")
         # The validator advances state on a successful dispatch gate so the
         # next discovery call continues from the just-authorized node.
         metrics["previous_node"] = metrics.get("current_node", "")
         metrics["current_node"] = node
         _save_metrics(metrics_path, metrics)
     else:
-        print(f"BLOCKED: proposed {args.propose}; allowed next node is {node} — {reason}", file=sys.stderr)
+        print(f"BLOCKED: proposed {args.propose}; allowed next node is {node}  -  {reason}", file=sys.stderr)
         return 1
 
     return 0
