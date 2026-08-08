@@ -91,6 +91,50 @@ Initial set:
 4. `py -3 tools/run.py ci --check` passes after the refactor.
 5. A test walkthrough of a trivial PR follows the new structure successfully.
 
+## Implementation sketch
+
+### Files to create
+
+For each node in the graph, create one file under the canonical source:
+
+- `codex-marketplace/plugins/superpowers-plus/skills/iterative-review/references/node-setup.md`
+- `codex-marketplace/plugins/superpowers-plus/skills/iterative-review/references/node-preflight.md`
+- `codex-marketplace/plugins/superpowers-plus/skills/iterative-review/references/node-fast-fix.md`
+- `codex-marketplace/plugins/superpowers-plus/skills/iterative-review/references/node-orchestrator-self-review.md`
+- `codex-marketplace/plugins/superpowers-plus/skills/iterative-review/references/node-lens-dispatch.md`
+- `codex-marketplace/plugins/superpowers-plus/skills/iterative-review/references/node-lens-triage.md`
+- `codex-marketplace/plugins/superpowers-plus/skills/iterative-review/references/node-finding-fix.md`
+- `codex-marketplace/plugins/superpowers-plus/skills/iterative-review/references/node-reviewer-fixes.md`
+- `codex-marketplace/plugins/superpowers-plus/skills/iterative-review/references/node-regression-scan.md`
+- `codex-marketplace/plugins/superpowers-plus/skills/iterative-review/references/node-resolved-ledger.md`
+- `codex-marketplace/plugins/superpowers-plus/skills/iterative-review/references/node-final-strong.md`
+- `codex-marketplace/plugins/superpowers-plus/skills/iterative-review/references/node-closeout.md`
+- `codex-marketplace/plugins/superpowers-plus/skills/iterative-review/references/node-ready.md`
+- `codex-marketplace/plugins/superpowers-plus/skills/iterative-review/references/node-blocked.md`
+
+### Files to modify
+
+- `codex-marketplace/plugins/superpowers-plus/skills/iterative-review/SKILL.md` — replace the full walkthrough with the 6-step orchestrator surface and a pointer to `references/review-state-graph.md`.
+- `codex-marketplace/plugins/superpowers-plus/skills/iterative-review/references/review-state-graph.md` — add a column or note mapping each node to its `references/node-<name>.md` recipe.
+
+### Content migration
+
+Map the existing `### <node>` sections in `SKILL.md` directly into the new `references/node-<name>.md` files, preserving the exact commands and subagent packages. Remove node detail from `SKILL.md`; keep only `## Required reading`, `## When to Use`, `## Core Pattern` (one paragraph), and the 6-step orchestrator.
+
+### Ordering
+
+1. Create all `node-*.md` files from the current `SKILL.md` sections.
+2. Rewrite `SKILL.md` to the thin orchestrator.
+3. Update `review-state-graph.md` with the `node-*.md` pointers.
+4. Regenerate `.agents/skills/` with `py -3 tools/run.py installed-skills --apply`.
+5. Run `py -3 tools/run.py ci --check`.
+6. Test the new structure on a trivial PR.
+
+### Verification
+
+- `py -3 tools/run.py ci --check` passes.
+- A manual `next_node.py` run on a scratch `review-metrics.json` advances through the expected nodes in order.
+
 ## Out of scope
 
 - Changing the graph itself.
