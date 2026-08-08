@@ -502,8 +502,8 @@ def validate_all(*, skip_freshness: bool = False) -> None:
 
 
 
-def main() -> int:
-    args = _parse_args()
+def main(argv: list[str] | None = None) -> int:
+    args = _parse_args(argv)
     phase_runners = {
         "inventory": lambda: validate_inventory(skip_freshness=args.skip_freshness_checks),
         "project": lambda: validate_project(skip_freshness=args.skip_freshness_checks),

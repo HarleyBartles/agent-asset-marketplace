@@ -66,13 +66,13 @@ Tools that are purely read-only (e.g. validators) do not need `--apply`,
 - Report each sub-tool's return code in `--verbose` mode.
 
 The validator does not need to execute every task; it can inspect `_TASKS` and
-the argument-parsing code in `tools/run.py` to confirm the flags are declared
-and forwarded.
+the argument-parsing code in `tools/run.py` to confirm the flags are declared.
+End-to-end forwarding is exercised by `tools/run.py ci --check`.
 
 ### Validator
 
 Create `.agents/skills/repo-standards/scripts/validate_tool_cli.py` or a new
-tool `.tools/validate_tool_cli.py` (decision for the planning agent). The
+tool `tools/validate_tool_cli.py` (decision for the planning agent). The
 validator:
 
 - Globs `tools/*.py`.
@@ -80,7 +80,7 @@ validator:
 - For CLI files, runs `--help` and `--check`, checks for the classification
   string, and records `OK / WARN / FAIL`.
 - For `tools/run.py`, statically or dynamically checks that the standard flags
-  are defined and forwarded to child tool invocations.
+  are defined and that every task in `_TASKS` has `check` and `apply` steps.
 - Prints a summary line: `OK: N  WARN: N  FAIL: N`.
 - Exits `0` only if no `FAIL` findings.
 

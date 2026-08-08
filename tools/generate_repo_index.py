@@ -29,8 +29,8 @@ DEFAULT_REPO_INDEX: dict[str, Any] = {
     "validation": {
         "marketplace": "py -3 tools/validate_marketplace.py",
         "repo_index": "py -3 tools/validate_repo_index.py",
-        "repo_index_generate": "py -3 tools/generate_repo_index.py",
-        "marketplace_generate": "py -3 tools/generate_marketplace.py",
+        "repo_index_generate": "py -3 tools/generate_repo_index.py --apply",
+        "marketplace_generate": "py -3 tools/generate_marketplace.py --apply",
         "marketplace_check": "py -3 tools/generate_marketplace.py --check",
         "repo_index_check": "py -3 tools/generate_repo_index.py --check",
     },

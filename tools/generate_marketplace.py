@@ -26,7 +26,7 @@ def _check_freshness(path, expected_text: str) -> None:
         raise FileNotFoundError(path)
     current_text = path.read_text(encoding="utf-8")
     if current_text != expected_text:
-        raise ValueError(f"{path.relative_to(ROOT)} is stale; run py -3 tools/generate_marketplace.py")
+        raise ValueError(f"{path.relative_to(ROOT)} is stale; run py -3 tools/generate_marketplace.py --apply")
 
 
 def main(argv: list[str] | None = None) -> int:

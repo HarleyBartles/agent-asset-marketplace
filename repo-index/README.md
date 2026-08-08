@@ -11,7 +11,7 @@ marketplace plugin pack surfaces that matter for validation and review.
 
 - Start with `repo-index/repo-index.json` when you need a compact map of the
   repo.
-- Regenerate the index with `py -3 tools/generate_repo_index.py` before
+- Regenerate the index with `py -3 tools/generate_repo_index.py --apply` before
   validating when marketplace roots change, and use
   `py -3 tools/generate_repo_index.py --check` to prove the checked-in file is
   current.

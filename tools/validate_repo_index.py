@@ -105,13 +105,13 @@ def validate_repo_index() -> dict:
         raise ValueError("repo-index validation block is missing")
     if validation.get("marketplace") != "py -3 tools/validate_marketplace.py":
         raise ValueError("repo-index marketplace validation command mismatch")
-    if validation.get("marketplace_generate") != "py -3 tools/generate_marketplace.py":
+    if validation.get("marketplace_generate") != "py -3 tools/generate_marketplace.py --apply":
         raise ValueError("repo-index marketplace_generate command mismatch")
     if validation.get("marketplace_check") != "py -3 tools/generate_marketplace.py --check":
         raise ValueError("repo-index marketplace_check command mismatch")
     if validation.get("repo_index") != "py -3 tools/validate_repo_index.py":
         raise ValueError("repo-index repo_index validation command mismatch")
-    if validation.get("repo_index_generate") != "py -3 tools/generate_repo_index.py":
+    if validation.get("repo_index_generate") != "py -3 tools/generate_repo_index.py --apply":
         raise ValueError("repo-index repo_index_generate command mismatch")
     if validation.get("repo_index_check") != "py -3 tools/generate_repo_index.py --check":
         raise ValueError("repo-index repo_index_check command mismatch")
