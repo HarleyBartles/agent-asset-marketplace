@@ -97,7 +97,7 @@ exit codes:
   0  all mapped runbooks are present or were written
   1  one or more mapped runbooks are missing"""
     parser = argparse.ArgumentParser(
-        description="Scaffold the repo-local .agents/runbooks/ set.",
+        description="Scaffold the repo-local .agents/runbooks/ set. (mixed)",
         epilog=epilog,
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )

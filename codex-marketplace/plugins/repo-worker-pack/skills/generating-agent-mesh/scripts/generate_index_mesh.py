@@ -361,7 +361,7 @@ def configure_root(repo_root: Path) -> None:
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(description="Generate or validate the repo-wide INDEX.md mesh")
+    parser = argparse.ArgumentParser(description="Generate or validate the repo-wide INDEX.md mesh. (mixed)")
     parser.add_argument("--check", action="store_true", help="validate without writing")
     parser.add_argument("--apply", action="store_true", help="generate INDEX.md files")
     parser.add_argument(

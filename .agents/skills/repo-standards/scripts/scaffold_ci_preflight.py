@@ -70,7 +70,7 @@ exit codes:
   0  preflight scripts are present or were written
   1  drift detected or a template could not be copied"""
     parser = argparse.ArgumentParser(
-        description="Scaffold the repo's CI preflight scripts.",
+        description="Scaffold the repo's CI preflight scripts. (mixed)",
         epilog=epilog,
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )

@@ -300,7 +300,7 @@ The manifest is read from references/repository-shape-manifest.json inside the
 repo-standards skill. Exceptions declared in .agents/doctrine/repo-runbook-policy.md
 under the ## Exceptions heading are skipped."""
     parser = argparse.ArgumentParser(
-        description="Check or apply the repo-standards surface manifest.",
+        description="Check or apply the repo-standards surface manifest. (mixed)",
         epilog=epilog,
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )

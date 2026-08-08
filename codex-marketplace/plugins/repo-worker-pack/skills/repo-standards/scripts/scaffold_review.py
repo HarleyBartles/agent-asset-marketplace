@@ -59,7 +59,7 @@ exit codes:
   0  REVIEW.md is present/valid or was written
   1  drift detected, template missing, or write failed"""
     parser = argparse.ArgumentParser(
-        description="Scaffold the repo's REVIEW.md review entry point.",
+        description="Scaffold the repo's REVIEW.md review entry point. (mixed)",
         epilog=epilog,
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )

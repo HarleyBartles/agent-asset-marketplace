@@ -88,6 +88,14 @@ Every executable Python script bundled with a first-party skill must support the
 - `--apply` is the explicit mutating mode.
 - `mixed` scripts must classify themselves as `mixed` in `--help`.
 
+## Helper scripts
+
+Files in a skill's `scripts/` directory that are not executed directly (they have no `if __name__ == "__main__":` guard) are not expected to support `--help` or `--check`. They must:
+
+- be importable without side effects,
+- have a leading module docstring,
+- not import or use `argparse`.
+
 ## Testing
 
 Before deploying a skill, verify:

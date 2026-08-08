@@ -121,7 +121,7 @@ exit codes:
   0  marketplace.json is valid or was written/migrated successfully
   1  drift detected or the file could not be written"""
     parser = argparse.ArgumentParser(
-        description="Scaffold, migrate, or validate .agents/plugins/marketplace.json.",
+        description="Scaffold, migrate, or validate .agents/plugins/marketplace.json. (mixed)",
         epilog=epilog,
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )
