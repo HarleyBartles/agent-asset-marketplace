@@ -24,6 +24,7 @@ Dispatch only the lens reviewers whose `## Applies to` rules match the PR.
 | reviewer-marketplace | marketplace bundle | review-log-marketplace.md |
 | reviewer-security | security posture | review-log-security.md |
 | reviewer-strong | final strong review (when requested) | review-log-strong.md |
+| reviewer-mesh | generated mesh / INDEX.md / scaffolder | review-log-mesh.md |
 
 ### Common package
 All dispatched lenses receive: `<diff_path>`, `<pr_description>`, `<scan_findings>`, and `review-log-orchestrator-self-review.md`.
