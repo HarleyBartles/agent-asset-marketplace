@@ -15,9 +15,12 @@ Verify a fix against the originating lens's checklist, tightly scoped to the bla
 4. Write `review-log-reviewer-fixes.md` and end it with exactly one of:
    - `reviewer-fixes: PASS`
    - `reviewer-fixes: FAIL`
-5. On `PASS`, leave `review-metrics.json` unchanged and route to `resolved-ledger`.
-6. On `FAIL`, update `review-metrics.json`:
-   - Add the original finding to `rounds_per_finding` with `fix_round` incremented by 1.
+5. On `PASS`:
+   - Set `non_trivial_fix: false`.
+   - Clear any `contested` and `regressions` entries tied to this resolved finding.
+   - Route to `resolved-ledger`.
+6. On `FAIL`, do **not** increment `fix_round` (`finding-fix` owns that on the next pass):
+   - Mark the original finding as unresolved, or record the new issue in `regressions` with `regression_of` linking back.
    - Route back to `finding-fix`.
 
 ## Outputs

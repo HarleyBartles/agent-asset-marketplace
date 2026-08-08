@@ -28,12 +28,12 @@ Verify and fix a single `blocking/important` lens finding.
 4. If inline/orchestrator is chosen:
    - Apply the minimal change to the affected file(s).
    - Run the consumer's preflight (e.g., `py -3 tools/run.py ci --check`) and confirm it passes.
-5. Record the result in `rounds_per_finding` in `review-metrics.json`: increment `fix_round` for the finding.
+5. Record the result in `rounds_per_finding` in `review-metrics.json`: at the start of the pass, increment `fix_round` for the finding (this is the single owner of `fix_round`).
 6. Move to `re-preflight`.
 7. Round escalation: use `implementer` for rounds 1-3; if a finding fails `reviewer-fixes` three times, escalate to `implementer-strong` for round 4; if it still fails, route to `blocked`.
 
 ## Outputs
-- Updated `rounds_per_finding` in `review-metrics.json`: increment `fix_round` for the finding being fixed
+- Updated `rounds_per_finding` in `review-metrics.json`: `fix_round` incremented for the finding being fixed (single source of truth)
 - If `implementer` was used:
   - `review-log-implementer-brief.md`
   - `review-log-implementer-report.md`
