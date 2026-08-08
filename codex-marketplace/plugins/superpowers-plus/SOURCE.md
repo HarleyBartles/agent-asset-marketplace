@@ -6,7 +6,7 @@ This plugin contains the first-party Superpowers+ workflow skills, including the
 
 - Repo: `obra/superpowers`
 - URL: <https://github.com/obra/superpowers>
-- Retained snapshot: `provenance/superpowers-plus.md`
+- Retained snapshot: this `SOURCE.md`
 - License: `MIT`
 - The retained upstream snapshot is reference-only. The editable first-party
   skills live under `codex-marketplace/plugins/superpowers-plus/skills/<name>/`.
@@ -21,7 +21,7 @@ There are no generated flat skill zip exports. Skills install from the Codex plu
 - `superpowers-plus` is the first-party plugin bundle for the
   Superpowers+ workflow skill family.
 - Editable custody lives in `codex-marketplace/plugins/superpowers-plus/skills/<name>/`. The retained
-  upstream provenance record is `provenance/superpowers-plus.md` and is reference-only
+  upstream provenance record is this `SOURCE.md` and is reference-only
   and is not the editable surface.
 - No adapter overlay is applied; first-party skills are distributed as-authored.
 - `codex-marketplace/plugin-roots.json` lists the active plugin roots.

@@ -8,7 +8,7 @@ This plugin contains the first-party `unslop-engine` skill and the first-party `
 - URL: <https://github.com/mshumer/unslop.git>
 - Pinned commit: `edcb62386d129c65e4395f0cfcc9168eb1ba2148`
 - License: `MIT` (Copyright (c) 2026 Matt Shumer)
-- Source custody: `provenance/MARK-99-unslop.md`
+- Source custody: this `SOURCE.md`
 - Distribution: engine script adapted into `skills/unslop-engine/scripts/unslop.py`
 
 ### Why the upstream engine is adapted, not shipped verbatim

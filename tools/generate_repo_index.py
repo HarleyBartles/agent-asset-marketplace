@@ -79,16 +79,7 @@ DEFAULT_REPO_INDEX: dict[str, Any] = {
                 "tools/validate_repo_index.py",
             ],
         },
-        {
-            "name": "provenance",
-            "path": "provenance",
-            "purpose": "Retained provenance notes, trust records, and custody evidence.",
-            "surface_kind": "provenance",
-            "nearest_scoped_agents_md": ".devin/rules/provenance.md",
-            "key_validation_scripts": [
-                "tools/validate_repo_index.py",
-            ],
-        },
+
         {
             "name": "docs-unslop-profile",
             "path": ".agents/docs/unslop/profile.md",

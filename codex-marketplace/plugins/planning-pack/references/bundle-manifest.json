@@ -12,9 +12,7 @@
     "release-engineering, requirements-elicitation, and estimation are bundled verbatim from first-party sources.",
     "mermaid-diagramming is bundled from a first-party skill."
   ],
-  "provenance_refs": [
-    "provenance/planning-pack.md"
-  ],
+  "provenance_refs": [],
   "plugin_author": "Harley Bartles",
   "plugin_license": "MIT",
   "entries": [
