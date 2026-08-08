@@ -14,7 +14,7 @@ The upstream `unslop.py` is a Claude Code CLI tool that requires the `claude` bi
 
 The distributed script in `scripts/unslop.py` is adapted from the upstream idea: it uses Python standard library text analysis on local sample files, removes the Claude Code CLI dependency, removes the interactive terminal UI, and only uses Playwright for visual dependencies when already present. The upstream MIT license and copyright are preserved in `LICENSE.upstream`.
 
-The upstream source remains retained verbatim in `SOURCE.md` for provenance and comparison.
+The upstream source and adaptation rationale are recorded in `SOURCE.md` for provenance and comparison.
 
 ## First-Party Profiles
 

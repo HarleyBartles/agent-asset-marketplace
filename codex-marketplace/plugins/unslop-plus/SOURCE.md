@@ -32,3 +32,29 @@ The `unslop-engine` skill adapts the upstream idea (sample collection, pattern d
 - Provenance distinguishes third-party engine adaptation from first-party profile authorship.
 - Upstream MIT license preserved at `skills/unslop-engine/LICENSE.upstream`.
 - Plugin-level MIT license at `LICENSE` covers first-party profile and adaptation work.
+
+## Provenance
+
+### Vendor record
+
+- Upstream repo: `mshumer/unslop`
+- Pinned commit: `edcb62386d129c65e4395f0cfcc9168eb1ba2148`
+- License: MIT
+- Retained source record: this `SOURCE.md`
+- Marketplace package: `codex-marketplace/plugins/unslop-plus/`
+
+### Adaptation Notes
+
+- GPT skill install paths: `codex-marketplace/plugins/unslop-plus/skills/unslop-engine/` and `codex-marketplace/plugins/unslop-plus/skills/unslop-profiles/`
+- Codex plugin install path: `codex-marketplace/plugins/unslop-plus/.codex-plugin/plugin.json`
+- Text mode uses Python standard library analysis over inline samples, fixture samples, or a sample directory.
+- Visual mode checks for Playwright and Chromium before attempting visual evidence; missing optional dependencies are recorded as skipped in the output manifest and validation report.
+- Output contract is documented in `skills/unslop-engine/references/output-contract.md`.
+
+### Validation Expectations
+
+- Package validator checks required GPT skill files and rejects forbidden shipped runtime instructions.
+- Output validator checks `unslop-output/` for manifest, prompts, samples, counted analysis, draft profile strength, and visual evidence status.
+- Repo marketplace validation checks the plugin manifest, registry entry, and bundle manifest.
+
+- Upstream MIT notice: `skills/unslop-engine/LICENSE.upstream`.

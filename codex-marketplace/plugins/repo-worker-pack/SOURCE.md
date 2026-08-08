@@ -11,7 +11,7 @@ This plugin projects the first-party repo worker baseline skills.
 ## Provenance
 
 - Local source path: `codex-marketplace/plugins/<plugin>/skills/repo-worker-base`
-- Scope: first-party repo hygiene entrypoint for Codex workers in Harley's workspace
+- Scope: first-party repo hygiene entrypoint for Codex workers in the asset marketplace workspace
 - Marketplace package: `codex-marketplace/plugins/repo-worker-pack/`
 
 ### Preservation notes
