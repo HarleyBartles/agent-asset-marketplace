@@ -94,7 +94,7 @@ For every post-fix finding, set `regression_class` from the decision table in th
 - Follow the graph in `references/review-state-graph.md`. Do not follow a round list.
 - The `final-strong` pass is reachable only through `lens-triage` or after all `blocking/important` findings are resolved; there is no edge from `setup`, `preflight`, `fast-fix`, or `orchestrator-self-review` directly to `final-strong`. If `lens-dispatch` is skipped, unavailable, or produces no logs, the review is `blocked`.
 - This skill does not modify review files or PR state beyond the scope-honesty preflight.
-- The orchestrator owns the scope-honesty preflight, all verification, the `resolved-ledger`, and the final decision to flip the PR to ready. `implementer` subagents own the fix edits under the orchestrator's brief.
+- The orchestrator owns the scope-honesty preflight, the `orchestrator-self-review` pass, all verification, the `resolved-ledger`, and the final decision to flip the PR to ready. `implementer` subagents own the fix edits under the orchestrator's brief. `orchestrator-self-review` is orchestrator-only; no `reviewer-*`, `implementer`, or `subagent_explore` may be dispatched to perform it.
 - All review inputs, logs, metrics, and fix-diffs are written to the off-repo scratch directory; they are never committed to the repo.
 - CI must pass before leaving draft.
 
@@ -103,6 +103,7 @@ For every post-fix finding, set `regression_class` from the decision table in th
 - Treating the skill as a fixed list of rounds. Use the graph.
 - Skipping `orchestrator-self-review` and dispatching lens reviewers immediately. That is the most expensive way to catch predictable issues.
 - Using a clean `orchestrator-self-review` as an excuse to skip `lens-dispatch`, `lens-triage`, or `final-strong`. It is not a pass.
+- Delegating `orchestrator-self-review` to a subagent. This is an orchestrator-only, cheap mechanical pass. If the diff is too large to scan quickly, narrow to checklist patterns or proceed to `lens-dispatch` with a minimal prediction log; do not call a subagent.
 - Claiming subagents are unavailable and proceeding to `ready` without `lens-dispatch` or `final-strong`. If `run_subagent` cannot be used, the review is `blocked`.
 - Skipping `re-preflight` after a fix. A fix can re-introduce deterministic issues.
 - Skipping `regression-scan` for a non-trivial fix. A fix can cause a new issue in an adjacent area.

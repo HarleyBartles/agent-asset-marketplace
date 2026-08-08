@@ -1,7 +1,13 @@
 # node-orchestrator-self-review
 
 ## Purpose
-Run a cheap, mechanical prediction pass over the full diff using each relevant lens checklist.
+Run a cheap, mechanical prediction pass by the orchestrator over the full diff using each relevant lens checklist.
+
+## Actor
+Orchestrator only. Do not use `run_subagent`, `subagent_explore`, `implementer`, `reviewer-*`, or any other subagent in this node. The orchestrator must perform the cheap mechanical scan itself.
+
+## Tools
+Use shell/pattern tools such as `grep`, `py -3 -c`, `Select-String`, `ripgrep`, or the repository's deterministic `ci --check` targets to scan `<diff_path>` for checklist patterns. If the diff is too large for a quick full scan, narrow to the patterns in each `## Checklist` and still record predictions. Do not expand the scope by delegating the scan to a subagent.
 
 ## Inputs
 - Full branch `<diff_path>`
@@ -10,10 +16,10 @@ Run a cheap, mechanical prediction pass over the full diff using each relevant l
 
 ## Recipe
 1. For each relevant `reviewer-*.md` profile, read its `## Checklist` and `## Applies to` sections.
-2. Use `## Applies to` only to decide relevance; still scan the full diff for checklist patterns.
+2. Use `## Applies to` only to decide relevance; still scan the full diff for checklist patterns. The orchestrator must perform this scan with the tools above. Do not call a subagent to do a full lens review; `lens-dispatch` will run the parallel lens reviewers after this node.
 3. Fix predictable issues with high confidence.
 4. Record uncertain items in `review-log-orchestrator-self-review.md` in the off-repo scratch.
-5. Update `scan_findings` after the fixes.
+5. Update `<scan_findings>` after the fixes.
 
 ## Outputs
 - Write `review-log-orchestrator-self-review.md`
