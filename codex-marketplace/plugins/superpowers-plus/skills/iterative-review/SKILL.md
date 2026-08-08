@@ -41,7 +41,7 @@ Use when a draft PR exists and needs an automated subagent review loop before be
 
 ## Core Pattern
 
-Follow the `review-state-graph.md` reference. The graph routes the orchestrator through deterministic preflight, `orchestrator-self-review`, parallel `lens-dispatch`, `reviewer-strong` whole-branch review, `finding-fix` by an `implementer`, `re-preflight`, lens-aware `reviewer-fixes`, `resolved-ledger`, conditional `regression-scan`, and a final `reviewer-strong`. Every finding records the node and round that discovered it. There are no fixed "Round N" steps.
+Follow the `review-state-graph.md` reference. The graph routes the orchestrator through deterministic preflight, `orchestrator-self-review`, parallel `lens-dispatch`, `lens-triage`, fast `finding-fix` by an `implementer` for `blocking/important` lens findings, `re-preflight`, lens-aware `reviewer-fixes`, `resolved-ledger`, conditional `regression-scan`, and a final `reviewer-strong` `final-strong` pass. `trivial/deferred` findings are left for `final-strong` instead of forcing an early whole-branch review. Every finding records the node and round that discovered it. There are no fixed "Round N" steps.
 
 ## Required reading
 
@@ -103,7 +103,7 @@ This is the cheapest non-deterministic review. For each relevant `reviewer-*.md`
 
 ### `lens-dispatch`
 
-This node is mandatory. Dispatch only the lens reviewers whose `## Applies to` rules match the PR, plus the mandatory `reviewer-strong` whole-branch pass.
+This node is mandatory. Dispatch only the lens reviewers whose `## Applies to` rules match the PR. Do not include the whole-branch `reviewer-strong` here; that is the `final-strong` pass after all `blocking/important` findings are resolved.
 
 1. Discover every `reviewer-*.md` file in the Devin Desktop agents search path (`~/.config/devin/agents/` / `%APPDATA%\devin\agents\`, `.devin/agents/`, and `.agents/agents/`). This set is the portable profiles shipped by the marketplace pack plus any user or repo-local `reviewer-*.md` overrides.
 2. For each lens profile, read its `## Applies to` section. Match the rules in this order:
@@ -112,29 +112,28 @@ This node is mandatory. Dispatch only the lens reviewers whose `## Applies to` r
    - If a `keywords` string appears in the diff or in `<pr_description>`, dispatch the lens.
 3. Build the input package for each matching lens: full branch `<diff_path>`, `<pr_description>`, `<scan_findings>`, `review-log-orchestrator-self-review.md`, and any lens-specific inputs (`<plan_path>`, `<spec_path>`, `<roadmap_path>` for `reviewer-plans`). Assign each lens a concrete `<log_path>` such as `$scratch/review-log-<lens>.md`.
 4. Use `run_subagent` to dispatch each selected lens. Read the corresponding `reviewer-*.md` profile and use its content as the subagent task. Pass the `<log_path>` in the subagent `task` so the reviewer writes to that exact file. Set the off-repo workspace as the subagent's working directory.
-5. `reviewer-strong` always runs after the lens reviews with the full diff, PR description, all `review-log-<lens>.md` files, and its own `<log_path>` (e.g. `$scratch/review-log-strong.md`).
 
-If no lens matches the PR, still dispatch `reviewer-strong` for the whole-branch pass.
+If no lens matches the PR, still continue to `lens-triage` with the orchestrator-self-review log; `final-strong` will then perform the first whole-branch review.
 
 If you cannot run subagents (e.g. `run_subagent` is unavailable, fails, or is explicitly stopped), this is a `blocked` node — do not proceed to `ready` and do not claim the review is complete. Record the blocker and hand to a human.
 
 Lens reviewers should use the prediction log as the primary checklist and not re-flag what the orchestrator already fixed. Each lens writes `review-log-<lens>.md`.
 
-### `strong-review`
+### `lens-triage`
 
-This node is mandatory. Before dispatching `reviewer-strong`, re-run the UTF-8 backstop helper on the scratch directory to ensure every lens report is plain UTF-8:
+After all lens subagents complete, run the UTF-8 backstop helper on the scratch directory to ensure every lens report is plain UTF-8:
 
 ```
 py -3 .agents/skills/iterative-review/scripts/normalize_review_inputs.py --apply <scratch_dir>
 ```
 
-Then dispatch `reviewer-strong` with the full diff, PR description, `issue_context`, `scan_findings`, `review-log-orchestrator-self-review.md`, all `review-log-*.md` files, and `<log_path>` set to `$scratch/review-log-strong.md`. Its job is to combine lens findings, look for gaps and contradictions, and review design/scope. It must use the `write` tool to write the report to `<log_path>`.
+Then classify every finding from the lens reports:
+- `blocking/important` — enter the fast fix loop: go to `metrics-track` then `finding-fix`.
+- `trivial/deferred` — the fix is optional or cosmetic; leave it for `final-strong` and go to `final-strong` now.
+- `contested` or `load-bearing` — the orchestrator cannot resolve it safely; go to `blocked`.
+- `clean` (no lens findings) — go to `final-strong`.
 
-Use `run_subagent` with the `reviewer-strong` profile from the Devin Desktop agents search path. `reviewer-strong` must always see the lens logs; do not let it run on the diff alone.
-
-If `reviewer-strong` reports `reviewer-strong: clean` and the preflight is clean, proceed to `ready`. Otherwise, proceed to `metrics-track`.
-
-If you cannot run `reviewer-strong` or any lens did not complete, this is `blocked`; do not proceed to `ready`.
+The orchestrator does not dispatch a subagent at `lens-triage`. It is a routing decision based on the lens logs and the `## Checklist` severity language in each `review-log-<lens>.md`.
 
 ### `metrics-track`
 
@@ -195,7 +194,7 @@ If more findings remain in the queue, choose the next one and go to `finding-fix
 
 ### `final-strong`
 
-Run one whole-branch `reviewer-strong` pass after all findings are resolved. It receives the full branch diff, PR description, all lens logs, the `resolved-ledger` of fixed findings, and the `regression_class` records. Its job is to confirm there are no remaining gaps, contradictions, or design issues.
+Run one whole-branch `reviewer-strong` pass after all `blocking/important` findings are resolved. It also covers any `trivial/deferred` findings the `lens-triage` decided to defer. It receives the full branch diff, PR description, all lens logs, the `resolved-ledger` of fixed findings, and the `regression_class` records. Its job is to confirm there are no remaining gaps, contradictions, or design issues.
 
 If `reviewer-strong` reports `reviewer-strong: clean` and the preflight is clean, go to `closeout`. If it reports findings, go to `metrics-track` to start a new fix loop. If it reports a contested or load-bearing finding, go to `blocked`.
 
@@ -247,7 +246,7 @@ For every post-fix finding, set `regression_class` from the decision table in th
 ## Invariants
 
 - Follow the graph in `references/review-state-graph.md`. Do not follow a round list.
-- The initial `strong-review` is reachable only through `lens-dispatch`; there is no edge from `setup`, `preflight`, `fast-fix`, or `orchestrator-self-review` directly to `strong-review`. If `lens-dispatch` is skipped, unavailable, or produces no logs, the review is `blocked`.
+- The `final-strong` pass is reachable only through `lens-triage` or after all `blocking/important` findings are resolved; there is no edge from `setup`, `preflight`, `fast-fix`, or `orchestrator-self-review` directly to `final-strong`. If `lens-dispatch` is skipped, unavailable, or produces no logs, the review is `blocked`.
 - This skill does not modify review files or PR state beyond the scope-honesty preflight.
 - The orchestrator owns the scope-honesty preflight, all verification, the `resolved-ledger`, and the final decision to flip the PR to ready. `implementer` subagents own the fix edits under the orchestrator's brief.
 - All review inputs, logs, metrics, and fix-diffs are written to the off-repo scratch directory; they are never committed to the repo.
@@ -257,8 +256,8 @@ For every post-fix finding, set `regression_class` from the decision table in th
 
 - Treating the skill as a fixed list of rounds. Use the graph.
 - Skipping `orchestrator-self-review` and dispatching lens reviewers immediately. That is the most expensive way to catch predictable issues.
-- Using a clean `orchestrator-self-review` as an excuse to skip `lens-dispatch` or `strong-review`. It is not a pass.
-- Claiming subagents are unavailable and proceeding to `ready` without `lens-dispatch` or `strong-review`. If `run_subagent` cannot be used, the review is `blocked`.
+- Using a clean `orchestrator-self-review` as an excuse to skip `lens-dispatch`, `lens-triage`, or `final-strong`. It is not a pass.
+- Claiming subagents are unavailable and proceeding to `ready` without `lens-dispatch` or `final-strong`. If `run_subagent` cannot be used, the review is `blocked`.
 - Skipping `re-preflight` after a fix. A fix can re-introduce deterministic issues.
 - Skipping `regression-scan` for a non-trivial fix. A fix can cause a new issue in an adjacent area.
 - Letting `reviewer-fixes` drift into a full branch review. Keep the input tightly scoped to the fix.

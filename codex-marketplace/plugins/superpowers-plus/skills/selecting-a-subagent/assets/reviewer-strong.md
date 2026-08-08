@@ -32,14 +32,14 @@ Use when the review must consider the entire branch or a large, multi-file diff.
 
 - `<diff_path>`: path to the prepared branch diff.
 - `<pr_description>` (optional): the pull-request description for context.
-- `<log_path>` (required): the off-repo path where the report must be written with the `write` tool (e.g. `Z:/_agent-scratch/main/iterative-review-<round>/review-log-strong.md`).
+- `<log_path>` (required): the off-repo path where the report must be written with the `write` tool (e.g. `<scratch_dir>/review-log-strong.md`).
 - `<review-log-orchestrator-self-review>` (required for the first pass): the orchestrator's prediction log. Use this as the starting checklist.
-- `<review-log-*.md>` (required for `lens-dispatch` or `regression-scan`): the lens review reports produced in the current round. At minimum this includes `review-log-skills.md`, `review-log-marketplace.md`, `review-log-security.md`, `review-log-plans.md`, `review-log-mesh.md`, and `review-log-scripts.md`. These are the primary finding set for their scopes.
+- `<review-log-*.md>` (required for `final-strong` or `regression-scan`): the lens review reports produced in the current round. At minimum this includes `review-log-skills.md`, `review-log-marketplace.md`, `review-log-security.md`, `review-log-plans.md`, `review-log-mesh.md`, and `review-log-scripts.md`. These are the primary finding set for their scopes.
 - `<regression_diff_path>` (optional): the fix diff only, used for `regression-scan`. When provided, read this and the immediately touched files, not the full branch.
 
 ## How to dispatch this reviewer
 
-The orchestrator dispatches this profile with `run_subagent` (or the consumer's equivalent subagent mechanism). The `task` must include the concrete `<diff_path>`, any lens logs, and the `<log_path>` where the report must be written. Do not ask the subagent to read this profile; the profile body is the injected instruction set. Set the off-repo scratch directory as the subagent's working directory. The first `strong-review` needs all lens logs; `regression-scan` may need only the originating lens log and the fix diff.
+The orchestrator dispatches this profile with `run_subagent` (or the consumer's equivalent subagent mechanism). The `task` must include the concrete `<diff_path>`, any lens logs, and the `<log_path>` where the report must be written. Do not ask the subagent to read this profile; the profile body is the injected instruction set. Set the off-repo scratch directory as the subagent's working directory. The `final-strong` pass needs all lens logs; `regression-scan` may need only the originating lens log and the fix diff.
 
 ## How to review
 

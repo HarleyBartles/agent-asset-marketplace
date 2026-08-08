@@ -12,10 +12,12 @@ flowchart TD
     preflight -->|red| fast-fix --> preflight
     preflight -->|green| scope-honesty --> orchestrator-self-review
     orchestrator-self-review --> lens-dispatch
-    lens-dispatch --> normalize-inputs --> strong-review
-    strong-review -->|clean| closeout
-    strong-review -->|findings| metrics-track
-    strong-review -->|contested / load-bearing| blocked
+    lens-dispatch --> normalize-inputs --> lens-triage
+
+    lens-triage -->|blocking / important| metrics-track
+    lens-triage -->|trivial / deferred| final-strong
+    lens-triage -->|contested / load-bearing| blocked
+    lens-triage -->|clean| final-strong
 
     metrics-track --> finding-fix
     finding-fix --> re-preflight
@@ -50,7 +52,7 @@ flowchart TD
 | `scope-honesty` | orchestrator | Compare the diff to the plan, spec, PR body, and linked issues. Fix drift. |
 | `orchestrator-self-review` | orchestrator | Apply each relevant `reviewer-*.md` profile's `## Checklist` to the diff (resolving each name through the Devin Desktop agents search path); fix predictable items; record uncertain items in `review-log-orchestrator-self-review.md`. |
 | `lens-dispatch` | parallel subagents | Run the relevant lens reviewers with the prediction log as input. This node is mandatory; do not route around it because the orchestrator-self-review was clean. |
-| `strong-review` | `reviewer-strong` | Whole-branch pass that combines lens logs, finds gaps, contradictions, and design issues. |
+| `lens-triage` | orchestrator | Decide the fate of each lens finding: `blocking/important` findings enter the fast fix loop, `trivial/deferred` findings are left for `final-strong`, and `contested/load-bearing` findings are `blocked`. If no findings, proceed to `final-strong`. |
 | `metrics-track` | orchestrator | Record the finding, the node that discovered it, the round number, the node where it resolves, and the `regression_class`. This node does not block. |
 | `finding-fix` | `implementer` subagent | Resolve one finding with the lens's checklist and a concrete brief, then commit. |
 | `re-preflight` | `tools/run.py ci --check` | Re-run the deterministic checks on the post-fix range. |
@@ -74,9 +76,10 @@ flowchart TD
 | `scope-honesty` | `orchestrator-self-review` | Drift corrected or no drift. |
 | `orchestrator-self-review` | `lens-dispatch` | Always; the orchestrator's prediction is not a substitute for lens review. The only exception is a PR with zero changed files. |
 | `lens-dispatch` | `normalize-inputs` | All lens logs are available. |
-| `normalize-inputs` | `strong-review` | UTF-8 backstop has run on the scratch directory. |
-| `strong-review` | `closeout` | `reviewer-strong` reports `reviewer-strong: clean`. |
-| `strong-review` | `metrics-track` | `reviewer-strong` or lens review reports findings. |
+| `normalize-inputs` | `lens-triage` | UTF-8 backstop has run on the scratch directory. |
+| `lens-triage` | `metrics-track` | `blocking/important` findings that need a fix before `final-strong`. |
+| `lens-triage` | `final-strong` | No findings, `trivial/deferred` findings only, or no `blocking/important` findings left. |
+| `lens-triage` | `blocked` | A finding is `contested` or `load-bearing` and the orchestrator cannot resolve it. |
 | `metrics-track` | `finding-fix` | Always; choose the next finding to fix. |
 | `finding-fix` | `re-preflight` | Fix is committed. |
 | `finding-fix` | `blocked` | Round cap exceeded: `implementer-strong` on round 4 still fails. |
@@ -95,11 +98,10 @@ flowchart TD
 | `final-strong` | `metrics-track` | `reviewer-strong` reports findings. |
 | `final-strong` | `blocked` | A finding is contested or load-bearing. |
 | `closeout` | `ready` | Archives (if any) are committed and the local tree passes `ci --check`. |
-| `strong-review` | `blocked` | A finding is contested or load-bearing and the orchestrator cannot resolve it. |
 
 ## Round counting
 
-A "round" is one complete traversal through `lens-dispatch` or `strong-review` (including `final-strong`) that produces findings. `orchestrator-self-review`, `reviewer-fixes`, and `resolved-ledger` are not rounds because they are cheap or bookkeeping nodes. The first `lens-dispatch` is round 1. The first `strong-review` is round 2. A `regression-scan` or `final-strong` that confirms a new issue starts a new round at `metrics-track`.
+A "round" is one complete traversal through `lens-dispatch` or `final-strong` that produces findings. `orchestrator-self-review`, `lens-triage`, `reviewer-fixes`, and `resolved-ledger` are not rounds because they are cheap or bookkeeping nodes. The first `lens-dispatch` is round 1. The first `final-strong` is round 2. A `regression-scan` or `final-strong` that confirms a new issue starts a new round at `metrics-track`.
 
 ## `review-metrics.json` schema
 
