@@ -52,10 +52,12 @@ Consumer-canonical variant:
 ## Repo-specific guidance
 
 - Work in an isolated worktree on a task branch.
-- Run the relevant validation before **every** commit:
-  - `tools/run marketplace --apply` (regenerates derived surfaces), then `git add`.
-  - `tools/run ci --check` (the preflight) on the staged tree before committing.
-  - Run the preflight manually before committing; if the pre-commit hook is installed it will re-run the same checks. Do not use `git commit --no-verify` to bypass the hook.
+- Do not run `py -3 tools/run.py ci --check` before every commit. It is an explicit CI-should-pass check on the working tree, not a pre-pre-commit step. The pre-commit hook already applies mechanical fixes and then runs `ci --check` on the staged tree; running it manually first is wasteful.
+- If you are confident the working change is correct, commit it. The pre-commit hook will keep you honest: it applies what it can, stages the result, and fails the commit if a non-mechanical check is broken.
+- If the pre-commit hook is not installed, run `py -3 tools/run.py ci --apply` and then `py -3 tools/run.py ci --check` manually before committing.
+- Only run `py -3 tools/run.py ci --check` deliberately when you want to know whether the working tree would pass CI (for example, before pushing or flipping the PR to ready).
+- `py -3 tools/run.py marketplace --apply` regenerates derived surfaces; stage any generated changes before committing.
+- Do not use `git commit --no-verify` to bypass the pre-commit hook.
 - Commit focused changes. Do not commit generated artifacts unless the generator produced them.
 - Push the branch and open a **draft** PR into `main` unless direct-main work is explicitly authorized.
 - A valid repo-work return must include one of:

@@ -307,8 +307,7 @@ def test_repo_standards_check_invalid_agents_md(tmp_path: Path) -> None:
     exceptions = (
         "- marketplace-source-submodule\n"
         "- marketplace-json\n"
-        "- ci-preflight-ps1\n"
-        "- ci-preflight-sh\n"
+        "- tools-run\n"
         "- pre-commit-hook\n"
         "- repo-runbook-policy\n"
         "- runbooks-agents-md\n"
@@ -503,8 +502,7 @@ def test_repo_standards_apply_force_overwrites_drifted_contributing(tmp_path: Pa
     exceptions = (
         "- marketplace-source-submodule\n"
         "- marketplace-json\n"
-        "- ci-preflight-ps1\n"
-        "- ci-preflight-sh\n"
+        "- tools-run\n"
         "- pre-commit-hook\n"
         "- repo-runbook-policy\n"
         "- runbooks-agents-md\n"
@@ -645,8 +643,7 @@ def test_repo_standards_apply_in_shared_checkout_with_flag_succeeds(tmp_path: Pa
     exceptions = (
         "- marketplace-source-submodule\n"
         "- marketplace-json\n"
-        "- ci-preflight-ps1\n"
-        "- ci-preflight-sh\n"
+        "- tools-run\n"
         "- pre-commit-hook\n"
         "- repo-runbook-policy\n"
         "- runbooks-agents-md\n"
@@ -716,8 +713,8 @@ def test_scaffold_repo_runbook_policy_check_customized_passes(tmp_path: Path) ->
     assert "OK" in result.stdout
 
 
-def test_pre_commit_hook_template_uses_check_mode(tmp_path: Path) -> None:
-    """repo-standards installs a pre-commit hook that runs ci-preflight --check."""
+def test_pre_commit_hook_template_uses_apply_then_check(tmp_path: Path) -> None:
+    """repo-standards installs a pre-commit hook that runs tools/run.py ci --apply."""
     repo = tmp_path / "precommit-check"
     repo.mkdir()
     _init_git_repo(repo)
@@ -725,8 +722,7 @@ def test_pre_commit_hook_template_uses_check_mode(tmp_path: Path) -> None:
     exceptions = (
         "- marketplace-source-submodule\n"
         "- marketplace-json\n"
-        "- ci-preflight-ps1\n"
-        "- ci-preflight-sh\n"
+        "- tools-run\n"
         "- repo-runbook-policy\n"
         "- runbooks-agents-md\n"
         "- review-entry\n"
@@ -760,4 +756,4 @@ def test_pre_commit_hook_template_uses_check_mode(tmp_path: Path) -> None:
     hook = repo / ".git" / "hooks" / "pre-commit"
     assert hook.is_file(), "pre-commit hook was not installed"
     text = hook.read_text(encoding="utf-8")
-    assert text.rstrip().endswith(" --check"), text
+    assert "tools/run.py ci --apply" in text, text
