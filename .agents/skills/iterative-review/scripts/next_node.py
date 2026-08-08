@@ -6,13 +6,18 @@ Classification (read-only/mutating/mixed): mixed.
 - --metrics <path>        discovery (read-only) or commit gate (mutating)
 - --ledger <path>         path to review-log-resolved-ledger.md (default: sibling of --metrics)
 - --propose <node>        commit gate; if <node> is the allowed next node, exits 0 and
-                          writes current_node/previous_node to review-metrics.json
+                          merges current_node/previous_node into review-metrics.json
+- --json                  machine-readable discovery; emits {"node": "...", "reason": "..."}
 - no --propose            read-only discovery; prints the allowed next node
 
 The orchestrator must call this before any node recipe (use --propose to advance
 state) and must not proceed if it exits 1. The script is the mechanical source of
 truth for the graph; it returns the single allowed next node given the state in
 review-metrics.json.
+
+State contract: when --propose succeeds, _save_metrics re-reads the on-disk
+review-metrics.json and updates only previous_node and current_node, preserving
+all other fields (findings_by_node, rounds_per_finding, regressions, custom).
 """
 
 from __future__ import annotations
@@ -107,7 +112,13 @@ def _load_metrics(path: Path) -> dict:
 
 
 def _save_metrics(path: Path, metrics: dict) -> None:
-    path.write_text(json.dumps(metrics, indent=2, ensure_ascii=False), encoding="utf-8")
+    # Merge-write: re-read the on-disk file and overwrite only the node pointers
+    # so that externally-updated fields (findings_by_node, rounds_per_finding,
+    # regressions, custom fields) are never clobbered.
+    existing = _load_metrics(path)
+    existing["previous_node"] = metrics.get("previous_node")
+    existing["current_node"] = metrics.get("current_node")
+    path.write_text(json.dumps(existing, indent=2, ensure_ascii=False), encoding="utf-8")
 
 
 def _unresolved_severities(metrics: dict) -> list[str]:
@@ -215,6 +226,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--metrics", help="path to review-metrics.json")
     parser.add_argument("--ledger", help="path to review-log-resolved-ledger.md")
     parser.add_argument("--propose", help="proposed next node to validate")
+    parser.add_argument("--json", action="store_true", help="emit machine-readable discovery JSON")
     args = parser.parse_args(argv)
 
     if not args.check and not args.metrics:
@@ -233,7 +245,10 @@ def main(argv: list[str] | None = None) -> int:
     if not args.propose:
         # Discovery is read-only: it reports the allowed next node from the
         # current state without advancing state.
-        print(f"{node}\n# {reason}")
+        if args.json:
+            print(json.dumps({"node": node, "reason": reason}, ensure_ascii=False))
+        else:
+            print(f"{node}\n# {reason}")
     elif args.propose == node:
         print(f"ALLOWED: {args.propose} — {reason}")
         # The validator advances state on a successful dispatch gate so the
