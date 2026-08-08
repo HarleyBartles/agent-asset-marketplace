@@ -1,90 +1,99 @@
-# Preflight surface relocation
+# Replace `ci-preflight` wrappers with direct `tools/run.py` CI surface
 
 ## Problem
 
-The root `scripts/` directory has only one job: it holds `ci-preflight.sh` and
-`ci-preflight.ps1`. The name `scripts/` is a generic magnet for arbitrary
-repo-owned scripts, but the standard does not intend it to be a dumping ground.
-Only the preflight files live there.
+The repo root `scripts/` directory exists only to hold `ci-preflight.sh` and `ci-preflight.ps1`. Those files are thin, repo-owned wrappers around `tools/run.py` that add interpreter detection and a `git add -u` call between `ci --apply` and `ci --check`. They are an extra abstraction that does not pull its own weight.
 
 ## Goal
 
-Move the preflight files from `scripts/` to a directory whose name matches its
-purpose: `pre-commit/`. This makes the repo's surface shape self-describing and
-removes the temptation to add unrelated scripts to a folder called `scripts/`.
+Remove the `ci-preflight` wrapper files entirely and make `repo-standards` enforce the `tools/run.py` CI surface directly. The consumer pre-commit hook should call `tools/run.py` itself, not a separate preflight script.
 
 ## Non-goals
 
 - Do not change `.agents/skills/<skill>/scripts/` directories.
-- Do not change `tools/`.
-- Do not remove the preflight files; only relocate them.
-- Do not change the preflight logic beyond the path.
+- Do not change `tools/` other than `tools/run.py`.
+- Do not introduce a new `scripts/` or `pre-commit/` directory for wrapper files.
+- Do not change the semantics of `--check`; it remains the read-only CI/PR gate.
 
 ## Design
 
-### New location
+### What `repo-standards` enforces
 
-- `pre-commit/ci-preflight.sh`
-- `pre-commit/ci-preflight.ps1`
-- `pre-commit/INDEX.md` (generated or tracked alongside the preflight files)
+`repo-standards` treats `tools/run.py` as the consumer CLI entry point. The `repository-shape-manifest.json` and shape checks should require:
 
-The existing `scripts/` directory at the repo root becomes surplus and is no
-longer scaffolded or validated by `repo-standards`.
+- `tools/run.py` exists and is executable as `py -3 tools/run.py`.
+- `tools/run.py ci --check` is a valid, non-mutating command.
+- `tools/run.py ci --apply` is a valid, mutating command.
+- `tools/run.py` supports `--allow-shared-checkout` when called with `--apply`.
 
-### Updates to `repo-standards`
+`repo-standards` no longer scaffolds `scripts/ci-preflight.sh`, `scripts/ci-preflight.ps1`, or a `pre-commit/ci-preflight` path.
 
-- `repository-shape-manifest.json`:
-  - Change `ci-preflight-sh` path from `scripts/ci-preflight.sh` to
-    `pre-commit/ci-preflight.sh`.
-  - Change `ci-preflight-ps1` path from `scripts/ci-preflight.ps1` to
-    `pre-commit/ci-preflight.ps1`.
-- `scaffold_ci_preflight.py`:
-  - Write files to `pre-commit/` instead of `scripts/`.
-  - Create the directory if missing.
-  - Keep the same template content and behavior.
-- `templates/pre-commit`:
-  - Update the hook path from `scripts/ci-preflight.sh` to
-    `pre-commit/ci-preflight.sh`.
-- Skill docs and references that mention `scripts/ci-preflight` to use
-  `pre-commit/ci-preflight`.
+### `tools/run.py` `ci --apply` semantics
 
-### Backward compatibility
+`ci` is a meta-target that depends on `lint`, `repo-standards`, `validate`, and `archive-links`. Currently `ci --apply` only dispatches those dependencies in apply mode, and `ci --check` dispatches them in check mode. This is the source of the pre-commit redundancy.
 
-- `repo-standards --check` should report drift if the old `scripts/ci-preflight`
-  files still exist and the new `pre-commit/` files are missing.
-- `repo-standards --apply` should create `pre-commit/` and not automatically
-  delete the old `scripts/` files. Repo maintainers can remove `scripts/`
-  manually after verifying the new surface is in place.
-- Consumer repos that already have `scripts/ci-preflight` will see the same
-  drift; the repo's normal `apply` flow can recreate the files in `pre-commit/`.
+Redefine `ci --apply` to mean **apply and then verify**:
 
-### Marketplace mirror
+1. Run each `ci` dependency in apply mode (regenerate mechanical artifacts, apply safe fixes).
+2. Run each `ci` dependency in check mode (the same read-only verification used by `ci --check`).
+3. Exit 0 only if both passes succeed.
 
-Because `repo-standards` is a marketplace skill, the templates and scaffolder
-updates must be reflected in the generated `codex-marketplace` plugin mirrors
-after `py -3 tools/run.py marketplace --apply`.
+`ci --check` remains the standalone, read-only CI/PR gate: it runs only the check pass.
+
+With this change, the pre-commit hook only needs to call `ci --apply` and then stage the tracked changes.
+
+### Consumer pre-commit hook
+
+`repo-standards` scaffolds a minimal `.git/hooks/pre-commit` (or a consumer-owned `pre-commit` file to be copied into the hook directory) that does not reference `ci-preflight` wrappers. Example POSIX hook:
+
+```bash
+#!/usr/bin/env bash
+set -euo pipefail
+REPO_ROOT="$(git rev-parse --show-toplevel)"
+cd "$REPO_ROOT"
+py -3 tools/run.py ci --apply --allow-shared-checkout
+git add -u
+```
+
+The `ci --apply` pass itself now guarantees the tree is check-clean, so the hook no longer needs a separate `ci --check` call.
+
+### Files to remove / no longer scaffold
+
+- `scripts/ci-preflight.sh`
+- `scripts/ci-preflight.ps1`
+- `scripts/` root directory (once the above are removed)
+- `repo-standards` templates for `ci-preflight.sh` and `ci-preflight.ps1`
+- `repo-standards` `scaffold_ci_preflight.py` (or replace it with a `scaffold_pre_commit_hook.py` that writes the minimal hook above)
+- References in `repository-shape-manifest.json` that check for `scripts/ci-preflight`
 
 ### Files to touch
 
-- `.agents/skills/repo-standards/references/repository-shape-manifest.json`
-- `.agents/skills/repo-standards/scripts/scaffold_ci_preflight.py`
-- `.agents/skills/repo-standards/templates/pre-commit`
-- `.agents/skills/repo-standards/references/skill-script-contract-validator.md`
-  if it references the preflight path
-- Any `SKILL.md` or `AGENTS.md` that references `scripts/ci-preflight`
-- `codex-marketplace/plugins/repo-worker-pack/skills/repo-standards/...` via
-  `py -3 tools/run.py marketplace --apply`
+- `tools/run.py`: update `ci` task so `ci --apply` runs apply then check.
+- `tools/run.py` epilog: document the new `ci --apply` semantics.
+- `.agents/skills/repo-standards/references/repository-shape-manifest.json`: replace `ci-preflight` entries with `tools-run` checks.
+- `.agents/skills/repo-standards/scripts/scaffold_ci_preflight.py`: remove or retarget to scaffold the `.git/hooks/pre-commit` snippet.
+- `.agents/skills/repo-standards/templates/pre-commit`: update to call `tools/run.py` directly.
+- `.agents/skills/repo-standards/templates/ci-preflight.{sh,ps1}`: remove.
+- Any `SKILL.md` or `AGENTS.md` references to `scripts/ci-preflight`.
+- `codex-marketplace/plugins/repo-worker-pack/skills/repo-standards/...` mirrors, regenerated by `py -3 tools/run.py marketplace --apply`.
+
+### Backward compatibility
+
+- `repo-standards --check` should report drift if the old `scripts/ci-preflight` files still exist.
+- `repo-standards --apply` should not delete the old `scripts/` files automatically; repo maintainers remove them once the new surface is verified.
+- Consumer repos that already have `scripts/ci-preflight` will see the same drift and can remove the files after switching to the new hook.
+
+### Marketplace mirror
+
+Because `repo-standards` is a marketplace skill, the template and scaffolder updates must be reflected in the generated `codex-marketplace` plugin mirrors after `py -3 tools/run.py marketplace --apply`.
 
 ### Validation
 
-- After migration in this repo:
-  - `py -3 tools/run.py repo-standards --check` reports `OK`.
-  - `py -3 tools/run.py ci --check` passes.
-  - The `.git/hooks/pre-commit` script calls `pre-commit/ci-preflight.sh` and
-    that script runs successfully.
+- `py -3 tools/run.py repo-standards --check` reports `OK`.
+- `py -3 tools/run.py ci --check` passes.
+- `py -3 tools/run.py ci --apply --allow-shared-checkout` passes and the tree is clean (equivalent to a follow-up `ci --check`).
+- A pre-commit hook that calls `py -3 tools/run.py ci --apply --allow-shared-checkout` followed by `git add -u` succeeds.
 
 ### Handoff
 
-The planning agent should produce a plan that first updates `repo-standards`
-scaffolds and templates, then updates the shape manifest, then moves the actual
-preflight files in this repo, and finally regenerates the marketplace bundle.
+The planning agent should produce a plan that first updates `tools/run.py` with the apply-then-check semantics, then updates the `repo-standards` scaffolds/manifests to remove the `ci-preflight` surface and validate `tools/run.py` directly, then removes the local `scripts/` files, and finally regenerates the marketplace bundle.
