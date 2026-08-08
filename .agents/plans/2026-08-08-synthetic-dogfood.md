@@ -4,5 +4,6 @@
 
 ## Acceptance criteria
 
-1. TBD - what is the acceptance for this fake plan?
-2. The plan file is removed or cleaned up after the dogfood run.
+1. The plan file contains no `TBD`, `TODO`, or placeholder markers.
+2. The plan file remains registered in `.agents/plans/INDEX.md`.
+3. `py -3 tools/run.py ci --check` passes.
