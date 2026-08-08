@@ -32,7 +32,7 @@ Use this when you have made changes to plugin skill files, bundle manifests, plu
 
 - `codex-marketplace/plugin-roots.json` — discovered active plugin roots
 - `codex-marketplace/plugins/<plugin>/skills/<skill>/` — canonical skill source trees
-- `provenance/<record>.md` — retained upstream source provenance
+- `codex-marketplace/plugins/<plugin>/SOURCE.md` — per-pack source custody and provenance
 
 #### Execution flow
 
@@ -114,7 +114,7 @@ tools/run mesh --check
 You must run the full marketplace regeneration (`tools/run marketplace --apply`) after any change to:
 
 - Canonical plugin skills under `codex-marketplace/plugins/<plugin>/skills/`
-- Retained upstream provenance under `provenance/`
+- Per-pack `SOURCE.md` provenance records under `codex-marketplace/plugins/<plugin>/SOURCE.md`
 - Bundle manifests in plugin `references/`
 - Plugin manifests under `codex-marketplace/plugins/<plugin>/.codex-plugin/`
 
