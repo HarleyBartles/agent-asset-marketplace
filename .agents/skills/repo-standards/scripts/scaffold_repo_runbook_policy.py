@@ -54,7 +54,7 @@ exit codes:
   0  repo-runbook-policy.md is present/valid or was written
   1  drift detected, template missing, or write failed"""
     parser = argparse.ArgumentParser(
-        description="Scaffold the repo's .agents/doctrine/repo-runbook-policy.md mapping file.",
+        description="Scaffold the repo's .agents/doctrine/repo-runbook-policy.md mapping file. (mixed)",
         epilog=epilog,
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )

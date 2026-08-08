@@ -38,7 +38,7 @@ def _is_ledger_clean(metrics: dict) -> tuple[bool, str]:
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(description="Produce the resolved-ledger evidence file for iterative-review.")
+    parser = argparse.ArgumentParser(description="Produce the resolved-ledger evidence file. (mixed)")
     parser.add_argument("--check", action="store_true", help="self-check; exits 0 if ready")
     parser.add_argument("--apply", action="store_true", help="write the ledger if allowed")
     parser.add_argument("--metrics", help="path to review-metrics.json")

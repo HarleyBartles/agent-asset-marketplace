@@ -109,7 +109,7 @@ exit codes:
   0  no stale rules (or clean-up applied)
   1  drift detected or files could not be written"""
     parser = argparse.ArgumentParser(
-        description="Ensure the repo's .gitignore is free of stale in-repo SDD rules.",
+        description="Ensure the repo's .gitignore is free of stale in-repo SDD rules. (mixed)",
         epilog=epilog,
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )

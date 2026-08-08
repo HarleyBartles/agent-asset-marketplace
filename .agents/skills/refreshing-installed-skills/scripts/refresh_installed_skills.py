@@ -673,7 +673,7 @@ def _roll_marketplace_source(repo_root: Path) -> None:
 
 def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Install/refresh skills in .agents/skills from installed marketplace plugins"
+        description="Install/refresh skills in .agents/skills from installed marketplace plugins. (mixed)"
     )
     parser.add_argument(
         "--check",

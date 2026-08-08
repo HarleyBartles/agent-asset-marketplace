@@ -221,7 +221,7 @@ def _next_node(metrics: dict, ledger: Path) -> tuple[str, str]:
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(description="Return or validate the allowed next node for iterative-review.")
+    parser = argparse.ArgumentParser(description="Return or validate the allowed next node. (mixed)")
     parser.add_argument("--check", action="store_true", help="self-check; exits 0 if ready")
     parser.add_argument("--metrics", help="path to review-metrics.json")
     parser.add_argument("--ledger", help="path to review-log-resolved-ledger.md")
