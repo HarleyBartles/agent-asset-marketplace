@@ -32,15 +32,17 @@ Remove the `ci-preflight` wrapper files entirely and make `repo-standards` enfor
 
 `ci` is a meta-target that depends on `lint`, `repo-standards`, `validate`, and `archive-links`. Currently `ci --apply` only dispatches those dependencies in apply mode, and `ci --check` dispatches them in check mode. This is the source of the pre-commit redundancy.
 
-Redefine `ci --apply` to mean **apply and then verify**:
+Redefine `ci --apply` to mean **apply and then verify per dependency**:
 
-1. Run each `ci` dependency in apply mode (regenerate mechanical artifacts, apply safe fixes).
-2. Run each `ci` dependency in check mode (the same read-only verification used by `ci --check`).
-3. Exit 0 only if both passes succeed.
+1. For each `ci` dependency in order (`lint`, `repo-standards`, `validate`, `archive-links`):
+   a. Run the dependency in apply mode.
+   b. Run the same dependency in check mode.
+   c. Proceed to the next dependency only if both exit 0.
+2. Exit 0 only if every dependency passes apply and check.
 
-`ci --check` remains the standalone, read-only CI/PR gate: it runs only the check pass.
+`ci --check` remains the standalone, read-only CI/PR gate: it runs each dependency in check mode without any apply step.
 
-With this change, the pre-commit hook only needs to call `ci --apply` and then stage the tracked changes.
+With this change, the pre-commit hook only needs to call `ci --apply` and then stage the tracked changes. Failing fast on one dependency avoids spending time applying later dependencies when the tree is already known to be invalid.
 
 ### Consumer pre-commit hook
 
