@@ -42,7 +42,7 @@ from pathlib import Path
 #   - "all_resolved": all findings are resolved
 
 GRAPH: dict[str, list[tuple[str, str]]] = {
-    "setup": [("always", "preflight")],
+    "setup": [("always", "normalize-inputs")],
     "preflight": [
         ("red", "fast-fix"),
         ("green", "scope-honesty"),
@@ -100,7 +100,7 @@ def _load_metrics(path: Path) -> dict:
     if not path.exists():
         return {}
     try:
-        return json.loads(path.read_text(encoding="utf-8"))
+        return json.loads(path.read_text(encoding="utf-8-sig"))
     except (json.JSONDecodeError, OSError):
         return {}
 
@@ -230,14 +230,16 @@ def main(argv: list[str] | None = None) -> int:
     node, reason = _next_node(metrics, ledger_path)
 
     if not args.propose:
+        # Discovery is read-only: it reports the allowed next node from the
+        # current state without advancing state.
         print(f"{node}\n# {reason}")
-        # The validator is the mechanical source of truth for the current node;
-        # record the returned node in metrics so the next call continues from it.
+    elif args.propose == node:
+        print(f"ALLOWED: {args.propose} — {reason}")
+        # The validator advances state on a successful dispatch gate so the
+        # next discovery call continues from the just-authorized node.
         metrics["previous_node"] = metrics.get("current_node", "")
         metrics["current_node"] = node
         _save_metrics(metrics_path, metrics)
-    elif args.propose == node:
-        print(f"ALLOWED: {args.propose} — {reason}")
     else:
         print(f"BLOCKED: proposed {args.propose}; allowed next node is {node} — {reason}", file=sys.stderr)
         return 1

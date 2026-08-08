@@ -84,8 +84,9 @@ Initial set (all nodes in `references/review-state-graph.md`):
 - `scripts/next_node.py` becomes a stateful router that advances `current_node` and `previous_node` in `review-metrics.json` and validates all graph transitions.
 - `references/review-metrics-schema.json` gains `current_node`, `previous_node`, `contested`, `fix_round`, and `non_trivial_fix` fields so the router can make conditional decisions.
 - `references/node-*.md` recipes update `review-metrics.json` with the fields the router expects before each `next_node.py` call.
+- The round-cap threshold for `finding-fix` is `fix_round >= 4`; at that point the router escalates to `blocked`.
 
-### 5. Benefits
+### 6. Benefits
 
 - An agent running the skill only needs to hold one node recipe in context at a time.
 - The `SKILL.md` cannot become stale with respect to the graph because it does not describe the graph; it delegates to `next_node.py` and the node references.

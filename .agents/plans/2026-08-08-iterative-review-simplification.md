@@ -4,7 +4,7 @@
 
 **Goal:** Refactor the `iterative-review` skill into a thin orchestrator that delegates every node recipe to a dedicated `references/node-<name>.md` file, while keeping the full review graph and subagent loop intact.
 
-**Architecture:** The existing `SKILL.md` walkthrough is split into 14 per-node reference files. `SKILL.md` is replaced with a 6-step orchestrator that repeatedly calls `next_node.py` and opens the matching node reference. `review-state-graph.md` is updated to point each node at its reference doc.
+**Architecture:** The existing `SKILL.md` walkthrough is split into 19 per-node reference files (one for every node in `review-state-graph.md`). `SKILL.md` is replaced with a 6-step orchestrator that repeatedly calls `next_node.py` and opens the matching node reference. `review-state-graph.md` is updated to point each node at its reference doc.
 
 **Tech Stack:** Markdown, the existing `iterative-review/scripts/` helpers, and `tools/run.py` for CI and installed-skills regen.
 
@@ -21,12 +21,16 @@
 
 **Files:**
 - **Create:** `codex-marketplace/plugins/superpowers-plus/skills/iterative-review/references/node-setup.md`
+- **Create:** `codex-marketplace/plugins/superpowers-plus/skills/iterative-review/references/node-normalize-inputs.md`
 - **Create:** `codex-marketplace/plugins/superpowers-plus/skills/iterative-review/references/node-preflight.md`
 - **Create:** `codex-marketplace/plugins/superpowers-plus/skills/iterative-review/references/node-fast-fix.md`
+- **Create:** `codex-marketplace/plugins/superpowers-plus/skills/iterative-review/references/node-scope-honesty.md`
 - **Create:** `codex-marketplace/plugins/superpowers-plus/skills/iterative-review/references/node-orchestrator-self-review.md`
 - **Create:** `codex-marketplace/plugins/superpowers-plus/skills/iterative-review/references/node-lens-dispatch.md`
 - **Create:** `codex-marketplace/plugins/superpowers-plus/skills/iterative-review/references/node-lens-triage.md`
+- **Create:** `codex-marketplace/plugins/superpowers-plus/skills/iterative-review/references/node-metrics-track.md`
 - **Create:** `codex-marketplace/plugins/superpowers-plus/skills/iterative-review/references/node-finding-fix.md`
+- **Create:** `codex-marketplace/plugins/superpowers-plus/skills/iterative-review/references/node-re-preflight.md`
 - **Create:** `codex-marketplace/plugins/superpowers-plus/skills/iterative-review/references/node-reviewer-fixes.md`
 - **Create:** `codex-marketplace/plugins/superpowers-plus/skills/iterative-review/references/node-regression-scan.md`
 - **Create:** `codex-marketplace/plugins/superpowers-plus/skills/iterative-review/references/node-resolved-ledger.md`
@@ -34,6 +38,7 @@
 - **Create:** `codex-marketplace/plugins/superpowers-plus/skills/iterative-review/references/node-closeout.md`
 - **Create:** `codex-marketplace/plugins/superpowers-plus/skills/iterative-review/references/node-ready.md`
 - **Create:** `codex-marketplace/plugins/superpowers-plus/skills/iterative-review/references/node-blocked.md`
+- **Create:** `codex-marketplace/plugins/superpowers-plus/skills/iterative-review/references/node-next-node.md`
 - **Modify:** `codex-marketplace/plugins/superpowers-plus/skills/iterative-review/SKILL.md` (remove these sections)
 
 **Interfaces:**
@@ -188,7 +193,7 @@
 |---|---|
 | `SKILL.md` is reduced to the 6-step orchestrator | Task 2 |
 | Every current node section becomes a `references/node-<name>.md` file | Task 1 |
-| `next_node.py` still validates the graph and supports `--propose` | Task 5 (smoke test) + no script changes |
+| `next_node.py` is a stateful graph router with `current_node`/`previous_node` and `--propose` validation | Task 5 (smoke test) + script changes per spec section 5 |
 | `ci --check` passes after refactor | Task 1–4 |
 | Test walkthrough of a trivial PR follows the new structure | Task 5 |
 
