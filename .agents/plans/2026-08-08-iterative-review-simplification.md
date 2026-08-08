@@ -58,7 +58,8 @@
 - [ ] **Step 6: Remove the node subsections from `SKILL.md`**
   Delete the `### <node>` sections from `SKILL.md` but keep the frontmatter, `## When to Use`, `## Core Pattern`, `## Required reading`, and a short `## Following the graph` orchestrator.
 
-- [ ] **Step 7: Commit**
+- [ ] **Step 7: Mark Task 1 checkboxes `[x]` in this plan file**
+- [ ] **Step 8: Commit**
   ```bash
   git add -A
   git commit -m "Extract iterative-review node recipes into references/node-*.md"
@@ -91,7 +92,8 @@
   Run: `py -3 tools/run.py ci --check`
   Expected: all targets pass.
 
-- [ ] **Step 4: Commit**
+- [ ] **Step 4: Mark Task 2 checkboxes `[x]` in this plan file**
+- [ ] **Step 5: Commit**
   ```bash
   git commit -m "Rewrite iterative-review SKILL.md as thin orchestrator"
   ```
@@ -117,8 +119,10 @@
   Run: `py -3 tools/run.py ci --check`
   Expected: all targets pass.
   ```bash
+  git add -A
   git commit -m "Point review-state-graph nodes at node reference docs"
   ```
+- [ ] **Step 4: Mark Task 3 checkboxes `[x]` in this plan file**
 
 ---
 
@@ -143,6 +147,7 @@
   git add -A
   git commit -m "Regenerate installed skills for iterative-review refactor"
   ```
+- [ ] **Step 4: Mark Task 4 checkboxes `[x]` in this plan file**
 
 ---
 
@@ -173,6 +178,7 @@
 
 - [ ] **Step 4: Record the smoke test result in the scratch directory or a short note**
   No source code change needed. This step is for confidence only.
+- [ ] **Step 5: Mark Task 5 checkboxes `[x]` in this plan file**
 
 ---
 
