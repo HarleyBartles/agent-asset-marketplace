@@ -380,6 +380,45 @@ def _check_runtime_agents(ctx: Ctx) -> None:
     _run([sys.executable, "tools/sync_runtime_agents.py", "--check"], ctx)
 
 
+def _run_steps(
+    target: str,
+    task: Task,
+    steps: tuple[Callable[[Ctx], None], ...],
+    run_ctx: Ctx,
+) -> None:
+    if not steps:
+        return
+    print(f"[tools/run] === {target} ({run_ctx.mode})")
+    for step in steps:
+        try:
+            step(run_ctx)
+        except Exception as exc:
+            fix = _lint_fix(run_ctx) if target == "lint" else task.fix
+            raise RunnerError(target, fix, exc) from exc
+
+
+def _resolve_ci_deps() -> list[str]:
+    # The `ci` meta-target uses the same dependency set but resolves them
+    # through the normal DAG so transitive dependencies are included.
+    return resolve_targets(list(_TASKS["ci"].deps))
+
+
+def _run_ci(ctx: Ctx) -> None:
+    """Run the `ci` meta-target.
+
+    In `--apply` mode each dependency is run in apply mode and then immediately
+    in check mode for fail-fast validation. In `--check` mode every dependency
+    is run in check mode only.
+    """
+    for target in _resolve_ci_deps():
+        task = _TASKS[target]
+        if ctx.mode == "apply":
+            _run_steps(target, task, task.apply, Ctx("apply", ctx.base_ref, ctx.allow_shared, ctx.verbose))
+            _run_steps(target, task, task.check, Ctx("check", ctx.base_ref, ctx.allow_shared, ctx.verbose))
+        else:
+            _run_steps(target, task, task.check, ctx)
+
+
 _TASKS: dict[str, Task] = {
     "lint": Task(apply=(_run_lint,), check=(_run_lint,), fix="tools/run lint --apply"),
     "repo-standards": Task(
@@ -441,6 +480,8 @@ _TASKS: dict[str, Task] = {
     ),
     "ci": Task(
         deps=("lint", "repo-standards", "validate", "archive-links"),
+        apply=(_run_ci,),
+        check=(_run_ci,),
         fix="tools/run ci --apply",
     ),
     "all": Task(
@@ -468,8 +509,10 @@ def resolve_targets(requested: list[str]) -> list[str]:
         if name not in _TASKS:
             raise ValueError(f"unknown target: {name}")
         visiting.add(name)
-        for dep in _TASKS[name].deps:
-            visit(dep)
+        # `ci` is a meta-target; it resolves and runs its own dependencies.
+        if name != "ci":
+            for dep in _TASKS[name].deps:
+                visit(dep)
         visiting.remove(name)
         seen.add(name)
         order.append(name)
@@ -489,17 +532,6 @@ def _lint_fix(ctx: Ctx) -> str:
 
 
 def run_targets(targets: list[str], ctx: Ctx) -> None:
-    def _run_steps(target: str, task: Task, steps: tuple[Callable[[Ctx], None], ...], run_ctx: Ctx) -> None:
-        if not steps:
-            return
-        print(f"[tools/run] === {target} ({run_ctx.mode})")
-        for step in steps:
-            try:
-                step(run_ctx)
-            except Exception as exc:
-                fix = _lint_fix(run_ctx) if target == "lint" else task.fix
-                raise RunnerError(target, fix, exc) from exc
-
     for target in targets:
         task = _TASKS[target]
         if ctx.mode == "apply":
@@ -514,7 +546,7 @@ def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         epilog=(
             "Targets: " + ", ".join(_TASKS.keys()) + "\n"
             "ci --check is the full non-mutating CI/PR verification gate.\n"
-            "ci --apply regenerates mechanical artifacts; run ci --check to verify the result.\n"
+            "ci --apply applies and verifies each step in order (apply then check per dependency).\n"
             "For a single target, run `py -3 tools/run.py <target> --apply`. See .devin/rules/tools.md."
         ),
     )
