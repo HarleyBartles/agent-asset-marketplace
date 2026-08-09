@@ -35,16 +35,17 @@ def _check_hook_contract(hook_path: Path) -> list[str]:
         findings.append("pre-commit hook is not a regular file")
         return findings
 
-    # Best-effort executability check. On POSIX, an executable bit is
-    # required; if it is missing, a shebang is accepted as a fallback.
-    # On Windows the executable-bit check is skipped.
-    if os.name != "nt" and not os.access(hook_path, os.X_OK):
+    # On POSIX the executable bit is required for git to run the hook.
+    # On Windows/NT, os.access(X_OK) is not reliable, so a shebang is
+    # required as a plausibility check instead.
+    if os.name == "nt":
         try:
-            shebang = hook_path.read_bytes()[:2]
-            if shebang != b"#!":
-                findings.append("pre-commit hook is not executable and has no shebang")
+            if hook_path.read_bytes()[:2] != b"#!":
+                findings.append("pre-commit hook has no shebang")
         except OSError as exc:
             findings.append(f"pre-commit hook cannot be read: {exc}")
+    elif not os.access(hook_path, os.X_OK):
+        findings.append("pre-commit hook is not executable")
 
     try:
         text = hook_path.read_text(encoding="utf-8", errors="replace")
@@ -112,19 +113,20 @@ git commit -m "feat: validate pre-commit hook by contract, not byte-for-byte"
 Keep the `ci --apply` call, then add:
 
 ```bash
-# Re-stage any tracked files the hook may have modified.
-git diff --name-only --diff-filter=M | while IFS= read -r file; do
-  git add "$file" 2>/dev/null || true
-done
+# Stage tracked files the build step may have modified or deleted.
+git add -u
 
-# Stage canonical generated surfaces. Glob pathspecs avoid scanning the
-# working tree with `find` and do not stage arbitrary untracked files.
+# Stage the generated directories that tools/run.py ci --apply owns.
+git add -A -- .agents/skills/ 2>/dev/null || true
+
+# Stage canonical generated surfaces that may appear as untracked files
+# in new directories. Glob pathspecs avoid scanning the working tree.
 git add -- ':(glob)**/INDEX.md' 2>/dev/null || true
 git add -- ':(glob)**/INDEX.json' 2>/dev/null || true
 git add -- ':(glob)**/.provenance.json' 2>/dev/null || true
-git add -- ':(glob)codex-marketplace/plugin-roots.json' 2>/dev/null || true
-git add -- ':(glob).agents/plugins/marketplace.json' 2>/dev/null || true
-git add -- ':(glob)codex-marketplace/manifest.json' 2>/dev/null || true
+git add -- codex-marketplace/plugin-roots.json 2>/dev/null || true
+git add -- .agents/plugins/marketplace.json 2>/dev/null || true
+git add -- codex-marketplace/manifest.json 2>/dev/null || true
 ```
 
 Use `|| true` so a missing file does not abort the hook.

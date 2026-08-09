@@ -17,16 +17,17 @@ else
   exit 1
 fi
 
-# Re-stage any tracked files the hook may have modified.
-git diff --name-only --diff-filter=M | while IFS= read -r file; do
-  git add "$file" 2>/dev/null || true
-done
+# Stage tracked files the build step may have modified or deleted.
+git add -u
 
-# Stage canonical generated surfaces. Glob pathspecs avoid scanning the
-# working tree with `find` and do not stage arbitrary untracked files.
+# Stage the generated directories that tools/run.py ci --apply owns.
+git add -A -- .agents/skills/ 2>/dev/null || true
+
+# Stage canonical generated surfaces that may appear as untracked files
+# in new directories. Glob pathspecs avoid scanning the working tree.
 git add -- ':(glob)**/INDEX.md' 2>/dev/null || true
 git add -- ':(glob)**/INDEX.json' 2>/dev/null || true
 git add -- ':(glob)**/.provenance.json' 2>/dev/null || true
-git add -- ':(glob)codex-marketplace/plugin-roots.json' 2>/dev/null || true
-git add -- ':(glob).agents/plugins/marketplace.json' 2>/dev/null || true
-git add -- ':(glob)codex-marketplace/manifest.json' 2>/dev/null || true
+git add -- codex-marketplace/plugin-roots.json 2>/dev/null || true
+git add -- .agents/plugins/marketplace.json 2>/dev/null || true
+git add -- codex-marketplace/manifest.json 2>/dev/null || true
