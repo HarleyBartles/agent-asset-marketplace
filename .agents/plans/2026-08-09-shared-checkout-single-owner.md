@@ -146,7 +146,7 @@ import shared_checkout  # noqa: E402
 
 ---
 
-### Task 5: Commit and push
+### Task 6: Commit and push
 
 - [ ] **Step 1: Commit the changes and amend or extend the existing PR #285**
 
