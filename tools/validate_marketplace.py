@@ -487,8 +487,11 @@ def validate_project(*, skip_freshness: bool = False) -> None:
 def validate_index(*, skip_freshness: bool = False) -> None:
     _ = skip_freshness
     check_text(REPO_INDEX_README_PATH)
-    check_json(REPO_INDEX_PATH)
-    check_json(ROOT / "codex-marketplace" / "INDEX.json")
+    root = check_json(REPO_INDEX_PATH)
+    for zone in root.get("zones", []):
+        index_json = zone.get("index_json")
+        if index_json:
+            check_json(ROOT / index_json)
     validate_repo_index()
     print("OK validate_marketplace: index")
 
