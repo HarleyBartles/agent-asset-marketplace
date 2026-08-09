@@ -134,4 +134,4 @@ This design is the umbrella for a **3-plan epic**:
 
 ## Consumer check
 
-The canonical source lives in `codex-marketplace/plugins/superpowers-plus/skills/iterative-review/`. The installed copy in `codex-marketplace/plugins/superpowers-plus/skills/iterative-review/` is regenerated with `py -3 tools/run.py installed-skills --apply`. Record scripts and `next_node.py` must run from the installed layout, using paths relative to the script location and the consumer's `review-state.json` in the off-repo scratch workspace.
+The canonical source lives in `codex-marketplace/plugins/superpowers-plus/skills/iterative-review/`. The installed copy in `.agents/skills/iterative-review/` is regenerated with `py -3 tools/run.py installed-skills --apply`. Record scripts and `next_node.py` must run from the installed layout, using paths relative to the script location and the consumer's `review-state.json` in the off-repo scratch workspace.
