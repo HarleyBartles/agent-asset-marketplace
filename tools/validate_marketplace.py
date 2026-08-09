@@ -491,6 +491,7 @@ def validate_index(*, skip_freshness: bool = False) -> None:
     _ = skip_freshness
     check_text(REPO_INDEX_README_PATH)
     check_json(REPO_INDEX_PATH)
+    check_json(ROOT / "codex-marketplace" / "INDEX.json")
     validate_repo_index()
     print("OK validate_marketplace: index")
 
