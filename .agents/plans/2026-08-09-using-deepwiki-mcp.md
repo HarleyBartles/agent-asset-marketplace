@@ -330,7 +330,7 @@ Run:
 py -3 tools/run.py marketplace --apply
 ```
 
-Expected: no errors; generated files under `.agents/skills/using-deepwiki-mcp/`, `codex-marketplace/plugins/mcp-usage-pack/.codex-plugin/`, and `.agents/plugins/marketplace.json` reflect the new skill.
+Expected: no errors; the installed skill tree `.agents/skills/using-deepwiki-mcp/`, the pack `bundle-manifest.json`, the pack skills `INDEX.md` (`codex-marketplace/plugins/mcp-usage-pack/skills/INDEX.md`), the installed skills `INDEX.md` (`.agents/skills/INDEX.md`), and the installed skills `.provenance.json` (`.agents/skills/.provenance.json`) reflect the new skill. Plugin-level `.codex-plugin/` and `.agents/plugins/marketplace.json` are not changed by a new skill.
 
 - [ ] **Step 3: Run the CI preflight to prove the marketplace state is consistent**
 
