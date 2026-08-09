@@ -489,6 +489,8 @@ def validate_index(*, skip_freshness: bool = False) -> None:
     for zone in root.get("zones", []):
         index_json = zone.get("index_json")
         if index_json:
+            if Path(index_json).is_absolute():
+                raise ValueError(f"index_json must be a relative path: {index_json}")
             check_json(ROOT / index_json)
     validate_repo_index()
     print("OK validate_marketplace: index")
