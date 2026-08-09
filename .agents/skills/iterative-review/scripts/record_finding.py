@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""record_finding.py — append a finding event to the review log. (mixed)"""
+"""record_finding.py - append a finding event to the review log. (mixed)"""
 
 from __future__ import annotations
 
@@ -17,9 +17,7 @@ def _load_state(path: Path) -> dict:
 
 
 def _main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(
-        description="Record a new iterative-review finding. (mixed)"
-    )
+    parser = argparse.ArgumentParser(description="Record a new iterative-review finding. (mixed)")
     parser.add_argument("--check", action="store_true", help="self-check; exits 0 if ready")
     parser.add_argument("--state", help="path to review-state.json")
     parser.add_argument("--data", help="JSON finding object")
@@ -31,19 +29,25 @@ def _main(argv: list[str] | None = None) -> int:
 
     if not args.state or not args.data:
         parser.error("the following arguments are required: --state, --data")
-        print("record_finding.py is ready")
-        return 0
 
     state_path = Path(args.state)
     state = _load_state(state_path)
-    finding = json.loads(args.data)
+    try:
+        finding = json.loads(args.data)
+    except json.JSONDecodeError as e:
+        print(f"ERROR: invalid finding JSON: {e}", file=sys.stderr)
+        return 1
 
     missing = REQUIRED - finding.keys()
     if missing:
         print(f"ERROR: missing keys {missing}", file=sys.stderr)
         return 1
 
-    scratch = Path(state["scratch_dir"])
+    try:
+        scratch = Path(state["scratch_dir"])
+    except KeyError as e:
+        print(f"ERROR: missing state key {e}", file=sys.stderr)
+        return 1
     log = scratch / "findings.jsonl"
     log.parent.mkdir(parents=True, exist_ok=True)
 
