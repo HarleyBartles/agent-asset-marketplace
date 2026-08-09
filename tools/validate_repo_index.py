@@ -78,45 +78,88 @@ def _validate_optional_list_field(entry: dict, field: str) -> list[str]:
     return paths
 
 
+def _load_zone_index(zone: dict) -> dict:
+    index_json = zone.get("index_json")
+    if index_json is None:
+        return zone
+    sidecar_path = ROOT / index_json
+    if not sidecar_path.exists():
+        raise FileNotFoundError(sidecar_path)
+    return check_json(sidecar_path)
+
+
+def merged_repo_index() -> dict:
+    root_index = check_json(REPO_INDEX_PATH)
+    zones = root_index.get("zones", [])
+    merged = {
+        "schema_version": root_index.get("schema_version"),
+        "repo_name": root_index.get("repo_name"),
+        "description": root_index.get("description"),
+        "validation": root_index.get("validation", {}),
+        "zones": [],
+    }
+    for zone in zones:
+        sidecar = _load_zone_index(zone)
+        merged["zones"].append(sidecar)
+        if zone.get("index_json") is None:
+            continue
+        # Sidecars may provide additional top-level keys (e.g. marketplace_plugins)
+        for key, value in sidecar.items():
+            if key in {"schema_version", "name", "path"}:
+                continue
+            if key in merged:
+                # If both root and sidecar claim the same key, the sidecar wins,
+                # but raise for mismatched lists to avoid silent overwrites.
+                if isinstance(merged[key], list) and isinstance(value, list):
+                    merged[key] = value
+                elif isinstance(merged[key], dict) and isinstance(value, dict):
+                    merged[key].update(value)
+                else:
+                    raise ValueError(f"conflicting values for key {key} between root and sidecar {sidecar.get('name')}")
+            else:
+                merged[key] = value
+    return merged
+
+
 def validate_repo_index() -> dict:
-    repo_index = check_json(REPO_INDEX_PATH)
+    repo_index = merged_repo_index()
 
     schema_version = repo_index.get("schema_version")
-    if schema_version != 1:
-        raise ValueError("repo-index schema_version must be 1")
+    if schema_version != 2:
+        raise ValueError("INDEX.json schema_version must be 2")
     if repo_index.get("marketplace_root_inventory_path") != "codex-marketplace/plugin-roots.json":
-        raise ValueError("repo-index marketplace_root_inventory_path mismatch")
+        raise ValueError("INDEX.json marketplace_root_inventory_path mismatch")
 
     zones = repo_index.get("zones")
     if not isinstance(zones, list) or not zones:
-        raise ValueError("repo-index zones must be a non-empty list")
+        raise ValueError("INDEX.json zones must be a non-empty list")
 
     marketplace_plugins = repo_index.get("marketplace_plugins")
     if not isinstance(marketplace_plugins, list) or not marketplace_plugins:
-        raise ValueError("repo-index marketplace_plugins must be a non-empty list")
+        raise ValueError("INDEX.json marketplace_plugins must be a non-empty list")
 
     if repo_index.get("marketplace_registry_path") != ".agents/plugins/marketplace.json":
-        raise ValueError("repo-index marketplace_registry_path mismatch")
+        raise ValueError("INDEX.json marketplace_registry_path mismatch")
     if repo_index.get("codex_marketplace_manifest_path") != "codex-marketplace/manifest.json":
-        raise ValueError("repo-index codex_marketplace_manifest_path mismatch")
+        raise ValueError("INDEX.json codex_marketplace_manifest_path mismatch")
 
     validation = repo_index.get("validation")
     if not isinstance(validation, dict):
-        raise ValueError("repo-index validation block is missing")
+        raise ValueError("INDEX.json validation block is missing")
     if validation.get("marketplace") != "py -3 tools/validate_marketplace.py":
-        raise ValueError("repo-index marketplace validation command mismatch")
+        raise ValueError("INDEX.json marketplace validation command mismatch")
     if validation.get("marketplace_generate") != "py -3 tools/generate_marketplace.py --apply":
-        raise ValueError("repo-index marketplace_generate command mismatch")
+        raise ValueError("INDEX.json marketplace_generate command mismatch")
     if validation.get("marketplace_check") != "py -3 tools/generate_marketplace.py --check":
-        raise ValueError("repo-index marketplace_check command mismatch")
+        raise ValueError("INDEX.json marketplace_check command mismatch")
     if validation.get("repo_index") != "py -3 tools/validate_repo_index.py":
-        raise ValueError("repo-index repo_index validation command mismatch")
+        raise ValueError("INDEX.json repo_index validation command mismatch")
     if validation.get("repo_index_generate") != "py -3 tools/generate_repo_index.py --apply":
-        raise ValueError("repo-index repo_index_generate command mismatch")
+        raise ValueError("INDEX.json repo_index_generate command mismatch")
     if validation.get("repo_index_check") != "py -3 tools/generate_repo_index.py --check":
-        raise ValueError("repo-index repo_index_check command mismatch")
+        raise ValueError("INDEX.json repo_index_check command mismatch")
     if "generated_drift" in validation:
-        raise ValueError("repo-index validation block contains obsolete generated_drift command")
+        raise ValueError("INDEX.json validation block contains obsolete generated_drift command")
 
     check_path_exists(PLUGIN_ROOT_INVENTORY_PATH)
 
@@ -124,16 +167,16 @@ def validate_repo_index() -> dict:
     seen_zone_paths: set[str] = set()
     for zone in zones:
         if not isinstance(zone, dict):
-            raise ValueError("repo-index zones must contain objects")
+            raise ValueError("INDEX.json zones must contain objects")
         zone_name = _validate_required_string_field(zone, "name")
         zone_path = _validate_required_string_field(zone, "path")
         surface_kind = _validate_required_string_field(zone, "surface_kind")
         if surface_kind not in {"hand-authored", "generated", "vendored", "provenance", "runtime-facing"}:
-            raise ValueError(f"repo-index zone {zone_name} has an unsupported surface_kind")
+            raise ValueError(f"INDEX.json zone {zone_name} has an unsupported surface_kind")
         if zone_name in seen_zone_names:
-            raise ValueError(f"repo-index zone name is duplicated: {zone_name}")
+            raise ValueError(f"INDEX.json zone name is duplicated: {zone_name}")
         if zone_path in seen_zone_paths:
-            raise ValueError(f"repo-index zone path is duplicated: {zone_path}")
+            raise ValueError(f"INDEX.json zone path is duplicated: {zone_path}")
         seen_zone_names.add(zone_name)
         seen_zone_paths.add(zone_path)
 
@@ -157,19 +200,19 @@ def validate_repo_index() -> dict:
     spec_by_name = {spec["name"]: spec for spec in MARKETPLACE_PLUGIN_SPECS}
 
     if set(registry_plugins) != set(EXPECTED_ACTIVE_MARKETPLACE_PLUGIN_NAMES):
-        raise ValueError("repo-index marketplace plugins do not match the current marketplace registry")
+        raise ValueError("INDEX.json marketplace plugins do not match the current marketplace registry")
     registry_plugin_names = [plugin.get("name") for plugin in registry.get("plugins", [])]
     if registry_plugin_names != list(EXPECTED_ACTIVE_MARKETPLACE_PLUGIN_NAMES):
-        raise ValueError("repo-index marketplace registry order does not match the protected marketplace shape")
+        raise ValueError("INDEX.json marketplace registry order does not match the protected marketplace shape")
 
     seen_plugin_names: set[str] = set()
     for entry in marketplace_plugins:
         if not isinstance(entry, dict):
-            raise ValueError("repo-index marketplace_plugins must contain objects")
+            raise ValueError("INDEX.json marketplace_plugins must contain objects")
 
         name = _validate_required_string_field(entry, "name")
         if name in seen_plugin_names:
-            raise ValueError(f"repo-index marketplace plugin is duplicated: {name}")
+            raise ValueError(f"INDEX.json marketplace plugin is duplicated: {name}")
         seen_plugin_names.add(name)
 
         plugin_root = _validate_required_string_field(entry, "plugin_root")
@@ -177,40 +220,40 @@ def validate_repo_index() -> dict:
         registry_path = _validate_required_string_field(entry, "registry_path")
         registry_alignment = entry.get("registry_alignment")
         if not isinstance(registry_alignment, dict):
-            raise ValueError(f"repo-index marketplace plugin {name} is missing registry_alignment")
+            raise ValueError(f"INDEX.json marketplace plugin {name} is missing registry_alignment")
         alignment_status = registry_alignment.get("status")
         alignment_note = registry_alignment.get("note")
         if alignment_status not in {"aligned", "intentional-delta"}:
-            raise ValueError(f"repo-index marketplace plugin {name} has an unsupported registry_alignment status")
+            raise ValueError(f"INDEX.json marketplace plugin {name} has an unsupported registry_alignment status")
         if (
             alignment_status == "intentional-delta"
             and not isinstance(alignment_note, str)
             and alignment_note is not None
         ):
-            raise ValueError(f"repo-index marketplace plugin {name} needs a textual registry_alignment note")
+            raise ValueError(f"INDEX.json marketplace plugin {name} needs a textual registry_alignment note")
         if alignment_status == "intentional-delta" and not alignment_note:
-            raise ValueError(f"repo-index marketplace plugin {name} needs a registry_alignment note")
+            raise ValueError(f"INDEX.json marketplace plugin {name} needs a registry_alignment note")
 
         check_path_exists(_resolved_path(plugin_root))
         check_path_exists(_resolved_path(plugin_manifest))
 
         plugin_manifest_json = check_json(_resolved_path(plugin_manifest))
         if plugin_manifest_json.get("name") != name:
-            raise ValueError(f"repo-index marketplace plugin {name} manifest name mismatch")
+            raise ValueError(f"INDEX.json marketplace plugin {name} manifest name mismatch")
 
         plugin_spec = spec_by_name.get(name)
         registry_plugin = registry_plugins.get(name)
         if plugin_spec is None or registry_plugin is None:
-            raise ValueError(f"repo-index marketplace plugin {name} is not present in the current marketplace registry")
+            raise ValueError(f"INDEX.json marketplace plugin {name} is not present in the current marketplace registry")
 
         if alignment_status == "aligned":
             if registry_plugin.get("source", {}).get("path") != registry_path:
-                raise ValueError(f"repo-index marketplace plugin {name} registry path mismatch")
+                raise ValueError(f"INDEX.json marketplace plugin {name} registry path mismatch")
             if registry_plugin.get("source", {}).get("source") != "local":
-                raise ValueError(f"repo-index marketplace plugin {name} registry source kind mismatch")
+                raise ValueError(f"INDEX.json marketplace plugin {name} registry source kind mismatch")
         else:
             if not alignment_note:
-                raise ValueError(f"repo-index marketplace plugin {name} needs an intentional-delta explanation")
+                raise ValueError(f"INDEX.json marketplace plugin {name} needs an intentional-delta explanation")
 
         source_md = _validate_optional_string_field(entry, "source_md")
         if source_md is not None:
@@ -223,24 +266,24 @@ def validate_repo_index() -> dict:
         skills_path = _validate_optional_string_field(entry, "skills_path")
         manifest_skills = plugin_manifest_json.get("skills")
         if manifest_skills is not None and not skills_path:
-            raise ValueError(f"repo-index marketplace plugin {name} is missing skills_path")
+            raise ValueError(f"INDEX.json marketplace plugin {name} is missing skills_path")
         if skills_path is not None:
             check_path_exists(_resolved_path(skills_path))
             if not isinstance(manifest_skills, str):
-                raise ValueError(f"repo-index marketplace plugin {name} manifest skills path mismatch")
+                raise ValueError(f"INDEX.json marketplace plugin {name} manifest skills path mismatch")
             expected_skills_path = (ROOT / Path(plugin_root) / Path(manifest_skills)).resolve()
             actual_skills_path = _resolved_path(skills_path).resolve()
             if actual_skills_path != expected_skills_path:
-                raise ValueError(f"repo-index marketplace plugin {name} skills_path mismatch")
+                raise ValueError(f"INDEX.json marketplace plugin {name} skills_path mismatch")
 
         agents_md = _validate_optional_string_field(entry, "agents_md")
         if agents_md is not None:
             check_path_exists(_resolved_path(agents_md))
 
     if seen_plugin_names != set(registry_plugins):
-        raise ValueError("repo-index marketplace plugin list does not match the current marketplace registry")
+        raise ValueError("INDEX.json marketplace plugin list does not match the current marketplace registry")
     if [entry.get("name") for entry in marketplace_plugins] != list(EXPECTED_ACTIVE_MARKETPLACE_PLUGIN_NAMES):
-        raise ValueError("repo-index marketplace plugin order does not match the protected marketplace shape")
+        raise ValueError("INDEX.json marketplace plugin order does not match the protected marketplace shape")
 
     third_party_agents = ROOT / ".agents/doctrine/third-party.md"
     third_party_guidance = check_text(third_party_agents)

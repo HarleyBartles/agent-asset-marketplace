@@ -20,8 +20,7 @@ DEFAULT_ROOT_INDEX: dict[str, Any] = {
     "schema_version": 2,
     "repo_name": "agent-asset-marketplace",
     "description": (
-        "Registry of zone INDEX.json sidecars. "
-        "This file is an index of repo zones, not the source of truth itself."
+        "Registry of zone INDEX.json sidecars. This file is an index of repo zones, not the source of truth itself."
     ),
     "validation": {
         "marketplace": "py -3 tools/validate_marketplace.py",
@@ -180,10 +179,7 @@ def main(argv: list[str] | None = None) -> int:
 
     root_index, zone_sidecars = build_repo_index()
     root_rendered = json.dumps(root_index, indent=2, ensure_ascii=False) + "\n"
-    sidecar_rendered = [
-        (path, json.dumps(data, indent=2, ensure_ascii=False) + "\n")
-        for path, data in zone_sidecars
-    ]
+    sidecar_rendered = [(path, json.dumps(data, indent=2, ensure_ascii=False) + "\n") for path, data in zone_sidecars]
 
     if args.apply:
         _write_json(REPO_INDEX_PATH, root_index)
