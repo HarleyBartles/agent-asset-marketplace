@@ -410,10 +410,12 @@ def _copy_skill_directory(source_skill: Path, dest_skill: Path) -> None:
 
 
 def _files_are_identical(source: Path, dest: Path) -> bool:
-    """Check if two files have identical content."""
+    """Check if two files have identical content, ignoring line-ending style."""
     if not source.exists() or not dest.exists():
         return False
-    return source.read_bytes() == dest.read_bytes()
+    source_bytes = source.read_bytes().replace(b"\r\n", b"\n")
+    dest_bytes = dest.read_bytes().replace(b"\r\n", b"\n")
+    return source_bytes == dest_bytes
 
 
 def _skill_needs_update(source_skill: Path, dest_skill: Path) -> bool:
