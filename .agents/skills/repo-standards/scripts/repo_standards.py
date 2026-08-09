@@ -172,15 +172,17 @@ def _check_hook_contract(hook_path: Path) -> list[str]:
         findings.append("pre-commit hook is not a regular file")
         return findings
 
-    # Best-effort executability check. os.access(X_OK) is not reliable on
-    # Windows, so on NT we fall back to looking for a shebang.
-    if os.name != "nt" and not os.access(hook_path, os.X_OK):
+    # On POSIX the executable bit is required for git to run the hook.
+    # On Windows/NT, os.access(X_OK) is not reliable, so we only require a
+    # shebang as a plausibility check.
+    if os.name == "nt":
         try:
-            shebang = hook_path.read_bytes()[:2]
-            if shebang != b"#!":
-                findings.append("pre-commit hook is not executable and has no shebang")
+            if hook_path.read_bytes()[:2] != b"#!":
+                findings.append("pre-commit hook has no shebang")
         except OSError as exc:
             findings.append(f"pre-commit hook cannot be read: {exc}")
+    elif not os.access(hook_path, os.X_OK):
+        findings.append("pre-commit hook is not executable")
 
     try:
         text = hook_path.read_text(encoding="utf-8", errors="replace")
@@ -189,23 +191,52 @@ def _check_hook_contract(hook_path: Path) -> list[str]:
         return findings
 
     # Scan non-comment, non-empty lines for the required contract elements.
-    non_comment = "\n".join(line for line in text.splitlines() if line.strip() and not line.strip().startswith("#"))
+    non_comment = [line for line in text.splitlines() if line.strip() and not line.strip().startswith("#")]
 
-    has_guard = "set -euo pipefail" in non_comment
-    if not has_guard:
-        has_guard = "set -e" in non_comment and "set -u" in non_comment and "set -o pipefail" in non_comment
-    if not has_guard:
+    if not _has_shell_guard(non_comment):
         findings.append("pre-commit hook missing errexit/nounset/pipefail guard")
 
-    ci_apply = "tools/run.py ci --apply" in non_comment
+    non_comment_text = "\n".join(non_comment)
+    ci_apply = "tools/run.py ci --apply" in non_comment_text
     if not ci_apply:
         for prefix in ("py -3", "python3", "python"):
-            if f"{prefix} tools/run.py ci --apply" in non_comment:
+            if f"{prefix} tools/run.py ci --apply" in non_comment_text:
                 ci_apply = True
                 break
     if not ci_apply:
         findings.append("pre-commit hook must run 'tools/run.py ci --apply'")
     return findings
+
+
+def _has_shell_guard(non_comment: list[str]) -> bool:
+    """Return True if the non-comment lines set errexit, nounset, and pipefail."""
+    short_to_name = {"e": "errexit", "u": "nounset"}
+    # Options that can appear as '-o <name>' or as their long form directly.
+    long_options = {"pipefail", "errexit", "nounset"}
+    enabled: set[str] = set()
+    for line in non_comment:
+        stripped = line.strip()
+        if not stripped.startswith("set "):
+            continue
+        tokens = stripped.removeprefix("set").split()
+        i = 0
+        while i < len(tokens):
+            token = tokens[i]
+            if not token.startswith("-") or token.startswith("--"):
+                i += 1
+                continue
+            # token is a short-option cluster like -e, -eu, -euo, or the
+            # standalone -o. If it contains an 'o', the next token is the
+            # long option name for that -o.
+            has_o = "o" in token[1:]
+            for ch in token[1:]:
+                if ch in short_to_name:
+                    enabled.add(short_to_name[ch])
+            if has_o and i + 1 < len(tokens) and tokens[i + 1] in long_options:
+                enabled.add(tokens[i + 1])
+                i += 1
+            i += 1
+    return {"errexit", "nounset", "pipefail"}.issubset(enabled)
 
 
 def _check_surface(repo_root: Path, surface: dict[str, object], exceptions: set[str]) -> list[str]:
