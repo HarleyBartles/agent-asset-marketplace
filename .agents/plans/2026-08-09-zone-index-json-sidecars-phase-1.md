@@ -30,7 +30,7 @@
 - Consumes: existing `ROOT` and `load_json`.
 - Produces: `zone_index_path(zone_path: str) -> Path` and `REPO_INDEX_PATH` updated to root `INDEX.json`.
 
-- [ ] **Step 1: Update `REPO_INDEX_PATH` and add `REPO_INDEX_DIR_NAME`**
+- [x] **Step 1: Update `REPO_INDEX_PATH` and add `REPO_INDEX_DIR_NAME`**
 
 Change `REPO_INDEX_PATH` to point at the root `INDEX.json`.
 
@@ -51,7 +51,7 @@ def zone_index_path(zone_path: str) -> Path:
     return ROOT / zone_path / ZONE_INDEX_FILE_NAME
 ```
 
-- [ ] **Step 2: Verify the helper works**
+- [x] **Step 2: Verify the helper works**
 
 Run:
 
@@ -65,7 +65,7 @@ Expected:
 codex-marketplace\INDEX.json
 ```
 
-- [ ] **Step 3: Commit**
+- [x] **Step 3: Commit**
 
 ```bash
 git add tools/marketplace_utils.py
@@ -86,7 +86,7 @@ git commit -m "feat: add zone INDEX.json sidecar path helper"
 - Consumes: `MARKETPLACE_PLUGIN_SPECS` from `marketplace_utils`.
 - Produces: `build_root_index()` -> `dict`; `build_zone_indexes()` -> `list[tuple[Path, dict]]`; `main()` writes root and all zone sidecars.
 
-- [ ] **Step 0: Update `tools/generate_repo_index.py` imports**
+- [x] **Step 0: Update `tools/generate_repo_index.py` imports**
 
 Add `zone_index_path` to the `marketplace_utils` import:
 
@@ -98,7 +98,7 @@ from marketplace_utils import (
 )
 ```
 
-- [ ] **Step 1: Replace `DEFAULT_REPO_INDEX` with a root-only registry and a `codex-marketplace` sidecar constant**
+- [x] **Step 1: Replace `DEFAULT_REPO_INDEX` with a root-only registry and a `codex-marketplace` sidecar constant**
 
 The root registry now lists zones. For the pilot, `codex-marketplace` is the only zone with an `index_json` sidecar; all other zones stay inline.
 
@@ -219,7 +219,7 @@ DEFAULT_CODEX_MARKETPLACE_INDEX: dict[str, Any] = {
 }
 ```
 
-- [ ] **Step 2: Add `build_root_index()` and `build_zone_indexes()`**
+- [x] **Step 2: Add `build_root_index()` and `build_zone_indexes()`**
 
 ```python
 def build_root_index() -> dict[str, Any]:
@@ -234,7 +234,7 @@ def build_zone_indexes() -> list[tuple[Path, dict[str, Any]]]:
     return sidecars
 ```
 
-- [ ] **Step 3: Replace `build_repo_index()` and `main()` to write root + sidecars**
+- [x] **Step 3: Replace `build_repo_index()` and `main()` to write root + sidecars**
 
 ```python
 def build_repo_index() -> tuple[dict[str, Any], list[tuple[Path, dict[str, Any]]]]:
@@ -287,7 +287,7 @@ def main(argv: list[str] | None = None) -> int:
 
 Note: the `next(...)` lookup in the apply branch is inefficient but explicit. Replace it with a clean loop if you prefer.
 
-- [ ] **Step 4: Run the generator**
+- [x] **Step 4: Run the generator**
 
 ```bash
 py -3 tools/generate_repo_index.py --apply
@@ -301,7 +301,7 @@ Wrote codex-marketplace\INDEX.json
 OK repo index: generated
 ```
 
-- [ ] **Step 5: Verify the generator check**
+- [x] **Step 5: Verify the generator check**
 
 ```bash
 py -3 tools/generate_repo_index.py --check
@@ -315,7 +315,7 @@ OK codex-marketplace\INDEX.json
 OK repo index: current
 ```
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add tools/generate_repo_index.py INDEX.json codex-marketplace\INDEX.json
@@ -334,7 +334,7 @@ git commit -m "feat: generate root INDEX.json registry and codex-marketplace zon
 - Consumes: root `INDEX.json` and `codex-marketplace/INDEX.json`.
 - Produces: `merged_repo_index()` function and updated `validate_repo_index()` that runs existing invariants on the merged data.
 
-- [ ] **Step 1: Add `merged_repo_index()` helper**
+- [x] **Step 1: Add `merged_repo_index()` helper**
 
 Insert before `validate_repo_index()`:
 
@@ -379,7 +379,7 @@ def merged_repo_index() -> dict:
     return merged
 ```
 
-- [ ] **Step 2: Rewrite `validate_repo_index()` to use `merged_repo_index()`**
+- [x] **Step 2: Rewrite `validate_repo_index()` to use `merged_repo_index()`**
 
 Replace the first few lines of `validate_repo_index()`:
 
@@ -409,7 +409,7 @@ def validate_repo_index() -> dict:
 
 The rest of `validate_repo_index()` stays as-is, but update the remaining error messages that say "repo-index" to say "INDEX.json" for clarity. Replace string literals in validation `raise ValueError(...)` calls from `repo-index` to `INDEX.json`.
 
-- [ ] **Step 3: Run the validator**
+- [x] **Step 3: Run the validator**
 
 ```bash
 py -3 tools/validate_repo_index.py
@@ -417,7 +417,7 @@ py -3 tools/validate_repo_index.py
 
 Expected: output similar to the existing pass messages and exit 0.
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 git add tools/validate_repo_index.py
@@ -435,7 +435,7 @@ git commit -m "feat: validate merged root and zone INDEX.json sidecars"
 - Consumes: `REPO_INDEX_PATH` and `REPO_INDEX_README_PATH` from `marketplace_utils`.
 - Produces: `validate_index()` checks the new root `INDEX.json` and `codex-marketplace/INDEX.json`.
 
-- [ ] **Step 1: Add `check_json` for the zone sidecar path**
+- [x] **Step 1: Add `check_json` for the zone sidecar path**
 
 The current `validate_index()` does:
 
@@ -460,7 +460,7 @@ def validate_index(*, skip_freshness: bool = False) -> None:
     print("OK validate_marketplace: index")
 ```
 
-- [ ] **Step 2: Run the marketplace validator**
+- [x] **Step 2: Run the marketplace validator**
 
 ```bash
 py -3 tools/validate_marketplace.py
@@ -468,7 +468,7 @@ py -3 tools/validate_marketplace.py
 
 Expected: `OK validate_marketplace: index` at the end.
 
-- [ ] **Step 3: Commit**
+- [x] **Step 3: Commit**
 
 ```bash
 git add tools/validate_marketplace.py
@@ -488,14 +488,14 @@ git commit -m "feat: validate codex-marketplace INDEX.json sidecar"
 - Consumes: the changes from Tasks 1-4.
 - Produces: a passing `ci --check` and a clean branch.
 
-- [ ] **Step 1: Delete the stale `repo-index/repo-index.json`**
+- [x] **Step 1: Delete the stale `repo-index/repo-index.json`**
 
 ```bash
 git rm repo-index\repo-index.json
 git commit -m "refactor: remove stale repo-index/repo-index.json now superseded by root INDEX.json"
 ```
 
-- [ ] **Step 2: Regenerate all derived surfaces**
+- [x] **Step 2: Regenerate all derived surfaces**
 
 ```bash
 py -3 tools/run.py ci --apply
@@ -503,7 +503,7 @@ py -3 tools/run.py ci --apply
 
 This will run the pre-commit `ci --apply` target and regenerate the mesh, marketplace, repo-index, etc.
 
-- [ ] **Step 3: Verify with check**
+- [x] **Step 3: Verify with check**
 
 ```bash
 py -3 tools/run.py ci --check
@@ -511,14 +511,14 @@ py -3 tools/run.py ci --check
 
 Expected: `[tools/run] all requested targets passed.`
 
-- [ ] **Step 4: Commit any generated changes**
+- [x] **Step 4: Commit any generated changes**
 
 ```bash
 git add -A
 git commit -m "chore: regenerate derived surfaces after INDEX.json sidecar move"
 ```
 
-- [ ] **Step 5: Push branch and open PR**
+- [x] **Step 5: Push branch and open PR**
 
 ```bash
 git push -u origin implement/zone-index-json-sidecars-phase-1
