@@ -111,7 +111,15 @@ def _load_state(path: Path) -> dict:
 def _load_jsonl(path: Path) -> list[dict]:
     if not path.exists():
         return []
-    return [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line.strip()]
+    records: list[dict] = []
+    for line in path.read_text(encoding="utf-8").splitlines():
+        if not line.strip():
+            continue
+        try:
+            records.append(json.loads(line))
+        except json.JSONDecodeError as exc:
+            print(f"Warning: malformed JSONL line in {path}: {exc}", file=sys.stderr)
+    return records
 
 
 def _load_metrics(path: Path) -> dict:
@@ -223,11 +231,7 @@ def _condition_holds(condition: str, state: dict, ledger: Path, current_node: st
     if condition == "round_cap":
         if "rounds_per_finding" in state:
             rounds = state.get("rounds_per_finding", [])
-            return any(
-                (f.get("fix_round", 0) or 0) >= 4
-                for f in rounds
-                if not f.get("resolved_at_node")
-            )
+            return any((f.get("fix_round", 0) or 0) >= 4 for f in rounds if not f.get("resolved_at_node"))
         scratch = Path(state.get("scratch_dir", "."))
         findings = _load_jsonl(scratch / "findings.jsonl")
         resolved = {r["finding_id"] for r in _load_jsonl(scratch / "resolutions.jsonl")}
@@ -291,23 +295,37 @@ def main(argv: list[str] | None = None) -> int:
         print("next_node.py is ready")
         return 0
 
-    if args.propose and not args.state:
-        print("--propose requires --state", file=sys.stderr)
-        return 2
-
+    state_path: Path | None = None
     if args.state:
         state_path = Path(args.state)
         state = _load_state(state_path)
-        ledger_path = Path(args.ledger) if args.ledger else Path(
-            state.get("ledger_path", state_path.parent / "review-log-resolved-ledger.md")
+        ledger_path = (
+            Path(args.ledger)
+            if args.ledger
+            else Path(state.get("ledger_path", state_path.parent / "review-log-resolved-ledger.md"))
         )
         node, reason = _next_node(state, ledger_path)
+    elif args.metrics:
+        if args.propose:
+            # Existing recipes call --propose with --metrics; derive the canonical
+            # review-state.json path from the metrics file.
+            state_path = Path(args.metrics).with_name("review-state.json")
+            state = _load_state(state_path)
+            ledger_path = (
+                Path(args.ledger)
+                if args.ledger
+                else Path(state.get("ledger_path", state_path.parent / "review-log-resolved-ledger.md"))
+            )
+            node, reason = _next_node(state, ledger_path)
+        else:
+            # Backward-compatible read-only discovery from compiled metrics.
+            metrics_path = Path(args.metrics)
+            ledger_path = Path(args.ledger) if args.ledger else metrics_path.parent / "review-log-resolved-ledger.md"
+            metrics = _load_metrics(metrics_path)
+            node, reason = _next_node(metrics, ledger_path)
     else:
-        # Backward-compatible read-only discovery from compiled metrics.
-        metrics_path = Path(args.metrics)
-        ledger_path = Path(args.ledger) if args.ledger else metrics_path.parent / "review-log-resolved-ledger.md"
-        metrics = _load_metrics(metrics_path)
-        node, reason = _next_node(metrics, ledger_path)
+        print("--state or --metrics is required when not using --check", file=sys.stderr)
+        return 2
 
     if not args.propose:
         # Discovery is read-only: it reports the allowed next node from the
@@ -316,13 +334,14 @@ def main(argv: list[str] | None = None) -> int:
             print(json.dumps({"node": node, "reason": reason}, ensure_ascii=False))
         else:
             print(f"{node}\n# {reason}")
-    elif args.propose == node:
+    elif state_path is not None and args.propose == node:
         print(f"ALLOWED: {args.propose}  -  {reason}")
-        # The validator advances state on a successful dispatch gate so the
-        # next discovery call continues from the just-authorized node.
-        state["previous_node"] = state.get("current_node", "")
-        state["current_node"] = node
-        state_path.write_text(json.dumps(state, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+        # Re-read the state from disk immediately before writing to avoid
+        # overwriting concurrent changes with a stale in-memory dict.
+        fresh = _load_state(state_path)
+        fresh["previous_node"] = fresh.get("current_node", "")
+        fresh["current_node"] = node
+        state_path.write_text(json.dumps(fresh, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     else:
         print(f"BLOCKED: proposed {args.propose}; allowed next node is {node}  -  {reason}", file=sys.stderr)
         return 1
