@@ -40,7 +40,7 @@ The `marketplace` target runs the generator/validator stack in order:
 
 1. `inventory` — refreshes `codex-marketplace/plugin-roots.json` and validates plugin roots.
 2. `installed-skills` — refreshes `.agents/skills/` for installed plugins.
-3. `repo-index` — writes `repo-index/repo-index.json`.
+3. `repo-index` — writes the root `INDEX.json` registry and each zone's per-directory `INDEX.json` sidecar.
 4. `mesh` — regenerates repo-wide `INDEX.md` navigation mesh.
 5. `validate` — structural validation of plugin trees, manifests, and bundle manifests.
 6. `marketplace` — final aggregate validation.
@@ -50,7 +50,7 @@ The `marketplace` target runs the generator/validator stack in order:
 - Marketplace manifests: `.agents/plugins/marketplace.json`, `codex-marketplace/manifest.json`
 - Plugin roots: `codex-marketplace/plugins/<pack>/`
 - Bundle manifests: `codex-marketplace/plugins/<pack>/references/bundle-manifest.json`
-- Repo index: `repo-index/repo-index.json`
+- Root index: `INDEX.json`; zone sidecars: `codex-marketplace/INDEX.json`, `.agents/plugins/INDEX.json`, `.agents/plans/INDEX.json`, `.agents/specs/INDEX.json`, `tools/INDEX.json`, `codex-marketplace/plugins/INDEX.json`
 - Index mesh: `INDEX.md` files throughout the repo
 - Installed skills: `.agents/skills/<skill>/`
 

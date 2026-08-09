@@ -4,7 +4,7 @@
 
 **Goal:** Convert the remaining directory zones from inline root `INDEX.json` entries to per-zone `INDEX.json` sidecars, so the root becomes a pure registry.
 
-**Architecture:** Extend `tools/generate_repo_index.py` with sidecar defaults for every remaining directory zone and refactor `build_zone_indexes()` to produce all sidecars. `tools/validate_marketplace.py` checks every `index_json` referenced in the root. The existing `merged_repo_index()` in `tools/validate_repo_index.py` already merges all sidecars; no validator change is required beyond the generation step.
+**Architecture:** Extend `tools/generate_repo_index.py` with sidecar defaults for every remaining directory zone and refactor `build_zone_indexes()` to produce all sidecars. `tools/validate_marketplace.py` checks every `index_json` referenced in the root. `tools/validate_repo_index.py` `merged_repo_index()` must rebuild the `zones` list from the loaded sidecars and expand the per-key skip set to avoid collision with the root registry's local fields (e.g. `purpose`, `surface_kind`, `nearest_scoped_agents_md`, `key_validation_scripts`).
 
 **Tech Stack:** Python 3, `pathlib`, `json`, existing `tools/run.py` targets.
 
@@ -207,6 +207,8 @@ Expected: `OK repo index: current`.
 git add tools\generate_repo_index.py INDEX.json codex-marketplace\INDEX.json codex-marketplace\plugins\INDEX.json .agents\plugins\INDEX.json .agents\plans\INDEX.json .agents\specs\INDEX.json tools\INDEX.json
 git commit -m "feat: generate INDEX.json sidecars for all directory zones"
 ```
+
+> **Note:** `tools/validate_repo_index.py` `merged_repo_index()` was also updated to rebuild the `zones` list from the sidecars and expand the key skip set so that per-zone fields (`purpose`, `surface_kind`, `nearest_scoped_agents_md`, `key_validation_scripts`) do not collide with the merged aggregate.
 
 ---
 

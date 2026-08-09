@@ -82,6 +82,8 @@ def _load_zone_index(zone: dict) -> dict:
     index_json = zone.get("index_json")
     if index_json is None:
         return zone
+    if Path(index_json).is_absolute():
+        raise ValueError(f"index_json must be a relative path: {index_json}")
     sidecar_path = ROOT / index_json
     if not sidecar_path.exists():
         raise FileNotFoundError(sidecar_path)
@@ -116,8 +118,8 @@ def merged_repo_index() -> dict:
             }:
                 continue
             if key in merged:
-                # If both root and sidecar claim the same key, the sidecar wins,
-                # but raise for mismatched lists to avoid silent overwrites.
+                # Sidecar lists intentionally override root lists; no conflict is
+                # raised because the sidecar is the authoritative source for zone-local data.
                 if isinstance(merged[key], list) and isinstance(value, list):
                     merged[key] = value
                 elif isinstance(merged[key], dict) and isinstance(value, dict):

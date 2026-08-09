@@ -21,6 +21,8 @@ def zone_index_path(zone_path: str) -> Path:
     """Return the absolute path to a zone's INDEX.json sidecar."""
     if not isinstance(zone_path, str) or not zone_path.strip():
         raise ValueError("zone_path must be a non-empty string")
+    if Path(zone_path).is_absolute():
+        raise ValueError(f"zone_path must be a relative path: {zone_path}")
     return ROOT / zone_path / ZONE_INDEX_FILE_NAME
 
 

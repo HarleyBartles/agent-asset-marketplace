@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import copy
 import json
 from pathlib import Path
 from typing import Any
@@ -184,7 +185,7 @@ def _plugin_entry(spec: dict[str, Any]) -> dict[str, Any]:
 
 
 def build_root_index() -> dict[str, Any]:
-    return dict(DEFAULT_ROOT_INDEX)
+    return copy.deepcopy(DEFAULT_ROOT_INDEX)
 
 
 def build_zone_indexes() -> list[tuple[Path, dict[str, Any]]]:
@@ -216,6 +217,9 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--apply", action="store_true", help="write the repo index and zone sidecars")
     args = parser.parse_args(argv)
 
+    if args.apply and args.check:
+        parser.error("--check and --apply are mutually exclusive")
+
     root_index, zone_sidecars = build_repo_index()
     root_rendered = json.dumps(root_index, indent=2, ensure_ascii=False) + "\n"
     sidecar_rendered = [(path, json.dumps(data, indent=2, ensure_ascii=False) + "\n") for path, data in zone_sidecars]
@@ -223,32 +227,33 @@ def main(argv: list[str] | None = None) -> int:
     if args.apply:
         _write_json(REPO_INDEX_PATH, root_index)
         print(f"Wrote {REPO_INDEX_PATH.relative_to(ROOT)}")
-        for path, _ in sidecar_rendered:
-            _write_json(path, next(data for p, data in zone_sidecars if p == path))
+        for path, data in zone_sidecars:
+            _write_json(path, data)
             print(f"Wrote {path.relative_to(ROOT)}")
         print("OK repo index: generated")
         return 0
 
-    if not REPO_INDEX_PATH.exists():
-        raise FileNotFoundError(REPO_INDEX_PATH)
-    current_root = REPO_INDEX_PATH.read_text(encoding="utf-8")
-    if current_root != root_rendered:
-        stale_path = REPO_INDEX_PATH.relative_to(ROOT)
-        raise ValueError(f"{stale_path} is stale; run py -3 tools/generate_repo_index.py --apply")
-
-    for path, rendered in sidecar_rendered:
-        if not path.exists():
-            raise FileNotFoundError(path)
-        current = path.read_text(encoding="utf-8")
-        if current != rendered:
-            stale_path = path.relative_to(ROOT)
+    if args.check or not args.apply:
+        if not REPO_INDEX_PATH.exists():
+            raise FileNotFoundError(REPO_INDEX_PATH)
+        current_root = REPO_INDEX_PATH.read_text(encoding="utf-8")
+        if current_root != root_rendered:
+            stale_path = REPO_INDEX_PATH.relative_to(ROOT)
             raise ValueError(f"{stale_path} is stale; run py -3 tools/generate_repo_index.py --apply")
 
-    print(f"OK {REPO_INDEX_PATH.relative_to(ROOT)}")
-    for path, _ in sidecar_rendered:
-        print(f"OK {path.relative_to(ROOT)}")
-    print("OK repo index: current")
-    return 0
+        for path, rendered in sidecar_rendered:
+            if not path.exists():
+                raise FileNotFoundError(path)
+            current = path.read_text(encoding="utf-8")
+            if current != rendered:
+                stale_path = path.relative_to(ROOT)
+                raise ValueError(f"{stale_path} is stale; run py -3 tools/generate_repo_index.py --apply")
+
+        print(f"OK {REPO_INDEX_PATH.relative_to(ROOT)}")
+        for path, _ in sidecar_rendered:
+            print(f"OK {path.relative_to(ROOT)}")
+        print("OK repo index: current")
+        return 0
 
 
 if __name__ == "__main__":
