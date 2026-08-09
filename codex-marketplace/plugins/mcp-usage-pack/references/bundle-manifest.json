@@ -15,6 +15,17 @@
   "plugin_license": "MIT",
   "entries": [
     {
+      "canonical_name": "using-deepwiki-mcp",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "canonical_source_path": "codex-marketplace/plugins/mcp-usage-pack/skills/using-deepwiki-mcp",
+      "local_path": "skills/using-deepwiki-mcp",
+      "source_path": "codex-marketplace/plugins/mcp-usage-pack/skills/using-deepwiki-mcp/SKILL.md",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Canonical first-party using-deepwiki-mcp skill. (Using DeepWiki MCP first-party skill)"
+    },
+    {
       "canonical_name": "using-discord-mcp",
       "source_category": "first_party",
       "content_mode": "verbatim",
