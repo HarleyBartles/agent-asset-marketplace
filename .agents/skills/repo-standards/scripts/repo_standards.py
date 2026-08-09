@@ -171,18 +171,36 @@ def _check_hook_contract(hook_path: Path) -> list[str]:
     if not hook_path.is_file():
         findings.append("pre-commit hook is not a regular file")
         return findings
-    text = hook_path.read_text(encoding="utf-8")
-    has_guard = "set -euo pipefail" in text
+
+    # Best-effort executability check. os.access(X_OK) is not reliable on
+    # Windows, so on NT we fall back to looking for a shebang.
+    if os.name != "nt" and not os.access(hook_path, os.X_OK):
+        try:
+            shebang = hook_path.read_bytes()[:2]
+            if shebang != b"#!":
+                findings.append("pre-commit hook is not executable and has no shebang")
+        except OSError as exc:
+            findings.append(f"pre-commit hook cannot be read: {exc}")
+
+    try:
+        text = hook_path.read_text(encoding="utf-8", errors="replace")
+    except OSError as exc:
+        findings.append(f"pre-commit hook cannot be read: {exc}")
+        return findings
+
+    # Scan non-comment, non-empty lines for the required contract elements.
+    non_comment = "\n".join(line for line in text.splitlines() if line.strip() and not line.strip().startswith("#"))
+
+    has_guard = "set -euo pipefail" in non_comment
     if not has_guard:
-        has_guard = (
-            "set -e" in text and "set -u" in text and "set -o pipefail" in text
-        )
+        has_guard = "set -e" in non_comment and "set -u" in non_comment and "set -o pipefail" in non_comment
     if not has_guard:
         findings.append("pre-commit hook missing errexit/nounset/pipefail guard")
-    ci_apply = "tools/run.py ci --apply" in text
+
+    ci_apply = "tools/run.py ci --apply" in non_comment
     if not ci_apply:
         for prefix in ("py -3", "python3", "python"):
-            if f"{prefix} tools/run.py ci --apply" in text:
+            if f"{prefix} tools/run.py ci --apply" in non_comment:
                 ci_apply = True
                 break
     if not ci_apply:

@@ -22,31 +22,62 @@
 
 **Interfaces:**
 - Consumes: `_check_surface`, `_check_surface_content` helpers.
-- Produces: `_check_hook_contract(repo_root: Path, hook_path: Path) -> list[str]`.
+- Produces: `_check_hook_contract(hook_path: Path) -> list[str]`.
 
-- [ ] **Step 1: Read the current `kind == "hook"` branch in `_check_surface`**
+- [x] **Step 1: Read the current `kind == "hook"` branch in `_check_surface`**
 
-- [ ] **Step 2: Write `_check_hook_contract`**
+- [x] **Step 2: Write `_check_hook_contract`**
 
 ```python
 def _check_hook_contract(hook_path: Path) -> list[str]:
     findings: list[str] = []
-    if not os.access(hook_path, os.X_OK):
-        # On Windows this may be permissive, so also accept a shebang/executable marker.
-        pass
-    text = hook_path.read_text(encoding="utf-8")
-    if "set -euo pipefail" not in text and ("set -e" not in text or "set -u" not in text or "set -o pipefail" not in text):
+    if not hook_path.is_file():
+        findings.append("pre-commit hook is not a regular file")
+        return findings
+
+    # Best-effort executability check. On POSIX, an executable bit is
+    # required; if it is missing, a shebang is accepted as a fallback.
+    # On Windows the executable-bit check is skipped.
+    if os.name != "nt" and not os.access(hook_path, os.X_OK):
+        try:
+            shebang = hook_path.read_bytes()[:2]
+            if shebang != b"#!":
+                findings.append("pre-commit hook is not executable and has no shebang")
+        except OSError as exc:
+            findings.append(f"pre-commit hook cannot be read: {exc}")
+
+    try:
+        text = hook_path.read_text(encoding="utf-8", errors="replace")
+    except OSError as exc:
+        findings.append(f"pre-commit hook cannot be read: {exc}")
+        return findings
+
+    # Scan non-comment, non-empty lines for the required contract elements.
+    non_comment = "\n".join(
+        line for line in text.splitlines()
+        if line.strip() and not line.strip().startswith("#")
+    )
+
+    has_guard = "set -euo pipefail" in non_comment
+    if not has_guard:
+        has_guard = (
+            "set -e" in non_comment and "set -u" in non_comment and "set -o pipefail" in non_comment
+        )
+    if not has_guard:
         findings.append("pre-commit hook missing errexit/nounset/pipefail guard")
-    ci_apply = "tools/run.py ci --apply" in text
+
+    ci_apply = "tools/run.py ci --apply" in non_comment
     if not ci_apply:
-        # Also accept py -3 / python3 / python forms
-        ci_apply = any(f"{cmd} tools/run.py ci --apply" in text for cmd in ("py -3", "python3", "python"))
+        for prefix in ("py -3", "python3", "python"):
+            if f"{prefix} tools/run.py ci --apply" in non_comment:
+                ci_apply = True
+                break
     if not ci_apply:
         findings.append("pre-commit hook must run 'tools/run.py ci --apply'")
     return findings
 ```
 
-- [ ] **Step 3: Replace byte comparison in `_check_surface` for `kind == "hook"`**
+- [x] **Step 3: Replace byte comparison in `_check_surface` for `kind == "hook"`**
 
 Replace:
 ```python
@@ -61,7 +92,7 @@ with:
         findings.extend(_check_hook_contract(hook_path))
 ```
 
-- [ ] **Step 4: Run `py -3 tools/run.py ci --check` and commit**
+- [x] **Step 4: Run `py -3 tools/run.py ci --check` and commit**
 
 ```bash
 git add codex-marketplace/plugins/repo-worker-pack/skills/repo-standards/scripts/repo_standards.py
@@ -76,7 +107,7 @@ git commit -m "feat: validate pre-commit hook by contract, not byte-for-byte"
 **Interfaces:**
 - None; shell script.
 
-- [ ] **Step 1: Replace the final `git add -A` with targeted staging**
+- [x] **Step 1: Replace the final `git add -A` with targeted staging**
 
 Keep the `ci --apply` call, then add:
 
@@ -99,7 +130,7 @@ git add codex-marketplace/manifest.json || true
 
 Use `|| true` so a missing file does not abort the hook.
 
-- [ ] **Step 2: Run `py -3 tools/run.py ci --check` and commit**
+- [x] **Step 2: Run `py -3 tools/run.py ci --check` and commit**
 
 ```bash
 git add codex-marketplace/plugins/repo-worker-pack/skills/repo-standards/templates/pre-commit
@@ -115,15 +146,15 @@ git commit -m "feat: stage only generated surfaces in pre-commit template"
 **Interfaces:**
 - None.
 
-- [ ] **Step 1: Update `repository-shape-standard.md` pre-commit wording**
+- [x] **Step 1: Update `repository-shape-standard.md` pre-commit wording**
 
 Change the bullet from `.git/hooks/pre-commit` wired to `tools/run.py ci --apply` (or an equivalent command). Note that the hook is validated by contract, not by content.
 
-- [ ] **Step 2: Update `repository-shape-manifest.json` if needed**
+- [x] **Step 2: Update `repository-shape-manifest.json` if needed**
 
-Leave the `pre-commit-hook` surface as `kind: "hook"` with `source: "templates/pre-commit`". The `source` is the scaffold template; the validator now uses a contract check.
+No edit is needed. The `pre-commit-hook` surface remains `kind: "hook"` with `source: "templates/pre-commit"`; these fields already describe the scaffold template correctly, and the validator change is behavioral.
 
-- [ ] **Step 3: Run `py -3 tools/run.py ci --check` and commit**
+- [x] **Step 3: Run `py -3 tools/run.py ci --check` and commit**
 
 ```bash
 git add codex-marketplace/plugins/repo-worker-pack/skills/repo-standards/references/
@@ -135,7 +166,7 @@ git commit -m "docs: describe pre-commit hook as a contract, not a pinned file"
 **Files:**
 - Generated: `.agents/skills/repo-standards/`
 
-- [ ] **Step 1: Regenerate surfaces**
+- [x] **Step 1: Regenerate surfaces**
 
 ```bash
 py -3 tools/run.py marketplace --apply
@@ -143,14 +174,14 @@ py -3 tools/run.py mesh --apply
 py -3 tools/run.py ci --check
 ```
 
-- [ ] **Step 2: Commit generated surfaces**
+- [x] **Step 2: Commit generated surfaces**
 
 ```bash
 git add .agents/skills/repo-standards/ .agents/specs/INDEX.md .agents/plans/INDEX.md .agents/docs/INDEX.md INDEX.md
 git commit -m "chore: regenerate installed skill and mesh surfaces"
 ```
 
-- [ ] **Step 3: Push branch and open draft PR**
+- [x] **Step 3: Push branch and open draft PR**
 
 ```bash
 git push -u origin fix/repo-standards-pre-commit
@@ -159,6 +190,6 @@ gh pr create --draft --title "repo-standards: pre-commit contract and targeted s
 
 ## Self-review / readiness
 
-- [ ] Spec: `2026-08-09-repo-standards-pre-commit-contract-design.md` covers goals, contract, validation.
-- [ ] No placeholders in the plan.
-- [ ] Every task ends with `ci --check` evidence.
+- [x] Spec: `2026-08-09-repo-standards-pre-commit-contract-design.md` covers goals, contract, validation.
+- [x] No placeholders in the plan.
+- [x] Every task ends with `ci --check` evidence.

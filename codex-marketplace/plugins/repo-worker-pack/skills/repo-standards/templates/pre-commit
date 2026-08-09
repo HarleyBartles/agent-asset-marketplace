@@ -17,18 +17,16 @@ else
   exit 1
 fi
 
-# Stage tracked files the hook may have regenerated.
+# Re-stage any tracked files the hook may have modified.
 git diff --name-only --diff-filter=M | while IFS= read -r file; do
-  git add "$file"
+  git add "$file" 2>/dev/null || true
 done
 
-# Stage canonical generated surfaces that may not yet be tracked.
-git add INDEX.md 2>/dev/null || true
-find . -name INDEX.md -not -path '*/.git/*' -exec git add {} + 2>/dev/null || true
-git add INDEX.json 2>/dev/null || true
-find . -name INDEX.json -not -path '*/.git/*' -exec git add {} + 2>/dev/null || true
-git add .provenance.json 2>/dev/null || true
-git add .agents/skills/.provenance.json 2>/dev/null || true
-git add codex-marketplace/plugin-roots.json 2>/dev/null || true
-git add .agents/plugins/marketplace.json 2>/dev/null || true
-git add codex-marketplace/manifest.json 2>/dev/null || true
+# Stage canonical generated surfaces. Glob pathspecs avoid scanning the
+# working tree with `find` and do not stage arbitrary untracked files.
+git add -- ':(glob)INDEX.md' ':(glob)**/INDEX.md' 2>/dev/null || true
+git add -- ':(glob)INDEX.json' ':(glob)**/INDEX.json' 2>/dev/null || true
+git add -- ':(glob).provenance.json' ':(glob)**/.provenance.json' 2>/dev/null || true
+git add -- ':(glob)codex-marketplace/plugin-roots.json' 2>/dev/null || true
+git add -- ':(glob).agents/plugins/marketplace.json' 2>/dev/null || true
+git add -- ':(glob)codex-marketplace/manifest.json' 2>/dev/null || true
