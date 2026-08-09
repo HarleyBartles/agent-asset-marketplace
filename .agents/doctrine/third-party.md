@@ -1,15 +1,15 @@
 
 ## Scope
 
-`provenance/`
+per-pack `SOURCE.md`
 
-This scope covers third-party source custody, upstream evidence, and the provenance notes that record retained upstream material.
+This scope covers third-party source custody, upstream evidence, and the provenance notes that record retained upstream material in each plugin pack.
 
 Defer to the repository root `AGENTS.md` for global doctrine, publication rules, and upstream-drain policy.
 
-Third-party custody is retained evidence, not repo doctrine. Keep any scoped guidance here limited to custody and evidence rules for the provenance tree.
+Third-party custody is retained evidence, not repo doctrine. Keep any scoped guidance here limited to custody and evidence rules for the per-pack `SOURCE.md` provenance records.
 
-Default custody shape: record the upstream repo, pinned commit, license, and adaptation path in `provenance/<record>.md`. If a vendor snapshot is retained in-tree, place it under `codex-marketplace/plugins/<plugin>/skills/<skill>/` and mark it appropriately in the bundle manifest.
+Default custody shape: record the upstream repo, pinned commit, license, and adaptation path in `codex-marketplace/plugins/<plugin>/SOURCE.md`. If a vendor snapshot is retained in-tree, place it under `codex-marketplace/plugins/<plugin>/skills/<skill>/` and record it in the pack's `SOURCE.md`.
 
 ## Line-ending normalization exception
 

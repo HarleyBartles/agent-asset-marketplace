@@ -58,7 +58,6 @@ Capture:
 
 Commit the recorded results. Typical locations:
 
-- `provenance/<skill-name>-pressure-test-*.md` for source-custody-style evidence.
 - `tests/pressure/<skill-name>/` for test-campaign-style evidence (prompts, results, README).
 
 The existing `using-git-worktrees` campaign under `tests/pressure/using-git-worktrees/` is a test-campaign-style example.

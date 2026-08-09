@@ -484,7 +484,7 @@ def validate_project(*, skip_freshness: bool = False) -> None:
 
     check_text(ROOT / "codex-marketplace/README.md")
     check_text(ROOT / "codex-marketplace/plugins/README.md")
-    check_text(ROOT / "provenance/MARK-99-unslop.md")
+    check_text(ROOT / "codex-marketplace/plugins/unslop-plus/SOURCE.md")
     validate_no_legacy_manifest_shapes()
     print("OK validate_marketplace: project")
 def validate_index(*, skip_freshness: bool = False) -> None:

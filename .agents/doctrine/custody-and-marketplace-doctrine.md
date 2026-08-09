@@ -9,9 +9,7 @@ marketplace manifests are exported. It is authoritative, not a tutorial.
 Source custody is the canonical home for asset content. Marketplace and export
 surfaces are derived from custody, never the reverse.
 
-- **Third-party pool** lives under `provenance/`. These are verbatim
-  upstream snapshots pinned to a commit. Preserve upstream source, package
-  payload, license, notice, and source-map evidence there. Do not edit
+- **Third-party pool** custody is recorded per pack in `codex-marketplace/plugins/<plugin>/SOURCE.md`. If a vendor snapshot is retained in-tree, place it under `codex-marketplace/plugins/<plugin>/skills/<skill>/` and record the upstream repo, pinned commit, license, and adaptation path in the pack's `SOURCE.md`. Do not edit
   third-party custody to adapt skill behavior; adapt at bundle time and
   record the adaptation honestly.
 - **First-party authoring** lives under `codex-marketplace/plugins/<plugin>/`. These are
@@ -71,7 +69,7 @@ historical context.
 
 The flow is:
 
-1. **Source custody** — `provenance/` and `codex-marketplace/plugins/<plugin>/`.
+1. **Source custody** — `codex-marketplace/plugins/<plugin>/`.
 2. **Bundle** — `codex-marketplace/plugins/` vendored bundles, generated
    from custody plus manifest entries.
 3. **Install / export** — `codex-marketplace/plugins/` is the canonical install
@@ -94,7 +92,7 @@ The validator is a proof gate, not a replacement for regeneration.
 The business-as-usual target for adding or updating a skill is:
 
 1. **Write source** — add or edit the skill under `codex-marketplace/plugins/<plugin>/skills/`
-   or snapshot it under `provenance/`.
+   and record any third-party provenance in `codex-marketplace/plugins/<plugin>/SOURCE.md`.
 2. **Add bundle entry** — declare the entry in the pack's
    `references/bundle-manifest.json` `entries` with
    `canonical_name`, `source_category`, `content_mode`, `source_family`,

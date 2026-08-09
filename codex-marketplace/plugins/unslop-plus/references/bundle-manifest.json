@@ -11,9 +11,7 @@
     "Unslop+ is a first-party plugin bundle containing the unslop engine skill and the anti-slop profile router skill.",
     "The bundle replaces the previous unslop mega-pack and keeps the engine separate from the profile router."
   ],
-  "provenance_refs": [
-    "provenance/MARK-99-unslop.md"
-  ],
+  "provenance_refs": [],
   "plugin_author": "Harley Bartles",
   "plugin_license": "MIT",
   "entries": [

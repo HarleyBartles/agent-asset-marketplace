@@ -19,10 +19,10 @@ marketplace plugin pack surfaces that matter for validation and review.
   validation or generation hook for a path.
 - Use the `marketplace_plugins` entries to jump from a protected plugin name
   to the plugin manifest, license evidence, bundle manifest, skills path, and
-  known provenance references.
+  per-pack `SOURCE.md` provenance references.
 - The canonical repo unslop profile lives at `.agents/docs/unslop/profile.md`.
 - Treat the index as navigation metadata only. It helps you find repo truth;
-  it does not replace manifests, ledgers, provenance files, or the files on
+  it does not replace manifests, ledgers, per-pack `SOURCE.md` provenance, or the files on
   disk themselves.
 
 ## Scoped AGENTS mesh
@@ -38,7 +38,7 @@ explicit reason.
 This index is intentionally simple so it can later feed corpus preparation,
 search, or retrieval pipelines. It is a source-map and traversal aid, not a
 semantic database. Future RAG work should build from the same file paths and
-provenance records that this index already records.
+per-pack `SOURCE.md` provenance that this index records.
 
 ## Validation
 

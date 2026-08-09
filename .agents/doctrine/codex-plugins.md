@@ -11,7 +11,7 @@ This scope is plugin curation and manifest law, not source custody. Keep the plu
 
 The active installable roots under this directory are defined by `codex-marketplace/plugin-roots.json` and validated against the protected marketplace manifests and plugin surfaces.
 
-These are the canonical installable plugin roots. First-party source custody lives under `codex-marketplace/plugins/<plugin>/skills/`. Third-party upstream provenance is recorded under `provenance/`.
+These are the canonical installable plugin roots. First-party source custody lives under `codex-marketplace/plugins/<plugin>/skills/`. Third-party upstream provenance is recorded per pack in `codex-marketplace/plugins/<plugin>/SOURCE.md`.
 
 Treat these plugin roots as the canonical install surface. Everything else in this tree is support custody or historical provenance, not part of the active marketplace inventory.
 

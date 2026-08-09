@@ -44,7 +44,7 @@ Run these in order. Stop at the first row that matches the change.
    stop and finish `verification-before-completion` first. Publication is not
    a substitute for validation.
 2. **Marketplace source edited?** If `codex-marketplace/plugins/<plugin>/` skill content,
-   `codex-marketplace/plugin-roots.json`, `provenance/`, or `references/bundle-manifest.json` changed,
+   `codex-marketplace/plugin-roots.json`, `codex-marketplace/plugins/<plugin>/SOURCE.md`, or `references/bundle-manifest.json` changed,
    regenerate with `py -3 tools/run.py marketplace --apply` before publishing.
 3. **Pick the surface.** Choose the smallest sufficient surface from
    [`references/publishing-decisions.md`](references/publishing-decisions.md).
