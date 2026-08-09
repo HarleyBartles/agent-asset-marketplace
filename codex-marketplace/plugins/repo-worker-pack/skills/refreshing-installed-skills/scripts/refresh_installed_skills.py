@@ -110,9 +110,9 @@ PROVENANCE_PATH = AGENTS_SKILLS_PATH / ".provenance.json"
 
 def _local_skill_prefixes(config: dict[str, Any]) -> list[str]:
     repo = config.get("repo") or {}
-    prefixes = repo.get("local_skill_prefixes")
+    prefixes = repo.get("local_skills")
     if prefixes is None:
-        prefixes = []
+        prefixes = repo.get("local_skill_prefixes", [])
     return [str(p) for p in prefixes]
 
 

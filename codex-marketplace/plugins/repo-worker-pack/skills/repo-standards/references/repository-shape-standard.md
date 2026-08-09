@@ -5,7 +5,7 @@ This file describes the surfaces `repo-standards` checks and can apply. It is th
 ## Required surfaces
 
 - `.agents/plugins/marketplace-source` as a git submodule pointing at the marketplace source.
-- `.agents/plugins/marketplace.json` with `repo.local_skill_prefixes` configured.
+- `.agents/plugins/marketplace.json` with `repo.local_skills` configured.
 - `tools/run.py` - the repo's canonical `ci` (and other) task runner. See [ci-validation-pipeline.md](ci-validation-pipeline.md) for the contract.
 - `.git/hooks/pre-commit` wired to `tools/run.py ci --apply`. The hook is validated by contract (it must be executable on POSIX; it must carry a `#!` shebang on Windows/NT where the executable bit is not reliably represented; it must run `tools/run.py ci --apply`; and it must enable `errexit`, `nounset`, and `pipefail`), not by byte-for-byte comparison to a template.
 - `.agents/doctrine/repo-runbook-policy.md` mapping the repo to `repo-standards`.
@@ -43,7 +43,7 @@ Use these idempotent scripts to create missing user-content surfaces. The agent 
 - `scaffold-contributing` generates `CONTRIBUTING.md`.
 - `scaffold-gitignore` removes any stale `.agents/superpowers/sdd/**` root `.gitignore` rule and any obsolete `.agents/superpowers/sdd/.gitignore` directory.
 - `scaffold-agents-md` scaffolds or validates root `AGENTS.md` as a router.
-- `scaffold-marketplace-json` scaffolds or validates `.agents/plugins/marketplace.json` with `repo.local_skill_prefixes`.
+- `scaffold-marketplace-json` scaffolds or validates `.agents/plugins/marketplace.json` with `repo.local_skills`.
 - `scaffold-all` runs the above in sequence.
 
 `repo-standards --apply` also invokes the appropriate scaffold when a surface has `scaffold` set in the manifest.
@@ -59,7 +59,7 @@ Repos may record surface exceptions in the `## Exceptions` section of `.agents/d
 
 ## Local overrides
 
-Each repo supplies its own `repo.local_skill_prefixes` in `.agents/plugins/marketplace.json` so local skills are not pruned by `refreshing-installed-skills`.
+Each repo supplies its own `repo.local_skills` in `.agents/plugins/marketplace.json` so local skills are not pruned by `refreshing-installed-skills`.
 
 ## SDD scratch
 
