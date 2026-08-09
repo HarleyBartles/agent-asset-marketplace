@@ -38,7 +38,7 @@ Verify and fix a single `blocking/important` lens finding.
        --propose re-preflight
    ```
 6. Move to `re-preflight`.
-7. Round escalation: use `implementer` for rounds 1-3; if a finding fails `reviewer-fixes` three times, escalate to `implementer-strong` for round 4; if it still fails, route to `blocked`.
+7. Round cap: the fix round for a finding is `round - discovered_at_round + 1` from `<scratch_dir>/review-state.json`. When that reaches `max_fix_rounds`, escalate to `implementer-strong`; if it still fails at the cap, route to `blocked`.
 
 ## Outputs
 - `<scratch_dir>/review-metrics.json` regenerated from `<scratch_dir>/review-state.json` and the recorded logs

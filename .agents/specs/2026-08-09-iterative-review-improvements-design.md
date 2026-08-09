@@ -92,7 +92,7 @@ This design is the umbrella for a **3-plan epic**:
 - Refactor `next_node.py` to use `review-state.json` and the log files.
 - Update `update_review_metrics.py` to be a thin wrapper over `compile_metrics.py` for the orchestrator.
 - Update every `references/node-*.md` recipe to call the record scripts instead of editing `review-metrics.json`.
-- Regenerate `.agents/skills/iterative-review/` and pass `py -3 tools/run.py ci --check`.
+- Regenerate `codex-marketplace/plugins/superpowers-plus/skills/iterative-review/` and pass `py -3 tools/run.py ci --check`.
 
 ### Plan 2 — Ergonomic and reliability improvements
 
@@ -134,4 +134,4 @@ This design is the umbrella for a **3-plan epic**:
 
 ## Consumer check
 
-The canonical source lives in `codex-marketplace/plugins/superpowers-plus/skills/iterative-review/`. The installed copy in `.agents/skills/iterative-review/` is regenerated with `py -3 tools/run.py installed-skills --apply`. Record scripts and `next_node.py` must run from the installed layout, using paths relative to the script location and the consumer's `review-state.json` in the off-repo scratch workspace.
+The canonical source lives in `codex-marketplace/plugins/superpowers-plus/skills/iterative-review/`. The installed copy in `codex-marketplace/plugins/superpowers-plus/skills/iterative-review/` is regenerated with `py -3 tools/run.py installed-skills --apply`. Record scripts and `next_node.py` must run from the installed layout, using paths relative to the script location and the consumer's `review-state.json` in the off-repo scratch workspace.

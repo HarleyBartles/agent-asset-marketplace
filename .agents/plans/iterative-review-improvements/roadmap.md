@@ -11,6 +11,6 @@ Source spec: [`.agents/specs/2026-08-09-iterative-review-improvements-design.md`
 ## Constraints
 
 - All work in canonical source: `codex-marketplace/plugins/superpowers-plus/skills/iterative-review/`.
-- Regenerate `.agents/skills/iterative-review/` with `py -3 tools/run.py installed-skills --apply` where needed.
+- Regenerate `codex-marketplace/plugins/superpowers-plus/skills/iterative-review/` with `py -3 tools/run.py installed-skills --apply` where needed.
 - Each plan must pass `py -3 tools/run.py ci --check` before being considered complete.
 - Each plan must be handed off through `handoff-gates` plan-readiness before execution.

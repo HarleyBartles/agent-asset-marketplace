@@ -33,14 +33,12 @@ Verify a fix against the originating lens's checklist, tightly scoped to the bla
      ```bash
      py -3 .agents/skills/iterative-review/scripts/next_node.py \
          --state <scratch_dir>/review-state.json \
-         --metrics <scratch_dir>/review-metrics.json \
          --propose regression-scan
      ```
    - Otherwise, route to `resolved-ledger`:
      ```bash
      py -3 .agents/skills/iterative-review/scripts/next_node.py \
          --state <scratch_dir>/review-state.json \
-         --metrics <scratch_dir>/review-metrics.json \
          --propose resolved-ledger
      ```
 6. On `FAIL`, do **not** increment `fix_round` (`finding-fix` owns that on the next pass):

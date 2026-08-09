@@ -3,7 +3,7 @@
   "title": "Iterative review metrics",
   "description": "Evidence file for the iterative review graph. Recorded by the orchestrator at each metrics-track node.",
   "type": "object",
-  "required": ["pr", "findings_by_node", "rounds_per_finding", "regressions", "total_reviewer_subagent_dispatches", "devin_auto_review_invocations"],
+  "required": ["pr", "findings_by_node", "rounds_per_finding", "regressions"],
   "properties": {
     "pr": {
       "type": "object",

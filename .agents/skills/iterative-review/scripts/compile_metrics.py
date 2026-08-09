@@ -5,11 +5,12 @@ from __future__ import annotations
 
 import argparse
 import json
+import sys
 from pathlib import Path
 
 
 def _load(path: Path) -> dict:
-    return json.loads(path.read_text(encoding="utf-8"))
+    return json.loads(path.read_text(encoding="utf-8-sig"))
 
 
 def _load_jsonl(path: Path) -> list[dict]:
@@ -31,13 +32,14 @@ def _compile(state: dict, logs: dict) -> dict:
         finding_id = f["finding_id"]
         r = resolutions.get(finding_id)
         b = blockers.get(finding_id)
+        contested = (b is not None and b["blocker_class"] == "contested") or (b is None and f.get("contested", False))
         entry = {
             "finding_id": finding_id,
             "lens": f["lens"],
             "discovered_at_node": f["discovered_at_node"],
             "discovered_at_round": f["discovered_at_round"],
             "severity": f["severity"],
-            "contested": b is not None and b["blocker_class"] == "contested",
+            "contested": contested,
         }
         if r:
             entry["resolved_at_node"] = r["resolved_at_node"]
@@ -59,8 +61,6 @@ def _compile(state: dict, logs: dict) -> dict:
         "previous_node": state.get("previous_node"),
         "non_trivial_fix": state.get("non_trivial_fix", False),
         "total_rounds": total_rounds,
-        "total_reviewer_subagent_dispatches": 0,
-        "devin_auto_review_invocations": 0,
     }
 
 
@@ -80,7 +80,11 @@ def _main(argv: list[str] | None = None) -> int:
 
     state_path = Path(args.state)
     state = _load(state_path)
-    scratch = Path(state["scratch_dir"])
+    try:
+        scratch = Path(state["scratch_dir"])
+    except KeyError as e:
+        print(f"ERROR: missing state key {e}", file=sys.stderr)
+        return 1
 
     logs = {
         "findings": _load_jsonl(scratch / "findings.jsonl"),
@@ -91,6 +95,7 @@ def _main(argv: list[str] | None = None) -> int:
 
     metrics = _compile(state, logs)
     metrics_path = Path(args.metrics)
+    metrics_path.parent.mkdir(parents=True, exist_ok=True)
     metrics_path.write_text(json.dumps(metrics, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     print(f"compile_metrics.py: wrote {metrics_path}")
     return 0

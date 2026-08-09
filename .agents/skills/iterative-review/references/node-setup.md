@@ -27,7 +27,7 @@ Collect and normalize the off-repo review inputs for the draft PR.
      "round": 1,
      "max_fix_rounds": 4,
      "pr": {
-       "number": "<pr_number>",
+       "pr_number": "<pr_number>",
        "base": "<base>",
        "branch": "<branch>",
        "head_sha": "<head_sha>"
