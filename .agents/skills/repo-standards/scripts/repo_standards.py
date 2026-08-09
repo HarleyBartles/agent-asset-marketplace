@@ -299,7 +299,8 @@ def _check_surface(repo_root: Path, surface: dict[str, object], exceptions: set[
         return findings
 
     if template is not None and template.is_file():
-        findings.extend(_check_surface_content(repo_root, rel, template))
+        if surface.get("check_content", True):
+            findings.extend(_check_surface_content(repo_root, rel, template))
     return findings
 
 

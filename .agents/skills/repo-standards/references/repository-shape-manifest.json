@@ -25,6 +25,15 @@
       "optional": false
     },
     {
+      "id": "tools-shared-checkout",
+      "path": "tools/shared_checkout.py",
+      "kind": "file",
+      "source": "scripts/shared_checkout.py",
+      "check_content": false,
+      "scaffold": null,
+      "optional": false
+    },
+    {
       "id": "pre-commit-hook",
       "path": ".git/hooks/pre-commit",
       "kind": "hook",

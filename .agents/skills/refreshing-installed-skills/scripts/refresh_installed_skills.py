@@ -36,21 +36,18 @@ def _repo_root() -> Path:
     return Path(result.stdout.strip())
 
 
-# Allow importing the shared checkout helper from the script directory (so the
-# skill is self-contained when installed/bundled) or from tools/ when running
-# from source.
+# Import the shared checkout helper from the repo's tools/ directory. The only
+# bundled copy lives inside the repo-standards skill; other skills rely on
+# repo-standards having deployed tools/shared_checkout.py.
 _SCRIPT_DIR = Path(__file__).resolve().parent
 _SHARED_CHECKOUT_PATH: Path | None = None
-if (_SCRIPT_DIR / "shared_checkout.py").is_file():
-    _SHARED_CHECKOUT_PATH = _SCRIPT_DIR
-else:
-    for _parent in _SCRIPT_DIR.parents:
-        _candidate = _parent / "tools" / "shared_checkout.py"
-        if _candidate.is_file():
-            _SHARED_CHECKOUT_PATH = _parent / "tools"
-            break
+for _parent in _SCRIPT_DIR.parents:
+    _candidate = _parent / "tools" / "shared_checkout.py"
+    if _candidate.is_file():
+        _SHARED_CHECKOUT_PATH = _parent / "tools"
+        break
 if _SHARED_CHECKOUT_PATH is None:
-    raise RuntimeError("shared_checkout.py not found; repo layout mismatch")
+    raise RuntimeError("tools/shared_checkout.py not found; run repo-standards --apply")
 sys.path.insert(0, str(_SHARED_CHECKOUT_PATH))
 import shared_checkout
 
