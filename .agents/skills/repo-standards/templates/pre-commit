@@ -8,7 +8,9 @@ cd "$REPO_ROOT"
 
 # Capture the working tree state before the build so we can detect any
 # generated files the staging allow-list does not cover.
+AFTER_STATUS=""
 BEFORE_STATUS=$(mktemp)
+trap 'rm -f "$BEFORE_STATUS" "$AFTER_STATUS"' EXIT
 git status --porcelain --untracked-files=all > "$BEFORE_STATUS"
 
 if command -v py >/dev/null 2>&1; then
@@ -22,9 +24,6 @@ else
   exit 1
 fi
 
-# Stage tracked files the build step may have modified or deleted.
-git add -u
-
 # Stage the generated directories that tools/run.py ci --apply owns.
 git add -A -- .agents/skills/ 2>/dev/null || true
 
@@ -33,8 +32,8 @@ git add -A -- .agents/skills/ 2>/dev/null || true
 git add -- ':(glob)**/INDEX.md' 2>/dev/null || true
 git add -- ':(glob)**/INDEX.json' 2>/dev/null || true
 git add -- ':(glob)**/.provenance.json' 2>/dev/null || true
-git add -- codex-marketplace/plugin-roots.json 2>/dev/null || true
 git add -- .agents/plugins/marketplace.json 2>/dev/null || true
+git add -- codex-marketplace/plugin-roots.json 2>/dev/null || true
 git add -- codex-marketplace/manifest.json 2>/dev/null || true
 
 # Fail the commit if the build produced any unstaged or untracked changes

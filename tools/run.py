@@ -566,7 +566,7 @@ def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument(
         "--allow-shared-checkout",
         action="store_true",
-        help="approve writes in the main shared checkout (requires --apply)",
+        help="approve writes in the main shared checkout on the main branch (requires --apply)",
     )
     parser.add_argument(
         "--verbose",
@@ -590,8 +590,6 @@ def main(argv: list[str] | None = None) -> int:
     if args.apply:
         if not shared_checkout.approve_mutation(ROOT, SCRIPT_NAME, args.allow_shared_checkout):
             return 1
-        if shared_checkout.is_main_shared_checkout(ROOT):
-            args.allow_shared_checkout = True
     base_ref = _resolve_base_ref(args)
     ctx = Ctx(
         mode="apply" if args.apply else "check",

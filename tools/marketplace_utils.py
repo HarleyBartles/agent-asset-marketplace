@@ -194,7 +194,7 @@ EXPECTED_MARKETPLACE = {
         if spec["name"] not in REPO_LOCAL_MARKETPLACE_POLICY["exclusions"]
     ],
     "repo": {
-        "local_skill_prefixes": list(REPO_LOCAL_MARKETPLACE_POLICY["local_skill_prefixes"]),
+        "local_skills": list(REPO_LOCAL_MARKETPLACE_POLICY["local_skill_prefixes"]),
     },
     "notes": MARKETPLACE_NOTES,
 }
@@ -345,7 +345,7 @@ def build_marketplace_manifest(plugin_manifests: list[dict[str, Any]]) -> dict[s
         },
         "plugins": plugins,
         "repo": {
-            "local_skill_prefixes": list(REPO_LOCAL_MARKETPLACE_POLICY["local_skill_prefixes"]),
+            "local_skills": list(REPO_LOCAL_MARKETPLACE_POLICY["local_skill_prefixes"]),
         },
         "notes": MARKETPLACE_NOTES,
     }

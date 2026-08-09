@@ -299,7 +299,8 @@ def _check_surface(repo_root: Path, surface: dict[str, object], exceptions: set[
         return findings
 
     if template is not None and template.is_file():
-        findings.extend(_check_surface_content(repo_root, rel, template))
+        if surface.get("check_content", True):
+            findings.extend(_check_surface_content(repo_root, rel, template))
     return findings
 
 
@@ -397,8 +398,8 @@ under the ## Exceptions heading are skipped."""
         "--allow-shared-checkout",
         action="store_true",
         help=(
-            "Approve applying changes in a shared or git-worktree checkout. "
-            "Only pass this if you intend to mutate this checkout."
+            "Approve applying changes in the main shared checkout on the main branch. "
+            "Linked worktrees are always approved. Only pass this if you intend to mutate this checkout."
         ),
     )
     args = parser.parse_args(argv)
