@@ -644,7 +644,7 @@ Use these concrete hook points when editing `next_node.py`:
 
 ## Plan handoff
 
-After completing the plan, record the final plan-readiness rating from `handoff-gates` here and update the [roadmap](roadmap.md):
+After completing the plan, record the final plan-readiness rating from `handoff-gates` here and update the [roadmap](../../iterative-review-improvements/roadmap.md):
 
 | Item | Status |
 |---|---|
