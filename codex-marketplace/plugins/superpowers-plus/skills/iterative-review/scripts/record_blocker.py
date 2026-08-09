@@ -46,8 +46,7 @@ def _main(argv: list[str] | None = None) -> int:
 
     if blocker["blocker_class"] not in VALID_BLOCKER_CLASSES:
         print(
-            f"ERROR: blocker_class must be one of {VALID_BLOCKER_CLASSES}; "
-            f"got {blocker['blocker_class']!r}",
+            f"ERROR: blocker_class must be one of {VALID_BLOCKER_CLASSES}; got {blocker['blocker_class']!r}",
             file=sys.stderr,
         )
         return 1
