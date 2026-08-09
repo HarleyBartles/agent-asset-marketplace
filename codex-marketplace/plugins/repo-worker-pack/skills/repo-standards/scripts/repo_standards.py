@@ -197,14 +197,17 @@ def _check_hook_contract(hook_path: Path) -> list[str]:
         findings.append("pre-commit hook missing errexit/nounset/pipefail guard")
 
     non_comment_text = "\n".join(non_comment)
-    ci_apply = "tools/run.py ci --apply" in non_comment_text
+    # Accept either the canonical 'ci --apply' or the legacy 'all --apply' alias,
+    # which is a safe backwards-compatibility bridge for older checkouts.
+    targets = ("tools/run.py ci --apply", "tools/run.py all --apply")
+    ci_apply = any(t in non_comment_text for t in targets)
     if not ci_apply:
         for prefix in ("py -3", "python3", "python"):
-            if f"{prefix} tools/run.py ci --apply" in non_comment_text:
+            if any(f"{prefix} {t}" in non_comment_text for t in targets):
                 ci_apply = True
                 break
     if not ci_apply:
-        findings.append("pre-commit hook must run 'tools/run.py ci --apply'")
+        findings.append("pre-commit hook must run 'tools/run.py ci --apply' (or 'all --apply')")
     return findings
 
 
