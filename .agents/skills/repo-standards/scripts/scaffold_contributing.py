@@ -30,7 +30,7 @@ def _repo_root() -> Path:
 
 
 def _template_path() -> Path:
-    return Path(__file__).resolve().parent.parent / "templates" / "CONTRIBUTING.md"
+    return Path(__file__).resolve().parent.parent / "templates" / "contributing-template.md"
 
 
 def _has_required_boilerplate(content: str) -> bool:
