@@ -413,4 +413,4 @@ EOF
 - **SDD confidence:** 9/10 — the skill is small, the `using-<x>-mcp` pattern is established, and the MCP surface has already been discovered.
 - **Plan-readiness rating:** 9/10 — all file paths, exact contents, and validation commands are specified; no Python tooling changes are required.
 
-**Execution handoff:** the plan is saved to `.agents/plans/2026-08-09-using-deepwiki-mcp.md`. A fresh subagent or implementer can execute task-by-task from Task 1. The design spec is at `.agents/specs/2026-08-09-using-deepwiki-mcp-design.md`.
+**Execution handoff:** the plan is saved to `.agents/plans/completed/2026-08-09-using-deepwiki-mcp.md`. A fresh subagent or implementer can execute task-by-task from Task 1. The design spec is at `.agents/specs/completed/2026-08-09-using-deepwiki-mcp-design.md`.
