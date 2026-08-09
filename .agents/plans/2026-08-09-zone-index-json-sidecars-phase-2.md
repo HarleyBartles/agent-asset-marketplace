@@ -30,7 +30,7 @@
 - Consumes: existing `build_root_index()`, `DEFAULT_CODEX_MARKETPLACE_INDEX`, `zone_index_path`.
 - Produces: `DEFAULT_ZONE_INDEXES` list, an updated `DEFAULT_ROOT_INDEX` with only registry entries, and a `build_zone_indexes()` that returns sidecars for all directory zones.
 
-- [ ] **Step 1: Replace `DEFAULT_ROOT_INDEX` zones with registry-only entries**
+- [x] **Step 1: Replace `DEFAULT_ROOT_INDEX` zones with registry-only entries**
 
 All zones that get a sidecar must only have `name`, `path`, and `index_json` in the root. Single-file surfaces (`marketplace-root-inventory`, `docs-unslop-profile`) stay inline because they are not directories and their metadata belongs to their parent.
 
@@ -90,7 +90,7 @@ All zones that get a sidecar must only have `name`, `path`, and `index_json` in 
     ],
 ```
 
-- [ ] **Step 2: Add `DEFAULT_ZONE_INDEXES` for the new sidecars**
+- [x] **Step 2: Add `DEFAULT_ZONE_INDEXES` for the new sidecars**
 
 Insert the sidecar data structure after `DEFAULT_CODEX_MARKETPLACE_INDEX`:
 
@@ -157,7 +157,7 @@ DEFAULT_ZONE_INDEXES: list[dict[str, Any]] = [
 ]
 ```
 
-- [ ] **Step 3: Rewrite `build_zone_indexes()` to generate all sidecars**
+- [x] **Step 3: Rewrite `build_zone_indexes()` to generate all sidecars**
 
 ```python
 def build_zone_indexes() -> list[tuple[Path, dict[str, Any]]]:
@@ -174,7 +174,7 @@ def build_zone_indexes() -> list[tuple[Path, dict[str, Any]]]:
     return sidecars
 ```
 
-- [ ] **Step 4: Run the generator**
+- [x] **Step 4: Run the generator**
 
 ```bash
 py -3 tools/generate_repo_index.py --apply
@@ -193,7 +193,7 @@ Wrote tools\INDEX.json
 OK repo index: generated
 ```
 
-- [ ] **Step 5: Verify the generator check**
+- [x] **Step 5: Verify the generator check**
 
 ```bash
 py -3 tools/generate_repo_index.py --check
@@ -201,7 +201,7 @@ py -3 tools/generate_repo_index.py --check
 
 Expected: `OK repo index: current`.
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add tools\generate_repo_index.py INDEX.json codex-marketplace\INDEX.json codex-marketplace\plugins\INDEX.json .agents\plugins\INDEX.json .agents\plans\INDEX.json .agents\specs\INDEX.json tools\INDEX.json
@@ -220,7 +220,7 @@ git commit -m "feat: generate INDEX.json sidecars for all directory zones"
 - Consumes: root `INDEX.json`.
 - Produces: `validate_index()` iterates `zones` and calls `check_json` on each `index_json`.
 
-- [ ] **Step 1: Replace `validate_index()`**
+- [x] **Step 1: Replace `validate_index()`**
 
 ```python
 def validate_index(*, skip_freshness: bool = False) -> None:
@@ -235,7 +235,7 @@ def validate_index(*, skip_freshness: bool = False) -> None:
     print("OK validate_marketplace: index")
 ```
 
-- [ ] **Step 2: Run the marketplace validator**
+- [x] **Step 2: Run the marketplace validator**
 
 ```bash
 py -3 tools/validate_marketplace.py
@@ -243,7 +243,7 @@ py -3 tools/validate_marketplace.py
 
 Expected: `OK validate_marketplace: index` at the end.
 
-- [ ] **Step 3: Commit**
+- [x] **Step 3: Commit**
 
 ```bash
 git add tools\validate_marketplace.py
@@ -261,13 +261,13 @@ git commit -m "feat: validate all zone INDEX.json sidecars"
 - Consumes: changes from Tasks 1-2.
 - Produces: a passing `ci --check` and a clean branch.
 
-- [ ] **Step 1: Regenerate all derived surfaces**
+- [x] **Step 1: Regenerate all derived surfaces**
 
 ```bash
 py -3 tools/run.py ci --apply
 ```
 
-- [ ] **Step 2: Verify with check**
+- [x] **Step 2: Verify with check**
 
 ```bash
 py -3 tools/run.py ci --check
@@ -275,14 +275,14 @@ py -3 tools/run.py ci --check
 
 Expected: `[tools/run] all requested targets passed.`
 
-- [ ] **Step 3: Commit any generated changes**
+- [x] **Step 3: Commit any generated changes**
 
 ```bash
 git add -A
 git commit -m "chore: regenerate derived surfaces after sidecar expansion"
 ```
 
-- [ ] **Step 4: Push**
+- [x] **Step 4: Push**
 
 ```bash
 git push
