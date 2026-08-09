@@ -1,5 +1,5 @@
 {
-  "manifestSha": "0b13082fc8dbefd144c369b03c3e32329d297096f51011577baa4096c888d9e9",
+  "manifestSha": "a25192bd14a2942d30227612f3866671af308b6f5a3930a608adc81ff2a3b7ab",
   "syncedPlugins": [
     "mcp-usage-pack",
     "repo-worker-pack",
@@ -30,5 +30,5 @@
   ],
   "marketplaceFile": ".agents/plugins/marketplace.json",
   "vendorProfiles": [],
-  "syncedAt": "2026-08-09T18:39:51.808951"
+  "syncedAt": "2026-08-09T18:48:56.696025"
 }

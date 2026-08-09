@@ -117,8 +117,8 @@ def _local_skills(config: dict[str, Any]) -> list[str]:
 _local_skill_prefixes = _local_skills
 
 
-def _is_local_skill_dir(skill_dir: Path, prefixes: list[str]) -> bool:
-    return skill_dir.is_dir() and any(skill_dir.name.startswith(p) for p in prefixes)
+def _is_local_skill_dir(skill_dir: Path, local_skill_names: list[str]) -> bool:
+    return skill_dir.is_dir() and skill_dir.name in local_skill_names
 
 
 def _frontmatter_name(skill_dir: Path) -> object:
@@ -149,7 +149,14 @@ def _validate_local_skill_dirs(prefixes: list[str]) -> list[Path]:
             try:
                 if _frontmatter_name(skill_dir) != skill_dir.name:
                     raise ValueError("local skill directory name must match frontmatter name")
-            except (FileNotFoundError, UnicodeDecodeError, ValueError, AttributeError, TypeError, yaml.YAMLError) as exc:
+            except (
+                FileNotFoundError,
+                UnicodeDecodeError,
+                ValueError,
+                AttributeError,
+                TypeError,
+                yaml.YAMLError,
+            ) as exc:
                 try:
                     display_path = skill_dir.relative_to(ROOT)
                 except ValueError:
@@ -252,7 +259,7 @@ def _reserved_marketplace_skill_collisions(
         if not isinstance(plugin_name, str):
             plugin_name = "unknown"
         for skill_dir in sorted(skills_path.iterdir()):
-            if skill_dir.is_dir() and any(skill_dir.name.startswith(p) for p in prefixes):
+            if skill_dir.is_dir() and skill_dir.name in prefixes:
                 collisions.append((plugin_name, skill_dir.name))
     return collisions
 
@@ -266,7 +273,7 @@ def _expected_marketplace_skill_inventory(
         if skills_path is None:
             continue
         for skill_dir in sorted(skills_path.iterdir()):
-            if skill_dir.is_dir() and not any(skill_dir.name.startswith(p) for p in prefixes):
+            if skill_dir.is_dir() and skill_dir.name not in prefixes:
                 expected.setdefault(skill_dir.name, skill_dir)
     return expected
 
@@ -278,7 +285,7 @@ def _marketplace_skill_inventory_is_current(installed_plugins: list[dict[str, An
     installed_marketplace_names = {
         skill_dir.name
         for skill_dir in AGENTS_SKILLS_PATH.iterdir()
-        if skill_dir.is_dir() and not any(skill_dir.name.startswith(p) for p in prefixes)
+        if skill_dir.is_dir() and skill_dir.name not in prefixes
     }
     return installed_marketplace_names == set(expected) and all(
         not _skill_needs_update(source_skill, AGENTS_SKILLS_PATH / name) for name, source_skill in expected.items()
@@ -488,8 +495,8 @@ def _install_plugin_skills(
 
         dest_skill = AGENTS_SKILLS_PATH / skill_dir.name
 
-        if any(skill_dir.name.startswith(p) for p in prefixes):
-            raise ValueError(f"Marketplace skill '{skill_dir.name}' uses the reserved local skill prefix")
+        if skill_dir.name in prefixes:
+            raise ValueError(f"Marketplace skill '{skill_dir.name}' collides with a declared local skill name")
 
         # Collision guard: if two plugins project a skill with the same name,
         # the first one wins and a warning is emitted.
