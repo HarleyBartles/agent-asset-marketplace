@@ -49,7 +49,7 @@ for _parent in _SCRIPT_DIR.parents:
 if _SHARED_CHECKOUT_PATH is None:
     raise RuntimeError("tools/shared_checkout.py not found; run repo-standards --apply")
 sys.path.insert(0, str(_SHARED_CHECKOUT_PATH))
-import shared_checkout
+import shared_checkout  # noqa: E402
 
 
 ROOT = _repo_root()
@@ -229,7 +229,9 @@ def _run_validate_local_skills_extra(check_mode: bool, prefixes: list[str]) -> b
     return True
 
 
-def _reserved_marketplace_skill_collisions(installed_plugins: list[dict[str, Any]], prefixes: list[str]) -> list[tuple[str, str]]:
+def _reserved_marketplace_skill_collisions(
+    installed_plugins: list[dict[str, Any]], prefixes: list[str]
+) -> list[tuple[str, str]]:  # noqa: E501
     collisions: list[tuple[str, str]] = []
     for plugin in installed_plugins:
         skills_path = _get_plugin_skills_path(plugin)
@@ -244,7 +246,9 @@ def _reserved_marketplace_skill_collisions(installed_plugins: list[dict[str, Any
     return collisions
 
 
-def _expected_marketplace_skill_inventory(installed_plugins: list[dict[str, Any]], prefixes: list[str]) -> dict[str, Path]:
+def _expected_marketplace_skill_inventory(
+    installed_plugins: list[dict[str, Any]], prefixes: list[str]
+) -> dict[str, Path]:  # noqa: E501
     expected: dict[str, Path] = {}
     for plugin in installed_plugins:
         skills_path = _get_plugin_skills_path(plugin)
@@ -266,17 +270,14 @@ def _marketplace_skill_inventory_is_current(installed_plugins: list[dict[str, An
         if skill_dir.is_dir() and not any(skill_dir.name.startswith(p) for p in prefixes)
     }
     return installed_marketplace_names == set(expected) and all(
-        not _skill_needs_update(source_skill, AGENTS_SKILLS_PATH / name)
-        for name, source_skill in expected.items()
+        not _skill_needs_update(source_skill, AGENTS_SKILLS_PATH / name) for name, source_skill in expected.items()
     )
 
 
 def _load_marketplace_config() -> dict[str, Any]:
     """Load the marketplace configuration."""
     if not MARKETPLACE_PATH.is_file():
-        raise FileNotFoundError(
-            f"{MARKETPLACE_PATH} not found; create it with at least a 'plugins' list"
-        )
+        raise FileNotFoundError(f"{MARKETPLACE_PATH} not found; create it with at least a 'plugins' list")
     config = _load_json(MARKETPLACE_PATH)
     if not isinstance(config, dict):
         raise ValueError(f"{MARKETPLACE_PATH}: must contain a JSON object")
@@ -403,11 +404,7 @@ def _copy_skill_directory(source_skill: Path, dest_skill: Path) -> None:
     shutil.copytree(
         source_skill,
         dest_skill,
-        ignore=lambda src, names: [
-            name
-            for name in names
-            if _should_skip_file(Path(src) / name)
-        ],
+        ignore=lambda src, names: [name for name in names if _should_skip_file(Path(src) / name)],
     )
     print(f"Installed skill: {dest_skill.relative_to(ROOT)}")
 
@@ -450,7 +447,12 @@ def _skill_needs_update(source_skill: Path, dest_skill: Path) -> bool:
     return False
 
 
-def _install_plugin_skills(plugin: dict[str, Any], check_mode: bool = False, synced_skill_names: set[str] | None = None, prefixes: list[str] | None = None) -> bool:
+def _install_plugin_skills(
+    plugin: dict[str, Any],
+    check_mode: bool = False,
+    synced_skill_names: set[str] | None = None,
+    prefixes: list[str] | None = None,
+) -> bool:  # noqa: E501
     """Install skills from a single plugin."""
     skills_path = _get_plugin_skills_path(plugin)
     if skills_path is None:
@@ -474,14 +476,16 @@ def _install_plugin_skills(plugin: dict[str, Any], check_mode: bool = False, syn
         dest_skill = AGENTS_SKILLS_PATH / skill_dir.name
 
         if any(skill_dir.name.startswith(p) for p in prefixes):
-            raise ValueError(
-                f"Marketplace skill '{skill_dir.name}' uses the reserved local skill prefix"
-            )
+            raise ValueError(f"Marketplace skill '{skill_dir.name}' uses the reserved local skill prefix")
 
         # Collision guard: if two plugins project a skill with the same name,
         # the first one wins and a warning is emitted.
         if skill_dir.name in synced_skill_names:
-            print(f"WARNING: Skill '{skill_dir.name}' (from plugin '{plugin_name}') collides with an already-synced skill of the same name; keeping the first copy.")
+            print(
+                f"WARNING: Skill '{skill_dir.name}' (from plugin '{plugin_name}') "
+                f"collides with an already-synced skill of the same name; "
+                f"keeping the first copy."
+            )
             continue
 
         if check_mode:
@@ -502,7 +506,9 @@ def _install_plugin_skills(plugin: dict[str, Any], check_mode: bool = False, syn
     return installed_any
 
 
-def _clean_orphan_skills(check_mode: bool = False, synced_skill_names: set[str] | None = None, prefixes: list[str] | None = None) -> bool:
+def _clean_orphan_skills(
+    check_mode: bool = False, synced_skill_names: set[str] | None = None, prefixes: list[str] | None = None
+) -> bool:  # noqa: E501
     """Remove skills that don't belong to any installed plugin."""
     if not AGENTS_SKILLS_PATH.exists():
         return False
@@ -538,11 +544,7 @@ NON_PROFILE_MD_NAMES = {"INDEX.md"}
 
 def _is_vendor_profile_file(path: Path) -> bool:
     """Return True for a `.md` file that should be treated as a vendor profile."""
-    return (
-        path.is_file()
-        and path.suffix.lower() == ".md"
-        and path.name not in NON_PROFILE_MD_NAMES
-    )
+    return path.is_file() and path.suffix.lower() == ".md" and path.name not in NON_PROFILE_MD_NAMES
 
 
 def _vendor_profile_source_dir(plugin: dict[str, Any]) -> Path | None:
@@ -599,15 +601,11 @@ def _provenance_state(
     return state
 
 
-def _provenance_needs_update(
-    existing: dict[str, Any] | None, new_state: dict[str, Any]
-) -> bool:
+def _provenance_needs_update(existing: dict[str, Any] | None, new_state: dict[str, Any]) -> bool:
     """Return True if any non-temporal provenance field has changed."""
     if not existing:
         return True
-    existing_durable = {
-        key: value for key, value in existing.items() if key != "syncedAt"
-    }
+    existing_durable = {key: value for key, value in existing.items() if key != "syncedAt"}
     return existing_durable != new_state
 
 
@@ -673,25 +671,17 @@ def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         description="Install/refresh skills in .agents/skills from installed marketplace plugins. (mixed)"
     )
     parser.add_argument(
-        "--check",
-        action="store_true",
-        help="Check mode: report what would change without making changes"
+        "--check", action="store_true", help="Check mode: report what would change without making changes"
     )
     parser.add_argument(
-        "--apply",
-        action="store_true",
-        help="Install/refresh skills (must be explicit; default is check mode)"
+        "--apply", action="store_true", help="Install/refresh skills (must be explicit; default is check mode)"
     )
-    parser.add_argument(
-        "--force",
-        action="store_true",
-        help="Force refresh even when provenance matches"
-    )
+    parser.add_argument("--force", action="store_true", help="Force refresh even when provenance matches")
     parser.add_argument(
         "--allow-shared-checkout",
         action="store_true",
         help="Approve installing/refreshing skills in a shared or git-worktree checkout. "
-             "Only pass this if you intend to mutate this checkout.",
+        "Only pass this if you intend to mutate this checkout.",
     )
     parser.add_argument(
         "--roll-marketplace-source",
@@ -744,10 +734,7 @@ def main(argv: list[str] | None = None) -> int:
     collisions = _reserved_marketplace_skill_collisions(installed_plugins, prefixes)
     if collisions:
         for plugin_name, skill_name in collisions:
-            print(
-                f"ERROR: Marketplace plugin '{plugin_name}' exposes reserved local skill prefix "
-                f"'{skill_name}'"
-            )
+            print(f"ERROR: Marketplace plugin '{plugin_name}' exposes reserved local skill prefix '{skill_name}'")
         return 1
 
     # Compute the deterministic vendor-profile provenance record for the
@@ -762,11 +749,7 @@ def main(argv: list[str] | None = None) -> int:
         plugin_name = plugin.get("name", "unknown")
         if not isinstance(plugin_name, str):
             continue
-        profile_names = sorted(
-            child.name
-            for child in profiles_dir.iterdir()
-            if _is_vendor_profile_file(child)
-        )
+        profile_names = sorted(child.name for child in profiles_dir.iterdir() if _is_vendor_profile_file(child))
         if not profile_names:
             continue
         vendor_profile_records.append(
@@ -779,9 +762,7 @@ def main(argv: list[str] | None = None) -> int:
 
     # Delegate vendor profile deployment to repo-standards and capture whether
     # any work is needed. In --check mode this already reports drift.
-    deploy_script = (
-        ROOT / ".agents" / "skills" / "repo-standards" / "scripts" / "deploy_vendor_profiles.py"
-    )
+    deploy_script = ROOT / ".agents" / "skills" / "repo-standards" / "scripts" / "deploy_vendor_profiles.py"
     deploy_check = subprocess.run(
         [sys.executable, str(deploy_script), "--check"],
         cwd=ROOT,
@@ -831,7 +812,9 @@ def main(argv: list[str] | None = None) -> int:
     for plugin in installed_plugins:
         plugin_name = plugin.get("name", "unknown")
         print(f"\nProcessing plugin: {plugin_name}")
-        if _install_plugin_skills(plugin, check_mode=args.check, synced_skill_names=synced_skill_names, prefixes=prefixes):
+        if _install_plugin_skills(
+            plugin, check_mode=args.check, synced_skill_names=synced_skill_names, prefixes=prefixes
+        ):  # noqa: E501
             changes_made = True
 
     # Clean orphan skills
@@ -883,7 +866,10 @@ def main(argv: list[str] | None = None) -> int:
             return 0
     else:
         if changes_made:
-            print(f"\nSkills installed/refreshed successfully ({len(synced_skill_names)} skills from {len(installed_plugin_names)} plugins)")
+            print(
+                f"\nSkills installed/refreshed successfully "
+                f"({len(synced_skill_names)} skills from {len(installed_plugin_names)} plugins)"
+            )
         else:
             print("\nNo changes needed")
         return 0

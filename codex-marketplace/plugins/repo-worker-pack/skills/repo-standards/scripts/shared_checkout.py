@@ -54,7 +54,7 @@ def is_main_shared_checkout(repo_root: Path) -> bool:
 
 
 def _current_branch(repo_root: Path) -> str:
-    """Return the current git branch name, or an empty string if detached."""
+    """Return the current git branch name; returns 'HEAD' when detached, or an empty string if the git command fails."""
     result = subprocess.run(
         ["git", "rev-parse", "--abbrev-ref", "HEAD"],
         cwd=repo_root,

@@ -33,6 +33,8 @@ git add -- ':(glob)**/INDEX.md' 2>/dev/null || true
 git add -- ':(glob)**/INDEX.json' 2>/dev/null || true
 git add -- ':(glob)**/.provenance.json' 2>/dev/null || true
 git add -- .agents/plugins/marketplace.json 2>/dev/null || true
+git add -- codex-marketplace/plugin-roots.json 2>/dev/null || true
+git add -- codex-marketplace/manifest.json 2>/dev/null || true
 
 # Fail the commit if the build produced any unstaged or untracked changes
 # outside the allow-list. This prevents a clean local run from silently

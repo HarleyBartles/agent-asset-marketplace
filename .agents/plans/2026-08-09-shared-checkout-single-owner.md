@@ -4,11 +4,12 @@
 
 ## Goal
 
-Make `repo-standards` the single skill that bundles `shared_checkout.py` and deploy it to the consumer repo's `tools/shared_checkout.py`. Other skills that need the helper import it from `tools/`. Repo-specific overrides in `tools/shared_checkout.py` are allowed and are not reported as drift.
+Gate `--allow-shared-checkout` so it only applies when the main shared checkout is on the `main` branch, and make `repo-standards` the single skill that bundles `shared_checkout.py` and deploys it to `tools/shared_checkout.py`. Other skills that need the helper import it from `tools/`. Repo-specific overrides in `tools/shared_checkout.py` are allowed and are not reported as drift.
 
 ## Architecture
 
-- `repo-standards/scripts/shared_checkout.py` remains the bundled source of truth.
+- `tools/shared_checkout.py::approve_mutation` only requires `--allow-shared-checkout` when the repo is the main shared checkout and `HEAD` is `main`; on any other branch it returns `True`, and linked worktrees are always approved.
+- `repo-standards/scripts/shared_checkout.py` remains the bundled source of truth for the consumer deployment.
 - `repo-standards` declares `tools/shared_checkout.py` as a surface with `check_content: false` so `--check` only verifies existence.
 - `repo-standards --apply` deploys `tools/shared_checkout.py` if it is missing, and no-ops if it exists.
 - `repo-standards --apply --force` overwrites `tools/shared_checkout.py` with the bundled copy.
@@ -17,7 +18,23 @@ Make `repo-standards` the single skill that bundles `shared_checkout.py` and dep
 ## Recommendations
 
 1. **Runtime import for non-owner skills:** walk parent directories from the script location until `tools/shared_checkout.py` is found, then add that directory to `sys.path`. This works both in the marketplace source repo and in a consumer repo's `.agents/skills/...` installed layout.
-3. **Force update mechanism:** use the existing `repo-standards --apply --force` flag. It already overwrites drifted surfaces. `ci --apply` does not pass `--force`, so it will not clobber a repo's customized `tools/shared_checkout.py`.
+2. **Force update mechanism:** use the existing `repo-standards --apply --force` flag. It already overwrites drifted surfaces. `ci --apply` does not pass `--force`, so it will not clobber a repo's customized `tools/shared_checkout.py`.
+
+---
+
+### Task 0: Branch-gate `--allow-shared-checkout` to the `main` branch
+
+**Files:**
+- Modify: `tools/shared_checkout.py`, `tools/run.py`
+- Test: `py -3 tools/run.py ci --check`
+
+**Interfaces:**
+- `approve_mutation` returns `True` without the flag on any branch other than `main` in the main checkout.
+- Linked worktrees always return `True`.
+
+- [x] **Step 1: Add `_current_branch` helper and branch check in `approve_mutation`**
+
+- [x] **Step 2: Update `tools/run.py` to preserve the user's `--allow-shared-checkout` value and reword help text**
 
 ---
 
@@ -73,7 +90,6 @@ In `_check_surface`, after the file is verified to exist, skip `_check_surface_c
   - `codex-marketplace/plugins/repo-worker-pack/skills/generating-agent-mesh/scripts/generate_index_mesh.py`
   - `codex-marketplace/plugins/repo-worker-pack/skills/refreshing-installed-skills/scripts/refresh_installed_skills.py`
   - `codex-marketplace/plugins/superpowers-plus/skills/using-git-worktrees/scripts/new_worktree.py`
-  - `codex-marketplace/plugins/superpowers-plus/skills/using-git-worktrees/scripts/remove_worktree.py`
 - Delete:
   - `codex-marketplace/plugins/repo-worker-pack/skills/generating-agent-mesh/scripts/shared_checkout.py`
   - `codex-marketplace/plugins/repo-worker-pack/skills/refreshing-installed-skills/scripts/shared_checkout.py`
@@ -106,7 +122,19 @@ import shared_checkout  # noqa: E402
 
 ---
 
-### Task 4: Regenerate installed skills and verify
+### Task 4: Stage generated marketplace files in the repo-standards pre-commit template
+
+**Files:**
+- Modify: `codex-marketplace/plugins/repo-worker-pack/skills/repo-standards/templates/pre-commit`
+- Test: `py -3 tools/run.py ci --check`
+
+- [x] **Step 1: Restore `git add` for `codex-marketplace/plugin-roots.json` and `codex-marketplace/manifest.json` in the pre-commit allow-list**
+
+`tools/run.py ci --apply` regenerates these files, so the hook must stage them before the `AFTER_STATUS` check.
+
+---
+
+### Task 5: Regenerate installed skills and verify
 
 **Files:**
 - Generated: `.agents/skills/*/scripts/shared_checkout.py`, `.agents/skills/.provenance.json`
