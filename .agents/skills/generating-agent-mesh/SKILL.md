@@ -43,7 +43,7 @@ py -3 .agents/skills/generating-agent-mesh/scripts/validate_agent_mesh.py --chec
 
 The wrapper commands `generate-index-mesh` and `validate-agent-mesh` in the same directory call these bundled Python cores and are the form used by `repo-standards` preflight.
 
-`generate-index-mesh` writes the repo-wide `INDEX.md` mesh and `repo-index/repo-index.json` from `git ls-files` when passed `--apply`; without `--apply` it defaults to `--check`. `validate-agent-mesh` checks local markdown links and doctrine routing. It does not commit; the caller decides whether to commit regenerated or validated state. When running from a linked worktree, add `--apply --allow-shared-checkout`.
+`generate-index-mesh` writes the repo-wide `INDEX.md` mesh from `git ls-files` when passed `--apply`; without `--apply` it defaults to `--check`. `validate-agent-mesh` checks local markdown links and doctrine routing. It does not commit; the caller decides whether to commit regenerated or validated state. When running from a linked worktree, add `--apply --allow-shared-checkout`.
 
 ## Repo-specific generation extensions
 

@@ -1,0 +1,12 @@
+{
+  "schema_version": 2,
+  "name": "runtime-registry",
+  "path": ".agents/plugins",
+  "purpose": "Runtime-facing plugin registry consumed by Codex tooling.",
+  "surface_kind": "runtime-facing",
+  "nearest_scoped_agents_md": null,
+  "key_validation_scripts": [
+    "tools/validate_marketplace.py",
+    "tools/validate_repo_index.py"
+  ]
+}

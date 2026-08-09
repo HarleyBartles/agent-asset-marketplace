@@ -18,7 +18,6 @@ from marketplace_utils import (
     MARKETPLACE_PLUGIN_SPECS,
     PLUGIN_ROOT_INVENTORY_PATH,
     REPO_INDEX_PATH,
-    REPO_INDEX_README_PATH,
     build_marketplace_manifest,
     load_json,
     parse_top_markdown_table,
@@ -64,8 +63,6 @@ def _git_lines(*args: str) -> list[str]:
     return result.stdout.splitlines()
 
 
-
-
 def _split_skill_frontmatter_and_body(path: Path) -> tuple[str, str]:
     text = path.read_text(encoding="utf-8")
     if not text.startswith("---"):
@@ -83,16 +80,6 @@ def _split_skill_frontmatter_and_body(path: Path) -> tuple[str, str]:
     frontmatter = "".join(lines[1:end_index])
     body = "".join(lines[end_index + 1 :])
     return frontmatter, body
-
-
-
-
-
-
-
-
-
-
 
 
 def _validate_repo_index_metadata(repo_index: dict | None, *, bundle_name: str, plugin_root: str) -> None:
@@ -140,12 +127,12 @@ def _load_markdown_table_column_values(path: Path, column_name: str) -> list[str
     return values
 
 
-
-
 def _validate_skill_frontmatter_metadata(skill_path: Path, *, bundle_name: str, entry: dict) -> None:
     """Validate that SKILL.md frontmatter has required metadata fields based on content_mode.
 
-    MARK-262: Adapted skills must have complete metadata frontmatter. Verbatim skills should be byte-identical to upstream and should NOT have metadata.
+    MARK-262: Adapted skills must have complete metadata frontmatter.
+    Verbatim skills should be byte-identical to upstream and should NOT
+    have metadata.
     """
     skill_md = skill_path / "SKILL.md"
     if not skill_md.is_file():
@@ -171,9 +158,21 @@ def _validate_skill_frontmatter_metadata(skill_path: Path, *, bundle_name: str, 
                 if isinstance(metadata, dict) and source_category == "third_party":
                     # Check for MARK-262 authorship fields that should not be in
                     # third-party verbatim skills (they must be byte-identical to upstream)
-                    mark262_fields = ["source_author", "source_license", "source_repo", "source_path", "content_mode", "adapted_author"]
+                    mark262_fields = [
+                        "source_author",
+                        "source_license",
+                        "source_repo",
+                        "source_path",
+                        "content_mode",
+                        "adapted_author",
+                    ]
                     if any(field in metadata for field in mark262_fields):
-                        raise ValueError(f"{bundle_name} skill {canonical_name} has MARK-262 authorship metadata but content_mode is verbatim - third-party verbatim skills must be byte-identical to upstream")
+                        raise ValueError(
+                            f"{bundle_name} skill {canonical_name} has "
+                            f"MARK-262 authorship metadata but content_mode is "
+                            f"verbatim - third-party verbatim skills must be "
+                            f"byte-identical to upstream"
+                        )
         return
 
     # For adapted entries, metadata is required
@@ -216,11 +215,18 @@ def _validate_skill_frontmatter_metadata(skill_path: Path, *, bundle_name: str, 
     # Normalised skills should NOT have adapted_author or adaptation_note
     elif content_mode == "normalised":
         if metadata.get("adapted_author") or metadata.get("adaptation_note"):
-            raise ValueError(f"{bundle_name} skill {canonical_name} normalised content should not have adapted_author or adaptation_note")
+            raise ValueError(
+                f"{bundle_name} skill {canonical_name} normalised content "
+                f"should not have adapted_author or adaptation_note"
+            )
 
     # Ensure content_mode in frontmatter matches bundle manifest
     if metadata.get("content_mode") != content_mode:
-        raise ValueError(f"{bundle_name} skill {canonical_name} frontmatter content_mode '{metadata.get('content_mode')}' does not match bundle manifest '{content_mode}'")
+        raise ValueError(
+            f"{bundle_name} skill {canonical_name} frontmatter content_mode "
+            f"'{metadata.get('content_mode')}' does not match bundle manifest "
+            f"'{content_mode}'"
+        )
 
 
 def _validate_plugin_level_authorship(bundle_manifest: dict, *, bundle_name: str) -> None:
@@ -256,7 +262,10 @@ def _validate_plugin_level_authorship(bundle_manifest: dict, *, bundle_name: str
             # For verbatim third-party content, ensure upstream author is not overwritten
             if plugin_author == "Harley Bartles" and "Harley Bartles" in source_author:
                 if source_category == "third_party":
-                    raise ValueError(f"{bundle_name} entry {canonical_name} incorrectly claims repo author for verbatim third-party content")
+                    raise ValueError(
+                        f"{bundle_name} entry {canonical_name} incorrectly "
+                        f"claims repo author for verbatim third-party content"
+                    )
 
 
 def validate_marketplace_registry(registry: dict, plugin_manifests: list[dict]) -> None:
@@ -341,7 +350,6 @@ def validate_plugin_manifest(plugin_manifest: dict, spec: dict) -> None:
         check_path_exists(ROOT / plugin_root / skills_path)
 
 
-
 def _load_skill_inventory(plugin_root: str) -> set[str]:
     skills_root = ROOT / plugin_root / "skills"
     if not skills_root.is_dir():
@@ -365,19 +373,6 @@ def _normalize_string_list(value: object, *, context: str, field_name: str, allo
         seen.add(item)
         normalized.append(item)
     return tuple(normalized)
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 def validate_no_legacy_manifest_shapes() -> None:
@@ -405,11 +400,10 @@ def validate_no_legacy_manifest_shapes() -> None:
             csp = entry.get("canonical_source_path", "")
             if isinstance(csp, str) and Path(csp).suffix:
                 raise ValueError(
-                    f"{spec['name']}: entry {i} canonical_source_path must be directory-level (legacy file-level path: {csp})"
+                    f"{spec['name']}: entry {i} canonical_source_path "
+                    f"must be directory-level (legacy file-level path: {csp})"
                 )
     print("OK manifest shape: all plugins use plugin-first directory-level entries[]")
-
-
 
 
 def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
@@ -435,6 +429,8 @@ def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         ),
     )
     return parser.parse_args()
+
+
 def validate_inventory(*, skip_freshness: bool = False) -> None:
     if not skip_freshness:
         _run_tool_check(
@@ -447,8 +443,6 @@ def validate_inventory(*, skip_freshness: bool = False) -> None:
     validate_active_plugin_tree()
     check_json(PLUGIN_ROOT_INVENTORY_PATH)
     print("OK validate_marketplace: inventory")
-
-
 
 
 def validate_project(*, skip_freshness: bool = False) -> None:
@@ -487,10 +481,17 @@ def validate_project(*, skip_freshness: bool = False) -> None:
     check_text(ROOT / "codex-marketplace/plugins/unslop-plus/SOURCE.md")
     validate_no_legacy_manifest_shapes()
     print("OK validate_marketplace: project")
+
+
 def validate_index(*, skip_freshness: bool = False) -> None:
     _ = skip_freshness
-    check_text(REPO_INDEX_README_PATH)
-    check_json(REPO_INDEX_PATH)
+    root = check_json(REPO_INDEX_PATH)
+    for zone in root.get("zones", []):
+        index_json = zone.get("index_json")
+        if index_json:
+            if Path(index_json).is_absolute():
+                raise ValueError(f"index_json must be a relative path: {index_json}")
+            check_json(ROOT / index_json)
     validate_repo_index()
     print("OK validate_marketplace: index")
 
@@ -499,7 +500,6 @@ def validate_all(*, skip_freshness: bool = False) -> None:
     validate_inventory(skip_freshness=skip_freshness)
     validate_project(skip_freshness=skip_freshness)
     validate_index(skip_freshness=skip_freshness)
-
 
 
 def main(argv: list[str] | None = None) -> int:

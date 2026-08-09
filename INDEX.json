@@ -1,0 +1,66 @@
+{
+  "schema_version": 2,
+  "repo_name": "agent-asset-marketplace",
+  "description": "Registry of zone INDEX.json sidecars. This file is an index of repo zones, not the source of truth itself.",
+  "validation": {
+    "marketplace": "py -3 tools/validate_marketplace.py",
+    "repo_index": "py -3 tools/validate_repo_index.py",
+    "repo_index_generate": "py -3 tools/generate_repo_index.py --apply",
+    "marketplace_generate": "py -3 tools/generate_marketplace.py --apply",
+    "marketplace_check": "py -3 tools/generate_marketplace.py --check",
+    "repo_index_check": "py -3 tools/generate_repo_index.py --check"
+  },
+  "zones": [
+    {
+      "name": "runtime-registry",
+      "path": ".agents/plugins",
+      "index_json": ".agents/plugins/INDEX.json"
+    },
+    {
+      "name": "codex-marketplace-root",
+      "path": "codex-marketplace",
+      "index_json": "codex-marketplace/INDEX.json"
+    },
+    {
+      "name": "marketplace-root-inventory",
+      "path": "codex-marketplace/plugin-roots.json",
+      "purpose": "Editable active marketplace plugin root inventory for manifest and validator generation.",
+      "surface_kind": "hand-authored",
+      "nearest_scoped_agents_md": null,
+      "key_validation_scripts": [
+        "tools/validate_marketplace.py",
+        "tools/validate_repo_index.py"
+      ]
+    },
+    {
+      "name": "codex-marketplace-plugins",
+      "path": "codex-marketplace/plugins",
+      "index_json": "codex-marketplace/plugins/INDEX.json"
+    },
+    {
+      "name": "docs-unslop-profile",
+      "path": ".agents/docs/unslop/profile.md",
+      "purpose": "Canonical repo unslop profile for anti-slop custody and discovery.",
+      "surface_kind": "hand-authored",
+      "nearest_scoped_agents_md": ".devin/rules/docs.md",
+      "key_validation_scripts": [
+        "tools/validate_repo_index.py"
+      ]
+    },
+    {
+      "name": "superpowers-plans",
+      "path": ".agents/plans",
+      "index_json": ".agents/plans/INDEX.json"
+    },
+    {
+      "name": "superpowers-specs",
+      "path": ".agents/specs",
+      "index_json": ".agents/specs/INDEX.json"
+    },
+    {
+      "name": "tools",
+      "path": "tools",
+      "index_json": "tools/INDEX.json"
+    }
+  ]
+}

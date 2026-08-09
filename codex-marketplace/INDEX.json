@@ -1,105 +1,17 @@
 {
-  "schema_version": 1,
-  "repo_name": "agent-asset-marketplace",
-  "description": "Navigation metadata for the agent asset marketplace. This file is an index of repo zones and marketplace plugin packs, not the source of truth itself.",
+  "schema_version": 2,
+  "name": "codex-marketplace",
+  "path": "codex-marketplace",
+  "purpose": "Codex marketplace source root and export manifest surface.",
+  "surface_kind": "runtime-facing",
+  "nearest_scoped_agents_md": ".devin/rules/codex-marketplace.md",
+  "key_validation_scripts": [
+    "tools/validate_marketplace.py",
+    "tools/validate_repo_index.py"
+  ],
   "marketplace_root_inventory_path": "codex-marketplace/plugin-roots.json",
   "marketplace_registry_path": ".agents/plugins/marketplace.json",
   "codex_marketplace_manifest_path": "codex-marketplace/manifest.json",
-  "validation": {
-    "marketplace": "py -3 tools/validate_marketplace.py",
-    "repo_index": "py -3 tools/validate_repo_index.py",
-    "repo_index_generate": "py -3 tools/generate_repo_index.py --apply",
-    "marketplace_generate": "py -3 tools/generate_marketplace.py --apply",
-    "marketplace_check": "py -3 tools/generate_marketplace.py --check",
-    "repo_index_check": "py -3 tools/generate_repo_index.py --check"
-  },
-  "zones": [
-    {
-      "name": "runtime-registry",
-      "path": ".agents/plugins",
-      "purpose": "Runtime-facing plugin registry consumed by Codex tooling.",
-      "surface_kind": "runtime-facing",
-      "nearest_scoped_agents_md": null,
-      "key_validation_scripts": [
-        "tools/validate_marketplace.py",
-        "tools/validate_repo_index.py"
-      ]
-    },
-    {
-      "name": "codex-marketplace-root",
-      "path": "codex-marketplace",
-      "purpose": "Codex marketplace source root and export manifest surface.",
-      "surface_kind": "runtime-facing",
-      "nearest_scoped_agents_md": ".devin/rules/codex-marketplace.md",
-      "key_validation_scripts": [
-        "tools/validate_marketplace.py",
-        "tools/validate_repo_index.py"
-      ]
-    },
-    {
-      "name": "marketplace-root-inventory",
-      "path": "codex-marketplace/plugin-roots.json",
-      "purpose": "Editable active marketplace plugin root inventory for manifest and validator generation.",
-      "surface_kind": "hand-authored",
-      "nearest_scoped_agents_md": null,
-      "key_validation_scripts": [
-        "tools/validate_marketplace.py",
-        "tools/validate_repo_index.py"
-      ]
-    },
-    {
-      "name": "codex-marketplace-plugins",
-      "path": "codex-marketplace/plugins",
-      "purpose": "Protected active Codex marketplace plugin pack roots and their packaging metadata.",
-      "surface_kind": "runtime-facing",
-      "nearest_scoped_agents_md": ".devin/rules/codex-plugins.md",
-      "key_validation_scripts": [
-        "tools/validate_marketplace.py",
-        "tools/validate_repo_index.py"
-      ]
-    },
-    {
-      "name": "docs-unslop-profile",
-      "path": ".agents/docs/unslop/profile.md",
-      "purpose": "Canonical repo unslop profile for anti-slop custody and discovery.",
-      "surface_kind": "hand-authored",
-      "nearest_scoped_agents_md": ".devin/rules/docs.md",
-      "key_validation_scripts": [
-        "tools/validate_repo_index.py"
-      ]
-    },
-    {
-      "name": "superpowers-plans",
-      "path": ".agents/plans",
-      "purpose": "Superpowers plan drafts and execution plans.",
-      "surface_kind": "hand-authored",
-      "nearest_scoped_agents_md": ".devin/rules/plans.md",
-      "key_validation_scripts": [
-        "tools/validate_repo_index.py"
-      ]
-    },
-    {
-      "name": "superpowers-specs",
-      "path": ".agents/specs",
-      "purpose": "Superpowers design specs. Specs are repo-resident, tracked, and indexed alongside plans.",
-      "surface_kind": "hand-authored",
-      "nearest_scoped_agents_md": ".agents/runbooks/design.md",
-      "key_validation_scripts": [
-        "tools/validate_repo_index.py"
-      ]
-    },
-    {
-      "name": "tools",
-      "path": "tools",
-      "purpose": "Repository validation and generation scripts.",
-      "surface_kind": "hand-authored",
-      "nearest_scoped_agents_md": ".devin/rules/tools.md",
-      "key_validation_scripts": [
-        "tools/validate_marketplace.py",
-        "tools/validate_repo_index.py"
-      ]
-    }
-  ],
   "marketplace_plugins": [
     {
       "name": "agentic-evaluation",

@@ -13,8 +13,19 @@ ROOT = Path(__file__).resolve().parents[1]
 PLUGIN_ROOT_INVENTORY_PATH = ROOT / "codex-marketplace/plugin-roots.json"
 MARKETPLACE_PATH = ROOT / ".agents/plugins/marketplace.json"
 CODEX_MARKETPLACE_MANIFEST_PATH = ROOT / "codex-marketplace/manifest.json"
-REPO_INDEX_PATH = ROOT / "repo-index/repo-index.json"
-REPO_INDEX_README_PATH = ROOT / "repo-index/README.md"
+REPO_INDEX_PATH = ROOT / "INDEX.json"
+ZONE_INDEX_FILE_NAME = "INDEX.json"
+
+
+def zone_index_path(zone_path: str) -> Path:
+    """Return the absolute path to a zone's INDEX.json sidecar."""
+    if not isinstance(zone_path, str) or not zone_path.strip():
+        raise ValueError("zone_path must be a non-empty string")
+    if Path(zone_path).is_absolute():
+        raise ValueError(f"zone_path must be a relative path: {zone_path}")
+    return ROOT / zone_path / ZONE_INDEX_FILE_NAME
+
+
 REPO_LOCAL_MARKETPLACE_POLICY_PATH = ROOT / "codex-marketplace/repo-local-marketplace-policy.json"
 
 MARKETPLACE_NOTES = [
@@ -60,9 +71,7 @@ def load_repo_local_marketplace_policy() -> dict[str, Any]:
         },
         "install_defaults": tuple(str(item) for item in install_defaults if str(item).strip()),
         "category_overrides": {
-            str(key): str(value)
-            for key, value in category_overrides.items()
-            if str(key).strip() and str(value).strip()
+            str(key): str(value) for key, value in category_overrides.items() if str(key).strip() and str(value).strip()
         },
         "exclusions": tuple(str(item) for item in exclusions if str(item).strip()),
         "local_skill_prefixes": tuple(str(item) for item in local_skill_prefixes if str(item).strip()),
@@ -77,7 +86,9 @@ def _installation_policy_for_plugin(plugin_name: str) -> str:
         return "INSTALLED_BY_DEFAULT"
     return REPO_LOCAL_MARKETPLACE_POLICY["defaults"]["installation"]
 
+
 EXPECTED_MARKETPLACE_ROOT = ".agents/plugins/marketplace.json"
+
 
 def load_json(path: Path) -> Any:
     with path.open("r", encoding="utf-8") as handle:
@@ -282,9 +293,7 @@ def normalize_decision_row(row: dict[str, str]) -> dict[str, Any]:
         "import_state": row.get("import_state", ""),
         "decision": row.get("decision", ""),
         "imported_source_paths": tuple(
-            item.strip()
-            for item in row.get("imported_source_paths", "").split(",")
-            if item.strip()
+            item.strip() for item in row.get("imported_source_paths", "").split(",") if item.strip()
         ),
     }
 

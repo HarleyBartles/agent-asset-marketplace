@@ -1,0 +1,12 @@
+{
+  "schema_version": 2,
+  "name": "tools",
+  "path": "tools",
+  "purpose": "Repository validation and generation scripts.",
+  "surface_kind": "hand-authored",
+  "nearest_scoped_agents_md": ".devin/rules/tools.md",
+  "key_validation_scripts": [
+    "tools/validate_marketplace.py",
+    "tools/validate_repo_index.py"
+  ]
+}
