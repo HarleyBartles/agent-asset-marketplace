@@ -1,5 +1,10 @@
 # Iterative review skill — state/router split and ergonomic improvements
 
+## Status
+
+- Plan 1 (state/router split and record scripts) is implemented and ready to merge in PR #287, head `c1e59ac4`.
+- The `iterative-review` skill was dogfooded on this PR and reached `reviewer-strong: clean`.
+
 ## Goal
 
 Fix the `iterative-review` skill's core design flaw: `review-metrics.json` is both the router state and the generated metrics evidence file. This causes hand-editing contention and makes the graph fragile. After the split, add a small set of ergonomic improvements that make the skill easier for an orchestrator to follow and recover from mistakes.

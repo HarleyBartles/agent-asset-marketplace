@@ -1,6 +1,8 @@
 # Plan 1 — State/router split and record scripts
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use /subagent-driven-development (recommended) or /executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **Status:** complete. Implemented in PR #287 (head `c1e59ac4`). `reviewer-strong: clean`.
+
+> **For agentic workers:** REQUIRED SUB-SKILL: Use /subagent-driven-development (recommended) or /executing-plans to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** Split `iterative-review` so that `review-state.json` is the only router state and `review-metrics.json` is a generated evidence aggregate. Add the record scripts and `compile_metrics.py`, refactor `next_node.py`, and remove all hand-editing of `review-metrics.json` from the node recipes.
 
@@ -27,7 +29,7 @@
 **Interfaces:**
 - Produces: the JSON schema for `review-state.json`.
 
-- [ ] **Step 1: Write the schema**
+- [x] **Step 1: Write the schema**
 
 ```json
 {
@@ -60,7 +62,7 @@
 }
 ```
 
-- [ ] **Step 2: Run CI**
+- [x] **Step 2: Run CI**
 
 ```bash
 py -3 tools/run.py ci --check
@@ -68,7 +70,7 @@ py -3 tools/run.py ci --check
 
 Expected: all targets pass.
 
-- [ ] **Step 3: Commit**
+- [x] **Step 3: Commit**
 
 ```bash
 git add codex-marketplace/plugins/superpowers-plus/skills/iterative-review/references/review-state-schema.json
@@ -87,7 +89,7 @@ git commit -m "feat(iterative-review): add review-state schema"
 - Consumes: `review-state.json` path and a JSON finding object.
 - Produces: an append-only `findings.jsonl` event.
 
-- [ ] **Step 1: Write the script**
+- [x] **Step 1: Write the script**
 
 ```python
 #!/usr/bin/env python3
@@ -155,7 +157,7 @@ if __name__ == "__main__":
     raise SystemExit(_main())
 ```
 
-- [ ] **Step 2: Run a manual idempotency test**
+- [x] **Step 2: Run a manual idempotency test**
 
 ```bash
 py -3 codex-marketplace/plugins/superpowers-plus/skills/iterative-review/scripts/record_finding.py --check
@@ -163,7 +165,7 @@ py -3 codex-marketplace/plugins/superpowers-plus/skills/iterative-review/scripts
 
 Expected: `record_finding.py is ready` and exit 0.
 
-- [ ] **Step 3: Commit**
+- [x] **Step 3: Commit**
 
 ```bash
 git add codex-marketplace/plugins/superpowers-plus/skills/iterative-review/scripts/record_finding.py
@@ -185,28 +187,28 @@ git commit -m "feat(iterative-review): add record_finding.py"
 - `record_regression.py` — `--state <path> --data <json>` with keys `fix_for`, `new_finding`, `discovered_at_node`, `discovered_at_round`, `regression_class`, `severity`.
 - `record_blocker.py` — `--state <path> --data <json>` with keys `finding_id`, `blocker_class`.
 
-- [ ] **Step 1: Write `record_resolution.py`**
+- [x] **Step 1: Write `record_resolution.py`**
 
 Copy `record_finding.py` and change:
 - `REQUIRED = {"finding_id", "resolved_at_node", "resolved_at_round"}`
 - log file: `resolutions.jsonl`
 - `if finding["finding_id"] in existing:` returns 0 without duplication
 
-- [ ] **Step 2: Write `record_regression.py`**
+- [x] **Step 2: Write `record_regression.py`**
 
 Copy `record_finding.py` and change:
 - `REQUIRED = {"fix_for", "new_finding", "discovered_at_node", "discovered_at_round", "regression_class", "severity"}`
 - log file: `regressions.jsonl`
 - `new_finding` uniqueness check instead of `finding_id`
 
-- [ ] **Step 3: Write `record_blocker.py`**
+- [x] **Step 3: Write `record_blocker.py`**
 
 Copy `record_finding.py` and change:
 - `REQUIRED = {"finding_id", "blocker_class"}`
 - log file: `blockers.jsonl`
 - `blocker_class` enum: `{"contested", "tool-blocked"}`
 
-- [ ] **Step 4: Run `--check` on each**
+- [x] **Step 4: Run `--check` on each**
 
 ```bash
 py -3 .../scripts/record_resolution.py --check
@@ -216,7 +218,7 @@ py -3 .../scripts/record_blocker.py --check
 
 Expected: each prints ready and exits 0.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add codex-marketplace/plugins/superpowers-plus/skills/iterative-review/scripts/record_*.py
@@ -235,7 +237,7 @@ git commit -m "feat(iterative-review): add record resolution, regression, and bl
 - Consumes: `--state <review-state.json> --metrics <review-metrics.json>`.
 - Produces: a `review-metrics.json` aggregate from state and logs.
 
-- [ ] **Step 1: Write the script**
+- [x] **Step 1: Write the script**
 
 ```python
 #!/usr/bin/env python3
@@ -340,7 +342,7 @@ if __name__ == "__main__":
     raise SystemExit(_main())
 ```
 
-- [ ] **Step 2: Run a manual compile test**
+- [x] **Step 2: Run a manual compile test**
 
 Create a temporary scratch with a sample `review-state.json` and logs, then run:
 
@@ -351,7 +353,7 @@ py -3 -c "import json; print(json.load(open('/tmp/review-metrics.json'))['rounds
 
 Expected: the generated `review-metrics.json` has a `rounds_per_finding` entry matching the input finding.
 
-- [ ] **Step 3: Commit**
+- [x] **Step 3: Commit**
 
 ```bash
 git add codex-marketplace/plugins/superpowers-plus/skills/iterative-review/scripts/compile_metrics.py
@@ -370,7 +372,7 @@ git commit -m "feat(iterative-review): add compile_metrics.py"
 - Consumes: `--state <review-state.json>`; logs from `scratch_dir`.
 - Produces: single allowed next node and updated `review-state.json`.
 
-- [ ] **Step 1: Add `--state` argument and `_load_state()`**
+- [x] **Step 1: Add `--state` argument and `_load_state()`**
 
 Add `--state` to the argument parser and make `--state` required when not using `--check`. Add:
 
@@ -384,7 +386,7 @@ def _load_state(path: Path) -> dict:
         return {}
 ```
 
-- [ ] **Step 2: Add log-driven unresolved checks**
+- [x] **Step 2: Add log-driven unresolved checks**
 
 Add helpers to read the JSONL logs:
 
@@ -411,7 +413,7 @@ def _unresolved_findings(state: dict) -> list[str]:
 
 Replace the `regressions` and `contested` checks to read from `regressions.jsonl` and `blockers.jsonl`.
 
-- [ ] **Step 3: Update `--propose` to write `review-state.json` instead of `review-metrics.json`**
+- [x] **Step 3: Update `--propose` to write `review-state.json` instead of `review-metrics.json`**
 
 In `main`, after a successful `--propose`, write the new `review-state.json`:
 
@@ -423,11 +425,11 @@ state_path.write_text(json.dumps(state, indent=2, ensure_ascii=False) + "\n", en
 
 Stop mutating `review-metrics.json` from `next_node.py`. The only persistent file `next_node.py` writes is `review-state.json`.
 
-- [ ] **Step 4: Update the `--metrics` flag behavior**
+- [x] **Step 4: Update the `--metrics` flag behavior**
 
 `--metrics` may still be accepted for backward compatibility, but it becomes a read-only input used only for the fallback `compile_metrics.py` output. The canonical inputs are `--state` and the logs.
 
-- [ ] **Step 5: Run CI**
+- [x] **Step 5: Run CI**
 
 ```bash
 py -3 tools/run.py ci --check
@@ -435,7 +437,7 @@ py -3 tools/run.py ci --check
 
 Expected: all targets pass.
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add codex-marketplace/plugins/superpowers-plus/skills/iterative-review/scripts/next_node.py
@@ -453,7 +455,7 @@ git commit -m "refactor(iterative-review): next_node.py uses review-state and lo
 **Interfaces:**
 - `update_review_metrics.py` remains an orchestrator-facing convenience, but now it calls `compile_metrics.py` with `--state` and `--metrics`.
 
-- [ ] **Step 1: Replace the merge logic with `compile_metrics.py` invocation**
+- [x] **Step 1: Replace the merge logic with `compile_metrics.py` invocation**
 
 Change `main` so that `--apply` runs `compile_metrics.py` as a subprocess instead of merging JSON patches:
 
@@ -471,13 +473,13 @@ def _compile(state_path: Path, metrics_path: Path) -> int:
 
 Update `main` so that `--apply --metrics <path>` calls `_compile(state_path, metrics_path)` where `state_path` is `<metrics_dir>/review-state.json` by default.
 
-- [ ] **Step 2: Run CI**
+- [x] **Step 2: Run CI**
 
 ```bash
 py -3 tools/run.py ci --check
 ```
 
-- [ ] **Step 3: Commit**
+- [x] **Step 3: Commit**
 
 ```bash
 git add codex-marketplace/plugins/superpowers-plus/skills/iterative-review/scripts/update_review_metrics.py
@@ -495,27 +497,27 @@ git commit -m "refactor(iterative-review): update_review_metrics.py calls compil
 **Interfaces:**
 - Fixes the schema to match the generated output shape.
 
-- [ ] **Step 1: Remove `resolved_at_node` and `resolved_at_round` from required**
+- [x] **Step 1: Remove `resolved_at_node` and `resolved_at_round` from required**
 
 Change `rounds_per_finding` items so that `resolved_at_node` and `resolved_at_round` are not in `required`.
 
-- [ ] **Step 2: Add `deferred` to the severity enum**
+- [x] **Step 2: Add `deferred` to the severity enum**
 
 ```json
 "severity": {"type": "string", "enum": ["blocking", "important", "minor", "deferred"]}
 ```
 
-- [ ] **Step 3: Add `regression_of` to `regressions` items**
+- [x] **Step 3: Add `regression_of` to `regressions` items**
 
 ```json
 "regression_of": {"type": "string"}
 ```
 
-- [ ] **Step 4: Make `total_rounds` optional**
+- [x] **Step 4: Make `total_rounds` optional**
 
 It is generated by `compile_metrics.py` and should not be required on creation.
 
-- [ ] **Step 5: Run CI and commit**
+- [x] **Step 5: Run CI and commit**
 
 ```bash
 py -3 tools/run.py ci --check
@@ -537,7 +539,7 @@ git commit -m "fix(iterative-review): review-metrics schema for generated output
 **Interfaces:**
 - No node recipe edits `review-metrics.json` by hand. Each recipe appends events or calls `compile_metrics.py`.
 
-- [ ] **Step 1: Update `node-lens-triage.md`**
+- [x] **Step 1: Update `node-lens-triage.md`**
 
 Replace the instruction to append to `rounds_per_finding` in `review-metrics.json` with a `record_finding.py` call per classified finding:
 
@@ -546,31 +548,31 @@ py -3 .agents/skills/iterative-review/scripts/record_finding.py --state <scratch
 py -3 .agents/skills/iterative-review/scripts/compile_metrics.py --state <scratch_dir>/review-state.json --metrics <scratch_dir>/review-metrics.json
 ```
 
-- [ ] **Step 2: Update `node-reviewer-fixes.md`**
+- [x] **Step 2: Update `node-reviewer-fixes.md`**
 
 On `PASS`, call `record_resolution.py` for the original finding. On `FAIL` with a new same-lens issue, call `record_finding.py` and `record_regression.py`.
 
-- [ ] **Step 3: Update `node-regression-scan.md`**
+- [x] **Step 3: Update `node-regression-scan.md`**
 
 On a new issue, call `record_finding.py` and `record_regression.py` with the appropriate `regression_class` and `regression_of`.
 
-- [ ] **Step 4: Update `node-metrics-track.md`**
+- [x] **Step 4: Update `node-metrics-track.md`**
 
 Remove the instruction to hand-edit `review-metrics.json`. It now only documents that `record_*.py` and `compile_metrics.py` produce the metrics file.
 
-- [ ] **Step 5: Update `node-resolved-ledger.md`**
+- [x] **Step 5: Update `node-resolved-ledger.md`**
 
 Ensure `resolved_ledger.py` is called after `record_resolution.py` has been used for all resolved findings and `compile_metrics.py` has regenerated `review-metrics.json`.
 
-- [ ] **Step 6: Update `node-blocked.md`**
+- [x] **Step 6: Update `node-blocked.md`**
 
 Use `record_blocker.py` to record the blocker class before routing to `blocked`.
 
-- [ ] **Step 7: Update `node-setup.md`**
+- [x] **Step 7: Update `node-setup.md`**
 
 Create an empty `review-state.json` alongside the scratch workspace. The sample state should include `current_node: "setup"`, `round: 1`, `max_fix_rounds: 4`, `pr`, and `scratch_dir`.
 
-- [ ] **Step 8: Run CI and commit**
+- [x] **Step 8: Run CI and commit**
 
 ```bash
 py -3 tools/run.py ci --check
@@ -592,13 +594,13 @@ git commit -m "docs(iterative-review): node recipes use record scripts and gener
 **Interfaces:**
 - The installed copy of the skill mirrors the canonical source.
 
-- [ ] **Step 1: Regenerate installed skills**
+- [x] **Step 1: Regenerate installed skills**
 
 ```bash
 py -3 tools/run.py installed-skills --apply
 ```
 
-- [ ] **Step 2: Run CI**
+- [x] **Step 2: Run CI**
 
 ```bash
 py -3 tools/run.py ci --check
@@ -606,7 +608,7 @@ py -3 tools/run.py ci --check
 
 Expected: all targets pass.
 
-- [ ] **Step 3: Commit**
+- [x] **Step 3: Commit**
 
 ```bash
 git add -A
