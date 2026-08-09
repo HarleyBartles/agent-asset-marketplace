@@ -86,6 +86,18 @@ git commit -m "feat: add zone INDEX.json sidecar path helper"
 - Consumes: `MARKETPLACE_PLUGIN_SPECS` from `marketplace_utils`.
 - Produces: `build_root_index()` -> `dict`; `build_zone_indexes()` -> `list[tuple[Path, dict]]`; `main()` writes root and all zone sidecars.
 
+- [ ] **Step 0: Update `tools/generate_repo_index.py` imports**
+
+Add `zone_index_path` to the `marketplace_utils` import:
+
+```python
+from marketplace_utils import (
+    MARKETPLACE_PLUGIN_SPECS,
+    REPO_INDEX_PATH,
+    zone_index_path,
+)
+```
+
 - [ ] **Step 1: Replace `DEFAULT_REPO_INDEX` with a root-only registry and a `codex-marketplace` sidecar constant**
 
 The root registry now lists zones. For the pilot, `codex-marketplace` is the only zone with an `index_json` sidecar; all other zones stay inline.
