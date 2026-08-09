@@ -105,12 +105,16 @@ AGENTS_SKILLS_PATH = ROOT / ".agents" / "skills"
 PROVENANCE_PATH = AGENTS_SKILLS_PATH / ".provenance.json"
 
 
-def _local_skill_prefixes(config: dict[str, Any]) -> list[str]:
+def _local_skills(config: dict[str, Any]) -> list[str]:
     repo = config.get("repo") or {}
-    prefixes = repo.get("local_skill_prefixes")
+    prefixes = repo.get("local_skills")
     if prefixes is None:
-        prefixes = []
+        prefixes = repo.get("local_skill_prefixes", [])
     return [str(p) for p in prefixes]
+
+
+# Backwards-compatible alias for older consumers
+_local_skill_prefixes = _local_skills
 
 
 def _is_local_skill_dir(skill_dir: Path, prefixes: list[str]) -> bool:
@@ -136,19 +140,26 @@ def _validate_local_skill_dirs(prefixes: list[str]) -> list[Path]:
         return []
 
     invalid: list[Path] = []
-    for skill_dir in sorted(AGENTS_SKILLS_PATH.iterdir()):
-        if not _is_local_skill_dir(skill_dir, prefixes):
-            continue
-        try:
-            if _frontmatter_name(skill_dir) != skill_dir.name:
-                raise ValueError("local skill directory name must match frontmatter name")
-        except (FileNotFoundError, UnicodeDecodeError, ValueError, AttributeError, TypeError, yaml.YAMLError) as exc:
+    for prefix in prefixes:
+        matched: list[Path] = []
+        for skill_dir in sorted(AGENTS_SKILLS_PATH.iterdir()):
+            if not _is_local_skill_dir(skill_dir, [prefix]):
+                continue
+            matched.append(skill_dir)
             try:
-                display_path = skill_dir.relative_to(ROOT)
-            except ValueError:
-                display_path = skill_dir
-            print(f"ERROR: local skill {display_path} is invalid: {exc}")
-            invalid.append(skill_dir)
+                if _frontmatter_name(skill_dir) != skill_dir.name:
+                    raise ValueError("local skill directory name must match frontmatter name")
+            except (FileNotFoundError, UnicodeDecodeError, ValueError, AttributeError, TypeError, yaml.YAMLError) as exc:
+                try:
+                    display_path = skill_dir.relative_to(ROOT)
+                except ValueError:
+                    display_path = skill_dir
+                print(f"ERROR: local skill {display_path} is invalid: {exc}")
+                invalid.append(skill_dir)
+        if not matched:
+            missing = AGENTS_SKILLS_PATH / prefix
+            print(f"ERROR: declared local skill '{prefix}' is not present on disk")
+            invalid.append(missing)
     return invalid
 
 

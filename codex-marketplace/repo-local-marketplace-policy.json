@@ -1,7 +1,7 @@
 {
   "marketplace_name": "agent-asset-marketplace",
   "display_name": "Agent Asset Marketplace",
-  "local_skill_prefixes": ["mark-"],
+  "local_skills": ["mark-"],
   "defaults": {
     "installation": "AVAILABLE",
     "authentication": "ON_INSTALL"
