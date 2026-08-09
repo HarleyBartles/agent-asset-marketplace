@@ -1,23 +1,33 @@
 # node-metrics-track
 
 ## Purpose
-Record the discovery context for each finding in `review-metrics.json`.
+Ensure `review-metrics.json` is generated from the recorded logs and current state before routing to the next fix.
 
 ## Inputs
-- Findings from the current node
-- Round number
-- Originating lens
-- Severity classification
+- `<scratch_dir>/review-state.json`
+- Recorded finding, resolution, regression, and blocker logs
 
 ## Recipe
-1. For each finding, record the node that discovered it, the round, the lens, and the severity in `review-metrics.json`.
+1. Confirm the upstream node has already recorded any new finding, resolution, regression, or blocker events with the appropriate `record_*.py` scripts.
+2. Regenerate the metrics file:
+   ```bash
+   py -3 .agents/skills/iterative-review/scripts/compile_metrics.py \
+       --state <scratch_dir>/review-state.json \
+       --metrics <scratch_dir>/review-metrics.json
+   ```
+3. Authorize the next node:
+   ```bash
+   py -3 .agents/skills/iterative-review/scripts/next_node.py \
+       --state <scratch_dir>/review-state.json \
+       --propose finding-fix
+   ```
 
 ## Outputs
-- Update `review-metrics.json` fields:
-  - `findings_by_node`
-  - `rounds_per_finding`
-  - `regression_class`
-  - `regression_of`
+- `<scratch_dir>/review-metrics.json` regenerated from `<scratch_dir>/review-state.json` and the recorded logs
 
 ## Next check
-py -3 .agents/skills/iterative-review/scripts/next_node.py --metrics <scratch_dir>/review-metrics.json
+```bash
+py -3 .agents/skills/iterative-review/scripts/next_node.py \
+    --state <scratch_dir>/review-state.json \
+    --propose finding-fix
+```

@@ -16,18 +16,63 @@ Verify a fix against the originating lens's checklist, tightly scoped to the bla
    - `reviewer-fixes: PASS`
    - `reviewer-fixes: FAIL`
 5. On `PASS`:
-   - On the original finding's `rounds_per_finding` entry, set `resolved_at_node: "reviewer-fixes"` and `resolved_at_round` to the current `fix_round` value.
-   - Set `non_trivial_fix: false`.
-   - Clear any `contested` and `regressions` entries tied to this resolved finding.
-   - Route to `resolved-ledger`.
+   - Record the resolution:
+     ```bash
+     py -3 .agents/skills/iterative-review/scripts/record_resolution.py \
+         --state <scratch_dir>/review-state.json \
+         --data '{"finding_id": "<finding_id>", "resolved_at_node": "reviewer-fixes", "resolved_at_round": <round>}'
+     ```
+   - Set `non_trivial_fix` to the appropriate value in `<scratch_dir>/review-state.json` (`false` for a typical pass, `true` if the fix should trigger `regression-scan`).
+   - Regenerate the metrics file:
+     ```bash
+     py -3 .agents/skills/iterative-review/scripts/compile_metrics.py \
+         --state <scratch_dir>/review-state.json \
+         --metrics <scratch_dir>/review-metrics.json
+     ```
+   - Route to `resolved-ledger`:
+     ```bash
+     py -3 .agents/skills/iterative-review/scripts/next_node.py \
+         --state <scratch_dir>/review-state.json \
+         --propose resolved-ledger
+     ```
 6. On `FAIL`, do **not** increment `fix_round` (`finding-fix` owns that on the next pass):
-   - Mark the original finding as unresolved, or record the new issue in `regressions` with `regression_of` linking back.
-   - Route back to `finding-fix`.
+   - If the original finding is still unresolved, no new record is needed. Regenerate the metrics file and route back to `finding-fix`:
+     ```bash
+     py -3 .agents/skills/iterative-review/scripts/compile_metrics.py \
+         --state <scratch_dir>/review-state.json \
+         --metrics <scratch_dir>/review-metrics.json
+     py -3 .agents/skills/iterative-review/scripts/next_node.py \
+         --state <scratch_dir>/review-state.json \
+         --propose finding-fix
+     ```
+   - If a new same-lens issue was found, record it and its relationship to the original finding:
+     ```bash
+     py -3 .agents/skills/iterative-review/scripts/record_finding.py \
+         --state <scratch_dir>/review-state.json \
+         --data '{"finding_id": "<new_finding_id>", "lens": "<lens>", "discovered_at_node": "reviewer-fixes", "discovered_at_round": <round>, "severity": "<severity>"}'
+     py -3 .agents/skills/iterative-review/scripts/record_regression.py \
+         --state <scratch_dir>/review-state.json \
+         --data '{"fix_for": "<original_finding_id>", "new_finding": "<new_finding_id>", "discovered_at_node": "reviewer-fixes", "discovered_at_round": <round>, "regression_class": "same-lens-blast-radius", "severity": "<severity>"}'
+     ```
+     Then regenerate the metrics file and route to `metrics-track`:
+     ```bash
+     py -3 .agents/skills/iterative-review/scripts/compile_metrics.py \
+         --state <scratch_dir>/review-state.json \
+         --metrics <scratch_dir>/review-metrics.json
+     py -3 .agents/skills/iterative-review/scripts/next_node.py \
+         --state <scratch_dir>/review-state.json \
+         --propose metrics-track
+     ```
 
 ## Outputs
 - `review-log-reviewer-fixes.md` ending with exactly one of:
   - `reviewer-fixes: PASS`
   - `reviewer-fixes: FAIL`
+- `<scratch_dir>/review-metrics.json` regenerated from `<scratch_dir>/review-state.json` and the recorded logs
 
 ## Next check
-py -3 .agents/skills/iterative-review/scripts/next_node.py --json --metrics <scratch_dir>/review-metrics.json
+```bash
+py -3 .agents/skills/iterative-review/scripts/next_node.py \
+    --state <scratch_dir>/review-state.json \
+    --propose <next-node>
+```

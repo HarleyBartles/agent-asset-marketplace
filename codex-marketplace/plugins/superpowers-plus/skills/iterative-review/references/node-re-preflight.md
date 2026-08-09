@@ -10,14 +10,32 @@ Re-run the consumer's canonical preflight after a fix to catch newly introduced 
 
 ## Recipe
 1. Re-run the consumer's canonical preflight over the post-fix range.
-2. Update `review-metrics.json`:
-   - `findings_by_node.re-preflight` = number of new deterministic findings (0 if clean)
-3. If it reports new deterministic issues, go to `fast-fix`.
-4. If it is clean, go to `reviewer-fixes`.
+2. For each new deterministic finding, record it:
+   ```bash
+   py -3 .agents/skills/iterative-review/scripts/record_finding.py \
+       --state <scratch_dir>/review-state.json \
+       --data '{"finding_id": "<finding_id>", "lens": "preflight", "discovered_at_node": "re-preflight", "discovered_at_round": <round>, "severity": "<severity>"}'
+   ```
+   If the re-preflight is clean, no new finding is recorded.
+3. Regenerate the metrics file and authorize the next node:
+   ```bash
+   py -3 .agents/skills/iterative-review/scripts/compile_metrics.py \
+       --state <scratch_dir>/review-state.json \
+       --metrics <scratch_dir>/review-metrics.json
+   py -3 .agents/skills/iterative-review/scripts/next_node.py \
+       --state <scratch_dir>/review-state.json \
+       --propose <next-node>
+   ```
+4. If it reports new deterministic issues, go to `fast-fix`.
+5. If it is clean, go to `reviewer-fixes`.
 
 ## Outputs
 - Updated `<scan_findings>`
-- `review-metrics.json` with `findings_by_node.re-preflight`
+- `<scratch_dir>/review-metrics.json` regenerated from `<scratch_dir>/review-state.json` and the recorded logs
 
 ## Next check
-py -3 .agents/skills/iterative-review/scripts/next_node.py --metrics <scratch_dir>/review-metrics.json
+```bash
+py -3 .agents/skills/iterative-review/scripts/next_node.py \
+    --state <scratch_dir>/review-state.json \
+    --propose <next-node>
+```
