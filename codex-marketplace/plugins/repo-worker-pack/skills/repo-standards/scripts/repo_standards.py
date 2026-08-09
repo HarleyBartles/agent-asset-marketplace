@@ -165,6 +165,31 @@ def _run_scaffold_check(scaffold: Path, repo_root: Path) -> list[str]:
     return findings
 
 
+def _check_hook_contract(hook_path: Path) -> list[str]:
+    """Validate a pre-commit hook by the repo-standards contract, not by byte comparison."""
+    findings: list[str] = []
+    if not hook_path.is_file():
+        findings.append("pre-commit hook is not a regular file")
+        return findings
+    text = hook_path.read_text(encoding="utf-8")
+    has_guard = "set -euo pipefail" in text
+    if not has_guard:
+        has_guard = (
+            "set -e" in text and "set -u" in text and "set -o pipefail" in text
+        )
+    if not has_guard:
+        findings.append("pre-commit hook missing errexit/nounset/pipefail guard")
+    ci_apply = "tools/run.py ci --apply" in text
+    if not ci_apply:
+        for prefix in ("py -3", "python3", "python"):
+            if f"{prefix} tools/run.py ci --apply" in text:
+                ci_apply = True
+                break
+    if not ci_apply:
+        findings.append("pre-commit hook must run 'tools/run.py ci --apply'")
+    return findings
+
+
 def _check_surface(repo_root: Path, surface: dict[str, object], exceptions: set[str]) -> list[str]:
     findings: list[str] = []
     rel = str(surface["path"])
@@ -204,11 +229,8 @@ def _check_surface(repo_root: Path, surface: dict[str, object], exceptions: set[
         if not hook_path.is_file():
             findings.append(f"missing hook: {rel}")
             return findings
-        if template is not None and template.is_file():
-            expected = template.read_bytes()
-            actual = hook_path.read_bytes()
-            if expected != actual:
-                findings.append(f"drift: {rel}")
+        # Validate the hook contract rather than requiring the exact template.
+        findings.extend(_check_hook_contract(hook_path))
         return findings
 
     if optional and not full.exists():

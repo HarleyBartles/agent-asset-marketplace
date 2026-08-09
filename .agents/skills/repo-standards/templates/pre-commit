@@ -17,4 +17,18 @@ else
   exit 1
 fi
 
-git add -A
+# Stage tracked files the hook may have regenerated.
+git diff --name-only --diff-filter=M | while IFS= read -r file; do
+  git add "$file"
+done
+
+# Stage canonical generated surfaces that may not yet be tracked.
+git add INDEX.md 2>/dev/null || true
+find . -name INDEX.md -not -path '*/.git/*' -exec git add {} + 2>/dev/null || true
+git add INDEX.json 2>/dev/null || true
+find . -name INDEX.json -not -path '*/.git/*' -exec git add {} + 2>/dev/null || true
+git add .provenance.json 2>/dev/null || true
+git add .agents/skills/.provenance.json 2>/dev/null || true
+git add codex-marketplace/plugin-roots.json 2>/dev/null || true
+git add .agents/plugins/marketplace.json 2>/dev/null || true
+git add codex-marketplace/manifest.json 2>/dev/null || true
