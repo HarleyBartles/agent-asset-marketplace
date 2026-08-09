@@ -65,9 +65,7 @@ def _compile(state: dict, logs: dict) -> dict:
 
 
 def _main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(
-        description="Compile review-metrics.json from review-state and logs. (mixed)"
-    )
+    parser = argparse.ArgumentParser(description="Compile review-metrics.json from review-state and logs. (mixed)")
     parser.add_argument("--check", action="store_true", help="self-check; exits 0 if ready")
     parser.add_argument("--state", help="path to review-state.json")
     parser.add_argument("--metrics", help="path to review-metrics.json")

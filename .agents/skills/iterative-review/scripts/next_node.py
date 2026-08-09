@@ -3,21 +3,18 @@
 
 Classification (read-only/mutating/mixed): mixed.
 - --check                 read-only self-check; exits 0
-- --metrics <path>        discovery (read-only) or commit gate (mutating)
-- --ledger <path>         path to review-log-resolved-ledger.md (default: sibling of --metrics)
+- --state <path>          canonical router state (read-only or commit gate)
+- --metrics <path>        backward-compatible read-only aggregate (compile_metrics output)
+- --ledger <path>         path to review-log-resolved-ledger.md (default: state.ledger_path)
 - --propose <node>        commit gate; if <node> is the allowed next node, exits 0 and
-                          merges current_node/previous_node into review-metrics.json
+                          advances state in review-state.json
 - --json                  machine-readable discovery; emits {"node": "...", "reason": "..."}
 - no --propose            read-only discovery; prints the allowed next node
 
 The orchestrator must call this before any node recipe (use --propose to advance
 state) and must not proceed if it exits 1. The script is the mechanical source of
 truth for the graph; it returns the single allowed next node given the state in
-review-metrics.json.
-
-State contract: when --propose succeeds, _save_metrics re-reads the on-disk
-review-metrics.json and updates only previous_node and current_node, preserving
-all other fields (findings_by_node, rounds_per_finding, regressions, custom).
+review-state.json and the append-only logs in the scratch directory.
 """
 
 from __future__ import annotations
@@ -102,6 +99,21 @@ GRAPH: dict[str, list[tuple[str, str]]] = {
 }
 
 
+def _load_state(path: Path) -> dict:
+    if not path.exists():
+        return {}
+    try:
+        return json.loads(path.read_text(encoding="utf-8-sig"))
+    except (json.JSONDecodeError, OSError):
+        return {}
+
+
+def _load_jsonl(path: Path) -> list[dict]:
+    if not path.exists():
+        return []
+    return [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line.strip()]
+
+
 def _load_metrics(path: Path) -> dict:
     if not path.exists():
         return {}
@@ -111,31 +123,65 @@ def _load_metrics(path: Path) -> dict:
         return {}
 
 
-def _save_metrics(path: Path, metrics: dict) -> None:
-    # Merge-write: re-read the on-disk file and overwrite only the node pointers
-    # so that externally-updated fields (findings_by_node, rounds_per_finding,
-    # regressions, custom fields) are never clobbered.
-    existing = _load_metrics(path)
-    existing["previous_node"] = metrics.get("previous_node")
-    existing["current_node"] = metrics.get("current_node")
-    path.write_text(json.dumps(existing, indent=2, ensure_ascii=False), encoding="utf-8")
-
-
-def _unresolved_severities(metrics: dict) -> list[str]:
-    rounds = metrics.get("rounds_per_finding", [])
+def _unresolved_findings(state: dict) -> list[str]:
+    """Return finding_ids of unresolved blocking/important findings."""
+    if "rounds_per_finding" in state:
+        rounds = state.get("rounds_per_finding", [])
+        return [
+            f.get("finding_id", "?")
+            for f in rounds
+            if f.get("severity") in ("blocking", "important") and not f.get("resolved_at_node")
+        ]
+    scratch = Path(state.get("scratch_dir", "."))
+    findings = _load_jsonl(scratch / "findings.jsonl")
+    resolved = {r["finding_id"] for r in _load_jsonl(scratch / "resolutions.jsonl")}
     return [
-        f.get("finding_id", "?")
-        for f in rounds
-        if f.get("severity") in ("blocking", "important") and not f.get("resolved_at_node")
+        f["finding_id"]
+        for f in findings
+        if f["finding_id"] not in resolved and f.get("severity") in ("blocking", "important")
     ]
 
 
-def _condition_holds(condition: str, metrics: dict, ledger: Path, current_node: str) -> bool:
-    unresolved = _unresolved_severities(metrics)
-    regressions = metrics.get("regressions", [])
-    findings_by_node = metrics.get("findings_by_node", {})
+def _unresolved_regressions(state: dict) -> list[dict]:
+    """Return regression events that are not yet resolved."""
+    if "regressions" in state and "scratch_dir" not in state:
+        return [r for r in state.get("regressions", []) if not r.get("resolved")]
+    scratch = Path(state.get("scratch_dir", "."))
+    regressions = _load_jsonl(scratch / "regressions.jsonl")
+    resolved = {r["finding_id"] for r in _load_jsonl(scratch / "resolutions.jsonl")}
+    return [r for r in regressions if r.get("new_finding") not in resolved]
+
+
+def _findings_by_node(state: dict) -> dict[str, int]:
+    """Return a count of findings discovered at each node."""
+    if "findings_by_node" in state:
+        return state.get("findings_by_node", {})
+    scratch = Path(state.get("scratch_dir", "."))
+    findings = _load_jsonl(scratch / "findings.jsonl")
+    counts: dict[str, int] = {}
+    for f in findings:
+        node = f.get("discovered_at_node")
+        if node:
+            counts[node] = counts.get(node, 0) + 1
+    return counts
+
+
+def _contested(state: dict) -> bool:
+    """Return True if any unresolved finding is marked as contested."""
+    if "rounds_per_finding" in state:
+        return any(f.get("contested") for f in state.get("rounds_per_finding", []))
+    scratch = Path(state.get("scratch_dir", "."))
+    blockers = _load_jsonl(scratch / "blockers.jsonl")
+    unresolved = set(_unresolved_findings(state))
+    return any(b.get("blocker_class") == "contested" and b.get("finding_id") in unresolved for b in blockers)
+
+
+def _condition_holds(condition: str, state: dict, ledger: Path, current_node: str) -> bool:
+    unresolved = _unresolved_findings(state)
+    regressions = _unresolved_regressions(state)
+    findings_by_node = _findings_by_node(state)
     ledger_missing = not ledger.exists()
-    previous_node = metrics.get("previous_node", "")
+    previous_node = state.get("previous_node", "")
 
     if condition == "always":
         return True
@@ -154,67 +200,74 @@ def _condition_holds(condition: str, metrics: dict, ledger: Path, current_node: 
     if condition == "regressions":
         return bool(regressions)
     if condition == "contested":
-        # A blocked flag in the metrics means a finding was contested/load-bearing.
-        return any(f.get("contested") for f in metrics.get("rounds_per_finding", []))
+        return _contested(state)
     if condition == "more_findings":
-        # Used from resolved-ledger when additional findings remain queued.
         return bool(unresolved)
     if condition == "all_resolved":
         return not unresolved and not ledger_missing
     if condition == "clean":
-        # After a lens/scan, "clean" means no unresolved blocking/important.
         return not unresolved
     if condition == "trivial":
-        # trivial/deferred only: there are rounds but none are blocking/important and no unresolved.
-        rounds = metrics.get("rounds_per_finding", [])
-        has_unresolved = bool(unresolved)
-        has_trivial = any(f.get("severity") in ("trivial", "deferred") for f in rounds)
-        return not has_unresolved and has_trivial
+        if "rounds_per_finding" in state:
+            rounds = state.get("rounds_per_finding", [])
+            has_trivial = any(f.get("severity") in ("trivial", "deferred") for f in rounds)
+        else:
+            scratch = Path(state.get("scratch_dir", "."))
+            findings = _load_jsonl(scratch / "findings.jsonl")
+            has_trivial = any(f.get("severity") in ("trivial", "deferred") for f in findings)
+        return not unresolved and has_trivial
     if condition == "red":
-        # preflight/re-preflight is "red" when the node has findings.
         return findings_by_node.get(current_node, 0) > 0
     if condition == "green":
         return findings_by_node.get(current_node, 0) == 0
     if condition == "round_cap":
-        # finding-fix is blocked if any finding has exceeded the round cap.
+        if "rounds_per_finding" in state:
+            rounds = state.get("rounds_per_finding", [])
+            return any(
+                (f.get("fix_round", 0) or 0) >= 4
+                for f in rounds
+                if not f.get("resolved_at_node")
+            )
+        scratch = Path(state.get("scratch_dir", "."))
+        findings = _load_jsonl(scratch / "findings.jsonl")
+        resolved = {r["finding_id"] for r in _load_jsonl(scratch / "resolutions.jsonl")}
+        round_ = state.get("round", 1)
+        max_rounds = state.get("max_fix_rounds", 4)
         return any(
-            (f.get("fix_round", 0) or 0) >= 4
-            for f in metrics.get("rounds_per_finding", [])
-            if not f.get("resolved_at_node")
+            f["finding_id"] not in resolved
+            and f.get("severity") in ("blocking", "important")
+            and (round_ - f.get("discovered_at_round", round_) + 1) >= max_rounds
+            for f in findings
         )
     if condition == "fixed":
-        # reviewer-fixes reached a clean outcome for the original finding.
         return not unresolved and not regressions
     if condition == "not_fixed":
-        # Original finding is not resolved.
         return bool(unresolved)
     if condition == "new_issue":
-        # reviewer-fixes or regression-scan discovered a new issue.
         return bool(unresolved) or bool(regressions)
     if condition == "non_trivial":
-        # Flag set by the reviewer-fixes recipe for non-trivial/cross-cutting fixes.
-        return metrics.get("non_trivial_fix", False)
+        return state.get("non_trivial_fix", False)
 
     return False
 
 
-def _next_node(metrics: dict, ledger: Path) -> tuple[str, str]:
-    current = metrics.get("current_node")
+def _next_node(state: dict, ledger: Path) -> tuple[str, str]:
+    current = state.get("current_node")
     if not current or current not in GRAPH:
-        return "setup", "no current_node in review-metrics.json yet"
+        return "setup", "no current_node in review-state.json yet"
 
     transitions = GRAPH[current]
     for condition, next_node in transitions:
-        if _condition_holds(condition, metrics, ledger, current):
+        if _condition_holds(condition, state, ledger, current):
             return next_node, f"from {current}: {condition} -> {next_node}"
 
     # Fall back to the old guard for unresolved / regressions / ledger if the
     # state machine has not yet covered the current node.
-    unresolved = _unresolved_severities(metrics)
+    unresolved = _unresolved_findings(state)
     if unresolved:
         return "finding-fix", f"unresolved important/blocking: {', '.join(unresolved)}"
-    if metrics.get("regressions", []):
-        return "regression-scan", f"{len(metrics['regressions'])} unresolved regression(s)"
+    if _unresolved_regressions(state):
+        return "regression-scan", f"{_unresolved_regressions(state)} unresolved regression(s)"
     if not ledger.exists():
         return "resolved-ledger", "resolved-ledger evidence file is missing"
     return "final-strong", "all important findings resolved and ledger evidence present"
@@ -223,24 +276,38 @@ def _next_node(metrics: dict, ledger: Path) -> tuple[str, str]:
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Return or validate the allowed next node. (mixed)")
     parser.add_argument("--check", action="store_true", help="self-check; exits 0 if ready")
-    parser.add_argument("--metrics", help="path to review-metrics.json")
+    parser.add_argument("--state", help="path to review-state.json")
+    parser.add_argument("--metrics", help="path to review-metrics.json (read-only, legacy)")
     parser.add_argument("--ledger", help="path to review-log-resolved-ledger.md")
     parser.add_argument("--propose", help="proposed next node to validate")
     parser.add_argument("--json", action="store_true", help="emit machine-readable discovery JSON")
     args = parser.parse_args(argv)
 
-    if not args.check and not args.metrics:
-        print("--metrics is required when not using --check", file=sys.stderr)
+    if not args.check and not args.state and not args.metrics:
+        print("--state or --metrics is required when not using --check", file=sys.stderr)
         return 2
 
     if args.check:
         print("next_node.py is ready")
         return 0
 
-    metrics_path = Path(args.metrics)
-    ledger_path = Path(args.ledger) if args.ledger else metrics_path.parent / "review-log-resolved-ledger.md"
-    metrics = _load_metrics(metrics_path)
-    node, reason = _next_node(metrics, ledger_path)
+    if args.propose and not args.state:
+        print("--propose requires --state", file=sys.stderr)
+        return 2
+
+    if args.state:
+        state_path = Path(args.state)
+        state = _load_state(state_path)
+        ledger_path = Path(args.ledger) if args.ledger else Path(
+            state.get("ledger_path", state_path.parent / "review-log-resolved-ledger.md")
+        )
+        node, reason = _next_node(state, ledger_path)
+    else:
+        # Backward-compatible read-only discovery from compiled metrics.
+        metrics_path = Path(args.metrics)
+        ledger_path = Path(args.ledger) if args.ledger else metrics_path.parent / "review-log-resolved-ledger.md"
+        metrics = _load_metrics(metrics_path)
+        node, reason = _next_node(metrics, ledger_path)
 
     if not args.propose:
         # Discovery is read-only: it reports the allowed next node from the
@@ -253,9 +320,9 @@ def main(argv: list[str] | None = None) -> int:
         print(f"ALLOWED: {args.propose}  -  {reason}")
         # The validator advances state on a successful dispatch gate so the
         # next discovery call continues from the just-authorized node.
-        metrics["previous_node"] = metrics.get("current_node", "")
-        metrics["current_node"] = node
-        _save_metrics(metrics_path, metrics)
+        state["previous_node"] = state.get("current_node", "")
+        state["current_node"] = node
+        state_path.write_text(json.dumps(state, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     else:
         print(f"BLOCKED: proposed {args.propose}; allowed next node is {node}  -  {reason}", file=sys.stderr)
         return 1
