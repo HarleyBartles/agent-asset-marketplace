@@ -34,13 +34,7 @@ DEFAULT_ROOT_INDEX: dict[str, Any] = {
         {
             "name": "runtime-registry",
             "path": ".agents/plugins",
-            "purpose": "Runtime-facing plugin registry consumed by Codex tooling.",
-            "surface_kind": "runtime-facing",
-            "nearest_scoped_agents_md": None,
-            "key_validation_scripts": [
-                "tools/validate_marketplace.py",
-                "tools/validate_repo_index.py",
-            ],
+            "index_json": ".agents/plugins/INDEX.json",
         },
         {
             "name": "codex-marketplace-root",
@@ -61,13 +55,7 @@ DEFAULT_ROOT_INDEX: dict[str, Any] = {
         {
             "name": "codex-marketplace-plugins",
             "path": "codex-marketplace/plugins",
-            "purpose": "Protected active Codex marketplace plugin pack roots and their packaging metadata.",
-            "surface_kind": "runtime-facing",
-            "nearest_scoped_agents_md": ".devin/rules/codex-plugins.md",
-            "key_validation_scripts": [
-                "tools/validate_marketplace.py",
-                "tools/validate_repo_index.py",
-            ],
+            "index_json": "codex-marketplace/plugins/INDEX.json",
         },
         {
             "name": "docs-unslop-profile",
@@ -82,33 +70,17 @@ DEFAULT_ROOT_INDEX: dict[str, Any] = {
         {
             "name": "superpowers-plans",
             "path": ".agents/plans",
-            "purpose": "Superpowers plan drafts and execution plans.",
-            "surface_kind": "hand-authored",
-            "nearest_scoped_agents_md": ".devin/rules/plans.md",
-            "key_validation_scripts": [
-                "tools/validate_repo_index.py",
-            ],
+            "index_json": ".agents/plans/INDEX.json",
         },
         {
             "name": "superpowers-specs",
             "path": ".agents/specs",
-            "purpose": "Superpowers design specs. Specs are repo-resident, tracked, and indexed alongside plans.",
-            "surface_kind": "hand-authored",
-            "nearest_scoped_agents_md": ".agents/runbooks/design.md",
-            "key_validation_scripts": [
-                "tools/validate_repo_index.py",
-            ],
+            "index_json": ".agents/specs/INDEX.json",
         },
         {
             "name": "tools",
             "path": "tools",
-            "purpose": "Repository validation and generation scripts.",
-            "surface_kind": "hand-authored",
-            "nearest_scoped_agents_md": ".devin/rules/tools.md",
-            "key_validation_scripts": [
-                "tools/validate_marketplace.py",
-                "tools/validate_repo_index.py",
-            ],
+            "index_json": "tools/INDEX.json",
         },
     ],
 }
@@ -129,6 +101,67 @@ DEFAULT_CODEX_MARKETPLACE_INDEX: dict[str, Any] = {
     "codex_marketplace_manifest_path": "codex-marketplace/manifest.json",
     "marketplace_plugins": [],
 }
+
+DEFAULT_ZONE_INDEXES: list[dict[str, Any]] = [
+    {
+        "schema_version": 2,
+        "name": "runtime-registry",
+        "path": ".agents/plugins",
+        "purpose": "Runtime-facing plugin registry consumed by Codex tooling.",
+        "surface_kind": "runtime-facing",
+        "nearest_scoped_agents_md": None,
+        "key_validation_scripts": [
+            "tools/validate_marketplace.py",
+            "tools/validate_repo_index.py",
+        ],
+    },
+    {
+        "schema_version": 2,
+        "name": "codex-marketplace-plugins",
+        "path": "codex-marketplace/plugins",
+        "purpose": "Protected active Codex marketplace plugin pack roots and their packaging metadata.",
+        "surface_kind": "runtime-facing",
+        "nearest_scoped_agents_md": ".devin/rules/codex-plugins.md",
+        "key_validation_scripts": [
+            "tools/validate_marketplace.py",
+            "tools/validate_repo_index.py",
+        ],
+    },
+    {
+        "schema_version": 2,
+        "name": "superpowers-plans",
+        "path": ".agents/plans",
+        "purpose": "Superpowers plan drafts and execution plans.",
+        "surface_kind": "hand-authored",
+        "nearest_scoped_agents_md": ".devin/rules/plans.md",
+        "key_validation_scripts": [
+            "tools/validate_repo_index.py",
+        ],
+    },
+    {
+        "schema_version": 2,
+        "name": "superpowers-specs",
+        "path": ".agents/specs",
+        "purpose": "Superpowers design specs. Specs are repo-resident, tracked, and indexed alongside plans.",
+        "surface_kind": "hand-authored",
+        "nearest_scoped_agents_md": ".agents/runbooks/design.md",
+        "key_validation_scripts": [
+            "tools/validate_repo_index.py",
+        ],
+    },
+    {
+        "schema_version": 2,
+        "name": "tools",
+        "path": "tools",
+        "purpose": "Repository validation and generation scripts.",
+        "surface_kind": "hand-authored",
+        "nearest_scoped_agents_md": ".devin/rules/tools.md",
+        "key_validation_scripts": [
+            "tools/validate_marketplace.py",
+            "tools/validate_repo_index.py",
+        ],
+    },
+]
 
 
 def _plugin_entry(spec: dict[str, Any]) -> dict[str, Any]:
@@ -156,9 +189,15 @@ def build_root_index() -> dict[str, Any]:
 
 def build_zone_indexes() -> list[tuple[Path, dict[str, Any]]]:
     sidecars: list[tuple[Path, dict[str, Any]]] = []
+
     codex = dict(DEFAULT_CODEX_MARKETPLACE_INDEX)
     codex["marketplace_plugins"] = [_plugin_entry(spec) for spec in MARKETPLACE_PLUGIN_SPECS]
     sidecars.append((zone_index_path("codex-marketplace"), codex))
+
+    for zone in DEFAULT_ZONE_INDEXES:
+        data = dict(zone)
+        sidecars.append((zone_index_path(data["path"]), data))
+
     return sidecars
 
 

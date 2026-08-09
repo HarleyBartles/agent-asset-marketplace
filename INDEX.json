@@ -14,13 +14,7 @@
     {
       "name": "runtime-registry",
       "path": ".agents/plugins",
-      "purpose": "Runtime-facing plugin registry consumed by Codex tooling.",
-      "surface_kind": "runtime-facing",
-      "nearest_scoped_agents_md": null,
-      "key_validation_scripts": [
-        "tools/validate_marketplace.py",
-        "tools/validate_repo_index.py"
-      ]
+      "index_json": ".agents/plugins/INDEX.json"
     },
     {
       "name": "codex-marketplace-root",
@@ -41,13 +35,7 @@
     {
       "name": "codex-marketplace-plugins",
       "path": "codex-marketplace/plugins",
-      "purpose": "Protected active Codex marketplace plugin pack roots and their packaging metadata.",
-      "surface_kind": "runtime-facing",
-      "nearest_scoped_agents_md": ".devin/rules/codex-plugins.md",
-      "key_validation_scripts": [
-        "tools/validate_marketplace.py",
-        "tools/validate_repo_index.py"
-      ]
+      "index_json": "codex-marketplace/plugins/INDEX.json"
     },
     {
       "name": "docs-unslop-profile",
@@ -62,33 +50,17 @@
     {
       "name": "superpowers-plans",
       "path": ".agents/plans",
-      "purpose": "Superpowers plan drafts and execution plans.",
-      "surface_kind": "hand-authored",
-      "nearest_scoped_agents_md": ".devin/rules/plans.md",
-      "key_validation_scripts": [
-        "tools/validate_repo_index.py"
-      ]
+      "index_json": ".agents/plans/INDEX.json"
     },
     {
       "name": "superpowers-specs",
       "path": ".agents/specs",
-      "purpose": "Superpowers design specs. Specs are repo-resident, tracked, and indexed alongside plans.",
-      "surface_kind": "hand-authored",
-      "nearest_scoped_agents_md": ".agents/runbooks/design.md",
-      "key_validation_scripts": [
-        "tools/validate_repo_index.py"
-      ]
+      "index_json": ".agents/specs/INDEX.json"
     },
     {
       "name": "tools",
       "path": "tools",
-      "purpose": "Repository validation and generation scripts.",
-      "surface_kind": "hand-authored",
-      "nearest_scoped_agents_md": ".devin/rules/tools.md",
-      "key_validation_scripts": [
-        "tools/validate_marketplace.py",
-        "tools/validate_repo_index.py"
-      ]
+      "index_json": "tools/INDEX.json"
     }
   ]
 }

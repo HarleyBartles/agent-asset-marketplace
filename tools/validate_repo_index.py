@@ -105,7 +105,15 @@ def merged_repo_index() -> dict:
             continue
         # Sidecars may provide additional top-level keys (e.g. marketplace_plugins)
         for key, value in sidecar.items():
-            if key in {"schema_version", "name", "path"}:
+            if key in {
+                "schema_version",
+                "name",
+                "path",
+                "purpose",
+                "surface_kind",
+                "nearest_scoped_agents_md",
+                "key_validation_scripts",
+            }:
                 continue
             if key in merged:
                 # If both root and sidecar claim the same key, the sidecar wins,

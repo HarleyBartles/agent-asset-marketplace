@@ -1,0 +1,11 @@
+{
+  "schema_version": 2,
+  "name": "superpowers-plans",
+  "path": ".agents/plans",
+  "purpose": "Superpowers plan drafts and execution plans.",
+  "surface_kind": "hand-authored",
+  "nearest_scoped_agents_md": ".devin/rules/plans.md",
+  "key_validation_scripts": [
+    "tools/validate_repo_index.py"
+  ]
+}
