@@ -112,20 +112,19 @@ git commit -m "feat: validate pre-commit hook by contract, not byte-for-byte"
 Keep the `ci --apply` call, then add:
 
 ```bash
-# Re-stage any tracked files the hook regenerated.
+# Re-stage any tracked files the hook may have modified.
 git diff --name-only --diff-filter=M | while IFS= read -r file; do
-  git add "$file"
+  git add "$file" 2>/dev/null || true
 done
 
-# Stage canonical generated surfaces that may not yet be tracked in a fresh repo.
-git add INDEX.md || true
-find . -name INDEX.md -not -path './.git/*' -exec git add {} + || true
-git add INDEX.json || true
-git add .agents/skills/.provenance.json || true
-git add .provenance.json || true
-git add codex-marketplace/plugin-roots.json || true
-git add .agents/plugins/marketplace.json || true
-git add codex-marketplace/manifest.json || true
+# Stage canonical generated surfaces. Glob pathspecs avoid scanning the
+# working tree with `find` and do not stage arbitrary untracked files.
+git add -- ':(glob)INDEX.md' ':(glob)**/INDEX.md' 2>/dev/null || true
+git add -- ':(glob)INDEX.json' ':(glob)**/INDEX.json' 2>/dev/null || true
+git add -- ':(glob).provenance.json' ':(glob)**/.provenance.json' 2>/dev/null || true
+git add -- ':(glob)codex-marketplace/plugin-roots.json' 2>/dev/null || true
+git add -- ':(glob).agents/plugins/marketplace.json' 2>/dev/null || true
+git add -- ':(glob)codex-marketplace/manifest.json' 2>/dev/null || true
 ```
 
 Use `|| true` so a missing file does not abort the hook.

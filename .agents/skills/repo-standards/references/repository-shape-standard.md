@@ -7,7 +7,7 @@ This file describes the surfaces `repo-standards` checks and can apply. It is th
 - `.agents/plugins/marketplace-source` as a git submodule pointing at the marketplace source.
 - `.agents/plugins/marketplace.json` with `repo.local_skill_prefixes` configured.
 - `tools/run.py` - the repo's canonical `ci` (and other) task runner. See [ci-validation-pipeline.md](ci-validation-pipeline.md) for the contract.
-- `.git/hooks/pre-commit` wired to `tools/run.py ci --apply`. The hook is validated by contract (it must run `tools/run.py ci --apply` and use an `errexit/nounset/pipefail` guard), not by byte-for-byte comparison to a template.
+- `.git/hooks/pre-commit` wired to `tools/run.py ci --apply`. The hook is validated by contract (it must be executable on POSIX or carry a `#!` shebang, run `tools/run.py ci --apply`, and use an `errexit/nounset/pipefail` guard), not by byte-for-byte comparison to a template.
 - `.agents/doctrine/repo-runbook-policy.md` mapping the repo to `repo-standards`.
 - `REVIEW.md` at the repo root pointing to the review runbook and required skill invocations.
 - `CONTRIBUTING.md` at the repo root as the contributor entry point.
