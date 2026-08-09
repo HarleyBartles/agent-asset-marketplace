@@ -110,9 +110,16 @@ git commit -m "feat: validate pre-commit hook by contract, not byte-for-byte"
 
 - [x] **Step 1: Replace the final `git add -A` with targeted staging**
 
-Keep the `ci --apply` call, then add:
+Keep the `ci --apply` call. Capture the pre-build status, then after `ci --apply` use targeted staging:
 
 ```bash
+# Capture the working tree state before the build so we can detect any
+# generated files the staging allow-list does not cover.
+BEFORE_STATUS=$(mktemp)
+git status --porcelain --untracked-files=all > "$BEFORE_STATUS"
+
+# ... run tools/run.py ci --apply ...
+
 # Stage tracked files the build step may have modified or deleted.
 git add -u
 
@@ -127,9 +134,20 @@ git add -- ':(glob)**/.provenance.json' 2>/dev/null || true
 git add -- codex-marketplace/plugin-roots.json 2>/dev/null || true
 git add -- .agents/plugins/marketplace.json 2>/dev/null || true
 git add -- codex-marketplace/manifest.json 2>/dev/null || true
+
+# Fail the commit if the build produced any unstaged or untracked changes
+# outside the allow-list.
+AFTER_STATUS=$(mktemp)
+git status --porcelain --untracked-files=all > "$AFTER_STATUS"
+UNSTAGED=$(comm -13 <(sort "$BEFORE_STATUS") <(sort "$AFTER_STATUS") | awk 'substr($0,2,1) != " "')
+if [ -n "$UNSTAGED" ]; then
+  echo "pre-commit: build produced unstaged/tracked or untracked changes not in the staging allow-list:" >&2
+  echo "$UNSTAGED" >&2
+  exit 1
+fi
 ```
 
-Use `|| true` so a missing file does not abort the hook.
+Use `|| true` on `git add` calls for missing files; the post-build check is the deliberate failure point.
 
 - [x] **Step 2: Run `py -3 tools/run.py ci --check` and commit**
 
