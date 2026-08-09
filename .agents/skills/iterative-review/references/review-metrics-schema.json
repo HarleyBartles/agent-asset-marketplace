@@ -3,7 +3,7 @@
   "title": "Iterative review metrics",
   "description": "Evidence file for the iterative review graph. Recorded by the orchestrator at each metrics-track node.",
   "type": "object",
-  "required": ["pr", "findings_by_node", "rounds_per_finding", "regressions", "total_rounds", "total_reviewer_subagent_dispatches", "devin_auto_review_invocations"],
+  "required": ["pr", "findings_by_node", "rounds_per_finding", "regressions", "total_reviewer_subagent_dispatches", "devin_auto_review_invocations"],
   "properties": {
     "pr": {
       "type": "object",
@@ -34,7 +34,7 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["finding_id", "lens", "discovered_at_node", "discovered_at_round", "resolved_at_node", "resolved_at_round", "severity"],
+        "required": ["finding_id", "lens", "discovered_at_node", "discovered_at_round", "severity"],
         "properties": {
           "finding_id": {"type": "string"},
           "lens": {"type": "string"},
@@ -46,7 +46,7 @@
           "regression_class": {"type": "string", "enum": ["same-lens-blast-radius", "cross-lens-blast-radius", "outside-blast-radius"]},
           "contested": {"type": "boolean"},
           "fix_round": {"type": "integer", "minimum": 0},
-          "severity": {"type": "string", "enum": ["blocking", "important", "minor"]}
+          "severity": {"type": "string", "enum": ["blocking", "important", "minor", "deferred"]}
         }
       }
     },
@@ -61,8 +61,9 @@
           "discovered_at_node": {"type": "string"},
           "discovered_at_round": {"type": "integer", "minimum": 1},
           "lens": {"type": "string"},
+          "regression_of": {"type": "string"},
           "regression_class": {"type": "string", "enum": ["same-lens-blast-radius", "cross-lens-blast-radius", "outside-blast-radius"]},
-          "severity": {"type": "string", "enum": ["blocking", "important", "minor"]}
+          "severity": {"type": "string", "enum": ["blocking", "important", "minor", "deferred"]}
         }
       }
     },
