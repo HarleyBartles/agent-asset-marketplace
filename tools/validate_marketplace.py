@@ -18,7 +18,6 @@ from marketplace_utils import (
     MARKETPLACE_PLUGIN_SPECS,
     PLUGIN_ROOT_INVENTORY_PATH,
     REPO_INDEX_PATH,
-    REPO_INDEX_README_PATH,
     build_marketplace_manifest,
     load_json,
     parse_top_markdown_table,
@@ -486,7 +485,6 @@ def validate_project(*, skip_freshness: bool = False) -> None:
 
 def validate_index(*, skip_freshness: bool = False) -> None:
     _ = skip_freshness
-    check_text(REPO_INDEX_README_PATH)
     root = check_json(REPO_INDEX_PATH)
     for zone in root.get("zones", []):
         index_json = zone.get("index_json")

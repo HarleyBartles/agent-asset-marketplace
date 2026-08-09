@@ -14,7 +14,6 @@ PLUGIN_ROOT_INVENTORY_PATH = ROOT / "codex-marketplace/plugin-roots.json"
 MARKETPLACE_PATH = ROOT / ".agents/plugins/marketplace.json"
 CODEX_MARKETPLACE_MANIFEST_PATH = ROOT / "codex-marketplace/manifest.json"
 REPO_INDEX_PATH = ROOT / "INDEX.json"
-REPO_INDEX_README_PATH = ROOT / "repo-index/README.md"
 ZONE_INDEX_FILE_NAME = "INDEX.json"
 
 
