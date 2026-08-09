@@ -13,7 +13,7 @@ REQUIRED = {"finding_id", "lens", "discovered_at_node", "discovered_at_round", "
 
 
 def _load_state(path: Path) -> dict:
-    return json.loads(path.read_text(encoding="utf-8"))
+    return json.loads(path.read_text(encoding="utf-8-sig"))
 
 
 def _main(argv: list[str] | None = None) -> int:
@@ -53,7 +53,7 @@ def _main(argv: list[str] | None = None) -> int:
 
     existing = set()
     if log.exists():
-        for line in log.read_text(encoding="utf-8").splitlines():
+        for line in log.read_text(encoding="utf-8-sig").splitlines():
             if line.strip():
                 existing.add(json.loads(line).get("finding_id"))
 
