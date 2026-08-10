@@ -40,7 +40,10 @@ def _main_repo_root() -> Path:
 
 
 def _sanitize_branch_name(branch: str) -> str:
-    """Replace filesystem/URL-unsafe characters with a dash, matching sdd-workspace."""
+    """Replace filesystem/URL-unsafe characters with a dash.
+
+    This must match the canonical set in the repo-standards scratch-workspace policy.
+    """
     return re.sub(r'[:\\\\?*"<>|/\\\\]', "-", branch)
 
 
@@ -56,7 +59,48 @@ def _active_branches(main_repo_root: Path) -> set[str]:
     return {_sanitize_branch_name(line.strip()) for line in result.stdout.splitlines() if line.strip()}
 
 
-def _classify(scratch_root: Path, repo_name: str, active_branches: set[str]) -> list[tuple[str, Path]]:
+def _worktree_branches(main_repo_root: Path) -> set[str]:
+    """Return the sanitized branch names that currently have a checked-out worktree."""
+    result = subprocess.run(
+        ["git", "worktree", "list", "--porcelain"],
+        cwd=main_repo_root,
+        capture_output=True,
+        text=True,
+        check=True,
+        env=_stripped_env(),
+    )
+    branches: set[str] = set()
+    current_branch: str | None = None
+    for line in result.stdout.splitlines():
+        if line.startswith("branch "):
+            current_branch = line.split(" ", 1)[1]
+            if current_branch.startswith("refs/heads/"):
+                current_branch = current_branch[len("refs/heads/") :]
+            branches.add(_sanitize_branch_name(current_branch))
+            current_branch = None
+    return branches
+
+
+def _plans_referencing(plans_root: Path, branch: str) -> bool:
+    """Return True if any plan file appears to reference the given branch/scratch folder."""
+    if not plans_root.exists():
+        return False
+    for plan in plans_root.glob("*.md"):
+        try:
+            if branch in plan.read_text(encoding="utf-8"):
+                return True
+        except OSError:
+            pass
+    return False
+
+
+def _classify(
+    scratch_root: Path,
+    repo_name: str,
+    active_branches: set[str],
+    worktree_branches: set[str],
+    plans_root: Path,
+) -> list[tuple[str, Path]]:
     repo_scratch = scratch_root / repo_name
     if not repo_scratch.exists():
         return []
@@ -64,6 +108,10 @@ def _classify(scratch_root: Path, repo_name: str, active_branches: set[str]) -> 
     for entry in repo_scratch.iterdir():
         if entry.is_dir() and entry.name in active_branches:
             decisions.append(("keep_live", entry))
+        elif entry.is_dir() and entry.name in worktree_branches:
+            decisions.append(("keep_live (worktree present)", entry))
+        elif entry.is_dir() and _plans_referencing(plans_root, entry.name):
+            decisions.append(("keep_live (plan references)", entry))
         elif entry.is_dir():
             decisions.append(("delete_now", entry))
         else:
@@ -96,8 +144,10 @@ def _main() -> int:
     repo_name = args.repo_name or main_repo_root.name
     scratch_root = main_repo_root.parent / "_agent-scratch"
     active = _active_branches(main_repo_root)
+    worktrees = _worktree_branches(main_repo_root)
+    plans_root = main_repo_root / ".agents" / "plans"
 
-    decisions = _classify(scratch_root, repo_name, active)
+    decisions = _classify(scratch_root, repo_name, active, worktrees, plans_root)
     if not decisions:
         print(f"No scratch entries for {repo_name}")
         return 0

@@ -27,6 +27,20 @@ scratch for that task.
 - `<plan-or-task-basename>` is the base name of the plan or task file without
   extension.
 
+## Canonical branch sanitization
+
+Branch names are used as filesystem directory names, so the following characters
+are mapped to `-` by all producers and consumers of scratch paths:
+
+```text
+: \ ? * " < > | /
+```
+
+This set matches the default Windows/URL forbidden characters plus the path
+separators `/` and `\`. All implementations (Bash, PowerShell, and Python
+scripts) must use this exact character set so slash-branches such as `feature/x`
+are consistently stored as `feature-x`.
+
 ## Validation
 
 The `repo-standards` validator checks the local `_agent-scratch` root against

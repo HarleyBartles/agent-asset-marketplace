@@ -93,7 +93,10 @@ def _canonical_worktree_root(main_repo_root: Path, branch: str) -> Path:
 
 
 def _sanitize_branch_name(branch: str) -> str:
-    """Replace filesystem/URL-unsafe characters with a dash, matching sdd-workspace."""
+    """Replace filesystem/URL-unsafe characters with a dash.
+
+    This must match the canonical set in the repo-standards scratch-workspace policy.
+    """
     return re.sub(r'[:\\?*"<>|/\\\\]', "-", branch)
 
 

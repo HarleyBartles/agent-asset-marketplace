@@ -369,7 +369,7 @@ scratch_root.mkdir(parents=True, exist_ok=True)
 print(f"Scratch ready at {scratch_root}")
 ```
 
-Call it inside `_apply_worktree` immediately after the worktree is created and before `_configure_worktree`/skill refresh returns.
+Call it inside `_apply_worktree` after `_configure_worktree` succeeds and before `_apply_worktree` returns 0.
 
 - [ ] **Step 2: Add scratch removal to `remove_worktree.py`**
 
@@ -386,13 +386,12 @@ def _remove_scratch(main_repo_root: Path, branch: str) -> None:
 
 Call `_remove_scratch(main_repo_root, branch)` immediately after `git worktree remove` succeeds.
 
-- [ ] **Step 3: Commit each file**
+- [ ] **Step 3: Commit the worktree changes together**
 
 ```bash
 git add codex-marketplace/plugins/superpowers-plus/skills/using-git-worktrees/scripts/new_worktree.py
-git commit -m "feat(using-git-worktrees): create namespaced scratch with new worktree"
 git add codex-marketplace/plugins/superpowers-plus/skills/using-git-worktrees/scripts/remove_worktree.py
-git commit -m "feat(using-git-worktrees): remove namespaced scratch with worktree"
+git commit -m "feat(using-git-worktrees): create and remove namespaced scratch with worktree"
 ```
 
 ---
@@ -415,6 +414,7 @@ git commit -m "feat(using-git-worktrees): remove namespaced scratch with worktre
 """Classify and optionally clean orphan _agent-scratch directories."""
 
 import argparse
+import re
 import shutil
 import subprocess
 import sys
@@ -456,7 +456,61 @@ def _active_branches(main_repo_root: Path) -> set[str]:
     return {line.strip() for line in result.stdout.splitlines() if line.strip()}
 
 
-def _classify(scratch_root: Path, repo_name: str, active_branches: set[str]) -> list[tuple[str, Path]]:
+def _sanitize_branch_name(branch: str) -> str:
+    """Replace filesystem/URL-unsafe characters with a dash."""
+    return re.sub(r'[:\\?*"<>|/\\\\]', '-', branch)
+
+
+def _active_branches(main_repo_root: Path) -> set[str]:
+    result = subprocess.run(
+        ["git", "branch", "--format=%(refname:short)"],
+        cwd=main_repo_root,
+        capture_output=True,
+        text=True,
+        check=True,
+        env=_stripped_env(),
+    )
+    return {_sanitize_branch_name(line.strip()) for line in result.stdout.splitlines() if line.strip()}
+
+
+def _worktree_branches(main_repo_root: Path) -> set[str]:
+    result = subprocess.run(
+        ["git", "worktree", "list", "--porcelain"],
+        cwd=main_repo_root,
+        capture_output=True,
+        text=True,
+        check=True,
+        env=_stripped_env(),
+    )
+    branches: set[str] = set()
+    for line in result.stdout.splitlines():
+        if line.startswith("branch "):
+            branch = line.split(" ", 1)[1]
+            if branch.startswith("refs/heads/"):
+                branch = branch[len("refs/heads/"):]
+            branches.add(_sanitize_branch_name(branch))
+    return branches
+
+
+def _plans_referencing(plans_root: Path, branch: str) -> bool:
+    if not plans_root.exists():
+        return False
+    for plan in plans_root.glob("*.md"):
+        try:
+            if branch in plan.read_text(encoding="utf-8"):
+                return True
+        except OSError:
+            pass
+    return False
+
+
+def _classify(
+    scratch_root: Path,
+    repo_name: str,
+    active_branches: set[str],
+    worktree_branches: set[str],
+    plans_root: Path,
+) -> list[tuple[str, Path]]:
     repo_scratch = scratch_root / repo_name
     if not repo_scratch.exists():
         return []
@@ -464,6 +518,10 @@ def _classify(scratch_root: Path, repo_name: str, active_branches: set[str]) -> 
     for entry in repo_scratch.iterdir():
         if entry.is_dir() and entry.name in active_branches:
             decisions.append(("keep_live", entry))
+        elif entry.is_dir() and entry.name in worktree_branches:
+            decisions.append(("keep_live (worktree present)", entry))
+        elif entry.is_dir() and _plans_referencing(plans_root, entry.name):
+            decisions.append(("keep_live (plan references)", entry))
         elif entry.is_dir():
             decisions.append(("delete_now", entry))
         else:
@@ -473,18 +531,33 @@ def _classify(scratch_root: Path, repo_name: str, active_branches: set[str]) -> 
 
 def _main() -> int:
     parser = argparse.ArgumentParser(
-        description="Classify or remove orphan _agent-scratch directories."
+        description="Classify or remove orphan _agent-scratch directories.",
+        epilog="--check is the default and always exits 0; --apply removes delete_now entries.",
     )
     parser.add_argument("--repo-name", help="repository name to inspect; defaults to main checkout basename")
-    parser.add_argument("--apply", action="store_true", help="remove delete_now entries")
+    mode = parser.add_mutually_exclusive_group()
+    mode.add_argument(
+        "--check",
+        action="store_true",
+        default=True,
+        help="report classification and exit 0 (default, read-only)",
+    )
+    mode.add_argument(
+        "--apply",
+        action="store_true",
+        default=False,
+        help="remove delete_now entries (mutating)",
+    )
     args = parser.parse_args()
 
     main_repo_root = _main_repo_root()
     repo_name = args.repo_name or main_repo_root.name
     scratch_root = main_repo_root.parent / "_agent-scratch"
     active = _active_branches(main_repo_root)
+    worktrees = _worktree_branches(main_repo_root)
+    plans_root = main_repo_root / ".agents" / "plans"
 
-    decisions = _classify(scratch_root, repo_name, active)
+    decisions = _classify(scratch_root, repo_name, active, worktrees, plans_root)
     if not decisions:
         print(f"No scratch entries for {repo_name}")
         return 0
@@ -504,8 +577,6 @@ def _main() -> int:
 if __name__ == "__main__":
     sys.exit(_main())
 ```
-
-The production implementation adds a mutually exclusive `--check` (default, read-only, exits 0) and `--apply` (mutating) flag pair, matching the skill-bundled CLI contract. It also sanitizes active branch names with `re.sub(r'[:\\?*"<>|/\\\\]', '-', branch)` so slash-branches produce a single flat directory.
 
 - [ ] **Step 2: Verify `--help` and `--check` equivalent**
 
@@ -556,10 +627,11 @@ py -3 tools/run.py ci --check
 
 Expected: all targets pass on the staged tree.
 
-- [ ] **Step 3: Commit the regenerated copies**
+- [ ] **Step 3: Include regenerated copies in the relevant task commits**
 
 ```bash
-git commit -m "chore: regenerate installed skills and marketplace for scratch namespace policy"
+# regenerate as part of the task; then `git add -A` and `git commit`
+# so installed skills/indexes are committed alongside the canonical source change
 ```
 
 Expected: the pre-commit hook re-runs `ci --apply` and succeeds.

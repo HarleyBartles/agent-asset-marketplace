@@ -140,7 +140,10 @@ def _check_worktree(repo_root: Path, target: str) -> tuple[int, Path, str]:
 
 
 def _sanitize_branch_name(branch: str) -> str:
-    """Replace filesystem/URL-unsafe characters with a dash, matching sdd-workspace."""
+    """Replace filesystem/URL-unsafe characters with a dash.
+
+    This must match the canonical set in the repo-standards scratch-workspace policy.
+    """
     return re.sub(r'[:\\?*"<>|/\\\\]', "-", branch)
 
 
