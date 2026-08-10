@@ -106,9 +106,7 @@ def _resolve_worktree(repo_root: Path, target: str) -> Path:
     if len(by_leaf) == 1:
         return Path(next(iter(by_leaf.values()))).resolve()
     if len(by_leaf) > 1:
-        raise RuntimeError(
-            f"branch {target!r} is ambiguous; use a full ref such as {', '.join(sorted(by_leaf))}"
-        )
+        raise RuntimeError(f"branch {target!r} is ambiguous; use a full ref such as {', '.join(sorted(by_leaf))}")
 
     raise RuntimeError(f"Could not resolve worktree: {target}")
 
