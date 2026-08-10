@@ -380,20 +380,9 @@ print(f"Scratch ready at {scratch_root}")
 
 Call it inside `_apply_worktree` after `_configure_worktree` succeeds and before `_apply_worktree` returns 0.
 
-- [ ] **Step 2: Add scratch removal to `remove_worktree.py`**
+- [ ] **Step 2: Keep scratch cleanup out of `remove_worktree.py`**
 
-Locate the worktree removal logic and add the scratch removal step:
-
-```python
-def _remove_scratch(main_repo_root: Path, branch: str) -> None:
-    repo_name = main_repo_root.name
-    scratch_root = main_repo_root.parent / "_agent-scratch" / repo_name / _sanitize_branch_name(branch)
-    if scratch_root.exists():
-        shutil.rmtree(scratch_root, ignore_errors=True)
-        print(f"Removed scratch {scratch_root}")
-```
-
-Call `_remove_scratch(main_repo_root, branch)` immediately after `git worktree remove` succeeds.
+`remove_worktree.py` only removes the git worktree. Do not delete the branch's scratch directory here; `cleanup_scratch.py` owns scratch lifecycle and will classify folders as `delete_now` only when the branch is merged and no plan references them.
 
 - [ ] **Step 3: Commit the worktree changes together**
 

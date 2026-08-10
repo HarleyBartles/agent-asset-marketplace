@@ -44,7 +44,7 @@ def _sanitize_branch_name(branch: str) -> str:
 
     This must match the canonical set in the repo-standards scratch-workspace policy.
     """
-    return re.sub(r'[:\\\\?*"<>|/\\\\]', "-", branch)
+    return re.sub(r'[:\\?*"<>|/\\\\]', "-", branch)
 
 
 def _active_branches(main_repo_root: Path) -> set[str]:
@@ -82,12 +82,13 @@ def _worktree_branches(main_repo_root: Path) -> set[str]:
 
 
 def _plans_referencing(plans_root: Path, branch: str) -> bool:
-    """Return True if any plan file appears to reference the given branch/scratch folder."""
+    """Return True if any plan file explicitly references the given branch/scratch folder."""
     if not plans_root.exists():
         return False
+    pattern = re.compile(rf"(?<!\w){re.escape(branch)}(?!\w)")
     for plan in plans_root.glob("*.md"):
         try:
-            if branch in plan.read_text(encoding="utf-8"):
+            if pattern.search(plan.read_text(encoding="utf-8")):
                 return True
         except OSError:
             pass

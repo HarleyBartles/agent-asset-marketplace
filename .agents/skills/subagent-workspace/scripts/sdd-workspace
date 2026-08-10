@@ -36,6 +36,15 @@ repo_name=$(basename "$main_checkout")
 branch=$(git -C "$root" rev-parse --abbrev-ref HEAD)
 branch=$(printf '%s' "$branch" | tr ':\?*"<>|/\\' '-')
 dir="$scratch_parent/_agent-scratch/$repo_name/$branch"
+
+# Fall back to the legacy flat layout if the repo-namespaced path has not
+# been populated yet, so in-flight scratch created before the namespacing
+# change remains accessible.
+legacy_dir="$scratch_parent/_agent-scratch/$branch"
+if [[ -d "$legacy_dir" && ! -d "$dir" ]]; then
+  dir="$legacy_dir"
+fi
+
 mkdir -p "$dir"
 current_plan="$dir/current-plan.txt"
 plan_stem=""

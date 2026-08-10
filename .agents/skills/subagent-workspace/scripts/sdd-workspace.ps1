@@ -53,6 +53,15 @@ $repoName = Split-Path -Leaf $mainCheckout
 $branch = (git -C "$root" rev-parse --abbrev-ref HEAD).Trim()
 $branch = $branch -replace '[\\/:*?"<>|]', '-'
 $workspaceRoot = Join-Path (Join-Path (Join-Path $scratchParent "_agent-scratch") $repoName) $branch
+
+# Fall back to the legacy flat layout if the repo-namespaced path has not
+# been populated yet, so in-flight scratch created before the namespacing
+# change remains accessible.
+$legacyWorkspaceRoot = Join-Path (Join-Path $scratchParent "_agent-scratch") $branch
+if ((Test-Path -LiteralPath $legacyWorkspaceRoot) -and -not (Test-Path -LiteralPath $workspaceRoot)) {
+  $workspaceRoot = $legacyWorkspaceRoot
+}
+
 New-Item -ItemType Directory -Force -Path $workspaceRoot | Out-Null
 
 $currentPlanMarker = Join-Path $workspaceRoot 'current-plan.txt'

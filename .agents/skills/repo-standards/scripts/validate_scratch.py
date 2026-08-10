@@ -3,7 +3,6 @@
 
 import argparse
 import os
-import re
 import shutil
 import subprocess
 import sys
@@ -37,12 +36,15 @@ def _scratch_root() -> Path:
     return main.parent / "_agent-scratch"
 
 
+_FORBIDDEN = set(r':\?*"<>|/\\\\')
+
+
 def _valid_name(name: str) -> bool:
-    """Return True if name is a non-empty, path-safe token without separators."""
-    return bool(name) and re.fullmatch(r"[A-Za-z0-9_.-]+", name) is not None
+    """Return True if name is a non-empty, path-safe token without forbidden characters."""
+    return bool(name) and name not in (".", "..") and not _FORBIDDEN.intersection(name)
 
 
-def _validate(check: bool, apply: bool) -> int:
+def _validate(apply: bool) -> int:
     scratch_root = _scratch_root()
     if not scratch_root.exists():
         print(f"OK: {scratch_root} does not exist")
@@ -108,8 +110,8 @@ def _cli() -> int:
     )
     args = parser.parse_args()
     if args.apply:
-        return _validate(check=False, apply=True)
-    return _validate(check=True, apply=False)
+        return _validate(apply=True)
+    return _validate(apply=False)
 
 
 if __name__ == "__main__":
