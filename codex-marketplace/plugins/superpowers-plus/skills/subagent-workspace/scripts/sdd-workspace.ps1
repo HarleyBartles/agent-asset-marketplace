@@ -49,9 +49,20 @@ $PlanFile = $resolvedPlan
 $commonDir = (git -C "$root" rev-parse --git-common-dir).Trim()
 $mainCheckout = Split-Path -Parent $commonDir
 $scratchParent = Split-Path -Parent $mainCheckout
+$repoName = Split-Path -Leaf $mainCheckout
 $branch = (git -C "$root" rev-parse --abbrev-ref HEAD).Trim()
 $branch = $branch -replace '[\\/:*?"<>|]', '-'
-$workspaceRoot = Join-Path (Join-Path $scratchParent "_agent-scratch") $branch
+$workspaceRoot = Join-Path (Join-Path (Join-Path $scratchParent "_agent-scratch") $repoName) $branch
+
+# One-time migration: if the repo-scoped path has not been created yet but a
+# legacy flat `_agent-scratch/<branch>` exists, copy its contents into the
+# scoped path so the per-project separation takes effect immediately.
+$legacyWorkspaceRoot = Join-Path (Join-Path $scratchParent "_agent-scratch") $branch
+if ((Test-Path -LiteralPath $legacyWorkspaceRoot) -and -not (Test-Path -LiteralPath $workspaceRoot)) {
+  New-Item -ItemType Directory -Force -Path $workspaceRoot | Out-Null
+  Copy-Item -Path "$legacyWorkspaceRoot\*" -Destination $workspaceRoot -Recurse -Force -ErrorAction SilentlyContinue
+}
+
 New-Item -ItemType Directory -Force -Path $workspaceRoot | Out-Null
 
 $currentPlanMarker = Join-Path $workspaceRoot 'current-plan.txt'

@@ -13,6 +13,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -89,6 +90,19 @@ def _main_repo_root() -> Path:
 def _canonical_worktree_root(main_repo_root: Path, branch: str) -> Path:
     repo_name = main_repo_root.name
     return main_repo_root.parent / "_agent-worktrees" / repo_name / branch
+
+
+def _sanitize_branch_name(branch: str) -> str:
+    """Replace filesystem/URL-unsafe characters with a dash.
+
+    This must match the canonical set in the repo-standards scratch-workspace policy.
+    """
+    return re.sub(r'[:\\?*"<>|/\\\\]', "-", branch)
+
+
+def _canonical_scratch_root(main_repo_root: Path, branch: str) -> Path:
+    repo_name = main_repo_root.name
+    return main_repo_root.parent / "_agent-scratch" / repo_name / _sanitize_branch_name(branch)
 
 
 def _normalize_branch_name(branch: str) -> str:
@@ -466,6 +480,11 @@ def _apply_worktree(
     if exit_code != 0:
         _remove_worktree(worktree_root, main_repo_root, branch)
         return exit_code
+
+    scratch_root = _canonical_scratch_root(main_repo_root, branch)
+    scratch_root.mkdir(parents=True, exist_ok=True)
+    print(f"Scratch ready at {scratch_root}")
+
     return 0
 
 
