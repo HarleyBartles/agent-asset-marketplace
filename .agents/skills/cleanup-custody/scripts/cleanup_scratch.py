@@ -10,6 +10,7 @@ This script follows the skill-bundled CLI contract:
 
 import argparse
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -38,6 +39,11 @@ def _main_repo_root() -> Path:
     raise RuntimeError("Could not determine the main repository root")
 
 
+def _sanitize_branch_name(branch: str) -> str:
+    """Replace filesystem/URL-unsafe characters with a dash, matching sdd-workspace."""
+    return re.sub(r'[:\\\\?*"<>|/\\\\]', "-", branch)
+
+
 def _active_branches(main_repo_root: Path) -> set[str]:
     result = subprocess.run(
         ["git", "branch", "--format=%(refname:short)"],
@@ -47,7 +53,7 @@ def _active_branches(main_repo_root: Path) -> set[str]:
         check=True,
         env=_stripped_env(),
     )
-    return {line.strip() for line in result.stdout.splitlines() if line.strip()}
+    return {_sanitize_branch_name(line.strip()) for line in result.stdout.splitlines() if line.strip()}
 
 
 def _classify(scratch_root: Path, repo_name: str, active_branches: set[str]) -> list[tuple[str, Path]]:

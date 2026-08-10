@@ -13,6 +13,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -91,9 +92,14 @@ def _canonical_worktree_root(main_repo_root: Path, branch: str) -> Path:
     return main_repo_root.parent / "_agent-worktrees" / repo_name / branch
 
 
+def _sanitize_branch_name(branch: str) -> str:
+    """Replace filesystem/URL-unsafe characters with a dash, matching sdd-workspace."""
+    return re.sub(r'[:\\?*"<>|/\\\\]', "-", branch)
+
+
 def _canonical_scratch_root(main_repo_root: Path, branch: str) -> Path:
     repo_name = main_repo_root.name
-    return main_repo_root.parent / "_agent-scratch" / repo_name / branch
+    return main_repo_root.parent / "_agent-scratch" / repo_name / _sanitize_branch_name(branch)
 
 
 def _normalize_branch_name(branch: str) -> str:

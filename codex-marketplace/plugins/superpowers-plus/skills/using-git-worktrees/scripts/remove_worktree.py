@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import argparse
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -138,10 +139,25 @@ def _check_worktree(repo_root: Path, target: str) -> tuple[int, Path, str]:
     return 1, worktree, f"Would remove worktree {worktree} (matched by {target!r})"
 
 
+def _sanitize_branch_name(branch: str) -> str:
+    """Replace filesystem/URL-unsafe characters with a dash, matching sdd-workspace."""
+    return re.sub(r'[:\\?*"<>|/\\\\]', "-", branch)
+
+
+def _branch_for_worktree(repo_root: Path, worktree: Path) -> str | None:
+    worktrees = _list_worktrees(repo_root)
+    for branch, path in worktrees.items():
+        if Path(path).resolve() == worktree.resolve():
+            return branch
+    return None
+
+
 def _apply_remove(repo_root: Path, worktree: Path, force: bool) -> int:
     if worktree == repo_root.resolve():
         print("error: refusing to remove the main repository checkout", file=sys.stderr)
         return 1
+
+    branch = _branch_for_worktree(repo_root, worktree)
 
     if force:
         # Deinitialize submodules only when force-removing; this mutates the
@@ -190,7 +206,8 @@ def _apply_remove(repo_root: Path, worktree: Path, force: bool) -> int:
 
     main_repo_root = _main_repo_root()
     repo_name = main_repo_root.name
-    scratch_root = main_repo_root.parent / "_agent-scratch" / repo_name / worktree.name
+    branch_name = _sanitize_branch_name(branch) if branch else worktree.name
+    scratch_root = main_repo_root.parent / "_agent-scratch" / repo_name / branch_name
     if scratch_root.exists():
         shutil.rmtree(scratch_root, ignore_errors=True)
         print(f"Removed scratch {scratch_root}")
