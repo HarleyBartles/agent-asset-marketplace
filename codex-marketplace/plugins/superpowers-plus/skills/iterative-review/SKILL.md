@@ -48,7 +48,8 @@ Follow the `review-state-graph.md` reference. The graph routes the orchestrator 
 - `selecting-a-subagent` skill for choosing lens profiles.
 - `references/review-state-graph.md` for the canonical graph, node table, and edge conditions.
 - `references/review-metrics-schema.json` for the metrics to collect.
-- `references/review-log-orchestrator-self-review.md` for the prediction log template.
+- `references/review-log-orchestrator-self-review.md` for the filled orchestrator self-review log.
+- `references/review-log-orchestrator-self-review-template.md` for the skeleton/template for that log.
 - `references/review-log-resolved-ledger.md` for the evidence file required by `final-strong`.
 - `references/node-*.md` for the per-node recipes. Do not read ahead; open only the `references/node-<node>.md` file named by `next_node.py`.
 - The relevant `reviewer-*.md` lens profiles for the current repository.
@@ -105,6 +106,24 @@ For every post-fix finding, set `regression_class` from the decision table in th
 - The orchestrator owns the scope-honesty preflight, the `orchestrator-self-review` pass, all verification, the `resolved-ledger`, and the final decision to flip the PR to ready. `implementer` subagents own the fix edits under the orchestrator's brief. `orchestrator-self-review` is orchestrator-only; no `reviewer-*`, `implementer`, or `subagent_explore` may be dispatched to perform it.
 - All review inputs, logs, metrics, and fix-diffs are written to the off-repo scratch directory; they are never committed to the repo.
 - CI must pass before leaving draft.
+
+## Lens re-run scope
+
+`lens-dispatch` runs at most once per review cycle. It dispatches every lens whose `## Applies to` rules match the PR.
+
+When a finding is fixed, `finding-fix` -> `re-preflight` -> `reviewer-fixes` re-runs only the originating lens for that finding. Do not re-dispatch all lenses after a single fix; that is unnecessary churn and can introduce unrelated feedback late in the cycle.
+
+## Machine-managed files
+
+The following files in the off-repo scratch must be written only through the provided scripts. The orchestrator must not use `write` or `edit` on them:
+
+- `review-state.json` - written by `next_node.py --propose` or `next_node.py --resync --apply`.
+- `findings.jsonl`, `resolutions.jsonl`, `regressions.jsonl`, `blockers.jsonl` - written by `record_*.py` scripts.
+- `lenses.jsonl` - written by `select_lenses.py --apply`.
+- `review-log-orchestrator-self-review.md` - written by `record_orchestrator_log.py`.
+- `review-metrics.json` - written by `compile_metrics.py`.
+
+Lens subagents write their own `review-log-<lens>.md` files with `write` and end them with a one-line status. The `write` tool warning applies to orchestrator-authored files; it causes IDE buffer contention when a file is also open or being updated by a script.
 
 ## Common Mistakes
 

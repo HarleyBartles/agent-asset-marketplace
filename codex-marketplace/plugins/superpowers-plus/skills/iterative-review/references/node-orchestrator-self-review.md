@@ -12,14 +12,23 @@ Use shell/pattern tools such as `grep`, `py -3 -c`, `Select-String`, `ripgrep`, 
 ## Inputs
 - Full branch `<diff_path>`
 - `reviewer-*.md` lens profiles from the Devin Desktop agents search path
+- `references/review-log-orchestrator-self-review-template.md` for the log skeleton
 - Off-repo `<scratch_dir>`
 
 ## Recipe
-1. For each relevant `reviewer-*.md` profile, read its `## Checklist` and `## Applies to` sections.
-2. Use `## Applies to` only to decide relevance; still scan the full diff for checklist patterns. The orchestrator must perform this scan with the tools above. Do not call a subagent to do a full lens review; `lens-dispatch` will run the parallel lens reviewers after this node.
-3. Fix predictable issues with high confidence.
-4. Record uncertain items in `review-log-orchestrator-self-review.md` in the off-repo scratch.
-5. Update `<scan_findings>` after the fixes.
+1. Read `references/review-log-orchestrator-self-review-template.md` to get the log skeleton.
+2. For each relevant `reviewer-*.md` profile, read its `## Checklist` and `## Applies to` sections.
+3. Use `## Applies to` only to decide relevance; still scan the full diff for checklist patterns. The orchestrator must perform this scan with the tools above. Do not call a subagent to do a full lens review; `lens-dispatch` will run the parallel lens reviewers after this node.
+4. Fix predictable issues with high confidence.
+5. Record the completed self-review in `review-log-orchestrator-self-review.md` in the off-repo scratch by appending the filled template with `record_orchestrator_log.py`. Save the filled template to a temporary file and pass it via `--data-file`:
+   ```bash
+   py -3 .agents/skills/iterative-review/scripts/record_orchestrator_log.py \
+       --state <scratch_dir>/review-state.json \
+       --node orchestrator-self-review \
+       --data-file <temp_filled_template.md> \
+       --apply
+   ```
+6. Update `<scan_findings>` after the fixes.
 
 ## Outputs
 - Write `review-log-orchestrator-self-review.md`
