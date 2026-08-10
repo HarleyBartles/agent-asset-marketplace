@@ -217,7 +217,6 @@ git commit -m "docs(iterative-review): require TDD evidence in finding-fix and f
 Add the two computed values to the returned metrics dict. After `total_rounds`:
 
 ```python
-    fix_nodes = {"finding-fix", "fast-fix"}
     findings_discovered_at_fix_nodes = sum(
         1 for f in findings if f.get("discovered_at_node") in {"finding-fix", "fast-fix"}
     )
