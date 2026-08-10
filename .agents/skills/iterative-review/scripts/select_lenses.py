@@ -100,11 +100,13 @@ def _select(state: dict) -> list[dict]:
         rule = _applies_to(text)
         lens = profile.stem
         if _matches(rule, changed, diff_text, pr_text, provided) and lens != "reviewer-strong":
-            selected.append({
-                "lens": lens,
-                "profile_path": str(profile.resolve()),
-                "output_path": str((scratch / f"review-log-{lens}.md").resolve()),
-            })
+            selected.append(
+                {
+                    "lens": lens,
+                    "profile_path": str(profile.resolve()),
+                    "output_path": str((scratch / f"review-log-{lens}.md").resolve()),
+                }
+            )
     return selected
 
 

@@ -106,6 +106,17 @@ For every post-fix finding, set `regression_class` from the decision table in th
 - All review inputs, logs, metrics, and fix-diffs are written to the off-repo scratch directory; they are never committed to the repo.
 - CI must pass before leaving draft.
 
+## Machine-managed files
+
+The following files in the off-repo scratch must be written only through the provided scripts:
+
+- `review-state.json` - written by `next_node.py --propose` or `next_node.py --resync --apply`.
+- `findings.jsonl`, `resolutions.jsonl`, `regressions.jsonl`, `blockers.jsonl` - written by `record_*.py` scripts.
+- `review-log-*.md` - written by the dispatched lens subagents and by `record_orchestrator_log.py` for orchestrator logs.
+- `review-metrics.json` - written by `compile_metrics.py`.
+
+Do not use `write` or `edit` on these files. The `write` tool causes IDE buffer contention when the file is also open or being updated by a script.
+
 ## Common Mistakes
 
 - Treating the skill as a fixed list of rounds. Use the graph.
