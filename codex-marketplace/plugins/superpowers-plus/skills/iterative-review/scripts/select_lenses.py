@@ -42,7 +42,7 @@ def _applies_to(text: str) -> dict:
     section = section_match.group(1)
 
     def _list_items(name: str) -> list[str]:
-        pattern = re.compile(rf"- {re.escape(name)}:\s*\n((?:\s+- .*\n)+)", re.S)
+        pattern = re.compile(rf"- {re.escape(name)}:\s*\n((?:[ \t]+- [^\n]*(?:\n|\Z))+)", re.S)
         m = pattern.search(section)
         if not m:
             return []
@@ -86,14 +86,27 @@ def _load_state(state_path: Path) -> dict:
         return json.load(f)
 
 
+def _find_diff_path(scratch: Path) -> Path | None:
+    candidates = list(scratch.glob("review-*..*.diff"))
+    return candidates[0] if candidates else None
+
+
 def _select(state: dict) -> list[dict]:
     scratch = Path(state["scratch_dir"])
-    diff_path = scratch / f"review-{state['pr']['base']}..{state['pr']['head_sha']}.diff"
-    pr_path = scratch / "pr_description.json"
-    diff_text = diff_path.read_text(encoding="utf-8") if diff_path.exists() else ""
+    diff_path = _find_diff_path(scratch)
+    pr_path = scratch / "pr_description"
+    diff_text = diff_path.read_text(encoding="utf-8") if diff_path and diff_path.exists() else ""
     pr_text = pr_path.read_text(encoding="utf-8") if pr_path.exists() else ""
-    changed = _changed_files(diff_path if diff_path.exists() else None)
-    provided = ["<diff_path>", "<pr_description>", "<scan_findings>", "<review-log-orchestrator-self-review>"]
+    changed = _changed_files(diff_path)
+    provided = []
+    if diff_path and diff_path.exists():
+        provided.append("<diff_path>")
+    if pr_path.exists():
+        provided.append("<pr_description>")
+    if (scratch / "scan_findings").exists():
+        provided.append("<scan_findings>")
+    if (scratch / "review-log-orchestrator-self-review.md").exists():
+        provided.append("<review-log-orchestrator-self-review>")
 
     selected = []
     for profile in _reviewer_paths():

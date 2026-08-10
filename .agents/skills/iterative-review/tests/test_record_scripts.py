@@ -149,7 +149,7 @@ class TestRecordOrchestratorLog(unittest.TestCase):
                 capture_output=True,
                 text=True,
             )
-            self.assertEqual(result.returncode, 1)
+            self.assertEqual(result.returncode, 2)
             self.assertIn("the following arguments are required", result.stderr)
 
 

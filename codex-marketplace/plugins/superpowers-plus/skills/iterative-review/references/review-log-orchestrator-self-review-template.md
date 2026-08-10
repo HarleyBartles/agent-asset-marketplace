@@ -28,6 +28,22 @@
 |---|---|---|
 | | | |
 
+## Next node
+
+Proceed to `lens-dispatch` and dispatch the relevant lens reviewers. A clean prediction log does not bypass this node.
+
+## Review artifacts
+
+The orchestrator writes all review inputs and logs to the off-repo `iterative-review-<pr_number>` directory. The canonical file names are:
+
+- `review-<base7>..<head7>.diff`
+- `pr_description`
+- `review-log-orchestrator-self-review.md`
+- `review-log-<lens>.md`
+- `review-metrics.json`
+
+These files are never committed. They are the review proto-memory: later reviewers and the orchestrator read them to avoid re-deriving earlier work, to verify claimed fixes, and to detect regressions.
+
 ## Metrics snapshot
 
 ```json
