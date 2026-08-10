@@ -1,6 +1,6 @@
 # Iterative review - TDD and fast-fix churn reduction (proposal)
 
-**Status:** Proposed next phase (not yet in-flight).
+**Status:** In-flight for Plan 4 implementation.
 **Source:** Design discussion after Plan 3 final branch review of PR #289.
 
 ## Goal
