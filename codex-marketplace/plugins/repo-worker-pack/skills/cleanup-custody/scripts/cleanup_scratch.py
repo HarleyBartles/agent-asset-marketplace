@@ -70,13 +70,14 @@ def _main() -> int:
         description="Classify or remove orphan _agent-scratch directories. (mixed: supports --check and --apply)"
     )
     parser.add_argument("--repo-name", help="repository name to inspect; defaults to main checkout basename")
-    parser.add_argument(
+    mode = parser.add_mutually_exclusive_group()
+    mode.add_argument(
         "--check",
         action="store_true",
         default=True,
         help="report classification and exit 0 (default, read-only)",
     )
-    parser.add_argument(
+    mode.add_argument(
         "--apply",
         action="store_true",
         default=False,

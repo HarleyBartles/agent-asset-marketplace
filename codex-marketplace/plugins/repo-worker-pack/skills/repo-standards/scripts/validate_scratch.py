@@ -90,14 +90,20 @@ def _cli() -> int:
     parser = argparse.ArgumentParser(
         description="Validate the _agent-scratch directory is namespaced by repo. (mixed: supports --check and --apply)"
     )
-    parser.add_argument("--check", action="store_true", default=False, help="report drift and exit 1 if found")
-    parser.add_argument(
-        "--apply", action="store_true", default=False, help="remove orphan entries classified as delete_now"
+    mode = parser.add_mutually_exclusive_group()
+    mode.add_argument(
+        "--check",
+        action="store_true",
+        default=True,
+        help="report drift and exit 1 if found (default, read-only)",
+    )
+    mode.add_argument(
+        "--apply",
+        action="store_true",
+        default=False,
+        help="remove invalid top-level files and non-namespaced folders (mutating)",
     )
     args = parser.parse_args()
-    if not args.check and not args.apply:
-        parser.print_help()
-        return 0
     if args.apply:
         return _validate(check=False, apply=True)
     return _validate(check=True, apply=False)
