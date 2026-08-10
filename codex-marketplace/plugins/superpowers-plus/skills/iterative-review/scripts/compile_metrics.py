@@ -53,6 +53,10 @@ def _compile(state: dict, logs: dict) -> dict:
         (f.get("discovered_at_round", 0) for f in findings),
         default=state.get("round", 1),
     )
+    findings_discovered_at_fix_nodes = sum(
+        1 for f in findings if f.get("discovered_at_node") in {"finding-fix", "fast-fix"}
+    )
+    regressions_introduced = len(regressions)
 
     return {
         "pr": state.get("pr", {}),
@@ -63,6 +67,8 @@ def _compile(state: dict, logs: dict) -> dict:
         "previous_node": state.get("previous_node"),
         "non_trivial_fix": state.get("non_trivial_fix", False),
         "total_rounds": total_rounds,
+        "findings_discovered_at_fix_nodes": findings_discovered_at_fix_nodes,
+        "regressions_introduced": regressions_introduced,
     }
 
 
