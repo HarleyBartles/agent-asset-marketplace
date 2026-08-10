@@ -19,7 +19,7 @@ from pathlib import Path
 def _load_metrics(path: Path) -> dict:
     if not path.exists():
         return {}
-    return json.loads(path.read_text(encoding="utf-8"))
+    return json.loads(path.read_text(encoding="utf-8-sig"))
 
 
 def _is_ledger_clean(metrics: dict) -> tuple[bool, str]:

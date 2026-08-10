@@ -1,17 +1,19 @@
 # Completing plans and specs
 
-Use this runbook when a plan and its associated spec(s) are delivered and the work is fully merged. It keeps `.agents/plans/` and `.agents/specs/` focused on in-flight work while preserving the historical record in a generated, indexed archive.
+Use this runbook when a plan and its associated spec(s) are delivered in the same PR as the implementation. Close out the artifacts in the completing PR so that when it merges the plan, spec, and related files move to the generated, indexed archive and `.agents/plans/` / `.agents/specs/` stay focused on in-flight work.
 
 ## When to archive
 
-Archive a plan and its related artifacts once:
+Archive a plan and its related artifacts as part of the same PR that completes the work, so that when the PR merges the artifacts it completes are closed out.
 
-- the work described by the plan is merged to `main`;
-- the spec is fully realized in the merged implementation;
+Archive once:
+
+- the implementation is complete and the PR is ready for final review;
+- the spec is fully realized in the implementation;
 - any roadmap or design notes tied to the same work slice are no longer active;
-- the plan is marked completed: every top-level checkbox (`- [ ]`) is checked (`- [x]`), OR the plan records a merged implementation PR.
+- the plan is marked completed: every top-level checkbox (`- [ ]`) is checked (`- [x]`), OR the plan records the implementation PR.
 
-Do not archive a plan while its work is still in an open branch, draft PR, or unresolved review.
+Do not archive a plan before its implementation is ready for final review or while it has unresolved review findings.
 
 > **Historical records:** Plans already in `.agents/plans/completed/` are historical snapshots. Do not re-litigate their checkboxes or update them to match the new completion rule. Going forward, only plans that are fully checked off or linked to a merged PR should be moved into `completed/`.
 
@@ -57,9 +59,10 @@ py -3 tools/run.py marketplace --apply
 # 5. Verify the tree passes CI before committing
 py -3 tools/run.py ci --check
 
-# 6. Commit and publish
+# 6. Commit the archive to the completing PR branch and publish
 git add -A
 git commit -m "archive: complete <plan-name>"
+git push origin <pr-branch>
 ```
 
 ## Mesh behavior

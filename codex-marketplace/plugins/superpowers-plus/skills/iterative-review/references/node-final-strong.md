@@ -14,17 +14,56 @@ Run one whole-branch `reviewer-strong` pass after all `blocking/important` findi
 
 ## Recipe
 1. Validate the dispatch:
-   ```
-   py -3 .agents/skills/iterative-review/scripts/next_node.py --propose final-strong --metrics <scratch_dir>/review-metrics.json
+   ```bash
+   py -3 .agents/skills/iterative-review/scripts/next_node.py \
+       --state <scratch_dir>/review-state.json \
+       --propose final-strong
    ```
 2. Build the input package and `run_subagent` `reviewer-strong` to the `<log_path>`.
-3. If `reviewer-strong: clean` and the preflight is clean, go to `closeout`.
-4. If findings are reported, update `rounds_per_finding` in `review-metrics.json` and go to `metrics-track` to start a new fix loop.
-5. If a `contested` or `load-bearing` finding is reported, set `contested: true` on the finding and go to `blocked`.
+3. If `reviewer-strong: clean` and the preflight is clean, authorize `closeout`:
+   ```bash
+   py -3 .agents/skills/iterative-review/scripts/compile_metrics.py \
+       --state <scratch_dir>/review-state.json \
+       --metrics <scratch_dir>/review-metrics.json
+   py -3 .agents/skills/iterative-review/scripts/next_node.py \
+       --state <scratch_dir>/review-state.json \
+       --propose closeout
+   ```
+4. If findings are reported, record each new finding, then regenerate the metrics file and go to `metrics-track` to start a new fix loop:
+   ```bash
+   py -3 .agents/skills/iterative-review/scripts/record_finding.py \
+       --state <scratch_dir>/review-state.json \
+       --data '{"finding_id": "<finding_id>", "lens": "reviewer-strong", "discovered_at_node": "final-strong", "discovered_at_round": <round>, "severity": "<severity>"}'
+   py -3 .agents/skills/iterative-review/scripts/compile_metrics.py \
+       --state <scratch_dir>/review-state.json \
+       --metrics <scratch_dir>/review-metrics.json
+   py -3 .agents/skills/iterative-review/scripts/next_node.py \
+       --state <scratch_dir>/review-state.json \
+       --propose metrics-track
+   ```
+5. If a `contested` or `load-bearing` finding is reported, record the finding and the blocker, then regenerate the metrics file and go to `blocked`:
+   ```bash
+   py -3 .agents/skills/iterative-review/scripts/record_finding.py \
+       --state <scratch_dir>/review-state.json \
+       --data '{"finding_id": "<finding_id>", "lens": "reviewer-strong", "discovered_at_node": "final-strong", "discovered_at_round": <round>, "severity": "<severity>"}'
+   py -3 .agents/skills/iterative-review/scripts/record_blocker.py \
+       --state <scratch_dir>/review-state.json \
+       --data '{"finding_id": "<finding_id>", "blocker_class": "contested"}'
+   py -3 .agents/skills/iterative-review/scripts/compile_metrics.py \
+       --state <scratch_dir>/review-state.json \
+       --metrics <scratch_dir>/review-metrics.json
+   py -3 .agents/skills/iterative-review/scripts/next_node.py \
+       --state <scratch_dir>/review-state.json \
+       --propose blocked
+   ```
 
 ## Outputs
 - Write `review-log-strong.md`
-- Update `review-metrics.json` if findings are reported
+- `<scratch_dir>/review-metrics.json` regenerated from `<scratch_dir>/review-state.json` and the recorded logs
 
 ## Next check
-py -3 .agents/skills/iterative-review/scripts/next_node.py --metrics <scratch_dir>/review-metrics.json
+```bash
+py -3 .agents/skills/iterative-review/scripts/next_node.py \
+    --state <scratch_dir>/review-state.json \
+    --propose <next-node>
+```

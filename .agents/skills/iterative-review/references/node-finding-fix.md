@@ -28,12 +28,21 @@ Verify and fix a single `blocking/important` lens finding.
 4. If inline/orchestrator is chosen:
    - Apply the minimal change to the affected file(s).
    - Run the consumer's preflight (e.g., `py -3 tools/run.py ci --check`) and confirm it passes.
-5. Record the result in `rounds_per_finding` in `review-metrics.json`: at the start of the pass, increment `fix_round` for the finding (this is the single owner of `fix_round`).
+5. After the fix is committed, do not hand-edit `review-metrics.json`. Regenerate the metrics file and authorize `re-preflight`:
+   ```bash
+   py -3 .agents/skills/iterative-review/scripts/compile_metrics.py \
+       --state <scratch_dir>/review-state.json \
+       --metrics <scratch_dir>/review-metrics.json
+   py -3 .agents/skills/iterative-review/scripts/next_node.py \
+       --state <scratch_dir>/review-state.json \
+       --propose re-preflight
+   ```
 6. Move to `re-preflight`.
-7. Round escalation: use `implementer` for rounds 1-3; if a finding fails `reviewer-fixes` three times, escalate to `implementer-strong` for round 4; if it still fails, route to `blocked`.
+7. Round cap: the fix round for a finding is `round - discovered_at_round + 1` from `<scratch_dir>/review-state.json`. When that reaches `max_fix_rounds`, escalate to `implementer-strong`; if it still fails at the cap, route to `blocked`.
 
 ## Outputs
-- Updated `rounds_per_finding` in `review-metrics.json`: `fix_round` incremented for the finding being fixed (single source of truth)
+- `<scratch_dir>/review-metrics.json` regenerated from `<scratch_dir>/review-state.json` and the recorded logs
+- The `fix_round` semantics are derived from `discovered_at_round` and the current `round` in `<scratch_dir>/review-state.json`; this node does not modify `review-state.json` directly
 - If `implementer` was used:
   - `review-log-implementer-brief.md`
   - `review-log-implementer-report.md`
@@ -43,4 +52,8 @@ Verify and fix a single `blocking/important` lens finding.
   - Updated `scan_findings`
 
 ## Next check
-py -3 .agents/skills/iterative-review/scripts/next_node.py --json --metrics <scratch_dir>/review-metrics.json
+```bash
+py -3 .agents/skills/iterative-review/scripts/next_node.py \
+    --state <scratch_dir>/review-state.json \
+    --propose re-preflight
+```
