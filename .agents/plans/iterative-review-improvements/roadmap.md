@@ -5,7 +5,7 @@ Source spec: [`.agents/specs/2026-08-09-iterative-review-improvements-design.md`
 | # | Title | Status | Plan File | Commit | PR | Rating | Notes |
 |---|---|---|---|---|---|---|---|
 | 1 | State/router split and record scripts | done | [Plan 1](2026-08-09-plan-1-state-router-split.md) | c1e59ac4 | #287 | 10/10 | Plan implemented; `iterative-review` dogfood reached `reviewer-strong: clean`. Ready to merge. |
-| 2 | Ergonomic and reliability improvements | pending | [Plan 2](2026-08-09-plan-2-ergonomic-improvements.md) | — | — | — | `status`, `--resync`, artifact-aware `--propose`, schema cleanup, round cap, batching |
+| 2 | Ergonomic and reliability improvements | in-progress | [Plan 2](2026-08-09-plan-2-ergonomic-improvements.md) | — | — | — | Plan drafted; awaiting handoff-gates and execution |
 | 3 | Lens dispatch and final polish | pending | [Plan 3](2026-08-09-plan-3-lens-dispatch-and-polish.md) | — | — | — | `select_lenses.py`, self-review template, tests, docs |
 
 ## Constraints
