@@ -46,7 +46,8 @@ def _applies_to(text: str) -> dict:
         m = pattern.search(section)
         if not m:
             return []
-        return [line.strip("- ").strip() for line in m.group(1).strip().splitlines() if line.strip().startswith("-")]
+        lines = m.group(1).strip().splitlines()
+        return [line.strip("- ").strip().strip("`") for line in lines if line.strip().startswith("-")]
 
     return {
         "globs": _list_items("globs"),
@@ -99,7 +100,7 @@ def _select(state: dict) -> list[dict]:
         text = profile.read_text(encoding="utf-8")
         rule = _applies_to(text)
         lens = profile.stem
-        if _matches(rule, changed, diff_text, pr_text, provided) and lens != "reviewer-strong":
+        if _matches(rule, changed, diff_text, pr_text, provided) and lens not in {"reviewer-strong", "reviewer-fixes"}:
             selected.append(
                 {
                     "lens": lens,
