@@ -482,10 +482,22 @@ def _worktree_branches(main_repo_root: Path) -> set[str]:
     return branches
 
 
+_SEP_CLASS = (
+    "[" + "".join(re.escape(c) for c in r':\?*"<>|/') + re.escape("-") + "]"
+)
+
+
+def _branch_plan_pattern(sanitized_branch: str) -> re.Pattern:
+    if not sanitized_branch:
+        return re.compile(r"(?<!\w)(?!\w)")
+    pieces = [_SEP_CLASS if c == "-" else re.escape(c) for c in sanitized_branch]
+    return re.compile(rf"(?<!\w){''.join(pieces)}(?!\w)")
+
+
 def _plans_referencing(plans_root: Path, branch: str) -> bool:
     if not plans_root.exists():
         return False
-    pattern = re.compile(rf"(?<!\w){re.escape(branch)}(?!\w)")
+    pattern = _branch_plan_pattern(branch)
     for plan in plans_root.glob("*.md"):
         try:
             if pattern.search(plan.read_text(encoding="utf-8")):
