@@ -116,6 +116,7 @@ This design is the umbrella for a **3-plan epic**:
 - Update `node-lens-dispatch.md` to use `select_lenses.py`.
 - Add a focused test suite for `next_node.py` and the record scripts.
 - Enforce the no-hand-write contract: every machine-managed file in the scratch workspace (`review-state.json`, `*.jsonl`, `review-log-*.md`) must be written only through a script. Add a script for orchestrator-authored `review-log-*.md` files and update `SKILL.md` to prohibit direct `write`/`edit` on these files.
+- Document and enforce lens re-run scope: `lens-dispatch` dispatches each relevant lens exactly once; `reviewer-fixes` re-runs only the originating lens for a given finding. The orchestrator must not re-dispatch all lenses after fixing a single lens's findings, to avoid unnecessary churn.
 - Final documentation and skill surface refresh.
 
 ## Non-goals
