@@ -631,3 +631,35 @@ gh pr create --draft --title "Scratch directory namespacing and cleanup policy" 
 - [ ] **Step 3: Report the PR URL**
 
 Expected: a GitHub draft PR URL.
+
+---
+
+### Task 10: Update subagent-workspace SDD scripts to use the namespaced scratch layout
+
+**Files:**
+- `codex-marketplace/plugins/superpowers-plus/skills/subagent-workspace/scripts/sdd-workspace`
+- `codex-marketplace/plugins/superpowers-plus/skills/subagent-workspace/scripts/sdd-workspace.ps1`
+- Installed `.agents/skills/subagent-workspace/scripts/sdd-workspace*`
+
+**Consumes:**
+- Task 0 (new scratch layout defined).
+
+**Produces:**
+- SDD workspace scripts resolve to `_agent-scratch/<repo-name>/<branch>/<plan-basename>/`.
+- `iterative-review` off-repo scratch is placed in the correct repo-scoped location.
+
+- [ ] **Step 1: Update `sdd-workspace` (Bash)**
+
+Change the resolved path from `_agent-scratch/<branch>` to `_agent-scratch/<repo-name>/<branch>`.
+
+- [ ] **Step 2: Update `sdd-workspace.ps1` (PowerShell)**
+
+Apply the same namespacing using `Split-Path -Leaf` on the main checkout.
+
+- [ ] **Step 3: Regenerate installed skills**
+
+Run `py -3 tools/run.py installed-skills --apply` (or refresh) and commit the canonical + installed changes.
+
+- [ ] **Step 4: Verify with `sdd-workspace.ps1`**
+
+Expected output: `Z:\_agent-scratch\<repo-name>\<branch>`.
