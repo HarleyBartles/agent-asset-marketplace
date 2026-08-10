@@ -353,11 +353,11 @@ git commit -m "feat(iterative-review): record_orchestrator_log and no-hand-write
 - `test_next_node.py` validates `--propose` graph transitions on a synthetic `review-state.json`.
 - `test_record_scripts.py` validates that `record_finding.py` and `record_resolution.py` append correctly and reject non-array/non-object data.
 
-- [ ] **Step 1: Create the test directory and `__init__.py` (or keep it package-less)**
+- [x] **Step 1: Create the test directory and `__init__.py` (or keep it package-less)**
 
 No `__init__.py` is needed if `pytest` discovers by file. Create the tests as standalone scripts.
 
-- [ ] **Step 2: Write `test_next_node.py`**
+- [x] **Step 2: Write `test_next_node.py`**
 
 ```python
 import json
@@ -398,7 +398,7 @@ def test_blocked_missing_artifacts(tmp_path: Path):
     assert "BLOCKED" in result.stdout
 ```
 
-- [ ] **Step 3: Write `test_record_scripts.py`**
+- [x] **Step 3: Write `test_record_scripts.py`**
 
 ```python
 import json
@@ -445,11 +445,11 @@ def test_record_finding_rejects_scalar(tmp_path: Path):
     assert result.returncode == 1
 ```
 
-- [ ] **Step 4: Add `pytest` marker to CI?**
+- [x] **Step 4: Add `pytest` marker to CI?**
 
 If the repo does not run `pytest` automatically, these tests can be invoked manually with `py -3 -m pytest` from the canonical skill directory. The plan's acceptance criteria is that `py -3 tools/run.py ci --check` still passes (lint and CLI contracts) and the manual `pytest` command passes.
 
-- [ ] **Step 5: Run CI and pytest**
+- [x] **Step 5: Run CI and pytest**
 
 ```bash
 cd codex-marketplace/plugins/superpowers-plus/skills/iterative-review
@@ -460,7 +460,7 @@ py -3 tools/run.py ci --check
 
 Expected: all tests pass and CI is green.
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add codex-marketplace/plugins/superpowers-plus/skills/iterative-review/tests/
