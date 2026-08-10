@@ -74,7 +74,7 @@
     "total_rounds": {"type": "integer", "minimum": 0},
     "total_reviewer_subagent_dispatches": {"type": "integer", "minimum": 0},
     "devin_auto_review_invocations": {"type": "integer", "minimum": 0},
-    "fast_fix_cycles": {"type": "integer", "minimum": 0},
+    "findings_discovered_at_fix_nodes": {"type": "integer", "minimum": 0},
     "regressions_introduced": {"type": "integer", "minimum": 0}
   }
 }

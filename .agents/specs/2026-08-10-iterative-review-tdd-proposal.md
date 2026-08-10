@@ -51,4 +51,4 @@ Document and enforce that a fix should be followed by:
 
 - `py -3 tools/run.py ci --check` passes after the changes.
 - New implementer profiles carry a TDD preamble that `subagent-driven-development` respects.
-- `review-metrics.json` tracks `fast_fix_cycles` and `regressions_introduced`.
+- `review-metrics.json` tracks `findings_discovered_at_fix_nodes` and `regressions_introduced`.

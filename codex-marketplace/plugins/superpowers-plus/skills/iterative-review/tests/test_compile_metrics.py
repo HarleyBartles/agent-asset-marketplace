@@ -77,7 +77,7 @@ def test_compile_metrics_includes_churn_fields():
         }
         metrics = module._compile(state, logs)
 
-        assert metrics["fast_fix_cycles"] == 1
+        assert metrics["findings_discovered_at_fix_nodes"] == 1
         assert metrics["regressions_introduced"] == 1
         assert metrics["non_trivial_fix"] is True
 
@@ -104,7 +104,7 @@ def test_compile_metrics_cli_writes_metrics_with_churn_fields():
         rc = module._main(["--state", str(state_path), "--metrics", str(metrics_path)])
         assert rc == 0
         written = json.loads(metrics_path.read_text(encoding="utf-8"))
-        assert "fast_fix_cycles" in written
+        assert "findings_discovered_at_fix_nodes" in written
         assert "regressions_introduced" in written
-        assert written["fast_fix_cycles"] == 0
+        assert written["findings_discovered_at_fix_nodes"] == 0
         assert written["regressions_introduced"] == 0

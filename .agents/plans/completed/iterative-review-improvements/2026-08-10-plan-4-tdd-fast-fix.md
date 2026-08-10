@@ -4,7 +4,7 @@
 
 **Goal:** Reduce fast-fix churn by making `test-driven-development` the default discipline for implementer subagents and orchestrators, tightening the `finding-fix`/`reviewer-fixes` re-check loop so fixes are proven by failing tests and only the originating lens is re-run.
 
-**Architecture:** Update the canonical `implementer` and `implementer-strong` subagent profiles and the `subagent-driven-development` implementer prompt to require RED/GREEN/REFACTOR evidence for any blocking/important finding. Add a TDD step to the `node-finding-fix.md` and `node-fast-fix.md` recipes. Add `fast_fix_cycles` and `regressions_introduced` to `review-metrics-schema.json` and `compile_metrics.py` so the review report can track churn. Keep all canonical edits in `codex-marketplace/plugins/superpowers-plus/skills/` and regenerate `.agents/skills/` with `py -3 tools/run.py installed-skills --apply`.
+**Architecture:** Update the canonical `implementer` and `implementer-strong` subagent profiles and the `subagent-driven-development` implementer prompt to require RED/GREEN/REFACTOR evidence for any blocking/important finding. Add a TDD step to the `node-finding-fix.md` and `node-fast-fix.md` recipes. Add `findings_discovered_at_fix_nodes` and `regressions_introduced` to `review-metrics-schema.json` and `compile_metrics.py` so the review report can track churn. Keep all canonical edits in `codex-marketplace/plugins/superpowers-plus/skills/` and regenerate `.agents/skills/` with `py -3 tools/run.py installed-skills --apply`.
 
 **Tech Stack:** Python 3, JSON/JSONL, Markdown profiles and prompts, `py -3 tools/run.py ci --check`.
 
@@ -200,7 +200,7 @@ git commit -m "docs(iterative-review): require TDD evidence in finding-fix and f
 
 ---
 
-### Task 3: Add `fast_fix_cycles` and `regressions_introduced` to review metrics
+### Task 3: Add `findings_discovered_at_fix_nodes` and `regressions_introduced` to review metrics
 
 **Files:**
 - Modify: `codex-marketplace/plugins/superpowers-plus/skills/iterative-review/scripts/compile_metrics.py`
@@ -210,7 +210,7 @@ git commit -m "docs(iterative-review): require TDD evidence in finding-fix and f
 - Test: `py -3 tools/run.py ci --check`
 
 **Interfaces:**
-- `compile_metrics.py` returns `fast_fix_cycles` (count of transitions to `finding-fix` and `fast-fix`) and `regressions_introduced` (count of `regressions` items).
+- `compile_metrics.py` returns `findings_discovered_at_fix_nodes` (count of findings whose first discovery node is `finding-fix` or `fast-fix`) and `regressions_introduced` (count of `regressions` items).
 - `review-metrics-schema.json` declares both fields as `integer` with `minimum: 0`.
 
 - [x] **Step 1: Update `_compile` in `compile_metrics.py` to compute the new fields**
@@ -219,9 +219,9 @@ Add the two computed values to the returned metrics dict. After `total_rounds`:
 
 ```python
     fix_nodes = {"finding-fix", "fast-fix"}
-    fast_fix_cycles = sum(1 for f in findings if f["discovered_at_node"] in fix_nodes)
-    # More accurate: count state transitions to those nodes. Use rounds_per_finding discovered_at_node as proxy.
-    fast_fix_cycles = sum(
+    findings_discovered_at_fix_nodes = sum(1 for f in findings if f["discovered_at_node"] in fix_nodes)
+    # Count findings whose first discovery node is `finding-fix` or `fast-fix`.
+    findings_discovered_at_fix_nodes = sum(
         1 for f in findings if f.get("discovered_at_node") in {"finding-fix", "fast-fix"}
     )
     regressions_introduced = len(regressions)
@@ -235,7 +235,7 @@ Add the two computed values to the returned metrics dict. After `total_rounds`:
         "previous_node": state.get("previous_node"),
         "non_trivial_fix": state.get("non_trivial_fix", False),
         "total_rounds": total_rounds,
-        "fast_fix_cycles": fast_fix_cycles,
+        "findings_discovered_at_fix_nodes": findings_discovered_at_fix_nodes,
         "regressions_introduced": regressions_introduced,
     }
 ```
@@ -245,7 +245,7 @@ Add the two computed values to the returned metrics dict. After `total_rounds`:
 In `review-metrics-schema.json`, after `total_reviewer_subagent_dispatches`, add:
 
 ```json
-    "fast_fix_cycles": {"type": "integer", "minimum": 0},
+    "findings_discovered_at_fix_nodes": {"type": "integer", "minimum": 0},
     "regressions_introduced": {"type": "integer", "minimum": 0},
 ```
 
@@ -307,7 +307,7 @@ def test_compile_metrics_includes_churn_fields():
         }
         metrics = module._compile(state, logs)
 
-        assert metrics["fast_fix_cycles"] == 1
+        assert metrics["findings_discovered_at_fix_nodes"] == 1
         assert metrics["regressions_introduced"] == 1
         assert metrics["non_trivial_fix"] is True
 
@@ -334,9 +334,9 @@ def test_compile_metrics_cli_writes_metrics_with_churn_fields():
         rc = module._main(["--state", str(state_path), "--metrics", str(metrics_path)])
         assert rc == 0
         written = json.loads(metrics_path.read_text(encoding="utf-8"))
-        assert "fast_fix_cycles" in written
+        assert "findings_discovered_at_fix_nodes" in written
         assert "regressions_introduced" in written
-        assert written["fast_fix_cycles"] == 0
+        assert written["findings_discovered_at_fix_nodes"] == 0
         assert written["regressions_introduced"] == 0
 ```
 
@@ -372,7 +372,7 @@ Expected: all targets pass.
 
 ```bash
 git add codex-marketplace/plugins/superpowers-plus/skills/iterative-review/scripts/compile_metrics.py codex-marketplace/plugins/superpowers-plus/skills/iterative-review/references/review-metrics-schema.json codex-marketplace/plugins/superpowers-plus/skills/iterative-review/tests/test_compile_metrics.py
-git commit -m "feat(iterative-review): track fast_fix_cycles and regressions_introduced in review metrics"
+git commit -m "feat(iterative-review): track findings_discovered_at_fix_nodes and regressions_introduced in review metrics"
 ```
 
 ---
