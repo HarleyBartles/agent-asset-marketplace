@@ -22,7 +22,7 @@
 
 **Files:**
 - Read: `codex-marketplace/plugins/superpowers-plus/skills/iterative-review/references/review-metrics-schema.json`
-- Read: `.agents/specs/2026-08-09-iterative-review-improvements-design.md`
+- Read: `.agents/specs/completed/2026-08-09-iterative-review-improvements-design.md`
 
 **Interfaces:**
 - Verifies the schema already matches the spec after Plan 1.
@@ -552,7 +552,7 @@ Change Plan 2 row from `pending` to `done` and fill the commit and PR columns af
 
 - [ ] **Step 2: Archive this plan file**
 
-Follow the `completing-plans` runbook: `git mv .agents/plans/iterative-review-improvements/2026-08-09-plan-2-ergonomic-improvements.md .agents/plans/completed/iterative-review-improvements/`, then run `tools/heal_archive_links.py --apply`, `tools/run.py mesh --apply`, and `tools/run.py marketplace --apply`.
+Follow the `completing-plans` runbook: `git mv .agents/plans/completed/iterative-review-improvements/2026-08-09-plan-2-ergonomic-improvements.md .agents/plans/completed/iterative-review-improvements/`, then run `tools/heal_archive_links.py --apply`, `tools/run.py mesh --apply`, and `tools/run.py marketplace --apply`.
 
 - [ ] **Step 3: Run final CI**
 
