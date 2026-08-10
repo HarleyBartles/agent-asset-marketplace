@@ -49,9 +49,10 @@ $PlanFile = $resolvedPlan
 $commonDir = (git -C "$root" rev-parse --git-common-dir).Trim()
 $mainCheckout = Split-Path -Parent $commonDir
 $scratchParent = Split-Path -Parent $mainCheckout
+$repoName = Split-Path -Leaf $mainCheckout
 $branch = (git -C "$root" rev-parse --abbrev-ref HEAD).Trim()
 $branch = $branch -replace '[\\/:*?"<>|]', '-'
-$workspaceRoot = Join-Path (Join-Path $scratchParent "_agent-scratch") $branch
+$workspaceRoot = Join-Path (Join-Path (Join-Path $scratchParent "_agent-scratch") $repoName) $branch
 New-Item -ItemType Directory -Force -Path $workspaceRoot | Out-Null
 
 $currentPlanMarker = Join-Path $workspaceRoot 'current-plan.txt'

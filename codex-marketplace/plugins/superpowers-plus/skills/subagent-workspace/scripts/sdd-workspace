@@ -4,7 +4,7 @@
 # progress ledger. Print the directory's absolute path.
 #
 # The workspace lives outside the working tree at:
-#   <main-checkout>/../_agent-scratch/<branch>/<plan-basename>/
+#   <main-checkout>/../_agent-scratch/<repo-name>/<branch>/<plan-basename>/
 # where <main-checkout> is the parent of the Git common directory.
 # This keeps scratch a sibling of the repository, never inside it,
 # and survives `git clean`.
@@ -32,9 +32,10 @@ fi
 common_dir=$(git -C "$root" rev-parse --git-common-dir)
 main_checkout=$(cd "$common_dir/.." && pwd)
 scratch_parent=$(cd "$main_checkout/.." && pwd)
+repo_name=$(basename "$main_checkout")
 branch=$(git -C "$root" rev-parse --abbrev-ref HEAD)
 branch=$(printf '%s' "$branch" | tr ':\?*"<>|/\\' '-')
-dir="$scratch_parent/_agent-scratch/$branch"
+dir="$scratch_parent/_agent-scratch/$repo_name/$branch"
 mkdir -p "$dir"
 current_plan="$dir/current-plan.txt"
 plan_stem=""
