@@ -368,8 +368,14 @@ def main(argv: list[str] | None = None) -> int:
     if args.apply and not args.resync:
         print("--apply is only valid with --resync", file=sys.stderr)
         return 2
+    if args.propose and args.apply:
+        print("--apply is only valid with --resync", file=sys.stderr)
+        return 2
     if args.propose and (args.status or args.resync):
         print("--propose cannot be combined with --status or --resync", file=sys.stderr)
+        return 2
+    if args.check and (args.status or args.resync):
+        print("--check cannot be combined with --status or --resync", file=sys.stderr)
         return 2
 
     if not args.check and not args.state and not args.metrics:
