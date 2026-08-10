@@ -102,21 +102,16 @@ class TestSelectLensesHelpers(unittest.TestCase):
             "globs": [],
             "keywords": [],
         }
-        with tempfile.TemporaryDirectory() as td:
-            scratch = Path(td)
-            self.assertFalse(module._matches(rule, ["foo.py"], "", "", scratch))
+        self.assertFalse(module._matches(rule, ["foo.py"], "", "", set()))
 
-    def test_lens_specific_input_selects_when_file_present(self):
+    def test_lens_specific_input_selects_when_provided(self):
         module = _load_select_lenses()
         rule = {
             "inputs": ["<plan_path>"],
             "globs": [],
             "keywords": [],
         }
-        with tempfile.TemporaryDirectory() as td:
-            scratch = Path(td)
-            (scratch / "plan").write_text("plan", encoding="utf-8")
-            self.assertTrue(module._matches(rule, ["foo.py"], "", "", scratch))
+        self.assertTrue(module._matches(rule, ["foo.py"], "", "", {"<plan_path>"}))
 
     def test_load_state_tolerates_bom(self):
         module = _load_select_lenses()

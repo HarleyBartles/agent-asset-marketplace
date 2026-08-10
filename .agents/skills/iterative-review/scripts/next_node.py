@@ -486,6 +486,8 @@ def main(argv: list[str] | None = None) -> int:
         fresh["current_node"] = node
         if args.propose == "reviewer-fixes":
             fresh["non_trivial_fix"] = args.non_trivial
+        elif args.propose == "regression-scan":
+            fresh["non_trivial_fix"] = state.get("non_trivial_fix", False)
         else:
             fresh["non_trivial_fix"] = False
         state_path.write_text(json.dumps(fresh, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")

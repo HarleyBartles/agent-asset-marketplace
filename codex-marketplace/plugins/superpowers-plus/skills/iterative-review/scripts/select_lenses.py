@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""select_lenses.py - discover and select reviewer lens profiles for a PR. (read-only)"""
+"""select_lenses.py - discover and select reviewer lens profiles for a PR. (mixed)"""
 
 from __future__ import annotations
 
@@ -95,18 +95,9 @@ def _glob_match(pattern: str, path: str) -> bool:
     return _match_parts(pattern.split("/"), PurePath(path).parts)
 
 
-def _input_available(scratch: Path, inp: str) -> bool:
-    """A non-common input token is available if a file matching its name exists."""
-    token = inp.strip("<>")
-    candidates = {token}
-    if token.endswith("_path"):
-        candidates.add(token[: -len("_path")])
-    return any((scratch / c).exists() for c in candidates)
-
-
-def _matches(rule: dict, changed: list[str], diff_text: str, pr_text: str, scratch: Path) -> bool:
+def _matches(rule: dict, changed: list[str], diff_text: str, pr_text: str, provided_inputs: set[str]) -> bool:
     for inp in rule.get("inputs", []):
-        if inp not in COMMON_INPUTS and _input_available(scratch, inp):
+        if inp not in COMMON_INPUTS and inp in provided_inputs:
             return True
     for pattern in rule.get("globs", []):
         if any(_glob_match(pattern, f) for f in changed):
@@ -135,7 +126,7 @@ def _find_diff_path(scratch: Path) -> Path | None:
     return max(candidates, key=lambda p: p.stat().st_mtime)
 
 
-def _select(state: dict) -> list[dict]:
+def _select(state: dict, provided_inputs: set[str]) -> list[dict]:
     scratch = Path(state["scratch_dir"])
     diff_path = _find_diff_path(scratch)
     for pr_candidate in (scratch / "pr_description", scratch / "pr_description.txt"):
@@ -153,7 +144,10 @@ def _select(state: dict) -> list[dict]:
         text = profile.read_text(encoding="utf-8")
         rule = _applies_to(text)
         lens = profile.stem
-        if _matches(rule, changed, diff_text, pr_text, scratch) and lens not in {"reviewer-strong", "reviewer-fixes"}:
+        if _matches(rule, changed, diff_text, pr_text, provided_inputs) and lens not in {
+            "reviewer-strong",
+            "reviewer-fixes",
+        }:
             selected.append(
                 {
                     "lens": lens,
@@ -165,8 +159,14 @@ def _select(state: dict) -> list[dict]:
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(description="Select reviewer lenses for a PR. (read-only)")
+    parser = argparse.ArgumentParser(description="Select reviewer lenses for a PR. (mixed)")
     parser.add_argument("--state", help="Path to review-state.json")
+    parser.add_argument(
+        "--input",
+        action="append",
+        default=[],
+        help="Lens-specific input token that is provided (repeatable)",
+    )
     parser.add_argument("--apply", action="store_true", help="Write lenses.jsonl to the scratch dir")
     parser.add_argument("--check", action="store_true", help="Validate CLI contract only")
     args = parser.parse_args(argv)
@@ -179,7 +179,8 @@ def main(argv: list[str] | None = None) -> int:
         parser.error("--state is required unless --check is used")
 
     state = _load_state(Path(args.state))
-    selected = _select(state)
+    provided_inputs = set(args.input)
+    selected = _select(state, provided_inputs)
 
     out_path = _lenses_path(state)
     if args.apply:

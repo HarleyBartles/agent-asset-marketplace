@@ -12,7 +12,7 @@ SKILL_DIR = Path(__file__).resolve().parent.parent
 NEXT_NODE = SKILL_DIR / "scripts" / "next_node.py"
 
 
-def _write_state(scratch: Path, *, current: str = "setup", previous: str = "") -> Path:
+def _write_state(scratch: Path, *, current: str = "setup", previous: str = "", non_trivial_fix: bool = False) -> Path:
     p = scratch / "review-state.json"
     p.write_text(
         json.dumps(
@@ -21,6 +21,7 @@ def _write_state(scratch: Path, *, current: str = "setup", previous: str = "") -
                 "previous_node": previous,
                 "round": 1,
                 "max_fix_rounds": 4,
+                "non_trivial_fix": non_trivial_fix,
                 "pr": {
                     "pr_number": 999,
                     "base": "main",
@@ -78,6 +79,21 @@ class TestNextNodePropose(unittest.TestCase):
             result = _propose(state, "regression-scan", extra=["--non-trivial"])
             self.assertEqual(result.returncode, 0)
             self.assertIn("ALLOWED: regression-scan", result.stdout)
+            fresh = json.loads(state.read_text(encoding="utf-8"))
+            self.assertTrue(fresh.get("non_trivial_fix"))
+
+    def test_non_trivial_cleared_on_resolved_ledger(self):
+        with tempfile.TemporaryDirectory() as td:
+            scratch = Path(td)
+            state = _write_state(scratch, current="regression-scan", previous="reviewer-fixes", non_trivial_fix=True)
+            (scratch / "findings.jsonl").write_text(
+                '{"finding_id": "f-1", "lens": "test", "severity": "trivial"}',
+                encoding="utf-8",
+            )
+            (scratch / "regressions.jsonl").write_text("", encoding="utf-8")
+            (scratch / "resolutions.jsonl").write_text('{"finding_id": "f-1"}', encoding="utf-8")
+            result = _propose(state, "resolved-ledger")
+            self.assertEqual(result.returncode, 0)
             fresh = json.loads(state.read_text(encoding="utf-8"))
             self.assertFalse(fresh.get("non_trivial_fix", True))
 
