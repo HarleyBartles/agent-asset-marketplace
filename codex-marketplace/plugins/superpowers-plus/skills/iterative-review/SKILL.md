@@ -107,6 +107,12 @@ For every post-fix finding, set `regression_class` from the decision table in th
 - All review inputs, logs, metrics, and fix-diffs are written to the off-repo scratch directory; they are never committed to the repo.
 - CI must pass before leaving draft.
 
+## Lens re-run scope
+
+`lens-dispatch` runs at most once per review cycle. It dispatches every lens whose `## Applies to` rules match the PR.
+
+When a finding is fixed, `finding-fix` -> `re-preflight` -> `reviewer-fixes` re-runs only the originating lens for that finding. Do not re-dispatch all lenses after a single fix; that is unnecessary churn and can introduce unrelated feedback late in the cycle.
+
 ## Machine-managed files
 
 The following files in the off-repo scratch must be written only through the provided scripts:

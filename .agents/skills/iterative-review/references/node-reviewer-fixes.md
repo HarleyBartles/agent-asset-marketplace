@@ -9,13 +9,16 @@ Verify a fix against the originating lens's checklist, tightly scoped to the bla
 - The affected file(s) only — do not re-review the whole branch
 
 ## Recipe
-1. Load the original lens checklist from `review-log-<lens>.md`.
-2. Re-apply that checklist to the changed surface and one step of blast radius only.
-3. Confirm the original finding is resolved and no new same-lens issues appear in the blast radius.
-4. Write `review-log-reviewer-fixes.md` and end it with exactly one of:
+1. Determine the `lens` that discovered the finding being fixed (from `findings.jsonl`).
+2. Re-dispatch only that lens profile with the fix diff and the original input package.
+3. Do not dispatch other lenses; their prior review remains valid unless the fix diff changes files they own.
+4. Load the original lens checklist from `review-log-<lens>.md`.
+5. Re-apply that checklist to the changed surface and one step of blast radius only.
+6. Confirm the original finding is resolved and no new same-lens issues appear in the blast radius.
+7. Write `review-log-reviewer-fixes.md` and end it with exactly one of:
    - `reviewer-fixes: PASS`
    - `reviewer-fixes: FAIL`
-5. On `PASS`:
+8. On `PASS`:
    - Record the resolution:
      ```bash
      py -3 .agents/skills/iterative-review/scripts/record_resolution.py \
@@ -41,7 +44,7 @@ Verify a fix against the originating lens's checklist, tightly scoped to the bla
          --state <scratch_dir>/review-state.json \
          --propose resolved-ledger
      ```
-6. On `FAIL`, do **not** increment `fix_round` (`finding-fix` owns that on the next pass):
+9. On `FAIL`, do **not** increment `fix_round` (`finding-fix` owns that on the next pass):
    - If the original finding is still unresolved, no new record is needed. Regenerate the metrics file and route back to `finding-fix`:
      ```bash
      py -3 .agents/skills/iterative-review/scripts/compile_metrics.py \

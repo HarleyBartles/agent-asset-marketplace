@@ -539,7 +539,7 @@ git commit -m "docs(iterative-review): orchestrator self-review template"
 - `lens-dispatch` dispatches each relevant lens exactly once.
 - `reviewer-fixes` re-dispatches only the lens that originally discovered the finding.
 
-- [ ] **Step 1: Add a `## Lens re-run scope` section to `SKILL.md`**
+- [x] **Step 1: Add a `## Lens re-run scope` section to `SKILL.md`**
 
 ```markdown
 ## Lens re-run scope
@@ -549,7 +549,7 @@ git commit -m "docs(iterative-review): orchestrator self-review template"
 When a finding is fixed, `finding-fix` -> `re-preflight` -> `reviewer-fixes` re-runs only the originating lens for that finding. Do not re-dispatch all lenses after a single fix; that is unnecessary churn and can introduce unrelated feedback late in the cycle.
 ```
 
-- [ ] **Step 2: Update `node-reviewer-fixes.md`**
+- [x] **Step 2: Update `node-reviewer-fixes.md`**
 
 Add to the recipe:
 
@@ -559,7 +559,7 @@ Add to the recipe:
 3. Do not dispatch other lenses; their prior review remains valid unless the fix diff changes files they own.
 ```
 
-- [ ] **Step 3: Update `node-lens-dispatch.md` to note one-time dispatch**
+- [x] **Step 3: Update `node-lens-dispatch.md` to note one-time dispatch**
 
 Add a note:
 
@@ -567,7 +567,7 @@ Add a note:
 `lens-dispatch` is a one-time dispatch. After this node, the graph routes to `lens-triage`, `metrics-track`, `finding-fix`, and `reviewer-fixes`. `reviewer-fixes` re-runs only the lens associated with the finding being fixed.
 ```
 
-- [ ] **Step 4: Run CI**
+- [x] **Step 4: Run CI**
 
 ```bash
 py -3 tools/run.py ci --check
@@ -575,7 +575,7 @@ py -3 tools/run.py ci --check
 
 Expected: all targets pass.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add codex-marketplace/plugins/superpowers-plus/skills/iterative-review/SKILL.md codex-marketplace/plugins/superpowers-plus/skills/iterative-review/references/node-reviewer-fixes.md codex-marketplace/plugins/superpowers-plus/skills/iterative-review/references/node-lens-dispatch.md
