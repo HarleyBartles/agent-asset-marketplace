@@ -133,10 +133,12 @@ def _classify(
 
 def _main() -> int:
     parser = argparse.ArgumentParser(
-        description="Classify or remove orphan _agent-scratch directories. (mixed: supports --check and --apply)",
+        description=(
+            "Classify or remove orphan _agent-scratch directories for the current repo. "
+            "(mixed: supports --check and --apply)"
+        ),
         epilog="--check is the default and always exits 0 (read-only preflight); --apply removes delete_now entries.",
     )
-    parser.add_argument("--repo-name", help="repository name to inspect; defaults to main checkout basename")
     mode = parser.add_mutually_exclusive_group()
     mode.add_argument(
         "--check",
@@ -153,7 +155,7 @@ def _main() -> int:
     args = parser.parse_args()
 
     main_repo_root = _main_repo_root()
-    repo_name = args.repo_name or main_repo_root.name
+    repo_name = main_repo_root.name
     scratch_root = main_repo_root.parent / "_agent-scratch"
     active = _active_branches(main_repo_root)
     worktrees = _worktree_branches(main_repo_root)

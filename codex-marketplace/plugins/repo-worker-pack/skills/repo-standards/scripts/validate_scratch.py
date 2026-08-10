@@ -44,47 +44,69 @@ def _valid_name(name: str) -> bool:
     return bool(name) and name not in (".", "..") and not _FORBIDDEN.intersection(name)
 
 
+def _remove_path(path: Path) -> bool:
+    """Remove a file or directory and return True on success."""
+    try:
+        if path.is_dir():
+            shutil.rmtree(path)
+        else:
+            path.unlink()
+        return True
+    except OSError as exc:
+        print(f"  error removing {path}: {exc}", file=sys.stderr)
+        return False
+
+
 def _validate(apply: bool) -> int:
+    main_repo_root = _main_repo_root()
+    repo_name = main_repo_root.name
     scratch_root = _scratch_root()
     if not scratch_root.exists():
         print(f"OK: {scratch_root} does not exist")
         return 0
 
+    repo_scratch = scratch_root / repo_name
+    if not repo_scratch.exists():
+        print(f"OK: {repo_scratch} does not exist")
+        return 0
+
+    if repo_scratch.is_file():
+        print(f"FAIL: {repo_name} is a file, expected a repo folder")
+        if apply:
+            if not _remove_path(repo_scratch):
+                return 1
+            repo_scratch.mkdir(parents=True, exist_ok=True)
+            print(f"  replaced {repo_scratch} with an empty repo folder")
+        return 0 if apply else 1
+
     issues = 0
-    for entry in scratch_root.iterdir():
+    failures = 0
+    for entry in repo_scratch.iterdir():
         if entry.is_file():
-            print(f"FAIL: top-level scratch file {entry.name} is not a repo folder")
+            print(f"FAIL: {repo_name} contains a file {entry.name}, expected branch/task folders")
             if apply:
-                entry.unlink()
-                print(f"  removed {entry}")
+                if _remove_path(entry):
+                    print(f"  removed {entry}")
+                else:
+                    failures += 1
             issues += 1
             continue
         if not _valid_name(entry.name):
-            print(f"FAIL: {entry.name} is not a valid repo-name folder")
+            print(f"FAIL: {repo_name}/{entry.name} is not a valid branch/task folder")
             if apply:
-                shutil.rmtree(entry, ignore_errors=True)
-                print(f"  removed {entry}")
+                if _remove_path(entry):
+                    print(f"  removed {entry}")
+                else:
+                    failures += 1
             issues += 1
-            continue
-        for repo_entry in entry.iterdir():
-            if repo_entry.is_file():
-                print(f"FAIL: {entry.name} contains a file {repo_entry.name}, expected branch/task folders")
-                if apply:
-                    repo_entry.unlink()
-                    print(f"  removed {repo_entry}")
-                issues += 1
-                continue
-            if not _valid_name(repo_entry.name):
-                print(f"FAIL: {entry.name}/{repo_entry.name} is not a valid branch/task folder")
-                if apply:
-                    shutil.rmtree(repo_entry, ignore_errors=True)
-                    print(f"  removed {repo_entry}")
-                issues += 1
 
+    if failures:
+        print(f"FAIL: {failures} removal(s) failed")
+        return 1
     if issues:
         print(f"FAIL: {issues} issue(s) found")
         return 0 if apply else 1
-    print(f"OK: {scratch_root} is clean and namespaced")
+    print(f"OK: {repo_scratch} is clean and namespaced")
     return 0
 
 
@@ -93,7 +115,10 @@ def _cli() -> int:
         description=(
             "Validate the _agent-scratch directory is namespaced by repo. (mixed: supports --check and --apply)"
         ),
-        epilog=("--check is the default and exits 1 when layout drift is found; --apply removes invalid entries."),
+        epilog=(
+            "--check is the default and exits 1 when layout drift is found; "
+            "--apply removes invalid entries in the current repo's namespace and exits 1 if any removal fails."
+        ),
     )
     mode = parser.add_mutually_exclusive_group()
     mode.add_argument(
