@@ -231,16 +231,25 @@ def _condition_holds(condition: str, state: dict, ledger: Path, current_node: st
     if condition == "round_cap":
         if "rounds_per_finding" in state:
             rounds = state.get("rounds_per_finding", [])
-            return any((f.get("fix_round", 0) or 0) >= 4 for f in rounds if not f.get("resolved_at_node"))
+            return any(
+                (f.get("fix_round", 0) or 0) >= state.get("max_fix_rounds", 4)
+                for f in rounds
+                if not f.get("resolved_at_node")
+            )
         scratch = Path(state.get("scratch_dir", "."))
         findings = _load_jsonl(scratch / "findings.jsonl")
         resolved = {r["finding_id"] for r in _load_jsonl(scratch / "resolutions.jsonl")}
         round_ = state.get("round", 1)
-        max_rounds = state.get("max_fix_rounds", 4)
+        default_max = state.get("max_fix_rounds", 4)
+        by_severity = state.get("max_rounds_by_severity", {})
+        by_finding = state.get("max_rounds_by_finding", {})
         return any(
             f["finding_id"] not in resolved
             and f.get("severity") in ("blocking", "important")
-            and (round_ - f.get("discovered_at_round", round_) + 1) >= max_rounds
+            and (round_ - f.get("discovered_at_round", round_) + 1) >= by_finding.get(
+                f["finding_id"],
+                by_severity.get(f.get("severity", ""), default_max),
+            )
             for f in findings
         )
     if condition == "fixed":
