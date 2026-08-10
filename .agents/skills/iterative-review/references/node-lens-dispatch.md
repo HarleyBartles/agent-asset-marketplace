@@ -21,10 +21,9 @@ Dispatch only the lens reviewers whose `## Applies to` rules match the PR.
 2. Read `<scratch_dir>/lenses.jsonl`; each line is a lens to dispatch.
 3. Build the common input package: `<diff_path>`, `<pr_description>`, `<scan_findings>`, and `review-log-orchestrator-self-review.md`.
 4. `run_subagent` each lens from `lenses.jsonl` with its `profile_path` and `output_path`.
-5. `run_subagent` each selected lens using the `reviewer-*.md` profile content and the off-repo workspace.
-6. Wait for all `run_subagent` calls to complete. From each `review-log-<lens>.md`, extract the terminal (last) line.
-7. If no lens matches, continue to `lens-triage` with the orchestrator-self-review log.
-8. If `run_subagent` is unavailable, route to `blocked`.
+5. Wait for all `run_subagent` calls to complete. From each `review-log-<lens>.md`, extract the terminal (last) line.
+6. If no lens matches, continue to `lens-triage` with the orchestrator-self-review log.
+7. If `run_subagent` is unavailable, route to `blocked`.
 
 ## Outputs
 - Write `review-log-<lens>.md` for each dispatched lens
