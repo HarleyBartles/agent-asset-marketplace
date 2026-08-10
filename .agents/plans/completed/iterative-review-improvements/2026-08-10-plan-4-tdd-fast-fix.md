@@ -111,11 +111,11 @@ When `test-driven-development` is required, end `review-log-implementer-report.m
 In the `## Your Job` block, insert the TDD step before the Commit step and renumber Commit/Self-review/Report to 5/6/7:
 
 ```markdown
-6. If the task is a blocking/important bug fix or non-trivial behavior change, follow `test-driven-development`:
+4. If the task is a blocking/important bug fix or non-trivial behavior change, follow `test-driven-development`:
    - RED: write or identify a failing test that reproduces the bug and run it. Capture the failing output in `review-log-implementer-report.md`.
    - GREEN: implement the minimal fix, run the same test until it passes.
    - REFACTOR: clean up only after green. Do not add behavior.
-7. Commit your work once the targeted tests and the consumer's preflight pass.
+5. Commit your work once the targeted tests and the consumer's preflight pass.
 ```
 
 In the `## Report Format` block, expand the TDD evidence bullet to:
@@ -179,8 +179,7 @@ Replace the recipe section with:
 2. Choose the cheapest fix for the top finding.
 3. If the top finding has an existing test, run that test and confirm it fails (RED). If there is no test, write the minimal test that reproduces the finding.
 4. Apply the minimal fix and re-run the test until it passes (GREEN).
-5. Run the consumer's canonical preflight command.
-6. Return to `preflight` and re-run the consumer's canonical preflight.
+5. Return to `preflight` to re-run the consumer's canonical preflight.
 ```
 
 - [x] **Step 3: Run CI**
