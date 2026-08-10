@@ -8,6 +8,9 @@ Classification (read-only/mutating/mixed): mixed.
 - --ledger <path>         path to review-log-resolved-ledger.md (default: state.ledger_path)
 - --propose <node>        commit gate; if <node> is the allowed next node, exits 0 and
                           advances state in review-state.json
+- --status                print current status without mutating state
+- --resync                compare state to logs and report drift
+- --resync --apply        correct current_node if the logs have run ahead
 - --json                  machine-readable discovery; emits {"node": "...", "reason": "..."}
 - no --propose            read-only discovery; prints the allowed next node
 
@@ -38,7 +41,9 @@ from pathlib import Path
 #   - "regressions": unresolved regressions exist
 #   - "clean": the previous lens pass reported nothing to fix
 #   - "trivial": only trivial/deferred findings remain
-#   - "contested": a contested/load-bearing finding exists
+#   - "blocked": any unresolved blocker (contested or tool-blocked) exists
+#   - "contested": a contested finding exists
+#   - "tool_blocked": a tool-blocked finding exists
 #   - "ledger_missing": the resolved-ledger evidence file is missing
 #   - "ready": the resolved-ledger evidence file is present and clean
 #   - "more_findings": unresolved findings remain in the queue
@@ -59,7 +64,7 @@ GRAPH: dict[str, list[tuple[str, str]]] = {
         ("after_setup", "preflight"),
     ],
     "lens-triage": [
-        ("contested", "blocked"),
+        ("blocked", "blocked"),
         ("findings", "metrics-track"),
         ("trivial", "final-strong"),
         ("clean", "final-strong"),
@@ -74,7 +79,7 @@ GRAPH: dict[str, list[tuple[str, str]]] = {
         ("green", "reviewer-fixes"),
     ],
     "reviewer-fixes": [
-        ("contested", "blocked"),
+        ("blocked", "blocked"),
         ("new_issue", "metrics-track"),
         ("non_trivial", "regression-scan"),
         ("fixed", "resolved-ledger"),
@@ -89,13 +94,23 @@ GRAPH: dict[str, list[tuple[str, str]]] = {
         ("all_resolved", "final-strong"),
     ],
     "final-strong": [
-        ("contested", "blocked"),
+        ("blocked", "blocked"),
         ("findings", "metrics-track"),
         ("clean", "closeout"),
     ],
     "closeout": [("always", "ready")],
     "ready": [("always", "ready")],  # terminal
     "blocked": [("always", "blocked")],  # terminal
+}
+
+
+# Nodes that require a non-empty log file before the router will allow state to
+# advance into them via --propose. Keys are target nodes; values are the required
+# log files ("*" means the file just needs to be non-empty).
+ARTIFACTS_FOR_NODE: dict[str, list[tuple[str, str]]] = {
+    "metrics-track": [("findings.jsonl", "*")],
+    "regression-scan": [("regressions.jsonl", "*")],
+    "resolved-ledger": [("resolutions.jsonl", "*")],
 }
 
 
@@ -184,6 +199,20 @@ def _contested(state: dict) -> bool:
     return any(b.get("blocker_class") == "contested" and b.get("finding_id") in unresolved for b in blockers)
 
 
+def _tool_blocked(state: dict) -> bool:
+    """Return True if any unresolved finding is marked as tool-blocked."""
+    if "rounds_per_finding" in state:
+        return any(
+            f.get("blocked_class") == "tool-blocked"
+            for f in state.get("rounds_per_finding", [])
+            if not f.get("resolved_at_node")
+        )
+    scratch = Path(state.get("scratch_dir", "."))
+    blockers = _load_jsonl(scratch / "blockers.jsonl")
+    unresolved = set(_unresolved_findings(state))
+    return any(b.get("blocker_class") == "tool-blocked" and b.get("finding_id") in unresolved for b in blockers)
+
+
 def _condition_holds(condition: str, state: dict, ledger: Path, current_node: str) -> bool:
     unresolved = _unresolved_findings(state)
     regressions = _unresolved_regressions(state)
@@ -209,6 +238,10 @@ def _condition_holds(condition: str, state: dict, ledger: Path, current_node: st
         return bool(regressions)
     if condition == "contested":
         return _contested(state)
+    if condition == "tool_blocked":
+        return _tool_blocked(state)
+    if condition == "blocked":
+        return _contested(state) or _tool_blocked(state)
     if condition == "more_findings":
         return bool(unresolved)
     if condition == "all_resolved":
@@ -246,7 +279,8 @@ def _condition_holds(condition: str, state: dict, ledger: Path, current_node: st
         return any(
             f["finding_id"] not in resolved
             and f.get("severity") in ("blocking", "important")
-            and (round_ - f.get("discovered_at_round", round_) + 1) >= by_finding.get(
+            and (round_ - f.get("discovered_at_round", round_) + 1)
+            >= by_finding.get(
                 f["finding_id"],
                 by_severity.get(f.get("severity", ""), default_max),
             )
@@ -262,6 +296,38 @@ def _condition_holds(condition: str, state: dict, ledger: Path, current_node: st
         return state.get("non_trivial_fix", False)
 
     return False
+
+
+def _status_report(state: dict, ledger: Path, node: str, reason: str) -> str:
+    scratch = Path(state.get("scratch_dir", "."))
+    unresolved = _unresolved_findings(state)
+    regressions = _unresolved_regressions(state)
+    log_preview = []
+    for log_name in ("findings.jsonl", "resolutions.jsonl", "regressions.jsonl", "blockers.jsonl"):
+        p = scratch / log_name
+        if p.exists():
+            lines = [line for line in p.read_text(encoding="utf-8-sig").splitlines() if line.strip()]
+            log_preview.append(f"{log_name}: {len(lines)} lines")
+    return (
+        f"current_node: {state.get('current_node', 'unknown')}\n"
+        f"previous_node: {state.get('previous_node', '')}\n"
+        f"next_allowed: {node}\n"
+        f"reason: {reason}\n"
+        f"round: {state.get('round', 1)} / max: {state.get('max_fix_rounds', 4)}\n"
+        f"unresolved_important_blocking: {len(unresolved)}\n"
+        f"unresolved_regressions: {len(regressions)}\n"
+        f"ledger_present: {ledger.exists()}\n"
+        f"logs:\n" + "\n".join(f"  {entry}" for entry in log_preview)
+    )
+
+
+def _artifacts_present(node: str, state: dict) -> tuple[bool, str]:
+    scratch = Path(state.get("scratch_dir", "."))
+    for log_name, _ in ARTIFACTS_FOR_NODE.get(node, []):
+        p = scratch / log_name
+        if not p.exists() or not p.read_text(encoding="utf-8-sig").strip():
+            return False, f"missing or empty artifact: {log_name}"
+    return True, ""
 
 
 def _next_node(state: dict, ledger: Path) -> tuple[str, str]:
@@ -294,6 +360,9 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--ledger", help="path to review-log-resolved-ledger.md")
     parser.add_argument("--propose", help="proposed next node to validate")
     parser.add_argument("--json", action="store_true", help="emit machine-readable discovery JSON")
+    parser.add_argument("--status", action="store_true", help="print status without mutating state")
+    parser.add_argument("--resync", action="store_true", help="compare state to logs and report drift")
+    parser.add_argument("--apply", action="store_true", help="apply the correction during --resync")
     args = parser.parse_args(argv)
 
     if not args.check and not args.state and not args.metrics:
@@ -336,6 +405,40 @@ def main(argv: list[str] | None = None) -> int:
         print("--state or --metrics is required when not using --check", file=sys.stderr)
         return 2
 
+    if args.status:
+        if args.json:
+            payload = {
+                "current_node": state.get("current_node", "unknown"),
+                "previous_node": state.get("previous_node", ""),
+                "next_allowed": node,
+                "reason": reason,
+                "round": state.get("round", 1),
+                "max_fix_rounds": state.get("max_fix_rounds", 4),
+                "unresolved_important_blocking": len(_unresolved_findings(state)),
+                "unresolved_regressions": len(_unresolved_regressions(state)),
+                "ledger_present": ledger_path.exists(),
+            }
+            print(json.dumps(payload, ensure_ascii=False))
+        else:
+            print(_status_report(state, ledger_path, node, reason))
+        return 0
+
+    if args.resync:
+        saved = state.get("current_node", "unknown")
+        if saved == node:
+            print(f"SYNC: current_node {saved} matches log-implied next node")
+            return 0
+        print(f"DRIFT: current_node is {saved}; logs imply {node}  -  {reason}")
+        if not args.apply:
+            print("Use --resync --apply to correct the state pointer", file=sys.stderr)
+            return 1
+        fresh = _load_state(state_path)
+        fresh["previous_node"] = fresh.get("current_node", "")
+        fresh["current_node"] = node
+        state_path.write_text(json.dumps(fresh, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+        print(f"SYNC: corrected current_node to {node}")
+        return 0
+
     if not args.propose:
         # Discovery is read-only: it reports the allowed next node from the
         # current state without advancing state.
@@ -345,6 +448,10 @@ def main(argv: list[str] | None = None) -> int:
             print(f"{node}\n# {reason}")
     elif state_path is not None and args.propose == node:
         print(f"ALLOWED: {args.propose}  -  {reason}")
+        ok, missing = _artifacts_present(args.propose, state)
+        if not ok:
+            print(f"BLOCKED: proposed {args.propose} is allowed, but {missing}", file=sys.stderr)
+            return 1
         # Re-read the state from disk immediately before writing to avoid
         # overwriting concurrent changes with a stale in-memory dict.
         fresh = _load_state(state_path)
