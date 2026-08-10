@@ -20,6 +20,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--state", help="Path to review-state.json")
     parser.add_argument("--node", help="Node name (used for review-log-<node>.md)")
     parser.add_argument("--data", help="Markdown content to append")
+    parser.add_argument("--data-file", help="Path to a file containing markdown to append")
     parser.add_argument("--apply", action="store_true", help="Append the log")
     parser.add_argument("--check", action="store_true", help="Validate CLI contract")
     args = parser.parse_args(argv)
@@ -28,9 +29,8 @@ def main(argv: list[str] | None = None) -> int:
         print("record_orchestrator_log.py: --check ok")
         return 0
 
-    missing = [
-        name for name, value in (("--state", args.state), ("--node", args.node), ("--data", args.data)) if not value
-    ]
+    data = Path(args.data_file).read_text(encoding="utf-8") if args.data_file else args.data
+    missing = [name for name, value in (("--state", args.state), ("--node", args.node), ("--data", data)) if not value]
     if missing:
         parser.error("the following arguments are required: " + ", ".join(missing))
 
@@ -39,7 +39,7 @@ def main(argv: list[str] | None = None) -> int:
     log_path = scratch / f"review-log-{args.node}.md"
     round_ = state.get("round", 1)
     now = datetime.now(timezone.utc).isoformat()
-    block = f"\n## Round {round_} - {now}\n\n{args.data}\n"
+    block = f"\n## Round {round_} - {now}\n\n{data}\n"
 
     if not args.apply:
         print(f"Would append to {log_path}:\n{block}")

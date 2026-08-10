@@ -148,6 +148,33 @@ class TestRecordOrchestratorLog(unittest.TestCase):
             self.assertTrue(log.exists())
             self.assertIn("test entry", log.read_text(encoding="utf-8"))
 
+    def test_record_orchestrator_log_appends_from_data_file(self):
+        with tempfile.TemporaryDirectory() as td:
+            scratch = Path(td)
+            state = _write_state(scratch)
+            data_file = scratch / "filled-template.md"
+            data_file.write_text("file entry", encoding="utf-8")
+            result = subprocess.run(
+                [
+                    "py",
+                    "-3",
+                    str(RECORD_ORCHESTRATOR_LOG),
+                    "--state",
+                    str(state),
+                    "--node",
+                    "orchestrator-self-review",
+                    "--data-file",
+                    str(data_file),
+                    "--apply",
+                ],
+                capture_output=True,
+                text=True,
+            )
+            self.assertEqual(result.returncode, 0)
+            log = scratch / "review-log-orchestrator-self-review.md"
+            self.assertTrue(log.exists())
+            self.assertIn("file entry", log.read_text(encoding="utf-8"))
+
     def test_record_orchestrator_log_rejects_missing_args(self):
         with tempfile.TemporaryDirectory() as td:
             scratch = Path(td)

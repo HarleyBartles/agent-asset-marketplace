@@ -36,9 +36,12 @@ def _write_state(scratch: Path, *, current: str = "setup", previous: str = "") -
     return p
 
 
-def _propose(state: Path, node: str) -> subprocess.CompletedProcess:
+def _propose(state: Path, node: str, extra: list[str] | None = None) -> subprocess.CompletedProcess:
+    cmd = ["py", "-3", str(NEXT_NODE), "--state", str(state), "--propose", node]
+    if extra:
+        cmd.extend(extra)
     return subprocess.run(
-        ["py", "-3", str(NEXT_NODE), "--state", str(state), "--propose", node],
+        cmd,
         capture_output=True,
         text=True,
     )
@@ -65,6 +68,16 @@ class TestNextNodePropose(unittest.TestCase):
             self.assertEqual(result.returncode, 1)
             self.assertIn("BLOCKED", result.stderr)
             self.assertIn("resolutions.jsonl", result.stderr)
+
+    def test_non_trivial_routes_reviewer_fixes_to_regression_scan(self):
+        with tempfile.TemporaryDirectory() as td:
+            scratch = Path(td)
+            state = _write_state(scratch, current="reviewer-fixes", previous="re-preflight")
+            (scratch / "findings.jsonl").write_text("", encoding="utf-8")
+            (scratch / "regressions.jsonl").write_text("", encoding="utf-8")
+            result = _propose(state, "regression-scan", extra=["--non-trivial"])
+            self.assertEqual(result.returncode, 0)
+            self.assertIn("ALLOWED: regression-scan", result.stdout)
 
 
 if __name__ == "__main__":

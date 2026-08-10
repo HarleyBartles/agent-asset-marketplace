@@ -20,12 +20,12 @@ Use shell/pattern tools such as `grep`, `py -3 -c`, `Select-String`, `ripgrep`, 
 2. For each relevant `reviewer-*.md` profile, read its `## Checklist` and `## Applies to` sections.
 3. Use `## Applies to` only to decide relevance; still scan the full diff for checklist patterns. The orchestrator must perform this scan with the tools above. Do not call a subagent to do a full lens review; `lens-dispatch` will run the parallel lens reviewers after this node.
 4. Fix predictable issues with high confidence.
-5. Record the completed self-review in `review-log-orchestrator-self-review.md` in the off-repo scratch by appending the filled template with `record_orchestrator_log.py`:
+5. Record the completed self-review in `review-log-orchestrator-self-review.md` in the off-repo scratch by appending the filled template with `record_orchestrator_log.py`. Save the filled template to a temporary file and pass it via `--data-file`:
    ```bash
    py -3 .agents/skills/iterative-review/scripts/record_orchestrator_log.py \
        --state <scratch_dir>/review-state.json \
        --node orchestrator-self-review \
-       --data "<filled template>" \
+       --data-file <temp_filled_template.md> \
        --apply
    ```
 6. Update `<scan_findings>` after the fixes.

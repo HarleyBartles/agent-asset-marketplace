@@ -358,7 +358,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument(
         "--non-trivial",
         action="store_true",
-        help="set non_trivial_fix when using --propose reviewer-fixes",
+        help="set non_trivial_fix when using --propose reviewer-fixes or regression-scan",
     )
     parser.add_argument("--json", action="store_true", help="emit machine-readable discovery JSON")
     parser.add_argument("--status", action="store_true", help="print status without mutating state")
@@ -378,6 +378,9 @@ def main(argv: list[str] | None = None) -> int:
     if args.non_trivial and not args.propose:
         print("--non-trivial is only valid with --propose", file=sys.stderr)
         return 2
+    if args.non_trivial and args.propose not in {"reviewer-fixes", "regression-scan"}:
+        print("--non-trivial is only valid with --propose reviewer-fixes or regression-scan", file=sys.stderr)
+        return 2
     if args.check and (args.status or args.resync):
         print("--check cannot be combined with --status or --resync", file=sys.stderr)
         return 2
@@ -394,6 +397,8 @@ def main(argv: list[str] | None = None) -> int:
     if args.state:
         state_path = Path(args.state)
         state = _load_state(state_path)
+        if args.non_trivial:
+            state["non_trivial_fix"] = True
         ledger_path = (
             Path(args.ledger)
             if args.ledger
@@ -406,6 +411,8 @@ def main(argv: list[str] | None = None) -> int:
             # review-state.json path from the metrics file.
             state_path = Path(args.metrics).with_name("review-state.json")
             state = _load_state(state_path)
+            if args.non_trivial:
+                state["non_trivial_fix"] = True
             ledger_path = (
                 Path(args.ledger)
                 if args.ledger
