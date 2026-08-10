@@ -109,7 +109,6 @@ GRAPH: dict[str, list[tuple[str, str]]] = {
 # log files ("*" means the file just needs to be non-empty).
 ARTIFACTS_FOR_NODE: dict[str, list[tuple[str, str]]] = {
     "metrics-track": [("findings.jsonl", "*")],
-    "regression-scan": [("regressions.jsonl", "*")],
     "resolved-ledger": [("resolutions.jsonl", "*")],
 }
 
@@ -365,6 +364,13 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--apply", action="store_true", help="apply the correction during --resync")
     args = parser.parse_args(argv)
 
+    if args.apply and not args.resync:
+        print("--apply is only valid with --resync", file=sys.stderr)
+        return 2
+    if args.propose and (args.status or args.resync):
+        print("--propose cannot be combined with --status or --resync", file=sys.stderr)
+        return 2
+
     if not args.check and not args.state and not args.metrics:
         print("--state or --metrics is required when not using --check", file=sys.stderr)
         return 2
@@ -424,6 +430,9 @@ def main(argv: list[str] | None = None) -> int:
         return 0
 
     if args.resync:
+        if args.apply and state_path is None:
+            print("--state is required for --resync --apply", file=sys.stderr)
+            return 2
         saved = state.get("current_node", "unknown")
         if saved == node:
             print(f"SYNC: current_node {saved} matches log-implied next node")
@@ -447,11 +456,11 @@ def main(argv: list[str] | None = None) -> int:
         else:
             print(f"{node}\n# {reason}")
     elif state_path is not None and args.propose == node:
-        print(f"ALLOWED: {args.propose}  -  {reason}")
         ok, missing = _artifacts_present(args.propose, state)
         if not ok:
             print(f"BLOCKED: proposed {args.propose} is allowed, but {missing}", file=sys.stderr)
             return 1
+        print(f"ALLOWED: {args.propose}  -  {reason}")
         # Re-read the state from disk immediately before writing to avoid
         # overwriting concurrent changes with a stale in-memory dict.
         fresh = _load_state(state_path)
