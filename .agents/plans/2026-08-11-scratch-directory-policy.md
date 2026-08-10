@@ -23,7 +23,10 @@
 **Files:**
 - Modify: `codex-marketplace/plugins/repo-worker-pack/skills/repo-worker-base/references/worktree-and-branch-policy.md`
 
-**Interfaces:**
+**Consumes:**
+- (none; this is the first task)
+
+**Produces:**
 - The canonical algorithm for `external-scratch-root` becomes `parent(main-checkout) / "_agent-scratch" / repository-name / branch-name`.
 - `plan-scoped-scratch` becomes `external-scratch-root / <plan-basename>`.
 
@@ -56,7 +59,10 @@ git commit -m "docs(repo-worker-base): namespace scratch by repository in locati
 **Files:**
 - Modify: `.agents/doctrine/non-repo-locations-policy.md`
 
-**Interfaces:**
+**Consumes:**
+- The canonical scratch algorithm from Task 0.
+
+**Produces:**
 - The doctrine file now shows the new scratch path and the rule that `_agent-scratch` top-level entries must be repo-name folders.
 
 - [ ] **Step 1: Update the Scratch files section**
@@ -98,7 +104,10 @@ git commit -m "docs(doctrine): namespace scratch directories by repository"
 **Files:**
 - Create: `codex-marketplace/plugins/repo-worker-pack/skills/repo-standards/references/scratch-workspace-policy.md`
 
-**Interfaces:**
+**Consumes:**
+- (none; this is a new portable reference)
+
+**Produces:**
 - Portable reference that consumer repos can install under `.agents/skills/repo-standards/references/scratch-workspace-policy.md`.
 
 - [ ] **Step 1: Create the reference file**
@@ -159,7 +168,10 @@ git commit -m "docs(repo-standards): add portable scratch workspace policy"
 **Files:**
 - Modify: `codex-marketplace/plugins/repo-worker-pack/skills/repo-standards/SKILL.md`
 
-**Interfaces:**
+**Consumes:**
+- The `scratch-workspace-policy.md` reference from Task 2.
+
+**Produces:**
 - `SKILL.md` lists the new reference and the validator script once it exists.
 
 - [ ] **Step 1: Add a scratch entry to the Read when table**
@@ -185,8 +197,11 @@ git commit -m "docs(repo-standards): route to scratch workspace policy reference
 - Create: `codex-marketplace/plugins/repo-worker-pack/skills/repo-standards/scripts/validate_scratch.py`
 - Test: `py -3 codex-marketplace/plugins/repo-worker-pack/skills/repo-standards/scripts/validate_scratch.py --check` and `--help`
 
-**Interfaces:**
-- Script accepts `--help` and `--check` and optionally `--apply`.
+**Consumes:**
+- The `scratch-workspace-policy.md` reference from Task 2.
+
+**Produces:**
+- `validate_scratch.py` script with `--help`, `--check`, and `--apply` semantics.
 - `--check` exits 0 if the `_agent-scratch` root under the repo's canonical location is clean, 1 otherwise.
 - `--apply` removes orphan directories classified as `delete_now`.
 
@@ -328,7 +343,10 @@ git commit -m "feat(repo-standards): add scratch directory layout validator"
 - Modify: `codex-marketplace/plugins/superpowers-plus/skills/using-git-worktrees/scripts/new_worktree.py`
 - Modify: `codex-marketplace/plugins/superpowers-plus/skills/using-git-worktrees/scripts/remove_worktree.py`
 
-**Interfaces:**
+**Consumes:**
+- The canonical scratch algorithm from Task 0.
+
+**Produces:**
 - `new_worktree.py` creates `../_agent-scratch/<repo-name>/<branch>` alongside the worktree.
 - `remove_worktree.py` removes that scratch directory when the worktree is removed.
 
@@ -379,8 +397,11 @@ git commit -m "feat(using-git-worktrees): remove namespaced scratch with worktre
 **Files:**
 - Create: `codex-marketplace/plugins/repo-worker-pack/skills/cleanup-custody/scripts/cleanup_scratch.py`
 
-**Interfaces:**
-- Script lists all top-level `_agent-scratch` entries, classifies each against running branches, and can remove `delete_now` entries.
+**Consumes:**
+- (none; this is a new helper)
+
+**Produces:**
+- `cleanup_scratch.py` script that lists all top-level `_agent-scratch` entries, classifies each against running branches, and can remove `delete_now` entries.
 
 - [ ] **Step 1: Create the script**
 
@@ -503,7 +524,10 @@ git commit -m "feat(cleanup-custody): add scratch directory cleanup helper"
 - All canonical skill source under `codex-marketplace/plugins/`
 - Generated: `.agents/skills/`
 
-**Interfaces:**
+**Consumes:**
+- Canonical source changes from Tasks 0-6.
+
+**Produces:**
 - `.agents/skills/` mirrors canonical source.
 - Marketplace indexes are current.
 
@@ -512,17 +536,26 @@ git commit -m "feat(cleanup-custody): add scratch directory cleanup helper"
 ```bash
 py -3 tools/run.py installed-skills --apply
 py -3 tools/run.py marketplace --apply
-py -3 tools/run.py ci --check
 ```
 
-Expected: all targets pass.
+Expected: installed skills and marketplace indexes reflect canonical source.
 
-- [ ] **Step 2: Stage and commit the regenerated copies**
+- [ ] **Step 2: Stage and run CI on the staged tree**
 
 ```bash
 git add -A
+py -3 tools/run.py ci --check
+```
+
+Expected: all targets pass on the staged tree.
+
+- [ ] **Step 3: Commit the regenerated copies**
+
+```bash
 git commit -m "chore: regenerate installed skills and marketplace for scratch namespace policy"
 ```
+
+Expected: the pre-commit hook re-runs `ci --apply` and succeeds.
 
 ---
 
@@ -531,7 +564,11 @@ git commit -m "chore: regenerate installed skills and marketplace for scratch na
 **Files:**
 - External: `Z:/_agent-scratch/`
 
-**Interfaces:**
+**Consumes:**
+- Installed `cleanup_scratch.py` from Task 6.
+- Installed `validate_scratch.py` from Task 4.
+
+**Produces:**
 - The top level of `Z:/_agent-scratch/` contains only repo-name folders.
 - Any current in-flight work is preserved under its repo/branch path.
 
@@ -573,7 +610,10 @@ Scratch is external to the repo. There is no git change to commit. Record the cl
 - Branch: `2026-08-11-scratch-policy`
 - PR body: brief summary and test command output
 
-**Interfaces:**
+**Consumes:**
+- All prior tasks completed.
+
+**Produces:**
 - Draft PR exists with publication proof.
 
 - [ ] **Step 1: Push the branch**
