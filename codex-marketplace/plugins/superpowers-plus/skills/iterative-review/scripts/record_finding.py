@@ -33,15 +33,12 @@ def _main(argv: list[str] | None = None) -> int:
     state_path = Path(args.state)
     state = _load_state(state_path)
     try:
-        finding = json.loads(args.data)
+        parsed = json.loads(args.data)
     except json.JSONDecodeError as e:
         print(f"ERROR: invalid finding JSON: {e}", file=sys.stderr)
         return 1
 
-    missing = REQUIRED - finding.keys()
-    if missing:
-        print(f"ERROR: missing keys {missing}", file=sys.stderr)
-        return 1
+    data_items = parsed if isinstance(parsed, list) else [parsed]
 
     try:
         scratch = Path(state["scratch_dir"])
@@ -57,14 +54,23 @@ def _main(argv: list[str] | None = None) -> int:
             if line.strip():
                 existing.add(json.loads(line).get("finding_id"))
 
-    if finding["finding_id"] in existing:
-        print("record_finding.py: finding already recorded; no change")
-        return 0
+    recorded = []
+    for item in data_items:
+        missing = REQUIRED - item.keys()
+        if missing:
+            print(f"ERROR: missing keys {missing} in {item}", file=sys.stderr)
+            return 1
+        if item["finding_id"] in existing:
+            continue
+        with log.open("a", encoding="utf-8") as f:
+            f.write(json.dumps(item, ensure_ascii=False) + "\n")
+        existing.add(item["finding_id"])
+        recorded.append(item["finding_id"])
 
-    with log.open("a", encoding="utf-8") as f:
-        f.write(json.dumps(finding, ensure_ascii=False) + "\n")
-
-    print(f"record_finding.py: recorded {finding['finding_id']}")
+    if recorded:
+        print(f"record_finding.py: recorded {', '.join(recorded)}")
+    else:
+        print("record_finding.py: all findings already recorded; no change")
     return 0
 
 

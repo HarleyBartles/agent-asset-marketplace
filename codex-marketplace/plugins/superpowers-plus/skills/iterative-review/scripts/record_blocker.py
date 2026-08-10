@@ -34,22 +34,12 @@ def _main(argv: list[str] | None = None) -> int:
     state_path = Path(args.state)
     state = _load_state(state_path)
     try:
-        blocker = json.loads(args.data)
+        parsed = json.loads(args.data)
     except json.JSONDecodeError as e:
         print(f"ERROR: invalid blocker JSON: {e}", file=sys.stderr)
         return 1
 
-    missing = REQUIRED - blocker.keys()
-    if missing:
-        print(f"ERROR: missing keys {missing}", file=sys.stderr)
-        return 1
-
-    if blocker["blocker_class"] not in VALID_BLOCKER_CLASSES:
-        print(
-            f"ERROR: blocker_class must be one of {VALID_BLOCKER_CLASSES}; got {blocker['blocker_class']!r}",
-            file=sys.stderr,
-        )
-        return 1
+    data_items = parsed if isinstance(parsed, list) else [parsed]
 
     try:
         scratch = Path(state["scratch_dir"])
@@ -65,14 +55,29 @@ def _main(argv: list[str] | None = None) -> int:
             if line.strip():
                 existing.add(json.loads(line).get("finding_id"))
 
-    if blocker["finding_id"] in existing:
-        print("record_blocker.py: blocker already recorded; no change")
-        return 0
+    recorded = []
+    for item in data_items:
+        missing = REQUIRED - item.keys()
+        if missing:
+            print(f"ERROR: missing keys {missing} in {item}", file=sys.stderr)
+            return 1
+        if item["blocker_class"] not in VALID_BLOCKER_CLASSES:
+            print(
+                f"ERROR: blocker_class must be one of {VALID_BLOCKER_CLASSES}; got {item['blocker_class']!r}",
+                file=sys.stderr,
+            )
+            return 1
+        if item["finding_id"] in existing:
+            continue
+        with log.open("a", encoding="utf-8") as f:
+            f.write(json.dumps(item, ensure_ascii=False) + "\n")
+        existing.add(item["finding_id"])
+        recorded.append(item["finding_id"])
 
-    with log.open("a", encoding="utf-8") as f:
-        f.write(json.dumps(blocker, ensure_ascii=False) + "\n")
-
-    print(f"record_blocker.py: recorded blocker for {blocker['finding_id']}")
+    if recorded:
+        print(f"record_blocker.py: recorded blockers for {', '.join(recorded)}")
+    else:
+        print("record_blocker.py: all blockers already recorded; no change")
     return 0
 
 

@@ -40,15 +40,12 @@ def _main(argv: list[str] | None = None) -> int:
     state_path = Path(args.state)
     state = _load_state(state_path)
     try:
-        regression = json.loads(args.data)
+        parsed = json.loads(args.data)
     except json.JSONDecodeError as e:
         print(f"ERROR: invalid regression JSON: {e}", file=sys.stderr)
         return 1
 
-    missing = REQUIRED - regression.keys()
-    if missing:
-        print(f"ERROR: missing keys {missing}", file=sys.stderr)
-        return 1
+    data_items = parsed if isinstance(parsed, list) else [parsed]
 
     try:
         scratch = Path(state["scratch_dir"])
@@ -64,14 +61,23 @@ def _main(argv: list[str] | None = None) -> int:
             if line.strip():
                 existing.add(json.loads(line).get("new_finding"))
 
-    if regression["new_finding"] in existing:
-        print("record_regression.py: regression already recorded; no change")
-        return 0
+    recorded = []
+    for item in data_items:
+        missing = REQUIRED - item.keys()
+        if missing:
+            print(f"ERROR: missing keys {missing} in {item}", file=sys.stderr)
+            return 1
+        if item["new_finding"] in existing:
+            continue
+        with log.open("a", encoding="utf-8") as f:
+            f.write(json.dumps(item, ensure_ascii=False) + "\n")
+        existing.add(item["new_finding"])
+        recorded.append(item["new_finding"])
 
-    with log.open("a", encoding="utf-8") as f:
-        f.write(json.dumps(regression, ensure_ascii=False) + "\n")
-
-    print(f"record_regression.py: recorded regression {regression['new_finding']}")
+    if recorded:
+        print(f"record_regression.py: recorded regressions {', '.join(recorded)}")
+    else:
+        print("record_regression.py: all regressions already recorded; no change")
     return 0
 
 
