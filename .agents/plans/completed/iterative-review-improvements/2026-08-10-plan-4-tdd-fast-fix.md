@@ -413,3 +413,28 @@ gh pr create --draft --title "Plan 4: TDD and fast-fix churn reduction" --body "
 ```
 
 Report the PR URL.
+
+---
+
+### Task 5: Mark the spec as implemented
+
+**Files:**
+- Read: `../../../specs/2026-08-10-iterative-review-tdd-proposal.md`
+- Modify: `../../../specs/2026-08-10-iterative-review-tdd-proposal.md`
+
+**Interfaces:**
+- The spec proposal status reflects that the work is complete and points to this plan and PR #290.
+
+- [x] **Step 1: Update the spec status paragraph**
+
+```markdown
+**Status:** Implemented in Plan 4 / PR #290.
+**Source:** Design discussion after Plan 3 final branch review of PR #289.
+```
+
+- [x] **Step 2: Commit the spec status update**
+
+```bash
+git add ../../../specs/2026-08-10-iterative-review-tdd-proposal.md
+git commit -m "docs(spec): mark iterative-review TDD proposal as implemented in Plan 4"
+```
