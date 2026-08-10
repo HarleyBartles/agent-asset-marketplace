@@ -11,7 +11,7 @@ from pathlib import Path
 
 
 def _load_state(state_path: Path) -> dict:
-    with state_path.open("r", encoding="utf-8") as f:
+    with state_path.open("r", encoding="utf-8-sig") as f:
         return json.load(f)
 
 

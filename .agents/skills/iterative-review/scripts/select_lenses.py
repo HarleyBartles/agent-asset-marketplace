@@ -8,7 +8,7 @@ import fnmatch
 import json
 import re
 import sys
-from pathlib import Path
+from pathlib import Path, PurePath
 
 
 def _reviewer_paths() -> list[Path]:
@@ -58,6 +58,14 @@ def _applies_to(text: str) -> dict:
     }
 
 
+COMMON_INPUTS = {
+    "<diff_path>",
+    "<pr_description>",
+    "<scan_findings>",
+    "<review-log-orchestrator-self-review>",
+}
+
+
 def _changed_files(diff_path: Path | None) -> list[str]:
     if not diff_path or not diff_path.exists():
         return []
@@ -66,12 +74,42 @@ def _changed_files(diff_path: Path | None) -> list[str]:
     return list(dict.fromkeys(f for pair in pairs for f in pair))
 
 
-def _matches(rule: dict, changed: list[str], diff_text: str, pr_text: str, provided_inputs: list[str]) -> bool:
+def _match_parts(pattern_parts: list[str], path_parts: tuple[str, ...]) -> bool:
+    """Match a glob pattern split on '/' against path parts, supporting '**'."""
+    if not pattern_parts:
+        return not path_parts
+    head, *tail = pattern_parts
+    if head == "**":
+        for i in range(len(path_parts) + 1):
+            if _match_parts(tail, path_parts[i:]):
+                return True
+        return False
+    if not path_parts:
+        return False
+    if fnmatch.fnmatchcase(path_parts[0], head):
+        return _match_parts(tail, path_parts[1:])
+    return False
+
+
+def _glob_match(pattern: str, path: str) -> bool:
+    return _match_parts(pattern.split("/"), PurePath(path).parts)
+
+
+def _input_available(scratch: Path, inp: str) -> bool:
+    """A non-common input token is available if a file matching its name exists."""
+    token = inp.strip("<>")
+    candidates = {token}
+    if token.endswith("_path"):
+        candidates.add(token[: -len("_path")])
+    return any((scratch / c).exists() for c in candidates)
+
+
+def _matches(rule: dict, changed: list[str], diff_text: str, pr_text: str, scratch: Path) -> bool:
     for inp in rule.get("inputs", []):
-        if inp in provided_inputs:
+        if inp not in COMMON_INPUTS and _input_available(scratch, inp):
             return True
     for pattern in rule.get("globs", []):
-        if any(fnmatch.fnmatch(f, pattern) for f in changed):
+        if any(_glob_match(pattern, f) for f in changed):
             return True
     for keyword in rule.get("keywords", []):
         if keyword.lower() in diff_text.lower() or keyword.lower() in pr_text.lower():
@@ -84,7 +122,7 @@ def _lenses_path(state: dict) -> Path:
 
 
 def _load_state(state_path: Path) -> dict:
-    with state_path.open("r", encoding="utf-8") as f:
+    with state_path.open("r", encoding="utf-8-sig") as f:
         return json.load(f)
 
 
@@ -109,22 +147,13 @@ def _select(state: dict) -> list[dict]:
     diff_text = diff_path.read_text(encoding="utf-8") if diff_path and diff_path.exists() else ""
     pr_text = pr_path.read_text(encoding="utf-8") if pr_path.exists() else ""
     changed = _changed_files(diff_path)
-    provided = []
-    if diff_path and diff_path.exists():
-        provided.append("<diff_path>")
-    if pr_path.exists():
-        provided.append("<pr_description>")
-    if (scratch / "scan_findings").exists():
-        provided.append("<scan_findings>")
-    if (scratch / "review-log-orchestrator-self-review.md").exists():
-        provided.append("<review-log-orchestrator-self-review>")
 
     selected = []
     for profile in _reviewer_paths():
         text = profile.read_text(encoding="utf-8")
         rule = _applies_to(text)
         lens = profile.stem
-        if _matches(rule, changed, diff_text, pr_text, provided) and lens not in {"reviewer-strong", "reviewer-fixes"}:
+        if _matches(rule, changed, diff_text, pr_text, scratch) and lens not in {"reviewer-strong", "reviewer-fixes"}:
             selected.append(
                 {
                     "lens": lens,

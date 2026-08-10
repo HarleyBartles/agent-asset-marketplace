@@ -78,6 +78,8 @@ class TestNextNodePropose(unittest.TestCase):
             result = _propose(state, "regression-scan", extra=["--non-trivial"])
             self.assertEqual(result.returncode, 0)
             self.assertIn("ALLOWED: regression-scan", result.stdout)
+            fresh = json.loads(state.read_text(encoding="utf-8"))
+            self.assertFalse(fresh.get("non_trivial_fix", True))
 
 
 if __name__ == "__main__":

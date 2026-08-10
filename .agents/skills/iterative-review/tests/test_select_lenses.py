@@ -2,6 +2,7 @@
 """Focused tests for select_lenses.py helpers."""
 
 import importlib.util
+import json
 import subprocess
 import tempfile
 import unittest
@@ -83,6 +84,47 @@ class TestSelectLensesHelpers(unittest.TestCase):
             files = module._changed_files(diff_path)
             self.assertIn("old_name.py", files)
             self.assertIn("new_name.py", files)
+
+    def test_glob_match_supports_double_star(self):
+        module = _load_select_lenses()
+        self.assertTrue(module._glob_match("**/scripts/**", "tools/scripts/run.py"))
+        self.assertTrue(module._glob_match("**/scripts/**", "scripts/foo.py"))
+        self.assertTrue(module._glob_match("**/*.py", "run.py"))
+        self.assertTrue(module._glob_match("tools/*.py", "tools/run.py"))
+        self.assertFalse(module._glob_match("tools/*.py", "tools/sub/run.py"))
+        self.assertFalse(module._glob_match("tools/*.py", "src/tools/run.py"))
+        self.assertTrue(module._glob_match("**/tools/*.py", "src/tools/run.py"))
+
+    def test_common_inputs_do_not_force_selection(self):
+        module = _load_select_lenses()
+        rule = {
+            "inputs": ["<diff_path>"],
+            "globs": [],
+            "keywords": [],
+        }
+        with tempfile.TemporaryDirectory() as td:
+            scratch = Path(td)
+            self.assertFalse(module._matches(rule, ["foo.py"], "", "", scratch))
+
+    def test_lens_specific_input_selects_when_file_present(self):
+        module = _load_select_lenses()
+        rule = {
+            "inputs": ["<plan_path>"],
+            "globs": [],
+            "keywords": [],
+        }
+        with tempfile.TemporaryDirectory() as td:
+            scratch = Path(td)
+            (scratch / "plan").write_text("plan", encoding="utf-8")
+            self.assertTrue(module._matches(rule, ["foo.py"], "", "", scratch))
+
+    def test_load_state_tolerates_bom(self):
+        module = _load_select_lenses()
+        with tempfile.TemporaryDirectory() as td:
+            state_path = Path(td) / "review-state.json"
+            payload = json.dumps({"scratch_dir": str(Path(td))}, ensure_ascii=False).encode("utf-8")
+            state_path.write_bytes(b"\xef\xbb\xbf" + payload)
+            self.assertEqual(module._load_state(state_path)["scratch_dir"], str(Path(td)))
 
 
 if __name__ == "__main__":

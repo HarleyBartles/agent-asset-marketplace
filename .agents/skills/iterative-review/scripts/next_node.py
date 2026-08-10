@@ -484,10 +484,10 @@ def main(argv: list[str] | None = None) -> int:
         fresh = _load_state(state_path)
         fresh["previous_node"] = fresh.get("current_node", "")
         fresh["current_node"] = node
-        if args.propose == "reviewer-fixes" and not args.non_trivial:
+        if args.propose == "reviewer-fixes":
+            fresh["non_trivial_fix"] = args.non_trivial
+        else:
             fresh["non_trivial_fix"] = False
-        if args.non_trivial:
-            fresh["non_trivial_fix"] = True
         state_path.write_text(json.dumps(fresh, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     else:
         print(f"BLOCKED: proposed {args.propose}; allowed next node is {node}  -  {reason}", file=sys.stderr)
