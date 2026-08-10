@@ -355,16 +355,21 @@ git commit -m "feat(repo-standards): add scratch directory layout validator"
 After the worktree is created and before skill refresh, add:
 
 ```python
+def _sanitize_branch_name(branch: str) -> str:
+    return re.sub(r'[:\\?*"<>|/\\\\]', '-', branch)
+
+
 def _canonical_scratch_root(main_repo_root: Path, branch: str) -> Path:
     repo_name = main_repo_root.name
-    return main_repo_root.parent / "_agent-scratch" / repo_name / branch
+    return main_repo_root.parent / "_agent-scratch" / repo_name / _sanitize_branch_name(branch)
+
 
 scratch_root = _canonical_scratch_root(main_repo_root, branch)
 scratch_root.mkdir(parents=True, exist_ok=True)
 print(f"Scratch ready at {scratch_root}")
 ```
 
-Call it inside the `__main__` flow right after `_init_submodules` and before the refresh/skills step.
+Call it inside `_apply_worktree` immediately after the worktree is created and before `_configure_worktree`/skill refresh returns.
 
 - [ ] **Step 2: Add scratch removal to `remove_worktree.py`**
 
@@ -401,7 +406,7 @@ git commit -m "feat(using-git-worktrees): remove namespaced scratch with worktre
 - (none; this is a new helper)
 
 **Produces:**
-- `cleanup_scratch.py` script that lists all top-level `_agent-scratch` entries, classifies each against running branches, and can remove `delete_now` entries.
+- `cleanup_scratch.py` script that classifies branch/task folders within `_agent-scratch/<repo-name>` for the current repo against running (sanitized) branch names and can remove `delete_now` entries.
 
 - [ ] **Step 1: Create the script**
 
@@ -500,6 +505,8 @@ if __name__ == "__main__":
     sys.exit(_main())
 ```
 
+The production implementation adds a mutually exclusive `--check` (default, read-only, exits 0) and `--apply` (mutating) flag pair, matching the skill-bundled CLI contract. It also sanitizes active branch names with `re.sub(r'[:\\?*"<>|/\\\\]', '-', branch)` so slash-branches produce a single flat directory.
+
 - [ ] **Step 2: Verify `--help` and `--check` equivalent**
 
 ```bash
@@ -507,7 +514,7 @@ py -3 codex-marketplace/plugins/repo-worker-pack/skills/cleanup-custody/scripts/
 py -3 codex-marketplace/plugins/repo-worker-pack/skills/cleanup-custody/scripts/cleanup_scratch.py
 ```
 
-Expected: `--help` prints usage; no-args run lists each `_agent-scratch/<repo-name>` entry with a classification.
+Expected: `--help` prints usage; no-args run (or `--check`) lists each branch folder under `_agent-scratch/<repo-name>` with a classification.
 
 - [ ] **Step 3: Commit**
 
@@ -580,7 +587,7 @@ Run from the main repo:
 py -3 .agents/skills/cleanup-custody/scripts/cleanup_scratch.py
 ```
 
-Expected: lists each top-level entry with `keep_live` or `delete_now`.
+Expected: lists each branch/task folder under `_agent-scratch/<repo-name>` with `keep_live` or `delete_now`.
 
 - [ ] **Step 2: Apply deletion for entries with no active branch or unknown repo**
 

@@ -88,7 +88,10 @@ def _validate(check: bool, apply: bool) -> int:
 
 def _cli() -> int:
     parser = argparse.ArgumentParser(
-        description="Validate the _agent-scratch directory is namespaced by repo. (mixed: supports --check and --apply)"
+        description=(
+            "Validate the _agent-scratch directory is namespaced by repo. (mixed: supports --check and --apply)"
+        ),
+        epilog=("--check is the default and exits 1 when layout drift is found; --apply removes invalid entries."),
     )
     mode = parser.add_mutually_exclusive_group()
     mode.add_argument(
