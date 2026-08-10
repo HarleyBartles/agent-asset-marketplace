@@ -38,7 +38,13 @@ def _main(argv: list[str] | None = None) -> int:
         print(f"ERROR: invalid resolution JSON: {e}", file=sys.stderr)
         return 1
 
+    if not isinstance(parsed, (dict, list)):
+        print("ERROR: --data must be a JSON object or array", file=sys.stderr)
+        return 1
     data_items = parsed if isinstance(parsed, list) else [parsed]
+    if not all(isinstance(item, dict) for item in data_items):
+        print("ERROR: every --data item must be a JSON object", file=sys.stderr)
+        return 1
 
     try:
         scratch = Path(state["scratch_dir"])
@@ -54,12 +60,20 @@ def _main(argv: list[str] | None = None) -> int:
             if line.strip():
                 existing.add(json.loads(line).get("finding_id"))
 
-    recorded = []
+    errors = []
     for item in data_items:
+        if not isinstance(item, dict):
+            continue
         missing = REQUIRED - item.keys()
         if missing:
-            print(f"ERROR: missing keys {missing} in {item}", file=sys.stderr)
-            return 1
+            errors.append(f"missing keys {missing} in {item}")
+    if errors:
+        for e in errors:
+            print(f"ERROR: {e}", file=sys.stderr)
+        return 1
+
+    recorded = []
+    for item in data_items:
         if item["finding_id"] in existing:
             continue
         with log.open("a", encoding="utf-8") as f:

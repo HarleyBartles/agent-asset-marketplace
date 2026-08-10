@@ -39,7 +39,13 @@ def _main(argv: list[str] | None = None) -> int:
         print(f"ERROR: invalid blocker JSON: {e}", file=sys.stderr)
         return 1
 
+    if not isinstance(parsed, (dict, list)):
+        print("ERROR: --data must be a JSON object or array", file=sys.stderr)
+        return 1
     data_items = parsed if isinstance(parsed, list) else [parsed]
+    if not all(isinstance(item, dict) for item in data_items):
+        print("ERROR: every --data item must be a JSON object", file=sys.stderr)
+        return 1
 
     try:
         scratch = Path(state["scratch_dir"])
@@ -55,18 +61,23 @@ def _main(argv: list[str] | None = None) -> int:
             if line.strip():
                 existing.add(json.loads(line).get("finding_id"))
 
-    recorded = []
+    errors = []
     for item in data_items:
+        if not isinstance(item, dict):
+            continue
         missing = REQUIRED - item.keys()
         if missing:
-            print(f"ERROR: missing keys {missing} in {item}", file=sys.stderr)
-            return 1
+            errors.append(f"missing keys {missing} in {item}")
+            continue
         if item["blocker_class"] not in VALID_BLOCKER_CLASSES:
-            print(
-                f"ERROR: blocker_class must be one of {VALID_BLOCKER_CLASSES}; got {item['blocker_class']!r}",
-                file=sys.stderr,
-            )
-            return 1
+            errors.append(f"blocker_class must be one of {VALID_BLOCKER_CLASSES}; got {item['blocker_class']!r}")
+    if errors:
+        for e in errors:
+            print(f"ERROR: {e}", file=sys.stderr)
+        return 1
+
+    recorded = []
+    for item in data_items:
         if item["finding_id"] in existing:
             continue
         with log.open("a", encoding="utf-8") as f:

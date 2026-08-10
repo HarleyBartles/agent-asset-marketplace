@@ -6,10 +6,11 @@ Classification (read-only/mutating/mixed): mixed.
 - --state <path>          canonical router state (read-only or commit gate)
 - --metrics <path>        backward-compatible read-only aggregate (compile_metrics output)
 - --ledger <path>         path to review-log-resolved-ledger.md (default: state.ledger_path)
-- --propose <node>        commit gate; if <node> is the allowed next node, exits 0 and
-                          advances state in review-state.json
+- --propose <node>        commit gate; if <node> is the allowed next node and its
+                          required artifact logs are non-empty, exits 0 and advances state
 - --status                print current status without mutating state
-- --resync                compare state to logs and report drift
+- --resync                compare state to logs and report drift; exits 0 in sync,
+                          1 if drift is detected, 2 on usage error
 - --resync --apply        correct current_node if the logs have run ahead
 - --json                  machine-readable discovery; emits {"node": "...", "reason": "..."}
 - no --propose            read-only discovery; prints the allowed next node
