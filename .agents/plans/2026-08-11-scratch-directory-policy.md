@@ -298,21 +298,30 @@ def _validate(check: bool, apply: bool) -> int:
 
 def _cli() -> int:
     parser = argparse.ArgumentParser(
-        description="Validate the _agent-scratch directory is namespaced by repo."
+        description=(
+            "Validate the _agent-scratch directory is namespaced by repo. "
+            "(mixed: supports --check and --apply)"
+        ),
+        epilog=(
+            "--check is the default and exits 1 when layout drift is found; "
+            "--apply removes invalid entries."
+        ),
     )
-    parser.add_argument(
-        "--check", action="store_true", default=False, help="report drift and exit 1 if found"
+    mode = parser.add_mutually_exclusive_group()
+    mode.add_argument(
+        "--check",
+        action="store_true",
+        default=True,
+        help="report drift and exit 1 if found (default, read-only)",
     )
-    parser.add_argument(
-        "--apply", action="store_true", default=False, help="remove orphan entries classified as delete_now"
+    mode.add_argument(
+        "--apply",
+        action="store_true",
+        default=False,
+        help="remove invalid top-level files and non-namespaced folders (mutating)",
     )
     args = parser.parse_args()
-    if not args.check and not args.apply:
-        parser.print_help()
-        return 0
-    if args.apply:
-        return _validate(check=False, apply=True)
-    return _validate(check=True, apply=False)
+    return _validate(check=not args.apply, apply=args.apply)
 
 
 if __name__ == "__main__":
@@ -378,7 +387,7 @@ Locate the worktree removal logic and add the scratch removal step:
 ```python
 def _remove_scratch(main_repo_root: Path, branch: str) -> None:
     repo_name = main_repo_root.name
-    scratch_root = main_repo_root.parent / "_agent-scratch" / repo_name / branch
+    scratch_root = main_repo_root.parent / "_agent-scratch" / repo_name / _sanitize_branch_name(branch)
     if scratch_root.exists():
         shutil.rmtree(scratch_root, ignore_errors=True)
         print(f"Removed scratch {scratch_root}")
@@ -442,18 +451,6 @@ def _main_repo_root() -> Path:
         if line.startswith("worktree "):
             return Path(line.split(" ", 1)[1]).resolve()
     raise RuntimeError("Could not determine the main repository root")
-
-
-def _active_branches(main_repo_root: Path) -> set[str]:
-    result = subprocess.run(
-        ["git", "branch", "--format=%(refname:short)"],
-        cwd=main_repo_root,
-        capture_output=True,
-        text=True,
-        check=True,
-        env=_stripped_env(),
-    )
-    return {line.strip() for line in result.stdout.splitlines() if line.strip()}
 
 
 def _sanitize_branch_name(branch: str) -> str:
