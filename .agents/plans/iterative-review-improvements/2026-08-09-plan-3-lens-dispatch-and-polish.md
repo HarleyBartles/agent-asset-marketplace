@@ -469,39 +469,48 @@ git commit -m "test(iterative-review): next_node and record script tests"
 
 ---
 
-### Task 4: Add `references/review-log-orchestrator-self-review-template.md`
+### Task 4: Add `references/review-log-orchestrator-self-review-template.md` and wire it into the operational flow
 
 **Files:**
 - Create: `codex-marketplace/plugins/superpowers-plus/skills/iterative-review/references/review-log-orchestrator-self-review-template.md`
 - Modify: `codex-marketplace/plugins/superpowers-plus/skills/iterative-review/SKILL.md`
+- Modify: `codex-marketplace/plugins/superpowers-plus/skills/iterative-review/references/node-orchestrator-self-review.md`
+- Modify: `codex-marketplace/plugins/superpowers-plus/skills/iterative-review/references/node-lens-dispatch.md`
+- Modify: `codex-marketplace/plugins/superpowers-plus/skills/iterative-review/references/review-state-graph.md`
 - Test: `py -3 tools/run.py ci --check`
 
 **Interfaces:**
-- The template provides a markdown skeleton for the orchestrator to fill via `record_orchestrator_log.py` or equivalent.
+- The template provides a markdown skeleton for the orchestrator self-review log.
+- The filled log remains `review-log-orchestrator-self-review.md` in the off-repo scratch.
 
-- [ ] **Step 1: Create the template file**
+- [x] **Step 1: Create the expanded template file**
 
-```markdown
-# Orchestrator self-review
+Create `codex-marketplace/plugins/superpowers-plus/skills/iterative-review/references/review-log-orchestrator-self-review-template.md` with the full log skeleton:
+- `## Inputs`
+- `## Reviewed lens profiles` (checklist)
+- `## Predicted and fixed` (table)
+- `## Uncertain (send to lens)` (table)
+- `## Metrics snapshot` (with `orchestrator_self_review_findings_fixed` and `orchestrator_self_review_items_uncertain`)
 
-## Inputs
-- diff: `<diff_path>`
-- pr_description: `<pr_description>`
+- [x] **Step 2: Update `SKILL.md` Required reading list**
 
-## Scan
-- Relevant file categories changed:
-- Preflight predictions:
+Make the two self-review log entries distinct:
+- `references/review-log-orchestrator-self-review.md` for the filled orchestrator self-review log.
+- `references/review-log-orchestrator-self-review-template.md` for the skeleton/template for that log.
 
-## Predictions
-No uncertain items requiring lens escalation.
+- [x] **Step 3: Update operational references**
+
+- `node-orchestrator-self-review.md`: orchestrator reads the template first, then records findings in the filled `review-log-orchestrator-self-review.md`.
+- `node-lens-dispatch.md`: keeps using the filled `review-log-orchestrator-self-review.md` as input, not the template.
+- `review-state-graph.md`: mention the template as the source for the filled log.
+
+- [x] **Step 4: Regenerate the installed copy**
+
+```bash
+py -3 tools/run.py installed-skills --apply
 ```
 
-- [ ] **Step 2: Update `SKILL.md` Required reading list**
-
-Add:
-- `references/review-log-orchestrator-self-review-template.md` for the prediction log template.
-
-- [ ] **Step 3: Run CI**
+- [x] **Step 5: Run CI**
 
 ```bash
 py -3 tools/run.py ci --check
@@ -509,10 +518,10 @@ py -3 tools/run.py ci --check
 
 Expected: all targets pass.
 
-- [ ] **Step 4: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
-git add codex-marketplace/plugins/superpowers-plus/skills/iterative-review/references/review-log-orchestrator-self-review-template.md codex-marketplace/plugins/superpowers-plus/skills/iterative-review/SKILL.md
+git add codex-marketplace/plugins/superpowers-plus/skills/iterative-review/references/review-log-orchestrator-self-review-template.md codex-marketplace/plugins/superpowers-plus/skills/iterative-review/SKILL.md codex-marketplace/plugins/superpowers-plus/skills/iterative-review/references/node-orchestrator-self-review.md codex-marketplace/plugins/superpowers-plus/skills/iterative-review/references/node-lens-dispatch.md codex-marketplace/plugins/superpowers-plus/skills/iterative-review/references/review-state-graph.md .agents/skills/iterative-review/ .agents/plans/iterative-review-improvements/2026-08-09-plan-3-lens-dispatch-and-polish.md
 git commit -m "docs(iterative-review): orchestrator self-review template"
 ```
 

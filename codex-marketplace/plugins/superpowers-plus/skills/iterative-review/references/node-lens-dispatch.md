@@ -8,7 +8,7 @@ Dispatch only the lens reviewers whose `## Applies to` rules match the PR.
 - Full branch `<diff_path>`
 - `<pr_description>`
 - `<scan_findings>`
-- `review-log-orchestrator-self-review.md`
+- `review-log-orchestrator-self-review.md` (the filled log, not the template)
 - Lens-specific inputs (`<plan_path>`, `<spec_path>`, `<roadmap_path>`)
 - Off-repo `<scratch_dir>`
 

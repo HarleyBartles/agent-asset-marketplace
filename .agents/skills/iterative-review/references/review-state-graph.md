@@ -158,8 +158,10 @@ A "round" is one complete traversal through `lens-dispatch` or `final-strong` th
 
 ## `review-log-orchestrator-self-review.md` template
 
-Use this off-repo scratch file to record what the orchestrator could predict
-and fix, and what it left for the lens reviewers.
+The skeleton is `references/review-log-orchestrator-self-review-template.md`;
+the orchestrator fills it into `review-log-orchestrator-self-review.md` in the
+off-repo scratch. Use the filled log to record what the orchestrator could
+predict and fix, and what it left for the lens reviewers.
 
 ```markdown
 # Orchestrator self-review log
