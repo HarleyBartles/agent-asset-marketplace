@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""record_resolution.py - append a resolution event to the review log. (mixed)"""
+"""record_resolution.py - append one or more resolution events to the review log. (mixed)"""
 
 from __future__ import annotations
 
@@ -20,7 +20,7 @@ def _main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Record a new iterative-review resolution. (mixed)")
     parser.add_argument("--check", action="store_true", help="self-check; exits 0 if ready")
     parser.add_argument("--state", help="path to review-state.json")
-    parser.add_argument("--data", help="JSON resolution object")
+    parser.add_argument("--data", help="JSON resolution object or array of objects")
     args = parser.parse_args(argv)
 
     if args.check:
@@ -33,14 +33,17 @@ def _main(argv: list[str] | None = None) -> int:
     state_path = Path(args.state)
     state = _load_state(state_path)
     try:
-        resolution = json.loads(args.data)
+        parsed = json.loads(args.data)
     except json.JSONDecodeError as e:
         print(f"ERROR: invalid resolution JSON: {e}", file=sys.stderr)
         return 1
 
-    missing = REQUIRED - resolution.keys()
-    if missing:
-        print(f"ERROR: missing keys {missing}", file=sys.stderr)
+    if not isinstance(parsed, (dict, list)):
+        print("ERROR: --data must be a JSON object or array", file=sys.stderr)
+        return 1
+    data_items = parsed if isinstance(parsed, list) else [parsed]
+    if not all(isinstance(item, dict) for item in data_items):
+        print("ERROR: every --data item must be a JSON object", file=sys.stderr)
         return 1
 
     try:
@@ -57,14 +60,31 @@ def _main(argv: list[str] | None = None) -> int:
             if line.strip():
                 existing.add(json.loads(line).get("finding_id"))
 
-    if resolution["finding_id"] in existing:
-        print("record_resolution.py: resolution already recorded; no change")
-        return 0
+    errors = []
+    for item in data_items:
+        if not isinstance(item, dict):
+            continue
+        missing = REQUIRED - item.keys()
+        if missing:
+            errors.append(f"missing keys {missing} in {item}")
+    if errors:
+        for e in errors:
+            print(f"ERROR: {e}", file=sys.stderr)
+        return 1
 
-    with log.open("a", encoding="utf-8") as f:
-        f.write(json.dumps(resolution, ensure_ascii=False) + "\n")
+    recorded = []
+    for item in data_items:
+        if item["finding_id"] in existing:
+            continue
+        with log.open("a", encoding="utf-8") as f:
+            f.write(json.dumps(item, ensure_ascii=False) + "\n")
+        existing.add(item["finding_id"])
+        recorded.append(item["finding_id"])
 
-    print(f"record_resolution.py: recorded resolution for {resolution['finding_id']}")
+    if recorded:
+        print(f"record_resolution.py: recorded resolutions for {', '.join(recorded)}")
+    else:
+        print("record_resolution.py: all resolutions already recorded; no change")
     return 0
 
 

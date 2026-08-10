@@ -64,13 +64,21 @@ The Devin Desktop agents search path is: user-global `~/.config/devin/agents/` (
    py -3 .agents/skills/iterative-review/scripts/next_node.py --state <scratch_dir>/review-state.json
    ```
    Capture the first line of output as `<node>`.
-4. Validate and advance the router to the discovered node before running its recipe:
+4. (Optional) Inspect current status without mutating state:
+   ```
+   py -3 .agents/skills/iterative-review/scripts/next_node.py --state <scratch_dir>/review-state.json --status
+   ```
+5. (Optional) If the logs have run ahead of the saved `current_node`, resync state:
+   ```
+   py -3 .agents/skills/iterative-review/scripts/next_node.py --state <scratch_dir>/review-state.json --resync --apply
+   ```
+6. Validate and advance the router to the discovered node before running its recipe:
    ```
    py -3 .agents/skills/iterative-review/scripts/next_node.py --propose <node> --state <scratch_dir>/review-state.json
    ```
-5. Open `references/node-<node>.md` for the just-proposed node and follow it exactly.
-6. Return to step 3 after the node is done.
-7. Stop when `next_node.py` prints `ready` or `blocked`.
+7. Open `references/node-<node>.md` for the just-proposed node and follow it exactly.
+8. Return to step 3 after the node is done.
+9. Stop when `next_node.py` prints `ready` or `blocked`.
 
 ## Recording `review-metrics.json`
 

@@ -33,6 +33,7 @@ def _compile(state: dict, logs: dict) -> dict:
         r = resolutions.get(finding_id)
         b = blockers.get(finding_id)
         contested = (b is not None and b["blocker_class"] == "contested") or (b is None and f.get("contested", False))
+        tool_blocked = b is not None and b["blocker_class"] == "tool-blocked"
         entry = {
             "finding_id": finding_id,
             "lens": f["lens"],
@@ -40,6 +41,7 @@ def _compile(state: dict, logs: dict) -> dict:
             "discovered_at_round": f["discovered_at_round"],
             "severity": f["severity"],
             "contested": contested,
+            "tool_blocked": tool_blocked,
         }
         if r:
             entry["resolved_at_node"] = r["resolved_at_node"]

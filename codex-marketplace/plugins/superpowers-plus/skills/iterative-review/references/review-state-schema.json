@@ -19,6 +19,14 @@
     "previous_node": {"type": "string"},
     "round": {"type": "integer", "minimum": 1},
     "max_fix_rounds": {"type": "integer", "minimum": 1},
+    "max_rounds_by_severity": {
+      "type": "object",
+      "additionalProperties": {"type": "integer", "minimum": 1}
+    },
+    "max_rounds_by_finding": {
+      "type": "object",
+      "additionalProperties": {"type": "integer", "minimum": 1}
+    },
     "non_trivial_fix": {"type": "boolean"},
     "contested": {"type": "boolean"},
     "blocked_class": {"type": "string", "enum": ["contested", "tool-blocked"]},

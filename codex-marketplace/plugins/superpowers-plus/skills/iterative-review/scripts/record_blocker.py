@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""record_blocker.py - append a blocker event to the review log. (mixed)"""
+"""record_blocker.py - append one or more blocker events to the review log. (mixed)"""
 
 from __future__ import annotations
 
@@ -21,7 +21,7 @@ def _main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Record a new iterative-review blocker. (mixed)")
     parser.add_argument("--check", action="store_true", help="self-check; exits 0 if ready")
     parser.add_argument("--state", help="path to review-state.json")
-    parser.add_argument("--data", help="JSON blocker object")
+    parser.add_argument("--data", help="JSON blocker object or array of objects")
     args = parser.parse_args(argv)
 
     if args.check:
@@ -34,21 +34,17 @@ def _main(argv: list[str] | None = None) -> int:
     state_path = Path(args.state)
     state = _load_state(state_path)
     try:
-        blocker = json.loads(args.data)
+        parsed = json.loads(args.data)
     except json.JSONDecodeError as e:
         print(f"ERROR: invalid blocker JSON: {e}", file=sys.stderr)
         return 1
 
-    missing = REQUIRED - blocker.keys()
-    if missing:
-        print(f"ERROR: missing keys {missing}", file=sys.stderr)
+    if not isinstance(parsed, (dict, list)):
+        print("ERROR: --data must be a JSON object or array", file=sys.stderr)
         return 1
-
-    if blocker["blocker_class"] not in VALID_BLOCKER_CLASSES:
-        print(
-            f"ERROR: blocker_class must be one of {VALID_BLOCKER_CLASSES}; got {blocker['blocker_class']!r}",
-            file=sys.stderr,
-        )
+    data_items = parsed if isinstance(parsed, list) else [parsed]
+    if not all(isinstance(item, dict) for item in data_items):
+        print("ERROR: every --data item must be a JSON object", file=sys.stderr)
         return 1
 
     try:
@@ -65,14 +61,34 @@ def _main(argv: list[str] | None = None) -> int:
             if line.strip():
                 existing.add(json.loads(line).get("finding_id"))
 
-    if blocker["finding_id"] in existing:
-        print("record_blocker.py: blocker already recorded; no change")
-        return 0
+    errors = []
+    for item in data_items:
+        if not isinstance(item, dict):
+            continue
+        missing = REQUIRED - item.keys()
+        if missing:
+            errors.append(f"missing keys {missing} in {item}")
+            continue
+        if item["blocker_class"] not in VALID_BLOCKER_CLASSES:
+            errors.append(f"blocker_class must be one of {VALID_BLOCKER_CLASSES}; got {item['blocker_class']!r}")
+    if errors:
+        for e in errors:
+            print(f"ERROR: {e}", file=sys.stderr)
+        return 1
 
-    with log.open("a", encoding="utf-8") as f:
-        f.write(json.dumps(blocker, ensure_ascii=False) + "\n")
+    recorded = []
+    for item in data_items:
+        if item["finding_id"] in existing:
+            continue
+        with log.open("a", encoding="utf-8") as f:
+            f.write(json.dumps(item, ensure_ascii=False) + "\n")
+        existing.add(item["finding_id"])
+        recorded.append(item["finding_id"])
 
-    print(f"record_blocker.py: recorded blocker for {blocker['finding_id']}")
+    if recorded:
+        print(f"record_blocker.py: recorded blockers for {', '.join(recorded)}")
+    else:
+        print("record_blocker.py: all blockers already recorded; no change")
     return 0
 
 

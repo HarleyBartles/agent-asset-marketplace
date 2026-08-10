@@ -83,7 +83,7 @@ flowchart TD
 | `normalize-inputs` | `lens-triage` | UTF-8 backstop has run on the scratch directory. |
 | `lens-triage` | `metrics-track` | `blocking/important` findings that need a fix before `final-strong`. |
 | `lens-triage` | `final-strong` | No findings, `trivial/deferred` findings only, or no `blocking/important` findings left. |
-| `lens-triage` | `blocked` | A finding is `contested` or `load-bearing` and the orchestrator cannot resolve it. |
+| `lens-triage` | `blocked` | A finding is `contested`, `tool-blocked`, or `load-bearing` and the orchestrator cannot resolve it. |
 | `metrics-track` | `finding-fix` | Always; choose the next finding to fix. |
 | `finding-fix` | `re-preflight` | Fix is committed. |
 | `finding-fix` | `blocked` | Round cap exceeded: `implementer-strong` on round 4 still fails. |
