@@ -25,7 +25,7 @@ Dispatch only the lens reviewers whose `## Applies to` rules match the PR.
 6. If no lens matches, continue to `lens-triage` with the orchestrator-self-review log.
 7. If `run_subagent` is unavailable, route to `blocked`.
 
-`lens-dispatch` is a one-time dispatch. After this node, the graph routes to `lens-triage`, `metrics-track`, `finding-fix`, and `reviewer-fixes`. `reviewer-fixes` re-runs only the lens associated with the finding being fixed.
+`lens-dispatch` is a one-time dispatch. After this node, the graph routes to `normalize-inputs` and then `lens-triage`. Downstream fix handling (`metrics-track` -> `finding-fix` -> `re-preflight` -> `reviewer-fixes`) re-runs only the lens associated with the finding being fixed; do not re-dispatch all lenses.
 
 ## Outputs
 - Write `review-log-<lens>.md` for each dispatched lens
