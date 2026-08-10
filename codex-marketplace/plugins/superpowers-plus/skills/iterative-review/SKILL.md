@@ -115,14 +115,14 @@ When a finding is fixed, `finding-fix` -> `re-preflight` -> `reviewer-fixes` re-
 
 ## Machine-managed files
 
-The following files in the off-repo scratch must be written only through the provided scripts:
+The following files in the off-repo scratch must be written only through the provided scripts. The orchestrator must not use `write` or `edit` on them:
 
 - `review-state.json` - written by `next_node.py --propose` or `next_node.py --resync --apply`.
 - `findings.jsonl`, `resolutions.jsonl`, `regressions.jsonl`, `blockers.jsonl` - written by `record_*.py` scripts.
-- `review-log-*.md` - written by the dispatched lens subagents and by `record_orchestrator_log.py` for orchestrator logs.
+- `review-log-orchestrator-self-review.md` - written by `record_orchestrator_log.py`.
 - `review-metrics.json` - written by `compile_metrics.py`.
 
-Do not use `write` or `edit` on these files. The `write` tool causes IDE buffer contention when the file is also open or being updated by a script.
+Lens subagents write their own `review-log-<lens>.md` files with `write` and end them with a one-line status. The `write` tool warning applies to orchestrator-authored files; it causes IDE buffer contention when a file is also open or being updated by a script.
 
 ## Common Mistakes
 

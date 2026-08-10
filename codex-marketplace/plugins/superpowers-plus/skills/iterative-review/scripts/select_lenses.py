@@ -36,7 +36,7 @@ def _reviewer_paths() -> list[Path]:
 
 def _applies_to(text: str) -> dict:
     """Parse the ## Applies to section from a reviewer profile."""
-    section_match = re.search(r"## Applies to(.*?)\n## ", text, re.S)
+    section_match = re.search(r"## Applies to(.*?)\n(?:## |\Z)", text, re.S)
     if not section_match:
         return {}
     section = section_match.group(1)
@@ -60,7 +60,8 @@ def _changed_files(diff_path: Path | None) -> list[str]:
     if not diff_path or not diff_path.exists():
         return []
     text = diff_path.read_text(encoding="utf-8")
-    return re.findall(r"^diff --git a/(.+) b/\1$", text, re.M)
+    pairs = re.findall(r"^diff --git a/(.+) b/(.+)$", text, re.M)
+    return list(dict.fromkeys(f for pair in pairs for f in pair))
 
 
 def _matches(rule: dict, changed: list[str], diff_text: str, pr_text: str, provided_inputs: list[str]) -> bool:
@@ -76,9 +77,8 @@ def _matches(rule: dict, changed: list[str], diff_text: str, pr_text: str, provi
     return False
 
 
-def _state_paths(state: dict) -> tuple[Path, Path]:
-    scratch = Path(state["scratch_dir"])
-    return scratch / "lenses.jsonl", scratch / "pr_description.json"
+def _lenses_path(state: dict) -> Path:
+    return Path(state["scratch_dir"]) / "lenses.jsonl"
 
 
 def _load_state(state_path: Path) -> dict:
@@ -128,7 +128,7 @@ def main(argv: list[str] | None = None) -> int:
     state = _load_state(Path(args.state))
     selected = _select(state)
 
-    out_path, _ = _state_paths(state)
+    out_path = _lenses_path(state)
     if args.apply:
         out_path.parent.mkdir(parents=True, exist_ok=True)
         with out_path.open("w", encoding="utf-8") as f:

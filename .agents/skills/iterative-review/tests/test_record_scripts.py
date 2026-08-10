@@ -11,6 +11,7 @@ from pathlib import Path
 SKILL_DIR = Path(__file__).resolve().parent.parent
 RECORD_FINDING = SKILL_DIR / "scripts" / "record_finding.py"
 RECORD_RESOLUTION = SKILL_DIR / "scripts" / "record_resolution.py"
+RECORD_ORCHESTRATOR_LOG = SKILL_DIR / "scripts" / "record_orchestrator_log.py"
 
 
 def _write_state(scratch: Path) -> Path:
@@ -111,6 +112,45 @@ class TestRecordResolution(unittest.TestCase):
             result = _run(RECORD_RESOLUTION, state, "[1, 2]")
             self.assertEqual(result.returncode, 1)
             self.assertIn("every --data item must be a JSON object", result.stderr)
+
+
+class TestRecordOrchestratorLog(unittest.TestCase):
+    def test_record_orchestrator_log_appends_with_apply(self):
+        with tempfile.TemporaryDirectory() as td:
+            scratch = Path(td)
+            state = _write_state(scratch)
+            result = subprocess.run(
+                [
+                    "py",
+                    "-3",
+                    str(RECORD_ORCHESTRATOR_LOG),
+                    "--state",
+                    str(state),
+                    "--node",
+                    "orchestrator-self-review",
+                    "--data",
+                    "test entry",
+                    "--apply",
+                ],
+                capture_output=True,
+                text=True,
+            )
+            self.assertEqual(result.returncode, 0)
+            log = scratch / "review-log-orchestrator-self-review.md"
+            self.assertTrue(log.exists())
+            self.assertIn("test entry", log.read_text(encoding="utf-8"))
+
+    def test_record_orchestrator_log_rejects_missing_args(self):
+        with tempfile.TemporaryDirectory() as td:
+            scratch = Path(td)
+            state = _write_state(scratch)
+            result = subprocess.run(
+                ["py", "-3", str(RECORD_ORCHESTRATOR_LOG), "--state", str(state), "--node", "orchestrator-self-review"],
+                capture_output=True,
+                text=True,
+            )
+            self.assertEqual(result.returncode, 1)
+            self.assertIn("the following arguments are required", result.stderr)
 
 
 if __name__ == "__main__":

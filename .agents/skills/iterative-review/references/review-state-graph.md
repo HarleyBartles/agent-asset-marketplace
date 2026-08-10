@@ -158,61 +158,7 @@ A "round" is one complete traversal through `lens-dispatch` or `final-strong` th
 
 ## `review-log-orchestrator-self-review.md` template
 
-The skeleton is `references/review-log-orchestrator-self-review-template.md`;
-the orchestrator fills it into `review-log-orchestrator-self-review.md` in the
+Use the skeleton at `references/review-log-orchestrator-self-review-template.md`.
+The orchestrator fills it into `review-log-orchestrator-self-review.md` in the
 off-repo scratch. Use the filled log to record what the orchestrator could
 predict and fix, and what it left for the lens reviewers.
-
-```markdown
-# Orchestrator self-review log
-
-## Reviewed lens profiles
-
-- [ ] `reviewer-security.md`
-- [ ] `reviewer-skills.md`
-- [ ] `reviewer-marketplace.md`
-- [ ] `reviewer-strong.md`
-- [ ] `reviewer-plans.md`
-- [ ] `reviewer-mesh.md`
-- [ ] `reviewer-scripts.md`
-
-## Predicted and fixed
-
-| Checklist item | Lens | Action | Rationale |
-|---|---|---|---|
-| ... | ... | fixed / n/a | ... |
-
-## Uncertain (send to lens)
-
-| Checklist item | Lens | Why uncertain |
-|---|---|---|
-| ... | ... | ... |
-
-## Next node
-
-Proceed to `lens-dispatch` and dispatch the relevant lens reviewers. A clean prediction log does not bypass this node.
-
-## Metrics snapshot
-
-```json
-{"orchestrator_self_review_findings_fixed": 0, "orchestrator_self_review_items_uncertain": 0}
-```
-
-## Review artifacts
-
-The orchestrator writes all review inputs and logs to the off-repo `iterative-review-<pr_number>` directory. The canonical file names are:
-
-- `review-<base7>..<head7>.diff`
-- `pr_description.txt`
-- `review-log-orchestrator-self-review.md`
-- `review-log-skills.md`
-- `review-log-marketplace.md`
-- `review-log-security.md`
-- `review-log-plans.md`
-- `review-log-mesh.md`
-- `review-log-scripts.md`
-- `review-log-strong.md`
-- `review-log-<lens>-<round>.md` for re-review rounds
-- `review-metrics.json`
-
-These files are never committed. They are the review proto-memory: later reviewers and the orchestrator read them to avoid re-deriving earlier work, to verify claimed fixes, and to detect regressions.
