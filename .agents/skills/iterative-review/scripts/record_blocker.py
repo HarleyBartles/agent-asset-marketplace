@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""record_blocker.py - append a blocker event to the review log. (mixed)"""
+"""record_blocker.py - append one or more blocker events to the review log. (mixed)"""
 
 from __future__ import annotations
 
@@ -21,7 +21,7 @@ def _main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Record a new iterative-review blocker. (mixed)")
     parser.add_argument("--check", action="store_true", help="self-check; exits 0 if ready")
     parser.add_argument("--state", help="path to review-state.json")
-    parser.add_argument("--data", help="JSON blocker object")
+    parser.add_argument("--data", help="JSON blocker object or array of objects")
     args = parser.parse_args(argv)
 
     if args.check:

@@ -45,6 +45,7 @@
           "regression_of": {"type": "string"},
           "regression_class": {"type": "string", "enum": ["same-lens-blast-radius", "cross-lens-blast-radius", "outside-blast-radius"]},
           "contested": {"type": "boolean"},
+          "tool_blocked": {"type": "boolean"},
           "fix_round": {"type": "integer", "minimum": 0},
           "severity": {"type": "string", "enum": ["blocking", "important", "minor", "deferred"]}
         }

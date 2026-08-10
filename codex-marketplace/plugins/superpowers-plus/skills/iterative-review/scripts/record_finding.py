@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""record_finding.py - append a finding event to the review log. (mixed)"""
+"""record_finding.py - append one or more finding events to the review log. (mixed)"""
 
 from __future__ import annotations
 
@@ -20,7 +20,7 @@ def _main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Record a new iterative-review finding. (mixed)")
     parser.add_argument("--check", action="store_true", help="self-check; exits 0 if ready")
     parser.add_argument("--state", help="path to review-state.json")
-    parser.add_argument("--data", help="JSON finding object")
+    parser.add_argument("--data", help="JSON finding object or array of objects")
     args = parser.parse_args(argv)
 
     if args.check:

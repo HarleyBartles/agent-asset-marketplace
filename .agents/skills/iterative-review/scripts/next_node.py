@@ -202,11 +202,7 @@ def _contested(state: dict) -> bool:
 def _tool_blocked(state: dict) -> bool:
     """Return True if any unresolved finding is marked as tool-blocked."""
     if "rounds_per_finding" in state:
-        return any(
-            f.get("blocked_class") == "tool-blocked"
-            for f in state.get("rounds_per_finding", [])
-            if not f.get("resolved_at_node")
-        )
+        return any(f.get("tool_blocked") for f in state.get("rounds_per_finding", []) if not f.get("resolved_at_node"))
     scratch = Path(state.get("scratch_dir", "."))
     blockers = _load_jsonl(scratch / "blockers.jsonl")
     unresolved = set(_unresolved_findings(state))
