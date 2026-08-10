@@ -108,7 +108,7 @@ When `test-driven-development` is required, end `review-log-implementer-report.m
 
 - [x] **Step 2: Update `implementer-prompt.md` to require TDD evidence for blocking/important work**
 
-In the `## Your Job` block, add as step 7 (before the current last reporting step) and renumber:
+In the `## Your Job` block, insert the TDD step before the Commit step and renumber Commit/Self-review/Report to 5/6/7:
 
 ```markdown
 6. If the task is a blocking/important bug fix or non-trivial behavior change, follow `test-driven-development`:
@@ -219,8 +219,6 @@ Add the two computed values to the returned metrics dict. After `total_rounds`:
 
 ```python
     fix_nodes = {"finding-fix", "fast-fix"}
-    findings_discovered_at_fix_nodes = sum(1 for f in findings if f["discovered_at_node"] in fix_nodes)
-    # Count findings whose first discovery node is `finding-fix` or `fast-fix`.
     findings_discovered_at_fix_nodes = sum(
         1 for f in findings if f.get("discovered_at_node") in {"finding-fix", "fast-fix"}
     )
@@ -242,7 +240,7 @@ Add the two computed values to the returned metrics dict. After `total_rounds`:
 
 - [x] **Step 2: Add the schema properties**
 
-In `review-metrics-schema.json`, after `total_reviewer_subagent_dispatches`, add:
+In `review-metrics-schema.json`, after `devin_auto_review_invocations` (the current last property), add:
 
 ```json
     "findings_discovered_at_fix_nodes": {"type": "integer", "minimum": 0},
