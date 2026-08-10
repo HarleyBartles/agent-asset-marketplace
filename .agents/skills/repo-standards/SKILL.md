@@ -41,6 +41,7 @@ Each repo supplies a thin overlay at `.agents/doctrine/repo-runbook-policy.md` t
 | How preflight, pre-commit, and CI relate | [references/ci-validation-pipeline.md](references/ci-validation-pipeline.md) |
 | The repo's local runbook mappings | `.agents/doctrine/repo-runbook-policy.md` in the consuming repo |
 | Repo hygiene (worktree, branch, validation, publication) | `/repo-worker-base` |
+| Scratch workspace layout and cleanup | [references/scratch-workspace-policy.md](references/scratch-workspace-policy.md) |
 | Skill-bundled script CLI contract failures | [references/skill-script-contract-validator.md](references/skill-script-contract-validator.md) |
 | Vendor subagent profile deployment | [references/vendor-profile-deployment.md](references/vendor-profile-deployment.md) |
 
