@@ -109,12 +109,13 @@ This design is the umbrella for a **3-plan epic**:
 - Allow `reviewer-fixes` to batch multiple findings from the same lens within the same blast radius.
 - Distinguish `contested` from `tool-blocked` in `blockers.jsonl` and `next_node.py` routing.
 
-### Plan 3 — Lens dispatch and final polish
+### Plan 3 — Lens dispatch, write-safety, and final polish
 
 - Add `select_lenses.py` to read `reviewer-*.md` profiles and diff, emit the lens dispatch list.
 - Add `references/review-log-orchestrator-self-review-template.md`.
 - Update `node-lens-dispatch.md` to use `select_lenses.py`.
 - Add a focused test suite for `next_node.py` and the record scripts.
+- Enforce the no-hand-write contract: every machine-managed file in the scratch workspace (`review-state.json`, `*.jsonl`, `review-log-*.md`) must be written only through a script. Add a script for orchestrator-authored `review-log-*.md` files and update `SKILL.md` to prohibit direct `write`/`edit` on these files.
 - Final documentation and skill surface refresh.
 
 ## Non-goals
