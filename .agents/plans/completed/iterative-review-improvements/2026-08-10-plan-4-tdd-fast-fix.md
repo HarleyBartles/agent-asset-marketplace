@@ -1,6 +1,6 @@
 # Plan 4 - TDD and fast-fix churn reduction
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use /subagent-driven-development (recommended) or /executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use /subagent-driven-development (recommended) or /executing-plans to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** Reduce fast-fix churn by making `test-driven-development` the default discipline for implementer subagents and orchestrators, tightening the `finding-fix`/`reviewer-fixes` re-check loop so fixes are proven by failing tests and only the originating lens is re-run.
 
@@ -24,14 +24,14 @@
 **Files:**
 - Read: `.agents/plans/iterative-review-improvements/roadmap.md`
 - Modify: `.agents/plans/iterative-review-improvements/roadmap.md`
-- Modify: `.agents/specs/2026-08-10-iterative-review-tdd-proposal.md` (status)
+- Modify: `../../../specs/2026-08-10-iterative-review-tdd-proposal.md` (status)
 - Test: `py -3 tools/run.py ci --check`
 
 **Interfaces:**
 - Plan 3 status becomes `done`; Plan 4 row shows `in_progress` and links to this plan.
 - The spec proposal status becomes `in-flight`.
 
-- [ ] **Step 1: Open the roadmap and update Plan 3 and Plan 4 rows**
+- [x] **Step 1: Open the roadmap and update Plan 3 and Plan 4 rows**
 
 Update the roadmap table to:
 
@@ -40,16 +40,16 @@ Update the roadmap table to:
 | 4 | TDD and fast-fix churn reduction | in_progress | [Plan 4](2026-08-10-plan-4-tdd-fast-fix.md) | — | — | — | Enforce `test-driven-development` for implementers and orchestrators, add TDD to implementer profiles and subagent-driven-development prompts, and tighten the `finding-fix`/`reviewer-fixes`/`fast-fix` node recipes so fixes are proven by failing tests and re-run only the originating lens, not a full final branch review. |
 ```
 
-- [ ] **Step 2: Update the spec status**
+- [x] **Step 2: Update the spec status**
 
-In `.agents/specs/2026-08-10-iterative-review-tdd-proposal.md`, change the status paragraph to:
+In `../../../specs/2026-08-10-iterative-review-tdd-proposal.md`, change the status paragraph to:
 
 ```markdown
 **Status:** In-flight for Plan 4 implementation.
 **Source:** Design discussion after Plan 3 final branch review of PR #289.
 ```
 
-- [ ] **Step 3: Run CI**
+- [x] **Step 3: Run CI**
 
 ```bash
 py -3 tools/run.py ci --check
@@ -57,10 +57,10 @@ py -3 tools/run.py ci --check
 
 Expected: all targets pass.
 
-- [ ] **Step 4: Commit the plan and roadmap update**
+- [x] **Step 4: Commit the plan and roadmap update**
 
 ```bash
-git add .agents/plans/iterative-review-improvements/roadmap.md .agents/specs/2026-08-10-iterative-review-tdd-proposal.md .agents/plans/iterative-review-improvements/2026-08-10-plan-4-tdd-fast-fix.md
+git add .agents/plans/iterative-review-improvements/roadmap.md ../../../specs/2026-08-10-iterative-review-tdd-proposal.md .agents/plans/iterative-review-improvements/2026-08-10-plan-4-tdd-fast-fix.md
 git commit -m "docs(plans): start Plan 4 - TDD and fast-fix churn reduction"
 ```
 
@@ -79,7 +79,7 @@ git commit -m "docs(plans): start Plan 4 - TDD and fast-fix churn reduction"
 - `implementer-prompt.md` instructs the subagent to report RED/GREEN commands and output for any blocking/important finding.
 - The final `review-log-implementer-report.md` must include a `## TDD Evidence` section.
 
-- [ ] **Step 1: Append a TDD section to `implementer.md` and `implementer-strong.md`**
+- [x] **Step 1: Append a TDD section to `implementer.md` and `implementer-strong.md`**
 
 Insert after the `## What not to do` section in each file:
 
@@ -106,7 +106,7 @@ When `test-driven-development` is required, end `review-log-implementer-report.m
 - The test file path and the production file path changed.
 ```
 
-- [ ] **Step 2: Update `implementer-prompt.md` to require TDD evidence for blocking/important work**
+- [x] **Step 2: Update `implementer-prompt.md` to require TDD evidence for blocking/important work**
 
 In the `## Your Job` block, add as step 7 (before the current last reporting step) and renumber:
 
@@ -127,7 +127,7 @@ In the `## Report Format` block, expand the TDD evidence bullet to:
   - The test file path and the production file path changed
 ```
 
-- [ ] **Step 3: Run CI**
+- [x] **Step 3: Run CI**
 
 ```bash
 py -3 tools/run.py ci --check
@@ -135,7 +135,7 @@ py -3 tools/run.py ci --check
 
 Expected: all targets pass.
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 git add codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/assets/implementer.md codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/assets/implementer-strong.md codex-marketplace/plugins/superpowers-plus/skills/subagent-driven-development/implementer-prompt.md
@@ -155,7 +155,7 @@ git commit -m "feat(selecting-a-subagent,subagent-driven-development): mandate T
 - `node-finding-fix.md` requires the implementer/orchestrator to produce RED/GREEN evidence before recording a resolution.
 - `node-fast-fix.md` requires the preflight command to pass and a failing-then-passing test for the top finding, if one exists in the preflight output.
 
-- [ ] **Step 1: Insert TDD requirements into `node-finding-fix.md` before step 5**
+- [x] **Step 1: Insert TDD requirements into `node-finding-fix.md` before step 5**
 
 Add a new step 4.5 after the fix is applied and before step 5:
 
@@ -169,7 +169,7 @@ Add a new step 4.5 after the fix is applied and before step 5:
 
 Then renumber the existing step 5 onwards to 6, etc.
 
-- [ ] **Step 2: Update `node-fast-fix.md` to require a reproducer for the top finding**
+- [x] **Step 2: Update `node-fast-fix.md` to require a reproducer for the top finding**
 
 Replace the recipe section with:
 
@@ -183,7 +183,7 @@ Replace the recipe section with:
 6. Return to `preflight` and re-run the consumer's canonical preflight.
 ```
 
-- [ ] **Step 3: Run CI**
+- [x] **Step 3: Run CI**
 
 ```bash
 py -3 tools/run.py ci --check
@@ -191,7 +191,7 @@ py -3 tools/run.py ci --check
 
 Expected: all targets pass.
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 git add codex-marketplace/plugins/superpowers-plus/skills/iterative-review/references/node-finding-fix.md codex-marketplace/plugins/superpowers-plus/skills/iterative-review/references/node-fast-fix.md
@@ -213,7 +213,7 @@ git commit -m "docs(iterative-review): require TDD evidence in finding-fix and f
 - `compile_metrics.py` returns `fast_fix_cycles` (count of transitions to `finding-fix` and `fast-fix`) and `regressions_introduced` (count of `regressions` items).
 - `review-metrics-schema.json` declares both fields as `integer` with `minimum: 0`.
 
-- [ ] **Step 1: Update `_compile` in `compile_metrics.py` to compute the new fields**
+- [x] **Step 1: Update `_compile` in `compile_metrics.py` to compute the new fields**
 
 Add the two computed values to the returned metrics dict. After `total_rounds`:
 
@@ -240,7 +240,7 @@ Add the two computed values to the returned metrics dict. After `total_rounds`:
     }
 ```
 
-- [ ] **Step 2: Add the schema properties**
+- [x] **Step 2: Add the schema properties**
 
 In `review-metrics-schema.json`, after `total_reviewer_subagent_dispatches`, add:
 
@@ -249,7 +249,7 @@ In `review-metrics-schema.json`, after `total_reviewer_subagent_dispatches`, add
     "regressions_introduced": {"type": "integer", "minimum": 0},
 ```
 
-- [ ] **Step 3: Write a failing test for `compile_metrics.py`**
+- [x] **Step 3: Write a failing test for `compile_metrics.py`**
 
 Create `codex-marketplace/plugins/superpowers-plus/skills/iterative-review/tests/test_compile_metrics.py`:
 
@@ -340,7 +340,7 @@ def test_compile_metrics_cli_writes_metrics_with_churn_fields():
         assert written["regressions_introduced"] == 0
 ```
 
-- [ ] **Step 4: Run the focused tests and expect failure (RED)**
+- [x] **Step 4: Run the focused tests and expect failure (RED)**
 
 ```bash
 py -3 -m pytest codex-marketplace/plugins/superpowers-plus/skills/iterative-review/tests/test_compile_metrics.py -q
@@ -348,11 +348,11 @@ py -3 -m pytest codex-marketplace/plugins/superpowers-plus/skills/iterative-revi
 
 Expected: tests fail because the new fields are not yet in `compile_metrics.py`.
 
-- [ ] **Step 5: Implement the metric changes in `compile_metrics.py` and the schema**
+- [x] **Step 5: Implement the metric changes in `compile_metrics.py` and the schema**
 
 Make the code and schema changes shown in Step 1 and Step 2.
 
-- [ ] **Step 6: Run the focused tests and expect pass (GREEN)**
+- [x] **Step 6: Run the focused tests and expect pass (GREEN)**
 
 ```bash
 py -3 -m pytest codex-marketplace/plugins/superpowers-plus/skills/iterative-review/tests/test_compile_metrics.py -q
@@ -360,7 +360,7 @@ py -3 -m pytest codex-marketplace/plugins/superpowers-plus/skills/iterative-revi
 
 Expected: 2 passed.
 
-- [ ] **Step 7: Run full CI**
+- [x] **Step 7: Run full CI**
 
 ```bash
 py -3 tools/run.py ci --check
@@ -368,7 +368,7 @@ py -3 tools/run.py ci --check
 
 Expected: all targets pass.
 
-- [ ] **Step 8: Commit**
+- [x] **Step 8: Commit**
 
 ```bash
 git add codex-marketplace/plugins/superpowers-plus/skills/iterative-review/scripts/compile_metrics.py codex-marketplace/plugins/superpowers-plus/skills/iterative-review/references/review-metrics-schema.json codex-marketplace/plugins/superpowers-plus/skills/iterative-review/tests/test_compile_metrics.py
@@ -388,7 +388,7 @@ git commit -m "feat(iterative-review): track fast_fix_cycles and regressions_int
 - `.agents/skills/` mirrors the canonical source.
 - Marketplace indexes are current.
 
-- [ ] **Step 1: Regenerate installed skills and indexes**
+- [x] **Step 1: Regenerate installed skills and indexes**
 
 ```bash
 py -3 tools/run.py installed-skills --apply
@@ -398,14 +398,14 @@ py -3 tools/run.py ci --check
 
 Expected: all targets pass.
 
-- [ ] **Step 2: Stage and commit the regenerated copies**
+- [x] **Step 2: Stage and commit the regenerated copies**
 
 ```bash
 git add -A
 git commit -m "chore: regenerate installed skills and marketplace for Plan 4 TDD changes"
 ```
 
-- [ ] **Step 3: Push the branch and open a draft PR**
+- [x] **Step 3: Push the branch and open a draft PR**
 
 ```bash
 git push origin 2026-08-10-iterative-review-tdd

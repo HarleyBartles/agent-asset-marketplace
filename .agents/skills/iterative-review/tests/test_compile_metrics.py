@@ -29,32 +29,41 @@ def test_compile_metrics_includes_churn_fields():
     with tempfile.TemporaryDirectory() as td:
         scratch = Path(td)
         (scratch / "findings.jsonl").write_text(
-            json.dumps({
-                "finding_id": "f-1",
-                "lens": "security",
-                "discovered_at_node": "finding-fix",
-                "discovered_at_round": 2,
-                "severity": "important",
-            }) + "\n",
+            json.dumps(
+                {
+                    "finding_id": "f-1",
+                    "lens": "security",
+                    "discovered_at_node": "finding-fix",
+                    "discovered_at_round": 2,
+                    "severity": "important",
+                }
+            )
+            + "\n",
             encoding="utf-8",
         )
         (scratch / "resolutions.jsonl").write_text(
-            json.dumps({
-                "finding_id": "f-1",
-                "resolved_at_node": "reviewer-fixes",
-                "resolved_at_round": 3,
-            }) + "\n",
+            json.dumps(
+                {
+                    "finding_id": "f-1",
+                    "resolved_at_node": "reviewer-fixes",
+                    "resolved_at_round": 3,
+                }
+            )
+            + "\n",
             encoding="utf-8",
         )
         (scratch / "regressions.jsonl").write_text(
-            json.dumps({
-                "fix_for": "f-1",
-                "new_finding": "f-2",
-                "discovered_at_node": "reviewer-fixes",
-                "discovered_at_round": 3,
-                "regression_class": "same-lens-blast-radius",
-                "severity": "important",
-            }) + "\n",
+            json.dumps(
+                {
+                    "fix_for": "f-1",
+                    "new_finding": "f-2",
+                    "discovered_at_node": "reviewer-fixes",
+                    "discovered_at_round": 3,
+                    "regression_class": "same-lens-blast-radius",
+                    "severity": "important",
+                }
+            )
+            + "\n",
             encoding="utf-8",
         )
         (scratch / "blockers.jsonl").write_text("", encoding="utf-8")

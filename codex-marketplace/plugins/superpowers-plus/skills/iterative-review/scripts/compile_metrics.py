@@ -53,9 +53,7 @@ def _compile(state: dict, logs: dict) -> dict:
         (f.get("discovered_at_round", 0) for f in findings),
         default=state.get("round", 1),
     )
-    fast_fix_cycles = sum(
-        1 for f in findings if f.get("discovered_at_node") in {"finding-fix", "fast-fix"}
-    )
+    fast_fix_cycles = sum(1 for f in findings if f.get("discovered_at_node") in {"finding-fix", "fast-fix"})
     regressions_introduced = len(regressions)
 
     return {
