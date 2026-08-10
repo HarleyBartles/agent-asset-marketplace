@@ -4,7 +4,7 @@
 
 **Goal:** Make the shared `_agent-scratch` root namespaced by repository, add validation so cross-repo dumping cannot happen again, and provide a cleanup tool to remove orphan scratch directories.
 
-**Architecture:** Update the canonical scratch location algorithm in `repo-worker-base` to include the repository name in the scratch path. Add a portable `repo-standards` validator that checks the `_agent-scratch` root only contains repo-name folders and that each repo's scratch tree only contains branch or task folders. Update `using-git-worktrees` to create and remove the namespaced scratch directory alongside the worktree. Add a `cleanup-custody` helper to classify and delete orphan scratch. Canonical edits live in `codex-marketplace/plugins/...`; installed copies under `.agents/skills/` are regenerated.
+**Architecture:** Update the canonical scratch location algorithm in `repo-worker-base` to include the repository name in the scratch path. Add a portable `repo-standards` validator that checks the `_agent-scratch` root only contains repo-name folders and that each repo's scratch tree only contains branch or task folders. Update `using-git-worktrees` to create the namespaced scratch directory when a worktree is created. Add a `cleanup-custody` helper to classify and delete orphan scratch; `remove_worktree.py` only removes the git worktree. Canonical edits live in `codex-marketplace/plugins/...`; installed copies under `.agents/skills/` are regenerated.
 
 **Tech Stack:** Python 3, Markdown, `py -3 tools/run.py ci --check`.
 
@@ -350,7 +350,7 @@ git commit -m "feat(repo-standards): add scratch directory layout validator"
 
 ---
 
-### Task 5: Update `using-git-worktrees` to create and remove namespaced scratch
+### Task 5: Update `using-git-worktrees` to create namespaced scratch
 
 **Files:**
 - Modify: `codex-marketplace/plugins/superpowers-plus/skills/using-git-worktrees/scripts/new_worktree.py`
@@ -393,7 +393,7 @@ Call it inside `_apply_worktree` after `_configure_worktree` succeeds and before
 ```bash
 git add codex-marketplace/plugins/superpowers-plus/skills/using-git-worktrees/scripts/new_worktree.py
 git add codex-marketplace/plugins/superpowers-plus/skills/using-git-worktrees/scripts/remove_worktree.py
-git commit -m "feat(using-git-worktrees): create and remove namespaced scratch with worktree"
+git commit -m "feat(using-git-worktrees): create namespaced scratch when adding a worktree"
 ```
 
 ---
@@ -720,11 +720,11 @@ Expected: a GitHub draft PR URL.
 
 - [ ] **Step 1: Update `sdd-workspace` (Bash)**
 
-Change the resolved path from `_agent-scratch/<branch>` to `_agent-scratch/<repo-name>/<branch>`.
+Change the resolved path from `_agent-scratch/<branch>` to `_agent-scratch/<repo-name>/<branch>`. Add a short migration fallback: if the repo-scoped path has not yet been created and the old flat `_agent-scratch/<branch>` path exists, use the legacy path so existing in-flight scratch remains accessible.
 
 - [ ] **Step 2: Update `sdd-workspace.ps1` (PowerShell)**
 
-Apply the same namespacing using `Split-Path -Leaf` on the main checkout.
+Apply the same namespacing using `Split-Path -Leaf` on the main checkout, and mirror the Bash legacy-path fallback.
 
 - [ ] **Step 3: Regenerate installed skills**
 
