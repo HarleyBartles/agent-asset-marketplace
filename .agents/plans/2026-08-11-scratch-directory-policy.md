@@ -212,7 +212,6 @@ git commit -m "docs(repo-standards): route to scratch workspace policy reference
 """Validate and optionally clean the _agent-scratch directory layout."""
 
 import argparse
-import re
 import shutil
 import subprocess
 import sys
@@ -247,12 +246,15 @@ def _scratch_root() -> Path:
     return main.parent / "_agent-scratch"
 
 
+_FORBIDDEN = set(r':\?*"<>|/\\\\')
+
+
 def _valid_name(name: str) -> bool:
-    """Return True if name is a non-empty, path-safe token without separators."""
-    return bool(name) and re.fullmatch(r"[A-Za-z0-9_.-]+", name) is not None
+    """Return True if name is a non-empty, path-safe token without forbidden characters."""
+    return bool(name) and name not in (".", "..") and not _FORBIDDEN.intersection(name)
 
 
-def _validate(check: bool, apply: bool) -> int:
+def _validate(apply: bool) -> int:
     scratch_root = _scratch_root()
     if not scratch_root.exists():
         print(f"OK: {scratch_root} does not exist")
@@ -321,7 +323,9 @@ def _cli() -> int:
         help="remove invalid top-level files and non-namespaced folders (mutating)",
     )
     args = parser.parse_args()
-    return _validate(check=not args.apply, apply=args.apply)
+    if args.apply:
+        return _validate(apply=True)
+    return _validate(apply=False)
 
 
 if __name__ == "__main__":
@@ -357,7 +361,7 @@ git commit -m "feat(repo-standards): add scratch directory layout validator"
 
 **Produces:**
 - `new_worktree.py` creates `../_agent-scratch/<repo-name>/<branch>` alongside the worktree.
-- `remove_worktree.py` removes that scratch directory when the worktree is removed.
+- `remove_worktree.py` removes the git worktree only. Scratch lifecycle is owned by `cleanup_scratch.py`, which classifies a folder as `delete_now` only when the branch is merged, the worktree is gone, and no plan references the scratch path.
 
 - [ ] **Step 1: Add scratch creation to `new_worktree.py`**
 
@@ -481,9 +485,10 @@ def _worktree_branches(main_repo_root: Path) -> set[str]:
 def _plans_referencing(plans_root: Path, branch: str) -> bool:
     if not plans_root.exists():
         return False
+    pattern = re.compile(rf"(?<!\w){re.escape(branch)}(?!\w)")
     for plan in plans_root.glob("*.md"):
         try:
-            if branch in plan.read_text(encoding="utf-8"):
+            if pattern.search(plan.read_text(encoding="utf-8")):
                 return True
         except OSError:
             pass
