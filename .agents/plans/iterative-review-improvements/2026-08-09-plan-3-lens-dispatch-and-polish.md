@@ -1,4 +1,4 @@
-# Plan 3 — Lens dispatch, write-safety, and final polish
+# Plan 3 - Lens dispatch, write-safety, and final polish
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use /subagent-driven-development (recommended) or /executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
@@ -34,7 +34,7 @@
 Change the Plan 3 status and commit column to:
 
 ```markdown
-| 3 | Lens dispatch, write-safety, and final polish | in_progress | [Plan 3](2026-08-09-plan-3-lens-dispatch-and-polish.md) | — | — | — | `select_lenses.py`, self-review template, tests, docs, plus a no-hand-write contract for all scratch files (`review-state.json`, `*.jsonl`, `review-log-*.md`) and a script for orchestrator markdown logs |
+| 3 | Lens dispatch, write-safety, and final polish | in_progress | [Plan 3](2026-08-09-plan-3-lens-dispatch-and-polish.md) | - | - | - | `select_lenses.py`, self-review template, tests, docs, plus a no-hand-write contract for all scratch files (`review-state.json`, `*.jsonl`, `review-log-*.md`) and a script for orchestrator markdown logs |
 ```
 
 - [ ] **Step 2: Run CI**
@@ -316,10 +316,10 @@ Add a new invariant subsection:
 
 The following files in the off-repo scratch must be written only through the provided scripts:
 
-- `review-state.json` — written by `next_node.py --propose` or `next_node.py --resync --apply`.
-- `findings.jsonl`, `resolutions.jsonl`, `regressions.jsonl`, `blockers.jsonl` — written by `record_*.py` scripts.
-- `review-log-*.md` — written by the dispatched lens subagents and by `record_orchestrator_log.py` for orchestrator logs.
-- `review-metrics.json` — written by `compile_metrics.py`.
+- `review-state.json` - written by `next_node.py --propose` or `next_node.py --resync --apply`.
+- `findings.jsonl`, `resolutions.jsonl`, `regressions.jsonl`, `blockers.jsonl` - written by `record_*.py` scripts.
+- `review-log-*.md` - written by the dispatched lens subagents and by `record_orchestrator_log.py` for orchestrator logs.
+- `review-metrics.json` - written by `compile_metrics.py`.
 
 Do not use `write` or `edit` on these files. The `write` tool causes IDE buffer contention when the file is also open or being updated by a script.
 ```

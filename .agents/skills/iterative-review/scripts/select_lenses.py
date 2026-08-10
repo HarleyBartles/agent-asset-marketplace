@@ -94,7 +94,12 @@ def _find_diff_path(scratch: Path) -> Path | None:
 def _select(state: dict) -> list[dict]:
     scratch = Path(state["scratch_dir"])
     diff_path = _find_diff_path(scratch)
-    pr_path = scratch / "pr_description"
+    for pr_candidate in (scratch / "pr_description", scratch / "pr_description.txt"):
+        if pr_candidate.exists():
+            pr_path = pr_candidate
+            break
+    else:
+        pr_path = scratch / "pr_description"
     diff_text = diff_path.read_text(encoding="utf-8") if diff_path and diff_path.exists() else ""
     pr_text = pr_path.read_text(encoding="utf-8") if pr_path.exists() else ""
     changed = _changed_files(diff_path)

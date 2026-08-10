@@ -115,6 +115,14 @@ class TestRecordResolution(unittest.TestCase):
 
 
 class TestRecordOrchestratorLog(unittest.TestCase):
+    def test_record_orchestrator_log_check(self):
+        result = subprocess.run(
+            ["py", "-3", str(RECORD_ORCHESTRATOR_LOG), "--check"],
+            capture_output=True,
+            text=True,
+        )
+        self.assertEqual(result.returncode, 0)
+
     def test_record_orchestrator_log_appends_with_apply(self):
         with tempfile.TemporaryDirectory() as td:
             scratch = Path(td)

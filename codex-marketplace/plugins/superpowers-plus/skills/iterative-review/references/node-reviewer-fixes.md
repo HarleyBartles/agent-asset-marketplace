@@ -6,16 +6,16 @@ Verify a fix against the originating lens's checklist, tightly scoped to the bla
 ## Inputs
 - `review-log-<lens>.md` from the original lens that produced the finding
 - `review-log-implementer-report.md` (if an `implementer` fixed the finding) or the inline fix diff
-- The affected file(s) only — do not re-review the whole branch
+- The affected file(s) only - do not re-review the whole branch
 
 ## Recipe
 
-### Orchestrator (steps 1-3, 7-9)
+### Orchestrator (steps 1-3, 8-9)
 1. Determine the `lens` that discovered the finding being fixed (from `findings.jsonl`).
 2. Re-dispatch only that lens profile with the fix diff and the original input package.
 3. Do not dispatch other lenses; their prior review remains valid unless the fix diff changes files they own.
 
-### Re-dispatched lens subagent (steps 4-6)
+### Re-dispatched lens subagent (steps 4-7)
 4. Load the original lens checklist from `review-log-<lens>.md`.
 5. Re-apply that checklist to the changed surface and one step of blast radius only.
 6. Confirm the original finding is resolved and no new same-lens issues appear in the blast radius.

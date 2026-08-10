@@ -119,6 +119,7 @@ The following files in the off-repo scratch must be written only through the pro
 
 - `review-state.json` - written by `next_node.py --propose` or `next_node.py --resync --apply`.
 - `findings.jsonl`, `resolutions.jsonl`, `regressions.jsonl`, `blockers.jsonl` - written by `record_*.py` scripts.
+- `lenses.jsonl` - written by `select_lenses.py --apply`.
 - `review-log-orchestrator-self-review.md` - written by `record_orchestrator_log.py`.
 - `review-metrics.json` - written by `compile_metrics.py`.
 

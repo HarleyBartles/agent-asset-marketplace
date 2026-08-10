@@ -2,6 +2,7 @@
 """Focused tests for select_lenses.py helpers."""
 
 import importlib.util
+import subprocess
 import tempfile
 import unittest
 from pathlib import Path
@@ -16,6 +17,16 @@ def _load_select_lenses():
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     return module
+
+
+class TestSelectLensesCLI(unittest.TestCase):
+    def test_select_lenses_check(self):
+        result = subprocess.run(
+            ["py", "-3", str(SELECT_LENSES), "--check"],
+            capture_output=True,
+            text=True,
+        )
+        self.assertEqual(result.returncode, 0)
 
 
 class TestSelectLensesHelpers(unittest.TestCase):
