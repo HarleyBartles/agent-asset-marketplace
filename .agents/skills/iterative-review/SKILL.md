@@ -49,6 +49,7 @@ Follow the `review-state-graph.md` reference. The graph routes the orchestrator 
 - `references/review-state-graph.md` for the canonical graph, node table, and edge conditions.
 - `references/review-metrics-schema.json` for the metrics to collect.
 - `references/review-log-orchestrator-self-review.md` for the prediction log template.
+- `references/review-log-orchestrator-self-review-template.md` for the prediction log template.
 - `references/review-log-resolved-ledger.md` for the evidence file required by `final-strong`.
 - `references/node-*.md` for the per-node recipes. Do not read ahead; open only the `references/node-<node>.md` file named by `next_node.py`.
 - The relevant `reviewer-*.md` lens profiles for the current repository.
