@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """select_lenses.py - discover and select reviewer lens profiles for a PR. (read-only)"""
 
+from __future__ import annotations
+
 import argparse
 import fnmatch
 import json
@@ -87,8 +89,12 @@ def _load_state(state_path: Path) -> dict:
 
 
 def _find_diff_path(scratch: Path) -> Path | None:
-    candidates = list(scratch.glob("review-*..*.diff"))
-    return candidates[0] if candidates else None
+    candidates = sorted(scratch.glob("review-*..*.diff"))
+    if not candidates:
+        return None
+    if len(candidates) == 1:
+        return candidates[0]
+    return max(candidates, key=lambda p: p.stat().st_mtime)
 
 
 def _select(state: dict) -> list[dict]:

@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """record_orchestrator_log.py - append an orchestrator markdown log for a node. (mixed)"""
 
+from __future__ import annotations
+
 import argparse
 import json
 import sys
@@ -26,8 +28,11 @@ def main(argv: list[str] | None = None) -> int:
         print("record_orchestrator_log.py: --check ok")
         return 0
 
-    if not (args.state and args.node and args.data):
-        parser.error("the following arguments are required: --state, --node, --data")
+    missing = [
+        name for name, value in (("--state", args.state), ("--node", args.node), ("--data", args.data)) if not value
+    ]
+    if missing:
+        parser.error("the following arguments are required: " + ", ".join(missing))
 
     state = _load_state(Path(args.state))
     scratch = Path(state["scratch_dir"])

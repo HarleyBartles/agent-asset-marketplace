@@ -29,18 +29,18 @@ Verify a fix against the originating lens's checklist, tightly scoped to the bla
          --state <scratch_dir>/review-state.json \
          --data '{"finding_id": "<finding_id>", "resolved_at_node": "reviewer-fixes", "resolved_at_round": <round>}'
      ```
-   - Set `non_trivial_fix` to the appropriate value in `<scratch_dir>/review-state.json` (`false` for a typical pass, `true` if the fix should trigger `regression-scan`).
    - Regenerate the metrics file:
      ```bash
      py -3 .agents/skills/iterative-review/scripts/compile_metrics.py \
          --state <scratch_dir>/review-state.json \
          --metrics <scratch_dir>/review-metrics.json
      ```
-   - If `non_trivial_fix` is `true`, route to `regression-scan`:
+   - If the fix should trigger `regression-scan`, pass `--non-trivial` to `next_node.py --propose` and route to `regression-scan`:
      ```bash
      py -3 .agents/skills/iterative-review/scripts/next_node.py \
          --state <scratch_dir>/review-state.json \
-         --propose regression-scan
+         --propose regression-scan \
+         --non-trivial
      ```
    - Otherwise, route to `resolved-ledger`:
      ```bash
