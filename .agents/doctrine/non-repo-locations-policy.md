@@ -19,12 +19,16 @@ Rules:
 ## Scratch files
 
 Scratch files (temporary scripts, commit message temp files, inspection
-scripts, debug output) go in `../_agent-scratch/<branch>/<plan-basename>/`,
+scripts, debug output) go in `../_agent-scratch/<repo-name>/<branch>/<plan-basename>/`,
 not in the repo tree. The scratch directory is a sibling of the repo folder.
 
 Rules:
 
-- Create a subfolder named after the worktree branch the scratch belongs to.
+- The top level of `_agent-scratch` must contain only folders named after
+  repositories (`<repo-name>`).
+- Inside each repo folder, create subfolders named after the worktree branch
+  the scratch belongs to.
+- Plan- or task-scoped scratch lives inside the branch folder.
 - Scratch contents are not durable. Do not put anything in scratch that needs
   to survive beyond the work it supports.
 - Do not commit scratch files into the repo.
