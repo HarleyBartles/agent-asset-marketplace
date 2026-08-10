@@ -87,12 +87,8 @@ def _validate(check: bool, apply: bool) -> int:
 
 
 def _cli() -> int:
-    parser = argparse.ArgumentParser(
-        description="Validate the _agent-scratch directory is namespaced by repo."
-    )
-    parser.add_argument(
-        "--check", action="store_true", default=False, help="report drift and exit 1 if found"
-    )
+    parser = argparse.ArgumentParser(description="Validate the _agent-scratch directory is namespaced by repo.")
+    parser.add_argument("--check", action="store_true", default=False, help="report drift and exit 1 if found")
     parser.add_argument(
         "--apply", action="store_true", default=False, help="remove orphan entries classified as delete_now"
     )

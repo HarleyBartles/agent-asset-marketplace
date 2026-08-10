@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import argparse
 import os
+import shutil
 import subprocess
 import sys
 from pathlib import Path
@@ -34,6 +35,21 @@ def _repo_root() -> Path:
         env=_stripped_env(),
     )
     return Path(result.stdout.strip())
+
+
+def _main_repo_root() -> Path:
+    """Return the main repository worktree root."""
+    result = subprocess.run(
+        ["git", "worktree", "list", "--porcelain"],
+        capture_output=True,
+        text=True,
+        check=True,
+        env=_stripped_env(),
+    )
+    for line in result.stdout.splitlines():
+        if line.startswith("worktree "):
+            return Path(line.split(" ", 1)[1]).resolve()
+    raise RuntimeError("Could not determine the main repository root")
 
 
 def _list_worktrees(repo_root: Path) -> dict[str, str]:
@@ -173,6 +189,14 @@ def _apply_remove(repo_root: Path, worktree: Path, force: bool) -> int:
         return result.returncode
 
     print(f"Removed worktree {worktree}")
+
+    main_repo_root = _main_repo_root()
+    repo_name = main_repo_root.name
+    scratch_root = main_repo_root.parent / "_agent-scratch" / repo_name / worktree.name
+    if scratch_root.exists():
+        shutil.rmtree(scratch_root, ignore_errors=True)
+        print(f"Removed scratch {scratch_root}")
+
     return 0
 
 
