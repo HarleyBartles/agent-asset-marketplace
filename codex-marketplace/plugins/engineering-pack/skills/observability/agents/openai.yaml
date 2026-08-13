@@ -8,6 +8,6 @@ metadata:
 interface:
   display_name: Observability
   short_description: Use when building or reviewing OpenTelemetry instrumentation and telemetry pipelines.
-  default_prompt: Use /observability when building or reviewing OpenTelemetry instrumentation, trace/metric/log pipeline design, or observability architecture.
+  default_prompt: Use $observability when building or reviewing OpenTelemetry instrumentation, trace/metric/log pipeline design, or observability architecture.
 policy:
   allow_implicit_invocation: true

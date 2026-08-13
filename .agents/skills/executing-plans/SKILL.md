@@ -40,7 +40,7 @@ Load plan, review critically, execute all tasks, report when complete.
 
 **Announce at start:** "I'm using the executing-plans skill to implement this plan."
 
-**Note:** Tell your human partner that Superpowers works much better with access to subagents (Claude Code, Codex CLI, Codex App, Copilot CLI, and Gemini CLI all qualify; see the per-platform tool refs in `../using-superpowers-plus/references/`). If subagents are available, use /subagent-driven-development instead of this skill.
+**Note:** Tell your human partner that Superpowers works much better with access to subagents (Claude Code, Codex CLI, Codex App, Copilot CLI, and Gemini CLI all qualify; see the per-platform tool refs in `../using-superpowers-plus/references/`). If subagents are available, use the `skill` tool to invoke `subagent-driven-development` instead of this skill.
 
 ## The Process
 
@@ -49,7 +49,7 @@ Load plan, review critically, execute all tasks, report when complete.
 Read this skill's baseline (`references/implementation-baseline.md`) and the repo's `.agents/runbooks/implementing.md` before executing the stage checklist.
 
 ### Step 1: Load and Review Plan
-1. Ensure an isolated workspace: use /using-git-worktrees to create one or verify the existing one
+1. Ensure an isolated workspace: use the `skill` tool to invoke `using-git-worktrees` to create one or verify the existing one
 2. Read plan file
 3. Note the `Execution Strategy` in the plan header. **MUST READ:** `references/execution-lane-override.md` and confirm the lane you are using is the right one: human explicit direction wins, then your own assessment, then the plan's recommendation
 4. Announce the lane you will use and see it through unless the human asks to change

@@ -5,7 +5,7 @@ metadata:
 interface:
   display_name: Iterative Review
   short_description: Human-approved legacy review assistance for non-frontier orchestrators.
-  default_prompt: Ask whether to use /iterative-review for this PR. Do not use it with Sol or another harness-designated frontier model.
+  default_prompt: Ask whether to use $iterative-review for this PR. Do not use it with Sol or another harness-designated frontier model.
 policy:
   products:
   - chatgpt
