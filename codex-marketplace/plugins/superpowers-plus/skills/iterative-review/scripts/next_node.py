@@ -473,6 +473,17 @@ def main(argv: list[str] | None = None) -> int:
             print(json.dumps({"node": node, "reason": reason}, ensure_ascii=False))
         else:
             print(f"{node}\n# {reason}")
+            if node not in ("ready", "blocked"):
+                node_path = f".agents/skills/iterative-review/references/node-{node}.md"
+                state_path_for_hint = state_path or (
+                    Path(args.metrics).with_name("review-state.json")
+                    if args.metrics else Path("<scratch_dir>/review-state.json")
+                )
+                print(f"# recipe: {node_path}")
+                print(
+                    "# authorize: py -3 .agents/skills/iterative-review/scripts/next_node.py "
+                    f"--propose {node} --state {state_path_for_hint}"
+                )
     elif state_path is not None and args.propose == node:
         ok, missing = _artifacts_present(args.propose, state)
         if not ok:
