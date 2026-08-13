@@ -7,10 +7,10 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 NEW_WORKTREE = (
-    REPO_ROOT / "sources" / "first_party" / "skills" / "using-git-worktrees" / "scripts" / "new_worktree.py"
+    REPO_ROOT / ".agents" / "skills" / "using-git-worktrees" / "scripts" / "new_worktree.py"
 )
 REMOVE_WORKTREE = (
-    REPO_ROOT / "sources" / "first_party" / "skills" / "using-git-worktrees" / "scripts" / "remove_worktree.py"
+    REPO_ROOT / ".agents" / "skills" / "using-git-worktrees" / "scripts" / "remove_worktree.py"
 )
 
 
@@ -18,6 +18,8 @@ def _make_repo(tmp_path: Path, name: str) -> Path:
     repo = tmp_path / name
     repo.mkdir()
     subprocess.run(["git", "init"], cwd=repo, check=True, capture_output=True)
+    subprocess.run(["git", "config", "core.autocrlf", "false"], cwd=repo, check=True, capture_output=True)
+    subprocess.run(["git", "config", "core.safecrlf", "false"], cwd=repo, check=True, capture_output=True)
     subprocess.run(["git", "config", "user.email", "test@test"], cwd=repo, check=True, capture_output=True)
     subprocess.run(["git", "config", "user.name", "Test"], cwd=repo, check=True, capture_output=True)
     (repo / "README.md").write_text("# test\n", encoding="utf-8")
@@ -47,20 +49,20 @@ def _make_repo_with_bundled_refresh(tmp_path: Path, name: str) -> Path:
     repo = _make_repo(tmp_path, name)
     pack = repo / "codex-marketplace" / "plugins" / "repo-worker-pack" / "skills"
     pack.mkdir(parents=True)
-    source_refresh = REPO_ROOT / "sources" / "first_party" / "skills" / "refreshing-installed-skills"
-    source_mesh = REPO_ROOT / "sources" / "first_party" / "skills" / "generating-agent-mesh"
-    shutil.copytree(
-        source_refresh,
-        pack / "refreshing-installed-skills",
-        ignore=shutil.ignore_patterns("__pycache__", "*.pyc"),
-    )
-    shutil.copytree(
-        source_mesh,
-        pack / "generating-agent-mesh",
-        ignore=shutil.ignore_patterns("__pycache__", "*.pyc"),
-    )
-    _copy_shared_checkout_into_skill(pack / "refreshing-installed-skills")
-    _copy_shared_checkout_into_skill(pack / "generating-agent-mesh")
+
+    # Provide the canonical shared_checkout.py at the repo root so installed
+    # skill refresh scripts can find it inside the new worktree.
+    repo_tools = repo / "tools"
+    repo_tools.mkdir(parents=True, exist_ok=True)
+    shutil.copy2(REPO_ROOT / "tools" / "shared_checkout.py", repo_tools / "shared_checkout.py")
+
+    # Mirror the minimal repo-worker-pack skills needed for refresh in the
+    # new worktree: the refresh and mesh skills, plus repo-standards deps.
+    for skill_name in ("refreshing-installed-skills", "generating-agent-mesh", "repo-standards"):
+        source = REPO_ROOT / "codex-marketplace" / "plugins" / "repo-worker-pack" / "skills" / skill_name
+        target = pack / skill_name
+        shutil.copytree(source, target, ignore=shutil.ignore_patterns("__pycache__", "*.pyc"))
+        _copy_shared_checkout_into_skill(target)
     (repo / ".agents" / "plugins").mkdir(parents=True)
     marketplace = {
         "plugins": [
@@ -84,20 +86,20 @@ def _make_repo_with_failing_refresh(tmp_path: Path, name: str) -> Path:
     repo = _make_repo(tmp_path, name)
     pack = repo / "codex-marketplace" / "plugins" / "repo-worker-pack" / "skills"
     pack.mkdir(parents=True)
-    source_refresh = REPO_ROOT / "sources" / "first_party" / "skills" / "refreshing-installed-skills"
-    source_mesh = REPO_ROOT / "sources" / "first_party" / "skills" / "generating-agent-mesh"
-    shutil.copytree(
-        source_refresh,
-        pack / "refreshing-installed-skills",
-        ignore=shutil.ignore_patterns("__pycache__", "*.pyc"),
-    )
-    shutil.copytree(
-        source_mesh,
-        pack / "generating-agent-mesh",
-        ignore=shutil.ignore_patterns("__pycache__", "*.pyc"),
-    )
-    _copy_shared_checkout_into_skill(pack / "refreshing-installed-skills")
-    _copy_shared_checkout_into_skill(pack / "generating-agent-mesh")
+
+    # Provide the canonical shared_checkout.py at the repo root so installed
+    # skill refresh scripts can find it inside the new worktree.
+    repo_tools = repo / "tools"
+    repo_tools.mkdir(parents=True, exist_ok=True)
+    shutil.copy2(REPO_ROOT / "tools" / "shared_checkout.py", repo_tools / "shared_checkout.py")
+
+    # Mirror the minimal repo-worker-pack skills needed for refresh in the
+    # new worktree: the refresh and mesh skills, plus repo-standards deps.
+    for skill_name in ("refreshing-installed-skills", "generating-agent-mesh", "repo-standards"):
+        source = REPO_ROOT / "codex-marketplace" / "plugins" / "repo-worker-pack" / "skills" / skill_name
+        target = pack / skill_name
+        shutil.copytree(source, target, ignore=shutil.ignore_patterns("__pycache__", "*.pyc"))
+        _copy_shared_checkout_into_skill(target)
 
     # Replace the refresh script with one that writes a marker and exits non-zero.
     fake_refresh = pack / "refreshing-installed-skills" / "scripts" / "refresh_installed_skills.py"
@@ -234,7 +236,7 @@ def test_new_and_remove_create_cycle(tmp_path: Path) -> None:
     repo = _make_repo(tmp_path, "cycle-repo")
     worktree_root = tmp_path / "_agent-worktrees" / "cycle-repo" / "feature"
     result = subprocess.run(
-        [sys.executable, str(NEW_WORKTREE), "feature", "--no-skill-refresh"],
+        [sys.executable, str(NEW_WORKTREE), "feature", "--apply", "--no-skill-refresh"],
         cwd=repo,
         env=_stripped_env(),
         capture_output=True,
@@ -244,7 +246,7 @@ def test_new_and_remove_create_cycle(tmp_path: Path) -> None:
     assert worktree_root.is_dir()
 
     result = subprocess.run(
-        [sys.executable, str(REMOVE_WORKTREE), "feature"],
+        [sys.executable, str(REMOVE_WORKTREE), "feature", "--apply"],
         cwd=repo,
         env=_stripped_env(),
         capture_output=True,
@@ -264,7 +266,7 @@ def test_new_worktree_base_ref(tmp_path: Path) -> None:
 
     worktree_root = tmp_path / "_agent-worktrees" / "base-ref-repo" / "feature"
     result = subprocess.run(
-        [sys.executable, str(NEW_WORKTREE), "feature", "--base-ref", "v1-base", "--no-skill-refresh"],
+        [sys.executable, str(NEW_WORKTREE), "feature", "--apply", "--base-ref", "v1-base", "--no-skill-refresh"],
         cwd=repo,
         env=_stripped_env(),
         capture_output=True,
@@ -319,7 +321,7 @@ def test_new_worktree_defaults_to_origin_main(tmp_path: Path) -> None:
 
     worktree_root = tmp_path / "_agent-worktrees" / "origin-main-local" / "feature"
     result = subprocess.run(
-        [sys.executable, str(NEW_WORKTREE), "feature", "--no-skill-refresh"],
+        [sys.executable, str(NEW_WORKTREE), "feature", "--apply", "--no-skill-refresh"],
         cwd=repo,
         env=_stripped_env(),
         capture_output=True,
@@ -353,7 +355,7 @@ def test_remove_worktree_resolves_by_full_ref_and_directory(tmp_path: Path) -> N
     # Full ref match
     worktree_full = tmp_path / "_agent-worktrees" / "resolve-repo" / "feature-full"
     result = subprocess.run(
-        [sys.executable, str(NEW_WORKTREE), "feature-full", "--no-skill-refresh"],
+        [sys.executable, str(NEW_WORKTREE), "feature-full", "--apply", "--no-skill-refresh"],
         cwd=repo,
         env=_stripped_env(),
         capture_output=True,
@@ -363,7 +365,7 @@ def test_remove_worktree_resolves_by_full_ref_and_directory(tmp_path: Path) -> N
     assert worktree_full.is_dir()
 
     result = subprocess.run(
-        [sys.executable, str(REMOVE_WORKTREE), "refs/heads/feature-full"],
+        [sys.executable, str(REMOVE_WORKTREE), "refs/heads/feature-full", "--apply"],
         cwd=repo,
         env=_stripped_env(),
         capture_output=True,
@@ -375,7 +377,7 @@ def test_remove_worktree_resolves_by_full_ref_and_directory(tmp_path: Path) -> N
     # Trailing segment / directory name match
     worktree_dir = tmp_path / "_agent-worktrees" / "resolve-repo" / "feature-dir"
     result = subprocess.run(
-        [sys.executable, str(NEW_WORKTREE), "feature-dir", "--no-skill-refresh"],
+        [sys.executable, str(NEW_WORKTREE), "feature-dir", "--apply", "--no-skill-refresh"],
         cwd=repo,
         env=_stripped_env(),
         capture_output=True,
@@ -385,7 +387,7 @@ def test_remove_worktree_resolves_by_full_ref_and_directory(tmp_path: Path) -> N
     assert worktree_dir.is_dir()
 
     result = subprocess.run(
-        [sys.executable, str(REMOVE_WORKTREE), "feature-dir"],
+        [sys.executable, str(REMOVE_WORKTREE), "feature-dir", "--apply"],
         cwd=repo,
         env=_stripped_env(),
         capture_output=True,
@@ -403,7 +405,7 @@ def test_new_worktree_fails_when_target_path_already_exists(tmp_path: Path) -> N
     # Existing file
     worktree_root.write_text("existing file", encoding="utf-8")
     result = subprocess.run(
-        [sys.executable, str(NEW_WORKTREE), "feature", "--no-skill-refresh"],
+        [sys.executable, str(NEW_WORKTREE), "feature", "--apply", "--no-skill-refresh"],
         cwd=repo,
         env=_stripped_env(),
         capture_output=True,
@@ -416,7 +418,7 @@ def test_new_worktree_fails_when_target_path_already_exists(tmp_path: Path) -> N
     worktree_root.unlink()
     worktree_root.mkdir(parents=True)
     result = subprocess.run(
-        [sys.executable, str(NEW_WORKTREE), "feature", "--no-skill-refresh"],
+        [sys.executable, str(NEW_WORKTREE), "feature", "--apply", "--no-skill-refresh"],
         cwd=repo,
         env=_stripped_env(),
         capture_output=True,
@@ -430,7 +432,7 @@ def test_new_worktree_runs_refresh_installed_skills(tmp_path: Path) -> None:
     repo = _make_repo_with_bundled_refresh(tmp_path, "refresh-repo")
     worktree_root = tmp_path / "_agent-worktrees" / "refresh-repo" / "feature"
     result = subprocess.run(
-        [sys.executable, str(NEW_WORKTREE), "feature", "--allow-shared-checkout"],
+        [sys.executable, str(NEW_WORKTREE), "feature", "--apply"],
         cwd=repo,
         env=_stripped_env(),
         capture_output=True,
@@ -456,7 +458,7 @@ def test_new_worktree_initializes_submodules_before_refresh(tmp_path: Path, monk
     repo = _make_repo_with_marketplace_source_submodule(tmp_path, "sub")
     worktree_root = tmp_path / "_agent-worktrees" / "sub" / "feature"
     result = subprocess.run(
-        [sys.executable, str(NEW_WORKTREE), "feature", "--allow-shared-checkout"],
+        [sys.executable, str(NEW_WORKTREE), "feature", "--apply"],
         cwd=repo,
         env=_stripped_env(),
         capture_output=True,
@@ -485,7 +487,7 @@ def test_new_worktree_removes_dangling_worktree_on_refresh_failure(tmp_path: Pat
     repo = _make_repo_with_failing_refresh(tmp_path, "failing-refresh-repo")
     worktree_root = tmp_path / "_agent-worktrees" / "failing-refresh-repo" / "feature"
     result = subprocess.run(
-        [sys.executable, str(NEW_WORKTREE), "feature", "--allow-shared-checkout"],
+        [sys.executable, str(NEW_WORKTREE), "feature", "--apply"],
         cwd=repo,
         env=_stripped_env(),
         capture_output=True,
@@ -516,7 +518,7 @@ def test_new_worktree_from_linked_worktree_succeeds_without_flag(tmp_path: Path)
     )
     target_root = tmp_path / "_agent-worktrees" / "linked-src-repo" / "target"
     result = subprocess.run(
-        [sys.executable, str(NEW_WORKTREE), "target"],
+        [sys.executable, str(NEW_WORKTREE), "target", "--apply"],
         cwd=linked_root,
         env=_stripped_env(),
         capture_output=True,
@@ -532,7 +534,7 @@ def test_new_worktree_removes_branch_on_refresh_failure(tmp_path: Path) -> None:
     repo = _make_repo_with_failing_refresh(tmp_path, "failing-branch-repo")
     worktree_root = tmp_path / "_agent-worktrees" / "failing-branch-repo" / "feature"
     result = subprocess.run(
-        [sys.executable, str(NEW_WORKTREE), "feature", "--allow-shared-checkout"],
+        [sys.executable, str(NEW_WORKTREE), "feature", "--apply"],
         cwd=repo,
         env=_stripped_env(),
         capture_output=True,
@@ -556,7 +558,7 @@ def test_new_worktree_from_main_succeeds_without_flag(tmp_path: Path) -> None:
     target_root = tmp_path / "_agent-worktrees" / "main-non-tty-repo" / "feature"
     # stdin is not a TTY because capture_output=True and no stdin is piped.
     result = subprocess.run(
-        [sys.executable, str(NEW_WORKTREE), "feature"],
+        [sys.executable, str(NEW_WORKTREE), "feature", "--apply"],
         cwd=repo,
         env=_stripped_env(),
         capture_output=True,
@@ -572,7 +574,7 @@ def test_remove_worktree_resolves_branch_namespace(tmp_path: Path) -> None:
 
     team_root = tmp_path / "_agent-worktrees" / "namespace-repo" / "team" / "feature"
     result = subprocess.run(
-        [sys.executable, str(NEW_WORKTREE), "team/feature", "--no-skill-refresh"],
+        [sys.executable, str(NEW_WORKTREE), "team/feature", "--apply", "--no-skill-refresh"],
         cwd=repo,
         env=_stripped_env(),
         capture_output=True,
@@ -583,7 +585,7 @@ def test_remove_worktree_resolves_branch_namespace(tmp_path: Path) -> None:
 
     personal_root = tmp_path / "_agent-worktrees" / "namespace-repo" / "personal" / "feature"
     result = subprocess.run(
-        [sys.executable, str(NEW_WORKTREE), "personal/feature", "--no-skill-refresh"],
+        [sys.executable, str(NEW_WORKTREE), "personal/feature", "--apply", "--no-skill-refresh"],
         cwd=repo,
         env=_stripped_env(),
         capture_output=True,
@@ -594,7 +596,7 @@ def test_remove_worktree_resolves_branch_namespace(tmp_path: Path) -> None:
 
     # Resolve by full ref
     result = subprocess.run(
-        [sys.executable, str(REMOVE_WORKTREE), "refs/heads/team/feature"],
+        [sys.executable, str(REMOVE_WORKTREE), "refs/heads/team/feature", "--apply"],
         cwd=repo,
         env=_stripped_env(),
         capture_output=True,
@@ -606,7 +608,7 @@ def test_remove_worktree_resolves_branch_namespace(tmp_path: Path) -> None:
 
     # Resolve by branch leaf (ambiguous, should remove the remaining one)
     result = subprocess.run(
-        [sys.executable, str(REMOVE_WORKTREE), "feature"],
+        [sys.executable, str(REMOVE_WORKTREE), "feature", "--apply"],
         cwd=repo,
         env=_stripped_env(),
         capture_output=True,
@@ -627,7 +629,8 @@ def test_new_worktree_rejects_path_traversal(tmp_path: Path) -> None:
             text=True,
         )
         assert result.returncode != 0, branch
-        assert any(word in result.stderr.lower() for word in ["canonical", "outside", "invalid branch"]), branch
+        combined = (result.stdout + result.stderr).lower()
+        assert any(word in combined for word in ["canonical", "outside", "invalid branch"]), branch
 
 
 def test_new_worktree_rejects_absolute_branch(tmp_path: Path) -> None:
@@ -641,7 +644,7 @@ def test_new_worktree_rejects_absolute_branch(tmp_path: Path) -> None:
         text=True,
     )
     assert result.returncode != 0
-    assert any(word in result.stderr.lower() for word in ["canonical", "outside", "invalid branch"])
+    assert any(word in (result.stdout + result.stderr).lower() for word in ["canonical", "outside", "invalid branch"])
 
 
 def test_remove_worktree_rejects_ambiguous_leaf(tmp_path: Path) -> None:
@@ -649,7 +652,7 @@ def test_remove_worktree_rejects_ambiguous_leaf(tmp_path: Path) -> None:
 
     team_root = tmp_path / "_agent-worktrees" / "ambiguous-repo" / "team" / "feature"
     subprocess.run(
-        [sys.executable, str(NEW_WORKTREE), "team/feature", "--no-skill-refresh"],
+        [sys.executable, str(NEW_WORKTREE), "team/feature", "--apply", "--no-skill-refresh"],
         cwd=repo,
         env=_stripped_env(),
         capture_output=True,
@@ -659,7 +662,7 @@ def test_remove_worktree_rejects_ambiguous_leaf(tmp_path: Path) -> None:
 
     personal_root = tmp_path / "_agent-worktrees" / "ambiguous-repo" / "personal" / "feature"
     subprocess.run(
-        [sys.executable, str(NEW_WORKTREE), "personal/feature", "--no-skill-refresh"],
+        [sys.executable, str(NEW_WORKTREE), "personal/feature", "--apply", "--no-skill-refresh"],
         cwd=repo,
         env=_stripped_env(),
         capture_output=True,
@@ -668,7 +671,7 @@ def test_remove_worktree_rejects_ambiguous_leaf(tmp_path: Path) -> None:
     assert personal_root.is_dir()
 
     result = subprocess.run(
-        [sys.executable, str(REMOVE_WORKTREE), "feature"],
+        [sys.executable, str(REMOVE_WORKTREE), "feature", "--apply"],
         cwd=repo,
         env=_stripped_env(),
         capture_output=True,
@@ -685,7 +688,7 @@ def test_remove_worktree_rejects_unregistered_absolute_path(tmp_path: Path) -> N
     outside = tmp_path / "outside"
     outside.mkdir()
     result = subprocess.run(
-        [sys.executable, str(REMOVE_WORKTREE), str(outside)],
+        [sys.executable, str(REMOVE_WORKTREE), str(outside), "--apply"],
         cwd=repo,
         env=_stripped_env(),
         capture_output=True,
@@ -699,7 +702,7 @@ def test_new_worktree_accepts_full_ref(tmp_path: Path) -> None:
     repo = _make_repo(tmp_path, "full-ref-repo")
     worktree_root = tmp_path / "_agent-worktrees" / "full-ref-repo" / "feature"
     result = subprocess.run(
-        [sys.executable, str(NEW_WORKTREE), "refs/heads/feature", "--no-skill-refresh"],
+        [sys.executable, str(NEW_WORKTREE), "refs/heads/feature", "--apply", "--no-skill-refresh"],
         cwd=repo,
         env=_stripped_env(),
         capture_output=True,
@@ -714,7 +717,7 @@ def test_remove_worktree_stops_on_locked_directory(tmp_path: Path) -> None:
     repo = _make_repo(tmp_path, "locked-repo")
     worktree_root = tmp_path / "_agent-worktrees" / "locked-repo" / "feature"
     result = subprocess.run(
-        [sys.executable, str(NEW_WORKTREE), "feature", "--no-skill-refresh"],
+        [sys.executable, str(NEW_WORKTREE), "feature", "--apply", "--no-skill-refresh"],
         cwd=repo,
         env=_stripped_env(),
         capture_output=True,
@@ -730,7 +733,7 @@ def test_remove_worktree_stops_on_locked_directory(tmp_path: Path) -> None:
     )
     try:
         result = subprocess.run(
-            [sys.executable, str(REMOVE_WORKTREE), "feature"],
+            [sys.executable, str(REMOVE_WORKTREE), "feature", "--apply"],
             cwd=repo,
             env=_stripped_env(),
             capture_output=True,

@@ -76,10 +76,12 @@ def _install(source_dir: Path, target_dir: Path, apply: bool, show_diff: bool) -
         print("No shipped .md profile assets found in source directory.")
         return 0
 
+    statuses: dict[str, bool] = {}
     changes: list[Path] = []
     for source in source_profiles:
         target = target_dir / source.name
         if _needs_sync(source, target):
+            statuses[source.name] = not target.exists()
             changes.append(source)
             if apply:
                 target.write_bytes(source.read_bytes())
@@ -101,7 +103,7 @@ def _install(source_dir: Path, target_dir: Path, apply: bool, show_diff: bool) -
         return 1
 
     for p in changes:
-        status = "added" if not (target_dir / p.name).exists() else "updated"
+        status = "added" if statuses[p.name] else "updated"
         print(f"{status}: {target_dir / p.name}")
     return 0
 

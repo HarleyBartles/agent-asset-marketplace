@@ -20,22 +20,6 @@ import sys
 from pathlib import Path
 
 
-# Import the shared checkout helper from the repo's tools/ directory. The only
-# bundled copy lives inside the repo-standards skill; other skills rely on
-# repo-standards having deployed tools/shared_checkout.py.
-_SCRIPT_DIR = Path(__file__).resolve().parent
-_SHARED_CHECKOUT_PATH: Path | None = None
-for _parent in _SCRIPT_DIR.parents:
-    _candidate = _parent / "tools" / "shared_checkout.py"
-    if _candidate.is_file():
-        _SHARED_CHECKOUT_PATH = _parent / "tools"
-        break
-if _SHARED_CHECKOUT_PATH is None:
-    raise RuntimeError("tools/shared_checkout.py not found; run repo-standards --apply")
-sys.path.insert(0, str(_SHARED_CHECKOUT_PATH))
-import shared_checkout  # noqa: E402
-
-
 def _stripped_env() -> dict[str, str]:
     env = os.environ.copy()
     env.pop("GIT_DIR", None)
@@ -326,7 +310,6 @@ def _configure_worktree(
     worktree_root: Path,
     main_repo_root: Path,
     no_skill_refresh: bool,
-    allow_shared_checkout: bool,
 ) -> int:
     """Refresh skills and regenerate the index mesh inside the new worktree.
 
@@ -344,8 +327,6 @@ def _configure_worktree(
 
         refresh_script = _find_refresh_script(worktree_root)
         if refresh_script:
-            if not shared_checkout.approve_mutation(worktree_root, "new-worktree", allow_shared_checkout):
-                return 1
             refresh_args = [str(refresh_script), "--apply", "--allow-shared-checkout"]
             result = subprocess.run(
                 [sys.executable, *refresh_args],
@@ -451,7 +432,6 @@ def _apply_worktree(
     branch: str,
     base_ref: str,
     no_skill_refresh: bool,
-    allow_shared_checkout: bool,
 ) -> int:
     worktree_root = _validate_worktree_root(main_repo_root, branch)
 
@@ -473,7 +453,7 @@ def _apply_worktree(
         return result.returncode
 
     try:
-        exit_code = _configure_worktree(worktree_root, main_repo_root, no_skill_refresh, allow_shared_checkout)
+        exit_code = _configure_worktree(worktree_root, main_repo_root, no_skill_refresh)
     except BaseException:
         _remove_worktree(worktree_root, main_repo_root, branch)
         raise
@@ -510,9 +490,9 @@ def _build_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--allow-shared-checkout",
         action="store_true",
-        help="forwarded to child skill scripts. A new worktree is an isolated linked worktree, "
-        "so new-worktree itself does not require this flag. (mutating, used with --apply)",
+        help="deprecated; no effect (kept for compatibility)",
     )
+
     mode = parser.add_mutually_exclusive_group()
     mode.add_argument(
         "--check",
@@ -548,7 +528,6 @@ def main(argv: list[str] | None = None) -> int:
             branch,
             base_ref,
             args.no_skill_refresh,
-            args.allow_shared_checkout,
         )
 
     # Default / --check mode

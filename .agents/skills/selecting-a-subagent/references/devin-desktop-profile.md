@@ -66,8 +66,6 @@ Reviewer dispatches must pass a prepared `<diff_path>` and optional `<pr_descrip
 | Broad read-only exploration | `subagent_explore` |
 | Broad mixed work | `subagent_general` |
 
-Custom profiles may declare `model:` in their `.md` profile file. The runtime honors that model when the subagent is launched. Do not pass a `model:` argument to `run_subagent`; the tool has no such parameter.
-
 Custom profiles may declare `model:` in their `.md` profile file. The runtime honors that model when the subagent is launched, but the tool set is also constrained by the profile `name` and is cached; edits may not take effect until the IDE is restarted. `allowed-tools` describes the expected tool set, but the runtime may expose fewer tools. For example, `reviewer-strong` on `glm-5-2` has `exec`, `grep`, `read`, `find_file_by_name`, and `write`; `reviewer-fixes` on `swe-1-6` has the same tools. To create an off-repo file from a profile that does not expose `write`, use `exec`.
 
 ### Vendor and third-party profiles
