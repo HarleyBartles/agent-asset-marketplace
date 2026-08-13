@@ -97,7 +97,6 @@ For every post-fix finding, set `regression_class` from the decision table in th
 
 - `<base>` and `<branch>` (or `<head_sha>`)
 - `<pr_number>` or `<pr_description>`
-- Optional `<issue_context>` for Linear/GitHub issue or spec text
 
 ## Invariants
 

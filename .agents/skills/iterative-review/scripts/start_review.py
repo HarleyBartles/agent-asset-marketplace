@@ -250,9 +250,7 @@ def main(argv: list[str] | None = None) -> int:
         return 2
 
     try:
-        scratch_dir, pr, base_sha, head_sha = _bootstrap_review(
-            args.pr, apply=args.apply
-        )
+        scratch_dir, pr, base_sha, head_sha = _bootstrap_review(args.pr, apply=args.apply)
     except subprocess.CalledProcessError as exc:
         print(f"error: {exc}", file=sys.stderr)
         return 1

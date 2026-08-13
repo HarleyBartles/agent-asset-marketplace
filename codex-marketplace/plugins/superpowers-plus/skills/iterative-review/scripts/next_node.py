@@ -477,7 +477,8 @@ def main(argv: list[str] | None = None) -> int:
                 node_path = f".agents/skills/iterative-review/references/node-{node}.md"
                 state_path_for_hint = state_path or (
                     Path(args.metrics).with_name("review-state.json")
-                    if args.metrics else Path("<scratch_dir>/review-state.json")
+                    if args.metrics
+                    else Path("<scratch_dir>/review-state.json")
                 )
                 print(f"# recipe: {node_path}")
                 print(
