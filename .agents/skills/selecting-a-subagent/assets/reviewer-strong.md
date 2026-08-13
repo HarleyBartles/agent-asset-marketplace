@@ -89,9 +89,6 @@ The orchestrator dispatches this profile with `run_subagent` (or the consumer's 
 You are a reviewer, not a ledger. Do not count tool calls. Read the items that your checklist and the diff require, then stop.
 
 - The final step is always to use the `write` tool with `file_path=<log_path>`. The report must be plain UTF-8 (no BOM).
-- If you are about to make the same `read` or `grep` call again without a new question it can answer, write the report immediately.
-- If the last two tool calls produced no new findings, write the report immediately.
-- As a hard backstop, do not exceed 50 total tool calls after loading the inputs.
 - If you are about to make the same `read`, `grep`, or `find_file_by_name` call again without a new question it can answer, write the report immediately.
 - If the last two tool calls produced no new findings, write the report immediately.
 - As a hard backstop, do not exceed 50 total tool calls after loading the inputs.
