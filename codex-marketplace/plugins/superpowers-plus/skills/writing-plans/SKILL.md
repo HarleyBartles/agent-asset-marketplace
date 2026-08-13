@@ -46,7 +46,7 @@ Assume they are a skilled developer, but know almost nothing about our toolset o
 
 **Context:** If working in an isolated worktree, it should have been created via the `/using-git-worktrees` skill at execution time.
 
-**Save plans to:** `~/.agents/plans/YYYY-MM-DD-<feature-name>.md`
+**Save plans to:** `.agents/plans/YYYY-MM-DD-<feature-name>.md`
 - (User preferences for plan location override this default)
 
 ## Scope Check
@@ -70,10 +70,10 @@ If a single missing fact blocks the next step, invoke `/asking-clarifying-questi
 
 Plans are durable, tracked files. The in-flight plan is the source of truth for the work, not a transient scratch note.
 
-- **In-flight home:** `~/.agents/plans/YYYY-MM-DD-<feature-name>.md` (or `~/.agents/plans/<epic-name>/YYYY-MM-DD-<feature-name>.md` for epic plans). Off-repo scratch is for transient session artifacts only; the plan itself always lives in the in-flight plan home.
+- **In-flight home:** `.agents/plans/YYYY-MM-DD-<feature-name>.md` (or `.agents/plans/<epic-name>/YYYY-MM-DD-<feature-name>.md` for epic plans). Off-repo scratch is for transient session artifacts only; the plan itself always lives in the in-flight plan home.
 - **Commit before handoff:** A plan must exist and be committed before it can be handed to `/executing-plans` or `/subagent-driven-development`. Execution skills read the saved, committed file, not unsaved editor state.
-- **Completion:** When the work is complete, move the plan file to `~/.agents/plans/completed/<plan-file>`.
-- **Roadmap and index links:** Any roadmap, `INDEX.md`, or spec link that points to the in-flight path must be updated to `../completed/<plan-file>` at closeout. See the `completing-plans` runbook for the exact archive sequence.
+- **Completion:** When the work is complete, move the plan file to `.agents/plans/completed/<plan-file>`.
+- **Roadmap and index links:** Any roadmap, `INDEX.md`, or spec link that points to the in-flight path must be updated when the plan is archived. See the `completing-plans` runbook for the exact move-and-link-rewrite sequence.
 
 ## File Structure
 
@@ -206,7 +206,7 @@ If you find issues during the self-review, fix them inline and re-run the plan-r
 
 After the plan is saved and the plan-readiness rating meets the floor, offer execution choice:
 
-**"Plan complete and saved to `~/.agents/plans/<filename>.md`. The plan-readiness rating is <X>/10. Two execution options:**
+**"Plan complete and saved to `.agents/plans/<filename>.md`. The plan-readiness rating is <X>/10. Two execution options:**
 
 **1. Subagent-Driven (recommended)** - I dispatch a fresh subagent per task, review between tasks, fast iteration
 
