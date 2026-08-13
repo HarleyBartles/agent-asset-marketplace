@@ -220,23 +220,18 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument(
         "--apply",
         action="store_true",
-        help="create the scratch workspace and advance the graph to preflight",
+        help="create the scratch workspace, run normalize-inputs, and print the next allowed node",
     )
     parser.add_argument(
         "--check",
         action="store_true",
         help="report what start_review.py would do without writing files",
     )
-    parser.add_argument(
-        "--head-ref",
-        default="HEAD",
-        help="git ref for the head of the PR (default: HEAD)",
-    )
     args = parser.parse_args(argv)
 
     if args.apply and args.check:
         print("error: --apply and --check are mutually exclusive", file=sys.stderr)
-        return 1
+        return 2
 
     if not args.apply and not args.check:
         args.check = True
@@ -251,7 +246,7 @@ def main(argv: list[str] | None = None) -> int:
 
     try:
         scratch_dir, pr, base_sha, head_sha = _bootstrap_review(args.pr, apply=args.apply)
-    except subprocess.CalledProcessError as exc:
+    except (subprocess.CalledProcessError, OSError) as exc:
         print(f"error: {exc}", file=sys.stderr)
         return 1
 
