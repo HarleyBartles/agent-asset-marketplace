@@ -20,20 +20,7 @@ import sys
 from pathlib import Path
 
 
-# Import the shared checkout helper from the repo's tools/ directory. The only
-# bundled copy lives inside the repo-standards skill; other skills rely on
-# repo-standards having deployed tools/shared_checkout.py.
-_SCRIPT_DIR = Path(__file__).resolve().parent
-_SHARED_CHECKOUT_PATH: Path | None = None
-for _parent in _SCRIPT_DIR.parents:
-    _candidate = _parent / "tools" / "shared_checkout.py"
-    if _candidate.is_file():
-        _SHARED_CHECKOUT_PATH = _parent / "tools"
-        break
-if _SHARED_CHECKOUT_PATH is None:
-    raise RuntimeError("tools/shared_checkout.py not found; run repo-standards --apply")
-sys.path.insert(0, str(_SHARED_CHECKOUT_PATH))
-import shared_checkout  # noqa: E402
+
 
 
 def _stripped_env() -> dict[str, str]:
@@ -344,8 +331,6 @@ def _configure_worktree(
 
         refresh_script = _find_refresh_script(worktree_root)
         if refresh_script:
-            if not shared_checkout.approve_mutation(worktree_root, "new-worktree", allow_shared_checkout):
-                return 1
             refresh_args = [str(refresh_script), "--apply", "--allow-shared-checkout"]
             result = subprocess.run(
                 [sys.executable, *refresh_args],
