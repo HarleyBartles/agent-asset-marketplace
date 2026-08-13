@@ -341,7 +341,7 @@ New:
 
 - [x] **Step 3: Verify by running `sdd-workspace`**
 
-Run: `py -3 .agents/skills/subagent-workspace/scripts/sdd-workspace .agents/plans/2026-08-13-skill-seams-cleanup.md`
+Run: `py -3 .agents/skills/subagent-workspace/scripts/sdd-workspace .agents/plans/completed/2026-08-13-skill-seams-cleanup.md`
 Expected: output path contains `_agent-scratch/agent-asset-marketplace/<branch>/2026-08-13-skill-seams-cleanup`.
 
 - [x] **Step 4: Commit**
