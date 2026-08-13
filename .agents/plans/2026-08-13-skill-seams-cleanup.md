@@ -27,7 +27,7 @@
 - Consumes: no `shared_checkout` import.
 - Produces: `new_worktree.py` imports only stdlib; `--allow-shared-checkout` is forwarded to `refresh_installed_skills` and `generate_index_mesh` only.
 
-- [ ] **Step 1: Remove the `shared_checkout` bootstrap**
+- [x] **Step 1: Remove the `shared_checkout` bootstrap**
 
 Old:
 ```python
@@ -49,7 +49,7 @@ import shared_checkout  # noqa: E402
 
 New: delete the block entirely; keep the preceding stdlib imports.
 
-- [ ] **Step 2: Remove the `approve_mutation` call**
+- [x] **Step 2: Remove the `approve_mutation` call**
 
 Old:
 ```python
@@ -67,7 +67,7 @@ New:
             refresh_args = [str(refresh_script), "--apply", "--allow-shared-checkout"]
 ```
 
-- [ ] **Step 3: Verify the script CLI contract**
+- [x] **Step 3: Verify the script CLI contract**
 
 Run: `py -3 .agents/skills/using-git-worktrees/scripts/new_worktree.py --help`
 Expected: exits 0 with help text.
@@ -75,7 +75,7 @@ Expected: exits 0 with help text.
 Run: `py -3 .agents/skills/using-git-worktrees/scripts/new_worktree.py --check some-test-branch`
 Expected: exits 1 (branch does not exist), no `shared_checkout` import error.
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 git add codex-marketplace/plugins/superpowers-plus/skills/using-git-worktrees/scripts/new_worktree.py
@@ -96,7 +96,7 @@ operates on a new linked worktree; child scripts gate themselves."
 - Consumes: `_needs_sync` and `_profile_paths` helpers.
 - Produces: `_install` tracks pre-write existence status and reports `added` only for fresh files.
 
-- [ ] **Step 1: Track pre-write `added` status**
+- [x] **Step 1: Track pre-write `added` status**
 
 Old:
 ```python
@@ -122,7 +122,7 @@ New:
                 target.write_bytes(source.read_bytes())
 ```
 
-- [ ] **Step 2: Use tracked status in output**
+- [x] **Step 2: Use tracked status in output**
 
 Old:
 ```python
@@ -138,7 +138,7 @@ New:
         print(f"{status}: {target_dir / p.name}")
 ```
 
-- [ ] **Step 3: Verify with a temporary target**
+- [x] **Step 3: Verify with a temporary target**
 
 Create a temporary directory (e.g. `Z:\_agent-scratch\agent-asset-marketplace\fix-skill-seams-2026-08-13\install-test`) and delete it first.
 
@@ -151,7 +151,7 @@ Expected: at least one profile reports `added: <target>\<name>.md`.
 Run the same command again.
 Expected: all profiles report `OK: all shipped profiles are already installed.` (no "updated").
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 git add codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/scripts/install_profiles.py
@@ -168,7 +168,7 @@ git commit -m "fix(selecting-a-subagent): report added correctly on first instal
 **Interfaces:**
 - Produces: a single, expanded loop-breaker block.
 
-- [ ] **Step 1: Remove the first, narrower loop-breaker block**
+- [x] **Step 1: Remove the first, narrower loop-breaker block**
 
 Old:
 ```markdown
@@ -187,12 +187,12 @@ New:
 - As a hard backstop, do not exceed 50 total tool calls after loading the inputs.
 ```
 
-- [ ] **Step 2: Verify no duplicate remains**
+- [x] **Step 2: Verify no duplicate remains**
 
 Run: `grep -n "last two tool calls produced no new findings" codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/assets/reviewer-strong.md`
 Expected: one line in the `## Stop condition and loop breaker` section.
 
-- [ ] **Step 3: Commit**
+- [x] **Step 3: Commit**
 
 ```bash
 git add codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/assets/reviewer-strong.md
@@ -209,7 +209,7 @@ git commit -m "fix(reviewer-strong): remove duplicated loop-breaker block"
 **Interfaces:**
 - Produces: single `model:`/allowed-tools section; the CLI/Desktop split remains a documented gap for a follow-up plan.
 
-- [ ] **Step 1: Remove the shorter, first `model:` paragraph**
+- [x] **Step 1: Remove the shorter, first `model:` paragraph**
 
 Old:
 ```markdown
@@ -223,12 +223,12 @@ New:
 Custom profiles may declare `model:` in their `.md` profile file. The runtime honors that model when the subagent is launched, but the tool set is also constrained by the profile `name` and is cached; edits may not take effect until the IDE is restarted. `allowed-tools` describes the expected tool set, but the runtime may expose fewer tools. For example, `reviewer-strong` on `glm-5-2` has `exec`, `grep`, `read`, `find_file_by_name`, and `write`; `reviewer-fixes` on `swe-1-6` has the same tools. To create an off-repo file from a profile that does not expose `write`, use `exec`.
 ```
 
-- [ ] **Step 2: Verify no duplicate remains**
+- [x] **Step 2: Verify no duplicate remains**
 
 Run: `grep -n "Do not pass a \`model:\` argument to \`run_subagent\`" codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/references/devin-desktop-profile.md`
 Expected: no output.
 
-- [ ] **Step 3: Commit**
+- [x] **Step 3: Commit**
 
 ```bash
 git add codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/references/devin-desktop-profile.md
@@ -246,7 +246,7 @@ git commit -m "fix(devin-desktop-profile): remove duplicated model paragraph"
 **Interfaces:**
 - Produces: skill names in prose are wrapped in backticks (`/name`) so examples and templates are unambiguous.
 
-- [ ] **Step 1: Fix `writing-skills` "Good" examples**
+- [x] **Step 1: Fix `writing-skills` "Good" examples**
 
 Old:
 ```markdown
@@ -260,7 +260,7 @@ New:
 - ✅ Good: `**REQUIRED BACKGROUND:** You MUST understand `/systematic-debugging``
 ```
 
-- [ ] **Step 2: Fix `writing-plans` plan header template**
+- [x] **Step 2: Fix `writing-plans` plan header template**
 
 Old:
 ```markdown
@@ -272,7 +272,7 @@ New:
 > **For agentic workers:** REQUIRED SUB-SKILL: Use `/subagent-driven-development` (recommended) or `/executing-plans` to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 ```
 
-- [ ] **Step 3: Fix `writing-plans` bullet examples**
+- [x] **Step 3: Fix `writing-plans` bullet examples**
 
 Old:
 ```markdown
@@ -292,12 +292,12 @@ and
 - **REQUIRED SUB-SKILL:** Use `/executing-plans`
 ```
 
-- [ ] **Step 4: Verify with `grep`**
+- [x] **Step 4: Verify with `grep`**
 
 Run: `grep -n "Use /[a-z-]" codex-marketplace/plugins/superpowers-plus/skills/writing-skills/SKILL.md codex-marketplace/plugins/superpowers-plus/skills/writing-plans/SKILL.md`
 Expected: no matches (all backticked).
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add codex-marketplace/plugins/superpowers-plus/skills/writing-skills/SKILL.md codex-marketplace/plugins/superpowers-plus/skills/writing-plans/SKILL.md
@@ -315,7 +315,7 @@ git commit -m "fix(writing-skills,writing-plans): backtick-wrap skill invocation
 **Interfaces:**
 - Produces: Usage comments match the `<repo-name>/<branch>/<plan-stem>` path that `sdd-workspace` actually returns.
 
-- [ ] **Step 1: Fix `task-brief` comment**
+- [x] **Step 1: Fix `task-brief` comment**
 
 Old:
 ```bash
@@ -327,7 +327,7 @@ New:
 # Default OUTFILE: <main-checkout>/../_agent-scratch/<repo-name>/<branch>/<plan-stem>/task-<N>-brief.md
 ```
 
-- [ ] **Step 2: Fix `review-package` comment**
+- [x] **Step 2: Fix `review-package` comment**
 
 Old:
 ```bash
@@ -339,12 +339,12 @@ New:
 # Default OUTFILE: <main-checkout>/../_agent-scratch/<repo-name>/<branch>/<plan-stem>/review-<base7>..<head7>.diff
 ```
 
-- [ ] **Step 3: Verify by running `sdd-workspace`**
+- [x] **Step 3: Verify by running `sdd-workspace`**
 
 Run: `py -3 .agents/skills/subagent-workspace/scripts/sdd-workspace .agents/plans/2026-08-13-skill-seams-cleanup.md`
 Expected: output path contains `_agent-scratch/agent-asset-marketplace/<branch>/2026-08-13-skill-seams-cleanup`.
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 git add codex-marketplace/plugins/superpowers-plus/skills/subagent-workspace/scripts/task-brief codex-marketplace/plugins/superpowers-plus/skills/subagent-workspace/scripts/review-package
@@ -363,35 +363,35 @@ git commit -m "fix(subagent-workspace): correct scratch-path usage comments"
 - Consumes: all source edits from Tasks 1-6.
 - Produces: green `ci --check` and a draft PR into `main`.
 
-- [ ] **Step 1: Regenerate the marketplace**
+- [x] **Step 1: Regenerate the marketplace**
 
 Run: `py -3 tools/run.py marketplace --apply`
 Expected: all generators pass; generated files are updated.
 
-- [ ] **Step 2: Stage regenerated files and source edits**
+- [x] **Step 2: Stage regenerated files and source edits**
 
 Run: `git add -A`
 Then: `git status --short` to confirm only expected files are staged.
 
-- [ ] **Step 3: Run the preflight**
+- [x] **Step 3: Run the preflight**
 
 Run: `py -3 tools/run.py ci --check`
 Expected: `[tools/run] all requested targets passed.`
 
-- [ ] **Step 4: Commit regeneration and any remaining changes**
+- [x] **Step 4: Commit regeneration and any remaining changes**
 
 ```bash
 git commit -m "chore: regenerate installed skills after seam fixes"
 ```
 
-- [ ] **Step 5: Push and open a draft PR**
+- [x] **Step 5: Push and open a draft PR**
 
 ```bash
 git push -u origin fix-skill-seams-2026-08-13
 gh pr create --draft --title "fix: skill seams cleanup" --body "Fixes cross-pack shared_checkout import, install_profiles status, duplicated content, invocation syntax, and stale scratch comments."
 ```
 
-- [ ] **Step 6: Record publication proof**
+- [x] **Step 6: Record publication proof**
 
 Capture the PR URL and the head SHA: `git rev-parse HEAD`.
 
