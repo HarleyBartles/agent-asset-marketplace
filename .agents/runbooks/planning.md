@@ -35,11 +35,11 @@ Every implementation plan in this repo must contain:
 
 Plans are durable, tracked files. The in-flight plan file is the source of truth for the work, not a transient scratch note.
 
-- **In-flight home:** Plans go in `~/.agents/plans/` with a descriptive filename (e.g. `2026-07-09-add-skill-pack.md`). Epic plans may live under `~/.agents/plans/<epic-name>/`.
+- **In-flight home:** Plans go in `.agents/plans/` with a descriptive filename (e.g. `2026-07-09-add-skill-pack.md`). Epic plans may live under `.agents/plans/<epic-name>/`.
 - **Off-repo scratch only for session artifacts:** Session artifacts (task briefs, reports, review diffs) go in the off-repo SDD scratch path (see `subagent-driven-development` for the current `sdd-workspace` path convention). Do not put the plan itself in scratch.
 - **Commit before handoff:** A plan must exist and be committed before it can be handed to `/executing-plans` or `/subagent-driven-development`. Execution skills read the saved, committed file, not unsaved editor state.
-- **Completion:** When the work is complete, move the plan to `~/.agents/plans/completed/<plan-file>` (and any matching spec to `~/.agents/specs/completed/`).
-- **Roadmap and index links:** Any roadmap, `INDEX.md`, or spec link that points to the in-flight path must be updated to `../completed/<plan-file>` at closeout. Use the `completing-plans` runbook for the exact move-and-update sequence.
+- **Completion:** When the work is complete, move the plan to `.agents/plans/completed/<plan-file>` (and any matching spec to `.agents/specs/completed/`).
+- **Roadmap and index links:** Any roadmap, `INDEX.md`, or spec link that points to the in-flight path must be updated when the plan is archived. Use the `completing-plans` runbook, which runs `tools/heal_archive_links.py --apply`, for the exact move-and-link-rewrite sequence.
 
 Do not create loose files at repo root. Do not place agent-generated artifacts under `docs/` or product source folders.
 
