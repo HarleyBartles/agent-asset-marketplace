@@ -31,13 +31,15 @@ Every implementation plan in this repo must contain:
 - **Expected interim state** — tasks that leave the build in a temporarily broken state (e.g. validation errors fixed by a later task) must document this explicitly so the implementer knows it's expected
 - **SDD confidence rating** — the plan includes a confidence rating (0-10) reflecting how well-specified the tasks are for subagent-driven execution. This rating must be the result of an honest execution confidence assessment (see below), not a self-assigned number
 
-## Plan Artifact Placement
+## Plan Lifecycle and Artifact Placement
 
-Plans go in `.agents/plans/` with a descriptive filename (e.g. `2026-07-09-add-skill-pack.md`).
+Plans are durable, tracked files. The in-flight plan file is the source of truth for the work, not a transient scratch note.
 
-Session artifacts (task briefs, reports, review diffs) go in the off-repo SDD
-scratch path (see `subagent-driven-development` for the current `sdd-workspace`
-path convention).
+- **In-flight home:** Plans go in `~/.agents/plans/` with a descriptive filename (e.g. `2026-07-09-add-skill-pack.md`). Epic plans may live under `~/.agents/plans/<epic-name>/`.
+- **Off-repo scratch only for session artifacts:** Session artifacts (task briefs, reports, review diffs) go in the off-repo SDD scratch path (see `subagent-driven-development` for the current `sdd-workspace` path convention). Do not put the plan itself in scratch.
+- **Commit before handoff:** A plan must exist and be committed before it can be handed to `/executing-plans` or `/subagent-driven-development`. Execution skills read the saved, committed file, not unsaved editor state.
+- **Completion:** When the work is complete, move the plan to `~/.agents/plans/completed/<plan-file>` (and any matching spec to `~/.agents/specs/completed/`).
+- **Roadmap and index links:** Any roadmap, `INDEX.md`, or spec link that points to the in-flight path must be updated to `../completed/<plan-file>` at closeout. Use the `completing-plans` runbook for the exact move-and-update sequence.
 
 Do not create loose files at repo root. Do not place agent-generated artifacts under `docs/` or product source folders.
 
