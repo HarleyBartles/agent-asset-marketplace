@@ -80,8 +80,8 @@ def _install(source_dir: Path, target_dir: Path, apply: bool, show_diff: bool) -
     changes: list[Path] = []
     for source in source_profiles:
         target = target_dir / source.name
-        statuses[source.name] = not target.exists()
         if _needs_sync(source, target):
+            statuses[source.name] = not target.exists()
             changes.append(source)
             if apply:
                 target.write_bytes(source.read_bytes())

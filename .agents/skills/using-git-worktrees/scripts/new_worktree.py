@@ -487,6 +487,11 @@ def _build_parser() -> argparse.ArgumentParser:
         action="store_true",
         help="skip refreshing installed skills in the new worktree (mutating, used with --apply)",
     )
+    parser.add_argument(
+        "--allow-shared-checkout",
+        action="store_true",
+        help="deprecated; no effect (kept for compatibility)",
+    )
 
     mode = parser.add_mutually_exclusive_group()
     mode.add_argument(
