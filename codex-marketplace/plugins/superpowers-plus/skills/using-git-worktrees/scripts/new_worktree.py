@@ -20,9 +20,6 @@ import sys
 from pathlib import Path
 
 
-
-
-
 def _stripped_env() -> dict[str, str]:
     env = os.environ.copy()
     env.pop("GIT_DIR", None)
