@@ -310,7 +310,6 @@ def _configure_worktree(
     worktree_root: Path,
     main_repo_root: Path,
     no_skill_refresh: bool,
-    allow_shared_checkout: bool,
 ) -> int:
     """Refresh skills and regenerate the index mesh inside the new worktree.
 
@@ -433,7 +432,6 @@ def _apply_worktree(
     branch: str,
     base_ref: str,
     no_skill_refresh: bool,
-    allow_shared_checkout: bool,
 ) -> int:
     worktree_root = _validate_worktree_root(main_repo_root, branch)
 
@@ -455,7 +453,7 @@ def _apply_worktree(
         return result.returncode
 
     try:
-        exit_code = _configure_worktree(worktree_root, main_repo_root, no_skill_refresh, allow_shared_checkout)
+        exit_code = _configure_worktree(worktree_root, main_repo_root, no_skill_refresh)
     except BaseException:
         _remove_worktree(worktree_root, main_repo_root, branch)
         raise
@@ -489,12 +487,7 @@ def _build_parser() -> argparse.ArgumentParser:
         action="store_true",
         help="skip refreshing installed skills in the new worktree (mutating, used with --apply)",
     )
-    parser.add_argument(
-        "--allow-shared-checkout",
-        action="store_true",
-        help="forwarded to child skill scripts. A new worktree is an isolated linked worktree, "
-        "so new-worktree itself does not require this flag. (mutating, used with --apply)",
-    )
+
     mode = parser.add_mutually_exclusive_group()
     mode.add_argument(
         "--check",
@@ -530,7 +523,6 @@ def main(argv: list[str] | None = None) -> int:
             branch,
             base_ref,
             args.no_skill_refresh,
-            args.allow_shared_checkout,
         )
 
     # Default / --check mode
