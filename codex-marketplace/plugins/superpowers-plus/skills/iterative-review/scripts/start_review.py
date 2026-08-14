@@ -156,7 +156,6 @@ def _bootstrap_review(pr_number: int, apply: bool) -> tuple[Path, dict, str, str
     diff_path = scratch_dir / f"review-{base_sha}..{head_sha}.diff"
     _generate_diff(repo_root, base_commit, head_sha, diff_path)
 
-    diff_path = scratch_dir / f"review-{base_sha}..{head_sha}.diff"
     state = {
         "current_node": "setup",
         "previous_node": "",
@@ -182,7 +181,12 @@ def _bootstrap_review(pr_number: int, apply: bool) -> tuple[Path, dict, str, str
 
 def _resync_review(state_path: Path) -> Path:
     """Refresh diff and PR metadata for an existing review without resetting graph state."""
-    state = json.loads(state_path.read_text(encoding="utf-8-sig"))
+    try:
+        state = json.loads(state_path.read_text(encoding="utf-8-sig"))
+    except FileNotFoundError:
+        raise SystemExit(f"ERROR: state file not found: {state_path}")
+    except json.JSONDecodeError as e:
+        raise SystemExit(f"ERROR: invalid state JSON in {state_path}: {e}")
     scratch_dir = Path(state["scratch_dir"])
     pr_number = state.get("pr", {}).get("pr_number")
     if not pr_number:
@@ -288,8 +292,8 @@ def main(argv: list[str] | None = None) -> int:
     if args.apply and args.check:
         print("error: --apply and --check are mutually exclusive", file=sys.stderr)
         return 2
-    if args.resync and not (args.state or args.apply):
-        print("error: --resync requires --state or --apply", file=sys.stderr)
+    if args.resync and not args.state:
+        print("error: --resync requires --state", file=sys.stderr)
         return 2
 
     if not args.apply and not args.check and not args.resync:

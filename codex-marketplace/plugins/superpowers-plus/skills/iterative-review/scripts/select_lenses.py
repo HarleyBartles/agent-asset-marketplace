@@ -19,7 +19,7 @@ def _user_agent_root() -> Path:
         return Path(env)
     if sys.platform != "win32":
         return Path.home() / ".config" / "devin" / "agents"
-    return Path.home() / "AppData" / "Roaming" / "devin" / "agents"
+    return Path(os.environ.get("APPDATA", Path.home() / "AppData" / "Roaming")) / "devin" / "agents"
 
 
 def _reviewer_paths() -> list[Path]:

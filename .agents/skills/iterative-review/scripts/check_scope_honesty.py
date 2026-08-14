@@ -17,8 +17,13 @@ from pathlib import Path
 
 
 def _load(path: Path) -> dict:
-    with path.open("r", encoding="utf-8-sig") as f:
-        return json.load(f)
+    try:
+        with path.open("r", encoding="utf-8-sig") as f:
+            return json.load(f)
+    except FileNotFoundError:
+        raise SystemExit(f"ERROR: state file not found: {path}")
+    except json.JSONDecodeError as e:
+        raise SystemExit(f"ERROR: invalid state JSON in {path}: {e}")
 
 
 def _changed_files(diff_path: Path) -> list[str]:
