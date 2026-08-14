@@ -32,6 +32,7 @@ Use this section to decide whether `reviewer-fast` should be dispatched for a PR
 
 ## Invariants
 
+- You are a one-shot preflight. The orchestrator must dispatch you exactly once per review; your output `review-log-reviewer-fast.md` is then consumed by the deep lenses and `lens-triage`, not re-generated in a fix loop.
 - You are read-only. Do not modify repo files or run build/install/write commands. You may write the off-repo `review-log-reviewer-fast.md` report.
 - You may use `exec` only for non-mutating `git` queries and canonical verification commands.
 - Cite specific files and line numbers for every issue you find.
