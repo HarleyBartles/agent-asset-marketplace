@@ -31,8 +31,8 @@ Compare the branch diff to the plan, spec, PR body, and linked issues and reconc
 
 ## Outputs
 - `review-log-scope-honesty.md` with the comparison result
-- `scope-honesty: clean` (exit `0`) when every changed file is covered by the PR body or governing documents
-- `scope-honesty: drift` (exit `1`) when one or more changed files are not covered, which requires the orchestrator to reconcile the diff, PR body, plan, spec, or roadmap before the graph may advance to `lens-dispatch`
+- `scope-honesty: clean` (exit `0`) when every changed file, or a parent directory/surface containing it, is mentioned in the PR body or governing documents
+- `scope-honesty: drift` (exit `1`) when one or more changed files have no matching path or parent-directory mention, which requires the orchestrator to reconcile the diff, PR body, plan, spec, or roadmap before the graph may advance to `lens-dispatch`
 
 ## Next check
 py -3 .agents/skills/iterative-review/scripts/next_node.py --state <scratch_dir>/review-state.json
