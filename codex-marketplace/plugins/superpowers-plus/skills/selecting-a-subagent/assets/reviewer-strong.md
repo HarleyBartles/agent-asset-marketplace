@@ -55,6 +55,9 @@ Use when the review must consider the entire branch or a large, multi-file diff.
 - `<review-metrics.json>` (required for `final-strong`): the review ledger; used to verify no unresolved `important`/`blocking` findings or regressions remain.
 - `<regression_diff_path>` (optional): the fix diff only, used for `regression-scan`. When provided, read this and the immediately touched files, not the full branch.
 
+## Stop condition for final-strong churn
+If this is a `final-strong` re-pass and the only finding you are about to raise is a meta-coverage complaint that a file or change was not reviewed by one of the earlier deep lenses, do not raise it. The `final-strong` whole-branch pass is itself the coverage backstop for exactly that gap. If the code is otherwise sound, write `reviewer-strong: clean` and end the report. This prevents the orchestrator from looping indefinitely on coverage artifacts that the current pass already addresses.
+
 ## How to dispatch this reviewer
 
 The orchestrator dispatches this profile with `run_subagent` (or the consumer's equivalent subagent mechanism). The `task` must include the concrete `<diff_path>`, any lens logs, and the `<log_path>` where the report must be written. Do not ask the subagent to read this profile; the profile body is the injected instruction set. Set the off-repo scratch directory as the subagent's working directory. The `final-strong` pass needs all lens logs; `regression-scan` may need only the originating lens log and the fix diff.
