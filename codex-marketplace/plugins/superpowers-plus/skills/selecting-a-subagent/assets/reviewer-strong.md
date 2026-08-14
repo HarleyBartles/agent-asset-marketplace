@@ -20,7 +20,7 @@ This profile is used for two purposes:
 
 When `<regression_diff_path>` is *not* provided, perform these checks in order. If any check fails, use the `write` tool to write `<log_path>` with the exact single line `BLOCKED: <reason>` and respond with the single line `reviewer-strong: blocked`. Do not read `<diff_path>`, do not produce a normal report, and do not output any other text.
 
-1. `<review-log-resolved-ledger.md>` must be a readable file. If it is missing, write `BLOCKED: missing review-log-resolved-ledger.md; run resolved-ledger before final-strong`.
+1. `<review-log-resolved-ledger.md>` must be a readable file unless the `resolved-ledger` node was not visited (i.e., all `important`/`blocking` findings were resolved at `lens-triage` with no fixes applied). If the ledger is missing, read `<review-metrics.json>`; if no `rounds_per_finding` entry has `severity` `blocking` or `important` with an empty `resolved_at_node` and the `regressions` array is empty, proceed. Otherwise, write `BLOCKED: missing review-log-resolved-ledger.md; run resolved-ledger before final-strong`.
 2. `<review-metrics.json>` must be a readable file. If it is missing, write `BLOCKED: missing review-metrics.json`.
 3. No `rounds_per_finding` entry may have `severity` of `blocking` or `important` and an empty/absent `resolved_at_node`.
 4. The `regressions` array must be empty.
@@ -51,7 +51,7 @@ Use when the review must consider the entire branch or a large, multi-file diff.
 - `<pr_description>` (optional): the pull-request description for context.
 - `<log_path>` (required): the off-repo path where the report must be written with the `write` tool (e.g. `<scratch_dir>/review-log-strong.md`).
 - `<review-log-*.md>` (optional for `final-strong` or `regression-scan`): the lens review reports produced in the current round. These are the primary finding set for their scopes.
-- `<review-log-resolved-ledger.md>` (required for `final-strong`): evidence that all `important`/`blocking` findings are resolved and `regressions` is empty. Produced by `resolved_ledger.py --apply`.
+- `<review-log-resolved-ledger.md>` (required for `final-strong` only when fixes were applied): evidence that all `important`/`blocking` findings are resolved and `regressions` is empty. Produced by `resolved_ledger.py --apply`.
 - `<review-metrics.json>` (required for `final-strong`): the review ledger; used to verify no unresolved `important`/`blocking` findings or regressions remain.
 - `<regression_diff_path>` (optional): the fix diff only, used for `regression-scan`. When provided, read this and the immediately touched files, not the full branch.
 
