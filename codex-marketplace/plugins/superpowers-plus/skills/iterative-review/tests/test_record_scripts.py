@@ -92,7 +92,7 @@ class TestRecordResolution(unittest.TestCase):
             data = json.dumps(
                 {
                     "finding_id": "f-001",
-                    "resolved_at_node": "finding-fix",
+                    "resolved_at_node": "reviewer-fixes",
                     "resolved_at_round": 2,
                 }
             )
