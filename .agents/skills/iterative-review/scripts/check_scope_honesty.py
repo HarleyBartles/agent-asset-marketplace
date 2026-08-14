@@ -82,24 +82,24 @@ def _check(state_path: Path, extras: list[Path] | None, apply: bool) -> tuple[bo
 
     log_path = scratch / "review-log-scope-honesty.md"
     log_path.parent.mkdir(parents=True, exist_ok=True)
-    with log_path.open("w", encoding="utf-8") as f:
-        f.write("## Inputs\n\n")
-        f.write(f"- diff: `{diff_path}`\n")
-        f.write(f"- PR description: `{scratch / 'pr_description.txt'}`\n")
+    with log_path.open("w", encoding="utf-8") as out:
+        out.write("## Inputs\n\n")
+        out.write(f"- diff: `{diff_path}`\n")
+        out.write(f"- PR description: `{scratch / 'pr_description.txt'}`\n")
         for extra in extras or []:
-            f.write(f"- governing doc: `{extra}`\n")
-        f.write(f"\n## Changed files: {len(changed)}\n\n")
+            out.write(f"- governing doc: `{extra}`\n")
+        out.write(f"\n## Changed files: {len(changed)}\n\n")
         for f in changed:
-            f.write(f"- `{f}`\n")
+            out.write(f"- `{f}`\n")
         if drift:
-            f.write("\n## Drift\n\n")
-            f.write("The following changed files are not mentioned in the PR body or governing documents:\n\n")
+            out.write("\n## Drift\n\n")
+            out.write("The following changed files are not mentioned in the PR body or governing documents:\n\n")
             for f in drift:
-                f.write(f"- `{f}`\n")
-            f.write("\nscope-honesty: drift\n")
+                out.write(f"- `{f}`\n")
+            out.write("\nscope-honesty: drift\n")
         else:
-            f.write("\n## Result\n\nAll changed files are covered by the PR description or governing documents.\n\n")
-            f.write("scope-honesty: clean\n")
+            out.write("\n## Result\n\nAll changed files are covered by the PR description or governing documents.\n\n")
+            out.write("scope-honesty: clean\n")
 
     return not drift, drift
 

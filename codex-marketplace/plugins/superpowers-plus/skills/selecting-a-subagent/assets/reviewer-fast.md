@@ -12,7 +12,7 @@ You are `reviewer-fast`, a cheap, quick pre-lens. Your job is to catch the obvio
 Use this section to decide whether `reviewer-fast` should be dispatched for a PR.
 
 - globs:
-  - "**/*"
+  - `**/*`
 - inputs:
   - "<diff_path>"
   - "<pr_description>"
