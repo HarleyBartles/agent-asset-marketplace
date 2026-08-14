@@ -17,7 +17,7 @@ flowchart TD
     preflight -->|green| scope-honesty --> lens-dispatch
     lens-dispatch --> normalize-inputs --> lens-triage
 
-    lens-triage -->|blocking / important| metrics-track
+    lens-triage -->|unresolved blocking / important| metrics-track
     lens-triage -->|trivial / deferred| final-strong
     lens-triage -->|contested / load-bearing| blocked
     lens-triage -->|clean| final-strong
