@@ -52,11 +52,16 @@ def _governing_texts(scratch: Path, extras: list[Path] | None) -> list[str]:
 
 
 def _path_mentioned(path: str, corpora: list[str]) -> bool:
-    """Return True if the full path, parent/name, or filename is found in any corpus."""
+    """Return True if the path, any parent path, or filename is found in any corpus."""
     p = PurePosixPath(path)
     variants: set[str] = {path, p.name}
     if p.parent != p and p.parent.name and p.parent.name != ".":
         variants.add(f"{p.parent.name}/{p.name}")
+    # Add every parent directory path so a surface-level mention covers bulk changes.
+    parent = p.parent
+    while parent != parent.parent and parent.name and parent.name != ".":
+        variants.add(str(parent))
+        parent = parent.parent
     needle = {v.lower() for v in variants if v and len(v) > 1}
     for text in corpora:
         lowered = text.lower()
