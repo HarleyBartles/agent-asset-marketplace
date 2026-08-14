@@ -161,6 +161,20 @@ def _select(state: dict, provided_inputs: set[str]) -> list[dict]:
     return selected
 
 
+def _select_filtered(
+    state: dict,
+    provided_inputs: set[str],
+    include: set[str] | None,
+    exclude: set[str] | None,
+) -> list[dict]:
+    selected = _select(state, provided_inputs)
+    if include:
+        selected = [s for s in selected if s["lens"] in include]
+    if exclude:
+        selected = [s for s in selected if s["lens"] not in exclude]
+    return selected
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Select reviewer lenses for a PR. (mixed)")
     parser.add_argument("--state", help="Path to review-state.json")
@@ -169,6 +183,18 @@ def main(argv: list[str] | None = None) -> int:
         action="append",
         default=[],
         help="Lens-specific input token that is provided (repeatable)",
+    )
+    parser.add_argument(
+        "--lens",
+        action="append",
+        default=[],
+        help="Explicitly include only these lens names (repeatable)",
+    )
+    parser.add_argument(
+        "--exclude",
+        action="append",
+        default=[],
+        help="Exclude these lens names (repeatable)",
     )
     parser.add_argument("--apply", action="store_true", help="Write lenses.jsonl to the scratch dir")
     parser.add_argument("--check", action="store_true", help="Validate CLI contract only")
@@ -183,7 +209,9 @@ def main(argv: list[str] | None = None) -> int:
 
     state = _load_state(Path(args.state))
     provided_inputs = set(args.input)
-    selected = _select(state, provided_inputs)
+    include = set(args.lens) if args.lens else None
+    exclude = set(args.exclude) if args.exclude else None
+    selected = _select_filtered(state, provided_inputs, include, exclude)
 
     out_path = _lenses_path(state)
     if args.apply:

@@ -57,8 +57,7 @@ GRAPH: dict[str, list[tuple[str, str]]] = {
         ("green", "scope-honesty"),
     ],
     "fast-fix": [("always", "preflight")],
-    "scope-honesty": [("always", "orchestrator-self-review")],
-    "orchestrator-self-review": [("always", "lens-dispatch")],
+    "scope-honesty": [("always", "lens-dispatch")],
     "lens-dispatch": [("always", "normalize-inputs")],
     "normalize-inputs": [
         ("after_lens_dispatch", "lens-triage"),
