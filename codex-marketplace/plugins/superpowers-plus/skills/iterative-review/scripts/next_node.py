@@ -82,11 +82,11 @@ GRAPH: dict[str, list[tuple[str, str]]] = {
         ("blocked", "blocked"),
         ("regressions", "metrics-track"),
         ("non_trivial", "regression-scan"),
-        ("fixed", "resolved-ledger"),
+        ("reviewer_fixes_clean", "resolved-ledger"),
         ("not_fixed", "finding-fix"),
     ],
     "regression-scan": [
-        ("clean", "resolved-ledger"),
+        ("regression_scan_clean", "resolved-ledger"),
         ("new_issue", "metrics-track"),
     ],
     "resolved-ledger": [
@@ -109,7 +109,6 @@ GRAPH: dict[str, list[tuple[str, str]]] = {
 # log files ("*" means the file just needs to be non-empty).
 ARTIFACTS_FOR_NODE: dict[str, list[tuple[str, str]]] = {
     "metrics-track": [("findings.jsonl", "*")],
-    "resolved-ledger": [("resolutions.jsonl", "*")],
 }
 
 
@@ -143,6 +142,19 @@ def _load_metrics(path: Path) -> dict:
         return json.loads(path.read_text(encoding="utf-8-sig"))
     except (json.JSONDecodeError, OSError):
         return {}
+
+
+def _lens_log_clean(scratch: Path, lens: str) -> bool:
+    """Return True if the lens's log ends with '<lens>: clean'."""
+    log = scratch / f"review-log-{lens}.md"
+    if not log.exists():
+        return False
+    for line in reversed(log.read_text(encoding="utf-8").splitlines()):
+        stripped = line.strip()
+        if not stripped:
+            continue
+        return stripped == f"{lens}: clean"
+    return False
 
 
 def _unresolved_findings(state: dict) -> list[str]:
@@ -214,6 +226,7 @@ def _condition_holds(condition: str, state: dict, ledger: Path, current_node: st
     findings_by_node = _findings_by_node(state)
     ledger_missing = not ledger.exists()
     previous_node = state.get("previous_node", "")
+    scratch = Path(state.get("scratch_dir", "."))
 
     if condition == "always":
         return True
@@ -289,6 +302,10 @@ def _condition_holds(condition: str, state: dict, ledger: Path, current_node: st
         return bool(unresolved)
     if condition == "new_issue":
         return bool(unresolved) or bool(regressions)
+    if condition == "reviewer_fixes_clean":
+        return _lens_log_clean(scratch, "reviewer-fixes") and not regressions
+    if condition == "regression_scan_clean":
+        return _lens_log_clean(scratch, "regression-scan") and not regressions
 
     return False
 
