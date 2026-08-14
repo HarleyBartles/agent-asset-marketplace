@@ -4,32 +4,31 @@
 Verify a fix against the originating lens's checklist, tightly scoped to the blast radius.
 
 ## Inputs
-- `review-log-<lens>.md` from the original lens that produced the finding
+- `findings.jsonl` - to know the `lens` and finding being fixed
+- `review-log-<lens>.md` - to extract the originating lens's `## Checklist` section
 - `review-log-implementer-report.md` (if an `implementer` fixed the finding) or the inline fix diff
 - The affected file(s) only - do not re-review the whole branch
 
 ## Recipe
 
-### Orchestrator (steps 1-3, 8-9)
-1. Determine the `lens` that discovered the finding being fixed (from `findings.jsonl`).
-2. Re-dispatch only that lens profile with the fix diff and the original input package.
-3. Do not dispatch other lenses; their prior review remains valid unless the fix diff changes files they own.
-
-### Re-dispatched lens subagent (steps 4-7)
-4. Load the original lens checklist from `review-log-<lens>.md`.
-5. Re-apply that checklist to the changed surface and one step of blast radius only.
-6. Confirm the original finding is resolved and no new same-lens issues appear in the blast radius.
-7. Write `review-log-reviewer-fixes.md` and end it with exactly one of:
-   - `reviewer-fixes: PASS`
-   - `reviewer-fixes: FAIL`
-8. On `PASS`:
-   - Record the resolution:
-     ```bash
-     py -3 .agents/skills/iterative-review/scripts/record_resolution.py \
-         --state <scratch_dir>/review-state.json \
-         --data '{"finding_id": "<finding_id>", "resolved_at_node": "reviewer-fixes", "resolved_at_round": <round>}'
-     ```
-   - Regenerate the metrics file:
+1. From `findings.jsonl` and `resolutions.jsonl`, determine the finding being re-reviewed and its originating `lens`.
+2. Read the originating `review-log-<lens>.md` and extract the `## Checklist` section into a temporary `<scratch_dir>/lens-<lens>-checklist.txt` file.
+3. Prepare a fix diff scoped to the blast radius of the fix. Do not include the whole branch.
+4. Dispatch the `reviewer-fixes` subagent (do not re-dispatch the original lens directly). Provide:
+   - `<diff_path>` - the scoped fix diff
+   - `<log_path>` - `<scratch_dir>/review-log-reviewer-fixes.md`
+   - `<pr_description>` - the PR title/body
+   - `<original_finding>` - the finding text or reference
+   - `<fix_diff_path>` - the same scoped fix diff
+   - `<full_diff_slice_path>` - the relevant slice of the full branch diff
+   - `<lens>` - the originating lens, e.g. `reviewer-plans`
+   - `<lens_checklist>` - the prepared `lens-<lens>-checklist.txt` file
+5. Wait for the subagent. Its final response must be exactly one line:
+   - `reviewer-fixes: clean`
+   - `reviewer-fixes: N issue(s)`
+6. Read `review-log-reviewer-fixes.md`.
+7. On `reviewer-fixes: clean`:
+   - Do not record the resolution here; `resolved-ledger` is the single authority that records resolutions. Regenerate the metrics file:
      ```bash
      py -3 .agents/skills/iterative-review/scripts/compile_metrics.py \
          --state <scratch_dir>/review-state.json \
@@ -48,8 +47,9 @@ Verify a fix against the originating lens's checklist, tightly scoped to the bla
          --state <scratch_dir>/review-state.json \
          --propose resolved-ledger
      ```
-9. On `FAIL`, do **not** increment `fix_round` (`finding-fix` owns that on the next pass):
-   - If the original finding is still unresolved, no new record is needed. Regenerate the metrics file and route back to `finding-fix`:
+8. On `reviewer-fixes: N issue(s)`:
+   - Do **not** increment `fix_round` (`finding-fix` owns that on the next pass).
+   - If the report shows the original finding is still unresolved, no new record is needed. Regenerate the metrics file and route back to `finding-fix`:
      ```bash
      py -3 .agents/skills/iterative-review/scripts/compile_metrics.py \
          --state <scratch_dir>/review-state.json \
@@ -58,7 +58,7 @@ Verify a fix against the originating lens's checklist, tightly scoped to the bla
          --state <scratch_dir>/review-state.json \
          --propose finding-fix
      ```
-   - If a new same-lens issue was found, record it and its relationship to the original finding:
+   - If a new same-lens issue was found in the blast radius, record it and its relationship to the original finding:
      ```bash
      py -3 .agents/skills/iterative-review/scripts/record_finding.py \
          --state <scratch_dir>/review-state.json \
@@ -79,8 +79,8 @@ Verify a fix against the originating lens's checklist, tightly scoped to the bla
 
 ## Outputs
 - `review-log-reviewer-fixes.md` ending with exactly one of:
-  - `reviewer-fixes: PASS`
-  - `reviewer-fixes: FAIL`
+  - `reviewer-fixes: clean`
+  - `reviewer-fixes: N issue(s)`
 - `<scratch_dir>/review-metrics.json` regenerated from `<scratch_dir>/review-state.json` and the recorded logs
 
 ## Next check

@@ -33,24 +33,43 @@ def _repo_root() -> Path:
 
 
 def _short_sha(ref: str, cwd: Path) -> str:
-    result = subprocess.run(
-        ["git", "rev-parse", "--short=7", ref],
-        cwd=cwd,
-        capture_output=True,
-        text=True,
-        check=True,
-    )
-    return result.stdout.strip()
+    """Return the short SHA for a ref, trying the ref and then origin/<ref>."""
+    for candidate in (ref, f"origin/{ref}"):
+        result = subprocess.run(
+            ["git", "rev-parse", "--short=7", candidate],
+            cwd=cwd,
+            capture_output=True,
+            text=True,
+        )
+        if result.returncode == 0:
+            return result.stdout.strip()
+    result.check_returncode()
 
 
-def _resolve_base_commit(base_ref: str, head_ref: str, cwd: Path) -> str:
+def _resolve_head_commit(ref: str, cwd: Path) -> str:
+    """Return the full SHA for the head ref, trying the local ref and then origin/<ref>."""
+    for candidate in (ref, f"origin/{ref}"):
+        result = subprocess.run(
+            ["git", "rev-parse", "--verify", candidate],
+            cwd=cwd,
+            capture_output=True,
+            text=True,
+        )
+        if result.returncode == 0:
+            return result.stdout.strip()
+    result.check_returncode()
+    return ""  # unreachable; satisfies the type checker
+
+
+def _resolve_base_commit(base_ref: str, head_commit: str, cwd: Path) -> str:
     """Return the merge-base commit between base and head.
 
-    For a rebased PR the review diff is head relative to this commit.
+    The head_commit must already be resolved (full SHA) so a locally rebased or
+    not-yet-pushed branch is diffed against the correct merge-base.
     """
     base = base_ref if "/" in base_ref or base_ref == "HEAD" else f"origin/{base_ref}"
     result = subprocess.run(
-        ["git", "merge-base", base, head_ref],
+        ["git", "merge-base", base, head_commit],
         cwd=cwd,
         capture_output=True,
         text=True,
@@ -135,8 +154,9 @@ def _bootstrap_review(pr_number: int, apply: bool) -> tuple[Path, dict, str, str
     pr = _pr_data(pr_number)
     base_ref = pr.get("baseRefName", "main")
     head_ref = pr.get("headRefName", "HEAD")
-    head_sha = _short_sha(head_ref, repo_root)
-    base_commit = _resolve_base_commit(base_ref, head_ref, repo_root)
+    head_commit = _resolve_head_commit(head_ref, repo_root)
+    head_sha = _short_sha(head_commit, repo_root)
+    base_commit = _resolve_base_commit(base_ref, head_commit, repo_root)
     base_sha = _short_sha(base_commit, repo_root)
 
     if not apply:
@@ -149,7 +169,7 @@ def _bootstrap_review(pr_number: int, apply: bool) -> tuple[Path, dict, str, str
     )
 
     diff_path = scratch_dir / f"review-{base_sha}..{head_sha}.diff"
-    _generate_diff(repo_root, base_commit, head_ref, diff_path)
+    _generate_diff(repo_root, base_commit, head_commit, diff_path)
 
     state = {
         "current_node": "setup",
@@ -163,6 +183,7 @@ def _bootstrap_review(pr_number: int, apply: bool) -> tuple[Path, dict, str, str
             "head_sha": head_sha,
             "url": pr.get("url", ""),
         },
+        "diff_path": str(diff_path),
         "scratch_dir": str(scratch_dir),
     }
     (scratch_dir / "review-state.json").write_text(
@@ -171,6 +192,52 @@ def _bootstrap_review(pr_number: int, apply: bool) -> tuple[Path, dict, str, str
     )
 
     return scratch_dir, pr, base_sha, head_sha
+
+
+def _resync_review(state_path: Path) -> Path:
+    """Refresh diff and PR metadata for an existing review without resetting graph state."""
+    try:
+        state = json.loads(state_path.read_text(encoding="utf-8-sig"))
+    except FileNotFoundError:
+        raise SystemExit(f"ERROR: state file not found: {state_path}")
+    except json.JSONDecodeError as e:
+        raise SystemExit(f"ERROR: invalid state JSON in {state_path}: {e}")
+    scratch_dir = Path(state["scratch_dir"])
+    pr_number = state.get("pr", {}).get("pr_number")
+    if not pr_number:
+        raise ValueError("review-state.json is missing pr.pr_number")
+
+    repo_root = _repo_root()
+    pr = _pr_data(pr_number)
+    base_ref = pr.get("baseRefName", "main")
+    head_ref = pr.get("headRefName", "HEAD")
+    head_commit = _resolve_head_commit(head_ref, repo_root)
+    head_sha = _short_sha(head_commit, repo_root)
+    base_commit = _resolve_base_commit(base_ref, head_commit, repo_root)
+    base_sha = _short_sha(base_commit, repo_root)
+
+    (scratch_dir / "pr_description.txt").write_text(
+        f"{pr.get('title', '')}\n\n{pr.get('body', '')}\n", encoding="utf-8"
+    )
+
+    diff_path = scratch_dir / f"review-{base_sha}..{head_sha}.diff"
+    _generate_diff(repo_root, base_commit, head_commit, diff_path)
+
+    state.setdefault("pr", {}).update(
+        {
+            "pr_number": pr_number,
+            "base": base_ref,
+            "branch": head_ref,
+            "head_sha": head_sha,
+            "url": pr.get("url", ""),
+        }
+    )
+    state["diff_path"] = str(diff_path)
+    state_path.write_text(
+        json.dumps(state, indent=2, ensure_ascii=False) + "\n",
+        encoding="utf-8",
+    )
+    return scratch_dir
 
 
 def _next_node_script() -> Path:
@@ -218,9 +285,18 @@ def main(argv: list[str] | None = None) -> int:
     )
     parser.add_argument("--pr", type=int, help="PR number to review")
     parser.add_argument(
+        "--state",
+        help="path to an existing review-state.json for resync",
+    )
+    parser.add_argument(
         "--apply",
         action="store_true",
         help="create the scratch workspace, run normalize-inputs, and print the next allowed node",
+    )
+    parser.add_argument(
+        "--resync",
+        action="store_true",
+        help="refresh the PR head, diff, and pr_description.txt without resetting graph state",
     )
     parser.add_argument(
         "--check",
@@ -232,16 +308,36 @@ def main(argv: list[str] | None = None) -> int:
     if args.apply and args.check:
         print("error: --apply and --check are mutually exclusive", file=sys.stderr)
         return 2
+    if args.resync and not args.state:
+        print("error: --resync requires --state", file=sys.stderr)
+        return 2
 
-    if not args.apply and not args.check:
+    if not args.apply and not args.check and not args.resync:
         args.check = True
 
     if args.check:
         print("start_review.py is ready")
         return 0
 
+    if args.resync:
+        state_path = Path(args.state)
+        if not state_path.exists():
+            print(f"error: state not found: {state_path}", file=sys.stderr)
+            return 2
+        try:
+            scratch_dir = _resync_review(state_path)
+        except (subprocess.CalledProcessError, OSError, ValueError) as exc:
+            print(f"error: {exc}", file=sys.stderr)
+            return 2
+        if _normalize_inputs(scratch_dir) != 0:
+            return 1
+        next_node, full_output = _discover_next_node(state_path)
+        print(f"Resynced review state at {state_path}")
+        print(f"Next allowed node:\n{full_output}")
+        return 0
+
     if args.pr is None:
-        print("error: --pr is required when not using --check", file=sys.stderr)
+        print("error: --pr is required when not using --check or --resync", file=sys.stderr)
         return 2
 
     try:

@@ -53,7 +53,7 @@ Use when a draft PR exists and needs an automated subagent review loop before be
 
 ## Core Pattern
 
-Follow the `review-state-graph.md` reference one node at a time, driven by `next_node.py`. The graph routes the orchestrator through deterministic preflight, `orchestrator-self-review`, parallel `lens-dispatch`, `lens-triage`, fast `finding-fix` by an `implementer` for `blocking/important` lens findings, `re-preflight`, lens-aware `reviewer-fixes`, `resolved-ledger`, conditional `regression-scan`, and a final `reviewer-strong` `final-strong` pass. `trivial/deferred` findings are left for `final-strong` instead of forcing an early whole-branch review. Every finding records the node and round that discovered it. There are no fixed "Round N" steps.
+Follow the `review-state-graph.md` reference one node at a time, driven by `next_node.py`. The graph routes the orchestrator through deterministic preflight, `scope-honesty`, parallel `lens-dispatch` (which starts with the cheap `reviewer-fast` pre-lens), `lens-triage`, fast `finding-fix` by an `implementer` for `blocking/important` lens findings, `re-preflight`, lens-aware `reviewer-fixes`, `resolved-ledger`, conditional `regression-scan`, and a final `reviewer-strong` `final-strong` pass. `trivial/deferred` findings are left for `final-strong` instead of forcing an early whole-branch review. Every finding records the node and round that discovered it. There are no fixed "Round N" steps.
 
 ## Just-in-time reading
 
@@ -102,9 +102,9 @@ For every post-fix finding, set `regression_class` from the decision table in th
 
 - Follow the graph in `references/review-state-graph.md`. Do not follow a round list.
 - Read only the `node-<node>.md` file named by `next_node.py`. Do not read ahead.
-- The `final-strong` pass is reachable only through `lens-triage` or after all `blocking/important` findings are resolved; there is no edge from `setup`, `preflight`, `fast-fix`, or `orchestrator-self-review` directly to `final-strong`. If `lens-dispatch` is skipped, unavailable, or produces no logs, the review is `blocked`.
+- The `final-strong` pass is reachable only through `lens-triage` or after all `blocking/important` findings are resolved; there is no edge from `setup`, `preflight`, `fast-fix`, or `scope-honesty` directly to `final-strong`. If `lens-dispatch` is skipped, unavailable, or produces no logs, the review is `blocked`.
 - This skill does not modify review files or PR state beyond the scope-honesty preflight.
-- The orchestrator owns the scope-honesty preflight, the `orchestrator-self-review` pass, all verification, the `resolved-ledger`, and the final decision to flip the PR to ready. `implementer` subagents own the fix edits under the orchestrator's brief. `orchestrator-self-review` is orchestrator-only; no `reviewer-*`, `implementer`, or `subagent_explore` may be dispatched to perform it.
+- The orchestrator owns the scope-honesty preflight, all verification, the `resolved-ledger`, and the final decision to flip the PR to ready. `implementer` subagents own the fix edits under the orchestrator's brief. The cheap `reviewer-fast` pre-lens is a subagent; the orchestrator does not perform it by hand.
 - All review inputs, logs, metrics, and fix-diffs are written to the off-repo scratch directory; they are never committed to the repo.
 - CI must pass before leaving draft.
 
@@ -121,7 +121,7 @@ The following files in the off-repo scratch must be written only through the pro
 - `review-state.json` - written by `next_node.py --propose` or `next_node.py --resync --apply`.
 - `findings.jsonl`, `resolutions.jsonl`, `regressions.jsonl`, `blockers.jsonl` - written by `record_*.py` scripts.
 - `lenses.jsonl` - written by `select_lenses.py --apply`.
-- `review-log-orchestrator-self-review.md` - written by `record_orchestrator_log.py`.
+- `review-log-reviewer-fast.md` - written by the `reviewer-fast` subagent as the pre-lens report.
 - `review-metrics.json` - written by `compile_metrics.py`.
 
 Lens subagents write their own `review-log-<lens>.md` files with `write` and end them with a one-line status. The `write` tool warning applies to orchestrator-authored files; it causes IDE buffer contention when a file is also open or being updated by a script.
@@ -130,9 +130,8 @@ Lens subagents write their own `review-log-<lens>.md` files with `write` and end
 
 - Treating the skill as a fixed list of rounds. Use the graph.
 - Reading `references/review-state-graph.md` or all `node-*.md` files before starting. Only read the one node `next_node.py` names.
-- Skipping `orchestrator-self-review` and dispatching lens reviewers immediately. That is the most expensive way to catch predictable issues.
-- Using a clean `orchestrator-self-review` as an excuse to skip `lens-dispatch`, `lens-triage`, or `final-strong`. It is not a pass.
-- Delegating `orchestrator-self-review` to a subagent. This is an orchestrator-only, cheap mechanical pass. If the diff is too large to scan quickly, narrow to checklist patterns or proceed to `lens-dispatch` with a minimal prediction log; do not call a subagent.
+- Treating `reviewer-fast` as a pass that allows skipping `lens-dispatch`, `lens-triage`, or `final-strong`. It is a cheap pre-filter, not a substitute for deep review.
+- Running `lens-dispatch` without `reviewer-fast` in the selection. The `reviewer-fast` pre-lens is mandatory and is always included by `select_lenses.py`.
 - Claiming subagents are unavailable and proceeding to `ready` without `lens-dispatch` or `final-strong`. If `run_subagent` cannot be used, the review is `blocked`.
 - Skipping `re-preflight` after a fix. A fix can re-introduce deterministic issues.
 - Skipping `regression-scan` for a non-trivial fix. A fix can cause a new issue in an adjacent area.

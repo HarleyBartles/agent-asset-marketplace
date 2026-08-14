@@ -8,27 +8,30 @@ Mark findings resolved and generate the resolved-ledger evidence gate.
 - Off-repo `<scratch_dir>`
 
 ## Recipe
-1. When `reviewer-fixes` or `regression-scan` is clean, record every resolved finding, then regenerate the metrics file:
+1. When `reviewer-fixes` or `regression-scan` is clean, `resolved-ledger` is the single authority that records the resolution. For each fixed finding, call `record_resolution.py` once with `resolved_at_node` set to `reviewer-fixes` or `regression-scan` and the current round:
    ```bash
    py -3 .agents/skills/iterative-review/scripts/record_resolution.py \
        --state <scratch_dir>/review-state.json \
-       --data '{"finding_id": "<finding_id>", "resolved_at_node": "resolved-ledger", "resolved_at_round": <round>}'
+       --data '{"finding_id": "<finding_id>", "resolved_at_node": "<reviewer-fixes|regression-scan>", "resolved_at_round": <round>}'
+   ```
+2. Regenerate the metrics file:
+   ```bash
    py -3 .agents/skills/iterative-review/scripts/compile_metrics.py \
        --state <scratch_dir>/review-state.json \
        --metrics <scratch_dir>/review-metrics.json
    ```
-2. When the queue is empty, run:
+3. When the queue is empty, run:
    ```bash
    py -3 .agents/skills/iterative-review/scripts/resolved_ledger.py --apply --metrics <scratch_dir>/review-metrics.json
    ```
-3. If the command exits 1, do not proceed to `final-strong`; return to `finding-fix` or `regression-scan`.
-4. If more findings remain in the queue, choose the next one, then authorize `finding-fix`:
+4. If the command exits 1, do not proceed to `final-strong`; return to `finding-fix` or `regression-scan`.
+5. If more findings remain in the queue, choose the next one, then authorize `finding-fix`:
    ```bash
    py -3 .agents/skills/iterative-review/scripts/next_node.py \
        --state <scratch_dir>/review-state.json \
        --propose finding-fix
    ```
-5. If the queue is empty and `resolved_ledger.py` succeeded, authorize `final-strong`:
+6. If the queue is empty and `resolved_ledger.py` succeeded, authorize `final-strong`:
    ```bash
    py -3 .agents/skills/iterative-review/scripts/next_node.py \
        --state <scratch_dir>/review-state.json \

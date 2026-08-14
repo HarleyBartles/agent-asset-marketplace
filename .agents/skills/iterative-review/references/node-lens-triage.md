@@ -1,7 +1,7 @@
 # node-lens-triage
 
 ## Purpose
-Normalize lens reports and classify every finding into a severity-based routing bucket.
+Normalize lens reports and classify every finding into a severity-based routing bucket. `reviewer-fast` findings are triaged the same as deep-lens findings, but fixing them does not re-run `reviewer-fast`; the downstream fix loop verifies through the consumer preflight (`re-preflight`) and the affected lens's checklist (`reviewer-fixes`).
 
 ## Inputs
 - Off-repo `<scratch_dir>` containing `review-log-<lens>.md` files

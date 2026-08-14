@@ -12,29 +12,58 @@ from pathlib import Path
 REQUIRED = {"finding_id", "blocker_class"}
 VALID_BLOCKER_CLASSES = {"contested", "tool-blocked"}
 
+_EPILOG = """\nREQUIRED KEYS:
+  finding_id, blocker_class\n\nVALID blocker_class VALUES:
+  contested, tool-blocked\n\nEXAMPLE JSON FILE:
+  {
+    "finding_id": "example-001",
+    "blocker_class": "contested"
+  }\n"""
+
 
 def _load_state(path: Path) -> dict:
-    return json.loads(path.read_text(encoding="utf-8-sig"))
+    try:
+        return json.loads(path.read_text(encoding="utf-8-sig"))
+    except FileNotFoundError:
+        raise SystemExit(f"ERROR: state file not found: {path}")
+    except json.JSONDecodeError as e:
+        raise SystemExit(f"ERROR: invalid state JSON in {path}: {e}")
 
 
 def _main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(description="Record a new iterative-review blocker. (mixed)")
+    parser = argparse.ArgumentParser(
+        description="Record a new iterative-review blocker. (mixed)",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog=_EPILOG,
+    )
     parser.add_argument("--check", action="store_true", help="self-check; exits 0 if ready")
     parser.add_argument("--state", help="path to review-state.json")
     parser.add_argument("--data", help="JSON blocker object or array of objects")
+    parser.add_argument("--data-file", help="path to JSON file containing a single object or array of objects")
     args = parser.parse_args(argv)
 
     if args.check:
         print("record_blocker.py is ready")
         return 0
 
-    if not args.state or not args.data:
-        parser.error("the following arguments are required: --state, --data")
+    if not args.state or (not args.data and not args.data_file):
+        parser.error("the following arguments are required: --state, and one of --data or --data-file")
+    if args.data and args.data_file:
+        parser.error("--data and --data-file are mutually exclusive")
 
     state_path = Path(args.state)
     state = _load_state(state_path)
+    if args.data_file:
+        data_file_path = Path(args.data_file)
+        try:
+            raw_data = data_file_path.read_text(encoding="utf-8-sig")
+        except FileNotFoundError:
+            print(f"ERROR: data file not found: {data_file_path}", file=sys.stderr)
+            return 1
+    else:
+        raw_data = args.data
     try:
-        parsed = json.loads(args.data)
+        parsed = json.loads(raw_data)
     except json.JSONDecodeError as e:
         print(f"ERROR: invalid blocker JSON: {e}", file=sys.stderr)
         return 1
@@ -80,7 +109,7 @@ def _main(argv: list[str] | None = None) -> int:
     for item in data_items:
         if item["finding_id"] in existing:
             continue
-        with log.open("a", encoding="utf-8") as f:
+        with log.open("a", encoding="utf-8", newline="\n") as f:
             f.write(json.dumps(item, ensure_ascii=False) + "\n")
         existing.add(item["finding_id"])
         recorded.append(item["finding_id"])

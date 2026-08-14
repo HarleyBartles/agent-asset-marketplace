@@ -6,19 +6,26 @@ from __future__ import annotations
 import argparse
 import fnmatch
 import json
+import os
 import re
 import sys
 from pathlib import Path, PurePath
 
 
+def _user_agent_root() -> Path:
+    """Return the user-global agents directory, honoring DEVIN_AGENTS."""
+    env = os.environ.get("DEVIN_AGENTS")
+    if env:
+        return Path(env)
+    if sys.platform != "win32":
+        return Path.home() / ".config" / "devin" / "agents"
+    return Path(os.environ.get("APPDATA", Path.home() / "AppData" / "Roaming")) / "devin" / "agents"
+
+
 def _reviewer_paths() -> list[Path]:
     """Return candidate reviewer-*.md paths in precedence order."""
-    if sys.platform != "win32":
-        user_root = Path.home() / ".config" / "devin" / "agents"
-    else:
-        user_root = Path.home() / "AppData" / "Roaming" / "devin" / "agents"
     roots = [
-        user_root,
+        _user_agent_root(),
         Path(".devin/agents"),
         Path(".agents/agents"),
         Path(__file__).parents[3] / "skills" / "selecting-a-subagent" / "assets",
@@ -62,7 +69,7 @@ COMMON_INPUTS = {
     "<diff_path>",
     "<pr_description>",
     "<scan_findings>",
-    "<review-log-orchestrator-self-review>",
+    "<review-log-reviewer-fast>",
 }
 
 
@@ -113,8 +120,13 @@ def _lenses_path(state: dict) -> Path:
 
 
 def _load_state(state_path: Path) -> dict:
-    with state_path.open("r", encoding="utf-8-sig") as f:
-        return json.load(f)
+    try:
+        with state_path.open("r", encoding="utf-8-sig") as f:
+            return json.load(f)
+    except FileNotFoundError:
+        raise SystemExit(f"ERROR: state file not found: {state_path}")
+    except json.JSONDecodeError as e:
+        raise SystemExit(f"ERROR: invalid state JSON in {state_path}: {e}")
 
 
 def _find_diff_path(scratch: Path) -> Path | None:
@@ -128,14 +140,21 @@ def _find_diff_path(scratch: Path) -> Path | None:
 
 def _select(state: dict, provided_inputs: set[str]) -> list[dict]:
     scratch = Path(state["scratch_dir"])
-    diff_path = _find_diff_path(scratch)
+    if "diff_path" in state:
+        diff_path = Path(state["diff_path"])
+        if not diff_path.exists():
+            diff_path = _find_diff_path(scratch)
+    else:
+        diff_path = _find_diff_path(scratch)
     for pr_candidate in (scratch / "pr_description", scratch / "pr_description.txt"):
         if pr_candidate.exists():
             pr_path = pr_candidate
             break
     else:
         pr_path = scratch / "pr_description"
-    diff_text = diff_path.read_text(encoding="utf-8") if diff_path and diff_path.exists() else ""
+    if not diff_path or not diff_path.exists():
+        raise SystemExit(f"ERROR: review diff not found in {scratch}")
+    diff_text = diff_path.read_text(encoding="utf-8")
     pr_text = pr_path.read_text(encoding="utf-8") if pr_path.exists() else ""
     changed = _changed_files(diff_path)
 
@@ -155,6 +174,22 @@ def _select(state: dict, provided_inputs: set[str]) -> list[dict]:
                     "output_path": str((scratch / f"review-log-{lens}.md").resolve()),
                 }
             )
+    preflight_log = scratch / "review-log-reviewer-fast.md"
+    selected = [s for s in selected if s["lens"] != "reviewer-fast" or not preflight_log.exists()]
+    return selected
+
+
+def _select_filtered(
+    state: dict,
+    provided_inputs: set[str],
+    include: set[str] | None,
+    exclude: set[str] | None,
+) -> list[dict]:
+    selected = _select(state, provided_inputs)
+    if include:
+        selected = [s for s in selected if s["lens"] in include]
+    if exclude:
+        selected = [s for s in selected if s["lens"] not in exclude]
     return selected
 
 
@@ -166,6 +201,18 @@ def main(argv: list[str] | None = None) -> int:
         action="append",
         default=[],
         help="Lens-specific input token that is provided (repeatable)",
+    )
+    parser.add_argument(
+        "--lens",
+        action="append",
+        default=[],
+        help="Explicitly include only these lens names (repeatable)",
+    )
+    parser.add_argument(
+        "--exclude",
+        action="append",
+        default=[],
+        help="Exclude these lens names (repeatable)",
     )
     parser.add_argument("--apply", action="store_true", help="Write lenses.jsonl to the scratch dir")
     parser.add_argument("--check", action="store_true", help="Validate CLI contract only")
@@ -180,12 +227,14 @@ def main(argv: list[str] | None = None) -> int:
 
     state = _load_state(Path(args.state))
     provided_inputs = set(args.input)
-    selected = _select(state, provided_inputs)
+    include = set(args.lens) if args.lens else None
+    exclude = set(args.exclude) if args.exclude else None
+    selected = _select_filtered(state, provided_inputs, include, exclude)
 
     out_path = _lenses_path(state)
     if args.apply:
         out_path.parent.mkdir(parents=True, exist_ok=True)
-        with out_path.open("w", encoding="utf-8") as f:
+        with out_path.open("w", encoding="utf-8", newline="\n") as f:
             for entry in selected:
                 f.write(json.dumps(entry, ensure_ascii=False) + "\n")
         print(f"Wrote {out_path} with {len(selected)} lens(es)")
