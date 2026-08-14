@@ -114,19 +114,24 @@ class TestDiffSlicerHelpers(unittest.TestCase):
             )
             profile = SKILL_DIR / ".." / "selecting-a-subagent" / "assets" / "reviewer-skills.md"
             (scratch / "lenses.jsonl").write_text(
-                json.dumps({
-                    "lens": "reviewer-skills",
-                    "profile_path": str(profile),
-                    "output_path": str(scratch / "review-log-reviewer-skills.md"),
-                }) + "\n",
+                json.dumps(
+                    {
+                        "lens": "reviewer-skills",
+                        "profile_path": str(profile),
+                        "output_path": str(scratch / "review-log-reviewer-skills.md"),
+                    }
+                )
+                + "\n",
                 encoding="utf-8",
             )
             (scratch / "review-state.json").write_text(
-                json.dumps({
-                    "scratch_dir": str(scratch),
-                    "diff_path": str(diff_path),
-                    "repo_root": str(td),
-                }),
+                json.dumps(
+                    {
+                        "scratch_dir": str(scratch),
+                        "diff_path": str(diff_path),
+                        "repo_root": str(td),
+                    }
+                ),
                 encoding="utf-8",
             )
             code = module.main(["--state", str(scratch / "review-state.json"), "--apply"])
