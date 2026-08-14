@@ -289,8 +289,6 @@ def _condition_holds(condition: str, state: dict, ledger: Path, current_node: st
         return bool(unresolved)
     if condition == "new_issue":
         return bool(unresolved) or bool(regressions)
-    if condition == "non_trivial":
-        return state.get("non_trivial_fix", False)
 
     return False
 

@@ -5,7 +5,7 @@ This is a concrete, scriptable version of the `scope-honesty` node. It checks
 that every changed file is plausibly described by the PR body or the governing
 plan/spec/roadmap. It is not a deep design review; it catches obvious scope drift.
 
-(mixed: default is --check; --apply writes the off-repo log.)
+(mixed: default runs the drift scan; --check is a self-check; --apply writes the off-repo log.)
 """
 
 from __future__ import annotations
@@ -121,7 +121,7 @@ def _find_diff_path(scratch: Path) -> Path | None:
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
         description="Compare the branch diff to the declared PR scope. (mixed)",
-        epilog="(mixed: default is --check; --apply writes the off-repo log.)",
+        epilog="(mixed: default runs the drift scan; --check is a self-check; --apply writes the off-repo log.)",
     )
     parser.add_argument("--state", help="Path to review-state.json")
     parser.add_argument("--plan", type=Path, action="append", default=[], help="Governing plan file")

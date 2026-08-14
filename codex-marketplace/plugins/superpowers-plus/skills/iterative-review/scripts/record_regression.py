@@ -25,7 +25,7 @@ _EPILOG = """\nREQUIRED KEYS:
     "new_finding": "example-002",
     "discovered_at_node": "finding-fix",
     "discovered_at_round": 2,
-    "regression_class": "over-fix",
+    "regression_class": "same-lens-blast-radius",
     "severity": "important"
   }\n"""
 

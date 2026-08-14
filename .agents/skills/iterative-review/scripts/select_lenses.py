@@ -120,8 +120,13 @@ def _lenses_path(state: dict) -> Path:
 
 
 def _load_state(state_path: Path) -> dict:
-    with state_path.open("r", encoding="utf-8-sig") as f:
-        return json.load(f)
+    try:
+        with state_path.open("r", encoding="utf-8-sig") as f:
+            return json.load(f)
+    except FileNotFoundError:
+        raise SystemExit(f"ERROR: state file not found: {state_path}")
+    except json.JSONDecodeError as e:
+        raise SystemExit(f"ERROR: invalid state JSON in {state_path}: {e}")
 
 
 def _find_diff_path(scratch: Path) -> Path | None:
