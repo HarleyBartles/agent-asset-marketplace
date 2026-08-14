@@ -128,7 +128,10 @@ def _find_diff_path(scratch: Path) -> Path | None:
 
 def _select(state: dict, provided_inputs: set[str]) -> list[dict]:
     scratch = Path(state["scratch_dir"])
-    diff_path = _find_diff_path(scratch)
+    if "diff_path" in state:
+        diff_path = Path(state["diff_path"])
+    else:
+        diff_path = _find_diff_path(scratch)
     for pr_candidate in (scratch / "pr_description", scratch / "pr_description.txt"):
         if pr_candidate.exists():
             pr_path = pr_candidate
