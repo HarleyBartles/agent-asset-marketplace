@@ -31,8 +31,7 @@ Normalize lens reports and classify every finding into a severity-based routing 
 4. Route:
    - Any `contested`/`load-bearing` finding -> `blocked`
    - Any unresolved `blocking/important` finding -> `metrics-track` then `finding-fix`
-   - Only `trivial/deferred` findings remaining, or all `blocking/important` findings resolved at triage -> `final-strong`
-   - No findings -> `final-strong`
+   - Only `trivial/deferred` findings remaining, or all `blocking/important` findings resolved at triage -> `final-strong` (the `resolved-ledger` node is skipped because no fixes were applied)
 
 ## Outputs
 - Routing decision

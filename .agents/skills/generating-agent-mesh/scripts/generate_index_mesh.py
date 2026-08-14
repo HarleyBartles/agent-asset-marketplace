@@ -112,8 +112,8 @@ SKILL_ZIPS_ROOT = ROOT / "generated" / "skill-zips"
 NON_CANONICAL_GUARD_ROOTS = {ROOT / ".agents" / "docs" / "superpowers"}
 
 
-def _load_tracked() -> tuple[set[Path], set[Path]]:
-    """Return (tracked_dirs, tracked_files) from git ls-files."""
+def _load_tracked() -> tuple[set[Path], set[Path], set[Path]]:
+    """Return (tracked_dirs, tracked_files, content_dirs) from git ls-files."""
     result = subprocess.run(
         ["git", "ls-files"],
         cwd=ROOT,

@@ -17,7 +17,7 @@ _EPILOG = """\nREQUIRED KEYS:
   reviewer-fixes, regression-scan, lens-triage\n\nEXAMPLE JSON FILE:
   {
     "finding_id": "example-001",
-    "resolved_at_node": "<reviewer-fixes|regression-scan>",
+    "resolved_at_node": "<reviewer-fixes|regression-scan|lens-triage>",
     "resolved_at_round": 2
   }\n"""
 
