@@ -6,7 +6,16 @@ from pathlib import Path
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
-CORE = REPO_ROOT / "sources" / "first_party" / "skills" / "generating-agent-mesh" / "scripts" / "generate_index_mesh.py"
+CORE = (
+    REPO_ROOT
+    / "codex-marketplace"
+    / "plugins"
+    / "repo-worker-pack"
+    / "skills"
+    / "generating-agent-mesh"
+    / "scripts"
+    / "generate_index_mesh.py"
+)
 
 
 def _stripped_env():
@@ -322,3 +331,35 @@ def test_quoted_links_for_markdown_ambiguous_filenames(tmp_path: Path) -> None:
 
     dir_target = urllib.parse.quote("Style Guides/INDEX.md", safe="/#")
     assert f"]({dir_target})" in index
+
+
+def test_prunes_index_only_directory(tmp_path: Path) -> None:
+    """A directory that only contains an INDEX.md is empty and should not be maintained."""
+    repo = _make_repo(tmp_path, "prune-repo")
+    _commit_file(repo, "empty-box/widget.md")
+    result = subprocess.run(
+        [sys.executable, str(CORE), "--apply", "--allow-shared-checkout"],
+        cwd=repo,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode == 0, result.stderr
+    assert (repo / "empty-box" / "INDEX.md").is_file()
+
+    # Commit the generated index so it is tracked, then remove the real file.
+    subprocess.run(["git", "add", "-A"], cwd=repo, check=True, capture_output=True)
+    subprocess.run(["git", "commit", "-m", "add index"], cwd=repo, check=True, capture_output=True)
+    (repo / "empty-box" / "widget.md").unlink()
+    subprocess.run(["git", "rm", "empty-box/widget.md"], cwd=repo, check=True, capture_output=True)
+    subprocess.run(["git", "commit", "-m", "remove widget"], cwd=repo, check=True, capture_output=True)
+
+    result = subprocess.run(
+        [sys.executable, str(CORE), "--apply", "--allow-shared-checkout"],
+        cwd=repo,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode == 0, result.stderr
+    assert not (repo / "empty-box" / "INDEX.md").exists()
