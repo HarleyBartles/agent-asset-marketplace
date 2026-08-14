@@ -21,7 +21,12 @@ _EPILOG = """\nREQUIRED KEYS:
 
 
 def _load_state(path: Path) -> dict:
-    return json.loads(path.read_text(encoding="utf-8-sig"))
+    try:
+        return json.loads(path.read_text(encoding="utf-8-sig"))
+    except FileNotFoundError:
+        raise SystemExit(f"ERROR: state file not found: {path}")
+    except json.JSONDecodeError as e:
+        raise SystemExit(f"ERROR: invalid state JSON in {path}: {e}")
 
 
 def _main(argv: list[str] | None = None) -> int:
@@ -47,7 +52,15 @@ def _main(argv: list[str] | None = None) -> int:
 
     state_path = Path(args.state)
     state = _load_state(state_path)
-    raw_data = Path(args.data_file).read_text(encoding="utf-8-sig") if args.data_file else args.data
+    if args.data_file:
+        data_file_path = Path(args.data_file)
+        try:
+            raw_data = data_file_path.read_text(encoding="utf-8-sig")
+        except FileNotFoundError:
+            print(f"ERROR: data file not found: {data_file_path}", file=sys.stderr)
+            return 1
+    else:
+        raw_data = args.data
     try:
         parsed = json.loads(raw_data)
     except json.JSONDecodeError as e:

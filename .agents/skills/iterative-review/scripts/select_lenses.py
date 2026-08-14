@@ -6,19 +6,26 @@ from __future__ import annotations
 import argparse
 import fnmatch
 import json
+import os
 import re
 import sys
 from pathlib import Path, PurePath
 
 
+def _user_agent_root() -> Path:
+    """Return the user-global agents directory, honoring DEVIN_AGENTS."""
+    env = os.environ.get("DEVIN_AGENTS")
+    if env:
+        return Path(env)
+    if sys.platform != "win32":
+        return Path.home() / ".config" / "devin" / "agents"
+    return Path.home() / "AppData" / "Roaming" / "devin" / "agents"
+
+
 def _reviewer_paths() -> list[Path]:
     """Return candidate reviewer-*.md paths in precedence order."""
-    if sys.platform != "win32":
-        user_root = Path.home() / ".config" / "devin" / "agents"
-    else:
-        user_root = Path.home() / "AppData" / "Roaming" / "devin" / "agents"
     roots = [
-        user_root,
+        _user_agent_root(),
         Path(".devin/agents"),
         Path(".agents/agents"),
         Path(__file__).parents[3] / "skills" / "selecting-a-subagent" / "assets",
@@ -62,7 +69,7 @@ COMMON_INPUTS = {
     "<diff_path>",
     "<pr_description>",
     "<scan_findings>",
-    "<review-log-orchestrator-self-review>",
+    "<review-log-reviewer-fast>",
 }
 
 

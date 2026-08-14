@@ -121,7 +121,7 @@ The following files in the off-repo scratch must be written only through the pro
 - `review-state.json` - written by `next_node.py --propose` or `next_node.py --resync --apply`.
 - `findings.jsonl`, `resolutions.jsonl`, `regressions.jsonl`, `blockers.jsonl` - written by `record_*.py` scripts.
 - `lenses.jsonl` - written by `select_lenses.py --apply`.
-- `review-log-orchestrator-self-review.md` - written by the `reviewer-fast` subagent as the pre-lens report.
+- `review-log-reviewer-fast.md` - written by the `reviewer-fast` subagent as the pre-lens report.
 - `review-metrics.json` - written by `compile_metrics.py`.
 
 Lens subagents write their own `review-log-<lens>.md` files with `write` and end them with a one-line status. The `write` tool warning applies to orchestrator-authored files; it causes IDE buffer contention when a file is also open or being updated by a script.

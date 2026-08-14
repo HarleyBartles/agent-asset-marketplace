@@ -153,7 +153,7 @@ A "round" is one complete traversal through `lens-dispatch` or `final-strong` th
 }
 ```
 
-## `review-log-orchestrator-self-review.md`
+## `review-log-reviewer-fast.md`
 
 This off-repo log is now produced by the `reviewer-fast` pre-lens instead of the
 orchestrator. The `reviewer-fast` profile writes it and ends with

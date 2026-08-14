@@ -8,7 +8,7 @@ Dispatch the cheap `reviewer-fast` pre-lens plus the matching deep lens reviewer
 - Full branch `<diff_path>`
 - `<pr_description>`
 - `<scan_findings>`
-- `review-log-orchestrator-self-review.md` (the pre-lens report from `reviewer-fast`)
+- `review-log-reviewer-fast.md` (the pre-lens report from `reviewer-fast`)
 - Lens-specific inputs (`<plan_path>`, `<spec_path>`, `<roadmap_path>`)
 - Off-repo `<scratch_dir>`
 
@@ -19,7 +19,7 @@ Dispatch the cheap `reviewer-fast` pre-lens plus the matching deep lens reviewer
    py -3 .agents/skills/iterative-review/scripts/select_lenses.py --state <scratch_dir>/review-state.json --apply
    ```
 2. Read `<scratch_dir>/lenses.jsonl`; each line is a lens to dispatch.
-3. Build the common input package: `<diff_path>`, `<pr_description>`, `<scan_findings>`, and `review-log-orchestrator-self-review.md`. If the lens's `## Inputs` section calls for `<plan_path>`, `<spec_path>`, or `<roadmap_path>`, add the requested file to that lens's package.
+3. Build the common input package: `<diff_path>`, `<pr_description>`, `<scan_findings>`, and `review-log-reviewer-fast.md`. If the lens's `## Inputs` section calls for `<plan_path>`, `<spec_path>`, or `<roadmap_path>`, add the requested file to that lens's package.
 4. `run_subagent` each lens from `lenses.jsonl` with its `profile_path`, `output_path`, and the lens-specific input package.
 5. Wait for all `run_subagent` calls to complete. From each `review-log-<lens>.md`, extract the terminal (last) line.
 6. If no deep lens matches, `reviewer-fast` still runs; continue to `lens-triage` with its log.
