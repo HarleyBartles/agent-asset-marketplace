@@ -305,7 +305,7 @@ def _condition_holds(condition: str, state: dict, ledger: Path, current_node: st
     if condition == "reviewer_fixes_clean":
         return _lens_log_clean(scratch, "reviewer-fixes") and not regressions
     if condition == "regression_scan_clean":
-        return _lens_log_clean(scratch, "regression-scan") and not regressions
+        return not unresolved and not regressions
 
     return False
 
