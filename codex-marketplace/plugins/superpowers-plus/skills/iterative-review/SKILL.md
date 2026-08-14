@@ -27,9 +27,21 @@ license: MIT
 
 This skill is a first-party skill authored for this repository. It is not derived from an upstream snapshot.
 
-## Before you start
+## Quick start
 
-Read `references/review-state-graph.md` first; it defines the canonical graph and routing. Then run the orchestrator below one node at a time.
+Do not read the whole skill or the graph reference before starting. `next_node.py` enforces the graph: it only allows the single next node. You cannot make an invalid move.
+
+1. Identify the PR number.
+2. From the branch worktree, run:
+   ```
+   py -3 .agents/skills/iterative-review/scripts/start_review.py --pr <pr_number> --apply
+   ```
+3. The script prints the one allowed next node, the recipe file to read, and the command to authorize it.
+4. Open that one `references/node-<node>.md` file and follow it.
+5. When the recipe says "next check", run `next_node.py` again. It will tell you the next node.
+6. Continue until `next_node.py` prints `ready` or `blocked`.
+
+`start_review.py` performs the `setup` and `normalize-inputs` nodes and leaves the graph pointing at `preflight`.
 
 # Iterative Review
 
@@ -41,45 +53,34 @@ Use when a draft PR exists and needs an automated subagent review loop before be
 
 ## Core Pattern
 
-Follow the `review-state-graph.md` reference. The graph routes the orchestrator through deterministic preflight, `orchestrator-self-review`, parallel `lens-dispatch`, `lens-triage`, fast `finding-fix` by an `implementer` for `blocking/important` lens findings, `re-preflight`, lens-aware `reviewer-fixes`, `resolved-ledger`, conditional `regression-scan`, and a final `reviewer-strong` `final-strong` pass. `trivial/deferred` findings are left for `final-strong` instead of forcing an early whole-branch review. Every finding records the node and round that discovered it. There are no fixed "Round N" steps.
+Follow the `review-state-graph.md` reference one node at a time, driven by `next_node.py`. The graph routes the orchestrator through deterministic preflight, `orchestrator-self-review`, parallel `lens-dispatch`, `lens-triage`, fast `finding-fix` by an `implementer` for `blocking/important` lens findings, `re-preflight`, lens-aware `reviewer-fixes`, `resolved-ledger`, conditional `regression-scan`, and a final `reviewer-strong` `final-strong` pass. `trivial/deferred` findings are left for `final-strong` instead of forcing an early whole-branch review. Every finding records the node and round that discovered it. There are no fixed "Round N" steps.
 
-## Required reading
+## Just-in-time reading
 
-- `selecting-a-subagent` skill for choosing lens profiles.
-- `references/review-state-graph.md` for the canonical graph, node table, and edge conditions.
-- `references/review-metrics-schema.json` for the metrics to collect.
-- `references/review-log-orchestrator-self-review.md` for the filled orchestrator self-review log.
-- `references/review-log-orchestrator-self-review-template.md` for the skeleton/template for that log.
-- `references/review-log-resolved-ledger.md` for the evidence file required by `final-strong`.
-- `references/node-*.md` for the per-node recipes. Do not read ahead; open only the `references/node-<node>.md` file named by `next_node.py`.
-- The relevant `reviewer-*.md` lens profiles for the current repository.
+Read only the one `references/node-<node>.md` file that `next_node.py` tells you to read. The only files to read ahead of time are:
+
+- this `SKILL.md` (this file)
+- `references/review-state-graph.md` if you want the full map (optional; do not study it before starting)
+
+`selecting-a-subagent` is used by `lens-dispatch` and `finding-fix` nodes; read it when `next_node.py` sends you there. The relevant `reviewer-*.md` lens profiles are discovered at `lens-dispatch` time.
 
 The Devin Desktop agents search path is: user-global `~/.config/devin/agents/` (or `%APPDATA%\devin\agents\` on Windows), then `.devin/agents/`, then `.agents/agents/`. Discover `reviewer-*.md` files from that combined path; `.devin/agents/` and `.agents/agents/` take precedence over user-global.
 
 ## Following the graph
 
-1. Determine `<base>` and `<branch>` (or `<head_sha>`) for the draft PR.
-2. Create the off-repo scratch workspace and seed `review-state.json` in it (see `references/node-setup.md`).
-3. Run the mechanical next-node discovery (read-only):
+1. Run `start_review.py --pr <pr_number> --apply` from the branch worktree. It creates the off-repo scratch workspace, materializes the diff and PR context, runs `normalize-inputs`, and advances `review-state.json` to `normalize-inputs`.
+2. Run `next_node.py` to discover the single allowed next node:
    ```
    py -3 .agents/skills/iterative-review/scripts/next_node.py --state <scratch_dir>/review-state.json
    ```
    Capture the first line of output as `<node>`.
-4. (Optional) Inspect current status without mutating state:
-   ```
-   py -3 .agents/skills/iterative-review/scripts/next_node.py --state <scratch_dir>/review-state.json --status
-   ```
-5. (Optional) If the logs have run ahead of the saved `current_node`, resync state:
-   ```
-   py -3 .agents/skills/iterative-review/scripts/next_node.py --state <scratch_dir>/review-state.json --resync --apply
-   ```
-6. Validate and advance the router to the discovered node before running its recipe:
+3. Open `references/node-<node>.md` and follow that one recipe.
+4. When the recipe says "next check", run `next_node.py` again.
+5. Validate and advance the router to the discovered node before running its recipe:
    ```
    py -3 .agents/skills/iterative-review/scripts/next_node.py --propose <node> --state <scratch_dir>/review-state.json
    ```
-7. Open `references/node-<node>.md` for the just-proposed node and follow it exactly.
-8. Return to step 3 after the node is done.
-9. Stop when `next_node.py` prints `ready` or `blocked`.
+6. Stop when `next_node.py` prints `ready` or `blocked`.
 
 ## Recording `review-metrics.json`
 
@@ -96,11 +97,11 @@ For every post-fix finding, set `regression_class` from the decision table in th
 
 - `<base>` and `<branch>` (or `<head_sha>`)
 - `<pr_number>` or `<pr_description>`
-- Optional `<issue_context>` for Linear/GitHub issue or spec text
 
 ## Invariants
 
 - Follow the graph in `references/review-state-graph.md`. Do not follow a round list.
+- Read only the `node-<node>.md` file named by `next_node.py`. Do not read ahead.
 - The `final-strong` pass is reachable only through `lens-triage` or after all `blocking/important` findings are resolved; there is no edge from `setup`, `preflight`, `fast-fix`, or `orchestrator-self-review` directly to `final-strong`. If `lens-dispatch` is skipped, unavailable, or produces no logs, the review is `blocked`.
 - This skill does not modify review files or PR state beyond the scope-honesty preflight.
 - The orchestrator owns the scope-honesty preflight, the `orchestrator-self-review` pass, all verification, the `resolved-ledger`, and the final decision to flip the PR to ready. `implementer` subagents own the fix edits under the orchestrator's brief. `orchestrator-self-review` is orchestrator-only; no `reviewer-*`, `implementer`, or `subagent_explore` may be dispatched to perform it.
@@ -128,6 +129,7 @@ Lens subagents write their own `review-log-<lens>.md` files with `write` and end
 ## Common Mistakes
 
 - Treating the skill as a fixed list of rounds. Use the graph.
+- Reading `references/review-state-graph.md` or all `node-*.md` files before starting. Only read the one node `next_node.py` names.
 - Skipping `orchestrator-self-review` and dispatching lens reviewers immediately. That is the most expensive way to catch predictable issues.
 - Using a clean `orchestrator-self-review` as an excuse to skip `lens-dispatch`, `lens-triage`, or `final-strong`. It is not a pass.
 - Delegating `orchestrator-self-review` to a subagent. This is an orchestrator-only, cheap mechanical pass. If the diff is too large to scan quickly, narrow to checklist patterns or proceed to `lens-dispatch` with a minimal prediction log; do not call a subagent.
