@@ -28,13 +28,7 @@ Verify a fix against the originating lens's checklist, tightly scoped to the bla
    - `reviewer-fixes: N issue(s)`
 6. Read `review-log-reviewer-fixes.md`.
 7. On `reviewer-fixes: clean`:
-   - Record the resolution:
-     ```bash
-     py -3 .agents/skills/iterative-review/scripts/record_resolution.py \
-         --state <scratch_dir>/review-state.json \
-         --data '{"finding_id": "<finding_id>", "resolved_at_node": "reviewer-fixes", "resolved_at_round": <round>}'
-     ```
-   - Regenerate the metrics file:
+   - Do not record the resolution here; `resolved-ledger` is the single authority that records resolutions. Regenerate the metrics file:
      ```bash
      py -3 .agents/skills/iterative-review/scripts/compile_metrics.py \
          --state <scratch_dir>/review-state.json \

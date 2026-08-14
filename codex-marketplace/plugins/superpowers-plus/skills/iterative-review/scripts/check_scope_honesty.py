@@ -26,8 +26,8 @@ def _load(path: Path) -> dict:
         raise SystemExit(f"ERROR: invalid state JSON in {path}: {e}")
 
 
-def _changed_files(diff_path: Path) -> list[str]:
-    if not diff_path.exists():
+def _changed_files(diff_path: Path | None) -> list[str]:
+    if not diff_path or not diff_path.exists():
         return []
     text = diff_path.read_text(encoding="utf-8")
     pairs = re.findall(r"^diff --git a/(.+) b/(.+)$", text, re.M)
@@ -68,11 +68,12 @@ def _path_mentioned(path: str, corpora: list[str]) -> bool:
 def _check(state_path: Path, extras: list[Path] | None, apply: bool) -> tuple[bool, list[str]]:
     state = _load(state_path)
     scratch = Path(state.get("scratch_dir", state_path.parent))
-    diff_path = Path(state.get("diff_path", scratch / "review.diff"))
+    raw_diff = state.get("diff_path")
+    diff_path = Path(raw_diff) if raw_diff else scratch / "review.diff"
     if not diff_path.exists():
         diff_path = _find_diff_path(scratch)
 
-    changed = _changed_files(diff_path) if diff_path and diff_path.exists() else []
+    changed = _changed_files(diff_path)
     pr_text = _pr_text(scratch)
     governing = _governing_texts(scratch, extras)
     corpora = [pr_text] + governing
@@ -89,7 +90,8 @@ def _check(state_path: Path, extras: list[Path] | None, apply: bool) -> tuple[bo
     log_path.parent.mkdir(parents=True, exist_ok=True)
     with log_path.open("w", encoding="utf-8") as out:
         out.write("## Inputs\n\n")
-        out.write(f"- diff: `{diff_path}`\n")
+        diff_label = str(diff_path) if diff_path else "not found"
+        out.write(f"- diff: `{diff_label}`\n")
         out.write(f"- PR description: `{scratch / 'pr_description.txt'}`\n")
         for extra in extras or []:
             out.write(f"- governing doc: `{extra}`\n")
