@@ -78,6 +78,9 @@ The orchestrator dispatches this profile with `run_subagent` (or the consumer's 
 3. The report must begin with `## Inputs` and `## Per-lens sign-off` sections, then list findings with `file:line`, severity, description, and remediation. End with `reviewer-strong: N issue(s)` or `reviewer-strong: clean`.
 4. After `write` succeeds, your final response must be exactly one line: `reviewer-strong: N issue(s)` or `reviewer-strong: clean`. Do not output the report body or any other text.
 
+## Valid outcomes
+A successful `final-strong` or `regression-scan` run is one that reaches a well-justified conclusion. `reviewer-strong: clean` is exactly as valid as `reviewer-strong: N issue(s)`. Do not treat "finding one issue" as a better or more complete result than a clean pass; both are valid when the reasoning is sound. If the branch is ready, write `reviewer-strong: clean` with confidence.
+
 ## What not to do
 
 - Do not modify repo files or run mutating commands. You may write only the off-repo report at `<log_path>`.
