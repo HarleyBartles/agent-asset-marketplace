@@ -21,7 +21,6 @@ _changed_files = select_lenses._changed_files
 _find_diff_path = select_lenses._find_diff_path
 _glob_match = select_lenses._glob_match
 _load_state = select_lenses._load_state
-_reviewer_paths = select_lenses._reviewer_paths
 
 
 FULL_DIFF_LENSES = {"reviewer-fast"}
@@ -73,8 +72,16 @@ def _slice_hunks(diff_text: str, include_globs: list[str], exclude_paths: set[st
 
 
 def _read_lenses(path: Path) -> list[dict]:
+    entries: list[dict] = []
     with path.open("r", encoding="utf-8") as f:
-        return [json.loads(line) for line in f if line.strip()]
+        for line_number, line in enumerate(f, start=1):
+            if not line.strip():
+                continue
+            try:
+                entries.append(json.loads(line))
+            except json.JSONDecodeError as e:
+                raise SystemExit(f"ERROR: invalid JSON in {path} at line {line_number}: {e}")
+    return entries
 
 
 def _write_lenses(path: Path, lenses: list[dict]) -> None:
@@ -112,18 +119,30 @@ def main(argv: list[str] | None = None) -> int:
     lenses = _read_lenses(lenses_path) if lenses_path.exists() else []
 
     for entry in lenses:
-        lens = entry["lens"]
-        profile = Path(entry["profile_path"])
-        text = profile.read_text(encoding="utf-8")
+        lens = entry.get("lens")
+        profile_path = entry.get("profile_path")
+        if not lens or not profile_path:
+            raise SystemExit(f"ERROR: lens entry missing 'lens' or 'profile_path': {entry}")
+        profile = Path(profile_path)
+        try:
+            text = profile.read_text(encoding="utf-8")
+        except FileNotFoundError:
+            raise SystemExit(f"ERROR: profile not found: {profile}")
         rule = _applies_to(text)
         globs = rule.get("globs", [])
         if lens in FULL_DIFF_LENSES or not globs:
-            sliced = diff_text
+            if args.apply:
+                entry["diff_path"] = str(diff_path)
+            else:
+                print(f"{lens} -> full diff ({len(diff_text)} bytes)")
+            continue
+        sliced = _slice_hunks(diff_text, globs, exclude_paths)
+        if args.apply:
+            slice_path = scratch / f"lens-{lens}-{diff_path.name}"
+            slice_path.write_text(sliced, encoding="utf-8", newline="\n")
+            entry["diff_path"] = str(slice_path)
         else:
-            sliced = _slice_hunks(diff_text, globs, exclude_paths)
-        slice_path = scratch / f"lens-{lens}-{diff_path.name}"
-        slice_path.write_text(sliced, encoding="utf-8", newline="\n")
-        entry["diff_path"] = str(slice_path)
+            print(f"{lens} -> would write {len(sliced)} bytes")
 
     if args.apply:
         _write_lenses(lenses_path, lenses)

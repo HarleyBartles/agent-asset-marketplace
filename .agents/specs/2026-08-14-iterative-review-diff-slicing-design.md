@@ -37,9 +37,9 @@ If a lens profile has no include globs, it receives the full diff (preserves cur
 
 ### Source vs consumer rule for installed skill mirrors
 
-If the repository contains `codex-marketplace/plugins/`, it is a marketplace source repo. For every changed file under `.agents/skills/`, the slicer looks for a corresponding first-party source under `codex-marketplace/plugins/**/skills/`. If the source file is also changed in the diff, the `.agents/skills/` mirror is excluded from all deep-lens slices and from `reviewer-fast`. If the source is not in the diff, the `.agents/skills/` file is treated as a consumer-side local edit and remains in scope for `reviewer-skills`.
+If the repository contains `codex-marketplace/plugins/`, it is a marketplace source repo. For every changed file under `.agents/skills/`, the slicer looks for a corresponding first-party source under `codex-marketplace/plugins/**/skills/`. If the source file is also changed in the diff, the `.agents/skills/` mirror is excluded from all deep-lens slices, but `reviewer-fast` still receives the full diff. If the source is not in the diff, the `.agents/skills/` file is treated as a consumer-side local edit and remains in scope for `reviewer-skills`.
 
-The mapping is derived from `.agents/skills/.provenance.json` when it exists. If that mapping is absent, the slicer falls back to a simple path-stem match: for a changed file `.agents/skills/<skill>/<subpath>`, look for `codex-marketplace/plugins/<pack>/skills/<skill>/<subpath>` in the diff.
+The mapping is a simple path-stem match: for a changed file `.agents/skills/<skill>/<subpath>`, look for `codex-marketplace/plugins/<pack>/skills/<skill>/<subpath>` in the diff.
 
 ### Updated `lens-dispatch` recipe
 

@@ -249,7 +249,7 @@ Run: `py -3 tools/run.py marketplace --apply`
 
 - [x] **Step 2: Run CI apply and check**
 
-Run: `py -3 tools/run.py ci --apply && py -3 tools/run.py ci --check`
+Run: `py -3 tools/run.py ci --apply`; `py -3 tools/run.py ci --check`
 
 Expected: all requested targets pass
 
