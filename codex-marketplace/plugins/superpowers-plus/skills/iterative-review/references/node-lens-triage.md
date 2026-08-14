@@ -21,10 +21,17 @@ Normalize lens reports and classify every finding into a severity-based routing 
        --state <scratch_dir>/review-state.json \
        --metrics <scratch_dir>/review-metrics.json
    ```
-3. Route:
+3. Classify each finding. If a finding is determined to be a false positive or otherwise requires no fix, record that resolution at `lens-triage`:
+   ```bash
+   py -3 .agents/skills/iterative-review/scripts/record_resolution.py \
+       --state <scratch_dir>/review-state.json \
+       --data '{"finding_id": "<finding_id>", "resolved_at_node": "lens-triage", "resolved_at_round": <round>}'
+   ```
+   A `lens-triage` resolution marks the finding as resolved without entering the fix loop.
+4. Route:
    - Any `contested`/`load-bearing` finding -> `blocked`
-   - Any `blocking/important` finding -> `metrics-track` then `finding-fix`
-   - Only `trivial/deferred` findings -> `final-strong`
+   - Any unresolved `blocking/important` finding -> `metrics-track` then `finding-fix`
+   - Only `trivial/deferred` findings remaining, or all `blocking/important` findings resolved at triage -> `final-strong`
    - No findings -> `final-strong`
 
 ## Outputs

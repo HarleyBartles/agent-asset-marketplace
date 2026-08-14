@@ -109,6 +109,7 @@ GRAPH: dict[str, list[tuple[str, str]]] = {
 # log files ("*" means the file just needs to be non-empty).
 ARTIFACTS_FOR_NODE: dict[str, list[tuple[str, str]]] = {
     "metrics-track": [("findings.jsonl", "*")],
+    "resolved-ledger": [("resolutions.jsonl", "*")],
 }
 
 
