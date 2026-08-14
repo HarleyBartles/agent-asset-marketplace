@@ -81,7 +81,7 @@ GRAPH: dict[str, list[tuple[str, str]]] = {
     ],
     "reviewer-fixes": [
         ("blocked", "blocked"),
-        ("new_issue", "metrics-track"),
+        ("regressions", "metrics-track"),
         ("non_trivial", "regression-scan"),
         ("fixed", "resolved-ledger"),
         ("not_fixed", "finding-fix"),

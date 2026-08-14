@@ -8,11 +8,8 @@ Mark findings resolved and generate the resolved-ledger evidence gate.
 - Off-repo `<scratch_dir>`
 
 ## Recipe
-1. When `reviewer-fixes` or `regression-scan` is clean, record every resolved finding, then regenerate the metrics file:
+1. When `reviewer-fixes` or `regression-scan` is clean, the resolution should already be recorded in `resolutions.jsonl` by the fixing node. Regenerate the metrics file:
    ```bash
-   py -3 .agents/skills/iterative-review/scripts/record_resolution.py \
-       --state <scratch_dir>/review-state.json \
-       --data '{"finding_id": "<finding_id>", "resolved_at_node": "resolved-ledger", "resolved_at_round": <round>}'
    py -3 .agents/skills/iterative-review/scripts/compile_metrics.py \
        --state <scratch_dir>/review-state.json \
        --metrics <scratch_dir>/review-metrics.json
