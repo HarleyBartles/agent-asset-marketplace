@@ -12,10 +12,11 @@ from pathlib import Path
 REQUIRED = {"finding_id", "resolved_at_node", "resolved_at_round"}
 
 _EPILOG = """\nREQUIRED KEYS:
-  finding_id, resolved_at_node, resolved_at_round\n\nEXAMPLE JSON FILE:
+  finding_id, resolved_at_node, resolved_at_round\n\nVALID resolved_at_node VALUES:
+  reviewer-fixes, regression-scan\n\nEXAMPLE JSON FILE:
   {
     "finding_id": "example-001",
-    "resolved_at_node": "resolved-ledger",
+    "resolved_at_node": "<reviewer-fixes|regression-scan>",
     "resolved_at_round": 2
   }\n"""
 
