@@ -31,4 +31,4 @@ Dispatch the cheap `reviewer-fast` pre-lens plus the matching deep lens reviewer
 - Write `review-log-<lens>.md` for each dispatched lens
 
 ## Next check
-py -3 .agents/skills/iterative-review/scripts/next_node.py --metrics <scratch_dir>/review-metrics.json
+py -3 .agents/skills/iterative-review/scripts/next_node.py --state <scratch_dir>/review-state.json

@@ -44,7 +44,6 @@ def _short_sha(ref: str, cwd: Path) -> str:
         if result.returncode == 0:
             return result.stdout.strip()
     result.check_returncode()
-    return ""
 
 
 def _resolve_base_commit(base_ref: str, head_ref: str, cwd: Path) -> str:
