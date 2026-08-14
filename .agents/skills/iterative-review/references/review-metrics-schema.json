@@ -26,7 +26,11 @@
         "lens-plans": {"type": "integer", "minimum": 0},
         "lens-mesh": {"type": "integer", "minimum": 0},
         "lens-scripts": {"type": "integer", "minimum": 0},
-        "strong-review": {"type": "integer", "minimum": 0},
+        "lens-triage": {"type": "integer", "minimum": 0},
+        "scope-honesty": {"type": "integer", "minimum": 0},
+        "reviewer-fixes": {"type": "integer", "minimum": 0},
+        "resolved-ledger": {"type": "integer", "minimum": 0},
+        "final-strong": {"type": "integer", "minimum": 0},
         "regression-scan": {"type": "integer", "minimum": 0}
       }
     },
