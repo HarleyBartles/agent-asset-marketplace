@@ -10,13 +10,14 @@ from pathlib import Path
 
 
 REQUIRED = {"finding_id", "resolved_at_node", "resolved_at_round"}
+VALID_NODES = {"reviewer-fixes", "regression-scan", "lens-triage"}
 
 _EPILOG = """\nREQUIRED KEYS:
   finding_id, resolved_at_node, resolved_at_round\n\nVALID resolved_at_node VALUES:
-  reviewer-fixes, regression-scan\n\nEXAMPLE JSON FILE:
+  reviewer-fixes, regression-scan, lens-triage\n\nEXAMPLE JSON FILE:
   {
     "finding_id": "example-001",
-    "resolved_at_node": "<reviewer-fixes|regression-scan>",
+    "resolved_at_node": "<reviewer-fixes|regression-scan|lens-triage>",
     "resolved_at_round": 2
   }\n"""
 
@@ -97,6 +98,10 @@ def _main(argv: list[str] | None = None) -> int:
         missing = REQUIRED - item.keys()
         if missing:
             errors.append(f"missing keys {missing} in {item}")
+            continue
+        node = item.get("resolved_at_node")
+        if node not in VALID_NODES:
+            errors.append(f"invalid resolved_at_node {node!r} in {item}")
     if errors:
         for e in errors:
             print(f"ERROR: {e}", file=sys.stderr)

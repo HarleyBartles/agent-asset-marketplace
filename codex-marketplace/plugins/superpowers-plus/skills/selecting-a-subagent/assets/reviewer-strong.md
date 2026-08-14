@@ -20,7 +20,7 @@ This profile is used for two purposes:
 
 When `<regression_diff_path>` is *not* provided, perform these checks in order. If any check fails, use the `write` tool to write `<log_path>` with the exact single line `BLOCKED: <reason>` and respond with the single line `reviewer-strong: blocked`. Do not read `<diff_path>`, do not produce a normal report, and do not output any other text.
 
-1. `<review-log-resolved-ledger.md>` must be a readable file. If it is missing, write `BLOCKED: missing review-log-resolved-ledger.md; run resolved-ledger before final-strong`.
+1. `<review-log-resolved-ledger.md>` must be a readable file unless the `resolved-ledger` node was not visited (i.e., all `important`/`blocking` findings were resolved at `lens-triage` with no fixes applied). If the ledger is missing, read `<review-metrics.json>`; if no `rounds_per_finding` entry has `severity` `blocking` or `important` with an empty `resolved_at_node` and the `regressions` array is empty, proceed. Otherwise, write `BLOCKED: missing review-log-resolved-ledger.md; run resolved-ledger before final-strong`.
 2. `<review-metrics.json>` must be a readable file. If it is missing, write `BLOCKED: missing review-metrics.json`.
 3. No `rounds_per_finding` entry may have `severity` of `blocking` or `important` and an empty/absent `resolved_at_node`.
 4. The `regressions` array must be empty.
@@ -51,9 +51,12 @@ Use when the review must consider the entire branch or a large, multi-file diff.
 - `<pr_description>` (optional): the pull-request description for context.
 - `<log_path>` (required): the off-repo path where the report must be written with the `write` tool (e.g. `<scratch_dir>/review-log-strong.md`).
 - `<review-log-*.md>` (optional for `final-strong` or `regression-scan`): the lens review reports produced in the current round. These are the primary finding set for their scopes.
-- `<review-log-resolved-ledger.md>` (required for `final-strong`): evidence that all `important`/`blocking` findings are resolved and `regressions` is empty. Produced by `resolved_ledger.py --apply`.
+- `<review-log-resolved-ledger.md>` (required for `final-strong` only when fixes were applied): evidence that all `important`/`blocking` findings are resolved and `regressions` is empty. Produced by `resolved_ledger.py --apply`.
 - `<review-metrics.json>` (required for `final-strong`): the review ledger; used to verify no unresolved `important`/`blocking` findings or regressions remain.
 - `<regression_diff_path>` (optional): the fix diff only, used for `regression-scan`. When provided, read this and the immediately touched files, not the full branch.
+
+## Stop condition for final-strong churn
+If this is a `final-strong` re-pass and the only finding you are about to raise is a meta-coverage complaint that a file or change was not reviewed by one of the earlier deep lenses, do not raise it. The `final-strong` whole-branch pass is itself the coverage backstop for exactly that gap. If the code is otherwise sound, write `reviewer-strong: clean` and end the report. This prevents the orchestrator from looping indefinitely on coverage artifacts that the current pass already addresses.
 
 ## How to dispatch this reviewer
 
@@ -74,6 +77,9 @@ The orchestrator dispatches this profile with `run_subagent` (or the consumer's 
 2. Call the `write` tool with `file_path=<log_path>` and the full report content. The `write` tool is the only way to create the report file.
 3. The report must begin with `## Inputs` and `## Per-lens sign-off` sections, then list findings with `file:line`, severity, description, and remediation. End with `reviewer-strong: N issue(s)` or `reviewer-strong: clean`.
 4. After `write` succeeds, your final response must be exactly one line: `reviewer-strong: N issue(s)` or `reviewer-strong: clean`. Do not output the report body or any other text.
+
+## Valid outcomes
+A successful `final-strong` or `regression-scan` run is one that reaches a well-justified conclusion. `reviewer-strong: clean` is exactly as valid as `reviewer-strong: N issue(s)`. Do not treat "finding one issue" as a better or more complete result than a clean pass; both are valid when the reasoning is sound. If the branch is ready, write `reviewer-strong: clean` with confidence.
 
 ## What not to do
 

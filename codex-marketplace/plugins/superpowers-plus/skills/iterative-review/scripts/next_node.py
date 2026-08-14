@@ -109,6 +109,7 @@ GRAPH: dict[str, list[tuple[str, str]]] = {
 # log files ("*" means the file just needs to be non-empty).
 ARTIFACTS_FOR_NODE: dict[str, list[tuple[str, str]]] = {
     "metrics-track": [("findings.jsonl", "*")],
+    "resolved-ledger": [("resolutions.jsonl", "*")],
 }
 
 
@@ -203,7 +204,7 @@ def _findings_by_node(state: dict) -> dict[str, int]:
 def _contested(state: dict) -> bool:
     """Return True if any unresolved finding is marked as contested."""
     if "rounds_per_finding" in state:
-        return any(f.get("contested") for f in state.get("rounds_per_finding", []))
+        return any(f.get("contested") for f in state.get("rounds_per_finding", []) if not f.get("resolved_at_node"))
     scratch = Path(state.get("scratch_dir", "."))
     blockers = _load_jsonl(scratch / "blockers.jsonl")
     unresolved = set(_unresolved_findings(state))

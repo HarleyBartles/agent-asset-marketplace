@@ -112,6 +112,38 @@ class TestRecordResolution(unittest.TestCase):
             self.assertEqual(result.returncode, 1)
             self.assertIn("every --data item must be a JSON object", result.stderr)
 
+    def test_record_resolution_accepts_lens_triage(self):
+        with tempfile.TemporaryDirectory() as td:
+            scratch = Path(td)
+            state = _write_state(scratch)
+            data = json.dumps(
+                {
+                    "finding_id": "f-002",
+                    "resolved_at_node": "lens-triage",
+                    "resolved_at_round": 1,
+                }
+            )
+            result = _run(RECORD_RESOLUTION, state, data)
+            self.assertEqual(result.returncode, 0)
+            log = scratch / "resolutions.jsonl"
+            self.assertTrue(log.exists())
+            self.assertIn("lens-triage", log.read_text(encoding="utf-8"))
+
+    def test_record_resolution_rejects_invalid_resolved_at_node(self):
+        with tempfile.TemporaryDirectory() as td:
+            scratch = Path(td)
+            state = _write_state(scratch)
+            data = json.dumps(
+                {
+                    "finding_id": "f-003",
+                    "resolved_at_node": "not-a-valid-node",
+                    "resolved_at_round": 1,
+                }
+            )
+            result = _run(RECORD_RESOLUTION, state, data)
+            self.assertEqual(result.returncode, 1)
+            self.assertIn("not-a-valid-node", result.stderr)
+
 
 if __name__ == "__main__":
     unittest.main()

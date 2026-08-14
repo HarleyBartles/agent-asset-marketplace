@@ -7,8 +7,8 @@ Run one whole-branch `reviewer-strong` pass after all `blocking/important` findi
 - Full branch diff
 - `<pr_description>`
 - All lens logs
-- `review-log-resolved-ledger.md`
 - `review-metrics.json`
+- `review-log-resolved-ledger.md` (only when `resolved-ledger` was visited)
 - `reviewer-strong` profile
 - `<log_path>`
 

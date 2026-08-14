@@ -17,7 +17,7 @@ flowchart TD
     preflight -->|green| scope-honesty --> lens-dispatch
     lens-dispatch --> normalize-inputs --> lens-triage
 
-    lens-triage -->|blocking / important| metrics-track
+    lens-triage -->|unresolved blocking / important| metrics-track
     lens-triage -->|trivial / deferred| final-strong
     lens-triage -->|contested / load-bearing| blocked
     lens-triage -->|clean| final-strong
@@ -54,14 +54,14 @@ flowchart TD
 | `fast-fix` | orchestrator or implementer | [node-fast-fix.md](node-fast-fix.md) | Fix a deterministic preflight finding; trivial items the orchestrator can fix, mechanical items an `implementer`. |
 | `scope-honesty` | orchestrator | [node-scope-honesty.md](node-scope-honesty.md) | Compare the diff to the plan, spec, PR body, and linked issues. Record or fix drift. |
 | `lens-dispatch` | parallel subagents | [node-lens-dispatch.md](node-lens-dispatch.md) | Dispatch the cheap `reviewer-fast` pre-lens plus the matching deep lens reviewers. |
-| `lens-triage` | orchestrator | [node-lens-triage.md](node-lens-triage.md) | Decide the fate of each lens finding: `blocking/important` findings enter the fast fix loop, `trivial/deferred` findings are left for `final-strong`, and `contested/load-bearing` findings are `blocked`. If no findings, proceed to `final-strong`. |
+| `lens-triage` | orchestrator | [node-lens-triage.md](node-lens-triage.md) | Decide the fate of each lens finding: `blocking/important` findings enter the fast fix loop unless resolved as false positives at triage, `trivial/deferred` findings are left for `final-strong`, and `contested/load-bearing` findings are `blocked`. If no findings, proceed to `final-strong`. |
 | `metrics-track` | orchestrator | [node-metrics-track.md](node-metrics-track.md) | Record the finding, the node that discovered it, the round number, the node where it resolves, and the `regression_class`. This node does not block. |
 | `finding-fix` | `implementer` subagent | [node-finding-fix.md](node-finding-fix.md) | Resolve one finding with the lens's checklist and a concrete brief, then commit. |
 | `re-preflight` | `tools/run.py ci --check` | [node-re-preflight.md](node-re-preflight.md) | Re-run the deterministic checks on the post-fix range. |
 | `reviewer-fixes` | `reviewer-fixes` subagent | [node-reviewer-fixes.md](node-reviewer-fixes.md) | Cheap lens-aware re-review of the fix blast radius. Verifies the original finding and applies the originating lens's `## Checklist` to the changed files only. |
 | `regression-scan` | `reviewer-strong` on the touched area | [node-regression-scan.md](node-regression-scan.md) | For non-trivial or cross-cutting fixes, confirm and classify any new issue the fix introduced. |
 | `resolved-ledger` | orchestrator | [node-resolved-ledger.md](node-resolved-ledger.md) | Bookkeeping node that records resolutions via `record_resolution.py` into `resolutions.jsonl` and `compile_metrics.py` generates `review-metrics.json`. When the queue is empty, runs `resolved_ledger.py --apply` to produce `review-log-resolved-ledger.md` before `final-strong`. |
-| `final-strong` | `reviewer-strong` | [node-final-strong.md](node-final-strong.md) | One whole-branch pass after all queued findings are resolved. Requires `review-log-resolved-ledger.md` and a clean `review-metrics.json`; `reviewer-strong` refuses if either is missing or shows unresolved `important`/`blocking` findings or regressions. Confirms no remaining gaps, contradictions, or design issues. |
+| `final-strong` | `reviewer-strong` | [node-final-strong.md](node-final-strong.md) | One whole-branch pass after all queued findings are resolved. Requires a clean `review-metrics.json` and `review-log-resolved-ledger.md` when the `resolved-ledger` node was visited (i.e., when fixes were made). If all `blocking/important` findings were resolved at `lens-triage` and no `resolved-ledger` was produced, `reviewer-strong` still proceeds. `reviewer-strong` refuses if unresolved `important`/`blocking` findings or regressions remain. Confirms no remaining gaps, contradictions, or design issues. |
 | `closeout` | orchestrator | [node-closeout.md](node-closeout.md) | After `reviewer-strong: clean`, archive completed plans/specs/roadmaps per `.agents/runbooks/completing-plans.md` if the PR closes them. |
 | `ready` | orchestrator | [node-ready.md](node-ready.md) | Final `ci --check`; flip the PR from draft to ready; wait for remote CI to pass. |
 | `blocked` | orchestrator | [node-blocked.md](node-blocked.md) | Human escalation for contested or load-bearing findings the orchestrator cannot resolve. |

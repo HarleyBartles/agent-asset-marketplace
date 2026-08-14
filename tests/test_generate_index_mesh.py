@@ -6,7 +6,16 @@ from pathlib import Path
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
-CORE = REPO_ROOT / "sources" / "first_party" / "skills" / "generating-agent-mesh" / "scripts" / "generate_index_mesh.py"
+CORE = (
+    REPO_ROOT
+    / "codex-marketplace"
+    / "plugins"
+    / "repo-worker-pack"
+    / "skills"
+    / "generating-agent-mesh"
+    / "scripts"
+    / "generate_index_mesh.py"
+)
 
 
 def _stripped_env():
@@ -21,6 +30,7 @@ def _make_repo(tmp_path: Path, name: str) -> Path:
     repo = tmp_path / name
     repo.mkdir()
     subprocess.run(["git", "init"], cwd=repo, check=True, capture_output=True)
+    subprocess.run(["git", "branch", "-m", "main"], cwd=repo, check=True, capture_output=True)
     subprocess.run(["git", "config", "user.email", "test@test"], cwd=repo, check=True, capture_output=True)
     subprocess.run(["git", "config", "user.name", "Test"], cwd=repo, check=True, capture_output=True)
     return repo
@@ -121,7 +131,7 @@ def test_generate_index_mesh_extra_hook_post_processes_and_check_passes(tmp_path
     if sys.platform == "win32":
         hook.write_text(
             "param([switch]$Check, [string]$RepoRoot)\n"
-            "$path = Join-Path $RepoRoot \"docs/adr/INDEX.md\"\n"
+            '$path = Join-Path $RepoRoot "docs/adr/INDEX.md"\n'
             "if ($Check) {\n"
             '    if (-not (Test-Path $path) -or -not (Select-String -Path $path -Pattern "## Extra" -Quiet)) '
             '{ Write-Host "DRIFT: missing extra"; exit 1 }\n'
@@ -136,14 +146,14 @@ def test_generate_index_mesh_extra_hook_post_processes_and_check_passes(tmp_path
         hook.write_text(
             "#!/usr/bin/env bash\n"
             "set -euo pipefail\n"
-            "if [ \"$1\" = \"--check\" ]; then\n"
+            'if [ "$1" = "--check" ]; then\n'
             "    mode=check\n"
             "    shift\n"
             "else\n"
             "    mode=write\n"
             "fi\n"
-            "repo_root=\"$1\"\n"
-            "path=\"$repo_root/docs/adr/INDEX.md\"\n"
+            'repo_root="$1"\n'
+            'path="$repo_root/docs/adr/INDEX.md"\n'
             'if [ "$mode" = "check" ]; then\n'
             '    if ! grep -q "## Extra" "$path"; then\n'
             '        echo "DRIFT: missing extra"\n'
@@ -191,16 +201,12 @@ def test_generate_index_mesh_extra_hook_failure_fails(tmp_path: Path) -> None:
 
     if sys.platform == "win32":
         hook.write_text(
-            "param([switch]$Check, [string]$RepoRoot)\n"
-            "Write-Host 'broken hook'\n"
-            "exit 1\n",
+            "param([switch]$Check, [string]$RepoRoot)\nWrite-Host 'broken hook'\nexit 1\n",
             encoding="utf-8",
         )
     else:
         hook.write_text(
-            "#!/usr/bin/env bash\n"
-            "echo 'broken hook'\n"
-            "exit 1\n",
+            "#!/usr/bin/env bash\necho 'broken hook'\nexit 1\n",
             encoding="utf-8",
         )
         hook.chmod(0o755)
@@ -260,7 +266,7 @@ def test_allow_shared_checkout_with_check_requires_apply(tmp_path: Path) -> None
 
 
 def test_apply_in_main_shared_checkout_requires_allow_flag(tmp_path: Path) -> None:
-    """--apply in the main shared checkout fails without --allow-shared-checkout."""
+    """--apply in the main shared checkout on main fails without --allow-shared-checkout."""
     repo = _make_repo(tmp_path, "main-no-flag")
     _commit_file(repo, "docs/guide.md")
     result = subprocess.run(
@@ -311,9 +317,7 @@ def test_quoted_links_for_markdown_ambiguous_filenames(tmp_path: Path) -> None:
     assert result.returncode == 0, result.stderr
     index = (repo / "INDEX.md").read_text(encoding="utf-8")
 
-    file_target = urllib.parse.quote(
-        "2. Choosing an Identity (Handle + Persona Creation).md", safe="/#"
-    )
+    file_target = urllib.parse.quote("2. Choosing an Identity (Handle + Persona Creation).md", safe="/#")
     assert f"]({file_target})" in index
     assert "2. Choosing an Identity" in index  # label stays readable
 
@@ -322,3 +326,35 @@ def test_quoted_links_for_markdown_ambiguous_filenames(tmp_path: Path) -> None:
 
     dir_target = urllib.parse.quote("Style Guides/INDEX.md", safe="/#")
     assert f"]({dir_target})" in index
+
+
+def test_prunes_index_only_directory(tmp_path: Path) -> None:
+    """A directory that only contains an INDEX.md is empty and should not be maintained."""
+    repo = _make_repo(tmp_path, "prune-repo")
+    _commit_file(repo, "empty-box/widget.md")
+    result = subprocess.run(
+        [sys.executable, str(CORE), "--apply", "--allow-shared-checkout"],
+        cwd=repo,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode == 0, result.stderr
+    assert (repo / "empty-box" / "INDEX.md").is_file()
+
+    # Commit the generated index so it is tracked, then remove the real file.
+    subprocess.run(["git", "add", "-A"], cwd=repo, check=True, capture_output=True)
+    subprocess.run(["git", "commit", "-m", "add index"], cwd=repo, check=True, capture_output=True)
+    (repo / "empty-box" / "widget.md").unlink()
+    subprocess.run(["git", "rm", "empty-box/widget.md"], cwd=repo, check=True, capture_output=True)
+    subprocess.run(["git", "commit", "-m", "remove widget"], cwd=repo, check=True, capture_output=True)
+
+    result = subprocess.run(
+        [sys.executable, str(CORE), "--apply", "--allow-shared-checkout"],
+        cwd=repo,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode == 0, result.stderr
+    assert not (repo / "empty-box" / "INDEX.md").exists()

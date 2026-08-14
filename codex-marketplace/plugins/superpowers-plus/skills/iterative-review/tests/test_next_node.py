@@ -76,6 +76,7 @@ class TestNextNodePropose(unittest.TestCase):
             state = _write_state(scratch, current="reviewer-fixes", previous="re-preflight")
             (scratch / "findings.jsonl").write_text("", encoding="utf-8")
             (scratch / "regressions.jsonl").write_text("", encoding="utf-8")
+            (scratch / "review-log-reviewer-fixes.md").write_text("\nreviewer-fixes: clean\n", encoding="utf-8")
             result = _propose(state, "regression-scan", extra=["--non-trivial"])
             self.assertEqual(result.returncode, 0)
             self.assertIn("ALLOWED: regression-scan", result.stdout)
@@ -96,6 +97,27 @@ class TestNextNodePropose(unittest.TestCase):
             self.assertEqual(result.returncode, 0)
             fresh = json.loads(state.read_text(encoding="utf-8"))
             self.assertFalse(fresh.get("non_trivial_fix", True))
+
+    def test_lens_triage_resolution_skips_fix(self):
+        """An important finding resolved at lens-triage should route to final-strong."""
+        with tempfile.TemporaryDirectory() as td:
+            scratch = Path(td)
+            state = _write_state(scratch, current="lens-triage", previous="normalize-inputs")
+            (scratch / "findings.jsonl").write_text(
+                '{"finding_id": "f-1", "lens": "test", "severity": "important"}',
+                encoding="utf-8",
+            )
+            (scratch / "resolutions.jsonl").write_text(
+                '{"finding_id": "f-1", "resolved_at_node": "lens-triage", "resolved_at_round": 1}',
+                encoding="utf-8",
+            )
+            result = subprocess.run(
+                ["py", "-3", str(NEXT_NODE), "--state", str(state)],
+                capture_output=True,
+                text=True,
+            )
+            self.assertEqual(result.returncode, 0)
+            self.assertIn("final-strong", result.stdout)
 
 
 if __name__ == "__main__":

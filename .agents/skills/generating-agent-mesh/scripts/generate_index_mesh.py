@@ -106,13 +106,14 @@ ROOT = _repo_root()
 EXCLUDED_DIR_NAMES = {".git", ".worktrees", "__pycache__", ".pytest_cache", ".superpowers"}
 EXCLUDED_ROOT_NAMES = {".git", ".worktrees", "__pycache__", ".superpowers"}
 EXCLUDED_FILE_NAMES = {".git", ".gitkeep"}
+INDEX_FILE_NAMES = {"INDEX.md", "INDEX.json"}
 THIRD_PARTY_ROOT = ROOT / "sources" / "third_party"
 SKILL_ZIPS_ROOT = ROOT / "generated" / "skill-zips"
 NON_CANONICAL_GUARD_ROOTS = {ROOT / ".agents" / "docs" / "superpowers"}
 
 
-def _load_tracked() -> tuple[set[Path], set[Path]]:
-    """Return (tracked_dirs, tracked_files) from git ls-files."""
+def _load_tracked() -> tuple[set[Path], set[Path], set[Path]]:
+    """Return (tracked_dirs, tracked_files, content_dirs) from git ls-files."""
     result = subprocess.run(
         ["git", "ls-files"],
         cwd=ROOT,
@@ -136,7 +137,15 @@ def _load_tracked() -> tuple[set[Path], set[Path]]:
     # The repo root itself is an implicit target (root INDEX.md) even though
     # no tracked file lives directly at the root.
     tracked_dirs.add(ROOT)
-    return tracked_dirs, tracked_files
+    content_dirs: set[Path] = {ROOT}
+    for f in tracked_files:
+        if f.name in INDEX_FILE_NAMES:
+            continue
+        for parent in f.parents:
+            content_dirs.add(parent)
+            if parent == ROOT:
+                break
+    return tracked_dirs, tracked_files, content_dirs
 
 
 def _load_ignored_index_paths(tracked_dirs: set[Path]) -> set[str]:
@@ -167,7 +176,7 @@ def _load_ignored_index_paths(tracked_dirs: set[Path]) -> set[str]:
     return ignored
 
 
-TRACKED_DIRS, TRACKED_FILES = _load_tracked()
+TRACKED_DIRS, TRACKED_FILES, CONTENT_DIRS = _load_tracked()
 IGNORED_INDEX_PATHS = _load_ignored_index_paths(TRACKED_DIRS)
 
 
@@ -206,7 +215,7 @@ def should_descend(child: Path) -> bool:
         and not is_under(child, SKILL_ZIPS_ROOT)
         and not is_non_canonical_guard(child)
         and not is_index_ignored(child)
-        and child in TRACKED_DIRS
+        and child in CONTENT_DIRS
     )
 
 
@@ -224,7 +233,7 @@ def should_index(path: Path) -> bool:
         return False
     if is_under(path, SKILL_ZIPS_ROOT):
         return False
-    if path not in TRACKED_DIRS:
+    if path not in CONTENT_DIRS:
         return False
     return not is_skill_root(path)
 
@@ -250,7 +259,7 @@ def render_index(path: Path) -> str:
     dirs = []
     files = []
     for entry in sorted(path.iterdir(), key=lambda p: (not p.is_dir(), p.name.casefold(), p.name)):
-        if entry.name == "INDEX.md":
+        if entry.name in INDEX_FILE_NAMES:
             continue
         if entry.is_dir():
             if entry.name in EXCLUDED_DIR_NAMES:
@@ -261,7 +270,7 @@ def render_index(path: Path) -> str:
                 continue
             if is_skill_root(path):
                 continue
-            if entry not in TRACKED_DIRS:
+            if entry not in CONTENT_DIRS and not is_skill_root(entry):
                 continue
             dirs.append(entry)
         else:
@@ -351,12 +360,12 @@ def walk_index_targets() -> list[IndexTarget]:
 
 
 def configure_root(repo_root: Path) -> None:
-    global ROOT, THIRD_PARTY_ROOT, SKILL_ZIPS_ROOT, NON_CANONICAL_GUARD_ROOTS, TRACKED_DIRS, TRACKED_FILES, IGNORED_INDEX_PATHS  # noqa: E501
+    global ROOT, THIRD_PARTY_ROOT, SKILL_ZIPS_ROOT, NON_CANONICAL_GUARD_ROOTS, TRACKED_DIRS, TRACKED_FILES, CONTENT_DIRS, IGNORED_INDEX_PATHS  # noqa: E501
     ROOT = repo_root
     THIRD_PARTY_ROOT = ROOT / "sources" / "third_party"
     SKILL_ZIPS_ROOT = ROOT / "generated" / "skill-zips"
     NON_CANONICAL_GUARD_ROOTS = {ROOT / ".agents" / "docs" / "superpowers"}
-    TRACKED_DIRS, TRACKED_FILES = _load_tracked()
+    TRACKED_DIRS, TRACKED_FILES, CONTENT_DIRS = _load_tracked()
     IGNORED_INDEX_PATHS = _load_ignored_index_paths(TRACKED_DIRS)
 
 
