@@ -257,7 +257,7 @@ def _condition_holds(condition: str, state: dict, ledger: Path, current_node: st
     if condition == "clean":
         return not unresolved
     if condition == "non_trivial":
-        return state.get("non_trivial_fix", False)
+        return _lens_log_clean(scratch, "reviewer-fixes") and state.get("non_trivial_fix", False)
     if condition == "trivial":
         if "rounds_per_finding" in state:
             rounds = state.get("rounds_per_finding", [])

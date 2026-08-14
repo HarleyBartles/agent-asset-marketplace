@@ -142,6 +142,8 @@ def _select(state: dict, provided_inputs: set[str]) -> list[dict]:
     scratch = Path(state["scratch_dir"])
     if "diff_path" in state:
         diff_path = Path(state["diff_path"])
+        if not diff_path.exists():
+            diff_path = _find_diff_path(scratch)
     else:
         diff_path = _find_diff_path(scratch)
     for pr_candidate in (scratch / "pr_description", scratch / "pr_description.txt"):
@@ -150,7 +152,9 @@ def _select(state: dict, provided_inputs: set[str]) -> list[dict]:
             break
     else:
         pr_path = scratch / "pr_description"
-    diff_text = diff_path.read_text(encoding="utf-8") if diff_path and diff_path.exists() else ""
+    if not diff_path or not diff_path.exists():
+        raise SystemExit(f"ERROR: review diff not found in {scratch}")
+    diff_text = diff_path.read_text(encoding="utf-8")
     pr_text = pr_path.read_text(encoding="utf-8") if pr_path.exists() else ""
     changed = _changed_files(diff_path)
 
@@ -230,7 +234,7 @@ def main(argv: list[str] | None = None) -> int:
     out_path = _lenses_path(state)
     if args.apply:
         out_path.parent.mkdir(parents=True, exist_ok=True)
-        with out_path.open("w", encoding="utf-8") as f:
+        with out_path.open("w", encoding="utf-8", newline="\n") as f:
             for entry in selected:
                 f.write(json.dumps(entry, ensure_ascii=False) + "\n")
         print(f"Wrote {out_path} with {len(selected)} lens(es)")

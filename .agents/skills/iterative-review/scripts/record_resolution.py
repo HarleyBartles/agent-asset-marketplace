@@ -106,7 +106,7 @@ def _main(argv: list[str] | None = None) -> int:
     for item in data_items:
         if item["finding_id"] in existing:
             continue
-        with log.open("a", encoding="utf-8") as f:
+        with log.open("a", encoding="utf-8", newline="\n") as f:
             f.write(json.dumps(item, ensure_ascii=False) + "\n")
         existing.add(item["finding_id"])
         recorded.append(item["finding_id"])

@@ -13,7 +13,7 @@ from __future__ import annotations
 import argparse
 import json
 import re
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 
 
 def _load(path: Path) -> dict:
@@ -52,15 +52,16 @@ def _governing_texts(scratch: Path, extras: list[Path] | None) -> list[str]:
 
 
 def _path_mentioned(path: str, corpora: list[str]) -> bool:
-    """Return True if any path part is found in any corpus."""
-    parts = [path]
-    parts += Path(path).parts
-    parts += [Path(path).name]
-    needle = set(part.lower() for part in parts)
+    """Return True if the full path, parent/name, or filename is found in any corpus."""
+    p = PurePosixPath(path)
+    variants: set[str] = {path, p.name}
+    if p.parent != p and p.parent.name and p.parent.name != ".":
+        variants.add(f"{p.parent.name}/{p.name}")
+    needle = {v.lower() for v in variants if v and len(v) > 1}
     for text in corpora:
         lowered = text.lower()
         for part in needle:
-            if part and len(part) > 1 and part in lowered:
+            if part and part in lowered:
                 return True
     return False
 
@@ -88,7 +89,7 @@ def _check(state_path: Path, extras: list[Path] | None, apply: bool) -> tuple[bo
 
     log_path = scratch / "review-log-scope-honesty.md"
     log_path.parent.mkdir(parents=True, exist_ok=True)
-    with log_path.open("w", encoding="utf-8") as out:
+    with log_path.open("w", encoding="utf-8", newline="\n") as out:
         out.write("## Inputs\n\n")
         diff_label = str(diff_path) if diff_path else "not found"
         out.write(f"- diff: `{diff_label}`\n")
