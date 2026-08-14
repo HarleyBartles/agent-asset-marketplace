@@ -29,7 +29,7 @@ Only if all four checks pass, proceed to `## Checklist`.
 
 ## Checklist
 
-Use this checklist during `orchestrator-self-review` and as the core of the review:
+Use this checklist as the core of the review:
 
 1. **Security / secrets exposure (CWE-200).** Scan for real identifiers or secrets that should not be in source: 17–20 digit snowflake IDs, tokens, API keys, email addresses, private IP addresses, or any value redacted elsewhere. Use `<PLACEHOLDER>` or env-var instructions.
 2. **SKILL.md frontmatter schema.** `license` must be a top-level field; `name` and `description` must be top-level; `metadata` must not silently swallow fields or contain unexpected keys.
@@ -50,8 +50,7 @@ Use when the review must consider the entire branch or a large, multi-file diff.
 - `<diff_path>`: path to the prepared branch diff.
 - `<pr_description>` (optional): the pull-request description for context.
 - `<log_path>` (required): the off-repo path where the report must be written with the `write` tool (e.g. `<scratch_dir>/review-log-strong.md`).
-- `<review-log-orchestrator-self-review>` (required for the first pass): the orchestrator's prediction log. Use this as the starting checklist.
-- `<review-log-*.md>` (required for `final-strong` or `regression-scan`): the lens review reports produced in the current round. At minimum this includes `review-log-skills.md`, `review-log-marketplace.md`, `review-log-security.md`, `review-log-plans.md`, `review-log-mesh.md`, and `review-log-scripts.md`. These are the primary finding set for their scopes.
+- `<review-log-*.md>` (optional for `final-strong` or `regression-scan`): the lens review reports produced in the current round. These are the primary finding set for their scopes.
 - `<review-log-resolved-ledger.md>` (required for `final-strong`): evidence that all `important`/`blocking` findings are resolved and `regressions` is empty. Produced by `resolved_ledger.py --apply`.
 - `<review-metrics.json>` (required for `final-strong`): the review ledger; used to verify no unresolved `important`/`blocking` findings or regressions remain.
 - `<regression_diff_path>` (optional): the fix diff only, used for `regression-scan`. When provided, read this and the immediately touched files, not the full branch.
@@ -62,7 +61,7 @@ The orchestrator dispatches this profile with `run_subagent` (or the consumer's 
 
 ## How to review
 
-- Start by reading all provided `review-log-*.md` files and `<review-log-orchestrator-self-review>`. Treat the lens reports as the primary finding set for their scopes. Do not re-derive those findings unless you disagree with a conclusion or need to verify a citation.
+- Start by reading all provided `review-log-*.md` files. Treat the lens reports as the primary finding set for their scopes. Do not re-derive those findings unless you disagree with a conclusion or need to verify a citation.
 - Then read `<diff_path>` and `<pr_description>`. Focus on: gaps the lenses missed, contradictions between lens findings, contradictions between the diff and the PR description/spec/plan, and design/scope issues no single lens can see.
 - `read` truncates long files and returns a `<truncation_notice>` with an overflow file path. If this happens, continue by reading the overflow file or by re-reading the same file with `offset` and `limit` to page through it.
 - Use `grep` to locate file boundaries (e.g., `^diff --git`) or specific patterns before reading a chunk. This keeps the review focused and avoids loading the entire diff into context at once.

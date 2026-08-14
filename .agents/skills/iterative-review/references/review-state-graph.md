@@ -131,7 +131,7 @@ A "round" is one complete traversal through `lens-dispatch` or `final-strong` th
       "lens": "reviewer-skills",
       "discovered_at_node": "lens-dispatch",
       "discovered_at_round": 1,
-      "resolved_at_node": "resolved-ledger",
+      "resolved_at_node": "reviewer-fixes",
       "resolved_at_round": 2,
       "severity": "important"
     }

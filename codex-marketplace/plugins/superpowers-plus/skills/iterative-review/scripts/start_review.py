@@ -46,15 +46,30 @@ def _short_sha(ref: str, cwd: Path) -> str:
     result.check_returncode()
 
 
-def _resolve_base_commit(base_ref: str, head_ref: str, cwd: Path) -> str:
+def _resolve_head_commit(ref: str, cwd: Path) -> str:
+    """Return the full SHA for the head ref, trying the local ref and then origin/<ref>."""
+    for candidate in (ref, f"origin/{ref}"):
+        result = subprocess.run(
+            ["git", "rev-parse", "--verify", candidate],
+            cwd=cwd,
+            capture_output=True,
+            text=True,
+        )
+        if result.returncode == 0:
+            return result.stdout.strip()
+    result.check_returncode()
+    return ""  # unreachable; satisfies the type checker
+
+
+def _resolve_base_commit(base_ref: str, head_commit: str, cwd: Path) -> str:
     """Return the merge-base commit between base and head.
 
-    For a rebased PR the review diff is head relative to this commit.
+    The head_commit must already be resolved (full SHA) so a locally rebased or
+    not-yet-pushed branch is diffed against the correct merge-base.
     """
     base = base_ref if "/" in base_ref or base_ref == "HEAD" else f"origin/{base_ref}"
-    head = head_ref if "/" in head_ref or head_ref == "HEAD" else f"origin/{head_ref}"
     result = subprocess.run(
-        ["git", "merge-base", base, head],
+        ["git", "merge-base", base, head_commit],
         cwd=cwd,
         capture_output=True,
         text=True,
@@ -139,8 +154,9 @@ def _bootstrap_review(pr_number: int, apply: bool) -> tuple[Path, dict, str, str
     pr = _pr_data(pr_number)
     base_ref = pr.get("baseRefName", "main")
     head_ref = pr.get("headRefName", "HEAD")
-    head_sha = _short_sha(head_ref, repo_root)
-    base_commit = _resolve_base_commit(base_ref, head_ref, repo_root)
+    head_commit = _resolve_head_commit(head_ref, repo_root)
+    head_sha = _short_sha(head_commit, repo_root)
+    base_commit = _resolve_base_commit(base_ref, head_commit, repo_root)
     base_sha = _short_sha(base_commit, repo_root)
 
     if not apply:
@@ -153,7 +169,7 @@ def _bootstrap_review(pr_number: int, apply: bool) -> tuple[Path, dict, str, str
     )
 
     diff_path = scratch_dir / f"review-{base_sha}..{head_sha}.diff"
-    _generate_diff(repo_root, base_commit, head_sha, diff_path)
+    _generate_diff(repo_root, base_commit, head_commit, diff_path)
 
     state = {
         "current_node": "setup",
@@ -195,8 +211,9 @@ def _resync_review(state_path: Path) -> Path:
     pr = _pr_data(pr_number)
     base_ref = pr.get("baseRefName", "main")
     head_ref = pr.get("headRefName", "HEAD")
-    head_sha = _short_sha(head_ref, repo_root)
-    base_commit = _resolve_base_commit(base_ref, head_ref, repo_root)
+    head_commit = _resolve_head_commit(head_ref, repo_root)
+    head_sha = _short_sha(head_commit, repo_root)
+    base_commit = _resolve_base_commit(base_ref, head_commit, repo_root)
     base_sha = _short_sha(base_commit, repo_root)
 
     (scratch_dir / "pr_description.txt").write_text(
@@ -204,7 +221,7 @@ def _resync_review(state_path: Path) -> Path:
     )
 
     diff_path = scratch_dir / f"review-{base_sha}..{head_sha}.diff"
-    _generate_diff(repo_root, base_commit, head_sha, diff_path)
+    _generate_diff(repo_root, base_commit, head_commit, diff_path)
 
     state.setdefault("pr", {}).update(
         {
