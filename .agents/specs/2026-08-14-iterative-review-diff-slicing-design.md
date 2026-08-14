@@ -57,6 +57,10 @@ The `reviewer-*.md` `## Inputs` section continues to document `<diff_path>` as t
 - Marketplace source repo: the `reviewer-skills` slice is the first-party skill source under `codex-marketplace/plugins/**/skills/` plus `tests/` for skill tests. It does not include generated `.agents/skills/` mirrors.
 - Consumer repo: the `reviewer-skills` slice is the installed `.agents/skills/` surface. If the consumer also has `codex-marketplace/` (unlikely), the source rule above applies.
 
+## Scope-honesty relaxation
+
+This PR also relaxes `check_scope_honesty.py` so that a changed file is considered covered when the PR body or a governing plan/spec/roadmap mentions a parent directory or surface that contains the file. This avoids flagging bulk changes as scope drift when the prose honestly describes the top-level surface rather than every leaf path. The `node-scope-honesty.md` reference is updated to describe the surface-level coverage rule.
+
 ## Success criteria
 
 - `diff_slicer.py` is exercised by `ci --apply` and `ci --check`.
