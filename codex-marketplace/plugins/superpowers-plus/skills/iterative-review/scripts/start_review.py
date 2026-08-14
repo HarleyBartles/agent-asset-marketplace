@@ -33,14 +33,18 @@ def _repo_root() -> Path:
 
 
 def _short_sha(ref: str, cwd: Path) -> str:
-    result = subprocess.run(
-        ["git", "rev-parse", "--short=7", ref],
-        cwd=cwd,
-        capture_output=True,
-        text=True,
-        check=True,
-    )
-    return result.stdout.strip()
+    """Return the short SHA for a ref, trying the ref and then origin/<ref>."""
+    for candidate in (ref, f"origin/{ref}"):
+        result = subprocess.run(
+            ["git", "rev-parse", "--short=7", candidate],
+            cwd=cwd,
+            capture_output=True,
+            text=True,
+        )
+        if result.returncode == 0:
+            return result.stdout.strip()
+    result.check_returncode()
+    return ""
 
 
 def _resolve_base_commit(base_ref: str, head_ref: str, cwd: Path) -> str:
@@ -49,8 +53,9 @@ def _resolve_base_commit(base_ref: str, head_ref: str, cwd: Path) -> str:
     For a rebased PR the review diff is head relative to this commit.
     """
     base = base_ref if "/" in base_ref or base_ref == "HEAD" else f"origin/{base_ref}"
+    head = head_ref if "/" in head_ref or head_ref == "HEAD" else f"origin/{head_ref}"
     result = subprocess.run(
-        ["git", "merge-base", base, head_ref],
+        ["git", "merge-base", base, head],
         cwd=cwd,
         capture_output=True,
         text=True,
@@ -149,7 +154,7 @@ def _bootstrap_review(pr_number: int, apply: bool) -> tuple[Path, dict, str, str
     )
 
     diff_path = scratch_dir / f"review-{base_sha}..{head_sha}.diff"
-    _generate_diff(repo_root, base_commit, head_ref, diff_path)
+    _generate_diff(repo_root, base_commit, head_sha, diff_path)
 
     diff_path = scratch_dir / f"review-{base_sha}..{head_sha}.diff"
     state = {
@@ -196,7 +201,7 @@ def _resync_review(state_path: Path) -> Path:
     )
 
     diff_path = scratch_dir / f"review-{base_sha}..{head_sha}.diff"
-    _generate_diff(repo_root, base_commit, head_ref, diff_path)
+    _generate_diff(repo_root, base_commit, head_sha, diff_path)
 
     state.setdefault("pr", {}).update(
         {
