@@ -1,0 +1,73 @@
+# Design: slice diffs before dispatching reviewer subagents
+
+## Problem
+
+The `iterative-review` skill currently gives every reviewer subagent the full branch diff. For a PR that touches many surfaces, this overloads the subagent context with hunks that are outside the lens's expertise. It also causes `reviewer-skills` to receive duplicate copies: the first-party source under `codex-marketplace/plugins/**/skills/` and the generated install mirror under `.agents/skills/`. The result is wasted tokens, more false positives, and contradictions such as `reviewer-strong` claiming a file was not reviewed by another lens when the same file was already reviewed at the source.
+
+## Goal
+
+Insert a `diff_slicer` step between lens selection and lens dispatch. For each selected deep lens, write a scoped diff that contains only the hunks the lens is qualified to review. The orchestrator-level reviewers (`reviewer-fast`, `orchestrator-self-review`, `final-strong`) continue to see the full diff. The `lens-triage` node works from lens logs, so it does not use a diff.
+
+## Non-goals
+
+- Do not change the full-diff contract for `reviewer-fast`, `orchestrator-self-review`, or `final-strong`.
+- Do not change `regression-scan` or `reviewer-fixes`; they already operate on a scoped diff.
+- Do not add a new configuration language. The slice rules should be derived from the existing `reviewer-*.md` `## Applies to` sections.
+- Do not remove the installed `.agents/skills/` copies from the repository; only exclude them from diffs where they duplicate marketplace source.
+
+## Proposed architecture
+
+### New component: `diff_slicer.py`
+
+- Path: `codex-marketplace/plugins/superpowers-plus/skills/iterative-review/scripts/diff_slicer.py`
+- CLI: `py -3 diff_slicer.py --state <state_path> --apply`
+- Inputs:
+  - `review-state.json` (provides `scratch_dir` and the full `diff_path`)
+  - `<scratch_dir>/lenses.jsonl` (produced by `select_lenses.py`)
+  - `reviewer-*.md` profiles (to read `## Applies to` globs)
+- Outputs:
+  - One sliced diff per lens: `<scratch_dir>/lens-<lens>-<base>..<head>.diff`
+  - Updated `lenses.jsonl` entries that include a `diff_path` key pointing at the slice
+
+A hunk is included in a lens slice when:
+1. At least one of its `a/` or `b/` paths matches an include glob from the lens profile's `## Applies to` section.
+2. None of its paths are excluded by the source-vs-consumer rule for installed skill mirrors.
+
+If a lens profile has no include globs, it receives the full diff (preserves current behavior).
+
+### Source vs consumer rule for installed skill mirrors
+
+If the repository contains `codex-marketplace/plugins/`, it is a marketplace source repo. For every changed file under `.agents/skills/`, the slicer looks for a corresponding first-party source under `codex-marketplace/plugins/**/skills/`. If the source file is also changed in the diff, the `.agents/skills/` mirror is excluded from all deep-lens slices and from `reviewer-fast`. If the source is not in the diff, the `.agents/skills/` file is treated as a consumer-side local edit and remains in scope for `reviewer-skills`.
+
+The mapping is derived from `.agents/skills/.provenance.json` when it exists. If that mapping is absent, the slicer falls back to a simple path-stem match: for a changed file `.agents/skills/<skill>/<subpath>`, look for `codex-marketplace/plugins/<pack>/skills/<skill>/<subpath>` in the diff.
+
+### Updated `lens-dispatch` recipe
+
+The `node-lens-dispatch.md` reference is updated to add a step between selecting lenses and dispatching them:
+
+1. Run `select_lenses.py` as before.
+2. Run `diff_slicer.py --state <scratch_dir>/review-state.json --apply`.
+3. Read `lenses.jsonl`. Use the per-lens `diff_path` when it exists; otherwise fall back to the full diff.
+4. Dispatch each subagent with its scoped `diff_path`.
+
+The `reviewer-*.md` `## Inputs` section continues to document `<diff_path>` as the prepared diff. No new input token is introduced.
+
+## `reviewer-skills` scope in each repo type
+
+- Marketplace source repo: the `reviewer-skills` slice is the first-party skill source under `codex-marketplace/plugins/**/skills/` plus `tests/` for skill tests. It does not include generated `.agents/skills/` mirrors.
+- Consumer repo: the `reviewer-skills` slice is the installed `.agents/skills/` surface. If the consumer also has `codex-marketplace/` (unlikely), the source rule above applies.
+
+## Success criteria
+
+- `diff_slicer.py` is exercised by `ci --apply` and `ci --check`.
+- A new `test_diff_slicer.py` unit test covers:
+  - Slicing by `## Applies to` globs.
+  - Excluding an installed `.agents/skills/` mirror when the marketplace source is in the same diff.
+  - Keeping an installed `.agents/skills/` file in scope when no marketplace source is present.
+  - Falling back to the full diff when a lens has no include globs.
+- `lens-dispatch.md` is updated and the installed copy in `.agents/skills/iterative-review/references/` is regenerated by `marketplace --apply`.
+- The skill passes `py -3 tools/run.py ci --check`.
+
+## Validation
+
+Run `py -3 tools/run.py ci --apply` followed by `py -3 tools/run.py ci --check` in the PR worktree. The tests must pass and the mesh/marketplace must remain current.
