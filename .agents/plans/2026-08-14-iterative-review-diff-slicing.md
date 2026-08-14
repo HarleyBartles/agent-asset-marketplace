@@ -1,6 +1,6 @@
 # Iterative review diff slicing implementation plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use `/subagent-driven-development` or `/executing-plans` to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use `/subagent-driven-development` or `/executing-plans` to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** Add `diff_slicer.py` to the `iterative-review` skill so each deep lens receives only the diff hunks it is qualified to review, while orchestrator-level reviewers keep the full diff.
 
@@ -27,7 +27,7 @@
 - Consumes: `review-state.json`, `lenses.jsonl`, full branch diff, `reviewer-*.md` profiles
 - Produces: `<scratch_dir>/lens-<lens>-<base>..<head>.diff` files and updated `lenses.jsonl` with `diff_path`
 
-- [ ] **Step 1: Write the failing unit test for `_glob_parts`**
+- [x] **Step 1: Write the failing unit test for `_glob_parts`**
 
 ```python
 def test_glob_parts_supports_double_star():
@@ -35,13 +35,13 @@ def test_glob_parts_supports_double_star():
     assert not _glob_match("codex-marketplace/plugins/**/skills/**/*.md", ".agents/skills/iterative-review/SKILL.md")
 ```
 
-- [ ] **Step 2: Run the failing test**
+- [x] **Step 2: Run the failing test**
 
 Run: `py -3 -m pytest codex-marketplace/plugins/superpowers-plus/skills/iterative-review/tests/test_diff_slicer.py::test_glob_parts_supports_double_star -v`
 
 Expected: FAIL (function not defined)
 
-- [ ] **Step 3: Implement `_glob_match`**
+- [x] **Step 3: Implement `_glob_match`**
 
 ```python
 def _glob_match(pattern: str, path: str) -> bool:
@@ -65,7 +65,7 @@ def _glob_match(pattern: str, path: str) -> bool:
     return match(parts, target)
 ```
 
-- [ ] **Step 4: Write the failing test for `_installed_mirror_paths`**
+- [x] **Step 4: Write the failing test for `_installed_mirror_paths`**
 
 ```python
 def test_installed_mirror_paths_excludes_source_duplicates():
@@ -79,7 +79,7 @@ def test_installed_mirror_paths_excludes_source_duplicates():
     assert ".agents/skills/new-skill/SKILL.md" not in mirrors
 ```
 
-- [ ] **Step 5: Implement `_installed_mirror_paths`**
+- [x] **Step 5: Implement `_installed_mirror_paths`**
 
 ```python
 def _installed_mirror_paths(changed: list[str], repo_root: Path) -> set[str]:
@@ -101,7 +101,7 @@ def _installed_mirror_paths(changed: list[str], repo_root: Path) -> set[str]:
     return mirrors
 ```
 
-- [ ] **Step 6: Write the failing test for `_slice_hunks`**
+- [x] **Step 6: Write the failing test for `_slice_hunks`**
 
 ```python
 def test_slice_hunks_keeps_matching_paths():
@@ -111,7 +111,7 @@ def test_slice_hunks_keeps_matching_paths():
     assert "diff --git a/bar.md b/bar.md" not in result
 ```
 
-- [ ] **Step 7: Implement `_slice_hunks`**
+- [x] **Step 7: Implement `_slice_hunks`**
 
 ```python
 def _slice_hunks(diff_text: str, include_globs: list[str], exclude_paths: set[str]) -> str:
@@ -138,7 +138,7 @@ def _slice_hunks(diff_text: str, include_globs: list[str], exclude_paths: set[st
     return "".join(out)
 ```
 
-- [ ] **Step 8: Implement `diff_slicer.py` CLI main**
+- [x] **Step 8: Implement `diff_slicer.py` CLI main**
 
 ```python
 def _read_lenses(path: Path) -> list[dict]:
@@ -191,13 +191,13 @@ def main(argv: list[str] | None = None) -> int:
     return 0
 ```
 
-- [ ] **Step 9: Run the new tests**
+- [x] **Step 9: Run the new tests**
 
 Run: `py -3 -m pytest codex-marketplace/plugins/superpowers-plus/skills/iterative-review/tests/test_diff_slicer.py -v`
 
 Expected: PASS
 
-- [ ] **Step 10: Commit Task 1**
+- [x] **Step 10: Commit Task 1**
 
 ```bash
 git add -A
@@ -213,7 +213,7 @@ git commit -m "feat(iterative-review): add diff_slicer.py with tests" -m "Genera
 - Consumes: `lenses.jsonl` with new `diff_path` field
 - Produces: updated orchestrator recipe
 
-- [ ] **Step 1: Insert the slicer step into `node-lens-dispatch.md`**
+- [x] **Step 1: Insert the slicer step into `node-lens-dispatch.md`**
 
 After step 1 and before step 2, add:
 
@@ -231,7 +231,7 @@ to:
 
 > Build the common input package: `<pr_description>`, `<scan_findings>`, and `review-log-reviewer-fast.md`. For each lens, add its sliced `<diff_path>` from the `lenses.jsonl` entry. If `reviewer-fast` is selected, use the full `<diff_path>` instead of a slice.
 
-- [ ] **Step 2: Commit Task 2**
+- [x] **Step 2: Commit Task 2**
 
 ```bash
 git add -A
@@ -243,17 +243,17 @@ git commit -m "docs(iterative-review): add diff_slicer step to lens-dispatch" -m
 **Files:**
 - Regenerate: `.agents/skills/iterative-review/` from the source
 
-- [ ] **Step 1: Regenerate installed skills**
+- [x] **Step 1: Regenerate installed skills**
 
 Run: `py -3 tools/run.py marketplace --apply`
 
-- [ ] **Step 2: Run CI apply and check**
+- [x] **Step 2: Run CI apply and check**
 
 Run: `py -3 tools/run.py ci --apply && py -3 tools/run.py ci --check`
 
 Expected: all requested targets pass
 
-- [ ] **Step 3: Commit Task 3**
+- [x] **Step 3: Commit Task 3**
 
 ```bash
 git add -A
@@ -265,13 +265,13 @@ git commit -m "chore(marketplace): regenerate iterative-review installed skill" 
 **Files:**
 - Remote: `origin` on GitHub
 
-- [ ] **Step 1: Push the branch**
+- [x] **Step 1: Push the branch**
 
 ```bash
 git push origin improve-iterative-review-diff-slicing
 ```
 
-- [ ] **Step 2: Open a draft PR**
+- [x] **Step 2: Open a draft PR**
 
 Use `gh pr create --draft` with a summary that references this spec and plan:
 
@@ -279,9 +279,9 @@ Use `gh pr create --draft` with a summary that references this spec and plan:
 gh pr create --draft --title "feat(iterative-review): slice diffs per reviewer lens" --body "Implements the diff slicer described in `.agents/specs/2026-08-14-iterative-review-diff-slicing-design.md`."
 ```
 
-- [ ] **Step 3: Mark plan steps complete**
+- [x] **Step 3: Mark plan steps complete**
 
-Replace the `- [ ]` checkboxes in this plan with `- [x]` for all completed steps.
+Replace the `- [x]` checkboxes in this plan with `- [x]` for all completed steps.
 
 ## Expected interim state
 
