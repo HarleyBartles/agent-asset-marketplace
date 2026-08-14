@@ -310,9 +310,9 @@ def main(argv: list[str] | None = None) -> int:
             return 2
         try:
             scratch_dir = _resync_review(state_path)
-        except (subprocess.CalledProcessError, OSError) as exc:
+        except (subprocess.CalledProcessError, OSError, ValueError) as exc:
             print(f"error: {exc}", file=sys.stderr)
-            return 1
+            return 2
         if _normalize_inputs(scratch_dir) != 0:
             return 1
         next_node, full_output = _discover_next_node(state_path)
