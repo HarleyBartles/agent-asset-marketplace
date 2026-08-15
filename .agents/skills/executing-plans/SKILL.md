@@ -51,9 +51,11 @@ Read this skill's baseline (`references/implementation-baseline.md`) and the rep
 ### Step 1: Load and Review Plan
 1. Ensure an isolated workspace: use /using-git-worktrees to create one or verify the existing one
 2. Read plan file
-3. Review critically - identify any questions or concerns about the plan
-4. If concerns: Raise them with your human partner before starting
-5. If no concerns: Create todos for the plan items and proceed
+3. Note the `Execution Strategy` in the plan header. **MUST READ:** `references/execution-lane-override.md` and confirm the lane you are using is the right one: human explicit direction wins, then your own assessment, then the plan's recommendation
+4. Announce the lane you will use and see it through unless the human asks to change
+5. Review critically - identify any questions or concerns about the plan
+6. If concerns: Raise them with your human partner before starting
+7. If no concerns: Create todos for the plan items and proceed
 
 ### Step 2: Execute Tasks
 
