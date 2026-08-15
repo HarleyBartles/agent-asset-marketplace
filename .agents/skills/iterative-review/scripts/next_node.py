@@ -57,17 +57,16 @@ GRAPH: dict[str, list[tuple[str, str]]] = {
         ("green", "scope-honesty"),
     ],
     "fast-fix": [("always", "preflight")],
-    "scope-honesty": [("always", "lens-dispatch")],
-    "lens-dispatch": [("always", "normalize-inputs")],
-    "normalize-inputs": [
-        ("after_lens_dispatch", "lens-triage"),
-        ("after_setup", "preflight"),
+    "scope-honesty": [("always", "reviewer-fast")],
+    "reviewer-fast": [
+        ("findings", "lens-triage"),
+        ("clean", "lens-dispatch"),
     ],
     "lens-triage": [
         ("blocked", "blocked"),
         ("findings", "metrics-track"),
-        ("trivial", "final-strong"),
-        ("clean", "final-strong"),
+        ("after_reviewer_fast", "lens-dispatch"),
+        ("after_lens_dispatch", "final-strong"),
     ],
     "metrics-track": [("always", "finding-fix")],
     "finding-fix": [
@@ -76,7 +75,13 @@ GRAPH: dict[str, list[tuple[str, str]]] = {
     ],
     "re-preflight": [
         ("red", "fast-fix"),
+        ("fast_origin", "lens-dispatch"),
         ("green", "reviewer-fixes"),
+    ],
+    "lens-dispatch": [("always", "normalize-inputs")],
+    "normalize-inputs": [
+        ("after_lens_dispatch", "lens-triage"),
+        ("after_setup", "preflight"),
     ],
     "reviewer-fixes": [
         ("blocked", "blocked"),
@@ -307,6 +312,22 @@ def _condition_holds(condition: str, state: dict, ledger: Path, current_node: st
         return _lens_log_clean(scratch, "reviewer-fixes") and not regressions
     if condition == "regression_scan_clean":
         return not unresolved and not regressions
+    if condition == "after_reviewer_fast":
+        return previous_node == "reviewer-fast" and not unresolved
+    if condition == "after_lens_dispatch":
+        return previous_node == "lens-dispatch" and not unresolved
+    if condition == "fast_origin":
+        findings = _load_jsonl(scratch / "findings.jsonl")
+        resolved_ids = {r["finding_id"] for r in _load_jsonl(scratch / "resolutions.jsonl")}
+        first_unresolved = next(
+            (
+                f
+                for f in findings
+                if f["finding_id"] not in resolved_ids and f.get("severity") in ("blocking", "important")
+            ),
+            None,
+        )
+        return not unresolved or (first_unresolved is not None and first_unresolved.get("lens") == "reviewer-fast")
 
     return False
 

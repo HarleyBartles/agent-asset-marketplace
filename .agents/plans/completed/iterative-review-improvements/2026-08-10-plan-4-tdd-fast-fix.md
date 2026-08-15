@@ -36,7 +36,7 @@
 Update the roadmap table to:
 
 ```markdown
-| 3 | Lens dispatch, write-safety, and final polish | done | [Plan 3](../completed/iterative-review-improvements/2026-08-09-plan-3-lens-dispatch-and-polish.md) | df9a41b8 | #289 | 9/10 | `select_lenses.py`, self-review template, tests, docs, plus a no-hand-write contract for all scratch files (`review-state.json`, `*.jsonl`, `review-log-*.md`) and a script for orchestrator markdown logs |
+| 3 | Lens dispatch, write-safety, and final polish | done | [Plan 3](./2026-08-09-plan-3-lens-dispatch-and-polish.md) | df9a41b8 | #289 | 9/10 | `select_lenses.py`, self-review template, tests, docs, plus a no-hand-write contract for all scratch files (`review-state.json`, `*.jsonl`, `review-log-*.md`) and a script for orchestrator markdown logs |
 | 4 | TDD and fast-fix churn reduction | in_progress | [Plan 4](2026-08-10-plan-4-tdd-fast-fix.md) | — | — | — | Enforce `test-driven-development` for implementers and orchestrators, add TDD to implementer profiles and subagent-driven-development prompts, and tighten the `finding-fix`/`reviewer-fixes`/`fast-fix` node recipes so fixes are proven by failing tests and re-run only the originating lens, not a full final branch review. |
 ```
 

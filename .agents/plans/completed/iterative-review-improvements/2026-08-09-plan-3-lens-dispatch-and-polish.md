@@ -22,8 +22,8 @@
 ### Task 0: Verify worktree baseline and update the roadmap
 
 **Files:**
-- Read: `.agents/plans/iterative-review-improvements/roadmap.md`
-- Modify: `.agents/plans/iterative-review-improvements/roadmap.md`
+- Read: `.agents/plans/completed/iterative-review-improvements/roadmap.md`
+- Modify: `.agents/plans/completed/iterative-review-improvements/roadmap.md`
 - Test: `py -3 tools/run.py ci --check`
 
 **Interfaces:**
@@ -48,7 +48,7 @@ Expected: all targets pass.
 - [ ] **Step 3: Commit the plan and roadmap update**
 
 ```bash
-git add .agents/plans/iterative-review-improvements/2026-08-09-plan-3-lens-dispatch-and-polish.md .agents/plans/iterative-review-improvements/roadmap.md
+git add .agents/plans/completed/iterative-review-improvements/2026-08-09-plan-3-lens-dispatch-and-polish.md .agents/plans/completed/iterative-review-improvements/roadmap.md
 git commit -m "docs(plans): start Plan 3 for iterative-review lens dispatch and write-safety"
 ```
 
@@ -521,7 +521,7 @@ Expected: all targets pass.
 - [x] **Step 6: Commit**
 
 ```bash
-git add codex-marketplace/plugins/superpowers-plus/skills/iterative-review/references/review-log-orchestrator-self-review-template.md codex-marketplace/plugins/superpowers-plus/skills/iterative-review/SKILL.md codex-marketplace/plugins/superpowers-plus/skills/iterative-review/references/node-orchestrator-self-review.md codex-marketplace/plugins/superpowers-plus/skills/iterative-review/references/node-lens-dispatch.md codex-marketplace/plugins/superpowers-plus/skills/iterative-review/references/review-state-graph.md .agents/skills/iterative-review/ .agents/plans/iterative-review-improvements/2026-08-09-plan-3-lens-dispatch-and-polish.md
+git add codex-marketplace/plugins/superpowers-plus/skills/iterative-review/references/review-log-orchestrator-self-review-template.md codex-marketplace/plugins/superpowers-plus/skills/iterative-review/SKILL.md codex-marketplace/plugins/superpowers-plus/skills/iterative-review/references/node-orchestrator-self-review.md codex-marketplace/plugins/superpowers-plus/skills/iterative-review/references/node-lens-dispatch.md codex-marketplace/plugins/superpowers-plus/skills/iterative-review/references/review-state-graph.md .agents/skills/iterative-review/ .agents/plans/completed/iterative-review-improvements/2026-08-09-plan-3-lens-dispatch-and-polish.md
 git commit -m "docs(iterative-review): orchestrator self-review template"
 ```
 
@@ -648,6 +648,6 @@ When the PR merges, move this file to `.agents/plans/completed/iterative-review-
 
 ## Execution handoff
 
-Plan complete and saved to `.agents/plans/iterative-review-improvements/2026-08-09-plan-3-lens-dispatch-and-polish.md`.
+Plan complete and saved to `.agents/plans/completed/iterative-review-improvements/2026-08-09-plan-3-lens-dispatch-and-polish.md`.
 
 Recommended execution approach: **subagent-driven-development**. Each task is independently implementable, modifies distinct files, and ends with a testable deliverable. Task 0 should be completed first to commit the plan and roadmap; Tasks 1-6 can then proceed in order.
