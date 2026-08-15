@@ -415,7 +415,7 @@ def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     )
     parser.add_argument(
         "--phase",
-        choices=("inventory", "project", "index", "all"),
+        choices=("inventory", "project", "index", "shared-references", "all"),
         default="all",
         help="Validate only one phase. Default: all",
     )
@@ -496,10 +496,20 @@ def validate_index(*, skip_freshness: bool = False) -> None:
     print("OK validate_marketplace: index")
 
 
+def validate_shared_references(*, skip_freshness: bool = False) -> None:
+    _ = skip_freshness
+    _run_tool_check(
+        [sys.executable, "tools/sync_skill_shared_references.py", "--check"],
+        "shared skill references check",
+    )
+    print("OK validate_marketplace: shared-references")
+
+
 def validate_all(*, skip_freshness: bool = False) -> None:
     validate_inventory(skip_freshness=skip_freshness)
     validate_project(skip_freshness=skip_freshness)
     validate_index(skip_freshness=skip_freshness)
+    validate_shared_references(skip_freshness=skip_freshness)
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -508,6 +518,7 @@ def main(argv: list[str] | None = None) -> int:
         "inventory": lambda: validate_inventory(skip_freshness=args.skip_freshness_checks),
         "project": lambda: validate_project(skip_freshness=args.skip_freshness_checks),
         "index": lambda: validate_index(skip_freshness=args.skip_freshness_checks),
+        "shared-references": lambda: validate_shared_references(skip_freshness=args.skip_freshness_checks),
         "all": lambda: validate_all(skip_freshness=args.skip_freshness_checks),
     }
     phase_runners[args.phase]()
