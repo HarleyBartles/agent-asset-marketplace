@@ -1,6 +1,6 @@
 # Escape Hatches and Execution Strategy Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use `/subagent-driven-development` (recommended) or `/executing-plans` to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use `/subagent-driven-development` (recommended) or `/executing-plans` to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** Surface plan-escape hatches in the planning skills, encode a recommended `Execution Strategy` in every plan header, and make execution skills read and respect that recommendation without re-litigating the plan.
 
@@ -34,7 +34,7 @@
 - Produces: `tools/validate_marketplace.py --phase shared-references`.
 - Produces: fresh reference copies in `codex-marketplace/plugins/superpowers-plus/skills/*/references/`.
 
-- [ ] **Step 1: Write `plan-scope-sizing.md`**
+- [x] **Step 1: Write `plan-scope-sizing.md`**
 
 Create `codex-marketplace/plugins/superpowers-plus/references/plan-scope-sizing.md` with this exact content:
 
@@ -81,7 +81,7 @@ The plan is already part of an epic, but while writing it you discover it is too
 - The right response to a well-sliced large plan is execution, not decomposition.
 ```
 
-- [ ] **Step 2: Write `execution-lane-override.md`**
+- [x] **Step 2: Write `execution-lane-override.md`**
 
 Create `codex-marketplace/plugins/superpowers-plus/references/execution-lane-override.md` with this exact content:
 
@@ -117,7 +117,7 @@ If the plan's `Execution Strategy` does not match the lane you chose, do not ask
 3. Proceed. If you can give neither human direction nor a clear assessment, raise a focused question to the human.
 ```
 
-- [ ] **Step 3: Create `tools/sync_skill_shared_references.py`**
+- [x] **Step 3: Create `tools/sync_skill_shared_references.py`**
 
 Implement `tools/sync_skill_shared_references.py` with `--check` and `--apply` modes:
 
@@ -133,7 +133,7 @@ Implement `tools/sync_skill_shared_references.py` with `--check` and `--apply` m
 - In `--apply` mode, write the canonical text to each destination, creating the `references/` directory if needed.
 - Print a concise summary of which files were checked or written.
 
-- [ ] **Step 4: Wire the sync script into `tools/run.py` and `tools/validate_marketplace.py`**
+- [x] **Step 4: Wire the sync script into `tools/run.py` and `tools/validate_marketplace.py`**
 
 Modify `tools/run.py`:
 - In `_apply_marketplace`, before `tools/generate_marketplace.py --apply`, run `[sys.executable, "tools/sync_skill_shared_references.py", "--apply"]`.
@@ -144,7 +144,7 @@ Modify `tools/validate_marketplace.py`:
 - Add `def validate_shared_references():` that calls `tools/sync_skill_shared_references.py --check`.
 - Register the phase in the `phase_runners` mapping.
 
-- [ ] **Step 5: Commit** (`Task 1`)
+- [x] **Step 5: Commit** (`Task 1`)
 
 ```bash
 git add codex-marketplace/plugins/superpowers-plus/references/ tools/sync_skill_shared_references.py tools/run.py tools/validate_marketplace.py
@@ -171,7 +171,7 @@ Co-Authored-By: Devin <158243242+devin-ai-integration[bot]@users.noreply.github.
 - Consumes: `plan-scope-sizing.md` and `execution-lane-override.md` exist as canonical references.
 - Produces: `Execution Strategy` header field, right-sizing pointer, size check, and updated execution handoff.
 
-- [ ] **Step 1: Add `Execution Strategy` to the Plan Document Header**
+- [x] **Step 1: Add `Execution Strategy` to the Plan Document Header**
 
 In the `## Plan Document Header` section, insert the following line after `**Tech Stack:**`:
 
@@ -179,7 +179,7 @@ In the `## Plan Document Header` section, insert the following line after `**Tec
 **Execution Strategy:** `subagent-driven-development` (default for independent tasks) — `executing-plans` (for tightly coupled/sequential tasks), `dispatching-parallel-agents` (for 2+ independent parallel tracks), or `manual` (for human-driven work). The planner picks the recommended lane.
 ```
 
-- [ ] **Step 2: Add a Right-Sizing section**
+- [x] **Step 2: Add a Right-Sizing section**
 
 Insert a new `## Right-Sizing and Escape Hatches` section between `## Task Right-Sizing` and `## Bite-Sized Task Granularity` (or after `## Task Right-Sizing` if the file order differs). Use this exact text:
 
@@ -191,7 +191,7 @@ If you think "this is a lot" or "the plan is huge" while writing, you are at a s
 A long plan with well-sliced, independently testable tasks is not a problem. The `subagent-driven-development` execution lane is designed for that shape. A plan is too big only when it crosses independent concerns or one of its tasks cannot fit in one review cycle.
 ```
 
-- [ ] **Step 3: Add the Plan Size Check to the self-review gate**
+- [x] **Step 3: Add the Plan Size Check to the self-review gate**
 
 In the `## Self-review & plan-readiness gate` section, add `### 5. Plan Size Check` before the final `Plan-readiness rating` step:
 
@@ -199,7 +199,7 @@ In the `## Self-review & plan-readiness gate` section, add `### 5. Plan Size Che
 **5. Plan Size Check:** Did you think the plan was too large while writing? If yes, did you apply one of the escape hatches in `references/plan-scope-sizing.md`? Is the `Execution Strategy` field filled with an allowed value and a clear rationale?
 ```
 
-- [ ] **Step 4: Update the Execution Handoff**
+- [x] **Step 4: Update the Execution Handoff**
 
 Replace the `## Execution Handoff` section with this:
 
@@ -214,7 +214,7 @@ After the plan is saved and the plan-readiness rating meets the floor, read the 
 If the user chooses a different lane, note it in the handoff and let the executing skill handle the override. Do not re-derive the whole plan from scratch.
 ```
 
-- [ ] **Step 5: Run the sync script and commit** (`Task 2`)
+- [x] **Step 5: Run the sync script and commit** (`Task 2`)
 
 ```bash
 py -3 tools/sync_skill_shared_references.py --apply
@@ -242,7 +242,7 @@ Co-Authored-By: Devin <158243242+devin-ai-integration[bot]@users.noreply.github.
 - Consumes: `plan-scope-sizing.md` canonical reference.
 - Produces: A Lane 3 for splitting oversized plans and a clear pointer to the scope sizing reference.
 
-- [ ] **Step 1: Add Lane 3 — Split an Oversized Plan**
+- [x] **Step 1: Add Lane 3 — Split an Oversized Plan**
 
 Insert a new `## Lane 3 — Split an Oversized Plan` section after `## Lane 2 — Continue an Epic`:
 
@@ -259,7 +259,7 @@ If a plan in progress grows beyond one deliverable, stop writing. **MUST READ:**
 This is a fallback for legitimately over-scoped plans. It is not an excuse to create endless epics of tiny plans.
 ```
 
-- [ ] **Step 2: Update Boundary cases to point to the reference**
+- [x] **Step 2: Update Boundary cases to point to the reference**
 
 In the `## Boundary cases` section, replace the existing text with this:
 
@@ -269,7 +269,7 @@ In the `## Boundary cases` section, replace the existing text with this:
 If a roadmap item should split into a new epic, a scope change invalidates multiple pending plans, or you are choosing between asking the human and escalating through `risk-gates`, load `references/scope-notes.md` and `references/plan-scope-sizing.md` and follow their guidance.
 ```
 
-- [ ] **Step 3: Run the sync script and commit** (`Task 3`)
+- [x] **Step 3: Run the sync script and commit** (`Task 3`)
 
 ```bash
 py -3 tools/sync_skill_shared_references.py --apply
@@ -296,7 +296,7 @@ Co-Authored-By: Devin <158243242+devin-ai-integration[bot]@users.noreply.github.
 - Consumes: Plan `Execution Strategy` field; `execution-lane-override.md` reference.
 - Produces: Execution lane decision step in `Step 1: Load and Review Plan`.
 
-- [ ] **Step 1: Add the execution lane decision to the load step**
+- [x] **Step 1: Add the execution lane decision to the load step**
 
 In `### Step 1: Load and Review Plan`, replace the numbered list with this:
 
@@ -311,7 +311,7 @@ In `### Step 1: Load and Review Plan`, replace the numbered list with this:
 7. If no concerns: Create todos for the plan items and proceed
 ```
 
-- [ ] **Step 2: Run the sync script and commit** (`Task 4`)
+- [x] **Step 2: Run the sync script and commit** (`Task 4`)
 
 ```bash
 py -3 tools/sync_skill_shared_references.py --apply
@@ -338,7 +338,7 @@ Co-Authored-By: Devin <158243242+devin-ai-integration[bot]@users.noreply.github.
 - Consumes: Plan `Execution Strategy` field; `execution-lane-override.md` reference.
 - Produces: Execution lane note in the `## Setup` section.
 
-- [ ] **Step 1: Add the execution lane note to Setup**
+- [x] **Step 1: Add the execution lane note to Setup**
 
 In the `## Setup` section, after the `Read the repo's .agents/runbooks/implementing.md` block, add this paragraph:
 
@@ -346,7 +346,7 @@ In the `## Setup` section, after the `Read the repo's .agents/runbooks/implement
 Read the plan once, note its context and Global Constraints, and create a todo per task. Before Task 1, note the `Execution Strategy` in the plan header. **MUST READ:** `references/execution-lane-override.md` to confirm `subagent-driven-development` is the right lane. If the plan recommends a different lane but you are using this one because the tasks are independent or the human directed it here, state that at the start of execution and do not re-litigate.
 ```
 
-- [ ] **Step 2: Run the sync script and commit** (`Task 5`)
+- [x] **Step 2: Run the sync script and commit** (`Task 5`)
 
 ```bash
 py -3 tools/sync_skill_shared_references.py --apply
@@ -373,7 +373,7 @@ Co-Authored-By: Devin <158243242+devin-ai-integration[bot]@users.noreply.github.
 - Consumes: Plan `Execution Strategy` field; `execution-lane-override.md` reference.
 - Produces: A short execution strategy note near the top of the skill.
 
-- [ ] **Step 1: Add an Execution Strategy note**
+- [x] **Step 1: Add an Execution Strategy note**
 
 After `## Overview` (or near the top of the process), insert:
 
@@ -383,7 +383,7 @@ After `## Overview` (or near the top of the process), insert:
 If you are invoking this skill from a plan, read the `Execution Strategy` in the plan header and **MUST READ:** `references/execution-lane-override.md` before dispatching. Announce that you are using `dispatching-parallel-agents` and see it through unless the human asks to change.
 ```
 
-- [ ] **Step 2: Run the sync script and commit** (`Task 6`)
+- [x] **Step 2: Run the sync script and commit** (`Task 6`)
 
 ```bash
 py -3 tools/sync_skill_shared_references.py --apply
@@ -411,13 +411,13 @@ Co-Authored-By: Devin <158243242+devin-ai-integration[bot]@users.noreply.github.
 - Consumes: All source skill changes from Tasks 1-6.
 - Produces: Fresh marketplace manifest and installed skill copies.
 
-- [ ] **Step 1: Run the full marketplace apply**
+- [x] **Step 1: Run the full marketplace apply**
 
 ```bash
 py -3 tools/run.py marketplace --apply
 ```
 
-- [ ] **Step 2: Verify the vendored and installed copies are fresh**
+- [x] **Step 2: Verify the vendored and installed copies are fresh**
 
 ```bash
 py -3 tools/sync_skill_shared_references.py --check
@@ -426,7 +426,7 @@ py -3 tools/run.py installed-skills --check
 
 If either fails, run the corresponding `--apply` command and re-check.
 
-- [ ] **Step 3: Commit regenerated files** (`Task 7`)
+- [x] **Step 3: Commit regenerated files** (`Task 7`)
 
 ```bash
 git add codex-marketplace/manifest.json .agents/plugins/marketplace.json .agents/skills/
@@ -450,7 +450,7 @@ Co-Authored-By: Devin <158243242+devin-ai-integration[bot]@users.noreply.github.
 **Interfaces:**
 - Produces: Passing `py -3 tools/run.py ci --check` and an open draft PR.
 
-- [ ] **Step 1: Run the canonical CI check**
+- [x] **Step 1: Run the canonical CI check**
 
 ```bash
 py -3 tools/run.py ci --check
@@ -458,7 +458,7 @@ py -3 tools/run.py ci --check
 
 If it fails, fix the issue or split the problem into a new plan. Do not proceed until `ci --check` passes.
 
-- [ ] **Step 2: Self-review and plan-readiness rating**
+- [x] **Step 2: Self-review and plan-readiness rating**
 
 Run the `handoff-gates` `plan-readiness` lane. Verify:
 
@@ -469,7 +469,7 @@ Run the `handoff-gates` `plan-readiness` lane. Verify:
 
 Report the final rating here before handoff.
 
-- [ ] **Step 3: Push and open a draft PR**
+- [x] **Step 3: Push and open a draft PR**
 
 ```bash
 git push -u origin plan-escape-hatches-execution-strategy
@@ -485,3 +485,12 @@ Capture the PR URL and head SHA for publication proof.
 **Rating:** 8/10
 
 The plan is concrete on the skill and reference content. The remaining 9/10 uncertainty is the exact insertion points inside the legacy `tools/run.py` and `tools/validate_marketplace.py` Python code; those files are straightforward to extend but the implementer should inspect the current `phase_runners` and `_apply_marketplace` helper before writing the exact edits. The plan names the function and the task clearly, so a competent implementer can close this gap in context.
+
+## Execution and Completion Notes
+
+- Execution lane: `executing-plans` (plan recommended `subagent-driven-development`; overridden because the user was in the session and the work was sequential and small enough for a single execution session).
+- All Tasks 1-8 completed and verified.
+- `py -3 tools/run.py ci --check`: passed.
+- `py -3 tools/run.py marketplace --apply`: passed.
+- Shared references stay in sync via `tools/sync_skill_shared_references.py`.
+- Completion-readiness self-rating: 9/10.
