@@ -174,8 +174,7 @@ def _select(state: dict, provided_inputs: set[str]) -> list[dict]:
                     "output_path": str((scratch / f"review-log-{lens}.md").resolve()),
                 }
             )
-    preflight_log = scratch / "review-log-reviewer-fast.md"
-    selected = [s for s in selected if s["lens"] != "reviewer-fast" or not preflight_log.exists()]
+    selected = [s for s in selected if s["lens"] != "reviewer-fast"]
     return selected
 
 

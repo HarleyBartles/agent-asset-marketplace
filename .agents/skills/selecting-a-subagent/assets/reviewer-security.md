@@ -11,13 +11,13 @@ You are `reviewer-security`, a focused read-only security/PII reviewer. Inspect 
 
 Use this section to decide whether `reviewer-security` should be dispatched for a PR.
 
-- globs:
-  - `**/*`
 - keywords:
   - secret
   - token
-  - key
   - credential
+  - password
+  - private_key
+  - api_key
 - inputs:
   - `<diff_path>`
 

@@ -1,6 +1,6 @@
 # Pre-lens Dispatch Shape and Cheap-Lens Hygiene
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use `/subagent-driven-development` (recommended) or `/executing-plans` to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use `/subagent-driven-development` (recommended) or `/executing-plans` to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** Close out the `iterative-review-improvements` epic, then make `reviewer-fast` a true pre-lens that gates `lens-dispatch` and stop `reviewer-security` from matching every non-empty diff.
 
@@ -29,32 +29,32 @@
 - Consumes: the completed `iterative-review-improvements` epic folder.
 - Produces: an archived epic and a clean base for the new work.
 
-- [ ] **Step 1: Move the completed epic folder to the archive**
+- [x] **Step 1: Move the completed epic folder to the archive**
 ```bash
 git mv .agents/plans/iterative-review-improvements .agents/plans/completed/iterative-review-improvements
 ```
 
-- [ ] **Step 2: Heal in-boundary archive links**
+- [x] **Step 2: Heal in-boundary archive links**
 ```bash
 py -3 tools/heal_archive_links.py --apply
 ```
 
-- [ ] **Step 3: Verify no stale archive links remain**
+- [x] **Step 3: Verify no stale archive links remain**
 ```bash
 py -3 tools/check_archive_links.py
 ```
 
-- [ ] **Step 4: Regenerate the agent mesh and plan indexes**
+- [x] **Step 4: Regenerate the agent mesh and plan indexes**
 ```bash
 py -3 tools/run.py mesh --apply
 ```
 
-- [ ] **Step 5: Run CI on the archived state**
+- [x] **Step 5: Run CI on the archived state**
 ```bash
 py -3 tools/run.py ci --check
 ```
 
-- [ ] **Step 6: Commit the closeout**
+- [x] **Step 6: Commit the closeout**
 ```bash
 git add -A
 git commit -m "archive(plans): close out iterative-review-improvements epic"
@@ -72,7 +72,7 @@ git commit -m "archive(plans): close out iterative-review-improvements epic"
 - Consumes: the current `review-state-graph.md` mermaid and edges table.
 - Produces: a graph where `reviewer-fast` sits after `scope-honesty` and gates `lens-dispatch`.
 
-- [ ] **Step 1: Replace the Mermaid `flowchart TD` block with the exact block below**
+- [x] **Step 1: Replace the Mermaid `flowchart TD` block with the exact block below**
 ```mermaid
 flowchart TD
     setup --> normalize-inputs --> preflight
@@ -107,7 +107,7 @@ flowchart TD
     closeout --> ready
 ```
 
-- [ ] **Step 2: Update the `## Edges` table to match the Mermaid block**
+- [x] **Step 2: Update the `## Edges` table to match the Mermaid block**
 Replace the existing `reviewer-fast`, `re-preflight`, and `lens-triage` rows with these exact rows:
 
 | From | To | Condition |
@@ -156,7 +156,7 @@ Replace the existing `reviewer-fast`, `re-preflight`, and `lens-triage` rows wit
 - Consumes: the updated `review-state-graph.md` and `lens` field on each finding.
 - Produces: a `next_node.py` that uses `previous_node` and `originating_lens` to route fast findings back to `lens-dispatch` and deep findings to `reviewer-fixes`.
 
-- [ ] **Step 1: Update the `GRAPH` transitions for `scope-honesty`, `reviewer-fast`, `re-preflight`, and `lens-triage`**
+- [x] **Step 1: Update the `GRAPH` transitions for `scope-honesty`, `reviewer-fast`, `re-preflight`, and `lens-triage`**
 Replace the relevant entries in the `GRAPH` dictionary with these exact entries:
 ```python
     "scope-honesty": [("always", "reviewer-fast")],
@@ -187,7 +187,7 @@ Replace the relevant entries in the `GRAPH` dictionary with these exact entries:
     ],
 ```
 
-- [ ] **Step 2: Add the new conditions to `_condition_holds`**
+- [x] **Step 2: Add the new conditions to `_condition_holds`**
 Add these exact cases to `_condition_holds` before the final `return False`:
 ```python
     if condition == "after_reviewer_fast":
@@ -204,10 +204,10 @@ Add these exact cases to `_condition_holds` before the final `return False`:
         return not unresolved or (first_unresolved is not None and first_unresolved.get("lens") == "reviewer-fast")
 ```
 
-- [ ] **Step 3: Add the new `reviewer-fast` terminal condition to `_lens_log_clean`**
+- [x] **Step 3: Add the new `reviewer-fast` terminal condition to `_lens_log_clean`**
 No change is required; `_lens_log_clean` already checks for `<lens>: clean` by filename. Verify that `scratch / "review-log-reviewer-fast.md"` is read the same way as other lens logs.
 
-- [ ] **Step 4: Run the `--check` self-test**
+- [x] **Step 4: Run the `--check` self-test**
 ```bash
 py -3 .agents/skills/iterative-review/scripts/next_node.py --check
 ```
@@ -224,7 +224,7 @@ py -3 .agents/skills/iterative-review/scripts/next_node.py --check
 - Consumes: the current `select_lenses.py` `_select` return.
 - Produces: `lenses.jsonl` that no longer contains `reviewer-fast`; `reviewer-fast` is dispatched by its own node.
 
-- [ ] **Step 1: Remove the `reviewer-fast` pre-lens selection logic**
+- [x] **Step 1: Remove the `reviewer-fast` pre-lens selection logic**
 In `_select`, replace:
 ```python
     preflight_log = scratch / "review-log-reviewer-fast.md"
@@ -237,7 +237,7 @@ with:
     return selected
 ```
 
-- [ ] **Step 2: Run the `--check` self-test**
+- [x] **Step 2: Run the `--check` self-test**
 ```bash
 py -3 .agents/skills/iterative-review/scripts/select_lenses.py --check
 ```
@@ -253,7 +253,7 @@ py -3 .agents/skills/iterative-review/scripts/select_lenses.py --check
 - Consumes: the updated `select_lenses.py` and `reviewer-fast` node.
 - Produces: a `node-lens-dispatch.md` recipe that only dispatches deep lenses and uses `diff_slicer.py` for their scoped diffs.
 
-- [ ] **Step 1: Rewrite the recipe to remove `reviewer-fast`**
+- [x] **Step 1: Rewrite the recipe to remove `reviewer-fast`**
 Replace the `## Recipe` section with this exact text:
 ```markdown
 ## Recipe
@@ -284,7 +284,7 @@ Replace the `## Recipe` section with this exact text:
 - Consumes: the full branch `<diff_path>` and `<pr_description>`.
 - Produces: `review-log-reviewer-fast.md` and the next node.
 
-- [ ] **Step 1: Write `node-reviewer-fast.md` with this exact content**
+- [x] **Step 1: Write `node-reviewer-fast.md` with this exact content**
 ```markdown
 # node-reviewer-fast
 
@@ -346,7 +346,7 @@ py -3 .agents/skills/iterative-review/scripts/next_node.py --state <scratch_dir>
 - Consumes: the current `reviewer-security.md` `## Applies to` section.
 - Produces: a `reviewer-security` that only dispatches when security-relevant keywords appear in the diff or PR body.
 
-- [ ] **Step 1: Replace the `## Applies to` section with this exact block**
+- [x] **Step 1: Replace the `## Applies to` section with this exact block**
 ```markdown
 ## Applies to
 
@@ -363,7 +363,7 @@ Use this section to decide whether `reviewer-security` should be dispatched for 
   - `<diff_path>`
 ```
 
-- [ ] **Step 2: Run a synthetic check to confirm `reviewer-security` is no longer always selected**
+- [x] **Step 2: Run a synthetic check to confirm `reviewer-security` is no longer always selected**
 ```bash
 py -3 .agents/skills/iterative-review/scripts/select_lenses.py --state <synthetic-state>/review-state.json
 ```
@@ -381,23 +381,23 @@ Use a synthetic `review-state.json` with a scratch dir containing a diff with no
 - Consumes: the canonical source changes from Tasks 1-7.
 - Produces: installed copies in sync with source and a green CI run.
 
-- [ ] **Step 1: Regenerate installed skills from the canonical source**
+- [x] **Step 1: Regenerate installed skills from the canonical source**
 ```bash
 py -3 tools/run.py marketplace --apply
 ```
 
-- [ ] **Step 2: Run the canonical preflight**
+- [x] **Step 2: Run the canonical preflight**
 ```bash
 py -3 tools/run.py ci --check
 ```
 
-- [ ] **Step 3: Commit the implementation and regenerated surfaces**
+- [x] **Step 3: Commit the implementation and regenerated surfaces**
 ```bash
 git add -A
 git commit -m "feat(iterative-review): pre-lens dispatch shape and cheap-lens hygiene"
 ```
 
-- [ ] **Step 4: Push the branch and open a draft PR**
+- [x] **Step 4: Push the branch and open a draft PR**
 ```bash
 git push origin iterative-review-triage-and-selection
 gh pr create --draft --title "Pre-lens dispatch shape and cheap-lens hygiene" --body-file .agents/plans/iterative-review-triage-and-selection/2026-08-15-plan-1-pre-lens-dispatch-shape.md
