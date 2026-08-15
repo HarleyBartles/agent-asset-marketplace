@@ -323,14 +323,11 @@ def _condition_holds(condition: str, state: dict, ledger: Path, current_node: st
             (
                 f
                 for f in findings
-                if f["finding_id"] not in resolved_ids
-                and f.get("severity") in ("blocking", "important")
+                if f["finding_id"] not in resolved_ids and f.get("severity") in ("blocking", "important")
             ),
             None,
         )
-        return not unresolved or (
-            first_unresolved is not None and first_unresolved.get("lens") == "reviewer-fast"
-        )
+        return not unresolved or (first_unresolved is not None and first_unresolved.get("lens") == "reviewer-fast")
 
     return False
 
