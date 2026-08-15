@@ -60,6 +60,17 @@ Break large goals into a roadmap of consecutive plans, execute them, and keep th
 6. Update the roadmap with status, commit, PR, final rating, and notes.
 7. Repeat until done. Run `handoff-gates` completion-readiness before code review.
 
+## Lane 3 — Split an Oversized Plan
+
+If a plan in progress grows beyond one deliverable, stop writing. **MUST READ:** `references/plan-scope-sizing.md` and use escape hatch 3:
+
+1. Close the current plan file at a clean boundary (end of the last fully scoped task).
+2. Create a new plan file for the remaining scope in the same epic directory.
+3. Update the epic roadmap table with the new plan, its place in the sequence, and a `Handoff Notes` entry explaining why the split happened.
+4. Mark the original plan as `blocked` or `replan` in the roadmap if it cannot continue as written.
+
+This is a fallback for legitimately over-scoped plans. It is not an excuse to create endless epics of tiny plans.
+
 ## Roadmap Schema
 
 A markdown table with `#`, `Title`, `Status`, `Plan File`, `Commit`, `PR`, `Rating`, `Notes`.
@@ -75,7 +86,7 @@ The roadmap is a live look-ahead document. Edit it inline as decisions change th
 
 ## Boundary cases
 
-If a roadmap item should split into a new epic, a scope change invalidates multiple pending plans, or you are choosing between asking the human and escalating through `risk-gates`, load `references/scope-notes.md` and follow its guidance.
+If a roadmap item should split into a new epic, a scope change invalidates multiple pending plans, or you are choosing between asking the human and escalating through `risk-gates`, load `references/scope-notes.md` and `references/plan-scope-sizing.md` and follow their guidance.
 
 ## Common Mistakes
 
