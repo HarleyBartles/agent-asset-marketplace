@@ -101,11 +101,11 @@ digraph process {
 
     "Setup: worktree, ledger check, read plan, pre-flight review" [shape=box];
     "More tasks remain?" [shape=diamond];
-    "Use /handoff-gates completion-readiness (self-review)" [shape=box];
-    "Invoke /requesting-code-review for final whole-branch review" [shape=box];
+    "Use handoff-gates completion-readiness (self-review)" [shape=box];
+    "Invoke requesting-code-review for final whole-branch review" [shape=box];
     "Final findings? ONE fix dispatch, one scoped re-review, adjudicate residuals" [shape=box];
     "Final review clean: delete this plan's workspace" [shape=box];
-    "Use /finishing-a-development-branch" [shape=box style=filled fillcolor=lightgreen];
+    "Use finishing-a-development-branch" [shape=box style=filled fillcolor=lightgreen];
 
     "Setup: worktree, ledger check, read plan, pre-flight review" -> "Dispatch implementer subagent (./implementer-prompt.md)";
     "Dispatch implementer subagent (./implementer-prompt.md)" -> "Implementer asks questions?";
@@ -131,19 +131,19 @@ digraph process {
     "Park findings in ledger with rulings" -> "Append completion to ledger, mark todo complete";
     "Append completion to ledger, mark todo complete" -> "More tasks remain?";
     "More tasks remain?" -> "Dispatch implementer subagent (./implementer-prompt.md)" [label="yes"];
-    "More tasks remain?" -> "Use /handoff-gates completion-readiness (self-review)" [label="no"];
-    "Use /handoff-gates completion-readiness (self-review)" -> "Invoke /requesting-code-review for final whole-branch review" [label="meets floor"];
-    "Use /handoff-gates completion-readiness (self-review)" -> "Dispatch implementer subagent (./implementer-prompt.md)" [label="fix issues"];
-    "Invoke /requesting-code-review for final whole-branch review" -> "Final findings? ONE fix dispatch, one scoped re-review, adjudicate residuals";
+    "More tasks remain?" -> "Use handoff-gates completion-readiness (self-review)" [label="no"];
+    "Use handoff-gates completion-readiness (self-review)" -> "Invoke requesting-code-review for final whole-branch review" [label="meets floor"];
+    "Use handoff-gates completion-readiness (self-review)" -> "Dispatch implementer subagent (./implementer-prompt.md)" [label="fix issues"];
+    "Invoke requesting-code-review for final whole-branch review" -> "Final findings? ONE fix dispatch, one scoped re-review, adjudicate residuals";
     "Final findings? ONE fix dispatch, one scoped re-review, adjudicate residuals" -> "Final review clean: delete this plan's workspace";
-    "Final review clean: delete this plan's workspace" -> "Use /finishing-a-development-branch";
+    "Final review clean: delete this plan's workspace" -> "Use finishing-a-development-branch";
 }
 ```
 
 ## Setup
 
 Ensure the work happens in an isolated workspace: use
-/using-git-worktrees to create one or verify the existing one.
+the `skill` tool to invoke `using-git-worktrees` to create one or verify the existing one.
 Never start implementation on a main/master branch without your human
 partner's explicit consent.
 
@@ -441,7 +441,7 @@ delete this plan's workspace (`rm -rf <workspace>`) — the git history is
 the record now. Sibling directories belong to other plans; leave them
 alone.
 
-Use /finishing-a-development-branch.
+Use the `skill` tool to invoke `finishing-a-development-branch`.
 
 ## Common Rationalizations
 
@@ -515,10 +515,10 @@ Re-reviewer: Missing progress reporting — ADDRESSED (src/recovery.js:41).
 ...
 
 [After all tasks]
-[Invoke /requesting-code-review for final whole-branch review]
+[Invoke requesting-code-review for final whole-branch review]
 Final reviewer: All requirements met. Deferred minors triaged: none block merge.
 
 [Delete this plan's workspace — the record now lives in git]
 
-Done! Using /finishing-a-development-branch.
+Done! Use the `skill` tool to invoke `finishing-a-development-branch`.
 ```
