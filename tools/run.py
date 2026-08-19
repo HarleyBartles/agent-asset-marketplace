@@ -286,6 +286,7 @@ def _run_validate(ctx: Ctx) -> None:
 
 
 def _apply_marketplace(ctx: Ctx) -> None:
+    _run([sys.executable, "tools/sync_skill_shared_references.py", "--apply"], ctx)
     _run([sys.executable, "tools/generate_marketplace.py", "--apply"], ctx)
     _run([sys.executable, "tools/validate_marketplace.py", "--phase", "all"], ctx)
     _run([sys.executable, ".agents/skills/repo-standards/scripts/deploy_vendor_profiles.py", "--apply"], ctx)

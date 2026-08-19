@@ -95,6 +95,12 @@ deliverable needs them; split only where a reviewer could meaningfully
 reject one task while approving its neighbor. Each task ends with an
 independently testable deliverable.
 
+## Right-Sizing and Escape Hatches
+
+If you think "this is a lot" or "the plan is huge" while writing, you are at a scope sizing decision point. **MUST READ:** `references/plan-scope-sizing.md` and follow one of the three escape hatches before continuing.
+
+A long plan with well-sliced, independently testable tasks is not a problem. The `subagent-driven-development` execution lane is designed for that shape. A plan is too big only when it crosses independent concerns or one of its tasks cannot fit in one review cycle.
+
 ## Bite-Sized Task Granularity
 
 **Each step is one action (2-5 minutes):**
@@ -118,6 +124,8 @@ independently testable deliverable.
 **Architecture:** [2-3 sentences about approach]
 
 **Tech Stack:** [Key technologies/libraries]
+
+**Execution Strategy:** `subagent-driven-development` (default for independent tasks) — `executing-plans` (for tightly coupled/sequential tasks), `dispatching-parallel-agents` (for 2+ independent parallel tracks), or `manual` (for human-driven work). The planner picks the recommended lane.
 
 ## Global Constraints
 
@@ -198,26 +206,17 @@ After writing the complete plan, look at the spec with fresh eyes and check the 
 
 **3. Type consistency:** Do the types, method signatures, and property names you used in later tasks match what you defined in earlier tasks? A function called `clearLayers()` in Task 3 but `clearFullLayers()` in Task 7 is a bug.
 
+**5. Plan Size Check:** Did you think the plan was too large while writing? If yes, did you apply one of the escape hatches in `references/plan-scope-sizing.md`? Is the `Execution Strategy` field filled with an allowed value and a clear rationale?
+
 **4. Plan-readiness rating:** Use `handoff-gates` `plan-readiness` lane. Rate the plan for execution confidence (8/10 floor, 9/10 target). Report the final rating in the handoff. Do not execute below 8/10.
 
 If you find issues during the self-review, fix them inline and re-run the plan-readiness gate. If you find a spec requirement with no task, add the task.
 
 ## Execution Handoff
 
-After the plan is saved and the plan-readiness rating meets the floor, offer execution choice:
+After the plan is saved and the plan-readiness rating meets the floor, read the `Execution Strategy` and present it to the user:
 
-**"Plan complete and saved to `.agents/plans/<filename>.md`. The plan-readiness rating is <X>/10. Two execution options:**
+> "Plan complete and saved to `.agents/plans/<filename>.md`. The `Execution Strategy` is `<strategy>`. The plan-readiness rating is `<X>/10`.
+> Do you want to proceed with the recommended strategy, or switch to another lane?"
 
-**1. Subagent-Driven (recommended)** - I dispatch a fresh subagent per task, review between tasks, fast iteration
-
-**2. Inline Execution** - Execute tasks in this session using executing-plans, batch execution with checkpoints
-
-**Which approach?"**
-
-**If Subagent-Driven chosen:**
-- **REQUIRED SUB-SKILL:** Use `/subagent-driven-development`
-- Fresh subagent per task + two-stage review
-
-**If Inline Execution chosen:**
-- **REQUIRED SUB-SKILL:** Use `/executing-plans`
-- Batch execution with checkpoints for review
+If the user chooses a different lane, note it in the handoff and let the executing skill handle the override. Do not re-derive the whole plan from scratch.

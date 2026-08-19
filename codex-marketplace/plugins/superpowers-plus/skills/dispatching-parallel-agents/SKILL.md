@@ -39,6 +39,10 @@ You delegate tasks to specialized agents with isolated context. By precisely cra
 
 When you have multiple unrelated failures (different test files, different subsystems, different bugs), investigating them sequentially wastes time. Each investigation is independent and can happen in parallel.
 
+## Execution Strategy Note
+
+If you are invoking this skill from a plan, read the `Execution Strategy` in the plan header and **MUST READ:** `references/execution-lane-override.md` before dispatching. Announce that you are using `dispatching-parallel-agents` and see it through unless the human asks to change.
+
 **Core principle:** Dispatch one agent per independent problem domain. Let them work concurrently.
 
 ## When to Use

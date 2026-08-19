@@ -178,8 +178,7 @@ plan-completion, TDD, and pre-completion-verification requirements in that
 runbook before handing off to review. Do not hand off to review with an unchecked
 or partially completed plan; that is a controller failure, not a reviewer catch.
 
-Read the plan once, note its context and Global Constraints, and create a
-todo per task.
+Read the plan once, note its context and Global Constraints, and create a todo per task. Before Task 1, note the `Execution Strategy` in the plan header. **MUST READ:** `references/execution-lane-override.md` to confirm `subagent-driven-development` is the right lane. If the plan recommends a different lane but you are using this one because the tasks are independent or the human directed it here, state that at the start of execution and do not re-litigate.
 
 Before dispatching Task 1, scan the plan once for conflicts:
 
