@@ -15,6 +15,11 @@ Generated artifacts are downstream outputs unless the repo explicitly says other
 
 ## Cross-repo standards alignment
 This repo ships portable skills and runbooks to consumer repos under `.agents/skills/`. Ask: *Is this change a repo-local fix or a standard consumer repos will inherit?* If the latter, update the source skill or reference, not only the installed copy.
+## Vendored asset source and inspection
+
+The canonical vendored marketplace assets live under `codex-marketplace/plugins/`. The active inventory is in `codex-marketplace/plugin-roots.json`, the aggregate Codex manifest is `codex-marketplace/manifest.json`, and the bundled skills for each plugin are declared in that plugin's `references/bundle-manifest.json` with their canonical source trees under that plugin's `skills/` directory.
+
+Do not treat `.agents/skills/` as additional or duplicate vendored assets. Those are installed copies from the plugins this repo consumes for its own operation (currently `repo-worker-pack`, `superpowers-plus`, and `mcp-usage-pack`). They are downstream of the canonical plugin source. To see what this repo actually offers, inspect the bundle manifests or read the marketplace inventory in `codex-marketplace/README.md`.
 ## Publication proof for repo work
 
 Local file changes are not repo completion. A worker must not return GREEN, claim repo work is done, or ask for issue closure from local paths, local commit hashes, local validation output, or an unpublished branch alone.
