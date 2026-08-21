@@ -78,7 +78,7 @@ def write_v2_state(tmp_path: Path, state: dict) -> Path:
     return path
 ```
 
-`make_complete_candidate()` must materialize non-empty evidence files under `tmp_path`, compute their real sizes and SHA-256 values, and return the smallest state satisfying every design-spec record shape and stored candidate predicate: one loaded authority; fast-, focused-, and strong-eligible covered obligations including one high-risk cross-surface obligation; matching current dispatches plus clean fast/focused/strong/final/closure reviews; strict route-selection evidence; one fixed finding with resolution proof; successful required preflight and remote-CI checks; and matching reviewed/CI head SHAs. Final and closure dispatches use `orchestrator-equivalent` capability/reasoning floors and literal inheritance or an exact recorded parent-route match. `make_remote_observation()` returns the matching transient observation plus the fixed UTC `now` used by `evaluate_green()`. The observation contains the PR head, authority metadata digest, required-check set, conclusions, and observation timestamp. `remove_predicate()` must remove only the named record or proof field and must not repair any dependent record. Keep these helpers in the test tree; production code must not import them.
+`make_complete_candidate()` must materialize non-empty evidence files under `tmp_path`, compute their real sizes and SHA-256 values, and return the smallest state satisfying every design-spec record shape and stored candidate predicate: one loaded authority; fast-, focused-, and strong-eligible covered obligations including one high-risk cross-surface obligation; matching current dispatches plus clean fast/focused/strong/final/closure reviews; strict route-selection evidence; one fixed finding with resolution proof; successful required preflight and remote-CI checks; and matching reviewed/CI head SHAs. Final and closure dispatches use the trusted `reviewer-strong` profile at the `final-strong` capability/reasoning floor, with a baked route that is not compared with or overridden by the parent. `make_remote_observation()` returns the matching transient observation plus the fixed UTC `now` used by `evaluate_green()`. The observation contains the PR head, authority metadata digest, required-check set, conclusions, and observation timestamp. `remove_predicate()` must remove only the named record or proof field and must not repair any dependent record. Keep these helpers in the test tree; production code must not import them.
 
 - [ ] **Step 2: Add RED tests for the proven version-1 defects**
 
@@ -143,9 +143,15 @@ test_green_rejects_remote_observation_older_than_60_seconds
 test_green_rejects_remote_observation_more_than_5_seconds_in_future
 test_green_rejects_accepted_risk_and_returns_reviewed_with_exceptions
 test_green_rejects_fast_profile_used_for_strong_obligation
-test_green_rejects_final_reviewer_below_orchestrator_equivalent
-test_green_rejects_unverifiable_parent_equivalence
-test_green_rejects_final_route_that_is_only_nominally_equivalent
+test_green_rejects_final_reviewer_below_final_strong
+test_green_accepts_trusted_reviewer_strong_with_baked_route
+test_green_accepts_opaque_harness_reviewer_strong_contract
+test_green_does_not_require_parent_equality_for_trusted_profile
+test_green_rejects_model_override_on_trusted_profile
+test_green_rejects_unqualified_final_fallback
+test_green_accepts_qualified_inherit_fallback
+test_current_profile_qualification_is_reusable_for_matching_dispatches
+test_profile_or_inventory_change_invalidates_qualification
 test_any_snapshot_mutation_revokes_green_candidate
 test_fix_rereview_may_narrow_but_requires_broader_reascent
 test_scope_risk_consequence_matrix_derives_required_tier
@@ -199,6 +205,7 @@ unknown status, stage, severity, disposition, obligation status, review verdict,
 unknown scope level, capability tier, or normalized reasoning floor
 unknown dispatch route-selection mode
 unknown dispatch context mode
+unknown route qualification source
 base/head/tree identifiers whose length does not match declared `git_object_format`
 non-64-character SHA-256 values
 mapping key different from the identifier inside its record
@@ -206,8 +213,9 @@ evidence record whose current file is missing, resized, or re-hashed
 authority, obligation, dispatch, review, finding, check, or blocker referencing nonexistent evidence
 review whose role, profile, assignment, snapshot, or observed model/context does not match its dispatch
 dispatch below an obligation's capability or reasoning floor
-blind-final or closure dispatch below orchestrator-equivalent capability/reasoning
-blind-final or closure dispatch that neither literally inherits nor exactly matches the recorded parent model and reasoning
+blind-final or closure dispatch below final-strong capability/reasoning
+blind-final or closure dispatch that has neither a qualified trusted profile/runtime-role map nor a qualified fallback
+trusted-profile dispatch with a model or reasoning override
 blind-final or closure dispatch whose context is not fresh
 blind-final dispatch whose context includes prior review or finding evidence
 finding resolution referencing a nonexistent finding, review, check, or human decision
@@ -262,7 +270,8 @@ DISPOSITIONS = (
 OBLIGATION_STATUSES = ("pending", "covered", "not-applicable", "invalidated", "unassessed")
 REVIEW_VERDICTS = ("clean", "findings", "incomplete", "blocked")
 DISPATCH_STATUSES = ("pending", "reported", "incomplete", "invalidated")
-ROUTE_SELECTION_MODES = ("tier-mapped", "literal-inherit", "explicit-parent-match")
+ROUTE_SELECTION_MODES = ("trusted-profile", "runtime-role-map", "literal-inherit", "explicit-route")
+ROUTE_QUALIFICATION_SOURCES = ("effective-profile", "runtime-adapter", "parent-inheritance", "explicit-route")
 REQUIRED_TOOL_CLASSES = (
     "repo-read",
     "git-read",
@@ -304,8 +313,8 @@ OBLIGATION_CATEGORIES = (
 )
 OBLIGATION_RISKS = ("high", "medium", "low")
 SCOPE_LEVELS = ("hunk", "file", "surface", "cross-surface", "whole-pr")
-CAPABILITY_TIERS = ("fast", "focused", "strong", "orchestrator-equivalent")
-REASONING_FLOORS = ("low", "standard", "high", "orchestrator-equivalent")
+CAPABILITY_TIERS = ("fast", "focused", "strong", "final-strong")
+REASONING_FLOORS = ("low", "standard", "high", "final-strong")
 CONTEXT_MODES = ("fresh", "forked")
 REVIEW_ROLES = (
     "impact-mapper-semantic",
@@ -332,7 +341,7 @@ BLOCKER_CLASSES = (
 
 Use explicit allowlists for every mapping. Do not silently retain unknown keys.
 
-Validate every `route-selection` evidence file as the strict design-spec object with exactly `schema_version`, `observed_at`, `inventory_evidence_sha256`, `budget_contract_sha256`, `parent_model`, `parent_reasoning`, `selected_model`, `selected_reasoning`, `selected_context_mode`, `selection_mode`, and `rationale`. The parent/selected values must match their dispatch. `literal-inherit` requires literal selected values `inherit`; `explicit-parent-match` requires exact parent equality; `tier-mapped` is legal only below final/closure and must meet the assignment floor. Final and closure require `fresh` context.
+Validate every `route-selection` evidence file as the strict design-spec object with exactly `schema_version`, `observed_at`, `inventory_evidence_sha256`, `budget_contract_sha256`, `required_capability_tier`, `profile`, `profile_sha256`, `selection_mode`, `selected_model`, `selected_reasoning`, `selected_context_mode`, nullable `parent_model`, nullable `parent_reasoning`, `qualification_source`, and `rationale`. The duplicated values must match their dispatch. `trusted-profile` requires the effective named profile, no model/reasoning override, and a readable profile hash or opaque harness adapter identity hash; its selected model/reasoning are observed values or the literal `profile-defined`, never override inputs. `runtime-role-map` requires a current adapter mapping hash. `literal-inherit` and `explicit-route` are legal fallbacks only when no profile mapping exists and the adapter qualifies them at the assignment floor. Final and closure require `fresh` context and `final-strong` qualification.
 
 - [ ] **Step 3: Implement snapshot fingerprinting**
 
@@ -357,8 +366,8 @@ def sha256_json(value: object) -> str:
 2. validate the snapshot or require `None` during intake;
 3. validate authorities, obligations, dispatches, reviews, findings, checks, blockers, seal, and history by key allowlists;
 4. ensure referenced evidence IDs exist;
-5. ensure each review matches its dispatch, each dispatch meets its assignment's capability/reasoning floor, and each route-selection evidence file parses as the strict live-inventory/parent-route/child-route decision schema;
-6. require final/closure dispatches to be orchestrator-equivalent and either use `literal-inherit` or exactly match the recorded parent model and reasoning under `explicit-parent-match`; nominal tier equality alone is insufficient, and blind-final context excludes prior review/finding evidence;
+5. ensure each review matches its dispatch, each dispatch meets its assignment's capability/reasoning floor, and each route-selection evidence file parses as the strict profile-or-route qualification schema;
+6. require final/closure dispatches to use a qualified `final-strong` trusted profile, runtime role map, or fallback in that precedence order; reject overrides on trusted profiles, require fresh context, and exclude prior review/finding evidence from blind-final context;
 7. ensure each evidence file still exists and matches its registered byte length and digest;
 8. ensure current evidence matches the current epoch and fingerprint;
 9. ensure `fixed` and `false-positive` findings contain their required proof fields;
@@ -532,7 +541,7 @@ Action payloads are allowlisted, never merged generically:
 
 Reject missing or extra payload keys. The Task 5 engine copies state in memory, registers supplied evidence files on that copy, then `complete_action()` ingests payload records into their allowlisted mappings and validates the whole candidate for the current snapshot, role, action, dispatch, and evidence registry. Only one final atomic save may replace original state. Hash the canonical action plus payload and evidence IDs for idempotency; an identical replay is a no-op, while the same action key with different content is an error.
 
-Before any subagent-backed action runs, `register_dispatch()` must persist its pending dispatch, strict route-selection evidence, and hashed context package. The route-selection record captures the live inventory, budget contract, parent model/reasoning, selected child model/reasoning/context, selection mode, and rationale. Completion is rejected if the pending dispatch did not predate the attestation, the action does not match, the report differs from the dispatch, the selected route is below the assignment floor, or a final/closure route is not literal inheritance or an exact parent model/reasoning match. Deterministic actions (`freeze-review-input`, `plan-coverage`, `run-preflight`, `run-remote-ci`, and `seal-green`) do not require a reviewer dispatch.
+Before any subagent-backed action runs, `register_dispatch()` must persist its pending dispatch, strict route-selection evidence, and hashed context package. The route-selection record captures the live inventory, budget contract, required tier, effective profile/adapter identity, selected route representation, qualification source, and rationale. An unchanged current qualification may be reused across matching dispatches; a changed profile hash, adapter identity, inventory hash, budget hash, or required tier invalidates it. Completion is rejected if the pending dispatch did not predate the attestation, the action does not match, the report differs from the dispatch, the profile or route is below the assignment floor, a trusted profile was overridden, or a lower-precedence fallback was used while an effective qualifying profile existed. Deterministic actions (`freeze-review-input`, `plan-coverage`, `run-preflight`, `run-remote-ci`, and `seal-green`) do not require a reviewer dispatch.
 
 For each action, test:
 
@@ -558,7 +567,7 @@ class ActionRecipe:
     required_role: str | None
     minimum_capability_tier: str | None
     minimum_reasoning_floor: str | None
-    requires_parent_route: bool
+    preferred_profile: str | None
     data_keys: tuple[str, ...]
     evidence_kinds: tuple[str, ...]
     record_command: str
@@ -603,9 +612,9 @@ presentation_observation_matches_candidate
 
 Every predicate returns `(bool, tuple[str, ...])`. `evaluate_green()` concatenates missing reasons from all predicates instead of stopping at the first one.
 
-`coverage_complete()` must require every affected surface to have every applicable universal category from the design contract, derive scope plus risk capability/reasoning floors, reject zero assignees, require two distinct assignees for high-risk obligations, and accept `not-applicable` only with current evidence. `impact_maps_complete()` requires both independent mapper roles. `scope_challenge_complete()` requires a current challenger attestation covering the union of both maps; findings from that challenge return to coverage planning. `fast_reviews_complete()`, `focused_reviews_complete()`, and `strong_reviews_complete()` each require every assignment scheduled at that exact policy tier to have an attestation at or above its floor; a stronger route may serve an assignment but does not permit skipping its ordered stage. A fast/focused attestation cannot satisfy a broader or higher-risk obligation. Whole-PR obligations are satisfied only by the exact-parent-route final and closure predicates with valid route-selection evidence.
+`coverage_complete()` must require every affected surface to have every applicable universal category from the design contract, derive scope plus risk capability/reasoning floors, reject zero assignees, require two distinct assignees for high-risk obligations, and accept `not-applicable` only with current evidence. `impact_maps_complete()` requires both independent mapper roles. `scope_challenge_complete()` requires a current challenger attestation covering the union of both maps; findings from that challenge return to coverage planning. `fast_reviews_complete()`, `focused_reviews_complete()`, and `strong_reviews_complete()` each require every assignment scheduled at that exact policy tier to have an attestation at or above its floor; a stronger route may serve an assignment but does not permit skipping its ordered stage. A fast/focused attestation cannot satisfy a broader or higher-risk obligation. Whole-PR obligations are satisfied only by final and closure predicates backed by valid `final-strong` profile-or-route qualification evidence.
 
-Implement the design-spec floor table as a pure function and test every scope/risk pair plus every strong consequence override. The result is the maximum applicable tier, with normalized reasoning `low`, `standard`, `high`, or exact-parent respectively. Repository policy may raise the result but any attempted lowering is a validation error.
+Implement the design-spec floor table as a pure function and test every scope/risk pair plus every strong consequence override. The result is the maximum applicable tier, with normalized reasoning `low`, `standard`, `high`, or `final-strong` respectively. Repository policy may raise the result but any attempted lowering is a validation error.
 
 - [ ] **Step 4: Implement finding closure rules**
 
@@ -693,7 +702,7 @@ Normal next-action JSON is:
     "required_role": null,
     "minimum_capability_tier": null,
     "minimum_reasoning_floor": null,
-    "requires_parent_route": false,
+    "preferred_profile": null,
     "data_keys": ["obligations"],
     "evidence_kinds": ["impact-map"],
     "record_command": "py -3 scripts/reviewctl.py complete --action plan-coverage --state C:/review/review-state.json --data-file C:/review/plan-coverage.json --evidence-file impact=impact-map=C:/review/impact-map.json --apply"
@@ -788,7 +797,7 @@ Remove claims that `next_node.py` alone makes invalid moves impossible. The unde
 
 - [ ] **Step 3: Update the graph reference**
 
-Label current node recipes `version 1 - legacy assistance`. Add the version-2 target graph and scope-to-reasoning ladder from the design spec. Mark snapshot, authority, impact maps, scope challenge, tiered reviewer attestations, orchestrator-equivalent final/closure, exact-SHA CI, and presentation recheck as required evidence gates. Do not delete version-1 recipes until the final cutover plan.
+Label current node recipes `version 1 - legacy assistance`. Add the version-2 target graph and scope-to-reasoning ladder from the design spec. Mark snapshot, authority, impact maps, scope challenge, tiered reviewer attestations, trusted-profile-first final-strong final/closure, exact-SHA CI, and presentation recheck as required evidence gates. Do not delete version-1 recipes until the final cutover plan.
 
 - [ ] **Step 4: Update implementation progress before regeneration**
 

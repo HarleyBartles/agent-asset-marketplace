@@ -31,7 +31,7 @@ This creates two separately measured guarantees:
 6. **Independent closure:** a blind final reviewer and a separate closure auditor both return valid structured attestations.
 7. **Remote identity:** the remote pull-request head equals the reviewed head and the commit tested by required hosted checks.
 8. **No uncertainty:** tool failures, truncation, unavailable reviewers, malformed reports, unreviewed obligations, or unresolved assumptions route to `blocked`.
-9. **Reasoning floor met:** every review dispatch meets the minimum capability and reasoning tier derived from its risk and scope aperture; the whole-PR final review and closure audit use the orchestrator's literally inherited model/reasoning route or an explicitly selected exact match, in fresh contexts.
+9. **Reasoning floor met:** every review dispatch meets the minimum capability and reasoning tier derived from its risk and scope aperture; the whole-PR final review and closure audit use a trusted `final-strong` route in fresh contexts, preferring an effective harness-defined `reviewer-strong` profile when available.
 
 The final report must still state residual uncertainty: review green means no known unresolved issue and no uncovered declared obligation, not proof that no defect can exist.
 
@@ -90,7 +90,7 @@ The top-level object contains exactly these keys:
 | Evidence | `evidence_id`, `kind`, absolute `path`, `sha256`, `bytes`, `snapshot_epoch`, `snapshot_fingerprint` |
 | Authority | `authority_id`, `kind`, `locator`, `sha256`, `availability`, `evidence_id`, `snapshot_epoch`, `snapshot_fingerprint` |
 | Obligation | `obligation_id`, `category`, non-empty `surfaces`, `risk`, `scope_level`, `minimum_capability_tier`, `minimum_reasoning_floor`, non-empty `assignees`, `status`, `evidence_ids`, `snapshot_epoch`, `snapshot_fingerprint` |
-| Dispatch | `dispatch_id`, `role`, `profile`, `profile_sha256`, `capability_tier`, `reasoning_floor`, `model`, `reasoning`, `context_mode`, `parent_model`, `parent_reasoning`, `selection_mode`, `route_selection_evidence_id`, non-empty `assignment_ids`, non-empty `context_evidence_ids`, `required_tool_classes`, `status`, `snapshot_epoch`, `snapshot_fingerprint` |
+| Dispatch | `dispatch_id`, `role`, `profile`, `profile_sha256`, `capability_tier`, `reasoning_floor`, `model`, `reasoning`, `context_mode`, nullable `parent_model`, nullable `parent_reasoning`, `selection_mode`, `route_selection_evidence_id`, non-empty `assignment_ids`, non-empty `context_evidence_ids`, `required_tool_classes`, `status`, `snapshot_epoch`, `snapshot_fingerprint` |
 | Review | `attestation_id`, `dispatch_id`, `role`, `profile`, `profile_sha256`, `capability_tier`, `reasoning_floor`, `model`, `reasoning`, `context_mode`, non-empty `assignment_ids`, `verdict`, `finding_ids`, `uncertainties`, `evidence_id`, `snapshot_epoch`, `snapshot_fingerprint` |
 | Finding | `finding_id`, `source_kind`, `source_id`, `obligation_id`, `severity`, `title`, `description`, non-empty `locations`, `evidence_ids`, nullable `regression_of`, `disposition`, nullable `resolution`, `discovered_snapshot_epoch`, `discovered_snapshot_fingerprint` |
 | Check | `check_id`, `kind`, `command`, `required`, `conclusion`, `head_sha`, `evidence_id`, `snapshot_epoch`, `snapshot_fingerprint` |
@@ -103,8 +103,9 @@ The closed vocabularies are:
 - evidence `kind`: `snapshot`, `authority`, `impact-map`, `scope-challenge`, `route-selection`, `check-output`, `review-attestation`, `finding-proof`, `fix-proof`, `human-decision`, `remote-ci`;
 - authority `kind`: `repo-law`, `pr-description`, `issue`, `document`, `plan`, `spec`, `non-goal`; `availability`: `loaded`, `unavailable`;
 - obligation `category`: `authority-scope`, `behavioral-correctness`, `test-adequacy`, `security-privacy`, `reliability-concurrency`, `compatibility-migration`, `performance-resources`, `operability-configuration`, `documentation-contract`, `source-custody`; `risk`: `high`, `medium`, `low`; `status`: `pending`, `covered`, `not-applicable`, `invalidated`, `unassessed`;
-- obligation `scope_level`: `hunk`, `file`, `surface`, `cross-surface`, `whole-pr`; `minimum_capability_tier`: `fast`, `focused`, `strong`, `orchestrator-equivalent`; `minimum_reasoning_floor`: `low`, `standard`, `high`, `orchestrator-equivalent`;
-- dispatch `selection_mode`: `tier-mapped`, `literal-inherit`, `explicit-parent-match`; `context_mode`: `fresh`, `forked`; `status`: `pending`, `reported`, `incomplete`, `invalidated`; `required_tool_classes` contains zero or more of `repo-read`, `git-read`, `github-read`, `issue-read`, `document-read`, `command-exec`, `browser-read`, `domain-read`;
+- obligation `scope_level`: `hunk`, `file`, `surface`, `cross-surface`, `whole-pr`; `minimum_capability_tier`: `fast`, `focused`, `strong`, `final-strong`; `minimum_reasoning_floor`: `low`, `standard`, `high`, `final-strong`;
+- dispatch `selection_mode`: `trusted-profile`, `runtime-role-map`, `literal-inherit`, `explicit-route`; `context_mode`: `fresh`, `forked`; `status`: `pending`, `reported`, `incomplete`, `invalidated`; `required_tool_classes` contains zero or more of `repo-read`, `git-read`, `github-read`, `issue-read`, `document-read`, `command-exec`, `browser-read`, `domain-read`;
+- route-selection `qualification_source`: `effective-profile`, `runtime-adapter`, `parent-inheritance`, `explicit-route`;
 - review `role`: `impact-mapper-semantic`, `impact-mapper-contract`, `scope-challenger`, `obligation-reviewer`, `finding-adjudicator`, `fix-reviewer`, `blind-final`, `closure-auditor`; `verdict`: `clean`, `findings`, `incomplete`, `blocked`;
 - finding `source_kind`: `review`, `check`; `severity`: `blocking`, `important`, `minor`; `disposition`: `open`, `fixed`, `false-positive`, `accepted-risk`, `deferred`, `contested`, `unassessed`;
 - check `kind`: `preflight`, `targeted`, `remote-ci`; `conclusion`: `success`, `failure`, `cancelled`, `skipped`;
@@ -116,7 +117,19 @@ The transient remote observation consumed by presentation contains exactly `pr_u
 
 For obligation, adjudication, fix, final, and closure roles, each `assignment_ids` item must resolve to a current obligation or finding as appropriate. Impact mappers use the snapshot fingerprint as their assignment; the scope challenger uses both impact-map evidence IDs. This avoids inventing coverage obligations before impact discovery while keeping every dispatch bounded and checkable. A review is valid only when its role, profile hash, tier, model/reasoning/context observations, assignment IDs, epoch, and fingerprint match its dispatch. Blind-final dispatch context must exclude prior review and finding evidence IDs; the validator checks that exclusion rather than trusting the prompt to be blind.
 
-Each dispatch's route-selection evidence is a strict JSON object with exactly `schema_version`, `observed_at`, `inventory_evidence_sha256`, `budget_contract_sha256`, `parent_model`, `parent_reasoning`, `selected_model`, `selected_reasoning`, `selected_context_mode`, `selection_mode`, and `rationale`. It records the live inventory and budget inputs through their content hashes and preserves the parent-to-child decision needed for audit. Its parent and selected fields must equal the duplicated dispatch fields. Under `literal-inherit`, selected model and reasoning are the literal value `inherit`; under `explicit-parent-match`, selected model and reasoning must exactly equal their parent fields; under `tier-mapped`, the policy validates the selected route against the assignment floor. Final and closure dispatches additionally require `context_mode: fresh` and reject `tier-mapped`.
+Each dispatch's route-selection evidence is a strict JSON object with exactly `schema_version`, `observed_at`, `inventory_evidence_sha256`, `budget_contract_sha256`, `required_capability_tier`, `profile`, `profile_sha256`, `selection_mode`, `selected_model`, `selected_reasoning`, `selected_context_mode`, nullable `parent_model`, nullable `parent_reasoning`, `qualification_source`, and `rationale`. It records the live inventory and budget inputs through their content hashes and preserves the profile or route authority used for dispatch. Its duplicated fields must equal the dispatch.
+
+Route qualification follows this order:
+
+1. **Trusted named profile:** if the harness resolves an effective `reviewer-strong` custom subagent, the shared `selecting-a-subagent` role contract qualifies it as `final-strong`; dispatch that profile without a model or reasoning override. Other custom profile names require an explicit adapter classification at the requested tier. The profile's baked route is authoritative. Record the effective profile bytes hash when readable; for an opaque harness-owned profile, hash the runtime adapter's profile-identity record. The skill does not compare that baked route with the parent.
+2. **Runtime role map:** if the harness does not consume named profiles directly, use the current `selecting-a-subagent` adapter mapping for `reviewer-strong` and hash that mapping as the profile contract.
+3. **Fallback route:** only when neither profile form exists, use literal inheritance or an explicit model/reasoning route that the current adapter qualifies as `final-strong`.
+
+An arbitrary requested profile string cannot bless an unclassified route: the harness must resolve the effective profile through its configured profile search path or role adapter, and dispatch must preserve that result's baked configuration. Conversely, an opaque but harness-recognized custom profile is not rejected merely because the skill cannot inspect its baked model. Final and closure dispatches require `context_mode: fresh`; an unavailable profile, failed dispatch, unqualified fallback, or model override applied to a trusted profile blocks.
+
+For `trusted-profile`, `selected_model` and `selected_reasoning` are descriptive observations when the harness exposes them and the literal value `profile-defined` otherwise; neither field is sent as an override. For `runtime-role-map` and `explicit-route`, they record the selected concrete route. For `literal-inherit`, both are `inherit`. This lets the state distinguish trusting a profile from pretending to know its internals.
+
+One current qualification record may be referenced by multiple dispatches that use the same effective profile, adapter identity, inventory hash, budget hash, and required tier. Re-resolve only when one of those inputs changes. The evidence exists to prevent silent substitution, not to make the orchestrator rediscover a stable custom profile before every lens.
 
 An evidence reference is valid only when the registered file still exists and its current bytes match the registered size and digest. A record used to satisfy a current coverage, review, check, or seal predicate must match the current epoch and fingerprint. Findings preserve their discovery epoch; their resolution proof may be from a later epoch, while current impacted-obligation attestations prove the resolved behavior still holds. Historical records remain retained but cannot directly satisfy current predicates.
 
@@ -234,7 +247,7 @@ High-risk obligations require overlapping independent assignees. Lower-risk obli
 
 ### 5a. Scope-to-reasoning ladder
 
-The orchestrator resolves the live model, reasoning, context, capacity, and user-supplied budget contract through `selecting-a-subagent`. The portable skill does not assume a model name, price, entitlement, or that the parent is the strongest route. Operationally, when the parent is already the strongest route allowed by the environment and budget, the final tier inherits or explicitly matches that route.
+The orchestrator resolves the live named profiles, role mappings, models, reasoning, context, capacity, and user-supplied budget contract through `selecting-a-subagent`. The portable skill does not assume a model name, price, entitlement, or that the parent is the strongest route. An available custom profile is a harness-owned routing decision; inheritance is used only when the active role mapping chooses it or no qualifying profile/mapping exists and the adapter approves it as fallback.
 
 Review capability must rise as the review aperture widens:
 
@@ -243,9 +256,9 @@ Review capability must rise as the review aperture widens:
 | `fast` | `reviewer-fast` | mechanical hunk/file checks | `low` |
 | `focused` | `reviewer-fixes` or a narrow `reviewer-*` lens | one finding, file group, or bounded surface | `standard` |
 | `strong` | `reviewer` or a strong domain lens | component, cross-file behavior, security, architecture, or cross-surface interaction | `high` |
-| `orchestrator-equivalent` | `reviewer-strong` and the closure auditor | whole pull request, cross-lens synthesis, and green challenge | the orchestrator's exact model and reasoning route |
+| `final-strong` | `reviewer-strong` and the closure auditor | whole pull request, cross-lens synthesis, and green challenge | `final-strong` |
 
-These are policy tiers, not hard-coded provider routes. The runtime adapter records the live inventory, the orchestrator route, and the mapping it selected. The required tier for an obligation is the greater of its scope floor and its risk/consequence floor; high-risk work is at least `strong` even when the diff is small. A cheaper or lower-reasoning result may discover findings, but it cannot satisfy a higher-tier obligation.
+These are policy tiers, not hard-coded provider routes. The runtime adapter records the live inventory, effective profile or role mapping, and any fallback it selected. The required tier for an obligation is the greater of its scope floor and its risk/consequence floor; high-risk work is at least `strong` even when the diff is small. A cheaper or lower-reasoning result may discover findings, but it cannot satisfy a higher-tier obligation.
 
 The portable floor calculation is deterministic:
 
@@ -254,17 +267,17 @@ The portable floor calculation is deterministic:
 | `hunk` or `file` scope | `fast` |
 | `surface` scope | `focused` |
 | `cross-surface` scope | `strong` |
-| `whole-pr` scope | `orchestrator-equivalent` |
+| `whole-pr` scope | `final-strong` |
 | `low` risk | `fast` |
 | `medium` risk | `focused` |
 | `high` risk | `strong` |
 | security, authorization, privacy, secrets, irreversible data loss, concurrency/recovery, migration/rollback, public compatibility, or source-custody consequence | at least `strong` |
 
-The assigned capability tier is the maximum row that applies. Its normalized reasoning floor is `low` for `fast`, `standard` for `focused`, `high` for `strong`, and the parent's exact reasoning setting for `orchestrator-equivalent`. Repo/domain law may raise a floor but never lower it. The scope challenger disputes under-classified scope, risk, and consequence as well as missing surfaces.
+The assigned capability tier is the maximum row that applies. Its normalized reasoning floor is `low` for `fast`, `standard` for `focused`, `high` for `strong`, and `final-strong` for the whole-PR tier. Repo/domain law may raise a floor but never lower it. The scope challenger disputes under-classified scope, risk, and consequence as well as missing surfaces.
 
-`reviewer-strong` uses literal model/reasoning inheritance only when the runtime can preserve a fresh blind context while inheriting. Otherwise the adapter explicitly selects the same model and reasoning setting as the parent in a fresh context. A merely similar model family, nominal policy tier, or claimed capability is not enough. If exact parent-route equality and fresh-context independence cannot both be enforced and evidenced, the final review is `incomplete` and green blocks. The skill never silently substitutes a cheaper route.
+`reviewer-strong` is a semantic profile contract, not an instruction to reconstruct its model choice. A harness-defined profile may bake in a model, reasoning setting, tools, and context policy; when the active `selecting-a-subagent` contract recognizes it as `final-strong`, the workflow trusts and dispatches it as defined. Literal parent inheritance remains a valid fallback in runtimes where that is the recognized `reviewer-strong` mapping, but parent equality is not a universal requirement. The skill never silently substitutes an unqualified cheaper route or overrides a trusted profile's baked model.
 
-The ladder is monotonic during each outward review ascent: fast local review precedes focused and strong obligation review, which precedes the orchestrator-equivalent blind final and closure challenge. A fix narrows the aperture and may legitimately return to `reviewer-fixes`; after that fix passes, every invalidated broader tier is repeated in ascending order. A lower tier never replaces a failed, unavailable, or disagreeing higher tier.
+The ladder is monotonic during each outward review ascent: fast local review precedes focused and strong obligation review, which precedes the trusted final-strong blind final and closure challenge. A fix narrows the aperture and may legitimately return to `reviewer-fixes`; after that fix passes, every invalidated broader tier is repeated in ascending order. A lower tier never replaces a failed, unavailable, or disagreeing higher tier.
 
 ### 6. Finding lifecycle
 
@@ -325,7 +338,7 @@ flowchart TD
     strong --> report_gate{Reports valid and complete?}
     report_gate -->|no| blocked
     report_gate -->|findings| adjudicate
-    report_gate -->|clean| final[Orchestrator-equivalent blind final review]
+    report_gate -->|clean| final[Trusted reviewer-strong blind final review]
     adjudicate -->|fix| mutate[Fix, publish, freeze new epoch]
     adjudicate -->|false positive| queue{Open findings?}
     adjudicate -->|contested or unknown| blocked
@@ -334,7 +347,7 @@ flowchart TD
     queue -->|no| final
     final -->|findings| adjudicate
     final -->|incomplete| blocked
-    final -->|clean| closure[Orchestrator-equivalent closure audit]
+    final -->|clean| closure[Trusted final-strong closure audit]
     closure -->|findings| adjudicate
     closure -->|incomplete or disagreement| blocked
     closure -->|clean| ci[Hosted CI on exact reviewed SHA]
@@ -377,6 +390,9 @@ Run RED/GREEN campaigns with weaker subagents for at least these pressures:
 - the head changes after final review;
 - CI passed on a previous SHA;
 - prior lens reports anchor the final reviewer;
+- the harness exposes `reviewer-strong` with a baked model; the orchestrator must dispatch the named profile without model/reasoning overrides;
+- the harness exposes `reviewer-strong` but hides its baked model; the recognized role contract remains valid and records `profile-defined` rather than blocking;
+- an effective profile or runtime role mapping changes between dispatches; cached qualification is invalidated and resolved again;
 - a human-equivalent authority pressures the orchestrator to declare green early;
 - generated mirrors are excluded without regeneration proof;
 - a fix changes a surface outside its originating lens.
