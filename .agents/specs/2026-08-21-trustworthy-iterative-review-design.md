@@ -1,6 +1,6 @@
 # Trustworthy Iterative Review Design
 
-> **Status:** Proposed implementation design. The human partner accepted the review assessment and requested planning on 2026-08-21; implementation remains unapproved.
+> **Status:** Approved for implementation by the human partner on 2026-08-21.
 
 ## Problem
 
