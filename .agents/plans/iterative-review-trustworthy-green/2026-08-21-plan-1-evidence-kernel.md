@@ -22,6 +22,7 @@
 - The [Version-2 state contract](../../specs/2026-08-21-trustworthy-iterative-review-design.md#version-2-state-contract) is normative; do not invent alternate keys or looser record shapes.
 - Do not regenerate marketplace surfaces or run canonical CI until the task's source and tests are staged as directed.
 - The complete version-2 workflow remains behind the new `reviewctl.py` entrypoint until the cutover plan; this plan does not claim that the existing skill is trustworthy green.
+- Plan 1 does not expose `reviewctl present`, accept caller-supplied remote observations through the CLI, or emit a reviewed-SHA proof. The pure presentation predicate exists only for fixture-driven kernel tests until Plan 6 adds the trusted live remote-fetch adapter.
 - Tasks 1-5 intentionally leave a local in-progress tree while TDD moves from RED to GREEN. Do not commit or publish that intermediate state, do not run canonical CI on it, and do not bypass hooks. Task 6 regenerates the overlay, stages the complete intended tree, runs canonical CI, and creates the first implementation commit.
 
 ---
@@ -586,7 +587,7 @@ class Decision:
 
 For reviewer-backed actions, the recipe exposes the maximum capability and reasoning floor of the assignments currently eligible for that stage. Fast, focused, and strong actions are distinct ordered gates. A missing stage may be vacuously complete only when the coverage plan contains no current obligation eligible for that tier; it may not consume a lower-tier attestation as a substitute.
 
-Before returning `seal-green`, the policy re-runs `verify_evidence_files()` for every evidence ID used by a green predicate. `seal-green` writes a candidate seal and advances to `green-candidate`. `evaluate_green(state, remote_observation, now=...)` rechecks those files plus transient remote head, authority, hosted-check identity, and the 60-second observation age and returns a decision without mutating state. Tests pass a fixed `now`; the CLI supplies the current UTC clock.
+Before returning `seal-green`, the policy re-runs `verify_evidence_files()` for every evidence ID used by a green predicate. `seal-green` writes a candidate seal and advances to `green-candidate`. `evaluate_green(state, remote_observation, now=...)` rechecks those files plus transient remote head, authority, hosted-check identity, and the 60-second observation age and returns a decision without mutating state. Plan 1 tests pass a fixed `now`; Plan 6 supplies the live UTC clock and the trusted remote observation.
 
 - [ ] **Step 3: Implement stage predicates**
 
@@ -664,7 +665,8 @@ Change every Task 4 checkbox to `[x]` in the working tree. Task 6 will stage the
 **Interfaces:**
 - Consumes: model, store, and policy APIs from Tasks 2-4.
 - Produces transaction functions in `engine.py`: `init_review(...)`, `dispatch_transaction(...)`, `complete_transaction(...)`, `block_transaction(...)`, and `resume_transaction(...)`; each operates on an in-memory copy and calls `save_state()` exactly once after full validation.
-- Produces: public CLI commands `init`, `status`, `next`, `dispatch`, `complete`, `block`, `resume`, `validate`, and `present`; an explicit legacy boundary that cannot treat version-1 state or metrics as version-2 evidence.
+- Produces: public CLI commands `init`, `status`, `next`, `dispatch`, `complete`, `block`, `resume`, and `validate`; an explicit legacy boundary that cannot treat version-1 state or metrics as version-2 evidence.
+- Does not produce: `present`, a remote-observation CLI input, or any reviewed-SHA proof. Plan 6 owns the live connector fetch and presentation command.
 
 - [ ] **Step 1: Write CLI contract tests before implementation**
 
@@ -674,13 +676,15 @@ Test exact behavior:
 reviewctl.py --help exits 0 and labels version 2 experimental until cutover
 reviewctl.py --check exits 0 without files
 init defaults to check and requires --apply to create version-2 state
-status, next, and present are read-only
+status and next are read-only
 dispatch, complete, block, and resume require --apply
 usage errors exit 2
 validation, stale evidence, and unlawful transitions exit 1
 --json emits one JSON object and no prose
 complete seal-green re-evaluates every candidate predicate and cannot accept a caller-supplied verdict
-present accepts only a connector-produced remote-observation file, re-evaluates the candidate, emits the exact reviewed SHA, and never changes state
+no present subcommand exists before Plan 6
+no CLI command accepts a remote-observation file or emits a reviewed-SHA proof
+arbitrary observation files can exercise only the pure evaluate_green fixture API and cannot produce presentation proof
 any failed dispatch/complete/block/resume transaction leaves review-state bytes unchanged
 evidence aliases are resolved before record validation and never survive in persisted state
 ```
