@@ -1,10 +1,10 @@
 ---
-name: working-with-epics
+name: writing-roadmaps
 description: Use when a goal is too large for one writing-plans plan and requires a sequenced roadmap of consecutive plans.
 metadata:
-  source-id: working-with-epics
-  source-path: codex-marketplace/plugins/superpowers-plus/skills/working-with-epics/SKILL.md
-  provenance-name: Working With Epics first-party skill
+  source-id: writing-roadmaps
+  source-path: codex-marketplace/plugins/superpowers-plus/skills/writing-roadmaps/SKILL.md
+  provenance-name: Writing Roadmaps first-party skill
   source-category: first_party
   status: active
   owner: Harley Bartles
@@ -35,7 +35,7 @@ metadata:
 license: MIT
 ---
 
-# Working With Epics
+# Writing Roadmaps
 
 ## Overview
 

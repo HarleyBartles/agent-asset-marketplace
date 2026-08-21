@@ -2,17 +2,17 @@ schema_version: 1
 custody: marketplace
 lane: skills-with-citation
 authority:
-  title: Working With Epics
+  title: Writing Roadmaps
   canonical_url: https://github.com/HarleyBartles/agent-asset-marketplace
   pinned_source_url: https://github.com/HarleyBartles/agent-asset-marketplace
   latest_check_url: https://github.com/HarleyBartles/agent-asset-marketplace
   revision: '2026-07-25'
   retrieved_at: '2026-07-25'
-  content_sha256: f62571f13047c4c504856483562d09b93883eb897adb2402352466142eac870c
+  content_sha256: 635880f87c4d75b67bd0a6295c80c579293ae75fcdc9056b92def595754b22f9
   license: MIT
   license_url: https://github.com/HarleyBartles/agent-asset-marketplace/blob/main/LICENSE
 decomposition:
-  reconciled_against: f62571f13047c4c504856483562d09b93883eb897adb2402352466142eac870c
+  reconciled_against: 635880f87c4d75b67bd0a6295c80c579293ae75fcdc9056b92def595754b22f9
   references:
     - path: references/scope-notes.md
       source_sections:

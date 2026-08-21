@@ -17,7 +17,7 @@ A plan may depend on a third-party API, a pending user decision, an upstream rel
 
 - Separate the plan into **contained** tasks the agent can do now and **blocked** tasks that require the external thing.
 - If the contained tasks form a meaningful, testable slice, rate the slice and hand it off. Leave the blocked tasks in the roadmap, not in this plan.
-- If there is no meaningful contained slice, the plan is not at a stage boundary. Classify as `blocked`, do not hand off, and return to `writing-plans` or `working-with-epics`.
+- If there is no meaningful contained slice, the plan is not at a stage boundary. Classify as `blocked`, do not hand off, and return to `writing-plans` or `writing-roadmaps`.
 
 ## Overlap with verification and review
 

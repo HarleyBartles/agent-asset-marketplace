@@ -1,6 +1,6 @@
 # Scope Notes
 
-Use when the main `working-with-epics` guidance does not cleanly cover the case in front of you.
+Use when the main `writing-roadmaps` guidance does not cleanly cover the case in front of you.
 
 ## When a roadmap item should become a new epic
 

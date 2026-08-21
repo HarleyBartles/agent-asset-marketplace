@@ -41,7 +41,7 @@ Create `codex-marketplace/plugins/superpowers-plus/references/plan-scope-sizing.
 ```markdown
 # Plan Scope Sizing
 
-Use when a `writing-plans` or `working-with-epics` session feels large, overwhelming, or "huge".
+Use when a `writing-plans` or `writing-roadmaps` session feels large, overwhelming, or "huge".
 
 ## The three escape hatches
 
@@ -61,7 +61,7 @@ The plan has many tasks, but each task is self-contained, has its own test cycle
 The plan covers multiple independent subsystems, concerns, or code boundaries that could be reviewed and delivered separately.
 
 - Stop writing the current plan.
-- Invoke `working-with-epics` and build a sequenced roadmap.
+- Invoke `writing-roadmaps` and build a sequenced roadmap.
 - Write Plan 1 from the first concern, and leave the others as pending plans.
 - This is for legitimately cross-concern work, not for making tiny plans.
 
@@ -124,7 +124,7 @@ Implement `tools/sync_skill_shared_references.py` with `--check` and `--apply` m
 - Read the canonical reference files from `codex-marketplace/plugins/superpowers-plus/references/`.
 - Copy `plan-scope-sizing.md` into:
   - `codex-marketplace/plugins/superpowers-plus/skills/writing-plans/references/`
-  - `codex-marketplace/plugins/superpowers-plus/skills/working-with-epics/references/`
+  - `codex-marketplace/plugins/superpowers-plus/skills/writing-roadmaps/references/`
 - Copy `execution-lane-override.md` into:
   - `codex-marketplace/plugins/superpowers-plus/skills/executing-plans/references/`
   - `codex-marketplace/plugins/superpowers-plus/skills/subagent-driven-development/references/`
@@ -232,11 +232,11 @@ Co-Authored-By: Devin <158243242+devin-ai-integration[bot]@users.noreply.github.
 
 ---
 
-### Task 3: Update `working-with-epics/SKILL.md`
+### Task 3: Update `writing-roadmaps/SKILL.md`
 
 **Files:**
-- Modify: `codex-marketplace/plugins/superpowers-plus/skills/working-with-epics/SKILL.md`
-- Create: `codex-marketplace/plugins/superpowers-plus/skills/working-with-epics/references/plan-scope-sizing.md` (via the sync script, then verify)
+- Modify: `codex-marketplace/plugins/superpowers-plus/skills/writing-roadmaps/SKILL.md`
+- Create: `codex-marketplace/plugins/superpowers-plus/skills/writing-roadmaps/references/plan-scope-sizing.md` (via the sync script, then verify)
 
 **Interfaces:**
 - Consumes: `plan-scope-sizing.md` canonical reference.
@@ -273,8 +273,8 @@ If a roadmap item should split into a new epic, a scope change invalidates multi
 
 ```bash
 py -3 tools/sync_skill_shared_references.py --apply
-git add codex-marketplace/plugins/superpowers-plus/skills/working-with-epics/SKILL.md codex-marketplace/plugins/superpowers-plus/skills/working-with-epics/references/plan-scope-sizing.md
-git commit -m "feat(working-with-epics): add JIT plan splitting lane
+git add codex-marketplace/plugins/superpowers-plus/skills/writing-roadmaps/SKILL.md codex-marketplace/plugins/superpowers-plus/skills/writing-roadmaps/references/plan-scope-sizing.md
+git commit -m "feat(writing-roadmaps): add JIT plan splitting lane
 
 Add a Lane 3 for splitting oversized epic plans and point to the shared
 plan-scope-sizing.md reference for the right escape hatch.

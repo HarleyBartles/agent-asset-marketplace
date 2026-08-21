@@ -21,7 +21,7 @@ metadata:
   - writing-plans
   - executing-plans
   - subagent-driven-development
-  - working-with-epics
+  - writing-roadmaps
   use_after:
   - brainstorming
   - writing-plans

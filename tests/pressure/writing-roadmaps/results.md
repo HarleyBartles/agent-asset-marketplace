@@ -2,9 +2,9 @@
 
 ## Summary
 
-All seven subagent pressure scenarios completed. The RED baselines show behavior without the new skills; the GREEN tests show behavior with `working-with-epics` and `handoff-gates` installed and read as if invoked.
+All seven subagent pressure scenarios completed. The RED baselines show behavior without the new skills; the GREEN tests show behavior with `writing-roadmaps` and `handoff-gates` installed and read as if invoked.
 
-## working-with-epics
+## writing-roadmaps
 
 ### RED: oversized request (no skill)
 
@@ -44,7 +44,7 @@ The subagent used the `handoff-gates` completion-readiness lane, scored the comp
 
 **Verdict:** Expected pass — below-9/10 rating with a clear hygiene gap and no premature handoff.
 
-## Combined GREEN: blocked plan (working-with-epics + handoff-gates)
+## Combined GREEN: blocked plan (writing-roadmaps + handoff-gates)
 
 The subagent read both skills, identified the 6/10 rating and the unresolved API contract, marked the roadmap item as `blocked`, and asked the human one focused question about the API contract schema, authentication, and error format. It did not proceed to execution.
 
