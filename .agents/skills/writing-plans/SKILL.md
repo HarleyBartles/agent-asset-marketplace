@@ -16,7 +16,7 @@ metadata:
   - Use when the goal fits a single tight implementation plan.
   - Use before touching implementation code.
   do_not_use_when:
-  - Do not use when the spec covers multiple independent subsystems; invoke working-with-epics
+  - Do not use when the spec covers multiple independent subsystems; invoke writing-roadmaps
     to create a roadmap before writing plans.
   - Do not use when implementation has already started.
   - Do not use as a substitute for brainstorming.
@@ -25,7 +25,7 @@ metadata:
   - handoff-gates
   - executing-plans
   - subagent-driven-development
-  - working-with-epics
+  - writing-roadmaps
 license: MIT
 ---
 ## Provenance
@@ -51,7 +51,7 @@ Assume they are a skilled developer, but know almost nothing about our toolset o
 
 ## Scope Check
 
-If the spec covers multiple independent subsystems, invoke `working-with-epics` to create a sequenced roadmap before writing any plan. If brainstorming already produced a roadmap, write Plan 1 from the roadmap and leave remaining subsystems as pending future plans. Each plan should produce working, testable software on its own.
+If the spec covers multiple independent subsystems, invoke `writing-roadmaps` to create a sequenced roadmap before writing any plan. If brainstorming already produced a roadmap, write Plan 1 from the roadmap and leave remaining subsystems as pending future plans. Each plan should produce working, testable software on its own.
 
 ## When to stop and ask
 

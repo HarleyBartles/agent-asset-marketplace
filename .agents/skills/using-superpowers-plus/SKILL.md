@@ -32,7 +32,7 @@ metadata:
   - finishing-a-development-branch
   - requesting-code-review
   - iterative-review
-  - working-with-epics
+  - writing-roadmaps
   related_skills:
   - brainstorming
   - systematic-debugging
@@ -48,7 +48,7 @@ metadata:
   - receiving-code-review
   - iterative-review
   - writing-skills
-  - working-with-epics
+  - writing-roadmaps
   - repo-worker-base
   - base-doctrine
   - inspecting-the-environment

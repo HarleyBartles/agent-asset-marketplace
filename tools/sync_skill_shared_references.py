@@ -13,7 +13,7 @@ SKILL_DIR = ROOT / "codex-marketplace" / "plugins" / "superpowers-plus" / "skill
 SHARES = {
     "plan-scope-sizing.md": [
         "writing-plans",
-        "working-with-epics",
+        "writing-roadmaps",
     ],
     "execution-lane-override.md": [
         "executing-plans",

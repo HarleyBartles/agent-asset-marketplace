@@ -213,15 +213,15 @@
       "source_path": "codex-marketplace/plugins/superpowers-plus/skills/verification-before-completion/SKILL.md"
     },
     {
-      "canonical_name": "working-with-epics",
+      "canonical_name": "writing-roadmaps",
       "source_category": "first_party",
       "content_mode": "verbatim",
       "source_family": "first_party",
-      "canonical_source_path": "codex-marketplace/plugins/superpowers-plus/skills/working-with-epics",
-      "local_path": "skills/working-with-epics",
+      "canonical_source_path": "codex-marketplace/plugins/superpowers-plus/skills/writing-roadmaps",
+      "local_path": "skills/writing-roadmaps",
       "provenance_note": "First-party helper skill bundled verbatim; not derived from the obra/superpowers upstream snapshot.",
       "copy_expectation": "byte_identical",
-      "source_path": "codex-marketplace/plugins/superpowers-plus/skills/working-with-epics/SKILL.md"
+      "source_path": "codex-marketplace/plugins/superpowers-plus/skills/writing-roadmaps/SKILL.md"
     },
     {
       "canonical_name": "writing-plans",

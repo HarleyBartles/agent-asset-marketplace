@@ -1,6 +1,6 @@
 # Plan Scope Sizing
 
-Use when a `writing-plans` or `working-with-epics` session feels large, overwhelming, or "huge".
+Use when a `writing-plans` or `writing-roadmaps` session feels large, overwhelming, or "huge".
 
 ## The three escape hatches
 
@@ -20,7 +20,7 @@ The plan has many tasks, but each task is self-contained, has its own test cycle
 The plan covers multiple independent subsystems, concerns, or code boundaries that could be reviewed and delivered separately.
 
 - Stop writing the current plan.
-- Invoke `working-with-epics` and build a sequenced roadmap.
+- Invoke `writing-roadmaps` and build a sequenced roadmap.
 - Write Plan 1 from the first concern, and leave the others as pending plans.
 - This is for legitimately cross-concern work, not for making tiny plans.
 

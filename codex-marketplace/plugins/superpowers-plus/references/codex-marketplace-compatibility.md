@@ -11,7 +11,7 @@ This note applies to the active Codex distribution of the first-party Superpower
 ## Plugin contract
 
 - `superpowers-plus` is the first-party plugin bundle for the Superpowers+ workflow skill family.
-- The active plugin includes the first-party Superpowers+ skills, including the `using-superpowers-plus` workflow-selection entrypoint, plus the compositional helper skills (`handoff-gates`, `inspecting-the-environment`, `iterative-review`, `requesting-code-review`, `receiving-code-review`, `selecting-a-subagent`, `working-with-epics`).
+- The active plugin includes the first-party Superpowers+ skills, including the `using-superpowers-plus` workflow-selection entrypoint, plus the compositional helper skills (`handoff-gates`, `inspecting-the-environment`, `iterative-review`, `requesting-code-review`, `receiving-code-review`, `selecting-a-subagent`, `writing-roadmaps`).
 - The retained `obra/superpowers` v6.2.0 MIT snapshot is recorded in `SOURCE.md` for reference; it is not the editable surface and no adapter overlay is applied.
 - Editable custody lives in `codex-marketplace/plugins/superpowers-plus/skills/<name>/`. When a Superpowers+ skill needs to change, edit the canonical plugin skill directly.
 - The repo-specific adaptation text lives only in the plugin skill; the canonical plugin skill is the editable surface and is not folded into the retained upstream snapshot.

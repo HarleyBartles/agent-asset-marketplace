@@ -23,7 +23,7 @@ metadata:
   - using-superpowers-plus
   - handoff-gates
   - writing-plans
-  - working-with-epics
+  - writing-roadmaps
 license: MIT
 ---
 ## Provenance
@@ -64,7 +64,7 @@ You MUST create a task for each of these items and complete them in order:
 digraph brainstorming {
     "Explore project context" [shape=box];
     "Scope too large for one spec?" [shape=diamond];
-    "Invoke working-with-epics" [shape=doublecircle];
+    "Invoke writing-roadmaps" [shape=doublecircle];
     "Ask clarifying questions" [shape=box];
     "Propose 2-3 approaches" [shape=box];
     "Present design sections" [shape=box];
@@ -75,7 +75,7 @@ digraph brainstorming {
     "Invoke writing-plans skill" [shape=doublecircle];
 
     "Explore project context" -> "Scope too large for one spec?";
-    "Scope too large for one spec?" -> "Invoke working-with-epics" [label="yes"];
+    "Scope too large for one spec?" -> "Invoke writing-roadmaps" [label="yes"];
     "Scope too large for one spec?" -> "Ask clarifying questions" [label="no"];
     "Ask clarifying questions" -> "Propose 2-3 approaches";
     "Propose 2-3 approaches" -> "Present design sections";
@@ -90,7 +90,7 @@ digraph brainstorming {
 }
 ```
 
-**The normal terminal state is invoking writing-plans.** If the project is too large for a single spec, invoke `working-with-epics` instead. Do NOT invoke frontend-design, mcp-builder, or any other implementation skill directly from brainstorming.
+**The normal terminal state is invoking writing-plans.** If the project is too large for a single spec, invoke `writing-roadmaps` instead. Do NOT invoke frontend-design, mcp-builder, or any other implementation skill directly from brainstorming.
 
 ## The Process
 
@@ -98,7 +98,7 @@ digraph brainstorming {
 
 - Check out the current project state first (files, docs, recent commits)
 - Before asking detailed questions, assess scope: if the request describes multiple independent subsystems (e.g., "build a platform with chat, file storage, billing, and analytics"), flag this immediately. Don't spend questions refining details of a project that needs to be decomposed first.
-- If the project is too large for a single spec, stop and invoke `working-with-epics` to build a sequenced roadmap and write Plan 1. Do not brainstorm the whole epic in one pass or continue with detailed design questions until Plan 1 is approved.
+- If the project is too large for a single spec, stop and invoke `writing-roadmaps` to build a sequenced roadmap and write Plan 1. Do not brainstorm the whole epic in one pass or continue with detailed design questions until Plan 1 is approved.
 - For appropriately-scoped projects, ask questions one at a time to refine the idea
 - Prefer multiple choice questions when possible, but open-ended is fine too
 - Only one question per message - if a topic needs more exploration, break it into multiple questions

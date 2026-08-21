@@ -1,5 +1,5 @@
 schema_version: 1
-reconciled_against: f62571f13047c4c504856483562d09b93883eb897adb2402352466142eac870c
+reconciled_against: 635880f87c4d75b67bd0a6295c80c579293ae75fcdc9056b92def595754b22f9
 references:
   - path: references/scope-notes.md
     source_sections:
