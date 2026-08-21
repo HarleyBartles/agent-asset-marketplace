@@ -12,7 +12,7 @@
 
 ## Global Constraints
 
-- Edit only canonical first-party source under `codex-marketplace/plugins/superpowers-plus/skills/iterative-review/`; regenerate `.agents/skills/iterative-review/` through the marketplace tooling.
+- Edit only canonical first-party source under `codex-marketplace/plugins/superpowers-plus/skills/iterative-review/`; regenerate the installed skill tree through the marketplace tooling, including `.agents/skills/iterative-review/SKILL.md`.
 - Do not make version-1 reports, JSONL logs, metrics, or resolved-ledger Markdown authoritative inputs to version 2.
 - Initial construction writes one validated empty intake state. Every subsequent version-2 mutation must validate the complete state, bind evidence to the current snapshot epoch, append one history record, and write atomically. No epoch-zero record is valid.
 - Unknown fields, invalid enum values, malformed evidence, stale epochs, stale snapshot fingerprints, and missing referenced files fail closed with exit code `1`; CLI usage errors use exit code `2`.
@@ -763,7 +763,7 @@ Change every Task 5 checkbox to `[x]` in the working tree. Task 6 will stage it 
 - Modify: `codex-marketplace/plugins/superpowers-plus/skills/iterative-review/references/review-state-graph.md`
 - Modify: `.agents/plans/iterative-review-trustworthy-green/2026-08-21-plan-1-evidence-kernel.md`
 - Modify: `.agents/plans/iterative-review-trustworthy-green/roadmap.md`
-- Regenerate: `.agents/skills/iterative-review/` and marketplace/index surfaces
+- Regenerate: the installed iterative-review skill tree, including `.agents/skills/iterative-review/SKILL.md`, and marketplace/index surfaces
 
 **Interfaces:**
 - Consumes: the public `reviewctl.py` commands and green predicate from Tasks 2-5.
