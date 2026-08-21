@@ -72,6 +72,8 @@ The top-level object contains exactly these keys:
   "snapshot": null,
   "evidence": {},
   "authorities": {},
+  "impact_maps": {},
+  "coverage_inventory": null,
   "obligations": {},
   "dispatches": {},
   "reviews": {},
@@ -89,6 +91,8 @@ The top-level object contains exactly these keys:
 |---|---|
 | Evidence | `evidence_id`, `kind`, absolute `path`, `sha256`, `bytes`, `snapshot_epoch`, `snapshot_fingerprint` |
 | Authority | `authority_id`, `kind`, `locator`, `sha256`, `availability`, `evidence_id`, `snapshot_epoch`, `snapshot_fingerprint` |
+| Impact map | `impact_map_id`, `role`, non-empty `entries`, `evidence_id`, `snapshot_epoch`, `snapshot_fingerprint` |
+| Coverage inventory | `coverage_inventory_id`, `semantic_impact_map_id`, `contract_impact_map_id`, `challenger_attestation_id`, non-empty `entries`, `evidence_id`, `snapshot_epoch`, `snapshot_fingerprint` |
 | Obligation | `obligation_id`, `category`, non-empty `surfaces`, `risk`, `scope_level`, `minimum_capability_tier`, `minimum_reasoning_floor`, non-empty `assignees`, `status`, `evidence_ids`, `snapshot_epoch`, `snapshot_fingerprint` |
 | Dispatch | `dispatch_id`, `role`, `profile`, `profile_sha256`, `capability_tier`, `reasoning_floor`, `model`, `reasoning`, `context_mode`, nullable `parent_model`, nullable `parent_reasoning`, `selection_mode`, `route_selection_evidence_id`, non-empty `assignment_ids`, non-empty `context_evidence_ids`, `required_tool_classes`, `status`, `snapshot_epoch`, `snapshot_fingerprint` |
 | Review | `attestation_id`, `dispatch_id`, `role`, `profile`, `profile_sha256`, `capability_tier`, `reasoning_floor`, `model`, `reasoning`, `context_mode`, non-empty `assignment_ids`, `verdict`, `finding_ids`, `uncertainties`, `evidence_id`, `snapshot_epoch`, `snapshot_fingerprint` |
@@ -113,9 +117,11 @@ The closed vocabularies are:
 
 A finding location is exactly `{"path": "repo/relative/path", "line": 1}`. Every non-null resolution includes `resolved_snapshot_epoch` and `resolved_snapshot_fingerprint`. A `fixed` resolution also includes `kind`, `fix_sha`, non-empty `verification_evidence_ids`, and non-empty `rereview_attestation_ids`. A `false-positive` resolution also includes `kind`, non-empty `counter_evidence_ids`, and `adjudicator_attestation_id`. An `accepted-risk` resolution also includes `kind` and `human_decision_evidence_id`; it is excluded from green. Open dispositions require `resolution: null`.
 
+An impact or coverage entry is exactly `{"surface": "stable affected-surface locator", "categories": ["..."], "hazards": ["..."]}`. Entries are non-empty lists with unique `surface` values. Each entry's unique `categories` list contains every universal obligation category; category applicability is decided by the corresponding obligation, where `not-applicable` requires current positive evidence. Hazard strings are non-empty and unique within the entry. The two impact maps must have distinct mapper roles, and each map's evidence bytes encode that exact structured map. The coverage inventory is the scope challenger's canonical, current inventory: it references both maps and the challenger attestation, contains every surface and hazard in the maps' union, and may only add surfaces or hazards. Its evidence bytes encode the exact accepted inventory. Omitting or weakening any member of the union is invalid.
+
 The transient remote observation consumed by presentation contains exactly `pr_url`, full `head_sha`, `authority_metadata_sha256`, `required_checks` as a name-to-conclusion mapping, and RFC 3339 UTC `observed_at`. It is valid for at most 60 seconds and may not be more than 5 seconds in the future. It is not persisted as proof of durable remote state.
 
-For obligation, adjudication, fix, final, and closure roles, each `assignment_ids` item must resolve to a current obligation or finding as appropriate. Impact mappers use the snapshot fingerprint as their assignment; the scope challenger uses both impact-map evidence IDs. This avoids inventing coverage obligations before impact discovery while keeping every dispatch bounded and checkable. A review is valid only when its role, profile hash, tier, model/reasoning/context observations, assignment IDs, epoch, and fingerprint match its dispatch. Blind-final dispatch context must exclude prior review and finding evidence IDs; the validator checks that exclusion rather than trusting the prompt to be blind.
+For obligation, adjudication, fix, final, and closure roles, each `assignment_ids` item must resolve to a current obligation or finding as appropriate. Impact mappers use the snapshot fingerprint as their assignment; the scope challenger uses both impact-map evidence IDs. This avoids inventing coverage obligations before impact discovery while keeping every dispatch bounded and checkable. An impact-map attestation and its structured map are accepted atomically. The scope-challenge attestation, final coverage inventory, and any obligations revised to cover challenger additions are also accepted atomically. A review is valid only when its role, profile hash, tier, model/reasoning/context observations, assignment IDs, epoch, and fingerprint match its dispatch. Blind-final dispatch context must exclude prior review and finding evidence IDs; the validator checks that exclusion rather than trusting the prompt to be blind.
 
 Each dispatch's route-selection evidence is a strict JSON object with exactly `schema_version`, `observed_at`, `inventory_evidence_sha256`, `budget_contract_sha256`, `required_capability_tier`, `profile`, `profile_sha256`, `selection_mode`, `selected_model`, `selected_reasoning`, `selected_context_mode`, nullable `parent_model`, nullable `parent_reasoning`, `qualification_source`, and `rationale`. It records the live inventory and budget inputs through their content hashes and preserves the profile or route authority used for dispatch. Its duplicated fields must equal the dispatch.
 
@@ -157,7 +163,7 @@ A review snapshot records:
 
 ### 3. Coverage obligations
 
-Lens selection becomes coverage planning. A lens is an assignee, not proof of coverage. Two independent discovery passes produce (1) a semantic change-and-dependency map and (2) a contract, data-flow, and user-journey map. The coverage plan uses their union. A separate scope challenger must either add omitted affected surfaces and hazard hypotheses or attest that none remain.
+Lens selection becomes coverage planning. A lens is an assignee, not proof of coverage. Two independent discovery passes produce (1) a semantic change-and-dependency map and (2) a contract, data-flow, and user-journey map. Each pass materializes a strict current impact-map record, and the initial coverage plan must cover their machine-computed union. A separate scope challenger must either add omitted affected surfaces and hazard hypotheses or attest that none remain. Its strict coverage-inventory record becomes the canonical affected-surface set; challenger additions and the corresponding revised obligations are recorded atomically. Coverage is complete only when obligations cover every surface/category pair in that final inventory.
 
 Each changed or affected surface must receive the universal obligations that apply:
 
@@ -300,7 +306,7 @@ Planning-artifact archive or closeout changes happen before the final snapshot i
 
 The blind final reviewer and closure auditor run on the same final snapshot. Hosted CI may require the pull request to leave draft; this creates a `remote-ci-candidate`, not `reviewed-green`. The green seal is written only after required checks pass for the reviewed SHA and the remote head has not changed.
 
-The seal records the snapshot fingerprint, required check names and conclusions, review attestation hashes, coverage digest, finding digest, and timestamp. It is a candidate proof, not a durable claim about mutable remote state. The human-facing handoff must be generated by a read-only `reviewctl present` command that re-fetches the pull-request head, authority metadata, and required hosted checks immediately before presentation. It evaluates the candidate against that transient observation and emits a reviewed-SHA proof without mutating state. A changed or unavailable remote state refuses green and routes the next mutation back through snapshot intake.
+The seal records the snapshot fingerprint, required check names and conclusions, review attestation hashes, coverage digest, finding digest, and timestamp. The coverage digest binds the two impact maps, challenged coverage inventory, and obligations. It is a candidate proof, not a durable claim about mutable remote state. The human-facing handoff must be generated by a read-only `reviewctl present` command that re-fetches the pull-request head, authority metadata, and required hosted checks immediately before presentation. It evaluates the candidate against that transient observation and emits a reviewed-SHA proof without mutating state. A changed or unavailable remote state refuses green and routes the next mutation back through snapshot intake.
 
 ### 9. Agent-facing experience
 

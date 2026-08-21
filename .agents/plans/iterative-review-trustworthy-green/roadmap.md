@@ -4,7 +4,7 @@ Source spec: [Trustworthy Iterative Review Design](../../specs/2026-08-21-trustw
 
 | # | Title | Status | Plan File | Commit | PR | Rating | Notes |
 |---|---|---|---|---|---|---|---|
-| 1 | Fail-closed evidence kernel and legacy false-green regression suite | ready | [Plan 1](2026-08-21-plan-1-evidence-kernel.md) | - | - | 9/10 | Establish the sole machine state, atomic evidence registry, green predicate, transition policy, and regression tests for every proven version-1 router defect. |
+| 1 | Fail-closed evidence kernel and legacy false-green regression suite | ready | [Plan 1](2026-08-21-plan-1-evidence-kernel.md) | - | - | 9/10 | Establish the sole machine state, strict impact/coverage inventory records, atomic evidence registry, green predicate, transition policy, and regression tests for every proven version-1 router defect. |
 | 2 | Immutable snapshot epochs and authority manifest | pending | - | - | - | - | Bind full base/head/tree identifiers, diff and metadata hashes, repo law, linked issue documents, and drift invalidation to each review epoch. |
 | 3 | Impact inventory, coverage planner, and safe reviewer packages | pending | - | - | - | - | Replace heuristic lens selection with changed/affected-surface obligations, derive scope-plus-risk capability floors, require risk-based overlap, and build context packages that cannot hide dependencies. |
 | 4 | Structured reviewer execution and attestation validation | pending | - | - | - | - | Dispatch intentionally tiered fast, focused, strong, and final-strong roles; prefer trusted harness-defined custom profiles, then validated runtime mappings or fallbacks, and require positive evidence for every assignment. |
@@ -31,7 +31,7 @@ Source spec: [Trustworthy Iterative Review Design](../../specs/2026-08-21-trustw
 
 ### Plan 1 - Evidence kernel
 
-- Strict version-2 state, scope/risk floors, profile-or-route qualification records, cross-reference validation, content-addressed evidence, chained history, atomic writes, pure ordered tier policy, and transient green evaluation exist behind one CLI.
+- Strict version-2 state, machine-checkable impact-map and challenged coverage-inventory records, scope/risk floors, profile-or-route qualification records, cross-reference validation, content-addressed evidence, chained history, atomic writes, pure ordered tier policy, and transient green evaluation exist behind one CLI. Plan 1 validates supplied inventories; Plan 3 supplies repository-aware discovery and planning automation.
 - Every known version-1 false-green/dead-route defect is a fixture proving legacy state cannot satisfy version 2; only the current baseline routing-test inconsistency is repaired.
 - Missing one green predicate, skipped or downgraded review tier, unresolved or overridden final-strong profile, unqualified fallback, stale or changed evidence bytes, persisted green, accepted risk, and malformed remote observation all fail closed.
 

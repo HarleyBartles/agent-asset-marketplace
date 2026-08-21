@@ -60,6 +60,8 @@ def make_v2_state(tmp_path: Path, **overrides: object) -> dict:
         "snapshot": None,
         "evidence": {},
         "authorities": {},
+        "impact_maps": {},
+        "coverage_inventory": None,
         "obligations": {},
         "dispatches": {},
         "reviews": {},
@@ -79,7 +81,7 @@ def write_v2_state(tmp_path: Path, state: dict) -> Path:
     return path
 ```
 
-`make_complete_candidate()` must materialize non-empty evidence files under `tmp_path`, compute their real sizes and SHA-256 values, and return the smallest state satisfying every design-spec record shape and stored candidate predicate: one loaded authority; fast-, focused-, and strong-eligible covered obligations including one high-risk cross-surface obligation; matching current dispatches plus clean fast/focused/strong/final/closure reviews; strict route-selection evidence; one fixed finding with resolution proof; successful required preflight and remote-CI checks; and matching reviewed/CI head SHAs. Final and closure dispatches use the trusted `reviewer-strong` profile at the `final-strong` capability/reasoning floor, with a baked route that is not compared with or overridden by the parent. `make_remote_observation()` returns the matching transient observation plus the fixed UTC `now` used by `evaluate_green()`. The observation contains the PR head, authority metadata digest, required-check set, conclusions, and observation timestamp. `remove_predicate()` must remove only the named record or proof field and must not repair any dependent record. Keep these helpers in the test tree; production code must not import them.
+`make_complete_candidate()` must materialize non-empty evidence files under `tmp_path`, compute their real sizes and SHA-256 values, and return the smallest state satisfying every design-spec record shape and stored candidate predicate: one loaded authority; independent semantic and contract impact maps; a challenged coverage inventory that contains their full surface/category/hazard union; fast-, focused-, and strong-eligible covered obligations for every inventory surface/category pair including one high-risk cross-surface obligation; matching current dispatches plus clean mapper/challenger/fast/focused/strong/final/closure reviews; strict route-selection evidence; one fixed finding with resolution proof; successful required preflight and remote-CI checks; and matching reviewed/CI head SHAs. Final and closure dispatches use the trusted `reviewer-strong` profile at the `final-strong` capability/reasoning floor, with a baked route that is not compared with or overridden by the parent. `make_remote_observation()` returns the matching transient observation plus the fixed UTC `now` used by `evaluate_green()`. The observation contains the PR head, authority metadata digest, required-check set, conclusions, and observation timestamp. `remove_predicate()` must remove only the named record or proof field and must not repair any dependent record. Keep these helpers in the test tree; production code must not import them.
 
 - [ ] **Step 2: Add RED tests for the proven version-1 defects**
 
@@ -107,6 +109,8 @@ In `test_review_invariants_v2.py`, define one parameterized test that starts fro
     [
         "snapshot",
         "authority",
+        "impact-map",
+        "coverage-inventory",
         "coverage",
         "preflight",
         "fast-review",
@@ -136,6 +140,11 @@ Also add:
 test_green_rejects_stale_epoch_evidence
 test_green_rejects_wrong_snapshot_fingerprint
 test_green_rejects_unassessed_obligation
+test_green_rejects_missing_impact_map_surface
+test_green_rejects_coverage_inventory_that_omits_map_surface
+test_green_rejects_coverage_inventory_that_omits_map_hazard
+test_green_rejects_missing_inventory_surface_category_obligation
+test_green_rejects_inventory_entry_without_all_universal_categories
 test_green_rejects_deferred_minor_finding
 test_green_rejects_reviewer_uncertainty
 test_green_rejects_malformed_report
@@ -211,7 +220,10 @@ base/head/tree identifiers whose length does not match declared `git_object_form
 non-64-character SHA-256 values
 mapping key different from the identifier inside its record
 evidence record whose current file is missing, resized, or re-hashed
-authority, obligation, dispatch, review, finding, check, or blocker referencing nonexistent evidence
+authority, impact map, coverage inventory, obligation, dispatch, review, finding, check, or blocker referencing nonexistent evidence
+impact map with the wrong mapper role, duplicate surface, missing universal category, duplicate category, or duplicate/blank hazard
+coverage inventory whose map or challenger reference is absent, stale, or role-mismatched
+coverage inventory that omits a surface, category, or hazard from either current impact map
 review whose role, profile, assignment, snapshot, or observed model/context does not match its dispatch
 dispatch below an obligation's capability or reasoning floor
 blind-final or closure dispatch below final-strong capability/reasoning
@@ -365,17 +377,19 @@ def sha256_json(value: object) -> str:
 
 1. validate top-level keys and enums;
 2. validate the snapshot or require `None` during intake;
-3. validate authorities, obligations, dispatches, reviews, findings, checks, blockers, seal, and history by key allowlists;
+3. validate authorities, impact maps, the nullable coverage inventory, obligations, dispatches, reviews, findings, checks, blockers, seal, and history by key allowlists;
 4. ensure referenced evidence IDs exist;
-5. ensure each review matches its dispatch, each dispatch meets its assignment's capability/reasoning floor, and each route-selection evidence file parses as the strict profile-or-route qualification schema;
-6. require final/closure dispatches to use a qualified `final-strong` trusted profile, runtime role map, or fallback in that precedence order; reject overrides on trusted profiles, require fresh context, and exclude prior review/finding evidence from blind-final context;
-7. ensure each evidence file still exists and matches its registered byte length and digest;
-8. ensure current evidence matches the current epoch and fingerprint;
-9. ensure `fixed` and `false-positive` findings contain their required proof fields;
-10. ensure `accepted-risk` cannot satisfy a green candidate;
-11. verify monotonic history sequence plus `previous_record_sha256` and `record_sha256` chain values;
-12. require status/blocker and reviewed-with-exceptions/accepted-risk consistency;
-13. allow `green_seal` only at `green-candidate` and reject any attempt to persist a green status.
+5. permit at most one current map per mapper role during ordered construction, reject duplicate or role-mismatched maps, validate strict impact/coverage entries, and, whenever a coverage inventory is present, prove it contains the full surface, category, and hazard union of both maps without trusting caller summaries;
+6. require the coverage inventory to reference the two current maps, the current scope-challenger attestation, and evidence bytes encoding the exact inventory;
+7. ensure each review matches its dispatch, each dispatch meets its assignment's capability/reasoning floor, and each route-selection evidence file parses as the strict profile-or-route qualification schema;
+8. require final/closure dispatches to use a qualified `final-strong` trusted profile, runtime role map, or fallback in that precedence order; reject overrides on trusted profiles, require fresh context, and exclude prior review/finding evidence from blind-final context;
+9. ensure each evidence file still exists and matches its registered byte length and digest;
+10. ensure current evidence matches the current epoch and fingerprint;
+11. ensure `fixed` and `false-positive` findings contain their required proof fields;
+12. ensure `accepted-risk` cannot satisfy a green candidate;
+13. verify monotonic history sequence plus `previous_record_sha256` and `record_sha256` chain values;
+14. require status/blocker and reviewed-with-exceptions/accepted-risk consistency;
+15. allow `green_seal` only at `green-candidate` and reject any attempt to persist a green status.
 
 Return `None` on success and raise `StateValidationError` with a stable path-prefixed message on failure, for example `findings.F-1.disposition: unknown value 'ignored'`.
 
@@ -526,10 +540,10 @@ Action payloads are allowlisted, never merged generically:
 | Action | Exact accepted `data` keys |
 |---|---|
 | `freeze-review-input` | `snapshot`, `authorities` |
-| `map-impact-semantic` | `attestation`, `findings` |
-| `map-impact-contract` | `attestation`, `findings` |
+| `map-impact-semantic` | `impact_map`, `attestation`, `findings` |
+| `map-impact-contract` | `impact_map`, `attestation`, `findings` |
 | `plan-coverage` | `obligations` |
-| `challenge-coverage` | `attestation`, `findings`, `revised_obligations` |
+| `challenge-coverage` | `coverage_inventory`, `attestation`, `findings`, `revised_obligations` |
 | `run-preflight` | `checks`, `findings` |
 | `run-fast-review` | `attestations`, `findings` |
 | `run-focused-review` | `attestations`, `findings` |
@@ -542,7 +556,7 @@ Action payloads are allowlisted, never merged generically:
 
 Reject missing or extra payload keys. The Task 5 engine copies state in memory, registers supplied evidence files on that copy, then `complete_action()` ingests payload records into their allowlisted mappings and validates the whole candidate for the current snapshot, role, action, dispatch, and evidence registry. Only one final atomic save may replace original state. Hash the canonical action plus payload and evidence IDs for idempotency; an identical replay is a no-op, while the same action key with different content is an error.
 
-Before any subagent-backed action runs, `register_dispatch()` must persist its pending dispatch, strict route-selection evidence, and hashed context package. The route-selection record captures the live inventory, budget contract, required tier, effective profile/adapter identity, selected route representation, qualification source, and rationale. An unchanged current qualification may be reused across matching dispatches; a changed profile hash, adapter identity, inventory hash, budget hash, or required tier invalidates it. Completion is rejected if the pending dispatch did not predate the attestation, the action does not match, the report differs from the dispatch, the profile or route is below the assignment floor, a trusted profile was overridden, or a lower-precedence fallback was used while an effective qualifying profile existed. Deterministic actions (`freeze-review-input`, `plan-coverage`, `run-preflight`, `run-remote-ci`, and `seal-green`) do not require a reviewer dispatch.
+Before any subagent-backed action runs, `register_dispatch()` must persist its pending dispatch, strict route-selection evidence, and hashed context package. The route-selection record captures the live inventory, budget contract, required tier, effective profile/adapter identity, selected route representation, qualification source, and rationale. An unchanged current qualification may be reused across matching dispatches; a changed profile hash, adapter identity, inventory hash, budget hash, or required tier invalidates it. Completion is rejected if the pending dispatch did not predate the attestation, the action does not match, the report differs from the dispatch, the profile or route is below the assignment floor, a trusted profile was overridden, or a lower-precedence fallback was used while an effective qualifying profile existed. Deterministic actions (`freeze-review-input`, `plan-coverage`, `run-preflight`, `run-remote-ci`, and `seal-green`) do not require a reviewer dispatch. Mapper completion atomically stores its attestation and strict impact-map record. Challenge completion atomically stores its attestation, the strict final coverage inventory, and the complete replacement obligation set when challenger additions require revisions; partial mutation is impossible.
 
 For each action, test:
 
@@ -597,8 +611,9 @@ Implement named pure predicates:
 has_current_snapshot
 authorities_complete
 impact_maps_complete
-coverage_complete
+coverage_plan_covers_map_union
 scope_challenge_complete
+coverage_complete
 preflight_current_and_green
 fast_reviews_complete
 focused_reviews_complete
@@ -613,7 +628,9 @@ presentation_observation_matches_candidate
 
 Every predicate returns `(bool, tuple[str, ...])`. `evaluate_green()` concatenates missing reasons from all predicates instead of stopping at the first one.
 
-`coverage_complete()` must require every affected surface to have every applicable universal category from the design contract, derive scope plus risk capability/reasoning floors, reject zero assignees, require two distinct assignees for high-risk obligations, and accept `not-applicable` only with current evidence. `impact_maps_complete()` requires both independent mapper roles. `scope_challenge_complete()` requires a current challenger attestation covering the union of both maps; findings from that challenge return to coverage planning. `fast_reviews_complete()`, `focused_reviews_complete()`, and `strong_reviews_complete()` each require every assignment scheduled at that exact policy tier to have an attestation at or above its floor; a stronger route may serve an assignment but does not permit skipping its ordered stage. A fast/focused attestation cannot satisfy a broader or higher-risk obligation. Whole-PR obligations are satisfied only by final and closure predicates backed by valid `final-strong` profile-or-route qualification evidence.
+`impact_maps_complete()` requires exactly one current map for each independent mapper role. It validates the structured entries and computes their union itself; caller-provided counts or summaries are never authoritative. `coverage_plan_covers_map_union()` requires an obligation for every surface/category pair in that raw union before challenge dispatch. `scope_challenge_complete()` requires a current challenger attestation assigned both map evidence IDs and a current coverage inventory that references that attestation and contains every mapped surface and hazard. The challenger may add surfaces or hazards but cannot remove or weaken map entries. Any additions and a complete revised obligation set are accepted in the same transition.
+
+`coverage_complete()` validates obligations against the final challenged coverage inventory, not against either mapper's potentially smaller set. It requires every inventory surface to have every universal category from the design contract, derives scope plus risk capability/reasoning floors, rejects zero assignees, requires two distinct assignees for high-risk obligations, and accepts `not-applicable` only with current evidence. `seal-green` hashes both maps, the coverage inventory, and obligations into `coverage_sha256`. `fast_reviews_complete()`, `focused_reviews_complete()`, and `strong_reviews_complete()` each require every assignment scheduled at that exact policy tier to have an attestation at or above its floor; a stronger route may serve an assignment but does not permit skipping its ordered stage. A fast/focused attestation cannot satisfy a broader or higher-risk obligation. Whole-PR obligations are satisfied only by final and closure predicates backed by valid `final-strong` profile-or-route qualification evidence.
 
 Implement the design-spec floor table as a pure function and test every scope/risk pair plus every strong consequence override. The result is the maximum applicable tier, with normalized reasoning `low`, `standard`, `high`, or `final-strong` respectively. Repository policy may raise the result but any attempted lowering is a validation error.
 
