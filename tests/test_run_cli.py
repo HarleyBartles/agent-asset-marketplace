@@ -271,3 +271,57 @@ def test_validate_does_not_call_git_diff_exit_code(monkeypatch):
     run._run_validate(ctx)
 
     assert "git_diff_exit_code" not in calls
+
+
+def test_index_mesh_target_delegates_to_bundled(monkeypatch):
+    calls = []
+
+    def fake_run(cmd, ctx):
+        calls.append(cmd)
+
+    monkeypatch.setattr(run, "_run", fake_run)
+
+    ctx = run.Ctx(mode="apply", base_ref=None, allow_shared=False, verbose=False)
+    run.run_targets(["index-mesh"], ctx)
+
+    mesh_cmd = next(
+        (c for c in calls if "generate_index_mesh.py" in " ".join(c) and "--apply" in c),
+        None,
+    )
+    assert mesh_cmd is not None
+
+
+def test_index_mesh_target_forwards_allow_shared_checkout(monkeypatch):
+    calls = []
+
+    def fake_run(cmd, ctx):
+        calls.append(cmd)
+
+    monkeypatch.setattr(run, "_run", fake_run)
+
+    ctx = run.Ctx(mode="apply", base_ref=None, allow_shared=True, verbose=False)
+    run.run_targets(["index-mesh"], ctx)
+
+    mesh_cmd = next(
+        (c for c in calls if "generate_index_mesh.py" in " ".join(c) and "--allow-shared-checkout" in c),
+        None,
+    )
+    assert mesh_cmd is not None
+
+
+def test_refresh_skills_target_delegates_to_bundled(monkeypatch):
+    calls = []
+
+    def fake_run(cmd, ctx):
+        calls.append(cmd)
+
+    monkeypatch.setattr(run, "_run", fake_run)
+
+    ctx = run.Ctx(mode="apply", base_ref=None, allow_shared=False, verbose=False)
+    run.run_targets(["refresh-skills"], ctx)
+
+    refresh_cmd = next(
+        (c for c in calls if "refresh_installed_skills.py" in " ".join(c) and "--apply" in c),
+        None,
+    )
+    assert refresh_cmd is not None

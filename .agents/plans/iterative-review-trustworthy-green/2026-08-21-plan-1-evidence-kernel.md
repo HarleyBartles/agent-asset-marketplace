@@ -69,11 +69,13 @@ Using harmless disposable subjects outside the reviewed branch, prove for each o
 
 For `remote-transition`, additionally prove the provider supports a stable idempotency key and independently verifiable already-in-result-state/no-op observation, so a crash after remote success can be reconciled without guessing.
 
+For `command-execution`, additionally prove the runner materializes the exact expected Git tree as an immutable read-only lower source, binds executable/interpreter/script/module/toolchain and allowlisted-environment digests, confines candidate processes away from review state/evidence/receipts/connector authority/credentials and unapproved network, permits writes only in disposable policy mounts, and kills/reaps the complete job/cgroup/process tree before issuing an independently retrievable receipt with equal pre/post source digests. Exercise a dirty-checkout substitution, review-evidence read/write, and surviving-background-child attempt; every attempt must be rejected or contained and reported.
+
 Also exercise the blind-review tool surface. Prove a snapshot-pinned role proxy can allow repository reads while denying review state, prior reports/findings, provider feedback/comments, and unlisted namespaces; prove it returns an ordered digest-bearing transcript with instruction/data channel roles.
 
 - [ ] **Step 2: Record the capability matrix and decision**
 
-`runtime-capability-gate.md` records the harness/runtime identity, immutable authority and policy identities, every supported receipt kind, retrieval method, challenge/execution semantics, raw-byte behavior, blind-tool confinement behavior, and redacted off-repo evidence hashes. It must contain one explicit decision:
+`runtime-capability-gate.md` records the harness/runtime identity, immutable authority and policy identities, every supported receipt kind, retrieval method, challenge/execution semantics, raw-byte behavior, blind-tool confinement behavior, command source-materialization/toolchain/environment/confinement/process-tree behavior, hostile-command outcomes, and redacted off-repo evidence hashes. It must contain one explicit decision:
 
 - `PASS`: every route above is independently proven and Plans 2/4/6 have a concrete adapter custody target; or
 - `BLOCKED`: name every missing capability and stop Plan 1 before Task 1. Open or reference an explicit harness-integration plan; do not substitute a fake verifier as feasibility evidence.
@@ -134,6 +136,7 @@ def make_empty_v2_state(tmp_path: Path, **overrides: object) -> dict:
         "route_selections": {},
         "runtime_receipts": {},
         "findings": {},
+        "review_repairs": {},
         "checks": {},
         "ready_transition": None,
         "ci_candidate": None,
@@ -238,6 +241,9 @@ test_green_rejects_remote_observation_older_than_60_seconds
 test_green_rejects_remote_observation_more_than_5_seconds_in_future
 test_green_rejects_accepted_risk_and_returns_reviewed_with_exceptions
 test_green_rejects_fast_profile_used_for_strong_obligation
+test_green_rejects_mapper_below_strong_or_without_fresh_distinct_execution
+test_green_rejects_scope_challenger_below_final_strong_or_reusing_mapper_contract
+test_green_rejects_adjudicator_below_source_floor_or_self_adjudicating
 test_green_rejects_final_reviewer_below_final_strong
 test_green_accepts_external_baked_profile_contract_explicitly_qualified_for_blind_final
 test_green_accepts_opaque_harness_contract_explicitly_qualified_for_closure_auditor
@@ -249,6 +255,9 @@ test_green_rejects_final_strong_profile_without_blind_final_role
 test_green_rejects_closure_profile_without_closure_role
 test_green_rejects_fabricated_launch_or_completion_receipt
 test_green_rejects_fabricated_command_success_without_runner_receipt
+test_green_rejects_dirty_checkout_or_mutable_source_command_receipt
+test_green_rejects_command_with_review_evidence_access_or_surviving_child
+test_green_rejects_command_receipt_with_wrong_toolchain_environment_or_confinement_digest
 test_green_rejects_hosted_check_with_local_command_receipt
 test_green_rejects_local_check_with_remote_observation_receipt
 test_green_rejects_replayed_launch_receipt_or_consumed_challenge
@@ -274,6 +283,9 @@ test_any_snapshot_mutation_revokes_green_candidate
 test_fix_enters_fixing_with_published_replacement_epoch_before_verification
 test_fix_rereview_may_narrow_but_requires_broader_reascent_before_fixed
 test_false_positive_resolution_does_not_require_replacement_snapshot
+test_confirmed_closure_process_finding_repairs_same_snapshot_then_refinalizes
+test_review_process_finding_rejects_enter_fixing_and_byte_identical_refresh
+test_review_repair_cannot_close_without_independent_current_verification
 test_close_fixed_does_not_advance_epoch_again
 test_accepted_risk_does_not_require_replacement_snapshot
 test_mapper_finding_is_valid_before_obligations_exist
@@ -293,6 +305,8 @@ test_final_and_closure_reject_not_applicable_outcome
 test_hypothesis_assignments_are_canonical_dispatchable_and_seal_bound
 test_preflight_rejects_omitted_or_substituted_local_check_policy_item
 test_duplicate_json_keys_rejected_at_every_ingestion_boundary
+test_every_canonical_projection_matches_independent_golden_bytes_and_hash
+test_every_included_projection_field_changes_digest
 test_mark_ready_for_ci_is_reserved_and_blocks_without_remote_adapter
 test_ready_transition_recovers_after_remote_success_before_local_commit
 test_initially_ready_pr_uses_verified_idempotent_noop_transition
@@ -326,6 +340,7 @@ Change every Task 1 checkbox to `[x]` in the working tree. Task 6 will stage the
 - Create: `codex-marketplace/plugins/superpowers-plus/skills/iterative-review/scripts/review_core/__init__.py`
 - Create: `codex-marketplace/plugins/superpowers-plus/skills/iterative-review/scripts/review_core/model.py`
 - Create: `codex-marketplace/plugins/superpowers-plus/skills/iterative-review/references/review-state-v2.schema.json`
+- Create by hand, never from production constructors: `codex-marketplace/plugins/superpowers-plus/skills/iterative-review/tests/fixtures/review-v2-canonical-vectors.json`
 - Create: `codex-marketplace/plugins/superpowers-plus/skills/iterative-review/tests/test_review_model_v2.py`
 - Modify: `codex-marketplace/plugins/superpowers-plus/skills/iterative-review/tests/review_v2_helpers.py`
 
@@ -352,6 +367,10 @@ def manifest_payload(
     feedback_history_policy_sha256: str, feedback_history_sha256: str,
     local_check_policy_id: str, local_check_policy_version: str,
     local_check_policy_sha256: str, required_check_policy_sha256: str,
+    review_assignment_policy_id: str, review_assignment_policy_version: str,
+    review_assignment_policy_sha256: str,
+    command_execution_policy_id: str, command_execution_policy_version: str,
+    command_execution_policy_sha256: str,
     evidence_ingestion_policy_id: str, evidence_ingestion_policy_version: str,
     evidence_ingestion_policy_sha256: str,
     hypothesis_derivation_policy_id: str,
@@ -374,6 +393,10 @@ def snapshot_subject(
     feedback_history_policy_sha256: str, feedback_history_sha256: str,
     local_check_policy_id: str, local_check_policy_version: str,
     local_check_policy_sha256: str, required_check_policy_sha256: str,
+    review_assignment_policy_id: str, review_assignment_policy_version: str,
+    review_assignment_policy_sha256: str,
+    command_execution_policy_id: str, command_execution_policy_version: str,
+    command_execution_policy_sha256: str,
     evidence_ingestion_policy_id: str, evidence_ingestion_policy_version: str,
     evidence_ingestion_policy_sha256: str,
     hypothesis_derivation_policy_id: str,
@@ -382,7 +405,27 @@ def snapshot_subject(
     unresolved_feedback_sha256: str,
 ) -> dict: ...
 def snapshot_fingerprint(snapshot: dict) -> str: ...
+def content_id(raw: bytes) -> str: ...
+def evidence_binding_subject(record: dict) -> dict: ...
+def loaded_authority_subject(record: dict) -> dict: ...
+def unavailable_authority_subject(record: dict) -> dict: ...
+def impact_map_subject(record: dict) -> dict: ...
+def coverage_inventory_subject(record: dict) -> dict: ...
+def obligation_subject(record: dict) -> dict: ...
+def hypothesis_assignment_subject(record: dict) -> dict: ...
 def route_selection_subject(record: dict) -> dict: ...
+def pending_dispatch_intent_subject(record: dict) -> dict: ...
+def review_wrapper_subject(record: dict) -> dict: ...
+def runtime_receipt_envelope_subject(record: dict) -> dict: ...
+def finding_identity_subject(record: dict) -> dict: ...
+def review_repair_intent_subject(record: dict) -> dict: ...
+def local_check_subject(record: dict) -> dict: ...
+def hosted_check_subject(record: dict) -> dict: ...
+def ready_intent_subject(record: dict) -> dict: ...
+def ci_candidate_subject(record: dict) -> dict: ...
+def blocker_identity_subject(record: dict) -> dict: ...
+def green_seal_subject(record: dict) -> dict: ...
+def history_record_subject(record: dict) -> dict: ...
 def authority_discovery_subject(snapshot: dict, manifest_payload: dict) -> dict: ...
 def profile_resolution_subject(route_selection: dict) -> dict: ...
 def review_launch_subject(
@@ -400,7 +443,7 @@ def remote_transition_subject(
 def remote_observation_subject(observation_without_receipt: dict) -> dict: ...
 ```
 
-The bodies represented by `...` are the implementation work, not unspecified interfaces: argument ownership, return types, and per-kind projections are fixed above and by the exact record tables in the normative spec. Each error sets a stable `code` and JSON-style `path`; no constructor accepts caller-selected projection keys. `strict_json_loads()` is the only JSON decoder used by state, CLI, adapters, reports, receipts, observations, or evidence re-reads; it rejects BOMs, non-finite numbers, and duplicate object keys before canonicalization. Completion subjects bind the digest of the exact accepted raw bytes as well as the validated structured content and tool transcript.
+The bodies represented by `...` are implementation work, but their allowlists are not: every constructor implements the exact projection row in the normative spec and rejects missing/extra keys before projection. Argument ownership and return types are fixed here; no constructor accepts caller-selected projection keys or performs generic “drop wrapper keys” subtraction. Each error sets a stable `code` and JSON-style `path`. `strict_json_loads()` is the only JSON decoder used by state, CLI, adapters, reports, receipts, observations, evidence re-reads, or golden-vector input; it rejects BOMs, non-finite numbers, and duplicate object keys before canonicalization. Completion subjects bind the digest of the exact accepted raw bytes as well as the validated structured content and tool transcript.
 
 - [ ] **Step 1: Write focused model validation tests**
 
@@ -428,13 +471,14 @@ evidence binding whose content object is absent or whose binding digest is wrong
 two epoch bindings for byte-identical content that incorrectly overwrite one another
 authority manifest or authority-discovery receipt missing, mismatched, or authored by an untrusted/reviewed-head authority
 authority manifest whose discovery-policy digest differs from the snapshot or sealed connector policy
+authority manifest whose review-assignment or command-execution policy identity/version/digest differs from the snapshot/composition-root policy
 authority-discovery policy whose identity/version/source is controlled by the reviewed head
 feedback history that omits an actionable already-resolved thread or whose policy identity/version/digest is controlled by the reviewed head
 loaded authority without source hash/evidence, or unavailable authority with fabricated source fields or missing failure evidence
 authority-manifest payload containing local evidence, receipt, epoch, or fingerprint fields
 runtime receipt envelope containing a local evidence ID or wrapper fields
 runtime receipt wrapper whose fetched-envelope evidence is absent or mismatched
-authority, impact map, coverage inventory, obligation, dispatch, review, runtime receipt, finding, check, or blocker referencing nonexistent evidence
+authority, impact map, coverage inventory, obligation, dispatch, review, runtime receipt, finding, review repair, check, or blocker referencing nonexistent evidence
 impact map with the wrong mapper role, duplicate surface, missing universal category, duplicate category, or duplicate/blank hazard
 impact/coverage entry with missing/unknown consequence, `none` plus another consequence, or obligation consequence not propagated from inventory
 conflicting valid map consequences `none` and a substantive value that do not normalize by dropping `none`
@@ -445,6 +489,9 @@ mapper/challenger report whose receipt-bound structured-output digest differs fr
 adjudication/fix/exemption result with a missing or role-incompatible outcome/evidence set
 review without structurally matching profile-resolution, launch, and completion receipt references
 dispatch below an obligation's capability or reasoning floor
+impact mapper below strong/high, scope challenger below final-strong, any mapper/challenger in a non-fresh or reused execution, or mapper/challenger role contracts that violate the sealed independence policy
+finding adjudicator below max(strong/high, source-dispatch floor, linked-assignment floors), in a non-fresh execution, or self-adjudicating a review-sourced finding through the source execution/role contract
+review-repair verifier below its source/target floor, non-fresh, or sharing the source/repair-producing role contract or execution
 blind-final or closure dispatch below final-strong capability/reasoning
 exemption-challenger dispatch below final-strong capability/reasoning or sharing the primary review's profile/contract authority
 blind-final or closure dispatch that has neither a qualified trusted profile/runtime-role map nor a qualified fallback
@@ -459,6 +506,7 @@ finding resolution referencing a nonexistent finding, review, check, or human de
 obligation/dispatch/review/check epoch different from the current snapshot when used as current
 finding resolution epoch earlier than discovery or inconsistent with its proof records
 green_seal present before the green-candidate stage
+green_seal whose repairs_sha256 omits or mismatches any review-repair record
 persisted status green
 accepted-risk finding while evaluating a green candidate
 blocked status without exactly one active blocker, more than one active blocker, active status with an active blocker, or closed blocker without current resolution evidence/epoch/fingerprint
@@ -469,16 +517,21 @@ remote check with a wrong app, workflow, run, policy digest, repository/PR ident
 hosted check missing policy item, workflow ID/path/definition ref/SHA, event, trigger subject, policy input/configuration digest, check-run, workflow-run, or run-attempt identity; using an unauthorized trigger; or selecting a superseded attempt
 local check with hosted fields or remote provenance, and hosted check with a command or local execution provenance
 local check missing from the sealed complete policy set or with substituted command, working directory, requiredness, or policy item
+local check missing/mismatching command-execution policy, immutable source/toolchain/environment/confinement/sandbox identity, equal pre/post source digest, or complete process-tree termination
 not-applicable obligation without a qualified current assignment attestation and concrete evidence, or high-risk exemption without independent overlap
 final or closure result with `not-applicable`
 hypothesis assignment with ad hoc/non-canonical ID, missing opposite polarity, wrong policy digest, unresolved dispatch ID, or absent seal binding
 pending/authorized ready transition without its strict intent/idempotency/challenge fields, completed transition without independently verified execution/receipt, or ci_candidate/remote-ci-candidate stage without that completed transition
 fixing finding without a replacement snapshot/publication proof, and fixed finding without current verification/re-review proof
+review-repairing finding without a confirmed review-process adjudication and exact invalidation cut, or review-repaired finding without current replacement records and independent verification
+confirmed candidate-change adjudication entering review repair, confirmed review-process adjudication entering fixing, or either branch being reused after acceptance
+any literal canonical-vector input whose constructor bytes/digest/derived ID differ from the independent fixture, any included-field mutation that leaves a digest unchanged, or any excluded-field mutation that changes subject bytes
 epoch-zero record of any kind
 ```
 
 Add a round-trip test proving `new_state()` validates and serializes deterministically.
 Add `test_construct_epoch_one_from_raw_adapter_payloads_without_fixed_point`: starting only from raw authority/failure bytes, typed discovery outputs, and sealed discovery/receipt-policy digests, use production constructors in the required order to compute the manifest payload digest, snapshot fingerprint, payload evidence, receipt envelope/wrapper, and final manifest wrapper. Assert no hashed projection contains its own digest or any later binding field and no partial wrapper validates.
+Add one table-driven golden-vector test for every normative projection and receipt target. The literal fixture contains strict input, expected canonical UTF-8 bytes, expected digest/derived ID, and expected receipt subject digest where applicable; production code may read but never generate or update it. A per-field mutation test proves every included semantic/security field changes the subject digest and every explicitly excluded wrapper field leaves subject bytes unchanged while strict wrapper/state validation still protects it.
 
 - [ ] **Step 2: Implement canonical enums and required keys**
 
@@ -497,6 +550,7 @@ STAGES = (
     "focused-review",
     "strong-review",
     "resolution",
+    "review-repair",
     "final-review",
     "closure-audit",
     "remote-ci-candidate",
@@ -510,6 +564,8 @@ DISPOSITIONS = (
     "open",
     "fixing",
     "fixed",
+    "review-repairing",
+    "review-repaired",
     "false-positive",
     "accepted-risk",
     "deferred",
@@ -522,7 +578,9 @@ OBLIGATION_OUTCOMES = ("covered", "not-applicable", "findings", "incomplete")
 BLIND_FINAL_OUTCOMES = ("covered", "findings", "incomplete")
 CLOSURE_AUDIT_OUTCOMES = ("covered", "findings", "incomplete")
 FINDING_ADJUDICATION_OUTCOMES = ("confirmed", "false-positive", "contested")
+ADJUDICATION_REMEDIATION_CLASSES = ("candidate-change", "review-process")
 FIX_REVIEW_OUTCOMES = ("verified", "findings", "incomplete")
+REVIEW_REPAIR_OUTCOMES = ("verified", "findings", "incomplete")
 EXEMPTION_CHALLENGE_OUTCOMES = ("not-applicable-confirmed", "applicable", "incomplete")
 DISPATCH_STATUSES = ("pending", "reported", "incomplete", "invalidated")
 READY_TRANSITION_STATUSES = ("pending", "authorized", "completed")
@@ -553,6 +611,7 @@ EVIDENCE_KINDS = (
     "tool-transcript",
     "finding-proof",
     "fix-proof",
+    "review-repair-proof",
     "human-decision",
     "remote-observation",
 )
@@ -596,9 +655,25 @@ REVIEW_ROLES = (
     "exemption-challenger",
     "finding-adjudicator",
     "fix-reviewer",
+    "review-repair-verifier",
     "blind-final",
     "closure-auditor",
 )
+REVIEW_REPAIR_TARGET_KINDS = (
+    "semantic-impact",
+    "contract-impact",
+    "coverage-plan",
+    "coverage-challenge",
+    "obligation-review",
+    "exemption-review",
+    "finding-adjudication",
+    "fix-review",
+    "blind-final",
+    "closure-audit",
+    "local-check",
+    "hosted-check",
+)
+REVIEW_REPAIR_STATUSES = ("repairing", "verified", "closed")
 CHECK_KINDS = ("preflight", "targeted", "remote-ci")
 FINDING_SOURCE_KINDS = ("review", "check", "feedback")
 RUNTIME_RECEIPT_KINDS = (
@@ -626,9 +701,9 @@ BLOCKER_CLASSES = (
 
 Use explicit allowlists for every mapping. Do not silently retain unknown keys.
 
-For every evidence-backed record, implement one named canonical subject constructor that excludes local evidence/content paths, epoch/fingerprint bindings, and any ID derived from that subject. Validation must reconstruct that subject rather than trusting caller-selected projection fields. Add a parameterized test proving each supported record can be constructed from raw subject bytes and that inserting any local binding field into the hashed subject is rejected.
+Implement every named constructor in the API from the normative projection table—no anonymous fallback and no generic key subtraction. Validation reconstructs the exact allowlisted subject and ID derivation, then compares it with the independently authored golden bytes/digest. The test matrix covers every included field, every explicitly excluded wrapper field, derived versus externally assigned IDs, mutable finding/repair/blocker lifecycle fields, and every receipt target. A constructor and validator that make the same omission must still fail the literal fixture or per-field mutation vectors.
 
-Validate every first-class route-selection record as the strict design-spec object. `route_selection_subject()` includes its externally assigned globally unique epoch-namespaced ID and immutable `resolved_route_token_sha256` and excludes local evidence/epoch/fingerprint fields; evidence binds those subject bytes and the wrapper is attached afterward. The dispatch references that record and does not duplicate profile, tier, model, reasoning, context, parent, or selection fields; CLI output derives them from the route. `trusted-profile` requires the effective named profile, an authority outside the reviewed head, no model/reasoning override, and a readable profile hash or opaque harness adapter identity hash; its selected model/reasoning are observed values or the literal `profile-defined`, never override inputs. `runtime-role-map` requires a current adapter mapping hash. `literal-inherit` and `explicit-route` are legal fallbacks only when no qualifying profile mapping exists and the adapter qualifies both the assignment floor and requested role. Launch verification compares the realized profile bytes/identity, role contract, model, reasoning, and context configuration against the token; mapping drift between resolution and launch blocks. Exemption challenger, final, and closure require `fresh` context, role-specific `final-strong` qualification, and a newly verified profile-resolution receipt for each launch; they never reuse cached qualification. Blind-final context uses the strict constructor-owned allowlist manifest and requires `hazard_framing_sha256: null`.
+Validate every first-class route-selection record as the strict design-spec object. `route_selection_subject()` includes its externally assigned globally unique epoch-namespaced ID and immutable `resolved_route_token_sha256` and excludes local evidence/epoch/fingerprint fields; evidence binds those subject bytes and the wrapper is attached afterward. The dispatch references that record and does not duplicate profile, tier, model, reasoning, context, parent, or selection fields; CLI output derives them from the route. `trusted-profile` requires the effective named profile, an authority outside the reviewed head, no model/reasoning override, and a readable profile hash or opaque harness adapter identity hash; its selected model/reasoning are observed values or the literal `profile-defined`, never override inputs. `runtime-role-map` requires a current adapter mapping hash. `literal-inherit` and `explicit-route` are legal fallbacks only when no qualifying profile mapping exists and the adapter qualifies both the computed role/assignment/source floor and requested role. Launch verification compares the realized profile bytes/identity, role contract, model, reasoning, context configuration, and independence relationships against the token and sealed review-assignment policy; mapping drift between resolution and launch blocks. Mappers, scope challenger, adjudicator, and review-repair verifier require fresh, execution-distinct launches at their portable role floors and the exact role-contract separation defined by the spec. Exemption challenger, repair verifier, final, and closure require newly verified profile resolution for each launch; exemption/final/closure and any repair reaching whole-PR proof are role-specific `final-strong`. They never reuse cached qualification. Blind-final context uses the strict constructor-owned allowlist manifest and requires `hazard_framing_sha256: null`.
 
 - [ ] **Step 3: Implement snapshot fingerprinting**
 
@@ -664,7 +739,7 @@ This order must be the only production constructor path. No digest projection co
 
 1. validate top-level keys, generation, and enums;
 2. validate the snapshot or require `None` during intake;
-3. validate content objects, epoch-bound evidence bindings, the nullable expected-authority manifest, authorities, impact maps, the nullable coverage inventory, obligations, canonical hypothesis assignments, route selections, dispatches, reviews, runtime receipt wrappers/envelopes, feedback/review/check findings, discriminated checks, nullable ready-transition intent and CI candidate, blockers, seal, and history by key allowlists;
+3. validate content objects, epoch-bound evidence bindings, the nullable expected-authority manifest, authorities, impact maps, the nullable coverage inventory, obligations, canonical hypothesis assignments, route selections, dispatches, reviews, runtime receipt wrappers/envelopes, feedback/review/check findings, review-repair intents, discriminated checks, nullable ready-transition intent and CI candidate, blockers, seal, and history by key allowlists;
 4. ensure referenced evidence/content IDs exist, `content_id == sha256(bytes)`, and `evidence_id == sha256(canonical binding projection)`; permit multiple epoch bindings to the same content object without mutation;
 5. permit at most one current map per mapper role during ordered construction, reject duplicate or role-mismatched maps, validate strict impact/coverage entries, normalize cross-map consequences by vocabulary-ordered union of substantive values (or exactly `none` only when no substantive value exists), and, whenever a coverage inventory is present, prove it contains the full surface, category, normalized-consequence, and hazard union without trusting caller summaries;
 6. require the coverage inventory to reference the two current maps, the current scope-challenger attestation, and evidence bytes encoding the exact inventory;
@@ -889,7 +964,7 @@ Change every Task 3 checkbox to `[x]` in the working tree. Task 6 will stage the
 
 **Interfaces:**
 - Consumes: validated state from Task 2 and evidence records from Task 3.
-- Produces: `ReceiptTrustPolicy` and `ReceiptVerifier` protocols, `Decision`, `next_action`, `register_dispatch`, `authorize_launch`, `record_launch`, `evaluate_green`, `complete_action`, `block_review`, and `resume_review` with the exact signatures below. The composition-root verifier owns the sealed per-kind issuer/locator registry, independently re-fetches canonical receipt envelopes, enforces one-time challenges, and returns verified execution identities; no generic local-file or caller-selected verifier exists.
+- Produces: sealed `ReceiptTrustPolicy`, `ReviewAssignmentPolicy`, `CommandExecutionPolicy`, `LocalCheckPolicy`, and `HypothesisDerivationPolicy` protocols; `Decision`, `next_action`, `register_dispatch`, `authorize_launch`, `record_launch`, `evaluate_green`, `complete_action`, `block_review`, and `resume_review` with the exact signatures below. The composition-root verifier owns the sealed per-kind issuer/locator registry, independently re-fetches canonical receipt envelopes, enforces one-time challenges, and returns verified execution identities; no generic local-file or caller-selected verifier exists.
 
 - [ ] **Step 1: Write the complete transition table as tests**
 
@@ -935,6 +1010,9 @@ Action payloads are allowlisted, never merged generically:
 | `run-fix-verification` | `checks` |
 | `review-fix` | `attestations`, `findings` |
 | `close-fixed` | `resolutions` |
+| `enter-review-repair` | `resolutions` |
+| `verify-review-repair` | `attestations`, `findings` |
+| `close-review-repaired` | `resolutions` |
 | `accept-risk` | `resolutions` |
 | `resume-review` | `blocker_id`, `resolution_evidence_ids` |
 | `run-final-review` | `attestation`, `findings` |
@@ -947,9 +1025,11 @@ The table is the engine's normalized action contract, not a promise that every f
 
 If freeze/refresh discovers unavailable authority or non-empty feedback, the same transaction installs the representable snapshot/manifest records and deterministically opens one blocker: `authority-missing`, `feedback-unresolved`, or `intake-incomplete` when both classes occur. Its evidence/reason enumerates every cause; resume requires proof that all listed causes changed, normally followed by trusted refresh. There is no transient active state with incomplete authority and no caller-supplied blocker record.
 
-Reject missing or extra payload keys. Resolution payloads are discriminated further: `close-false-positive` requires an existing adjudicator outcome of `false-positive` plus counter-evidence IDs and no replacement fields; a `confirmed` adjudication permits exactly one of `enter-fixing` or `accept-risk`; `enter-fixing` requires publication IDs and non-null replacement records; `close-fixed` requires existing `verified` targeted-check/fix-review/current-obligation IDs and forbids replacement fields; `accept-risk` requires durable human-decision evidence, consumes the confirmed branch, forbids replacement fields, and atomically enters `reviewed-with-exceptions`. `refresh-review-input` requires a trusted discovery result that differs in at least one snapshot subject field, advances exactly one epoch, and has no finding-resolution semantics. `resume-review` names the sole active blocker and non-empty current resolution evidence. The Task 5 engine works inside one `locked_state_transaction`, registers supplied evidence on the in-memory copy, then `complete_action()` ingests allowlisted records and validates the whole candidate. Hash the canonical action, branch-specific payload, prior generation, and evidence IDs for idempotency; an identical replay against the already-produced generation is a no-op, while the same action key with different content is an error.
+Reject missing or extra payload keys. Resolution payloads are discriminated further: `close-false-positive` requires an existing adjudicator outcome of `false-positive` plus counter-evidence IDs and no replacement fields. A `confirmed` result has exactly one remediation class. `candidate-change` permits exactly `enter-fixing` or `accept-risk`; `review-process` permits exactly `enter-review-repair` or `accept-risk`. `enter-fixing` requires publication IDs and non-null replacement records. `enter-review-repair` forbids replacement records, preserves epoch/fingerprint, derives the exact invalidation cut from the closed target kind/IDs, creates a strict repair intent, and moves the finding to `review-repairing`. `verify-review-repair` records an independent current attestation only after the invalidated gates have replacement records; `close-review-repaired` consumes an existing `verified` result and exact replacements, then forces new blind-final/closure. `close-fixed` requires existing `verified` targeted-check/fix-review/current-obligation IDs and forbids replacement fields. `accept-risk` requires durable human-decision evidence, consumes the confirmed branch, forbids replacement fields, and atomically enters `reviewed-with-exceptions`. `refresh-review-input` requires a trusted discovery result that differs in at least one snapshot subject field, advances exactly one epoch, and has no finding-resolution semantics. `resume-review` names the sole active blocker and non-empty current resolution evidence. The Task 5 engine works inside one `locked_state_transaction`, registers supplied evidence on the in-memory copy, then `complete_action()` ingests allowlisted records and validates the whole candidate. Hash the canonical action, branch-specific payload, prior generation, and evidence IDs for idempotency; an identical replay against the already-produced generation is a no-op, while the same action key with different content is an error.
 
-Before any subagent-backed action runs, `register_dispatch()` must persist its pending dispatch, referenced canonical route selection and immutable route token, profile-resolution receipt reference, distinct instruction/data/confinement manifests, and context-package/hazard-framing digests. Only after that commit may `authorize_launch()` ask the trusted adapter to mint a single-use challenge and persist its ID on the still-pending dispatch; the launch then consumes it. The route selection captures live inventory, budget contract, trusted profile authority, required tier/role, qualified roles, effective profile/adapter identity, selected route representation, qualification source, and rationale. An unchanged current qualification may be reused only for matching non-final dispatches; blind final and closure always re-resolve immediately before launch. Completion is rejected unless the sealed-policy verifier re-fetches matching profile-resolution, launch, and completion envelopes scoped to the exact review/dispatch/epoch/fingerprint; the launch must consume the persisted challenge and prove the realized profile bytes/identity, role contract, model, reasoning, context configuration, instruction/data channel roles, exact injected bytes, and role-specific tool-proxy policy still match the token/route. Completion binds the exact accepted raw attestation bytes plus the ordered request/result transcript digest. Caller-authored receipt-shaped JSON is not provenance. Also reject action/report mismatch, a route below the assignment floor, a wrong-role/anchored final profile, trusted-profile override, or a lower-precedence fallback while an effective qualifying profile existed. Blind-final dispatch uses the constructor-owned context manifest, no free-form context/hazard framing, inert authority/repository data, and a snapshot-pinned proxy that denies review state, prior reports/findings, and provider feedback/comments. Deterministic actions (`freeze-review-input`, `plan-coverage`, `run-preflight`, `mark-ready-for-ci`, `run-remote-ci`, and `seal-green`) do not require a reviewer dispatch, but freeze, commands, ready transition, and remote CI still require their trusted receipts. Mapper completion atomically derives its impact-map record from the receipt-bound digest. Challenge completion atomically derives the coverage inventory, canonical hypothesis assignments, and replacement obligations from receipt-bound digests.
+Implement the design spec's closed repair-target invalidation table literally and parameterize every row. The engine computes the exact transitive `invalidated_record_ids`; caller/adjudicator data may name only the typed target IDs and cannot add, omit, or retain dependent records. `finding-adjudication` reopens the finding whose invalidated resolution it authorized; `fix-review` returns its already-current-snapshot finding to `fixing`; authority/feedback/policy/snapshot omissions reject review repair and require trusted drift refresh. Tests prove the unchanged epoch/fingerprint, retained historical IDs, new globally unique replacement IDs, exact earliest next action, and mandatory fresh final/closure for every row.
+
+Before any subagent-backed action runs, `register_dispatch()` must persist its pending dispatch, referenced canonical route selection and immutable route token, profile-resolution receipt reference, distinct instruction/data/confinement manifests, and context-package/hazard-framing digests. It computes the maximum portable role floor, sealed `ReviewAssignmentPolicy` floor, source-dispatch floor, and linked assignment floors; every reviewer-backed `ActionRecipe` has non-null capability/reasoning floors. It also resolves the role's fresh-context, distinct-execution, distinct-role-contract, and non-self-adjudication constraints against current receipt-backed provenance before route selection. Only after that commit may `authorize_launch()` ask the trusted adapter to mint a single-use challenge and persist its ID on the still-pending dispatch; the launch then consumes it. The route selection captures live inventory, budget contract, trusted profile authority, required tier/role, qualified roles, effective profile/adapter identity, selected route representation, qualification source, and rationale. Qualification may be reused only where the assignment policy permits; mapper, challenger, adjudicator, repair-verifier, exemption, blind-final, and closure launches are fresh, and the last four plus any policy-designated role re-resolve immediately before launch. Completion is rejected unless the sealed-policy verifier re-fetches matching profile-resolution, launch, and completion envelopes scoped to the exact review/dispatch/epoch/fingerprint; the launch must consume the persisted challenge and prove the realized profile bytes/identity, role contract, model, reasoning, context configuration, instruction/data channel roles, exact injected bytes, and role-specific tool-proxy policy still match the token/route. Completion binds the exact accepted raw attestation bytes plus the ordered request/result transcript digest. Caller-authored receipt-shaped JSON is not provenance. Also reject action/report mismatch, a route below the computed role/assignment/source floor, any independence violation, a wrong-role/anchored final profile, trusted-profile override, or a lower-precedence fallback while an effective qualifying profile existed. Blind-final dispatch uses the constructor-owned context manifest, no free-form context/hazard framing, inert authority/repository data, and a snapshot-pinned proxy that denies review state, prior reports/findings, and provider feedback/comments. Deterministic actions (`freeze-review-input`, `plan-coverage`, `run-preflight`, `mark-ready-for-ci`, `run-remote-ci`, and `seal-green`) do not require a reviewer dispatch, but freeze, commands, ready transition, and remote CI still require their trusted receipts. Mapper completion atomically derives its impact-map record from the receipt-bound digest. Challenge completion atomically derives the coverage inventory, canonical hypothesis assignments, and replacement obligations from receipt-bound digests.
 
 Receipt subjects use explicit non-circular projections: profile resolution hashes the canonical route-selection content plus immutable resolved-route token; launch hashes the pending dispatch intent, instruction/data/confinement manifests, adapter challenge, realized profile/role/model/reasoning/context configuration, and exact injected bytes; completion hashes the exact raw agent-authored attestation and ordered typed tool transcript before the state-only review wrapper exists. Mapper/challenger raw attestations contain the exact map/inventory/obligation/hypothesis subject digests, and the engine derives records only from matching bytes. A stored wrapper references canonical envelope evidence that contains no local evidence ID. Add tests that changing any projected or scope field, substituting structured output, changing a named-profile mapping before launch, replaying across reviews/dispatches/actions or with a consumed challenge/run, hashing a receipt-enriched wrapper, injecting duplicate JSON keys, or selecting an issuer/locator outside sealed policy is rejected.
 
@@ -967,9 +1047,9 @@ For each action, test:
 
 Also test that a caller-forged stored `stage` cannot skip an action; `next_action()` derives the lawful stage from records and the engine overwrites the stored display value on every accepted mutation.
 
-Now extend `review_v2_helpers.py` using only production constructors from Tasks 2-3. Small builders create one canonical artifact at a time: raw loaded/unavailable authority/manifest payload, snapshot, content object/evidence binding, route/token selection, strict instruction/data/confinement context, pending dispatch/challenge, raw discriminated attestation and tool transcript, receipt envelope/wrapper, canonical hypothesis assignment, feedback finding, complete-policy local check, hosted workflow-definition/trigger/input/attempt observation, CI candidate, blocker/resume proof, and finding resolution. `make_complete_candidate()` composes those builders in dependency order and materializes the smallest valid state satisfying every stored green-candidate predicate. It includes distinct role-qualified final/closure routes with affirmative `covered` results, a fixed finding whose typed adjudication/check/fix-review proof predates closure, canonical empty unresolved feedback, and a local plus hosted check using their respective provenance unions. `make_remote_observation()` creates separate fresh presentation bytes/run/challenge; `make_policy_bundle()` supplies test-only sealed receipt/local-check/hypothesis policies after the live Task 0 gate; `remove_predicate()` removes only named proof. Add a fixture reading the exact canonical `codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/assets/reviewer-strong.md` bytes and assert that its prior-log contract cannot qualify as `blind-final`.
+Now extend `review_v2_helpers.py` using only production constructors from Tasks 2-3. Small builders create one canonical artifact at a time: raw loaded/unavailable authority/manifest payload, snapshot, content object/evidence binding, route/token selection, strict instruction/data/confinement context, pending dispatch/challenge, raw discriminated attestation and tool transcript, receipt envelope/wrapper, canonical hypothesis assignment, feedback finding, review-repair intent/proof, complete-policy confined local check, hosted workflow-definition/trigger/input/attempt observation, CI candidate, blocker/resume proof, and finding resolution. `make_complete_candidate()` composes those builders in dependency order and materializes the smallest valid state satisfying every stored green-candidate predicate. It includes distinct role-qualified final/closure routes with affirmative `covered` results, a fixed finding whose typed adjudication/check/fix-review proof predates closure, a same-snapshot review-repaired finding whose independent proof predates fresh final/closure, canonical empty unresolved feedback, and a local plus hosted check using their respective provenance unions. `make_remote_observation()` creates separate fresh presentation bytes/run/challenge; `make_policy_bundle()` supplies test-only sealed receipt/local-check/review-assignment/command-execution/hypothesis policies after the live Task 0 gate; `remove_predicate()` removes only named proof. Add a fixture reading the exact canonical `codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/assets/reviewer-strong.md` bytes and assert that its prior-log contract cannot qualify as `blind-final`.
 
-Add conditional transition tests for every finding-producing gate (`map-impact-*`, `challenge-coverage`, feedback intake, preflight, fast, focused, strong, exemption challenge, fix review, final, closure, and remote CI): any new finding interrupts immediately and makes `adjudicate-findings` the only action until a current receipt-verified typed outcome exists. Mapper findings use the snapshot assignment and nullable obligation; failed checks cause the engine to materialize typed check findings atomically rather than trusting a caller-supplied findings list. On both initial freeze and refresh, the sealed feedback-history adapter enumerates every actionable provider thread/change request, including already-resolved items, and the engine creates a durable finding keyed by provider/thread identity unless a lawful lifecycle closure already exists. Provider-side resolution changes the current feedback subset but cannot close that finding. A proposed high-risk N/A result makes `run-exemption-challenge` the next action before final; `applicable` rejects the exemption and returns to the earliest incomplete obligation predicate, while `not-applicable-confirmed` completes it. A `false-positive` adjudication outcome permits only `close-false-positive`; a `confirmed` outcome permits exactly one of `enter-fixing` or `accept-risk`, with the latter additionally requiring durable human evidence and atomically terminating as `reviewed-with-exceptions`; a `contested` outcome blocks. No outcome can authorize a different or second branch. `enter-fixing` accepts published replacement snapshot/manifest/authorities in one atomic transition, advances exactly one epoch with `head_sha == fix_sha`, invalidates current derived evidence, and returns to semantic impact mapping. While a finding is `fixing`, policy permits impact/check/fast/focused/strong re-ascent but blocks final review. It then requires already-recorded `run-fix-verification` and receipt-bound `review-fix: verified` proof before `close-fixed` may consume those IDs without advancing the epoch. Separately, any trusted non-fix drift requires `refresh-review-input`, advances one epoch, invalidates the same derived evidence, and re-ascends. Test all resolution branches, refresh causes, and finding origins, including feedback, final, and closure.
+Add conditional transition tests for every finding-producing gate (`map-impact-*`, `challenge-coverage`, feedback intake, preflight, fast, focused, strong, exemption challenge, fix review, repair verification, final, closure, and remote CI): any new finding interrupts immediately and makes `adjudicate-findings` the only action until a current receipt-verified typed outcome exists. Mapper findings use the snapshot assignment and nullable obligation; failed checks cause the engine to materialize typed check findings atomically rather than trusting a caller-supplied findings list. On both initial freeze and refresh, the sealed feedback-history adapter enumerates every actionable provider thread/change request, including already-resolved items, and the engine creates a durable finding keyed by provider/thread identity unless a lawful lifecycle closure already exists. Provider-side resolution changes the current feedback subset but cannot close that finding. A proposed high-risk N/A result makes `run-exemption-challenge` the next action before final; `applicable` rejects the exemption and returns to the earliest incomplete obligation predicate, while `not-applicable-confirmed` completes it. A `false-positive` adjudication outcome permits only `close-false-positive`. A `confirmed/candidate-change` outcome permits exactly `enter-fixing` or `accept-risk`; a `confirmed/review-process` outcome permits exactly `enter-review-repair` or `accept-risk`; `contested` blocks. No outcome can authorize a different or second branch. `enter-fixing` accepts published replacement snapshot/manifest/authorities in one atomic transition, advances exactly one epoch with `head_sha == fix_sha`, invalidates current derived evidence, and returns to semantic impact mapping. While a finding is `fixing`, policy permits impact/check/fast/focused/strong re-ascent but blocks final review. It then requires already-recorded `run-fix-verification` and receipt-bound `review-fix: verified` proof before `close-fixed` may consume those IDs without advancing the epoch. `enter-review-repair` preserves the exact snapshot, marks the finding `review-repairing`, derives and atomically invalidates the target/downstream record cut, and returns the earliest missing gate. After replacement proof exists, `verify-review-repair` must run under the computed independent floor; only its already-recorded `verified` result allows `close-review-repaired`, after which blind final and closure run fresh. Add an end-to-end case where closure finds an omitted coverage/security review on unchanged bytes; no no-op commit, byte-identical refresh, false-positive, or self-closing repair may escape the lawful repair route. Separately, any trusted non-fix drift requires `refresh-review-input`, advances one epoch, invalidates the same derived evidence, and re-ascends. Test all resolution branches, refresh causes, and finding origins, including feedback, final, and closure.
 
 - [ ] **Step 2: Implement `Decision` and explicit missing predicates**
 
@@ -1056,6 +1136,45 @@ class LocalCheckPolicy(Protocol):
     def items(self) -> tuple[LocalCheckItem, ...]: ...
 
 
+@dataclass(frozen=True)
+class RoleRequirement:
+    capability_tier: str
+    reasoning_floor: str
+    context_mode: str
+    distinct_execution_from: tuple[str, ...]
+    distinct_role_contract_from: tuple[str, ...]
+
+
+class ReviewAssignmentPolicy(Protocol):
+    @property
+    def source_id(self) -> str: ...
+
+    @property
+    def source_version(self) -> str: ...
+
+    @property
+    def sha256(self) -> str: ...
+
+    def requirement(
+        self, *, state: dict, role: str, assignment_ids: tuple[str, ...],
+    ) -> RoleRequirement: ...
+
+
+class CommandExecutionPolicy(Protocol):
+    @property
+    def source_id(self) -> str: ...
+
+    @property
+    def source_version(self) -> str: ...
+
+    @property
+    def sha256(self) -> str: ...
+
+    def command_intent(
+        self, *, snapshot: dict, item: LocalCheckItem,
+    ) -> dict: ...
+
+
 class HypothesisDerivationPolicy(Protocol):
     @property
     def source_id(self) -> str: ...
@@ -1073,6 +1192,8 @@ class HypothesisDerivationPolicy(Protocol):
 class PolicyBundle:
     receipt_verifier: ReceiptVerifier
     local_checks: LocalCheckPolicy
+    review_assignments: ReviewAssignmentPolicy
+    command_execution: CommandExecutionPolicy
     hypotheses: HypothesisDerivationPolicy
 
 
@@ -1135,9 +1256,9 @@ The verifier first checks that its sealed policy digest equals the snapshot's `r
 
 `next_action()` must have no fallback route. If state is internally inconsistent or any receipt needed to treat a current action as complete cannot be independently re-fetched, return `Decision(False, "blocked", ...)` or let the typed validation/provenance error reach the CLI. If status is blocked, the only lawful action is `resume-review` with blocker-resolution evidence.
 
-For reviewer-backed actions, the recipe exposes the maximum capability and reasoning floor of the assignments currently eligible for that stage. Fast, focused, and strong actions are distinct ordered gates. A missing stage may be vacuously complete only when the coverage plan contains no current obligation eligible for that tier; it may not consume a lower-tier attestation as a substitute.
+For reviewer-backed actions, the recipe exposes the non-null maximum of the portable role floor, sealed review-assignment-policy floor, source-dispatch floor, and assignments currently eligible for that stage, plus its required fresh/distinct provenance. Fast, focused, and strong actions are distinct ordered gates. A missing stage may be vacuously complete only when the coverage plan contains no current obligation eligible for that tier; it may not consume a lower-tier attestation as a substitute. Explicit tests reject fast/low or forked mappers, a challenger below final-strong, self-adjudication, and a repair verifier that shares prohibited source/repair provenance.
 
-Before returning `seal-green`, policy re-runs `verify_evidence_files()` for every green evidence ID and independently verifies every authority-discovery, command-execution, profile-resolution, launch, completion, ready-transition, and stored remote-observation receipt used by a predicate with its full review/dispatch/epoch/fingerprint scope. It requires the exact complete sealed local-check policy item set; each receipt binds the policy item, argv/command bytes, working directory, snapshot head/tree, exit status, timing identity, challenge, and output digest. A hosted check binds the full repository/PR/snapshot/policy/empty-feedback identity and exact policy-item/app/workflow ID/path/definition ref/SHA/event/trigger subject/policy inputs/configuration/check-run/workflow-run/attempt/head identity through a remote-observation receipt, never a command receipt. Plan 1 proves only that any verifier-reported incomplete discovery or untrusted current attempt blocks; it cannot prove a synthetic adapter found hidden roots or selected the correct provider attempt. Plan 2 owns live per-root/per-edge omission fixtures, and Plan 6 owns live multi-attempt/unauthorized-trigger selection fixtures. `seal-green` binds all verified receipt-envelope digests, writes a candidate seal, and advances to `green-candidate`. `evaluate_green(..., policies=..., now=...)` rechecks owned bytes and receipts plus separately fresh strict remote-observation bytes and 60-second age without mutating state. Plan 1 tests use a fixed clock and test-only policy bundle only after Task 0 proves real custody; Plan 2 supplies authority discovery, Plan 4 command/reviewer receipts, and Plan 6 the live ready/remote/presentation adapters. Until those trusted adapters exist, the experimental CLI blocks receipt-dependent completion/sealing rather than accepting local JSON.
+Before returning `seal-green`, policy re-runs `verify_evidence_files()` for every green evidence ID and independently verifies every authority-discovery, command-execution, profile-resolution, launch, completion, ready-transition, and stored remote-observation receipt used by a predicate with its full review/dispatch/epoch/fingerprint scope. It requires the exact complete sealed local-check policy item set and matching sealed command-execution policy. Each command receipt binds the policy item, argv/command bytes, sandbox working directory, snapshot head/tree, immutable source materialization, executable/interpreter/script/module/toolchain and allowlisted environment, confinement/sandbox/challenge/execution identity, equal pre/post lower-source digests, complete process-tree termination, exit/timing identity, and output digest. A dirty or mutable checkout, authority/evidence access, unapproved network/credential access, or surviving descendant blocks. A hosted check binds the full repository/PR/snapshot/policy/empty-feedback identity and exact policy-item/app/workflow ID/path/definition ref/SHA/event/trigger subject/policy inputs/configuration/check-run/workflow-run/attempt/head identity through a remote-observation receipt, never a command receipt. Plan 1 proves generic structural/verifier failure only; Task 0 must first prove the actual runner confinement route, Plan 2 owns live per-root/per-edge omission fixtures, Plan 4 owns hostile-command runner fixtures and live command/reviewer receipts, and Plan 6 owns live multi-attempt/unauthorized-trigger selection fixtures. `seal-green` binds all verified receipt-envelope digests and separate canonical coverage/findings/repairs/reviews/checks digests; `repairs_sha256` covers every repair intent, invalidation cut, replacement set, status, and verifier attestation. It writes a candidate seal and advances to `green-candidate`. `evaluate_green(..., policies=..., now=...)` rechecks owned bytes and receipts plus separately fresh strict remote-observation bytes and 60-second age without mutating state. Plan 1 tests use a fixed clock and test-only policy bundle only after Task 0 proves real custody; until trusted adapters exist, the experimental CLI blocks receipt-dependent completion/sealing rather than accepting local JSON.
 
 - [ ] **Step 3: Implement stage predicates**
 
@@ -1156,6 +1277,7 @@ fast_reviews_complete
 focused_reviews_complete
 strong_reviews_complete
 all_findings_closed
+review_repairs_current_and_verified
 blind_final_current_and_clean
 closure_audit_current_and_clean
 remote_ci_candidate_current
@@ -1167,7 +1289,7 @@ runtime_receipts_verified
 
 Every predicate returns `(bool, tuple[str, ...])`. `evaluate_green()` concatenates missing reasons from all predicates instead of stopping at the first one.
 
-`authority_manifest_complete()` recomputes the canonical typed manifest-payload digest and requires a discovery receipt whose subject binds that exact digest plus the complete canonical snapshot subject/fingerprint and externally rooted discovery/feedback-policy source identities, versions, and digests. The trusted connector adapter must independently traverse every authority root/typed edge and enumerate policy-complete actionable feedback history before verification succeeds. A policy edit in the reviewed head is data and cannot govern this run. `authorities_complete()` requires an exact discriminated match between manifest entries and current records, every expected record loaded, and the exact typed unresolved-feedback subset empty. Every actionable feedback-history item, including already-resolved items seen at initial freeze, also has a durable feedback finding; provider resolution alone does not close it. Neither predicate can be satisfied by a caller-authored smaller set, an unreadable authority with a fabricated source hash, a self-qualified policy, a genuine receipt from another review/snapshot, or receipt-shaped local evidence.
+`authority_manifest_complete()` recomputes the canonical typed manifest-payload digest and requires a discovery receipt whose subject binds that exact digest plus the complete canonical snapshot subject/fingerprint and externally rooted discovery, feedback-history, review-assignment, command-execution, local-check, evidence-ingestion, hypothesis, and receipt-policy source identities, versions, and digests. The trusted connector adapter must independently traverse every authority root/typed edge and enumerate policy-complete actionable feedback history before verification succeeds. A policy edit in the reviewed head is data and cannot govern this run. `authorities_complete()` requires an exact discriminated match between manifest entries and current records, every expected record loaded, and the exact typed unresolved-feedback subset empty. Every actionable feedback-history item, including already-resolved items seen at initial freeze, also has a durable feedback finding; provider resolution alone does not close it. Neither predicate can be satisfied by a caller-authored smaller set, an unreadable authority with a fabricated source hash, a self-qualified policy, a genuine receipt from another review/snapshot, or receipt-shaped local evidence.
 
 `impact_maps_complete()` requires exactly one current map for each independent mapper role. It validates structured entries and computes their surface/category/consequence/hazard union itself; `normalize_consequences()` discards `none` whenever any substantive consequence exists and otherwise returns exactly `none`, in closed-vocabulary order. Caller-provided counts or summaries are never authoritative. `coverage_plan_covers_map_union()` requires an obligation for every surface/category pair and propagation of normalized consequences before challenge dispatch. `scope_challenge_complete()` requires a current challenger attestation assigned both map evidence IDs and a current coverage inventory that references that attestation and contains every mapped surface, normalized consequence, and hazard. The challenger may add but cannot remove or weaken map entries; replacing `none` with a substantive consequence is explicitly strengthening. Any additions plus complete revised obligation and deterministically derived hypothesis sets are accepted in the same transition. Add a transition test where one mapper returns `none` and the other `security`; the lawful inventory contains only `security`.
 
@@ -1177,16 +1299,17 @@ Implement the design-spec floor table as a pure function over the obligation's c
 
 - [ ] **Step 4: Implement finding closure rules**
 
-`all_findings_closed()` rejects every `open`, `fixing`, `deferred`, `contested`, `unassessed`, or `accepted-risk` finding regardless of severity. It validates disposition proof:
+`all_findings_closed()` rejects every `open`, `fixing`, `review-repairing`, `deferred`, `contested`, `unassessed`, or `accepted-risk` finding regardless of severity. It validates disposition proof:
 
 - `fixing`: fix SHA, publication evidence, and an exact replacement snapshot/authority manifest installed atomically; still unresolved;
 - `fixed`: the same publication/replacement identity plus current targeted-check evidence, receipt-verified fix-review evidence, and the current impacted obligation IDs they cover;
+- `review-repaired`: confirmed review-process adjudication, same-snapshot repair intent/invalidation cut, current replacement record IDs, and receipt-verified independent repair-verifier evidence;
 - `false-positive`: receipt-verified adjudication plus counter-evidence;
 - `accepted-risk`: durable human decision evidence, followed by `reviewed-with-exceptions`; it never satisfies the green predicate.
 
 Regression relationships are ordinary findings with `regression_of`; resolving them closes them without deleting their history.
 
-An open finding first requires `adjudicate-findings`. A confirmed fix then uses `enter-fixing` to atomically advance to the published replacement snapshot; it cannot claim `fixed` in the discovery epoch. That transition invalidates current maps, inventory, obligation attestations, checks, final/closure, CI, and seal. `next_action()` returns impact mapping, then forces every applicable fast, focused, and strong tier to re-ascend. Only after separate `run-fix-verification` and `review-fix` actions have stored current proof may `close-fixed` consume those IDs without changing the epoch; final and closure then run afresh. `close-false-positive` and `accept-risk` are non-replacement branches with their own exact payloads. No close action may create its own adjudication, check, review, or publication proof.
+An open finding first requires `adjudicate-findings`. A confirmed candidate change uses `enter-fixing` to atomically advance to the published replacement snapshot; it cannot claim `fixed` in the discovery epoch. That transition invalidates current maps, inventory, obligation attestations, checks, final/closure, CI, and seal. `next_action()` returns impact mapping, then forces every applicable fast, focused, and strong tier to re-ascend. Only after separate `run-fix-verification` and `review-fix` actions have stored current proof may `close-fixed` consume those IDs without changing the epoch. A confirmed review-process defect instead uses `enter-review-repair` with no snapshot change, invalidates the deterministic target/downstream cut, re-runs the earliest missing gates, then requires separate `verify-review-repair` proof before `close-review-repaired`. Both closure paths force final and closure afresh. `close-false-positive` and `accept-risk` are non-replacement branches with their own exact payloads. No close action may create its own adjudication, check, review, publication, replacement, or repair-verification proof.
 
 There is no round cap that permits green or discards work. A configured resource cap may return `blocked` with the remaining obligations/findings and required escalation evidence.
 

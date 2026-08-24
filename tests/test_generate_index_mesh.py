@@ -1,3 +1,4 @@
+import json
 import os
 import subprocess
 import sys
@@ -358,3 +359,43 @@ def test_prunes_index_only_directory(tmp_path: Path) -> None:
     )
     assert result.returncode == 0, result.stderr
     assert not (repo / "empty-box" / "INDEX.md").exists()
+
+
+def test_githooks_directory_is_excluded_pre_traversal(tmp_path: Path) -> None:
+    repo = _make_repo(tmp_path, "githooks-repo")
+    _commit_file(repo, ".githooks/pre-commit")
+    _commit_file(repo, "docs/guide.md")
+    result = subprocess.run(
+        [sys.executable, str(CORE), "--apply", "--allow-shared-checkout"],
+        cwd=repo,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode == 0, result.stderr
+    assert not (repo / ".githooks" / "INDEX.md").exists()
+    assert (repo / "INDEX.md").is_file()
+
+
+def test_declarative_exclusions_exclude_pre_traversal(tmp_path: Path) -> None:
+    repo = _make_repo(tmp_path, "exclusions-repo")
+    _commit_file(repo, "docs/guide.md")
+    _commit_file(repo, "custom-skip/secret.md")
+    _commit_file(repo, "also/keep.md")
+    exclusions = repo / "tools" / "index_mesh_exclusions.json"
+    exclusions.parent.mkdir(parents=True, exist_ok=True)
+    exclusions.write_text(
+        json.dumps({"exclude_dir_names": ["custom-skip"]}),
+        encoding="utf-8",
+    )
+    result = subprocess.run(
+        [sys.executable, str(CORE), "--apply", "--allow-shared-checkout", "--exclusions", str(exclusions)],
+        cwd=repo,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode == 0, result.stderr
+    assert not (repo / "custom-skip" / "INDEX.md").exists()
+    assert (repo / "also" / "INDEX.md").exists()
+    assert "custom-skip" not in (repo / "INDEX.md").read_text(encoding="utf-8")
