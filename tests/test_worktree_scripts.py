@@ -5,13 +5,11 @@ import subprocess
 import sys
 from pathlib import Path
 
+import pytest
+
 REPO_ROOT = Path(__file__).resolve().parents[1]
-NEW_WORKTREE = (
-    REPO_ROOT / ".agents" / "skills" / "using-git-worktrees" / "scripts" / "new_worktree.py"
-)
-REMOVE_WORKTREE = (
-    REPO_ROOT / ".agents" / "skills" / "using-git-worktrees" / "scripts" / "remove_worktree.py"
-)
+NEW_WORKTREE = REPO_ROOT / ".agents" / "skills" / "using-git-worktrees" / "scripts" / "new_worktree.py"
+REMOVE_WORKTREE = REPO_ROOT / ".agents" / "skills" / "using-git-worktrees" / "scripts" / "remove_worktree.py"
 
 
 def _make_repo(tmp_path: Path, name: str) -> Path:
@@ -710,6 +708,136 @@ def test_new_worktree_accepts_full_ref(tmp_path: Path) -> None:
     )
     assert result.returncode == 0, result.stderr
     assert worktree_root.is_dir()
+
+
+def _make_repo_with_command_bus(tmp_path: Path, name: str, bus_content: str) -> Path:
+    """Create a repo that bundles the worker-pack skills and a custom tools/run.py."""
+    repo = _make_repo_with_bundled_refresh(tmp_path, name)
+    tools = repo / "tools"
+    tools.mkdir(parents=True, exist_ok=True)
+    (tools / "run.py").write_text(bus_content, encoding="utf-8")
+    subprocess.run(["git", "add", "-A"], cwd=repo, check=True, capture_output=True)
+    subprocess.run(["git", "commit", "-m", "add command bus"], cwd=repo, check=True, capture_output=True)
+    return repo
+
+
+_OK_BUS = """\
+import sys
+from pathlib import Path
+
+def main():
+    if len(sys.argv) < 2:
+        print("usage: tools/run.py <capability>", file=sys.stderr)
+        return 2
+    capability = sys.argv[1]
+    markers = {"refresh-skills": "refresh-bus-marker.txt", "index-mesh": "index-bus-marker.txt"}
+    if capability not in markers:
+        print(f"invalid choice: {capability}", file=sys.stderr)
+        return 2
+    (Path.cwd() / markers[capability]).write_text(f"{capability} called", encoding="utf-8")
+    return 0
+
+if __name__ == "__main__":
+    sys.exit(main())
+"""
+
+
+def test_new_worktree_dispatches_through_command_bus_when_present(tmp_path: Path) -> None:
+    repo = _make_repo_with_command_bus(tmp_path, "bus-repo", _OK_BUS)
+    worktree_root = tmp_path / "_agent-worktrees" / "bus-repo" / "feature"
+    result = subprocess.run(
+        [sys.executable, str(NEW_WORKTREE), "feature", "--apply"],
+        cwd=repo,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode == 0, result.stderr
+    assert worktree_root.is_dir()
+    assert (worktree_root / "refresh-bus-marker.txt").is_file()
+    assert (worktree_root / "index-bus-marker.txt").is_file()
+    assert "Installed skill" not in result.stdout
+    assert "Wrote index mesh" not in result.stdout
+
+
+def test_new_worktree_fails_closed_when_command_bus_fails(tmp_path: Path) -> None:
+    failing_bus = """\
+import sys
+print("repo-owned index-mesh failed", file=sys.stderr)
+sys.exit(1)
+"""
+    repo = _make_repo_with_command_bus(tmp_path, "fail-bus-repo", failing_bus)
+    worktree_root = tmp_path / "_agent-worktrees" / "fail-bus-repo" / "feature"
+    result = subprocess.run(
+        [sys.executable, str(NEW_WORKTREE), "feature", "--apply"],
+        cwd=repo,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode != 0, result.stdout
+    assert not worktree_root.exists()
+    assert "repo-owned index-mesh failed" in result.stderr
+    assert "Wrote index mesh" not in result.stdout
+
+
+def test_new_worktree_falls_back_to_bundled_for_unknown_bus_capability(tmp_path: Path) -> None:
+    partial_bus = """\
+import sys
+print(f"invalid choice: {sys.argv[1]}", file=sys.stderr)
+sys.exit(2)
+"""
+    repo = _make_repo_with_command_bus(tmp_path, "partial-bus-repo", partial_bus)
+    worktree_root = tmp_path / "_agent-worktrees" / "partial-bus-repo" / "feature"
+    result = subprocess.run(
+        [sys.executable, str(NEW_WORKTREE), "feature", "--apply"],
+        cwd=repo,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode == 0, result.stderr
+    assert worktree_root.is_dir()
+    assert "Installed skill" in result.stdout
+    assert "Wrote index mesh" in result.stdout
+
+
+@pytest.mark.skipif(shutil.which("bash") is None, reason="bash not available")
+def test_new_worktree_dispatches_through_bash_shell_wrapper(tmp_path: Path) -> None:
+    """A repo that only ships a tools/run bash wrapper can still own capabilities."""
+    repo = _make_repo_with_bundled_refresh(tmp_path, "bash-bus-repo")
+    tools = repo / "tools"
+    tools.mkdir(parents=True, exist_ok=True)
+    bus = tools / "run"
+    bus.write_text(
+        "#!/usr/bin/env bash\n"
+        "set -euo pipefail\n"
+        'capability="$1"\n'
+        'case "$capability" in\n'
+        '  refresh-skills) echo "refresh-skills called" > refresh-bus-marker.txt ;;\n'
+        '  index-mesh) echo "index-mesh called" > index-bus-marker.txt ;;\n'
+        '  *) echo "invalid choice: $capability" >&2; exit 2 ;;\n'
+        "esac\n",
+        encoding="utf-8",
+    )
+    bus.chmod(0o755)
+    subprocess.run(["git", "add", "-A"], cwd=repo, check=True, capture_output=True)
+    subprocess.run(["git", "commit", "-m", "add bash bus"], cwd=repo, check=True, capture_output=True)
+
+    worktree_root = tmp_path / "_agent-worktrees" / "bash-bus-repo" / "feature"
+    result = subprocess.run(
+        [sys.executable, str(NEW_WORKTREE), "feature", "--apply"],
+        cwd=repo,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode == 0, result.stderr
+    assert worktree_root.is_dir()
+    assert (worktree_root / "refresh-bus-marker.txt").is_file()
+    assert (worktree_root / "index-bus-marker.txt").is_file()
+    assert "Installed skill" not in result.stdout
+    assert "Wrote index mesh" not in result.stdout
 
 
 def test_remove_worktree_stops_on_locked_directory(tmp_path: Path) -> None:

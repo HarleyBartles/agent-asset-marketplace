@@ -181,6 +181,70 @@ def _find_mesh_script(worktree_root: Path) -> Path | None:
     return _find_skill_core(worktree_root, "generating-agent-mesh", "generate_index_mesh.py")
 
 
+def _find_command_bus(repo_root: Path) -> Path | None:
+    """Return the repo's canonical command-bus entry point if one exists.
+
+    Prefer the concrete Python bus so the dispatch can run it directly; fall
+    back to platform wrappers only when the Python bus is absent.
+    """
+    for name in ("run.py", "run", "run.ps1"):
+        candidate = repo_root / "tools" / name
+        if candidate.is_file():
+            return candidate
+    return None
+
+
+def _dispatch_capability(
+    repo_root: Path,
+    capability: str,
+    *extra: str,
+) -> int | None:
+    """Run a named capability through the repo's command bus, or return None to fall back.
+
+    Returns the command's exit code when the bus owns the capability. Returns
+    None when the repo has no command bus or the bus does not advertise the
+    capability, signalling the caller to use the bundled implementation. A
+    repo-owned command that fails is never silently retried.
+    """
+    bus = _find_command_bus(repo_root)
+    if bus is None:
+        return None
+
+    if bus.suffix == ".py":
+        cmd = [sys.executable, str(bus), capability, *extra]
+    elif bus.suffix == ".ps1":
+        ps = shutil.which("pwsh") or shutil.which("powershell")
+        if not ps:
+            return None
+        cmd = [ps, "-ExecutionPolicy", "Bypass", "-File", str(bus), capability, *extra]
+    else:
+        shell = shutil.which("bash") or shutil.which("sh")
+        if not shell:
+            return None
+        cmd = [shell, str(bus), capability, *extra]
+
+    result = subprocess.run(
+        cmd,
+        cwd=repo_root,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+    )
+
+    is_unknown = result.returncode == 2 and "invalid choice" in (result.stdout + result.stderr).lower()
+
+    # Only surface bus output when the repo actually owns the capability.
+    if not is_unknown:
+        if result.stdout:
+            sys.stdout.write(result.stdout)
+        if result.stderr:
+            sys.stderr.write(result.stderr)
+
+    if is_unknown:
+        return None
+    return result.returncode
+
+
 def _remove_worktree(worktree_root: Path, main_repo_root: Path, branch: str) -> None:
     """Remove a newly created worktree and its branch so failed runs can be retried."""
     remove = subprocess.run(
@@ -325,18 +389,30 @@ def _configure_worktree(
         if exit_code != 0:
             return exit_code
 
-        refresh_script = _find_refresh_script(worktree_root)
-        if refresh_script:
-            refresh_args = [str(refresh_script), "--apply", "--allow-shared-checkout"]
-            result = subprocess.run(
-                [sys.executable, *refresh_args],
-                cwd=worktree_root,
-                env=_stripped_env(),
-            )
-            if result.returncode != 0:
-                print(f"error: refreshing installed skills failed in {worktree_root}", file=sys.stderr)
-                return result.returncode
+        # Prefer the repo-owned command bus for cross-skill capabilities.
+        exit_code = _dispatch_capability(worktree_root, "refresh-skills", "--apply")
+        if exit_code is None:
+            refresh_script = _find_refresh_script(worktree_root)
+            if refresh_script:
+                refresh_args = [str(refresh_script), "--apply", "--allow-shared-checkout"]
+                result = subprocess.run(
+                    [sys.executable, *refresh_args],
+                    cwd=worktree_root,
+                    env=_stripped_env(),
+                )
+                exit_code = result.returncode
+            else:
+                print(
+                    "warning: refreshing-installed-skills not found; worktree created but skills were not refreshed",
+                    file=sys.stderr,
+                )
+                exit_code = 0
+        if exit_code != 0:
+            print(f"error: refreshing installed skills failed in {worktree_root}", file=sys.stderr)
+            return exit_code
 
+        exit_code = _dispatch_capability(worktree_root, "index-mesh", "--apply")
+        if exit_code is None:
             mesh_script = _find_mesh_script(worktree_root)
             if mesh_script:
                 mesh_args = [str(mesh_script), "--apply", "--allow-shared-checkout"]
@@ -345,19 +421,16 @@ def _configure_worktree(
                     cwd=worktree_root,
                     env=_stripped_env(),
                 )
-                if result.returncode != 0:
-                    print(f"error: generating index mesh failed in {worktree_root}", file=sys.stderr)
-                    return result.returncode
+                exit_code = result.returncode
             else:
                 print(
                     "warning: generate-index-mesh not found; worktree created but index mesh was not regenerated",
                     file=sys.stderr,
                 )
-        else:
-            print(
-                "warning: refreshing-installed-skills not found; worktree created but skills were not refreshed",
-                file=sys.stderr,
-            )
+                exit_code = 0
+        if exit_code != 0:
+            print(f"error: generating index mesh failed in {worktree_root}", file=sys.stderr)
+            return exit_code
 
     print(f"Worktree ready at {worktree_root}")
     return 0
