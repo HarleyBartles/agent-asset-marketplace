@@ -5,6 +5,8 @@ import subprocess
 import sys
 from pathlib import Path
 
+import pytest
+
 REPO_ROOT = Path(__file__).resolve().parents[1]
 NEW_WORKTREE = REPO_ROOT / ".agents" / "skills" / "using-git-worktrees" / "scripts" / "new_worktree.py"
 REMOVE_WORKTREE = REPO_ROOT / ".agents" / "skills" / "using-git-worktrees" / "scripts" / "remove_worktree.py"
@@ -798,6 +800,44 @@ sys.exit(2)
     assert worktree_root.is_dir()
     assert "Installed skill" in result.stdout
     assert "Wrote index mesh" in result.stdout
+
+
+@pytest.mark.skipif(shutil.which("bash") is None, reason="bash not available")
+def test_new_worktree_dispatches_through_bash_shell_wrapper(tmp_path: Path) -> None:
+    """A repo that only ships a tools/run bash wrapper can still own capabilities."""
+    repo = _make_repo_with_bundled_refresh(tmp_path, "bash-bus-repo")
+    tools = repo / "tools"
+    tools.mkdir(parents=True, exist_ok=True)
+    bus = tools / "run"
+    bus.write_text(
+        "#!/usr/bin/env bash\n"
+        "set -euo pipefail\n"
+        'capability="$1"\n'
+        'case "$capability" in\n'
+        '  refresh-skills) echo "refresh-skills called" > refresh-bus-marker.txt ;;\n'
+        '  index-mesh) echo "index-mesh called" > index-bus-marker.txt ;;\n'
+        '  *) echo "invalid choice: $capability" >&2; exit 2 ;;\n'
+        "esac\n",
+        encoding="utf-8",
+    )
+    bus.chmod(0o755)
+    subprocess.run(["git", "add", "-A"], cwd=repo, check=True, capture_output=True)
+    subprocess.run(["git", "commit", "-m", "add bash bus"], cwd=repo, check=True, capture_output=True)
+
+    worktree_root = tmp_path / "_agent-worktrees" / "bash-bus-repo" / "feature"
+    result = subprocess.run(
+        [sys.executable, str(NEW_WORKTREE), "feature", "--apply"],
+        cwd=repo,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode == 0, result.stderr
+    assert worktree_root.is_dir()
+    assert (worktree_root / "refresh-bus-marker.txt").is_file()
+    assert (worktree_root / "index-bus-marker.txt").is_file()
+    assert "Installed skill" not in result.stdout
+    assert "Wrote index mesh" not in result.stdout
 
 
 def test_remove_worktree_stops_on_locked_directory(tmp_path: Path) -> None:

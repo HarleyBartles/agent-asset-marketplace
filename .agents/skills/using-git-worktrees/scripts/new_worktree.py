@@ -182,8 +182,12 @@ def _find_mesh_script(worktree_root: Path) -> Path | None:
 
 
 def _find_command_bus(repo_root: Path) -> Path | None:
-    """Return the repo's canonical command-bus entry point if one exists."""
-    for name in ("run", "run.py"):
+    """Return the repo's canonical command-bus entry point if one exists.
+
+    Prefer the concrete Python bus so the dispatch can run it directly; fall
+    back to platform wrappers only when the Python bus is absent.
+    """
+    for name in ("run.py", "run", "run.ps1"):
         candidate = repo_root / "tools" / name
         if candidate.is_file():
             return candidate
@@ -206,7 +210,19 @@ def _dispatch_capability(
     if bus is None:
         return None
 
-    cmd = [sys.executable, str(bus), capability, *extra]
+    if bus.suffix == ".py":
+        cmd = [sys.executable, str(bus), capability, *extra]
+    elif bus.suffix == ".ps1":
+        ps = shutil.which("pwsh") or shutil.which("powershell")
+        if not ps:
+            return None
+        cmd = [ps, "-ExecutionPolicy", "Bypass", "-File", str(bus), capability, *extra]
+    else:
+        shell = shutil.which("bash") or shutil.which("sh")
+        if not shell:
+            return None
+        cmd = [shell, str(bus), capability, *extra]
+
     result = subprocess.run(
         cmd,
         cwd=repo_root,
