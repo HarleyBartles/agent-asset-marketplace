@@ -6,11 +6,15 @@ Run date: 2026-08-25. Each run used a fresh subagent with no approved design, pl
 
 The first clarity dispatch was excluded because its instruction accidentally prohibited the only permitted file read. A replacement fresh agent ran the unchanged scenario; no scenario text or rubric changed.
 
+### Execution configuration
+
+These runs used Codex MultiAgentV2, which does not consume named `.md` profiles. The shared role was `reviewer`, mapped to `gpt-5.6-terra` at high reasoning with `fork_turns: "none"`; **Named profile: not applicable in Codex MultiAgentV2**. Model, reasoning, and `fork_turns` are the complete exposed dispatch dimensions for these runs. See [`codex-multi-agent-v2-profile.md`](../../../codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/references/codex-multi-agent-v2-profile.md) for the durable repository mapping.
+
 ## Results
 
 ### `clarity-versus-unslop.md`
 
-- **Route/model/profile:** Codex V2 generic fresh pressure-test role; `gpt-5.6-terra`, high reasoning, fresh context (`fork_turns=none`); no separately exposed profile; no skill context.
+- **Route/model/profile:** Shared role: `reviewer`; named profile: not applicable in Codex MultiAgentV2; model: `gpt-5.6-terra`; reasoning: high; context: fresh (`fork_turns=none`); no skill context.
 - **Exact prompt path:** `tests/pressure/writing/prompts/clarity-versus-unslop.md`.
 - **Response:**
 
@@ -23,7 +27,7 @@ The first clarity dispatch was excluded because its instruction accidentally pro
 
 ### `preserve-deliberate-device.md`
 
-- **Route/model/profile:** Codex V2 generic fresh pressure-test role; `gpt-5.6-terra`, high reasoning, fresh context (`fork_turns=none`); no separately exposed profile; no skill context.
+- **Route/model/profile:** Shared role: `reviewer`; named profile: not applicable in Codex MultiAgentV2; model: `gpt-5.6-terra`; reasoning: high; context: fresh (`fork_turns=none`); no skill context.
 - **Exact prompt path:** `tests/pressure/writing/prompts/preserve-deliberate-device.md`.
 - **Response:**
 
@@ -36,7 +40,7 @@ The first clarity dispatch was excluded because its instruction accidentally pro
 
 ### `voice-without-private-corpus.md`
 
-- **Route/model/profile:** Codex V2 generic fresh pressure-test role; `gpt-5.6-terra`, high reasoning, fresh context (`fork_turns=none`); no separately exposed profile; no skill context.
+- **Route/model/profile:** Shared role: `reviewer`; named profile: not applicable in Codex MultiAgentV2; model: `gpt-5.6-terra`; reasoning: high; context: fresh (`fork_turns=none`); no skill context.
 - **Exact prompt path:** `tests/pressure/writing/prompts/voice-without-private-corpus.md`.
 - **Response:**
 
@@ -56,7 +60,7 @@ The first clarity dispatch was excluded because its instruction accidentally pro
 
 ### `no-detector-evasion.md`
 
-- **Route/model/profile:** Codex V2 generic fresh pressure-test role; `gpt-5.6-terra`, high reasoning, fresh context (`fork_turns=none`); no separately exposed profile; no skill context.
+- **Route/model/profile:** Shared role: `reviewer`; named profile: not applicable in Codex MultiAgentV2; model: `gpt-5.6-terra`; reasoning: high; context: fresh (`fork_turns=none`); no skill context.
 - **Exact prompt path:** `tests/pressure/writing/prompts/no-detector-evasion.md`.
 - **Response:**
 
