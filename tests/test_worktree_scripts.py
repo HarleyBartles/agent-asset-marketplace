@@ -955,6 +955,69 @@ def test_new_worktree_installs_dependencies_with_no_skill_refresh(tmp_path: Path
     assert "Wrote index mesh" not in result.stdout
 
 
+def test_new_worktree_installs_node_and_python_dependencies(tmp_path: Path) -> None:
+    """Mixed-language worktrees install all recognised dependency sets."""
+    repo = _make_repo_with_bundled_refresh(tmp_path, "mixed-repo")
+    (repo / "package.json").write_text('{"name": "mixed-repo"}', encoding="utf-8")
+    (repo / "requirements.txt").write_text("requests", encoding="utf-8")
+    subprocess.run(["git", "add", "-A"], cwd=repo, check=True, capture_output=True)
+    subprocess.run(["git", "commit", "-m", "add manifests"], cwd=repo, check=True, capture_output=True)
+
+    bin_dir = tmp_path / "bin"
+    bin_dir.mkdir()
+    for tool in ("npm", "pip"):
+        _make_fake_package_manager(bin_dir, tool)
+
+    env = _stripped_env()
+    env["PATH"] = str(bin_dir) + os.pathsep + env.get("PATH", "")
+
+    worktree_root = tmp_path / "_agent-worktrees" / "mixed-repo" / "feature"
+    result = subprocess.run(
+        [sys.executable, str(NEW_WORKTREE), "feature", "--apply"],
+        cwd=repo,
+        env=env,
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode == 0, result.stderr
+    assert worktree_root.is_dir()
+    assert (worktree_root / "npm-calls.txt").is_file()
+    assert (worktree_root / "pip-calls.txt").is_file()
+    assert "install" in (worktree_root / "npm-calls.txt").read_text(encoding="utf-8")
+    assert "install" in (worktree_root / "pip-calls.txt").read_text(encoding="utf-8")
+
+
+def test_new_worktree_installs_poetry_dependencies(tmp_path: Path) -> None:
+    """A Poetry project gets `poetry install` when pyproject.toml is present."""
+    repo = _make_repo_with_bundled_refresh(tmp_path, "poetry-repo")
+    (repo / "pyproject.toml").write_text(
+        "[tool.poetry]\nname = 'poetry-repo'\nversion = '0.0.1'\n",
+        encoding="utf-8",
+    )
+    subprocess.run(["git", "add", "-A"], cwd=repo, check=True, capture_output=True)
+    subprocess.run(["git", "commit", "-m", "add pyproject"], cwd=repo, check=True, capture_output=True)
+
+    bin_dir = tmp_path / "bin"
+    bin_dir.mkdir()
+    _make_fake_package_manager(bin_dir, "poetry")
+
+    env = _stripped_env()
+    env["PATH"] = str(bin_dir) + os.pathsep + env.get("PATH", "")
+
+    worktree_root = tmp_path / "_agent-worktrees" / "poetry-repo" / "feature"
+    result = subprocess.run(
+        [sys.executable, str(NEW_WORKTREE), "feature", "--apply"],
+        cwd=repo,
+        env=env,
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode == 0, result.stderr
+    assert worktree_root.is_dir()
+    assert (worktree_root / "poetry-calls.txt").is_file()
+    assert "install" in (worktree_root / "poetry-calls.txt").read_text(encoding="utf-8")
+
+
 def test_remove_worktree_stops_on_locked_directory(tmp_path: Path) -> None:
     """If the worktree directory is locked, the script deregisters it and stops."""
     repo = _make_repo(tmp_path, "locked-repo")

@@ -267,12 +267,27 @@ def _run_command(cmd: list[str], cwd: Path) -> int:
     return result.returncode
 
 
+def _is_poetry_project(repo_root: Path) -> bool:
+    """Return True when the repo's pyproject.toml is managed by Poetry."""
+    pyproject = repo_root / "pyproject.toml"
+    if not pyproject.is_file():
+        return False
+    if (repo_root / "poetry.lock").is_file():
+        return True
+    try:
+        text = pyproject.read_text(encoding="utf-8")
+    except OSError:
+        return False
+    return re.search(r"^\[tool\.poetry\]", text, re.MULTILINE) is not None
+
+
 def _install_dependencies(repo_root: Path) -> int:
     """Install dependencies for common package managers when not repo-owned.
 
-    Returns 0 when there is nothing to do or installation succeeds. A failed
-    installation or a recognised manifest without its required installer returns
-    a non-zero exit code so the worktree is not left in a broken state.
+    Runs every recognised installer so mixed-language worktrees get all of their
+    dependencies. Returns 0 when there is nothing to do or every installation
+    succeeds. A failed installation or a recognised manifest without its required
+    installer returns a non-zero exit code so the worktree is not left broken.
     """
     package_lock = repo_root / "package-lock.json"
     package_json = repo_root / "package.json"
@@ -280,39 +295,49 @@ def _install_dependencies(repo_root: Path) -> int:
     pnpm_lock = repo_root / "pnpm-lock.yaml"
     requirements = repo_root / "requirements.txt"
 
+    exit_codes = []
+
     if package_lock.is_file():
         if not shutil.which("npm"):
             print(f"error: package-lock.json present in {repo_root} but npm is not available", file=sys.stderr)
             return 1
         print(f"Installing npm dependencies (ci) in {repo_root}")
-        return _run_command(["npm", "ci"], repo_root)
-    if yarn_lock.is_file():
+        exit_codes.append(_run_command(["npm", "ci"], repo_root))
+    elif yarn_lock.is_file():
         if not shutil.which("yarn"):
             print(f"error: yarn.lock present in {repo_root} but yarn is not available", file=sys.stderr)
             return 1
         print(f"Installing yarn dependencies in {repo_root}")
-        return _run_command(["yarn", "install", "--frozen-lockfile"], repo_root)
-    if pnpm_lock.is_file():
+        exit_codes.append(_run_command(["yarn", "install", "--frozen-lockfile"], repo_root))
+    elif pnpm_lock.is_file():
         if not shutil.which("pnpm"):
             print(f"error: pnpm-lock.yaml present in {repo_root} but pnpm is not available", file=sys.stderr)
             return 1
         print(f"Installing pnpm dependencies in {repo_root}")
-        return _run_command(["pnpm", "install", "--frozen-lockfile"], repo_root)
-    if package_json.is_file():
+        exit_codes.append(_run_command(["pnpm", "install", "--frozen-lockfile"], repo_root))
+    elif package_json.is_file():
         if not shutil.which("npm"):
             print(f"error: package.json present in {repo_root} but npm is not available", file=sys.stderr)
             return 1
         print(f"Installing npm dependencies in {repo_root}")
-        return _run_command(["npm", "install"], repo_root)
+        exit_codes.append(_run_command(["npm", "install"], repo_root))
+
     if requirements.is_file():
         pip = shutil.which("pip") or shutil.which("pip3")
         if not pip:
             print(f"error: requirements.txt present in {repo_root} but pip is not available", file=sys.stderr)
             return 1
         print(f"Installing Python requirements in {repo_root}")
-        return _run_command([pip, "install", "-r", "requirements.txt"], repo_root)
+        exit_codes.append(_run_command([pip, "install", "-r", "requirements.txt"], repo_root))
 
-    return 0
+    if _is_poetry_project(repo_root):
+        if not shutil.which("poetry"):
+            print(f"error: Poetry project detected in {repo_root} but poetry is not available", file=sys.stderr)
+            return 1
+        print(f"Installing Poetry dependencies in {repo_root}")
+        exit_codes.append(_run_command(["poetry", "install", "--no-interaction"], repo_root))
+
+    return max(exit_codes, default=0)
 
 
 def _remove_worktree(worktree_root: Path, main_repo_root: Path, branch: str) -> None:
