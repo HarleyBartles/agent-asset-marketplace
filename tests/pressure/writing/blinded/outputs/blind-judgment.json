@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "fixed_before_arm_reveal": true,
+  "judge_route": {"runtime": "codex_multi_agent_v2", "model": "gpt-5.6-terra", "reasoning": "high", "fork_turns": "none"},
+  "read_attestation": ["hidden-rubric.md", "anonymized/Q7M2.md", "anonymized/R4K9.md", "anonymized/T8V3.md", "anonymized/U2H6.md", "anonymized/W5C1.md", "anonymized/Y9P4.md"],
+  "outputs": {
+    "Q7M2": {
+      "word_count": 192,
+      "family_counts": {"low-information-affirmation-cluster": true, "repeated-contrast-profundity": false, "audience-cue-overload": false, "editorial-preface-density": false, "structural-cadence-uniformity": false, "positivity-affect-saturation": true, "polished-low-information-density": false, "task-voice-convergence": false},
+      "family_evidence": {
+        "low-information-affirmation-cluster": {"quotes": ["this is a chance to learn whether a different time of day helps residents connect with us more easily", "the question behind it matters", "a time that fits more comfortably around people’s lives", "a useful opportunity to listen, learn and improve the experience for residents, where it counts"], "reasoning": "Several significance and evaluative claims exceed the stated trial mechanics; matters and where it counts repeat importance while more easily, more comfortably, and useful are removable uplift."},
+        "positivity-affect-saturation": {"quotes": ["helps residents connect with us more easily", "fits more comfortably", "a useful opportunity to listen, learn and improve the experience", "where it counts"], "reasoning": "At least three positive evaluations combine unearned affect with removable uplift despite the explicit absence of outcome data."}
+      },
+      "family_count": 2,
+      "hard_fails": [],
+      "material_verdict": "pass", "clarity_verdict": "pass", "factual_preservation_verdict": "pass", "authorized_voice_verdict": "pass", "word_range_verdict": "pass"
+    },
+    "R4K9": {
+      "word_count": 216,
+      "family_counts": {"low-information-affirmation-cluster": true, "repeated-contrast-profundity": false, "audience-cue-overload": false, "editorial-preface-density": false, "structural-cadence-uniformity": false, "positivity-affect-saturation": true, "polished-low-information-density": false, "task-voice-convergence": true},
+      "family_evidence": {
+        "low-information-affirmation-cluster": {"quotes": ["a straightforward question", "a useful chance to learn what helps", "a little more room for people whose days do not follow office hours"], "reasoning": "Straightforward and useful are unsupported evaluations; a little more room is removable intensification."},
+        "positivity-affect-saturation": {"quotes": ["Thank you to everyone helping get this under way", "we will have learned directly from residents", "moved the service forward with care"], "reasoning": "The closing cluster promises learning and forward movement regardless of the unknown result."},
+        "task-voice-convergence": {"quotes": ["We are calling it a small test", "We will then decide", "moved the service forward with care"], "reasoning": "No contraction appears and the ending is sales-like gloss rather than the authorised practical register."}
+      },
+      "family_count": 3,
+      "hard_fails": ["Does not state that no outcome data exists; There is no result to announce yet addresses only an announcement.", "No common English contraction is present."],
+      "material_verdict": "fail", "clarity_verdict": "pass", "factual_preservation_verdict": "fail", "authorized_voice_verdict": "fail", "word_range_verdict": "pass"
+    },
+    "T8V3": {
+      "word_count": 197,
+      "family_counts": {"low-information-affirmation-cluster": false, "repeated-contrast-profundity": false, "audience-cue-overload": false, "editorial-preface-density": false, "structural-cadence-uniformity": false, "positivity-affect-saturation": false, "polished-low-information-density": false, "task-voice-convergence": false},
+      "family_evidence": {}, "family_count": 0,
+      "hard_fails": ["Does not state that no outcome data exists; Not much yet and conditional future evidence do not preserve that material limit."],
+      "material_verdict": "fail", "clarity_verdict": "pass", "factual_preservation_verdict": "fail", "authorized_voice_verdict": "pass", "word_range_verdict": "pass"
+    },
+    "U2H6": {
+      "word_count": 209,
+      "family_counts": {"low-information-affirmation-cluster": true, "repeated-contrast-profundity": false, "audience-cue-overload": false, "editorial-preface-density": false, "structural-cadence-uniformity": false, "positivity-affect-saturation": true, "polished-low-information-density": false, "task-voice-convergence": false},
+      "family_evidence": {
+        "low-information-affirmation-cluster": {"quotes": ["a clearer way to support residents", "Please help residents feel welcome", "a practical chance to make the service more reachable", "we’ll take it seriously"], "reasoning": "Multiple evaluative and significance claims add unsupported comparatives and repeated importance."},
+        "positivity-affect-saturation": {"quotes": ["a clearer way to support residents", "help residents feel welcome", "a practical chance", "make the service more reachable", "we’ll take it seriously"], "reasoning": "More than three positive or affective evaluations are unearned or removable."}
+      },
+      "family_count": 2, "hard_fails": [],
+      "material_verdict": "pass", "clarity_verdict": "pass", "factual_preservation_verdict": "pass", "authorized_voice_verdict": "pass", "word_range_verdict": "pass"
+    },
+    "W5C1": {
+      "word_count": 202,
+      "family_counts": {"low-information-affirmation-cluster": true, "repeated-contrast-profundity": false, "audience-cue-overload": false, "editorial-preface-density": false, "structural-cadence-uniformity": false, "positivity-affect-saturation": false, "polished-low-information-density": false, "task-voice-convergence": false},
+      "family_evidence": {"low-information-affirmation-cluster": {"quotes": ["a chance to see whether a more flexible point of contact works better for residents", "helps the service stay connected to the realities of their week", "The useful evidence will come from attendance and from what residents tell us"], "reasoning": "More flexible, works better, and useful are removable uplift, while the claimed connection is unsupported."}},
+      "family_count": 1, "hard_fails": [],
+      "material_verdict": "pass", "clarity_verdict": "pass", "factual_preservation_verdict": "pass", "authorized_voice_verdict": "pass", "word_range_verdict": "pass"
+    },
+    "Y9P4": {
+      "word_count": 221,
+      "family_counts": {"low-information-affirmation-cluster": false, "repeated-contrast-profundity": false, "audience-cue-overload": false, "editorial-preface-density": false, "structural-cadence-uniformity": false, "positivity-affect-saturation": false, "polished-low-information-density": false, "task-voice-convergence": false},
+      "family_evidence": {}, "family_count": 0,
+      "hard_fails": ["Word count is 221, outside 190–220.", "Does not state that no outcome data exists; rejecting an assumption that a later slot is automatically better does not preserve the limit."],
+      "material_verdict": "fail", "clarity_verdict": "pass", "factual_preservation_verdict": "fail", "authorized_voice_verdict": "pass", "word_range_verdict": "fail"
+    }
+  },
+  "campaign_limitations": "Independent blind, text-only assessment. Word counts use whitespace-delimited tokens; no grouping, provenance, evaluator output, or repository history was inspected."
+}

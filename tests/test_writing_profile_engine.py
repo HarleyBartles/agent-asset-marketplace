@@ -46,6 +46,12 @@ def test_cli_help_is_available(script: str) -> None:
     assert "usage:" in result.stdout.lower()
 
 
+@pytest.mark.parametrize("script", ["discover_profiles.py", "validate_profiles.py", "evaluate_profile.py"])
+def test_read_only_cli_check_mode_is_available(script: str) -> None:
+    result = _run(script, "--check")
+    assert result.returncode in {0, 1}, result.stderr
+
+
 def test_discovery_is_lawful_recursive_stable_and_json_serializable(tmp_path: Path) -> None:
     lawful = tmp_path / "references" / "profiles" / "fatigue" / "sample"
     lawful.mkdir(parents=True)
@@ -64,8 +70,8 @@ def test_discovery_is_lawful_recursive_stable_and_json_serializable(tmp_path: Pa
     assert [(item["id"], item["kind"], item["version"]) for item in payload["profiles"]] == [
         ("sample-profile", "fatigue", "1.2.3")
     ]
-    assert payload["profiles"][0]["path"].replace("\\", "/").endswith(
-        "references/profiles/fatigue/sample/patterns.json"
+    assert (
+        payload["profiles"][0]["path"].replace("\\", "/").endswith("references/profiles/fatigue/sample/patterns.json")
     )
 
 
@@ -134,7 +140,8 @@ def test_evaluator_is_deterministic_utf8_safe_read_only_and_typed(tmp_path: Path
     assert payload["status"] in {"findings", "abstained", "clear"}
     assert source.read_bytes() == before
     assert all(
-        set(finding) == {
+        set(finding)
+        == {
             "type",
             "pattern_id",
             "evidence",
@@ -146,7 +153,9 @@ def test_evaluator_is_deterministic_utf8_safe_read_only_and_typed(tmp_path: Path
         }
         for finding in payload["findings"]
     )
-    assert all(finding["type"] in {"observed", "candidate", "preserve", "repair", "abstain"} for finding in payload["findings"])
+    assert all(
+        finding["type"] in {"observed", "candidate", "preserve", "repair", "abstain"} for finding in payload["findings"]
+    )
     assert not ({"detector_score", "authorship", "ai_probability"} & set(payload))
 
 

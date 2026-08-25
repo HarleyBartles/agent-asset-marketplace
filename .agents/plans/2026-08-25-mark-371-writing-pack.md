@@ -330,7 +330,7 @@ git commit -m "feat(writing-pack): add evidence-backed style profiles"
 - JSON result: `{schema_version, profile_id, profile_version, input_sha256, status, findings, warnings}`.
 - Finding: `{type, pattern_id, evidence, span, rationale, preserve_when, repair, confidence}` where `type` is one of `observed`, `candidate`, `preserve`, `repair`, `abstain`.
 
-- [ ] **Step 1: Write failing CLI and evaluator tests**
+- [x] **Step 1: Write failing CLI and evaluator tests**
 
 Cover:
 
@@ -351,19 +351,19 @@ Run and record RED:
 py -3 -m pytest tests/test_writing_profile_engine.py -q
 ```
 
-- [ ] **Step 2: Implement schema and discovery**
+- [x] **Step 2: Implement schema and discovery**
 
 Use Python's standard library. Resolve paths with `Path.resolve()`, verify the discovered file remains under the requested root, reject symlink/path escapes, ignore unrelated files, and sort by normalized relative path. The JSON Schema is the machine-readable contract; the validator may implement the supported subset explicitly rather than adding a runtime dependency.
 
-- [ ] **Step 3: Implement profile validation**
+- [x] **Step 3: Implement profile validation**
 
 Validate JSON shape, required metadata, unique pattern IDs, allowed enums, source ID references, golden expected IDs, and dates. Treat a past `review_after` as a warning plus recommendation downgrade, not silent invalidation. Reject fields whose semantics imply detection/evasion or a universal word ban.
 
-- [ ] **Step 4: Implement deterministic evaluation**
+- [x] **Step 4: Implement deterministic evaluation**
 
 Support only transparent rules declared in `patterns.json`: normalized phrase occurrence, paragraph/sentence repetition, local structure clusters, and explicitly declared co-occurrence thresholds. Return evidence spans and counts. Do not infer authorship, fabricate confidence, or use opaque model calls. If the profile cannot support a judgment, emit `abstain`.
 
-- [ ] **Step 5: Pass focused GREEN and script-contract validation**
+- [x] **Step 5: Pass focused GREEN and script-contract validation**
 
 ```powershell
 py -3 -m pytest tests/test_writing_profile_engine.py tests/test_writing_profiles.py -q
@@ -374,7 +374,7 @@ py -3 codex-marketplace/plugins/writing-pack/skills/writing-profile-engine/scrip
 py -3 codex-marketplace/plugins/repo-worker-pack/skills/repo-standards/scripts/validate_skill_scripts.py
 ```
 
-- [ ] **Step 6: Run the frozen blinded A/B campaign**
+- [x] **Step 6: Run the frozen blinded A/B campaign (retained as protocol-invalid diagnostic evidence)**
 
 Only after the engine passes GREEN, run the unchanged campaign declared in
 `tests/pressure/writing/blinded/campaign.json`: three fresh no-skill workers and
@@ -394,7 +394,7 @@ its majority treatment-pass and primary-improvement thresholds without
 degrading secondary metrics. Otherwise report the result as inconclusive or
 non-discriminating; do not claim causality.
 
-- [ ] **Step 7: Commit Task 5**
+- [x] **Step 7: Commit Task 5**
 
 ```powershell
 git add codex-marketplace/plugins/writing-pack/skills/writing-profile-engine tests/test_writing_profile_engine.py tests/test_writing_profiles.py tests/pressure/writing/blinded .agents/plans/2026-08-25-mark-371-writing-pack.md

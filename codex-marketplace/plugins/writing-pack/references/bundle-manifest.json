@@ -26,6 +26,17 @@
       "provenance_note": "Canonical first-party writing skill. (Writing composition first-party skill)"
     },
     {
+      "canonical_name": "writing-profile-engine",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "canonical_source_path": "codex-marketplace/plugins/writing-pack/skills/writing-profile-engine",
+      "local_path": "skills/writing-profile-engine",
+      "source_path": "codex-marketplace/plugins/writing-pack/skills/writing-profile-engine/SKILL.md",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Canonical first-party writing-profile-engine skill. (Writing profile engine first-party skill)"
+    },
+    {
       "canonical_name": "writing-style",
       "source_category": "first_party",
       "content_mode": "verbatim",
