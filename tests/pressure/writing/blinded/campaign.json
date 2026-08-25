@@ -1,0 +1,154 @@
+{
+  "schema_version": 1,
+  "campaign_id": "writing-style-adversarial-ab",
+  "campaign_version": "1.0.0",
+  "status": "frozen_unrun",
+  "frozen_at": "2026-08-25",
+  "designer": {
+    "shared_role": "reviewer",
+    "named_profile": null,
+    "named_profile_note": "Not applicable in Codex MultiAgentV2.",
+    "model": "gpt-5.6-terra",
+    "reasoning": "high",
+    "fork_turns": "none",
+    "task": "/root/task_4_implementer/blind_style_designer"
+  },
+  "artifacts": {
+    "stimulus": {
+      "path": "tests/pressure/writing/blinded/stimulus.md",
+      "sha256": "1cd2584fa49bbb68c362e52a8b4d79352e7715b2eeee8699eaf8fc9463660bd3",
+      "worker_visible": true
+    },
+    "hidden_rubric": {
+      "path": "tests/pressure/writing/blinded/hidden-rubric.md",
+      "sha256": "31e2c2040f49e39b089b37975d7c8fc44652755ecb73ef79f464cd07df87ce70",
+      "worker_visible": false
+    }
+  },
+  "trial_route": {
+    "runtime": "codex_multi_agent_v2",
+    "shared_role": "reviewer",
+    "named_profile": null,
+    "named_profile_note": "Not applicable in Codex MultiAgentV2.",
+    "model": "gpt-5.6-terra",
+    "reasoning": "high",
+    "fork_turns": "none",
+    "fresh_context_per_trial": true,
+    "identical_across_arms": true
+  },
+  "repetitions_per_arm": 3,
+  "arms": [
+    {
+      "id": "control-no-writing-style",
+      "writing_style_available": false,
+      "writing_style_invoked": false,
+      "worker_allowed_reads": [
+        "tests/pressure/writing/blinded/stimulus.md"
+      ]
+    },
+    {
+      "id": "treatment-writing-style",
+      "writing_style_available": true,
+      "writing_style_invoked": true,
+      "worker_allowed_reads": [
+        "tests/pressure/writing/blinded/stimulus.md",
+        "codex-marketplace/plugins/writing-pack/skills/writing-style/SKILL.md",
+        "codex-marketplace/plugins/writing-pack/skills/writing-style/references/profile-contract.md",
+        "codex-marketplace/plugins/writing-pack/skills/writing-style/references/voice-card.md",
+        "codex-marketplace/plugins/writing-pack/skills/writing-style/references/profiles/fatigue/ai-prose-fatigue/profile.md",
+        "codex-marketplace/plugins/writing-pack/skills/writing-style/references/profiles/fatigue/ai-prose-fatigue/patterns.json"
+      ]
+    }
+  ],
+  "worker_prohibitions": [
+    "Do not read the hidden rubric, campaign manifest, another output, or existing results.",
+    "Do not edit repository files.",
+    "Do not receive arm labels or scoring criteria in the stimulus."
+  ],
+  "execution_sequence": [
+    "Build and freeze the deterministic evaluator solely from writing profile goldens.",
+    "Pass engine and evaluator GREEN before generating any campaign output.",
+    "Run three fresh control trials and three fresh treatment trials with identical route settings.",
+    "Seal outputs, compute evaluator findings, anonymize all six, and withhold the arm map.",
+    "Have a fresh independent judge read only the hidden rubric and anonymized outputs.",
+    "Reveal the arm map only after the judge verdict is fixed."
+  ],
+  "primary_metrics": [
+    {
+      "id": "active_pattern_family_count",
+      "direction": "lower_is_better",
+      "definition": "Number of active fatigue families whose contextual threshold is met in one output."
+    },
+    {
+      "id": "active_pattern_signal_density",
+      "direction": "lower_is_better",
+      "definition": "Evaluator-supported active-family signals per 100 output words, with overlapping evidence deduplicated."
+    },
+    {
+      "id": "material_pass",
+      "direction": "higher_is_better",
+      "definition": "Binary hidden-rubric verdict fixed before arm reveal."
+    }
+  ],
+  "secondary_metrics": [
+    {
+      "id": "factual_preservation",
+      "direction": "non_decreasing",
+      "definition": "All supplied facts, limits, and decision sequence remain accurate."
+    },
+    {
+      "id": "clarity",
+      "direction": "non_decreasing",
+      "definition": "Date, audience action, uncertainty, and post-pilot decision sequence remain easy to locate and understand."
+    },
+    {
+      "id": "authorized_voice_preservation",
+      "direction": "non_decreasing",
+      "definition": "Plain practical first-person voice, a contraction, and exactly one use of small test remain without sales language."
+    },
+    {
+      "id": "word_range_compliance",
+      "direction": "non_decreasing",
+      "definition": "Output contains 190 through 220 words inclusive."
+    }
+  ],
+  "predeclared_thresholds": {
+    "baseline_red": {
+      "minimum_material_failures": 2,
+      "out_of_trials": 3,
+      "if_not_met": "non_discriminating_inconclusive"
+    },
+    "treatment_green": {
+      "minimum_material_passes": 2,
+      "out_of_trials": 3,
+      "maximum_treatment_to_control_median_family_count_ratio": 0.5,
+      "minimum_median_family_count_reduction": 2,
+      "maximum_treatment_hard_factual_failures": 0,
+      "secondary_metric_rule": "Treatment pass count must be greater than or equal to control pass count for every secondary metric.",
+      "if_not_met": "no_causal_improvement_claim_and_record_product_concern"
+    }
+  },
+  "judge": {
+    "fresh_context": true,
+    "independent_from_workers": true,
+    "allowed_reads": [
+      "tests/pressure/writing/blinded/hidden-rubric.md",
+      "six anonymized worker outputs"
+    ],
+    "prohibited_reads": [
+      "arm map",
+      "campaign results",
+      "worker prompts beyond the frozen stimulus embedded by reference in the rubric"
+    ],
+    "required_record": [
+      "per-output family counts and evidence",
+      "hard-fail checks",
+      "material verdict",
+      "clarity verdict",
+      "factual-preservation verdict",
+      "authorized-voice verdict",
+      "limitations"
+    ]
+  },
+  "freeze_rule": "After any worker output is revealed, do not edit the skill, profiles, engine, evaluator, stimulus, rubric, manifest, or thresholds to make this campaign pass."
+}

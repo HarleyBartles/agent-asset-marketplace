@@ -236,6 +236,10 @@ git commit -m "feat(writing-pack): add compositional writing router"
 - Create: `codex-marketplace/plugins/writing-pack/skills/writing-style/references/profiles/voice/default-voice-card.json`
 - Create: `tests/test_writing_profiles.py`
 - Create: `tests/pressure/writing/green-style.md`
+- Create: `tests/pressure/writing/blinded/README.md`
+- Create: `tests/pressure/writing/blinded/stimulus.md`
+- Create: `tests/pressure/writing/blinded/hidden-rubric.md`
+- Create: `tests/pressure/writing/blinded/campaign.json`
 
 **Interfaces:**
 - Consumes: the Task 1 evidence ledger, a draft, optional voice card, and context/audience.
@@ -243,7 +247,7 @@ git commit -m "feat(writing-pack): add compositional writing router"
 - Owns: writing-specific profile data under `references/profiles/**`.
 - Does not own: generic cross-domain unslop profiles or automated authorship classification.
 
-- [ ] **Step 1: Write failing contract and golden-fixture tests**
+- [x] **Step 1: Write failing contract and golden-fixture tests**
 
 `tests/test_writing_profiles.py` must initially fail and then enforce:
 
@@ -260,11 +264,11 @@ Run and record RED:
 py -3 -m pytest tests/test_writing_profiles.py -q
 ```
 
-- [ ] **Step 2: Create the `skills-with-citation` authority record**
+- [x] **Step 2: Create the `skills-with-citation` authority record**
 
 Synthesize from Task 1's primary sources without vendoring paywalled or copyrighted papers. `authority.yaml`, `source-map.yaml`, and `CITATIONS.md` must follow the repository citation-lane contract and hash the local citation evidence exactly. Map each derived reference/profile file to the source sections that support it. Keep issue-specific empirical notes in `research/`; put only durable, bounded operational guidance in the skill.
 
-- [ ] **Step 3: Author profile contract, fatigue profile, and goldens**
+- [x] **Step 3: Author profile contract, fatigue profile, and goldens**
 
 Use contextual pattern families, not a banned-word list. Each finding must answer:
 
@@ -276,11 +280,11 @@ Use contextual pattern families, not a banned-word list. Each finding must answe
 
 Set a dated refresh horizon. Expired evidence may still be displayed but must downgrade automated recommendations to `candidate` or `abstain` until reviewed.
 
-- [ ] **Step 4: Author the voice-card contract**
+- [x] **Step 4: Author the voice-card contract**
 
 The voice card may capture tendencies such as sentence range, directness, preferred vocabulary register, tolerated fragments, rhetorical devices, formatting norms, and explicit do/don't choices. It must be generated only from text the user supplies for the current task or from explicit preferences, and it must not retain the original corpus.
 
-- [ ] **Step 5: Run GREEN tests and pressure tests**
+- [x] **Step 5: Run GREEN tests and pressure tests**
 
 ```powershell
 py -3 -m pytest tests/test_writing_profiles.py tests/test_writing_pack.py -q
@@ -289,7 +293,13 @@ py -3 tools/validate_authority_assets.py
 
 Run `preserve-deliberate-device.md` and `voice-without-private-corpus.md` in fresh contexts with `writing-style` available. Record responses and judgments in `green-style.md`; both must pass without changing the scenario rubric.
 
-- [ ] **Step 6: Commit Task 4**
+Treat those two runs as acceptance/regression evidence only because their Task
+1 baseline already passed. Separately use a fresh test designer to freeze one
+adversarial worker stimulus, a hidden judge rubric, and a machine-readable A/B
+manifest under `tests/pressure/writing/blinded/`. Do not run either A/B arm in
+Task 4 and never expose the hidden rubric to workers.
+
+- [x] **Step 6: Commit Task 4**
 
 ```powershell
 git add codex-marketplace/plugins/writing-pack/skills/writing-style tests/test_writing_profiles.py tests/pressure/writing .agents/plans/2026-08-25-mark-371-writing-pack.md
@@ -310,6 +320,8 @@ git commit -m "feat(writing-pack): add evidence-backed style profiles"
 - Create: `codex-marketplace/plugins/writing-pack/skills/writing-profile-engine/scripts/evaluate_profile.py`
 - Create: `tests/test_writing_profile_engine.py`
 - Modify: `tests/test_writing_profiles.py`
+- Create: `tests/pressure/writing/blinded/results.md`
+- Create: six frozen-arm worker outputs and six anonymized judge inputs under `tests/pressure/writing/blinded/outputs/`
 
 **Interfaces:**
 - `discover_profiles.py [--root PATH] [--json]`: returns profiles found only below `references/profiles/`, with stable ID, version, kind, and path.
@@ -330,6 +342,8 @@ Cover:
 - expired-profile downgrade behavior;
 - no detector score, authorship conclusion, or source mutation;
 - every fatigue golden fixture's expected finding IDs and types.
+- evaluator behavior is fixed solely from profile goldens before any blinded
+  campaign output is generated or revealed.
 
 Run and record RED:
 
@@ -360,10 +374,30 @@ py -3 codex-marketplace/plugins/writing-pack/skills/writing-profile-engine/scrip
 py -3 codex-marketplace/plugins/repo-worker-pack/skills/repo-standards/scripts/validate_skill_scripts.py
 ```
 
-- [ ] **Step 6: Commit Task 5**
+- [ ] **Step 6: Run the frozen blinded A/B campaign**
+
+Only after the engine passes GREEN, run the unchanged campaign declared in
+`tests/pressure/writing/blinded/campaign.json`: three fresh no-skill workers and
+three fresh workers with `writing-style` explicitly available and invoked. Use
+the identical declared model, reasoning, and `fork_turns` settings. Workers may
+read only the stimulus plus their arm's declared skill files; they must never
+read the hidden rubric or another output.
+
+Evaluate active pattern-family counts and density plus typed findings. Anonymize
+the six outputs and send only those outputs and the hidden rubric to a fresh
+independent judge for clarity, factuality, and authorised-voice decisions. Do
+not edit the skill, profile, engine, evaluator, stimulus, rubric, manifest, or
+thresholds after outputs are revealed to make the campaign pass.
+
+Baseline RED requires the manifest's majority-failure threshold. GREEN requires
+its majority treatment-pass and primary-improvement thresholds without
+degrading secondary metrics. Otherwise report the result as inconclusive or
+non-discriminating; do not claim causality.
+
+- [ ] **Step 7: Commit Task 5**
 
 ```powershell
-git add codex-marketplace/plugins/writing-pack/skills/writing-profile-engine tests/test_writing_profile_engine.py tests/test_writing_profiles.py .agents/plans/2026-08-25-mark-371-writing-pack.md
+git add codex-marketplace/plugins/writing-pack/skills/writing-profile-engine tests/test_writing_profile_engine.py tests/test_writing_profiles.py tests/pressure/writing/blinded .agents/plans/2026-08-25-mark-371-writing-pack.md
 git commit -m "feat(writing-pack): add writing profile engine"
 ```
 

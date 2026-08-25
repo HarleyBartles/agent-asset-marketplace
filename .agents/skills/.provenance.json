@@ -7,7 +7,7 @@
     "unslop-plus",
     "writing-pack"
   ],
-  "syncedSkills": 41,
+  "syncedSkills": 42,
   "localSkills": [],
   "marketplace": {
     "source": "HarleyBartles/agent-asset-marketplace",
@@ -42,5 +42,5 @@
   ],
   "marketplaceFile": ".agents/plugins/marketplace.json",
   "vendorProfiles": [],
-  "syncedAt": "2026-08-25T12:55:14.526192"
+  "syncedAt": "2026-08-25T13:18:53.994454"
 }

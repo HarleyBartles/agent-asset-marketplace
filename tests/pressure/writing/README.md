@@ -1,7 +1,18 @@
 # Writing pressure campaign
 
-This campaign establishes a pre-skill RED baseline for MARK-371. It tests instruction-following and boundary behaviour, not human authorship, universal prose quality, or detector performance.
+This campaign records three different evidence classes for MARK-371. It tests
+instruction-following and boundary behaviour, not human authorship, universal
+prose quality, or detector performance.
 
-Each reusable prompt has a concrete draft, an objective rubric, and no private author corpus. `red.md` records fresh-context runs made before `writing-pack`, `writing`, and `writing-style` exist. A later GREEN run must use the same prompt and rubric.
+- `red.md` records the all-pass/inconclusive pre-skill baseline.
+- `green-writing.md` and `green-style.md` record non-causal acceptance and
+  regression evidence on unchanged scenarios whose baseline already passed.
+- `blinded/` freezes a separate adversarial A/B campaign. Its workers see only
+  `stimulus.md`; `hidden-rubric.md` remains judge-only. Task 4 does not run
+  either arm. `campaign.json` predeclares the Task 5 route, metrics, and verdict
+  thresholds.
+
+Each fixture is synthetic or records its provenance limitation. No pressure
+artifact contains a private author corpus.
 
 The scenarios do not authorize detector evasion, authorship inference, or intentional degradation of prose.
