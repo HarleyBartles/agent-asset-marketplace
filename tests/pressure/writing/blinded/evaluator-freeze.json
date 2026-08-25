@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "campaign_id": "writing-style-adversarial-ab",
+  "campaign_version": "1.4.0",
+  "frozen_before_worker_output": true,
+  "algorithm": "sha256",
+  "artifacts": [
+    {
+      "path": "codex-marketplace/plugins/writing-pack/skills/writing-profile-engine/scripts/_profile_common.py",
+      "sha256": "9aed5ef5ad95feb3d8730270acea09e4c6e3bea15becd875c27cd06e95161198"
+    },
+    {
+      "path": "codex-marketplace/plugins/writing-pack/skills/writing-profile-engine/scripts/discover_profiles.py",
+      "sha256": "43499f847ecdee7fed869afd69daf726f4ff6cb5dbe42016c7829a147bad95a2"
+    },
+    {
+      "path": "codex-marketplace/plugins/writing-pack/skills/writing-profile-engine/scripts/validate_profiles.py",
+      "sha256": "0c4ea26eb740e347e1cee0b1e706ea6e42de302dcac7f5d287ff3d34b68dcb03"
+    },
+    {
+      "path": "codex-marketplace/plugins/writing-pack/skills/writing-profile-engine/scripts/evaluate_profile.py",
+      "sha256": "809f9cc7a255baf71a2725ac3f7d0cab3b7169a6632f43af60cb8eaf84925476"
+    },
+    {
+      "path": "codex-marketplace/plugins/writing-pack/skills/writing-profile-engine/assets/schemas/writing-profile.schema.json",
+      "sha256": "c6ade1b9089af66d4260082d18cc82e06b7c8bb9e95544716ebcae5938e8e434"
+    },
+    {
+      "path": "codex-marketplace/plugins/writing-pack/skills/writing-style/references/profiles/fatigue/ai-prose-fatigue/patterns.json",
+      "sha256": "4ff7f5df7093bb814912787df8256f44218dc67e7ab089198964fb50220b8199"
+    },
+    {
+      "path": "codex-marketplace/plugins/writing-pack/skills/writing-style/references/profiles/fatigue/ai-prose-fatigue/goldens.json",
+      "sha256": "905e69aa5ea422a94d0e72ffdb1b3d9538ecbe754ed37afcf9552b000882f4dd"
+    },
+    {
+      "path": "tests/test_writing_profile_engine.py",
+      "sha256": "66dd45de80e77aee181b34f1e268fc9102980a9908a19624c04ccdff5c9962e1"
+    }
+  ]
+}

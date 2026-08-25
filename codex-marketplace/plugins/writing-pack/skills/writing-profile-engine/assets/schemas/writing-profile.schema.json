@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/writing-profile.schema.json",
+  "title": "Writing fatigue profile",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "profile_id", "profile_kind", "version", "reviewed_at", "review_after", "patterns"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "profile_id": {"type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"},
+    "profile_kind": {"enum": ["fatigue", "voice"]},
+    "version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+    "reviewed_at": {"type": "string", "format": "date"},
+    "review_after": {"type": "string", "format": "date"},
+    "patterns": {"type": "array", "items": {"type": "object"}}
+  }
+}
+
