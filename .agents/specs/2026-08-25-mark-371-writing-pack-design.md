@@ -396,7 +396,7 @@ The migration is one coherent source-custody change:
 | `repo-worker-pack/skills/writing-with-clarity` | Move with history to `writing-pack/skills/writing-with-clarity` |
 | `repo-worker-pack/skills/unslop-profiles` | Remove duplicate source; retain `unslop-plus/skills/unslop-profiles` |
 | `unslop-plus/skills/unslop-engine` | Remains in `unslop-plus` |
-| `unslop-plus/skills/unslop-profiles` | Remains in `unslop-plus` |
+| `unslop-plus/skills/unslop-profiles` | Remains in `unslop-plus`; move its library from top-level `profiles/` to lawful `references/profiles/` |
 | No writing composition skill | Add `writing-pack/skills/writing` |
 | No writing style skill | Add `writing-pack/skills/writing-style` |
 | No writing-specific engine | Add `writing-pack/skills/writing-profile-engine` |
@@ -417,6 +417,9 @@ The implementation must:
 6. Regenerate bundle manifests, marketplace manifests, installed skills,
    indexes, and provenance through the repository commands. Do not hand-edit
    generated `.agents/skills/` copies.
+7. Move the retained generic profile library under
+   `unslop-profiles/references/profiles/`; no skill may keep a top-level
+   `profiles/` directory.
 
 The migration must leave exactly one canonical marketplace source for each
 skill name. Installed `.agents/skills/` copies remain generated deployment
