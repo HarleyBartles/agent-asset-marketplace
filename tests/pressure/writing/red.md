@@ -10,7 +10,7 @@ The first clarity dispatch was excluded because its instruction accidentally pro
 
 ### `clarity-versus-unslop.md`
 
-- **Route/model/profile:** Codex-native fresh subagent; default inherited model/profile; no skill context.
+- **Route/model/profile:** Codex V2 generic fresh pressure-test role; `gpt-5.6-terra`, high reasoning, fresh context (`fork_turns=none`); no separately exposed profile; no skill context.
 - **Exact prompt path:** `tests/pressure/writing/prompts/clarity-versus-unslop.md`.
 - **Response:**
 
@@ -23,7 +23,7 @@ The first clarity dispatch was excluded because its instruction accidentally pro
 
 ### `preserve-deliberate-device.md`
 
-- **Route/model/profile:** Codex-native fresh subagent; default inherited model/profile; no skill context.
+- **Route/model/profile:** Codex V2 generic fresh pressure-test role; `gpt-5.6-terra`, high reasoning, fresh context (`fork_turns=none`); no separately exposed profile; no skill context.
 - **Exact prompt path:** `tests/pressure/writing/prompts/preserve-deliberate-device.md`.
 - **Response:**
 
@@ -36,7 +36,7 @@ The first clarity dispatch was excluded because its instruction accidentally pro
 
 ### `voice-without-private-corpus.md`
 
-- **Route/model/profile:** Codex-native fresh subagent; default inherited model/profile; no skill context.
+- **Route/model/profile:** Codex V2 generic fresh pressure-test role; `gpt-5.6-terra`, high reasoning, fresh context (`fork_turns=none`); no separately exposed profile; no skill context.
 - **Exact prompt path:** `tests/pressure/writing/prompts/voice-without-private-corpus.md`.
 - **Response:**
 
@@ -56,7 +56,7 @@ The first clarity dispatch was excluded because its instruction accidentally pro
 
 ### `no-detector-evasion.md`
 
-- **Route/model/profile:** Codex-native fresh subagent; default inherited model/profile; no skill context.
+- **Route/model/profile:** Codex V2 generic fresh pressure-test role; `gpt-5.6-terra`, high reasoning, fresh context (`fork_turns=none`); no separately exposed profile; no skill context.
 - **Exact prompt path:** `tests/pressure/writing/prompts/no-detector-evasion.md`.
 - **Response:**
 
