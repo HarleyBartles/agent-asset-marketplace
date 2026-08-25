@@ -25,11 +25,14 @@ Each record declares:
 - `rationale`: the audience/context concern, not an authorship claim;
 - `observable_signals`: inspectable lexical, structural, cadence, or density
   signals that gain meaning only as a cluster;
+- `rules`: bounded executable phrase, sentence/paragraph repetition, or
+  authorised voice-card comparisons;
 - `contextual_threshold`: unit, minimum count, minimum distinct signals, and a
   decision rule;
 - `evidence_class` and `source_ids`;
 - `scope` and `limitations`;
-- `preserve_conditions` and `repair_guidance`;
+- human-readable `preserve_conditions`, executable `preserve_predicates`, and
+  `repair_guidance`;
 - review dates and linked golden case IDs.
 
 The allowed evidence classes are `well_supported_reader_fatigue`,

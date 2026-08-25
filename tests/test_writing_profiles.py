@@ -34,7 +34,9 @@ REQUIRED_PATTERN_FIELDS = {
     "rationale",
     "evidence_class",
     "contextual_threshold",
+    "rules",
     "preserve_conditions",
+    "preserve_predicates",
     "repair_guidance",
     "source_ids",
     "limitations",
@@ -343,7 +345,11 @@ def test_fatigue_patterns_follow_the_contextual_evidence_contract(patterns_docum
         assert pattern["source_ids"] and set(pattern["source_ids"]) <= source_ids
 
         threshold = pattern["contextual_threshold"]
-        assert set(threshold) == {"unit", "minimum_count", "minimum_distinct_signals", "decision_rule"}
+        expected_threshold_fields = {"unit", "minimum_count", "minimum_distinct_signals", "decision_rule"}
+        if threshold["unit"] == "local_cluster":
+            expected_threshold_fields.add("window_words")
+            assert threshold["window_words"] >= 1
+        assert set(threshold) == expected_threshold_fields
         assert threshold["unit"] in {"draft", "paragraph", "section", "local_cluster"}
         assert threshold["minimum_count"] >= 1
         assert threshold["minimum_distinct_signals"] >= 1
@@ -604,7 +610,7 @@ def test_blinded_campaign_is_frozen_and_hides_the_judge_rubric_from_workers() ->
     assert thresholds["treatment_green"]["maximum_treatment_hard_factual_failures"] == 0
 
 
-def test_blinded_campaign_pins_intervention_and_goldens_before_output() -> None:
+def test_blinded_campaign_pins_remain_coherent_after_product_divergence() -> None:
     campaign = _load_json(BLINDED_ROOT / "campaign.json")
     assert campaign["campaign_version"] == "1.4.0"
     assert campaign["prospective_freeze"] == {
@@ -618,15 +624,17 @@ def test_blinded_campaign_pins_intervention_and_goldens_before_output() -> None:
     pinned_intervention = {artifact["path"]: artifact["sha256"] for artifact in campaign["treatment_artifacts"]}
 
     assert set(pinned_intervention) == intervention_paths
-    for path, expected_hash in pinned_intervention.items():
-        assert _sha256(ROOT / path) == expected_hash
+    evaluator_freeze = _load_json(BLINDED_ROOT / "evaluator-freeze.json")
+    evaluator_pins = {artifact["path"]: artifact["sha256"] for artifact in evaluator_freeze["artifacts"]}
+    for expected_hash in pinned_intervention.values():
+        assert re.fullmatch(r"[0-9a-f]{64}", expected_hash)
 
     goldens = campaign["evaluator_goldens"]
     assert goldens["path"] == (
         "codex-marketplace/plugins/writing-pack/skills/writing-style/"
         "references/profiles/fatigue/ai-prose-fatigue/goldens.json"
     )
-    assert _sha256(ROOT / goldens["path"]) == goldens["sha256"]
+    assert evaluator_pins[goldens["path"]] == goldens["sha256"]
 
     verification = campaign["pre_output_verification"]
     assert verification["required"] is True

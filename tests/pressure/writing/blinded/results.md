@@ -9,13 +9,14 @@
 
 ## Verdict
 
-**Product concern; no causal improvement claim.** The baseline RED and the
-treatment majority-pass gates were met, but treatment GREEN was not. The blind
-family-count median fell from 2 to 1, meeting the maximum ratio of 0.5 but not
-the required reduction of 2. One treatment output omitted the explicit
-no-outcome-data limit, violating the zero-hard-factual-fail gate. The frozen
-deterministic evaluator returned no findings for any output, so its family
-count and signal-density measures were non-discriminating.
+**Material behavioural improvement observed; formal campaign result remains
+product concern.** Blind judging gave the treatment 2 material passes out of 3,
+against 1 out of 3 for control, and its median family count fell from 2 to 1.
+The product owner accepts that partial behavioural result as useful evidence.
+It does not retroactively change the campaign: treatment GREEN was not met, and
+the freeze breach prevents a causal claim. One treatment output omitted the
+explicit no-outcome-data limit, while the frozen deterministic evaluator
+returned no findings for any output and was non-discriminating.
 
 This result is about this six-trial campaign only. It is not evidence of human
 authorship, detector performance, or general writing quality.
@@ -28,8 +29,9 @@ authorship, detector performance, or general writing quality.
 - Evaluator RED: 11 failed, 1 skipped because the engine and all three CLIs
   were absent.
 - Evaluator GREEN before trials: 11 passed, 1 skipped; combined engine/profile
-  suite 61 passed, 1 skipped; all help/default-validation/script-contract gates
-  passed.
+  suite 61 passed, 1 skipped. The reported script-contract pass was a false
+  green caused by a coverage omission: the installed projection did not exist,
+  and the read-only CLIs' `--check` contract had not actually been exercised.
 - Six fresh workers used the identical Codex MultiAgentV2 reviewer route,
   `gpt-5.6-terra`, high reasoning, `fork_turns: none`. Each attested only its
   arm's declared reads.
@@ -85,10 +87,11 @@ Control had 2 material failures out of 3. Required: at least 2. **Met.**
   improvement claim.**
 
 Because every treatment-GREEN condition was required, the frozen verdict is a
-product concern. The intervention improved the blind material-pass count in
-this sample, but did not clear the predeclared effect size or factual-safety
-gate. The engine also needs a separately designed, prospectively tested signal
-contract before it can measure this campaign's softer contextual families.
+product concern. The blind behavioural result nevertheless shows material
+improvement in this sample. It is the primary quality evidence; engine scripts
+support safety, portability, and reproducibility rather than acting as a proxy
+judge for prose quality. The intervention did not clear the predeclared effect
+size or factual-safety gate.
 
 ## Retained evidence
 
@@ -100,8 +103,10 @@ contract before it can measure this campaign's softer contextual families.
 - `outputs/blind-judgment.json`: fixed independent verdict.
 - `outputs/arm-map.json`: mapping revealed only after judgment.
 
-No skill, profile, evaluator rule, stimulus, rubric, campaign manifest, or
-threshold was changed after the first worker output to improve the campaign.
+No frozen campaign input, output, rubric, threshold, verdict, or score was
+changed after the first worker output to improve the campaign. Product source
+changed after the experiment closed, as recorded below, without rescoring the
+six outputs.
 
 ## Protocol-deviation chronology
 
@@ -119,11 +124,17 @@ threshold was changed after the first worker output to improve the campaign.
 5. Once the experimental record was closed as invalid, the final product
    engine received the minimal repository-required fixes: helper docstring,
    read-only help classification, `--check` readiness, and formatting. One
-   test added the CLI contract. Signal tables, thresholds, preserve logic, and
-   findings remain unchanged.
+   test added the CLI contract.
+6. Post-experiment review then found that the product engine manufactured voice
+   divergence from card presence, selected rules by hard-coded pattern ID,
+   skipped malformed candidates, and depended on a repo-external source
+   register. Those product defects were repaired through declared profile
+   rules, bounded voice-card comparisons, stricter validation, and bundled
+   source authority. The current engine was not used to rescore the campaign.
 
 `evaluator-freeze.json` intentionally continues to pin the pre-output f0eda
-artifacts. The final product diverges from six of those hashes: four scripts
-and the CLI-contract test changed for product corrections, while the schema
-differs only by repository-required EOF normalization. That divergence is
-expected and does not rewrite the retained campaign inputs or scores.
+artifacts. The campaign outputs were evaluated only by the exact engine in
+`f0eda0943f03d2293cee5305a04d999fba4d1722`. The current profile, engine,
+schema, and tests diverge afterward for product correctness and have no
+campaign evidence of their own. Do not tune or rerun the exposed scenario; any
+new confirmation should use a fresh withheld scenario frozen independently.

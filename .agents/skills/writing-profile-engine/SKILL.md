@@ -34,7 +34,11 @@ the input.
    `$writing-with-clarity` gate.
 
 The commands are read-only. Run each command with `--help` for its bounded
-interface. The result contract is in `references/result-contract.md`.
+interface. Profiles carry their executable rules and preserve predicates; the
+engine does not select behavior by pattern ID. The profile schema is in
+`assets/schemas/writing-profile.schema.json`, bundled durable source IDs are in
+`references/source-authority.json`, and the result contract is in
+`references/result-contract.md`.
 
 ## Boundaries
 
