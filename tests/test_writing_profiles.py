@@ -96,13 +96,33 @@ def _normalized_tokens(value: str) -> set[str]:
 def _is_negative_boundary(sentence: str) -> bool:
     return bool(
         re.search(
-            r"\b(?:do|does|must|should)\s+not\b|\bnot\s+an?\b|\bwithout\b",
+            r"\b(?:do|does|must|should)\s+not\b|\bnot\s+an?\b|"
+            r"\bwithout\s+(?:assigning|calculating|concluding|providing|reporting|returning)\b",
             sentence,
         )
     )
 
 
-def _semantic_categories(tokens: set[str]) -> set[str]:
+def _has_universal_restriction_scope(sentence: str, tokens: set[str]) -> bool:
+    if re.search(r"\bwithout\s+(?:any\s+)?exceptions?\b", sentence):
+        return True
+    if re.search(r"\b(?:if|unless|when)\b", sentence):
+        return False
+    universal_markers = {"all", "always", "any", "each", "every", "never"}
+    inherently_universal_actions = {
+        "ban",
+        "banned",
+        "disallow",
+        "disallowed",
+        "forbid",
+        "forbidden",
+        "prohibit",
+        "prohibited",
+    }
+    return bool(tokens & (universal_markers | inherently_universal_actions))
+
+
+def _semantic_categories(tokens: set[str], *, universal_restriction: bool = True) -> set[str]:
     categories: set[str] = set()
     lexical_targets = {
         "occurrence",
@@ -118,7 +138,6 @@ def _semantic_categories(tokens: set[str]) -> set[str]:
         "words",
     }
     restriction_actions = {
-        "always",
         "ban",
         "banned",
         "block",
@@ -133,7 +152,6 @@ def _semantic_categories(tokens: set[str]) -> set[str]:
         "excluded",
         "forbid",
         "forbidden",
-        "never",
         "omit",
         "omitted",
         "prohibit",
@@ -142,7 +160,6 @@ def _semantic_categories(tokens: set[str]) -> set[str]:
         "removed",
         "strip",
         "stripped",
-        "use",
     }
     origin_subjects = {"ai", "authorship", "detector", "evasion", "llm", "model"}
     score_measures = {"confidence", "likelihood", "probability", "rating", "score"}
@@ -158,7 +175,8 @@ def _semantic_categories(tokens: set[str]) -> set[str]:
         "verdict",
     }
 
-    if tokens & lexical_targets and tokens & restriction_actions:
+    restriction_action_present = bool(tokens & restriction_actions or {"never", "use"} <= tokens)
+    if universal_restriction and tokens & lexical_targets and restriction_action_present:
         categories.add("universal_token_restriction")
     if tokens & origin_subjects and tokens & score_measures:
         categories.add("origin_or_detector_score")
@@ -185,7 +203,10 @@ def _semantic_violations(value: Any, path: str = "$") -> list[str]:
         sentences = re.split(r"(?<=[.!?;])\s+|\n+", value.lower())
         for sentence in sentences:
             tokens = _normalized_tokens(sentence)
-            categories = _semantic_categories(tokens)
+            categories = _semantic_categories(
+                tokens,
+                universal_restriction=_has_universal_restriction_scope(sentence, tokens),
+            )
             authorship_assertion = bool(
                 tokens
                 & {
@@ -366,6 +387,9 @@ def test_profile_data_rejects_exact_token_bans_and_detector_scores(
         {"rationale": "Report an authorship probability of 0.8."},
         {"repair_guidance": "Remove every occurrence of delve."},
         {"repair_guidance": "Words such as delve should always be removed."},
+        {"repair_guidance": "Without exception, remove every occurrence of delve."},
+        {"repair_guidance": "Without any exceptions, always delete the term delve."},
+        {"repair_guidance": "Never use the term delve."},
     ],
 )
 def test_prohibited_semantic_aliases_are_rejected_recursively(unsafe_fixture: dict[str, Any]) -> None:
@@ -378,12 +402,26 @@ def test_prohibited_semantic_aliases_are_rejected_recursively(unsafe_fixture: di
         {"rationale": "This is not an authorship claim."},
         {"limitations": "Do not provide detector scores, authorship conclusions, or exact-token bans."},
         {"repair_guidance": "Preserve the word when it carries precise meaning."},
+        {"repair_guidance": "Use precise words when facts permit."},
+        {"repair_guidance": "Remove repeated words only when they obscure meaning."},
+        {"repair_guidance": "Use specific terms if evidence supports them."},
+        {"repair_guidance": "Remove repeated phrases when they obscure the point."},
+        {"repair_guidance": "Omit repeated terms only if the sentence stays clear."},
+        {"repair_guidance": "Always use precise words."},
+        {"repair_guidance": "Use any precise term that the facts support."},
     ],
 )
 def test_prohibited_semantic_check_preserves_legitimate_boundary_prose(
     legitimate_fixture: dict[str, Any],
 ) -> None:
     assert not _semantic_violations(legitimate_fixture)
+
+
+def test_profile_contract_documents_bounded_universal_restriction_scope() -> None:
+    contract = " ".join((STYLE_ROOT / "references" / "profile-contract.md").read_text(encoding="utf-8").lower().split())
+
+    assert "without exception" in contract
+    assert "contextual qualifiers such as `if`, `when`, and `unless`" in contract
 
 
 def test_goldens_name_expected_finding_types_and_pattern_ids(
@@ -561,9 +599,9 @@ def test_blinded_campaign_is_frozen_and_hides_the_judge_rubric_from_workers() ->
 
 def test_blinded_campaign_pins_intervention_and_goldens_before_output() -> None:
     campaign = _load_json(BLINDED_ROOT / "campaign.json")
-    assert campaign["campaign_version"] == "1.2.0"
+    assert campaign["campaign_version"] == "1.3.0"
     assert campaign["prospective_freeze"] == {
-        "correction_round": 2,
+        "correction_round": 3,
         "correction_scope": "pre_output_review_findings",
         "worker_outputs_existed_before_refreeze": False,
         "arms_run_before_refreeze": False,

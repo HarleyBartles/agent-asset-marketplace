@@ -71,7 +71,10 @@ Validation recursively applies a bounded grammar to nested objects and arrays.
 It normalises snake case, hyphens, and camel case in field names, then rejects
 semantic categories for universal token restrictions, detector or origin
 scores, and authorship judgments. In prose it rejects affirmative combinations
-from those same categories, including universal removal instructions. This is
-not an open-ended natural-language equivalence proof; ambiguous constructions
-require human review. Legitimate negative boundary statements such as “do not
-provide detector scores” or “this is not an authorship claim” remain allowed.
+from those same categories. Universal token restrictions require a universal
+marker such as `every`, `always`, `never`, or “without exception”; contextual
+qualifiers such as `if`, `when`, and `unless` do not create universal scope.
+This is not an open-ended natural-language equivalence proof; ambiguous
+constructions require human review. Legitimate negative boundary statements
+such as “do not provide detector scores” or “this is not an authorship claim”
+remain allowed.

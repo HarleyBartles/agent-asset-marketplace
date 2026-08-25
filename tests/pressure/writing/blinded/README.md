@@ -7,7 +7,7 @@ the experiment but does not run either arm.
 Before any output is generated, verify the SHA-256 pins for the stimulus,
 hidden rubric, the complete treatment-readable writing-style and
 writing-with-clarity route, and the evaluator goldens. Abort the campaign
-without running a trial if any pin differs. Version 1.2.0 records the second
+without running a trial if any pin differs. Version 1.3.0 records the third
 pre-output review correction; no worker output existed and no arm had run
 before the prospective refreeze.
 
