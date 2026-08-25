@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "route": {
+    "runtime": "codex_multi_agent_v2",
+    "shared_role": "reviewer",
+    "model": "gpt-5.6-terra",
+    "reasoning": "high",
+    "fork_turns": "none"
+  },
+  "trials": [
+    {"trial": "trial-a", "task": "/root/task_5_implementer/campaign_trial_a", "read_attestation": ["tests/pressure/writing/blinded/stimulus.md"]},
+    {"trial": "trial-b", "task": "/root/task_5_implementer/campaign_trial_b", "read_attestation": ["tests/pressure/writing/blinded/stimulus.md", "codex-marketplace/plugins/writing-pack/skills/writing-style/SKILL.md", "codex-marketplace/plugins/writing-pack/skills/writing-style/references/profile-contract.md", "codex-marketplace/plugins/writing-pack/skills/writing-style/references/voice-card.md", "codex-marketplace/plugins/writing-pack/skills/writing-style/references/profiles/fatigue/ai-prose-fatigue/profile.md", "codex-marketplace/plugins/writing-pack/skills/writing-style/references/profiles/fatigue/ai-prose-fatigue/patterns.json", "codex-marketplace/plugins/writing-pack/skills/writing-with-clarity/SKILL.md", "codex-marketplace/plugins/writing-pack/skills/writing-with-clarity/references/routing.md", "codex-marketplace/plugins/writing-pack/skills/writing-with-clarity/references/composition-and-flow.md", "codex-marketplace/plugins/writing-pack/skills/writing-with-clarity/references/final-edit.md"]},
+    {"trial": "trial-c", "task": "/root/task_5_implementer/campaign_trial_c", "read_attestation": ["tests/pressure/writing/blinded/stimulus.md"]},
+    {"trial": "trial-d", "task": "/root/task_5_implementer/campaign_trial_d", "read_attestation": ["tests/pressure/writing/blinded/stimulus.md", "codex-marketplace/plugins/writing-pack/skills/writing-style/SKILL.md", "codex-marketplace/plugins/writing-pack/skills/writing-style/references/profile-contract.md", "codex-marketplace/plugins/writing-pack/skills/writing-style/references/voice-card.md", "codex-marketplace/plugins/writing-pack/skills/writing-style/references/profiles/fatigue/ai-prose-fatigue/profile.md", "codex-marketplace/plugins/writing-pack/skills/writing-style/references/profiles/fatigue/ai-prose-fatigue/patterns.json", "codex-marketplace/plugins/writing-pack/skills/writing-with-clarity/SKILL.md", "codex-marketplace/plugins/writing-pack/skills/writing-with-clarity/references/routing.md", "codex-marketplace/plugins/writing-pack/skills/writing-with-clarity/references/composition-and-flow.md", "codex-marketplace/plugins/writing-pack/skills/writing-with-clarity/references/final-edit.md"]},
+    {"trial": "trial-e", "task": "/root/task_5_implementer/campaign_trial_e", "read_attestation": ["tests/pressure/writing/blinded/stimulus.md"]},
+    {"trial": "trial-f", "task": "/root/task_5_implementer/campaign_trial_f", "read_attestation": ["tests/pressure/writing/blinded/stimulus.md", "codex-marketplace/plugins/writing-pack/skills/writing-style/SKILL.md", "codex-marketplace/plugins/writing-pack/skills/writing-style/references/profile-contract.md", "codex-marketplace/plugins/writing-pack/skills/writing-style/references/voice-card.md", "codex-marketplace/plugins/writing-pack/skills/writing-style/references/profiles/fatigue/ai-prose-fatigue/profile.md", "codex-marketplace/plugins/writing-pack/skills/writing-style/references/profiles/fatigue/ai-prose-fatigue/patterns.json", "codex-marketplace/plugins/writing-pack/skills/writing-with-clarity/SKILL.md", "codex-marketplace/plugins/writing-pack/skills/writing-with-clarity/references/routing.md", "codex-marketplace/plugins/writing-pack/skills/writing-with-clarity/references/composition-and-flow.md", "codex-marketplace/plugins/writing-pack/skills/writing-with-clarity/references/final-edit.md"]}
+  ]
+}

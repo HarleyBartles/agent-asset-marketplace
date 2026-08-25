@@ -7,9 +7,11 @@
     "authentication": "ON_INSTALL"
   },
   "install_defaults": [
+    "mcp-usage-pack",
     "repo-worker-pack",
     "superpowers-plus",
-    "mcp-usage-pack"
+    "unslop-plus",
+    "writing-pack"
   ],
   "category_overrides": {},
   "exclusions": []

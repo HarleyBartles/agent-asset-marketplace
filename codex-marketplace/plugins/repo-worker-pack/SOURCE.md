@@ -7,6 +7,9 @@ This plugin projects the first-party repo worker baseline skills.
   compositional repo-worker entrypoint and supporting workflow skills.
 - The bundle stays narrow, first-party only, and aligns to the current manifest
   repo worker baseline without absorbing broader Superpowers+ or other workflow packs.
+- Writing workflow custody belongs to `writing-pack`; generic anti-slop engine
+  and profile custody belongs to `unslop-plus`. This plugin does not duplicate
+  either source tree.
 
 ## Provenance
 
@@ -43,9 +46,6 @@ This plugin projects the first-party repo worker baseline skills.
   at `codex-marketplace/plugins/<plugin>/skills/using-github-mcp/` so GitHub surface selection,
   publication proof, and merge/readiness checks have a canonical non-House-Skills
   home.
-- `unslop-profiles` is bundled here from the canonical first-party source at
-  `codex-marketplace/plugins/<plugin>/skills/unslop-profiles/` so worker-facing anti-slop profiles
-  are available on the repo baseline surface.
 - `context-safety` is bundled here from the canonical first-party
   source at `codex-marketplace/plugins/<plugin>/skills/context-safety/` so safer
   large text write guidance rides with the repo baseline.
@@ -56,7 +56,3 @@ This plugin projects the first-party repo worker baseline skills.
 - `risk-gates` is bundled here from the canonical first-party source at
   `codex-marketplace/plugins/<plugin>/skills/risk-gates/` so generic pre-action risk gates
   remain available on the repo-facing worker surface.
-- `writing-with-clarity` is bundled here from the canonical first-party
-  source at `codex-marketplace/plugins/<plugin>/skills/writing-with-clarity/`; its compact
-  references route human-facing prose tasks while the bundled 1918 HTML remains
-  a reference-only fallback with its upstream custody record.

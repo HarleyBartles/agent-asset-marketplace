@@ -29,6 +29,7 @@ The `unslop-engine` skill adapts the upstream idea (sample collection, pattern d
 - The `unslop-plus` plugin root contains the `unslop-engine` and `unslop-profiles` first-party skills.
 - The `unslop-engine` skill is an adaptation of the upstream `mshumer/unslop` idea; the `unslop-profiles` skill is a first-party read-when router.
 - Each profile is portable across repos with no Asset Marketplace-specific nouns.
+- Generic profiles remain owned here. When `writing-pack` is installed, the generic writing profile routes sustained prose to `$writing` without creating a hard dependency between the plugins.
 - Provenance distinguishes third-party engine adaptation from first-party profile authorship.
 - Upstream MIT license preserved at `skills/unslop-engine/LICENSE.upstream`.
 - Plugin-level MIT license at `LICENSE` covers first-party profile and adaptation work.
@@ -49,7 +50,7 @@ The `unslop-engine` skill adapts the upstream idea (sample collection, pattern d
 - Codex plugin install path: `codex-marketplace/plugins/unslop-plus/.codex-plugin/plugin.json`
 - Text mode uses Python standard library analysis over inline samples, fixture samples, or a sample directory.
 - Visual mode checks for Playwright and Chromium before attempting visual evidence; missing optional dependencies are recorded as skipped in the output manifest and validation report.
-- Output contract is documented in `skills/unslop-engine/references/output-contract.md`.
+- Generated output is validated by `skills/unslop-engine/scripts/validate_unslop_output.py`; the engine does not claim a separate prose contract that is absent from the package.
 
 ### Validation Expectations
 

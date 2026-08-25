@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "revealed_after_judgment": true,
+  "map": {
+    "Q7M2": {"trial": "trial-d", "arm": "treatment-writing-style"},
+    "R4K9": {"trial": "trial-a", "arm": "control-no-writing-style"},
+    "T8V3": {"trial": "trial-f", "arm": "treatment-writing-style"},
+    "U2H6": {"trial": "trial-c", "arm": "control-no-writing-style"},
+    "W5C1": {"trial": "trial-b", "arm": "treatment-writing-style"},
+    "Y9P4": {"trial": "trial-e", "arm": "control-no-writing-style"}
+  }
+}
