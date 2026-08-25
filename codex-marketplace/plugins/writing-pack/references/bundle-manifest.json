@@ -1,0 +1,29 @@
+{
+  "bundle_name": "writing-pack",
+  "bundle_version": "1.0.0",
+  "bundle_type": "plugin-pack",
+  "marketplace_root": ".agents/plugins/marketplace.json",
+  "plugin_root": "codex-marketplace/plugins/writing-pack",
+  "source_families": [
+    "first_party"
+  ],
+  "notes": [
+    "writing-pack combines first-party writing-pack skills."
+  ],
+  "provenance_refs": [],
+  "plugin_author": "Harley Bartles",
+  "plugin_license": "MIT",
+  "entries": [
+    {
+      "canonical_name": "writing-with-clarity",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "canonical_source_path": "codex-marketplace/plugins/writing-pack/skills/writing-with-clarity",
+      "local_path": "skills/writing-with-clarity",
+      "source_path": "codex-marketplace/plugins/writing-pack/skills/writing-with-clarity/SKILL.md",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Canonical first-party writing-with-clarity skill. (Writing With Clarity first-party skill)"
+    }
+  ]
+}

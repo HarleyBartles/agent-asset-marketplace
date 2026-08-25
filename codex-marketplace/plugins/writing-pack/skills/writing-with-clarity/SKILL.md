@@ -5,7 +5,7 @@ description: Use when drafting, revising, or reviewing prose intended for human 
   commit messages, and pull request text.
 metadata:
   source-id: writing-with-clarity
-  source-path: codex-marketplace/plugins/repo-worker-pack/skills/writing-with-clarity/SKILL.md
+  source-path: codex-marketplace/plugins/writing-pack/skills/writing-with-clarity/SKILL.md
   provenance-name: Writing With Clarity first-party skill
   source-category: first_party
   status: active
