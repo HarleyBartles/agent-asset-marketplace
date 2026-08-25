@@ -142,22 +142,17 @@ cd "$path"
 
 ## Step 2: Project Setup
 
-Auto-detect and run appropriate setup:
+`new_worktree.py` installs dependencies while creating the worktree. It dispatches the `install-deps --apply` capability through the repo's `tools/run.py` command bus first. If the bus does not own `install-deps`, the bundled default detects common package-manager manifests and runs the appropriate installer:
 
-```bash
-# Node.js
-if [ -f package.json ]; then npm install; fi
+| manifest            | command                                        |
+| ------------------- | ---------------------------------------------- |
+| `package-lock.json` | `npm ci`                                       |
+| `yarn.lock`         | `yarn install --frozen-lockfile`               |
+| `pnpm-lock.yaml`    | `pnpm install --frozen-lockfile`               |
+| `package.json`      | `npm install`                                  |
+| `requirements.txt`  | `pip install -r requirements.txt`              |
 
-# Rust
-if [ -f Cargo.toml ]; then cargo build; fi
-
-# Python
-if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-if [ -f pyproject.toml ]; then poetry install; fi
-
-# Go
-if [ -f go.mod ]; then go mod download; fi
-```
+A repo that wants to own dependency installation can add an `install-deps` target to `tools/run.py`. If a recognised manifest is present but its required installer is missing, `new_worktree.py` fails closed and removes the worktree. Do not run a separate install step.
 
 ## Step 3: Verify Clean Baseline
 

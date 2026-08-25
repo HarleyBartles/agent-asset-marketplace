@@ -845,26 +845,47 @@ def test_new_worktree_dispatches_through_bash_shell_wrapper(tmp_path: Path) -> N
     assert "Wrote index mesh" not in result.stdout
 
 
-def test_new_worktree_installs_dependencies_from_package_json(tmp_path: Path) -> None:
-    """The bundled default runs npm install when a package.json is present."""
-    repo = _make_repo_with_bundled_refresh(tmp_path, "npm-repo")
-    (repo / "package.json").write_text('{"name": "npm-repo", "dependencies": {}}', encoding="utf-8")
-    subprocess.run(["git", "add", "-A"], cwd=repo, check=True, capture_output=True)
-    subprocess.run(["git", "commit", "-m", "add package.json"], cwd=repo, check=True, capture_output=True)
+def _make_fake_package_manager(bin_dir: Path, name: str) -> None:
+    """Create a fake package manager that records its arguments in the cwd."""
+    if sys.platform == "win32":
+        (bin_dir / f"{name}.cmd").write_text(f"@echo off\necho %* > {name}-calls.txt\n", encoding="utf-8")
+    else:
+        wrapper = bin_dir / name
+        wrapper.write_text(f'#!/bin/sh\necho "$@" > {name}-calls.txt\n', encoding="utf-8")
+        wrapper.chmod(0o755)
 
-    # Provide a fake npm on a temporary PATH so the test does not require network.
+
+@pytest.mark.parametrize(
+    "manifest, manager, expected",
+    [
+        ("package-lock.json", "npm", "ci"),
+        ("package.json", "npm", "install"),
+        ("yarn.lock", "yarn", "install"),
+        ("pnpm-lock.yaml", "pnpm", "install"),
+    ],
+)
+def test_new_worktree_installs_dependencies_from_manifest(
+    tmp_path: Path,
+    manifest: str,
+    manager: str,
+    expected: str,
+) -> None:
+    """The bundled default picks the right installer for the manifest it sees."""
+    repo = _make_repo_with_bundled_refresh(tmp_path, f"{manager}-repo")
+    (repo / manifest).write_text("", encoding="utf-8")
+    subprocess.run(["git", "add", "-A"], cwd=repo, check=True, capture_output=True)
+    subprocess.run(["git", "commit", "-m", f"add {manifest}"], cwd=repo, check=True, capture_output=True)
+
+    # Provide fake package managers on a temporary PATH so the test does not require network.
     bin_dir = tmp_path / "bin"
     bin_dir.mkdir()
-    if sys.platform == "win32":
-        (bin_dir / "npm.cmd").write_text("@echo off\necho %* > npm-calls.txt\n", encoding="utf-8")
-    else:
-        (bin_dir / "npm").write_text('#!/bin/sh\necho "$@" > npm-calls.txt\n', encoding="utf-8")
-        (bin_dir / "npm").chmod(0o755)
+    for tool in ("npm", "yarn", "pnpm"):
+        _make_fake_package_manager(bin_dir, tool)
 
     env = _stripped_env()
     env["PATH"] = str(bin_dir) + os.pathsep + env.get("PATH", "")
 
-    worktree_root = tmp_path / "_agent-worktrees" / "npm-repo" / "feature"
+    worktree_root = tmp_path / "_agent-worktrees" / f"{manager}-repo" / "feature"
     result = subprocess.run(
         [sys.executable, str(NEW_WORKTREE), "feature", "--apply"],
         cwd=repo,
@@ -874,8 +895,64 @@ def test_new_worktree_installs_dependencies_from_package_json(tmp_path: Path) ->
     )
     assert result.returncode == 0, result.stderr
     assert worktree_root.is_dir()
+    assert (worktree_root / f"{manager}-calls.txt").is_file()
+    assert expected in (worktree_root / f"{manager}-calls.txt").read_text(encoding="utf-8")
+
+
+def test_new_worktree_fails_when_manifest_has_no_installer(tmp_path: Path) -> None:
+    """A manifest without its required package manager should fail the worktree."""
+    repo = _make_repo_with_bundled_refresh(tmp_path, "missing-npm-repo")
+    (repo / "package-lock.json").write_text('{"lockfileVersion": 1}', encoding="utf-8")
+    subprocess.run(["git", "add", "-A"], cwd=repo, check=True, capture_output=True)
+    subprocess.run(["git", "commit", "-m", "add package-lock"], cwd=repo, check=True, capture_output=True)
+
+    # Restrict PATH to git only so npm is not found.
+    git_path = shutil.which("git")
+    assert git_path is not None
+    env = _stripped_env()
+    env["PATH"] = str(Path(git_path).parent)
+
+    worktree_root = tmp_path / "_agent-worktrees" / "missing-npm-repo" / "feature"
+    result = subprocess.run(
+        [sys.executable, str(NEW_WORKTREE), "feature", "--apply"],
+        cwd=repo,
+        env=env,
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode != 0, result.stdout
+    assert not worktree_root.exists()
+    assert "npm is not available" in result.stderr
+
+
+def test_new_worktree_installs_dependencies_with_no_skill_refresh(tmp_path: Path) -> None:
+    """Dependency installation runs even when --no-skill-refresh is passed."""
+    repo = _make_repo_with_bundled_refresh(tmp_path, "no-skill-refresh-repo")
+    (repo / "package.json").write_text('{"name": "no-skill-refresh-repo"}', encoding="utf-8")
+    subprocess.run(["git", "add", "-A"], cwd=repo, check=True, capture_output=True)
+    subprocess.run(["git", "commit", "-m", "add package.json"], cwd=repo, check=True, capture_output=True)
+
+    bin_dir = tmp_path / "bin"
+    bin_dir.mkdir()
+    _make_fake_package_manager(bin_dir, "npm")
+
+    env = _stripped_env()
+    env["PATH"] = str(bin_dir) + os.pathsep + env.get("PATH", "")
+
+    worktree_root = tmp_path / "_agent-worktrees" / "no-skill-refresh-repo" / "feature"
+    result = subprocess.run(
+        [sys.executable, str(NEW_WORKTREE), "feature", "--apply", "--no-skill-refresh"],
+        cwd=repo,
+        env=env,
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode == 0, result.stderr
+    assert worktree_root.is_dir()
     assert (worktree_root / "npm-calls.txt").is_file()
     assert "install" in (worktree_root / "npm-calls.txt").read_text(encoding="utf-8")
+    assert "Installed skill" not in result.stdout
+    assert "Wrote index mesh" not in result.stdout
 
 
 def test_remove_worktree_stops_on_locked_directory(tmp_path: Path) -> None:

@@ -271,8 +271,8 @@ def _install_dependencies(repo_root: Path) -> int:
     """Install dependencies for common package managers when not repo-owned.
 
     Returns 0 when there is nothing to do or installation succeeds. A failed
-    installation returns the command's non-zero exit code so the worktree is
-    not left in a broken state.
+    installation or a recognised manifest without its required installer returns
+    a non-zero exit code so the worktree is not left in a broken state.
     """
     package_lock = repo_root / "package-lock.json"
     package_json = repo_root / "package.json"
@@ -280,23 +280,37 @@ def _install_dependencies(repo_root: Path) -> int:
     pnpm_lock = repo_root / "pnpm-lock.yaml"
     requirements = repo_root / "requirements.txt"
 
-    if package_lock.is_file() and shutil.which("npm"):
+    if package_lock.is_file():
+        if not shutil.which("npm"):
+            print(f"error: package-lock.json present in {repo_root} but npm is not available", file=sys.stderr)
+            return 1
         print(f"Installing npm dependencies (ci) in {repo_root}")
         return _run_command(["npm", "ci"], repo_root)
-    if package_json.is_file() and shutil.which("npm"):
-        print(f"Installing npm dependencies in {repo_root}")
-        return _run_command(["npm", "install"], repo_root)
-    if yarn_lock.is_file() and shutil.which("yarn"):
+    if yarn_lock.is_file():
+        if not shutil.which("yarn"):
+            print(f"error: yarn.lock present in {repo_root} but yarn is not available", file=sys.stderr)
+            return 1
         print(f"Installing yarn dependencies in {repo_root}")
         return _run_command(["yarn", "install", "--frozen-lockfile"], repo_root)
-    if pnpm_lock.is_file() and shutil.which("pnpm"):
+    if pnpm_lock.is_file():
+        if not shutil.which("pnpm"):
+            print(f"error: pnpm-lock.yaml present in {repo_root} but pnpm is not available", file=sys.stderr)
+            return 1
         print(f"Installing pnpm dependencies in {repo_root}")
         return _run_command(["pnpm", "install", "--frozen-lockfile"], repo_root)
+    if package_json.is_file():
+        if not shutil.which("npm"):
+            print(f"error: package.json present in {repo_root} but npm is not available", file=sys.stderr)
+            return 1
+        print(f"Installing npm dependencies in {repo_root}")
+        return _run_command(["npm", "install"], repo_root)
     if requirements.is_file():
         pip = shutil.which("pip") or shutil.which("pip3")
-        if pip:
-            print(f"Installing Python requirements in {repo_root}")
-            return _run_command([pip, "install", "-r", "requirements.txt"], repo_root)
+        if not pip:
+            print(f"error: requirements.txt present in {repo_root} but pip is not available", file=sys.stderr)
+            return 1
+        print(f"Installing Python requirements in {repo_root}")
+        return _run_command([pip, "install", "-r", "requirements.txt"], repo_root)
 
     return 0
 
@@ -488,15 +502,15 @@ def _configure_worktree(
             print(f"error: generating index mesh failed in {worktree_root}", file=sys.stderr)
             return exit_code
 
-        # Make the worktree runnable by installing dependencies. A repo can own
-        # this via the command bus; otherwise the bundled default detects common
-        # package manager manifests and runs the appropriate installer.
-        exit_code = _dispatch_capability(worktree_root, "install-deps", "--apply")
-        if exit_code is None:
-            exit_code = _install_dependencies(worktree_root)
-        if exit_code != 0:
-            print(f"error: installing dependencies failed in {worktree_root}", file=sys.stderr)
-            return exit_code
+    # Make the worktree runnable by installing dependencies. A repo can own
+    # this via the command bus; otherwise the bundled default detects common
+    # package manager manifests and runs the appropriate installer.
+    exit_code = _dispatch_capability(worktree_root, "install-deps", "--apply")
+    if exit_code is None:
+        exit_code = _install_dependencies(worktree_root)
+    if exit_code != 0:
+        print(f"error: installing dependencies failed in {worktree_root}", file=sys.stderr)
+        return exit_code
 
     print(f"Worktree ready at {worktree_root}")
     return 0
