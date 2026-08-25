@@ -1,11 +1,11 @@
 {
   "schema_version": 1,
   "campaign_id": "writing-style-adversarial-ab",
-  "campaign_version": "1.3.0",
+  "campaign_version": "1.4.0",
   "status": "frozen_unrun",
   "frozen_at": "2026-08-25",
   "prospective_freeze": {
-    "correction_round": 3,
+    "correction_round": 4,
     "correction_scope": "pre_output_review_findings",
     "worker_outputs_existed_before_refreeze": false,
     "arms_run_before_refreeze": false
@@ -46,7 +46,7 @@
     },
     {
       "path": "codex-marketplace/plugins/writing-pack/skills/writing-style/references/profile-contract.md",
-      "sha256": "a936cbfcc3b4fc4becb4e310c0c594cba90ed9edabe1339061f6e754d53ea5db"
+      "sha256": "2554ecd33206b2f517deb65238fb999a1f8ae46a5ece78bbc94f881b90b58b95"
     },
     {
       "path": "codex-marketplace/plugins/writing-pack/skills/writing-style/references/voice-card.md",

@@ -106,8 +106,6 @@ def _is_negative_boundary(sentence: str) -> bool:
 def _has_universal_restriction_scope(sentence: str, tokens: set[str]) -> bool:
     if re.search(r"\bwithout\s+(?:any\s+)?exceptions?\b", sentence):
         return True
-    if re.search(r"\b(?:if|unless|when)\b", sentence):
-        return False
     universal_markers = {"all", "always", "any", "each", "every", "never"}
     inherently_universal_actions = {
         "ban",
@@ -125,6 +123,8 @@ def _has_universal_restriction_scope(sentence: str, tokens: set[str]) -> bool:
 def _semantic_categories(tokens: set[str], *, universal_restriction: bool = True) -> set[str]:
     categories: set[str] = set()
     lexical_targets = {
+        "instance",
+        "instances",
         "occurrence",
         "occurrences",
         "phrase",
@@ -390,6 +390,11 @@ def test_profile_data_rejects_exact_token_bans_and_detector_scores(
         {"repair_guidance": "Without exception, remove every occurrence of delve."},
         {"repair_guidance": "Without any exceptions, always delete the term delve."},
         {"repair_guidance": "Never use the term delve."},
+        {"repair_guidance": "Never use the term delve when writing reports."},
+        {"repair_guidance": "Always remove every occurrence of delve when writing reports."},
+        {"repair_guidance": "Never use the word delve if the draft is a report."},
+        {"repair_guidance": "Remove all occurrences of delve unless the user requests it."},
+        {"repair_guidance": "Always delete each instance of delve if space is limited."},
     ],
 )
 def test_prohibited_semantic_aliases_are_rejected_recursively(unsafe_fixture: dict[str, Any]) -> None:
@@ -409,6 +414,7 @@ def test_prohibited_semantic_aliases_are_rejected_recursively(unsafe_fixture: di
         {"repair_guidance": "Omit repeated terms only if the sentence stays clear."},
         {"repair_guidance": "Always use precise words."},
         {"repair_guidance": "Use any precise term that the facts support."},
+        {"repair_guidance": "Use a precise term unless the source requires jargon."},
     ],
 )
 def test_prohibited_semantic_check_preserves_legitimate_boundary_prose(
@@ -422,6 +428,7 @@ def test_profile_contract_documents_bounded_universal_restriction_scope() -> Non
 
     assert "without exception" in contract
     assert "contextual qualifiers such as `if`, `when`, and `unless`" in contract
+    assert "do not cancel an explicit universal marker" in contract
 
 
 def test_goldens_name_expected_finding_types_and_pattern_ids(
@@ -599,9 +606,9 @@ def test_blinded_campaign_is_frozen_and_hides_the_judge_rubric_from_workers() ->
 
 def test_blinded_campaign_pins_intervention_and_goldens_before_output() -> None:
     campaign = _load_json(BLINDED_ROOT / "campaign.json")
-    assert campaign["campaign_version"] == "1.3.0"
+    assert campaign["campaign_version"] == "1.4.0"
     assert campaign["prospective_freeze"] == {
-        "correction_round": 3,
+        "correction_round": 4,
         "correction_scope": "pre_output_review_findings",
         "worker_outputs_existed_before_refreeze": False,
         "arms_run_before_refreeze": False,

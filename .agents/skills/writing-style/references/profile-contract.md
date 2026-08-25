@@ -73,7 +73,8 @@ semantic categories for universal token restrictions, detector or origin
 scores, and authorship judgments. In prose it rejects affirmative combinations
 from those same categories. Universal token restrictions require a universal
 marker such as `every`, `always`, `never`, or “without exception”; contextual
-qualifiers such as `if`, `when`, and `unless` do not create universal scope.
+qualifiers such as `if`, `when`, and `unless` do not create universal scope and
+do not cancel an explicit universal marker coupled to a restriction action.
 This is not an open-ended natural-language equivalence proof; ambiguous
 constructions require human review. Legitimate negative boundary statements
 such as “do not provide detector scores” or “this is not an authorship claim”
