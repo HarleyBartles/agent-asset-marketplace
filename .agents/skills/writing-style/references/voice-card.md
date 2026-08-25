@@ -20,6 +20,17 @@ it is not a personality, identity, culture, or authorship profile.
    boundary. Public availability alone is not permission to ship an imitation
    profile.
 
+Keep provenance fields coupled:
+
+- `synthetic_default` uses `synthetic_example`, `synthetic_fixture`, zero
+  samples, and `no_source_storage`;
+- `current_task_text` uses `current_task`, `current_task_user`, at least one
+  sample, and `no_source_storage`;
+- `explicit_preferences` uses `current_task`, `explicit_user_preference`, zero
+  text samples, and `no_source_storage`.
+
+All three bases require `source_retained: false`.
+
 The machine-readable contract is
 `references/profiles/voice/voice-card.schema.json`. The shipped
 `default-voice-card.json` is a synthetic neutral example, not a real person's

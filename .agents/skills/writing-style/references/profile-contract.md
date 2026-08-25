@@ -67,3 +67,7 @@ approved for repository publication.
 Profiles must not contain exact-token bans, forbidden-word lists, detector or
 evasion scores, authorship probabilities, identity claims, or instructions to
 degrade prose. Voice cards must not retain source prose or a private corpus.
+This boundary applies to semantically equivalent field names and prose, not
+only to a fixed spelling. Validation must recurse through nested objects and
+arrays while preserving legitimate boundary statements such as “do not provide
+detector scores” or “this is not an authorship claim.”

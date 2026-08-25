@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import copy
 import hashlib
 import json
 import re
@@ -80,6 +81,74 @@ def _walk_keys(value: Any) -> set[str]:
     return set()
 
 
+def _semantic_violations(value: Any, path: str = "$") -> list[str]:
+    """Return prohibited machine fields and affirmative profile semantics."""
+    violations: list[str] = []
+    token_restriction_key = re.compile(
+        r"(?:never_use|always_remove|forbid(?:den)?|ban(?:ned)?|prohibit(?:ed)?)"
+        r"(?:_[a-z0-9]+)*_(?:token|tokens|word|words|phrase|phrases|term|terms)$"
+        r"|^(?:token|tokens|word|words|phrase|phrases|term|terms)"
+        r"(?:_[a-z0-9]+)*_(?:ban|bans|forbidden|prohibited)$"
+    )
+    score_key = re.compile(
+        r"^(?:ai|detector|evasion)(?:_[a-z0-9]+)*_"
+        r"(?:score|probability|likelihood|confidence)$"
+    )
+    authorship_key = re.compile(
+        r"^authorship(?:_[a-z0-9]+)*_"
+        r"(?:score|probability|likelihood|confidence|verdict|conclusion|assertion|claim)$"
+    )
+
+    if isinstance(value, dict):
+        for key, child in value.items():
+            snake_key = re.sub(r"([a-z0-9])([A-Z])", r"\1_\2", key)
+            normalized_key = re.sub(r"[^a-z0-9]+", "_", snake_key.lower()).strip("_")
+            if (
+                normalized_key in UNSAFE_FIELD_NAMES
+                or token_restriction_key.fullmatch(normalized_key)
+                or score_key.fullmatch(normalized_key)
+                or authorship_key.fullmatch(normalized_key)
+            ):
+                violations.append(f"{path}.{key}: prohibited key semantics")
+            violations.extend(_semantic_violations(child, f"{path}.{key}"))
+    elif isinstance(value, list):
+        for index, child in enumerate(value):
+            violations.extend(_semantic_violations(child, f"{path}[{index}]"))
+    elif isinstance(value, str):
+        sentences = re.split(r"(?<=[.!?;])\s+|\n+", value.lower())
+        for sentence in sentences:
+            boundary = re.search(r"\b(?:do|does|must|should)\s+not\b|\bnot\s+an?\b", sentence)
+            token_ban = re.search(
+                r"\b(?:never\s+use|always\s+(?:remove|delete)|ban|forbid|prohibit)\b"
+                r".{0,50}\b(?:token|word|phrase|term)s?\b",
+                sentence,
+            )
+            score_assertion = re.search(
+                r"\b(?:ai|detector|evasion|authorship)(?:[- ]authorship)?[- ]?"
+                r"(?:score|probability|likelihood|confidence)\b"
+                r"\s*(?::|=|is|of)\s*(?:\d|high\b|low\b|likely\b|unlikely\b)",
+                sentence,
+            ) or re.search(
+                r"\b(?:assign|calculate|return|report|provide)\b.{0,50}"
+                r"\b(?:ai|detector|evasion|authorship).{0,20}"
+                r"(?:score|probability|likelihood|confidence)\b",
+                sentence,
+            )
+            authorship_assertion = re.search(
+                r"\b(?:conclude|assert|classify|label|determine)\b.{0,70}"
+                r"\b(?:ai[- ]generated|ai[- ]authored|written by ai|ai authorship|authorship)\b",
+                sentence,
+            ) or re.search(
+                r"\b(?:this|the)\s+(?:text|passage|draft|author)\b.{0,60}"
+                r"\b(?:was written by ai|is (?:likely )?ai[- ](?:generated|written|authored))\b",
+                sentence,
+            )
+            if token_ban or (not boundary and (score_assertion or authorship_assertion)):
+                violations.append(f"{path}: prohibited affirmative semantics")
+
+    return violations
+
+
 def _assert_iso_date(value: str) -> date:
     parsed = date.fromisoformat(value)
     assert parsed.isoformat() == value
@@ -102,14 +171,23 @@ def _assert_schema_value(schema: dict[str, Any], value: Any, path: str = "$") ->
         assert value == schema["const"], f"{path} must equal {schema['const']!r}"
     if "enum" in schema:
         assert value in schema["enum"], f"{path} must be one of {schema['enum']!r}"
+    if isinstance(value, int) and not isinstance(value, bool):
+        if "minimum" in schema:
+            assert value >= schema["minimum"], f"{path} is below minimum"
+        if "maximum" in schema:
+            assert value <= schema["maximum"], f"{path} is above maximum"
     if isinstance(value, str):
         if "minLength" in schema:
             assert len(value) >= schema["minLength"], f"{path} is too short"
+        if "maxLength" in schema:
+            assert len(value) <= schema["maxLength"], f"{path} is too long"
         if "pattern" in schema:
             assert re.fullmatch(schema["pattern"], value), f"{path} has invalid format"
     if isinstance(value, list):
         if "minItems" in schema:
             assert len(value) >= schema["minItems"], f"{path} has too few items"
+        if "maxItems" in schema:
+            assert len(value) <= schema["maxItems"], f"{path} has too many items"
         if schema.get("uniqueItems"):
             encoded = [json.dumps(item, sort_keys=True) for item in value]
             assert len(encoded) == len(set(encoded)), f"{path} contains duplicate items"
@@ -125,6 +203,20 @@ def _assert_schema_value(schema: dict[str, Any], value: Any, path: str = "$") ->
         for key, child in value.items():
             if key in properties:
                 _assert_schema_value(properties[key], child, f"{path}.{key}")
+
+    for index, subschema in enumerate(schema.get("allOf", [])):
+        _assert_schema_value(subschema, value, f"{path}.allOf[{index}]")
+
+    condition = schema.get("if")
+    if condition is not None:
+        try:
+            _assert_schema_value(condition, value, path)
+        except AssertionError:
+            if "else" in schema:
+                _assert_schema_value(schema["else"], value, path)
+        else:
+            if "then" in schema:
+                _assert_schema_value(schema["then"], value, path)
 
 
 @pytest.fixture(scope="module")
@@ -192,11 +284,41 @@ def test_profile_data_rejects_exact_token_bans_and_detector_scores(
     default_voice = _load_json(VOICE_ROOT / "default-voice-card.json")
 
     for document in (patterns_document, goldens_document, schema, default_voice):
-        assert not (_walk_keys(document) & UNSAFE_FIELD_NAMES)
+        assert not _semantic_violations(document)
 
-    serialized = json.dumps((patterns_document, goldens_document, schema, default_voice)).lower()
-    assert "ban every occurrence" not in serialized
-    assert "detector evasion" not in serialized
+
+@pytest.mark.parametrize(
+    "unsafe_fixture",
+    [
+        {"policy": {"never_use_tokens": ["delve"]}},
+        {"policy": {"bannedWords": ["delve"]}},
+        {"policy": {"forbidden_phrases": ["in conclusion"]}},
+        {"metrics": {"ai_likelihood": 0.92}},
+        {"metrics": {"aiLikelihood": 0.92}},
+        {"metrics": {"detector_confidence": 0.81}},
+        {"result": {"authorship_verdict": "AI-generated"}},
+        {"result": {"authorshipConclusion": "AI-authored"}},
+        {"rationale": "Conclude that this passage was written by AI."},
+        {"rationale": "Label this draft as AI-authored."},
+        {"rationale": "Report an authorship probability of 0.8."},
+    ],
+)
+def test_prohibited_semantic_aliases_are_rejected_recursively(unsafe_fixture: dict[str, Any]) -> None:
+    assert _semantic_violations(unsafe_fixture)
+
+
+@pytest.mark.parametrize(
+    "legitimate_fixture",
+    [
+        {"rationale": "This is not an authorship claim."},
+        {"limitations": "Do not provide detector scores, authorship conclusions, or exact-token bans."},
+        {"repair_guidance": "Preserve the word when it carries precise meaning."},
+    ],
+)
+def test_prohibited_semantic_check_preserves_legitimate_boundary_prose(
+    legitimate_fixture: dict[str, Any],
+) -> None:
+    assert not _semantic_violations(legitimate_fixture)
 
 
 def test_goldens_name_expected_finding_types_and_pattern_ids(
@@ -284,6 +406,59 @@ def test_voice_card_schema_is_bounded_and_default_card_conforms() -> None:
     assert not (_walk_keys(default_voice) & {"source_text", "source_prose", "corpus", "identity", "personality"})
 
 
+def test_voice_card_schema_couples_synthetic_default_provenance() -> None:
+    schema = _load_json(VOICE_ROOT / "voice-card.schema.json")
+    default_voice = _load_json(VOICE_ROOT / "default-voice-card.json")
+
+    invalid_cards = []
+    for path, invalid_value in (
+        (("scope", "task_boundary"), "current_task"),
+        (("derivation", "authorization"), "current_task_user"),
+        (("derivation", "sample_count"), 1),
+        (("derivation", "retention_boundary"), "task_memory_only"),
+    ):
+        card = copy.deepcopy(default_voice)
+        card[path[0]][path[1]] = invalid_value
+        invalid_cards.append(card)
+
+    for card in invalid_cards:
+        with pytest.raises(AssertionError):
+            _assert_schema_value(schema, card)
+
+
+def test_voice_card_schema_couples_current_task_text_provenance() -> None:
+    schema = _load_json(VOICE_ROOT / "voice-card.schema.json")
+    default_voice = _load_json(VOICE_ROOT / "default-voice-card.json")
+    current_task_card = copy.deepcopy(default_voice)
+    current_task_card["profile_id"] = "current-task-voice"
+    current_task_card["scope"]["task_boundary"] = "current_task"
+    current_task_card["derivation"].update(
+        {
+            "basis": "current_task_text",
+            "authorization": "current_task_user",
+            "sample_count": 1,
+            "source_retained": False,
+            "retention_boundary": "no_source_storage",
+        }
+    )
+    _assert_schema_value(schema, current_task_card)
+
+    invalid_cards = []
+    for path, invalid_value in (
+        (("scope", "task_boundary"), "synthetic_example"),
+        (("derivation", "authorization"), "synthetic_fixture"),
+        (("derivation", "sample_count"), 0),
+        (("derivation", "retention_boundary"), "task_memory_only"),
+    ):
+        card = copy.deepcopy(current_task_card)
+        card[path[0]][path[1]] = invalid_value
+        invalid_cards.append(card)
+
+    for card in invalid_cards:
+        with pytest.raises(AssertionError):
+            _assert_schema_value(schema, card)
+
+
 def test_blinded_campaign_is_frozen_and_hides_the_judge_rubric_from_workers() -> None:
     campaign = _load_json(BLINDED_ROOT / "campaign.json")
     stimulus = BLINDED_ROOT / "stimulus.md"
@@ -306,9 +481,7 @@ def test_blinded_campaign_is_frozen_and_hides_the_judge_rubric_from_workers() ->
     arms = {arm["id"]: arm for arm in campaign["arms"]}
     assert set(arms) == {"control-no-writing-style", "treatment-writing-style"}
     assert all(not (set(arm["worker_allowed_reads"]) & forbidden_worker_reads) for arm in arms.values())
-    assert arms["control-no-writing-style"]["worker_allowed_reads"] == [
-        "tests/pressure/writing/blinded/stimulus.md"
-    ]
+    assert arms["control-no-writing-style"]["worker_allowed_reads"] == ["tests/pressure/writing/blinded/stimulus.md"]
     assert arms["treatment-writing-style"]["writing_style_available"] is True
     assert arms["treatment-writing-style"]["writing_style_invoked"] is True
 
@@ -319,6 +492,46 @@ def test_blinded_campaign_is_frozen_and_hides_the_judge_rubric_from_workers() ->
     assert thresholds["treatment_green"]["out_of_trials"] == campaign["repetitions_per_arm"]
     assert thresholds["treatment_green"]["maximum_treatment_to_control_median_family_count_ratio"] <= 0.5
     assert thresholds["treatment_green"]["maximum_treatment_hard_factual_failures"] == 0
+
+
+def test_blinded_campaign_pins_intervention_and_goldens_before_output() -> None:
+    campaign = _load_json(BLINDED_ROOT / "campaign.json")
+    assert campaign["campaign_version"] == "1.1.0"
+    assert campaign["prospective_freeze"] == {
+        "correction_round": 1,
+        "correction_scope": "pre_output_review_findings",
+        "worker_outputs_existed_before_refreeze": False,
+        "arms_run_before_refreeze": False,
+    }
+    treatment = next(arm for arm in campaign["arms"] if arm["id"] == "treatment-writing-style")
+    intervention_paths = set(treatment["worker_allowed_reads"]) - {"tests/pressure/writing/blinded/stimulus.md"}
+    pinned_intervention = {artifact["path"]: artifact["sha256"] for artifact in campaign["treatment_artifacts"]}
+
+    assert set(pinned_intervention) == intervention_paths
+    for path, expected_hash in pinned_intervention.items():
+        assert _sha256(ROOT / path) == expected_hash
+
+    goldens = campaign["evaluator_goldens"]
+    assert goldens["path"] == (
+        "codex-marketplace/plugins/writing-pack/skills/writing-style/"
+        "references/profiles/fatigue/ai-prose-fatigue/goldens.json"
+    )
+    assert _sha256(ROOT / goldens["path"]) == goldens["sha256"]
+
+    verification = campaign["pre_output_verification"]
+    assert verification["required"] is True
+    assert verification["algorithm"] == "sha256"
+    assert verification["timing"] == "before_any_worker_output"
+    assert verification["on_mismatch"] == "abort_without_running_trials"
+
+
+def test_hidden_rubric_requires_output_evidence_without_excluding_unsupported_signals() -> None:
+    rubric = " ".join((BLINDED_ROOT / "hidden-rubric.md").read_text(encoding="utf-8").lower().split())
+
+    assert "a signal is supported only when tied to a supplied fact or direct concrete consequence" not in rubric
+    assert "quote evidence from the output" in rubric
+    assert "assess its support against the supplied facts" in rubric
+    assert "unsupported or unearned language can satisfy" in rubric
 
 
 def test_blinded_stimulus_does_not_reveal_hidden_pattern_or_scoring_names() -> None:

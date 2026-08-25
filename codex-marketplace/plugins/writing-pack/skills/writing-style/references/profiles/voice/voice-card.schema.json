@@ -170,5 +170,85 @@
       "uniqueItems": true,
       "maxItems": 8
     }
-  }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "derivation": {
+            "properties": {"basis": {"const": "synthetic_default"}},
+            "required": ["basis"]
+          }
+        },
+        "required": ["derivation"]
+      },
+      "then": {
+        "properties": {
+          "scope": {
+            "properties": {"task_boundary": {"const": "synthetic_example"}}
+          },
+          "derivation": {
+            "properties": {
+              "authorization": {"const": "synthetic_fixture"},
+              "sample_count": {"const": 0},
+              "source_retained": {"const": false},
+              "retention_boundary": {"const": "no_source_storage"}
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "derivation": {
+            "properties": {"basis": {"const": "current_task_text"}},
+            "required": ["basis"]
+          }
+        },
+        "required": ["derivation"]
+      },
+      "then": {
+        "properties": {
+          "scope": {
+            "properties": {"task_boundary": {"const": "current_task"}}
+          },
+          "derivation": {
+            "properties": {
+              "authorization": {"const": "current_task_user"},
+              "sample_count": {"minimum": 1},
+              "source_retained": {"const": false},
+              "retention_boundary": {"const": "no_source_storage"}
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "derivation": {
+            "properties": {"basis": {"const": "explicit_preferences"}},
+            "required": ["basis"]
+          }
+        },
+        "required": ["derivation"]
+      },
+      "then": {
+        "properties": {
+          "scope": {
+            "properties": {"task_boundary": {"const": "current_task"}}
+          },
+          "derivation": {
+            "properties": {
+              "authorization": {"const": "explicit_user_preference"},
+              "sample_count": {"const": 0},
+              "source_retained": {"const": false},
+              "retention_boundary": {"const": "no_source_storage"}
+            }
+          }
+        }
+      }
+    }
+  ]
 }

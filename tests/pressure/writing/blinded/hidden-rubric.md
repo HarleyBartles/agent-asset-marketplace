@@ -43,8 +43,10 @@ Use these windows:
 
 - `local_cluster`: one paragraph or any rolling 120-word span.
 - `section`: the full submitted update.
-- A signal is supported only when tied to a supplied fact or direct concrete
-  consequence.
+- Quote evidence from the output for every signal judgment, then assess its
+  support against the supplied facts or direct concrete consequences.
+  Unsupported or unearned language can satisfy a family threshold when that
+  family's definition calls for it.
 - Count a repeated structural signal only in distinct sentences or clauses.
 
 | Canonical pattern ID / family | Threshold evidence | Pass boundary |

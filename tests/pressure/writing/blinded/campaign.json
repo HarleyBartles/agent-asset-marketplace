@@ -1,9 +1,15 @@
 {
   "schema_version": 1,
   "campaign_id": "writing-style-adversarial-ab",
-  "campaign_version": "1.0.0",
+  "campaign_version": "1.1.0",
   "status": "frozen_unrun",
   "frozen_at": "2026-08-25",
+  "prospective_freeze": {
+    "correction_round": 1,
+    "correction_scope": "pre_output_review_findings",
+    "worker_outputs_existed_before_refreeze": false,
+    "arms_run_before_refreeze": false
+  },
   "designer": {
     "shared_role": "reviewer",
     "named_profile": null,
@@ -21,9 +27,47 @@
     },
     "hidden_rubric": {
       "path": "tests/pressure/writing/blinded/hidden-rubric.md",
-      "sha256": "31e2c2040f49e39b089b37975d7c8fc44652755ecb73ef79f464cd07df87ce70",
+      "sha256": "23d8476a713ada6e68aa4a717938f029ec9e1c43fe3d1ee1f7edb88ba1dba6dc",
       "worker_visible": false
     }
+  },
+  "treatment_artifacts": [
+    {
+      "path": "codex-marketplace/plugins/writing-pack/skills/writing-style/SKILL.md",
+      "sha256": "a81a8089f8dda59718e8ff3ce607790865aabe0f267433a28074957ec84098b0"
+    },
+    {
+      "path": "codex-marketplace/plugins/writing-pack/skills/writing-style/references/profile-contract.md",
+      "sha256": "8631a9034b8a082b299e47fa7d58a0ac67b6233edfefcbebce81721915f68ec3"
+    },
+    {
+      "path": "codex-marketplace/plugins/writing-pack/skills/writing-style/references/voice-card.md",
+      "sha256": "0118ed5d3e9422129d9d5cb4a4f8243d3eb3c4aa413336a48bf73f66f2bcc53c"
+    },
+    {
+      "path": "codex-marketplace/plugins/writing-pack/skills/writing-style/references/profiles/fatigue/ai-prose-fatigue/profile.md",
+      "sha256": "87826a7217176e6fd77da8b2072fa65a8cdbc80feef55f368be712f3cabe330f"
+    },
+    {
+      "path": "codex-marketplace/plugins/writing-pack/skills/writing-style/references/profiles/fatigue/ai-prose-fatigue/patterns.json",
+      "sha256": "4ff7f5df7093bb814912787df8256f44218dc67e7ab089198964fb50220b8199"
+    }
+  ],
+  "evaluator_goldens": {
+    "path": "codex-marketplace/plugins/writing-pack/skills/writing-style/references/profiles/fatigue/ai-prose-fatigue/goldens.json",
+    "sha256": "905e69aa5ea422a94d0e72ffdb1b3d9538ecbe754ed37afcf9552b000882f4dd"
+  },
+  "pre_output_verification": {
+    "required": true,
+    "algorithm": "sha256",
+    "timing": "before_any_worker_output",
+    "verify": [
+      "artifacts.stimulus",
+      "artifacts.hidden_rubric",
+      "treatment_artifacts",
+      "evaluator_goldens"
+    ],
+    "on_mismatch": "abort_without_running_trials"
   },
   "trial_route": {
     "runtime": "codex_multi_agent_v2",
