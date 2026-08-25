@@ -35,7 +35,7 @@ Do not use this skill when applying an existing anti-slop profile; use `$unslop-
 2. Collect representative samples (inline, fixture files, or a sample directory).
 3. Run the engine:
    ```bash
-   py -3 scripts/unslop.py --domain "..." [--type visual --count N]
+   py -3 scripts/unslop.py --apply --domain "..." [--type visual --count N]
    ```
 4. Review the generated artifacts in `unslop-output/`:
    - `analysis.md` — counted repeated patterns

@@ -105,3 +105,59 @@ def test_installed_unslop_engine_scripts_support_the_repository_check_contract()
         )
 
         assert result.returncode == 0, result.stderr
+
+
+def _run_unslop_engine(*arguments: str) -> subprocess.CompletedProcess[str]:
+    script = (
+        ROOT / "codex-marketplace" / "plugins" / "unslop-plus" / "skills" / "unslop-engine" / "scripts" / "unslop.py"
+    )
+
+    return subprocess.run(
+        [sys.executable, str(script), *arguments],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+
+
+def test_unslop_engine_defaults_to_a_non_mutating_check_mode(tmp_path: Path) -> None:
+    output = tmp_path / "unslop-output"
+    help_result = _run_unslop_engine("--help")
+    explicit_check = _run_unslop_engine("--check")
+    default_check = _run_unslop_engine(
+        "--domain",
+        "fixture-domain",
+        "--fixture-samples",
+        "--output",
+        str(output),
+    )
+
+    assert help_result.returncode == 0, help_result.stderr
+    assert explicit_check.returncode == 0, explicit_check.stderr
+    assert default_check.returncode == 0, default_check.stderr
+    assert not output.exists()
+    assert "mixed" in help_result.stdout.lower()
+
+
+def test_unslop_engine_requires_apply_before_creating_output(tmp_path: Path) -> None:
+    output = tmp_path / "unslop-output"
+    result = _run_unslop_engine(
+        "--apply",
+        "--domain",
+        "fixture-domain",
+        "--fixture-samples",
+        "--output",
+        str(output),
+    )
+
+    assert result.returncode == 0, result.stderr
+    assert (output / "manifest.json").is_file()
+
+
+def test_installed_unslop_engine_matches_its_canonical_source() -> None:
+    canonical_script = (
+        ROOT / "codex-marketplace" / "plugins" / "unslop-plus" / "skills" / "unslop-engine" / "scripts" / "unslop.py"
+    )
+    installed_script = ROOT / ".agents" / "skills" / "unslop-engine" / "scripts" / "unslop.py"
+
+    assert installed_script.read_bytes() == canonical_script.read_bytes()

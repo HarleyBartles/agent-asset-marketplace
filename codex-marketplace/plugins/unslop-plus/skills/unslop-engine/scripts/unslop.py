@@ -749,11 +749,17 @@ def run(args: argparse.Namespace) -> int:
 
 
 def parse_args(argv: list[str]) -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description=f"{__doc__} (mutating; --check is read-only)")
-    parser.add_argument(
+    parser = argparse.ArgumentParser(description=f"{__doc__} (mixed)")
+    mode = parser.add_mutually_exclusive_group()
+    mode.add_argument(
         "--check",
         action="store_true",
-        help="Validate CLI availability without writing output (read-only).",
+        help="Validate the command without writing output (read-only; default).",
+    )
+    mode.add_argument(
+        "--apply",
+        action="store_true",
+        help="Generate output artifacts (mutating; required to write).",
     )
     parser.add_argument("--domain", help="Domain to analyze.")
     parser.add_argument("--type", choices=("text", "visual"), default="text", help="Run type.")
@@ -766,7 +772,9 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
     parser.add_argument("--skip-comparison", action="store_true", help="Do not write before-after review notes.")
     parser.add_argument("--force-cleanup", action="store_true", help="Allow cleanup of a non-empty output directory.")
     args = parser.parse_args(argv)
-    if not args.check and not args.domain:
+    if args.apply and not args.domain:
+        parser.error("--domain is required with --apply")
+    if not args.check and not args.apply and not args.domain:
         parser.error("--domain is required unless --check is used")
     if args.count < 1:
         parser.error("--count must be at least 1")
@@ -777,8 +785,8 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
 
 def main(argv: list[str] | None = None) -> int:
     args = parse_args(argv or sys.argv[1:])
-    if args.check:
-        print("OK: unslop CLI check")
+    if not args.apply:
+        print("OK: read-only check; rerun with --apply to write output")
         return 0
     return run(args)
 
