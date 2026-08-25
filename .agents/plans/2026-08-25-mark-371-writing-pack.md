@@ -53,7 +53,7 @@
 - Produces: four reusable behavioral scenarios and a recorded pre-skill RED baseline.
 - Does not produce: profile rules, word bans, detector claims, or private author samples.
 
-- [ ] **Step 1: Verify and record primary research**
+- [x] **Step 1: Verify and record primary research**
 
 Use web research and original papers or publisher records. At minimum, assess these live candidates and replace any that cannot support the claimed point:
 
@@ -65,7 +65,7 @@ Use web research and original papers or publisher records. At minimum, assess th
 
 For each source, record what was measured, what population/domain was studied, what it does not establish, and whether it supports an operational rule. Do not generalize academic-writing word-frequency results to all prose.
 
-- [ ] **Step 2: Write the evidence ledger**
+- [x] **Step 2: Write the evidence ledger**
 
 Organize `evidence-ledger.md` by pattern family rather than by disliked phrase:
 
@@ -78,7 +78,7 @@ Organize `evidence-ledger.md` by pattern family rather than by disliked phrase:
 
 Every entry must include `Evidence class`, `Observed domain`, `Operational implication`, `Preserve when`, `Limitations`, and `Source IDs`.
 
-- [ ] **Step 3: Write pressure scenarios before the new skills exist**
+- [x] **Step 3: Write pressure scenarios before the new skills exist**
 
 Each prompt must include concrete input prose and an objective rubric. Collectively require the future workflow to:
 
@@ -87,11 +87,11 @@ Each prompt must include concrete input prose and an objective rubric. Collectiv
 - derive a bounded voice card from user-provided text without storing a corpus;
 - refuse detector-evasion framing while still offering a legitimate clarity/style revision.
 
-- [ ] **Step 4: Run and record the RED baseline**
+- [x] **Step 4: Run and record the RED baseline**
 
 Dispatch one fresh pressure-test subagent per prompt with no access to the approved design or future skills. Record the model/profile, exact prompt path, response, rubric judgment, and failure mode in `tests/pressure/writing/red.md`. RED is successful when the baseline exposes at least one material routing, preservation, or detector-boundary failure; do not manufacture a failure if all scenarios pass.
 
-- [ ] **Step 5: Validate and commit Task 1**
+- [x] **Step 5: Validate and commit Task 1**
 
 ```powershell
 py -3 -m json.tool research/ai-prose-fatigue/source-register.json > $null
