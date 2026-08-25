@@ -1018,6 +1018,71 @@ def test_new_worktree_installs_poetry_dependencies(tmp_path: Path) -> None:
     assert "install" in (worktree_root / "poetry-calls.txt").read_text(encoding="utf-8")
 
 
+def test_new_worktree_keeps_worktree_when_pip_fails(tmp_path: Path) -> None:
+    """A pip install failure should not delete the worktree; pip is global and can be blocked."""
+    repo = _make_repo_with_bundled_refresh(tmp_path, "pip-warn-repo")
+    (repo / "package.json").write_text('{"name": "pip-warn-repo"}', encoding="utf-8")
+    (repo / "requirements.txt").write_text("requests", encoding="utf-8")
+    subprocess.run(["git", "add", "-A"], cwd=repo, check=True, capture_output=True)
+    subprocess.run(["git", "commit", "-m", "add manifests"], cwd=repo, check=True, capture_output=True)
+
+    bin_dir = tmp_path / "bin"
+    bin_dir.mkdir()
+    _make_fake_package_manager(bin_dir, "npm")
+    if sys.platform == "win32":
+        (bin_dir / "pip.cmd").write_text("@echo off\necho %* > pip-calls.txt\nexit /b 1\n", encoding="utf-8")
+    else:
+        (bin_dir / "pip").write_text('#!/bin/sh\necho "$@" > pip-calls.txt\nexit 1\n', encoding="utf-8")
+        (bin_dir / "pip").chmod(0o755)
+
+    env = _stripped_env()
+    env["PATH"] = str(bin_dir) + os.pathsep + env.get("PATH", "")
+
+    worktree_root = tmp_path / "_agent-worktrees" / "pip-warn-repo" / "feature"
+    result = subprocess.run(
+        [sys.executable, str(NEW_WORKTREE), "feature", "--apply"],
+        cwd=repo,
+        env=env,
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode == 0, result.stderr
+    assert worktree_root.is_dir()
+    assert (worktree_root / "npm-calls.txt").is_file()
+    assert (worktree_root / "pip-calls.txt").is_file()
+    assert "pip install failed" in result.stderr
+
+
+def test_new_worktree_removes_worktree_when_npm_fails(tmp_path: Path) -> None:
+    """A failing Node installer should still fail closed and remove the worktree."""
+    repo = _make_repo_with_bundled_refresh(tmp_path, "npm-fail-repo")
+    (repo / "package.json").write_text('{"name": "npm-fail-repo"}', encoding="utf-8")
+    subprocess.run(["git", "add", "-A"], cwd=repo, check=True, capture_output=True)
+    subprocess.run(["git", "commit", "-m", "add package.json"], cwd=repo, check=True, capture_output=True)
+
+    bin_dir = tmp_path / "bin"
+    bin_dir.mkdir()
+    if sys.platform == "win32":
+        (bin_dir / "npm.cmd").write_text("@echo off\necho %* > npm-calls.txt\nexit /b 1\n", encoding="utf-8")
+    else:
+        (bin_dir / "npm").write_text('#!/bin/sh\necho "$@" > npm-calls.txt\nexit 1\n', encoding="utf-8")
+        (bin_dir / "npm").chmod(0o755)
+
+    env = _stripped_env()
+    env["PATH"] = str(bin_dir) + os.pathsep + env.get("PATH", "")
+
+    worktree_root = tmp_path / "_agent-worktrees" / "npm-fail-repo" / "feature"
+    result = subprocess.run(
+        [sys.executable, str(NEW_WORKTREE), "feature", "--apply"],
+        cwd=repo,
+        env=env,
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode != 0, result.stdout
+    assert not worktree_root.exists()
+
+
 def test_remove_worktree_stops_on_locked_directory(tmp_path: Path) -> None:
     """If the worktree directory is locked, the script deregisters it and stops."""
     repo = _make_repo(tmp_path, "locked-repo")

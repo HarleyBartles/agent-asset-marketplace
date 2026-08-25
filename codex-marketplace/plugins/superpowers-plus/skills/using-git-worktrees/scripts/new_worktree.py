@@ -328,7 +328,15 @@ def _install_dependencies(repo_root: Path) -> int:
             print(f"error: requirements.txt present in {repo_root} but pip is not available", file=sys.stderr)
             return 1
         print(f"Installing Python requirements in {repo_root}")
-        exit_codes.append(_run_command([pip, "install", "-r", "requirements.txt"], repo_root))
+        pip_code = _run_command([pip, "install", "-r", "requirements.txt"], repo_root)
+        if pip_code != 0:
+            # pip is often blocked on externally-managed Python installs. Do not
+            # delete a freshly created worktree for this; the worktree is still
+            # useful and the user can install dependencies into a venv later.
+            print(
+                f"warning: pip install failed in {repo_root}; leaving the worktree for manual Python setup",
+                file=sys.stderr,
+            )
 
     if _is_poetry_project(repo_root):
         if not shutil.which("poetry"):
@@ -337,7 +345,7 @@ def _install_dependencies(repo_root: Path) -> int:
         print(f"Installing Poetry dependencies in {repo_root}")
         exit_codes.append(_run_command(["poetry", "install", "--no-interaction"], repo_root))
 
-    return max(exit_codes, default=0)
+    return next((code for code in exit_codes if code != 0), 0)
 
 
 def _remove_worktree(worktree_root: Path, main_repo_root: Path, branch: str) -> None:
