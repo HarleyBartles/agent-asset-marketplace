@@ -123,6 +123,7 @@ threshold was changed after the first worker output to improve the campaign.
    findings remain unchanged.
 
 `evaluator-freeze.json` intentionally continues to pin the pre-output f0eda
-artifacts. The final product files and CLI-contract test diverge from five of
-those hashes; that divergence is expected and does not rewrite the retained
-campaign inputs or scores.
+artifacts. The final product diverges from six of those hashes: four scripts
+and the CLI-contract test changed for product corrections, while the schema
+differs only by repository-required EOF normalization. That divergence is
+expected and does not rewrite the retained campaign inputs or scores.
