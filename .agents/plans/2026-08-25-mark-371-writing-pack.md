@@ -121,7 +121,7 @@ git commit -m "research: establish AI prose fatigue evidence baseline"
 - Produces: an enabled marketplace plugin root with `writing-with-clarity` under its sole canonical plugin path.
 - Preserves: the existing clarity guidance, source map, citations, licence, bounded public-domain reference chapters, and report-hygiene reference.
 
-- [ ] **Step 1: Add failing plugin-boundary tests**
+- [x] **Step 1: Add failing plugin-boundary tests**
 
 In `tests/test_writing_pack.py`, add focused tests asserting:
 
@@ -137,7 +137,7 @@ Run and record RED:
 py -3 -m pytest tests/test_writing_pack.py -q
 ```
 
-- [ ] **Step 2: Scaffold and enable the plugin**
+- [x] **Step 2: Scaffold and enable the plugin**
 
 ```powershell
 py -3 tools/new_plugin.py --check writing-pack
@@ -146,11 +146,11 @@ py -3 tools/new_plugin.py --apply writing-pack
 
 Change the new `writing-pack` entry in `codex-marketplace/plugin-roots.json` from scaffold default `enabled: false` to `enabled: true`. Replace scaffold prose and manifest metadata with the approved four-skill boundary, writing-specific keywords, MIT rights statement, and a default prompt that routes ordinary writing work through `$writing`.
 
-- [ ] **Step 3: Move `writing-with-clarity` with history**
+- [x] **Step 3: Move `writing-with-clarity` with history**
 
 Use `git mv` for the whole skill directory. Update only path metadata and cross-skill routing needed by the new custody location; do not rewrite the clarity doctrine. Set `metadata.source-path` to `codex-marketplace/plugins/writing-pack/skills/writing-with-clarity/SKILL.md` and keep the existing `skills-with-source` authority lane byte-valid.
 
-- [ ] **Step 4: Sync the bundle and pass focused GREEN**
+- [x] **Step 4: Sync the bundle and pass focused GREEN**
 
 ```powershell
 py -3 tools/new_plugin.py --sync writing-pack
@@ -159,7 +159,7 @@ py -3 -m pytest tests/test_writing_pack.py -q
 git diff --check
 ```
 
-- [ ] **Step 5: Commit Task 2**
+- [x] **Step 5: Commit Task 2**
 
 ```powershell
 git add codex-marketplace/plugin-roots.json codex-marketplace/plugins/writing-pack codex-marketplace/plugins/repo-worker-pack/skills/writing-with-clarity tests/test_writing_pack.py .agents/plans/2026-08-25-mark-371-writing-pack.md

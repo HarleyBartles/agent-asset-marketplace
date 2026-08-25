@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import json
+import subprocess
+import sys
 from pathlib import Path
 
 
@@ -12,6 +14,13 @@ APPROVED_SKILLS = {
     "writing-style",
     "writing-profile-engine",
 }
+INSTALLED_DEFAULTS = [
+    "mcp-usage-pack",
+    "repo-worker-pack",
+    "superpowers-plus",
+    "unslop-plus",
+    "writing-pack",
+]
 
 
 def _load_json(path: Path) -> dict:
@@ -39,9 +48,7 @@ def test_clarity_skill_has_one_writing_pack_custody_path() -> None:
     clarity_skill = PLUGIN_ROOT / "skills" / "writing-with-clarity"
 
     assert clarity_skill.is_dir()
-    old_clarity_skill = (
-        ROOT / "codex-marketplace" / "plugins" / "repo-worker-pack" / "skills" / "writing-with-clarity"
-    )
+    old_clarity_skill = ROOT / "codex-marketplace" / "plugins" / "repo-worker-pack" / "skills" / "writing-with-clarity"
 
     assert not old_clarity_skill.exists()
 
@@ -62,3 +69,39 @@ def test_writing_pack_skills_do_not_own_top_level_profiles_directories() -> None
     skills_root = PLUGIN_ROOT / "skills"
 
     assert all(not (skill / "profiles").exists() for skill in skills_root.iterdir() if skill.is_dir())
+
+
+def test_installed_defaults_include_the_writing_and_generic_unslop_owners() -> None:
+    policy = _load_json(ROOT / "codex-marketplace" / "repo-local-marketplace-policy.json")
+    old_unslop_profiles = ROOT / "codex-marketplace" / "plugins" / "repo-worker-pack" / "skills" / "unslop-profiles"
+
+    assert policy["install_defaults"] == INSTALLED_DEFAULTS
+    assert not old_unslop_profiles.exists()
+    assert (ROOT / "codex-marketplace" / "plugins" / "unslop-plus" / "skills" / "unslop-profiles").is_dir()
+
+
+def test_installed_projection_retains_clarity_and_generic_unslop_provenance() -> None:
+    provenance = _load_json(ROOT / ".agents" / "skills" / ".provenance.json")
+    installed_clarity = ROOT / ".agents" / "skills" / "writing-with-clarity" / "SKILL.md"
+    installed_unslop_profiles = ROOT / ".agents" / "skills" / "unslop-profiles" / "SKILL.md"
+
+    assert provenance["syncedPlugins"] == INSTALLED_DEFAULTS
+    assert installed_clarity.is_file()
+    assert "plugins/writing-pack/skills/writing-with-clarity/SKILL.md" in installed_clarity.read_text(encoding="utf-8")
+    assert "plugins/unslop-plus/skills/unslop-profiles/SKILL.md" in installed_unslop_profiles.read_text(
+        encoding="utf-8"
+    )
+
+
+def test_installed_unslop_engine_scripts_support_the_repository_check_contract() -> None:
+    scripts_root = ROOT / "codex-marketplace" / "plugins" / "unslop-plus" / "skills" / "unslop-engine" / "scripts"
+
+    for script_name in ("unslop.py", "validate_package.py", "validate_unslop_output.py"):
+        result = subprocess.run(
+            [sys.executable, str(scripts_root / script_name), "--check"],
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+
+        assert result.returncode == 0, result.stderr

@@ -22,8 +22,9 @@
       "source_family": "first_party",
       "canonical_source_path": "codex-marketplace/plugins/unslop-plus/skills/unslop-engine",
       "local_path": "skills/unslop-engine",
-      "provenance_note": "Copied verbatim from the first-party unslop-engine skill.",
-      "copy_expectation": "byte_identical"
+      "source_path": "codex-marketplace/plugins/unslop-plus/skills/unslop-engine/SKILL.md",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Copied verbatim from the first-party unslop-engine skill."
     },
     {
       "canonical_name": "unslop-profiles",
@@ -32,8 +33,9 @@
       "source_family": "first_party",
       "canonical_source_path": "codex-marketplace/plugins/unslop-plus/skills/unslop-profiles",
       "local_path": "skills/unslop-profiles",
-      "provenance_note": "Copied verbatim from the first-party unslop-profiles skill.",
-      "copy_expectation": "byte_identical"
+      "source_path": "codex-marketplace/plugins/unslop-plus/skills/unslop-profiles/SKILL.md",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Copied verbatim from the first-party unslop-profiles skill."
     }
   ],
   "generated_doc_surfaces": [
