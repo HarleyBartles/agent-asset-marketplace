@@ -181,7 +181,13 @@ def _scan_security(path: Path, content: str, findings: list[str]) -> None:
                         f"possible real identifier {match.group()}: replace with a placeholder or env-var reference",
                     )
 
-        if _EMAIL.search(line):
+        # Hash-pinned vendored snapshots must remain byte-for-byte identical to
+        # their recorded upstream source. Public contact addresses in those
+        # snapshots are provenance, not authored fixture data to redact.
+        is_reference_snapshot = (
+            "assets" in path.parts and "authority" in path.parts and "reference-source" in path.parts
+        )
+        if _EMAIL.search(line) and not is_reference_snapshot:
             _warn(findings, path, line_no, "email address in source; use a placeholder or env-var reference")
 
         for token_match in _TOKEN_LIKE.finditer(line):

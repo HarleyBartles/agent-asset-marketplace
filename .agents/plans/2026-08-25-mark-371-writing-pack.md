@@ -492,7 +492,7 @@ git commit -m "refactor: separate writing and generic unslop custody"
 **Interfaces:**
 - Consumes: canonical plugin sources and `install_defaults` policy.
 - Produces: this repository's installed skills from `repo-worker-pack`, `superpowers-plus`, `mcp-usage-pack`, `writing-pack`, and `unslop-plus`.
-- Guarantees: `.agents/skills/writing`, `writing-with-clarity`, `writing-style`, `writing-profile-engine`, `unslop-engine`, and `unslop-profiles` are present and provenance points to the correct plugin owners.
+- Guarantees: `.agents/skills/writing/SKILL.md`, `writing-with-clarity`, `writing-style`, `writing-profile-engine`, `unslop-engine`, and `unslop-profiles` are present and provenance points to the correct plugin owners.
 
 - [x] **Step 1: Add failing installed-default tests**
 
@@ -555,11 +555,11 @@ git commit -m "build: publish writing pack to marketplace surfaces"
 - Produces: a draft PR URL, branch name, full head SHA, CI posture, review findings, and remaining risks.
 - Does not produce: a GREEN completion claim from local-only evidence.
 
-- [ ] **Step 1: Close the pressure campaign honestly**
+- [x] **Step 1: Close the pressure campaign honestly**
 
 Summarize RED versus GREEN behavior without claiming statistical validity. Record model/profile and context mode for every run. State that the campaign tests instruction-following and boundary behavior, not whether prose is human-authored or universally pleasant.
 
-- [ ] **Step 2: Run focused and full verification**
+- [x] **Step 2: Run focused and full verification**
 
 ```powershell
 py -3 -m pytest tests/test_writing_pack.py tests/test_writing_profiles.py tests/test_writing_profile_engine.py -q
@@ -570,7 +570,7 @@ git diff --check
 
 The second full gate is a determinism check. If either run fails, invoke `/systematic-debugging`, fix the root cause, and rerun both gates from fresh output.
 
-- [ ] **Step 3: Self-review with the required lenses**
+- [x] **Step 3: Self-review with the required lenses**
 
 Mechanically review the branch diff against the current `reviewer-skills`, `reviewer-marketplace`, and `reviewer-security` profile checklists. Pay particular attention to:
 

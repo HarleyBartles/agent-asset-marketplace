@@ -69,3 +69,7 @@ or the declared `$writing-style` interface. They record that the available
 partial route preserved the same boundaries in two fresh contexts. Incremental
 value needs a future scenario with a demonstrated baseline failure and full
 five-stage runtime coverage after Task 4.
+
+Task 5 supplied that separate adversarial scenario. Its
+[`blinded results`](blinded/results.md) show material behavioural improvement but
+remain invalid for causal proof because the evaluator freeze was breached.

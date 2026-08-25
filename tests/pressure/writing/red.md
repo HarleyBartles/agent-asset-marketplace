@@ -78,3 +78,7 @@ These runs used Codex MultiAgentV2, which does not consume named `.md` profiles.
 Later GREEN passes on these unchanged scenarios are not evidence of improvement
 caused by a new skill: the baseline already passed. They may only document the
 new route's observed behaviour and any coverage limitations.
+
+The later blinded adversarial campaign is recorded separately in
+[`blinded/results.md`](blinded/results.md). It observed a material treatment-arm
+improvement, but its evaluator-freeze breach prevents a causal GREEN claim.

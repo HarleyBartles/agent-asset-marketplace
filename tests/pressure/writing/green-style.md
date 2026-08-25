@@ -128,3 +128,7 @@ Both fresh-context runs passed their unchanged rubrics. Combined with the
 all-pass/inconclusive Task 1 baseline, the evidence supports only a present
 instruction-following result. It does not support a GREEN delta, causal
 improvement claim, universal fatigue rule, or author-identification claim.
+
+The later [`blinded campaign`](blinded/results.md) observed material improvement
+on its declared behaviour rubric. Its evaluator-freeze breach means that result
+is retained as observational evidence, not a causal GREEN claim.
