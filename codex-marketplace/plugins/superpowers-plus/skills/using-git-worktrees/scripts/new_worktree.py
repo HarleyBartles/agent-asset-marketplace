@@ -18,6 +18,7 @@ import shutil
 import subprocess
 import sys
 from pathlib import Path
+from typing import Optional
 
 
 def _stripped_env() -> dict[str, str]:
@@ -132,7 +133,7 @@ def _is_under_repo(repo_root: Path, candidate: Path) -> bool:
     return True
 
 
-def _find_skill_core(repo_root: Path, skill_name: str, core_name: str) -> Path | None:
+def _find_skill_core(repo_root: Path, skill_name: str, core_name: str) -> Optional[Path]:
     """Return the path to a skill's core script, searching installed plugins first.
 
     This helper is intentionally self-contained in each skill script so the
@@ -171,17 +172,17 @@ def _find_skill_core(repo_root: Path, skill_name: str, core_name: str) -> Path |
     return None
 
 
-def _find_refresh_script(worktree_root: Path) -> Path | None:
+def _find_refresh_script(worktree_root: Path) -> Optional[Path]:
     """Return the path to the new worktree's refreshing-installed-skills script."""
     return _find_skill_core(worktree_root, "refreshing-installed-skills", "refresh_installed_skills.py")
 
 
-def _find_mesh_script(worktree_root: Path) -> Path | None:
+def _find_mesh_script(worktree_root: Path) -> Optional[Path]:
     """Return the path to the new worktree's generate-index-mesh script."""
     return _find_skill_core(worktree_root, "generating-agent-mesh", "generate_index_mesh.py")
 
 
-def _find_command_bus(repo_root: Path) -> Path | None:
+def _find_command_bus(repo_root: Path) -> Optional[Path]:
     """Return the repo's canonical command-bus entry point if one exists.
 
     Prefer the concrete Python bus so the dispatch can run it directly; fall
@@ -198,7 +199,7 @@ def _dispatch_capability(
     repo_root: Path,
     capability: str,
     *extra: str,
-) -> int | None:
+) -> Optional[int]:
     """Run a named capability through the repo's command bus, or return None to fall back.
 
     Returns the command's exit code when the bus owns the capability. Returns
@@ -243,6 +244,61 @@ def _dispatch_capability(
     if is_unknown:
         return None
     return result.returncode
+
+
+def _run_command(cmd: list[str], cwd: Path) -> int:
+    """Run an external command, using the shell on Windows for .cmd/.bat tools."""
+    if sys.platform == "win32":
+        command = subprocess.list2cmdline([str(arg) for arg in cmd])
+        result = subprocess.run(
+            command,
+            cwd=cwd,
+            env=_stripped_env(),
+            shell=True,
+            text=True,
+        )
+    else:
+        result = subprocess.run(
+            [str(arg) for arg in cmd],
+            cwd=cwd,
+            env=_stripped_env(),
+            text=True,
+        )
+    return result.returncode
+
+
+def _install_dependencies(repo_root: Path) -> int:
+    """Install dependencies for common package managers when not repo-owned.
+
+    Returns 0 when there is nothing to do or installation succeeds. A failed
+    installation returns the command's non-zero exit code so the worktree is
+    not left in a broken state.
+    """
+    package_lock = repo_root / "package-lock.json"
+    package_json = repo_root / "package.json"
+    yarn_lock = repo_root / "yarn.lock"
+    pnpm_lock = repo_root / "pnpm-lock.yaml"
+    requirements = repo_root / "requirements.txt"
+
+    if package_lock.is_file() and shutil.which("npm"):
+        print(f"Installing npm dependencies (ci) in {repo_root}")
+        return _run_command(["npm", "ci"], repo_root)
+    if package_json.is_file() and shutil.which("npm"):
+        print(f"Installing npm dependencies in {repo_root}")
+        return _run_command(["npm", "install"], repo_root)
+    if yarn_lock.is_file() and shutil.which("yarn"):
+        print(f"Installing yarn dependencies in {repo_root}")
+        return _run_command(["yarn", "install", "--frozen-lockfile"], repo_root)
+    if pnpm_lock.is_file() and shutil.which("pnpm"):
+        print(f"Installing pnpm dependencies in {repo_root}")
+        return _run_command(["pnpm", "install", "--frozen-lockfile"], repo_root)
+    if requirements.is_file():
+        pip = shutil.which("pip") or shutil.which("pip3")
+        if pip:
+            print(f"Installing Python requirements in {repo_root}")
+            return _run_command([pip, "install", "-r", "requirements.txt"], repo_root)
+
+    return 0
 
 
 def _remove_worktree(worktree_root: Path, main_repo_root: Path, branch: str) -> None:
@@ -432,6 +488,16 @@ def _configure_worktree(
             print(f"error: generating index mesh failed in {worktree_root}", file=sys.stderr)
             return exit_code
 
+        # Make the worktree runnable by installing dependencies. A repo can own
+        # this via the command bus; otherwise the bundled default detects common
+        # package manager manifests and runs the appropriate installer.
+        exit_code = _dispatch_capability(worktree_root, "install-deps", "--apply")
+        if exit_code is None:
+            exit_code = _install_dependencies(worktree_root)
+        if exit_code != 0:
+            print(f"error: installing dependencies failed in {worktree_root}", file=sys.stderr)
+            return exit_code
+
     print(f"Worktree ready at {worktree_root}")
     return 0
 
@@ -452,7 +518,7 @@ def _default_base_ref(main_repo_root: Path) -> tuple[str, bool]:
 def _check_worktree(
     main_repo_root: Path,
     branch: str,
-    base_ref: str | None,
+    base_ref: Optional[str],
 ) -> tuple[int, str, str]:
     """Return (exit_code, human_summary, base_ref_to_use).
 
@@ -581,7 +647,7 @@ def _build_parser() -> argparse.ArgumentParser:
     return parser
 
 
-def main(argv: list[str] | None = None) -> int:
+def main(argv: Optional[list[str]] = None) -> int:
     parser = _build_parser()
     args = parser.parse_args(argv)
 

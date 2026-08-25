@@ -730,7 +730,11 @@ def main():
         print("usage: tools/run.py <capability>", file=sys.stderr)
         return 2
     capability = sys.argv[1]
-    markers = {"refresh-skills": "refresh-bus-marker.txt", "index-mesh": "index-bus-marker.txt"}
+    markers = {
+        "refresh-skills": "refresh-bus-marker.txt",
+        "index-mesh": "index-bus-marker.txt",
+        "install-deps": "install-deps-bus-marker.txt",
+    }
     if capability not in markers:
         print(f"invalid choice: {capability}", file=sys.stderr)
         return 2
@@ -756,6 +760,7 @@ def test_new_worktree_dispatches_through_command_bus_when_present(tmp_path: Path
     assert worktree_root.is_dir()
     assert (worktree_root / "refresh-bus-marker.txt").is_file()
     assert (worktree_root / "index-bus-marker.txt").is_file()
+    assert (worktree_root / "install-deps-bus-marker.txt").is_file()
     assert "Installed skill" not in result.stdout
     assert "Wrote index mesh" not in result.stdout
 
@@ -838,6 +843,39 @@ def test_new_worktree_dispatches_through_bash_shell_wrapper(tmp_path: Path) -> N
     assert (worktree_root / "index-bus-marker.txt").is_file()
     assert "Installed skill" not in result.stdout
     assert "Wrote index mesh" not in result.stdout
+
+
+def test_new_worktree_installs_dependencies_from_package_json(tmp_path: Path) -> None:
+    """The bundled default runs npm install when a package.json is present."""
+    repo = _make_repo_with_bundled_refresh(tmp_path, "npm-repo")
+    (repo / "package.json").write_text('{"name": "npm-repo", "dependencies": {}}', encoding="utf-8")
+    subprocess.run(["git", "add", "-A"], cwd=repo, check=True, capture_output=True)
+    subprocess.run(["git", "commit", "-m", "add package.json"], cwd=repo, check=True, capture_output=True)
+
+    # Provide a fake npm on a temporary PATH so the test does not require network.
+    bin_dir = tmp_path / "bin"
+    bin_dir.mkdir()
+    if sys.platform == "win32":
+        (bin_dir / "npm.cmd").write_text("@echo off\necho %* > npm-calls.txt\n", encoding="utf-8")
+    else:
+        (bin_dir / "npm").write_text('#!/bin/sh\necho "$@" > npm-calls.txt\n', encoding="utf-8")
+        (bin_dir / "npm").chmod(0o755)
+
+    env = _stripped_env()
+    env["PATH"] = str(bin_dir) + os.pathsep + env.get("PATH", "")
+
+    worktree_root = tmp_path / "_agent-worktrees" / "npm-repo" / "feature"
+    result = subprocess.run(
+        [sys.executable, str(NEW_WORKTREE), "feature", "--apply"],
+        cwd=repo,
+        env=env,
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode == 0, result.stderr
+    assert worktree_root.is_dir()
+    assert (worktree_root / "npm-calls.txt").is_file()
+    assert "install" in (worktree_root / "npm-calls.txt").read_text(encoding="utf-8")
 
 
 def test_remove_worktree_stops_on_locked_directory(tmp_path: Path) -> None:
