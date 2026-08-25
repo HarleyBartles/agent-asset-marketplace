@@ -165,6 +165,15 @@ def _string_set(value: Any) -> set[str]:
     return {item for item in value if isinstance(item, str)}
 
 
+def _unexpected_fields(value: dict[str, Any], allowed: set[str], prefix: str) -> list[str]:
+    unexpected = sorted(set(value) - allowed)
+    return [f"{prefix}: unexpected fields {unexpected}"] if unexpected else []
+
+
+def _is_integer(value: Any, minimum: int) -> bool:
+    return type(value) is int and value >= minimum
+
+
 def _validate_rule(rule: Any, prefix: str) -> list[str]:
     if not isinstance(rule, dict):
         return [f"{prefix}: expected object"]
@@ -175,29 +184,43 @@ def _validate_rule(rule: Any, prefix: str) -> list[str]:
     if kind not in RULE_KINDS:
         return errors + [f"{prefix}.kind: unsupported value {kind!r}"]
     if kind == "normalized_phrase_occurrence":
+        errors.extend(_unexpected_fields(rule, {"id", "kind", "phrases"}, prefix))
         errors.extend(_required_strings(rule.get("phrases"), f"{prefix}.phrases"))
     elif kind in {"sentence_repetition", "paragraph_repetition"}:
         count_field = "minimum_sentences" if kind == "sentence_repetition" else "minimum_paragraphs"
-        if not isinstance(rule.get(count_field), int) or rule[count_field] < 2:
+        errors.extend(
+            _unexpected_fields(
+                rule,
+                {"id", "kind", count_field, "opening_words", "maximum_word_count_spread"},
+                prefix,
+            )
+        )
+        if not _is_integer(rule.get(count_field), 2):
             errors.append(f"{prefix}.{count_field}: expected integer >= 2")
-        if not isinstance(rule.get("opening_words"), int) or rule["opening_words"] < 1:
+        if not _is_integer(rule.get("opening_words"), 1):
             errors.append(f"{prefix}.opening_words: expected integer >= 1")
         spread = rule.get("maximum_word_count_spread")
-        if not isinstance(spread, int) or spread < 0:
+        if not _is_integer(spread, 0):
             errors.append(f"{prefix}.maximum_word_count_spread: expected integer >= 0")
     else:
         field = rule.get("field")
+        allowed = {"id", "kind", "field", "comparison"}
+        if field != "tendencies.sentence_range":
+            allowed.add("card_values")
+        errors.extend(_unexpected_fields(rule, allowed, prefix))
         if field not in VOICE_FIELDS:
             errors.append(f"{prefix}.field: unsupported bounded voice-card field")
         comparison = rule.get("comparison")
         if not isinstance(comparison, dict):
             errors.append(f"{prefix}.comparison: expected object")
         elif field == "tendencies.sentence_range":
+            errors.extend(_unexpected_fields(comparison, {"kind"}, f"{prefix}.comparison"))
             if "card_values" in rule:
                 errors.append(f"{prefix}.card_values: not used for a declared sentence range")
             if comparison.get("kind") != "sentence_length_outside_range":
                 errors.append(f"{prefix}.comparison.kind: sentence range requires sentence_length_outside_range")
         elif comparison.get("kind") == "normalized_phrase_occurrence":
+            errors.extend(_unexpected_fields(comparison, {"kind", "phrases"}, f"{prefix}.comparison"))
             errors.extend(_required_strings(rule.get("card_values"), f"{prefix}.card_values"))
             errors.extend(_required_strings(comparison.get("phrases"), f"{prefix}.comparison.phrases"))
         else:
@@ -209,6 +232,7 @@ def _validate_predicate(predicate: Any, prefix: str) -> list[str]:
     if not isinstance(predicate, dict):
         return [f"{prefix}: expected object"]
     errors: list[str] = []
+    errors.extend(_unexpected_fields(predicate, {"id", "kind", "scope", "phrases"}, prefix))
     if not isinstance(predicate.get("id"), str) or not PROFILE_ID.fullmatch(predicate["id"]):
         errors.append(f"{prefix}.id: expected stable lowercase-hyphenated ID")
     if predicate.get("kind") not in PREDICATE_KINDS:
@@ -247,6 +271,7 @@ def _validate_pattern(pattern: Any, prefix: str, known_sources: set[str]) -> lis
     missing = sorted(required - set(pattern))
     if missing:
         errors.append(f"{prefix}: missing required fields {missing}")
+    errors.extend(_unexpected_fields(pattern, required, prefix))
     pattern_id = pattern.get("id")
     if not isinstance(pattern_id, str) or not PROFILE_ID.fullmatch(pattern_id):
         errors.append(f"{prefix}.id: expected stable lowercase-hyphenated ID")
@@ -272,14 +297,16 @@ def _validate_pattern(pattern: Any, prefix: str, known_sources: set[str]) -> lis
     if not isinstance(threshold, dict):
         errors.append(f"{prefix}.contextual_threshold: expected object")
     else:
+        threshold_allowed = {"unit", "minimum_count", "minimum_distinct_signals", "decision_rule"}
+        if threshold.get("unit") == "local_cluster":
+            threshold_allowed.add("window_words")
+        errors.extend(_unexpected_fields(threshold, threshold_allowed, f"{prefix}.contextual_threshold"))
         if threshold.get("unit") not in THRESHOLD_UNITS:
             errors.append(f"{prefix}.contextual_threshold.unit: unsupported value")
         for field in ("minimum_count", "minimum_distinct_signals"):
-            if not isinstance(threshold.get(field), int) or threshold[field] < 1:
+            if not _is_integer(threshold.get(field), 1):
                 errors.append(f"{prefix}.contextual_threshold.{field}: expected integer >= 1")
-        if threshold.get("unit") == "local_cluster" and (
-            not isinstance(threshold.get("window_words"), int) or threshold["window_words"] < 1
-        ):
+        if threshold.get("unit") == "local_cluster" and (not _is_integer(threshold.get("window_words"), 1)):
             errors.append(f"{prefix}.contextual_threshold.window_words: expected integer >= 1")
         if not isinstance(threshold.get("decision_rule"), str) or not threshold.get("decision_rule", "").strip():
             errors.append(f"{prefix}.contextual_threshold.decision_rule: expected non-empty string")
@@ -300,11 +327,17 @@ def _validate_pattern(pattern: Any, prefix: str, known_sources: set[str]) -> lis
     else:
         for index, predicate in enumerate(predicates):
             errors.extend(_validate_predicate(predicate, f"{prefix}.preserve_predicates[{index}]"))
+    dates: dict[str, date] = {}
     for field in ("first_observed", "reviewed_at", "review_after"):
         try:
-            date.fromisoformat(pattern[field])
+            dates[field] = date.fromisoformat(pattern[field])
         except (KeyError, TypeError, ValueError):
             errors.append(f"{prefix}.{field}: expected ISO date")
+    if {"first_observed", "reviewed_at", "review_after"} <= set(dates):
+        if dates["first_observed"] > dates["reviewed_at"]:
+            errors.append(f"{prefix}.first_observed: must not follow reviewed_at")
+        if dates["reviewed_at"] >= dates["review_after"]:
+            errors.append(f"{prefix}.review_after: must follow reviewed_at")
     return errors
 
 
@@ -325,7 +358,8 @@ def _validate_goldens(
     missing_top = sorted(required_top - set(golden))
     if missing_top:
         errors.append(f"{path}: missing required fields {missing_top}")
-    if golden.get("schema_version") != 1:
+    errors.extend(_unexpected_fields(golden, required_top, str(path)))
+    if type(golden.get("schema_version")) is not int or golden.get("schema_version") != 1:
         errors.append(f"{path}.schema_version: expected 1")
     if golden.get("fatigue_profile_id") != profile_id:
         errors.append(f"{path}.fatigue_profile_id: expected {profile_id!r}")
@@ -345,6 +379,7 @@ def _validate_goldens(
             "id",
             "input",
             "context",
+            "tags",
             "expected_classification",
             "applicable_pattern_ids",
             "expected_findings",
@@ -355,9 +390,11 @@ def _validate_goldens(
         if missing:
             errors.append(f"{prefix}: missing required fields {missing}")
             continue
+        errors.extend(_unexpected_fields(case, required | {"voice_card"}, prefix))
         for field in ("input", "context", "rationale", "expected_repair_principle"):
             if not isinstance(case.get(field), str):
                 errors.append(f"{prefix}.{field}: expected string")
+        errors.extend(_required_strings(case.get("tags"), f"{prefix}.tags"))
         if "voice_card" in case and not isinstance(case["voice_card"], dict):
             errors.append(f"{prefix}.voice_card: expected object")
         case_id = case.get("id")
@@ -374,6 +411,8 @@ def _validate_goldens(
         if not isinstance(applicable, list) or not applicable:
             errors.append(f"{prefix}.applicable_pattern_ids: expected non-empty array")
             applicable = []
+        else:
+            errors.extend(_required_strings(applicable, f"{prefix}.applicable_pattern_ids"))
         applicable_ids = _string_set(applicable)
         unknown = sorted(applicable_ids - pattern_ids)
         if unknown:
@@ -394,6 +433,7 @@ def _validate_goldens(
             missing_finding = sorted(required_finding - set(finding))
             if missing_finding:
                 errors.append(f"{finding_prefix}: missing required fields {missing_finding}")
+            errors.extend(_unexpected_fields(finding, required_finding, finding_prefix))
             if finding.get("type") not in {"repair", "preserve", "abstain"}:
                 errors.append(f"{finding_prefix}.type: unsupported value")
             if finding.get("type") != classification:
@@ -402,9 +442,16 @@ def _validate_goldens(
             if not isinstance(ids, list) or not ids:
                 errors.append(f"{finding_prefix}.pattern_ids: expected non-empty array")
             else:
-                unknown = sorted(_string_set(ids) - pattern_ids)
+                errors.extend(_required_strings(ids, f"{finding_prefix}.pattern_ids"))
+                finding_ids = _string_set(ids)
+                unknown = sorted(finding_ids - pattern_ids)
                 if unknown:
                     errors.append(f"{finding_prefix}.pattern_ids: unknown IDs {unknown}")
+                outside_case = sorted(finding_ids - applicable_ids)
+                if outside_case:
+                    errors.append(
+                        f"{finding_prefix}.pattern_ids: IDs {outside_case} must be listed in applicable_pattern_ids"
+                    )
     missing_coverage = sorted(
         f"{pattern_id}:{kind}"
         for pattern_id in pattern_ids
@@ -432,7 +479,8 @@ def validate_document(
     missing = sorted(required - set(document))
     if missing:
         return [f"{path}: missing required fields {missing}"], warnings
-    if document["schema_version"] != 1:
+    errors.extend(_unexpected_fields(document, required, str(path)))
+    if type(document["schema_version"]) is not int or document["schema_version"] != 1:
         errors.append(f"{path}.schema_version: expected 1")
     if not isinstance(document["profile_id"], str) or not PROFILE_ID.fullmatch(document["profile_id"]):
         errors.append(f"{path}.profile_id: expected stable lowercase-hyphenated ID")

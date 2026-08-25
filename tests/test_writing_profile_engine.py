@@ -149,6 +149,11 @@ def test_discovery_enumerates_malformed_candidates_and_validation_reports_them(t
     assert str(malformed) in errors
     assert "invalid UTF-8 JSON" in errors
 
+    human = _run("discover_profiles.py", "--root", str(tmp_path))
+    assert human.returncode == 0, human.stderr
+    assert "invalid" in human.stdout.lower()
+    assert "invalid UTF-8 JSON" in human.stdout
+
 
 def test_validation_enforces_executable_rules_thresholds_and_golden_coverage(tmp_path: Path) -> None:
     profile_root = tmp_path / "references" / "profiles" / "fatigue" / "bad-contract"
@@ -206,6 +211,32 @@ def test_validation_reports_nested_type_errors_without_traceback(tmp_path: Path)
     errors = "\n".join(json.loads(result.stdout)["errors"])
     assert "source_ids" in errors
     assert "phrases" in errors
+
+
+def test_validation_matches_strict_schema_and_case_local_golden_links(tmp_path: Path) -> None:
+    profile_root = tmp_path / "references" / "profiles" / "fatigue" / "strict"
+    profile_root.mkdir(parents=True)
+    document = json.loads(PROFILE.read_text(encoding="utf-8"))
+    document["patterns"][0]["undeclared"] = "not allowed"
+    document["patterns"][1]["contextual_threshold"]["minimum_count"] = True
+    document["patterns"][2]["first_observed"] = "2026-08-26"
+    document["patterns"][2]["reviewed_at"] = "2026-08-25"
+    (profile_root / "patterns.json").write_text(json.dumps(document), encoding="utf-8")
+    goldens = json.loads(GOLDENS.read_text(encoding="utf-8"))
+    case = goldens["cases"][0]
+    unrelated = next(
+        pattern["id"] for pattern in document["patterns"] if pattern["id"] not in case["applicable_pattern_ids"]
+    )
+    case["expected_findings"][0]["pattern_ids"].append(unrelated)
+    (profile_root / "goldens.json").write_text(json.dumps(goldens), encoding="utf-8")
+
+    result = _run("validate_profiles.py", "--root", str(tmp_path), "--json")
+    assert result.returncode == 1
+    errors = "\n".join(json.loads(result.stdout)["errors"])
+    assert "unexpected fields ['undeclared']" in errors
+    assert "minimum_count: expected integer" in errors
+    assert "first_observed: must not follow reviewed_at" in errors
+    assert "must be listed in applicable_pattern_ids" in errors
 
 
 def test_installed_and_standalone_validation_are_self_contained(tmp_path: Path) -> None:
@@ -303,6 +334,39 @@ def test_unprovenanced_voice_tendencies_abstain_even_when_a_field_is_supported()
     assert voice and voice[0]["type"] == "abstain"
 
 
+@pytest.mark.parametrize(
+    "mutation",
+    [
+        lambda card: card.pop("choices"),
+        lambda card: card["tendencies"].__setitem__("directness", "urgent"),
+        lambda card: card["tendencies"].__setitem__("vocabulary_register", 7),
+        lambda card: card["choices"].__setitem__("prefer", [{"not": "a string"}]),
+    ],
+)
+def test_incomplete_or_malformed_voice_cards_safely_abstain(mutation) -> None:
+    evaluate = _load_module("evaluate_profile")
+    voice_card = json.loads(
+        (STYLE / "references" / "profiles" / "voice" / "default-voice-card.json").read_text(encoding="utf-8")
+    )
+    voice_card["scope"]["task_boundary"] = "current_task"
+    voice_card["derivation"].update(
+        {
+            "basis": "explicit_preferences",
+            "authorization": "explicit_user_preference",
+            "retention_boundary": "no_source_storage",
+        }
+    )
+    mutation(voice_card)
+    payload = evaluate.evaluate_text(
+        PROFILE,
+        "It is worth noting that our comprehensive approach unlocks meaningful value.",
+        context="A staff notice requiring a direct, plain statement.",
+        voice_card=voice_card,
+    )
+    voice = [item for item in payload["findings"] if item["pattern_id"] == "task-voice-convergence"]
+    assert voice and voice[0]["type"] == "abstain"
+
+
 def test_supported_voice_card_fields_are_compared_to_observable_prose() -> None:
     evaluate = _load_module("evaluate_profile")
     voice_card = json.loads(
@@ -335,6 +399,7 @@ def test_custom_profile_rules_drive_evaluation_without_known_pattern_ids(tmp_pat
     pattern = document["patterns"][0]
     pattern["id"] = "custom-data-driven-pattern"
     pattern["contextual_threshold"].update({"unit": "section", "minimum_count": 2, "minimum_distinct_signals": 2})
+    pattern["contextual_threshold"].pop("window_words", None)
     pattern["rules"] = [
         {
             "id": "custom-phrases",
@@ -495,6 +560,8 @@ def test_all_goldens_return_the_declared_types_and_pattern_ids() -> None:
 def test_expired_profiles_downgrade_repair_to_candidate(tmp_path: Path) -> None:
     document = json.loads(PROFILE.read_text(encoding="utf-8"))
     for pattern in document["patterns"]:
+        pattern["first_observed"] = "2019-01-01"
+        pattern["reviewed_at"] = "2019-12-01"
         pattern["review_after"] = "2020-01-01"
     expired = tmp_path / "patterns.json"
     expired.write_text(json.dumps(document), encoding="utf-8")

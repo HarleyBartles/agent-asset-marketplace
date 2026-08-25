@@ -86,10 +86,105 @@ def _voice_value(voice_card: dict[str, Any], field: str) -> Any:
     return value
 
 
+def _bounded_strings(
+    value: Any,
+    *,
+    maximum: int,
+    maximum_length: int,
+    allowed: set[str] | None = None,
+    required: bool = False,
+) -> bool:
+    if not isinstance(value, list) or (required and not value) or len(value) > maximum:
+        return False
+    if not all(
+        isinstance(item, str) and 0 < len(item) <= maximum_length and (allowed is None or item in allowed)
+        for item in value
+    ):
+        return False
+    return len(value) == len(set(value))
+
+
+def _exact_object(value: Any, keys: set[str]) -> bool:
+    return isinstance(value, dict) and set(value) == keys
+
+
 def _voice_card_authorized(voice_card: dict[str, Any]) -> bool:
+    if not _exact_object(
+        voice_card,
+        {"schema_version", "profile_id", "version", "scope", "derivation", "tendencies", "choices", "limitations"},
+    ):
+        return False
     scope = voice_card.get("scope")
     derivation = voice_card.get("derivation")
-    if not isinstance(scope, dict) or not isinstance(derivation, dict):
+    tendencies = voice_card.get("tendencies")
+    choices = voice_card.get("choices")
+    if not _exact_object(scope, {"task_boundary", "genres", "audiences"}) or not _exact_object(
+        derivation,
+        {"basis", "authorization", "sample_count", "derived_at", "source_retained", "retention_boundary"},
+    ):
+        return False
+    if not _exact_object(
+        tendencies,
+        {
+            "sentence_range",
+            "directness",
+            "vocabulary_register",
+            "tolerated_fragments",
+            "rhetorical_devices",
+            "formatting_norms",
+        },
+    ) or not _exact_object(choices, {"prefer", "avoid"}):
+        return False
+    sentence_range = tendencies["sentence_range"]
+    if not _exact_object(sentence_range, {"typical_min_words", "typical_max_words"}):
+        return False
+    minimum = sentence_range["typical_min_words"]
+    maximum = sentence_range["typical_max_words"]
+    if not (type(minimum) is int and type(maximum) is int and 1 <= minimum <= maximum <= 100):
+        return False
+    try:
+        date.fromisoformat(derivation["derived_at"])
+    except (TypeError, ValueError):
+        return False
+    if not (
+        type(voice_card["schema_version"]) is int
+        and voice_card["schema_version"] == 1
+        and isinstance(voice_card["profile_id"], str)
+        and bool(re.fullmatch(r"[a-z0-9]+(?:-[a-z0-9]+)*", voice_card["profile_id"]))
+        and isinstance(voice_card["version"], str)
+        and bool(re.fullmatch(r"\d+\.\d+\.\d+", voice_card["version"]))
+        and _bounded_strings(scope["genres"], maximum=8, maximum_length=80)
+        and _bounded_strings(scope["audiences"], maximum=8, maximum_length=80)
+        and type(derivation["sample_count"]) is int
+        and 0 <= derivation["sample_count"] <= 100
+        and derivation["source_retained"] is False
+        and tendencies["directness"] in {"low", "balanced", "high"}
+        and _bounded_strings(
+            tendencies["vocabulary_register"],
+            maximum=5,
+            maximum_length=15,
+            allowed={"plain", "technical", "formal", "informal", "domain-specific"},
+        )
+        and type(tendencies["tolerated_fragments"]) is bool
+        and _bounded_strings(
+            tendencies["rhetorical_devices"],
+            maximum=7,
+            maximum_length=24,
+            allowed={
+                "contrast",
+                "em-dash",
+                "parallelism",
+                "refrain",
+                "rhetorical-question",
+                "triad",
+                "understatement",
+            },
+        )
+        and _bounded_strings(tendencies["formatting_norms"], maximum=8, maximum_length=80)
+        and _bounded_strings(choices["prefer"], maximum=12, maximum_length=120)
+        and _bounded_strings(choices["avoid"], maximum=12, maximum_length=120)
+        and _bounded_strings(voice_card["limitations"], maximum=8, maximum_length=180, required=True)
+    ):
         return False
     basis = derivation.get("basis")
     authorization = derivation.get("authorization")
@@ -100,6 +195,7 @@ def _voice_card_authorized(voice_card: dict[str, Any]) -> bool:
     return bool(
         scope.get("task_boundary") == "current_task"
         and provenance_ok
+        and ((basis == "current_task_text" and derivation["sample_count"] >= 1) or derivation["sample_count"] == 0)
         and derivation.get("source_retained") is False
         and derivation.get("retention_boundary") == "no_source_storage"
     )

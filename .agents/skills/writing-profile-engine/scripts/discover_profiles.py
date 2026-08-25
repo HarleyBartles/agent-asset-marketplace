@@ -23,7 +23,10 @@ def main() -> int:
         print(json.dumps({"schema_version": 1, "profiles": profiles}, ensure_ascii=False, sort_keys=True))
     else:
         for profile in profiles:
-            print(f"{profile['id']} {profile['version']} {profile['kind']} {profile['path']}")
+            if profile["status"] == "invalid":
+                print(f"invalid {profile['path']}: {profile['error']}")
+            else:
+                print(f"{profile['id']} {profile['version']} {profile['kind']} {profile['path']}")
     return 0
 
 
