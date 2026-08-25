@@ -1,9 +1,7 @@
 from pathlib import Path
 import importlib.util
 
-SPEC = importlib.util.spec_from_file_location(
-    "review_preflight", str(Path("tools/review_preflight.py").resolve())
-)
+SPEC = importlib.util.spec_from_file_location("review_preflight", str(Path("tools/review_preflight.py").resolve()))
 review_preflight = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(review_preflight)
 
