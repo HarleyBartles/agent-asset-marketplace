@@ -211,7 +211,7 @@ All scripts support `--help` and classify each flag as `read-only` or `mutating`
 | Directory not ignored | Add to .gitignore + commit |
 | Permission error on create | Sandbox fallback, work in place |
 | Tests fail during baseline | Report failures + ask |
-| No package.json/Cargo.toml | Skip dependency install |
+| No supported manifest | Skip dependency install |
 | Bundled `new-worktree` script | Use it instead of `git worktree add` |
 | Bundled `remove-worktree` script | Use it to remove a worktree and deinit submodules |
 | Skills need refresh after creation | `new-worktree` auto-runs `refreshing-installed-skills` |
