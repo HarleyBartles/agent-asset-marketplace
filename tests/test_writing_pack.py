@@ -65,6 +65,44 @@ def test_clarity_authority_assets_and_report_hygiene_survive_the_move() -> None:
     assert (clarity_skill / "references" / "report-hygiene-checklist.md").is_file()
 
 
+def test_writing_router_declares_its_specialist_interfaces_and_order() -> None:
+    writing_skill = PLUGIN_ROOT / "skills" / "writing"
+    skill_text = (writing_skill / "SKILL.md").read_text(encoding="utf-8")
+    workflow = (writing_skill / "references" / "workflow.md").read_text(encoding="utf-8")
+
+    assert "related_skills:" in skill_text
+    assert "writing-with-clarity" in skill_text
+    assert "writing-style" in skill_text
+
+    stages = [
+        "1. Establish audience, purpose, facts, and hard constraints.",
+        "2. Draft or revise through $writing-with-clarity.",
+        "3. Apply a declared voice card through $writing-style when one is available.",
+        "4. Run $writing-style fatigue review only when evidence supports a material finding.",
+        "5. Re-run $writing-with-clarity as the final gate.",
+    ]
+    positions = [workflow.index(stage) for stage in stages]
+
+    assert positions == sorted(positions)
+
+
+def test_writing_router_authority_order_protects_facts_and_clarity() -> None:
+    authority_order = (PLUGIN_ROOT / "skills" / "writing" / "references" / "authority-order.md").read_text(
+        encoding="utf-8"
+    )
+
+    ranks = [
+        "1. Factual accuracy, safety, legal requirements, and accessibility",
+        "2. Explicit user intent",
+        "3. Clarity and preservation of meaning",
+        "4. Declared voice and authorised style guidance",
+        "5. Reader-fatigue heuristics",
+    ]
+    positions = [authority_order.index(rank) for rank in ranks]
+
+    assert positions == sorted(positions)
+
+
 def test_writing_pack_skills_do_not_own_top_level_profiles_directories() -> None:
     skills_root = PLUGIN_ROOT / "skills"
 

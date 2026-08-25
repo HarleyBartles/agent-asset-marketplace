@@ -74,3 +74,7 @@ These runs used Codex MultiAgentV2, which does not consume named `.md` profiles.
 ## RED judgment
 
 **Inconclusive / no material RED failure observed.** All four baseline agents met their prompt rubrics without the future skills. This record does not claim that the future skills are unnecessary; it means this small, one-run-per-scenario baseline did not yet demonstrate a routing, preservation, privacy, or detector-boundary failure. Do not retrofit a failure. A later pressure campaign must retain these rubrics and, if it needs evidence of incremental value, add a fresh scenario with a concrete material failure rather than relabelling these passes.
+
+Later GREEN passes on these unchanged scenarios are not evidence of improvement
+caused by a new skill: the baseline already passed. They may only document the
+new route's observed behaviour and any coverage limitations.

@@ -15,6 +15,17 @@
   "plugin_license": "MIT",
   "entries": [
     {
+      "canonical_name": "writing",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "canonical_source_path": "codex-marketplace/plugins/writing-pack/skills/writing",
+      "local_path": "skills/writing",
+      "source_path": "codex-marketplace/plugins/writing-pack/skills/writing/SKILL.md",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Canonical first-party writing skill. (Writing composition first-party skill)"
+    },
+    {
       "canonical_name": "writing-with-clarity",
       "source_category": "first_party",
       "content_mode": "verbatim",

@@ -185,11 +185,11 @@ git commit -m "feat: scaffold writing pack and migrate clarity skill"
 - Produces: revised prose plus concise disclosure of material voice/style choices when useful.
 - Never delegates: factual authority to a style profile or clarity authority to an anti-fatigue finding.
 
-- [ ] **Step 1: Extend tests for the routing contract**
+- [x] **Step 1: Extend tests for the routing contract**
 
 Assert that the skill metadata names related skills, that `workflow.md` contains the five-stage order, and that `authority-order.md` ranks factual accuracy/safety, explicit user intent, clarity, declared voice, and fatigue heuristics in that order. Run the focused test and record RED.
 
-- [ ] **Step 2: Write the lean router and references**
+- [x] **Step 2: Write the lean router and references**
 
 Keep `SKILL.md` procedural and below 500 words. It must:
 
@@ -201,11 +201,11 @@ Keep `SKILL.md` procedural and below 500 words. It must:
 
 Make abstention normal: if no material fatigue pattern is present, return the clear draft unchanged.
 
-- [ ] **Step 3: Run fresh-context GREEN pressure tests**
+- [x] **Step 3: Run fresh-context GREEN pressure tests**
 
 Re-run `clarity-versus-unslop.md` and `no-detector-evasion.md` with the new `writing` skill available. Record exact responses and rubric judgments in `green-writing.md`. Fix the skill, not the rubric, until both pass.
 
-- [ ] **Step 4: Validate and commit Task 3**
+- [x] **Step 4: Validate and commit Task 3**
 
 ```powershell
 py -3 -m pytest tests/test_writing_pack.py -q
