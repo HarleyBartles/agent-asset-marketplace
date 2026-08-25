@@ -1,11 +1,11 @@
 {
   "schema_version": 1,
   "campaign_id": "writing-style-adversarial-ab",
-  "campaign_version": "1.1.0",
+  "campaign_version": "1.2.0",
   "status": "frozen_unrun",
   "frozen_at": "2026-08-25",
   "prospective_freeze": {
-    "correction_round": 1,
+    "correction_round": 2,
     "correction_scope": "pre_output_review_findings",
     "worker_outputs_existed_before_refreeze": false,
     "arms_run_before_refreeze": false
@@ -31,6 +31,14 @@
       "worker_visible": false
     }
   },
+  "clarity_recheck": {
+    "skill_path": "codex-marketplace/plugins/writing-pack/skills/writing-with-clarity/SKILL.md",
+    "routing_reference": "references/routing.md",
+    "primary_reference": "references/composition-and-flow.md",
+    "primary_route_reason": "The stimulus requests an intranet update, which uses the report route.",
+    "final_edit_reference": "references/final-edit.md",
+    "optional_secondary_reference": null
+  },
   "treatment_artifacts": [
     {
       "path": "codex-marketplace/plugins/writing-pack/skills/writing-style/SKILL.md",
@@ -38,7 +46,7 @@
     },
     {
       "path": "codex-marketplace/plugins/writing-pack/skills/writing-style/references/profile-contract.md",
-      "sha256": "8631a9034b8a082b299e47fa7d58a0ac67b6233edfefcbebce81721915f68ec3"
+      "sha256": "699375817af87ee5e34d7be25a9da6a79572699f795f9f44ee686ef07aa5443b"
     },
     {
       "path": "codex-marketplace/plugins/writing-pack/skills/writing-style/references/voice-card.md",
@@ -51,6 +59,22 @@
     {
       "path": "codex-marketplace/plugins/writing-pack/skills/writing-style/references/profiles/fatigue/ai-prose-fatigue/patterns.json",
       "sha256": "4ff7f5df7093bb814912787df8256f44218dc67e7ab089198964fb50220b8199"
+    },
+    {
+      "path": "codex-marketplace/plugins/writing-pack/skills/writing-with-clarity/SKILL.md",
+      "sha256": "3881eb85bc3826715a6366c18d8f98099eb3d6b3715897be380779f00e641d23"
+    },
+    {
+      "path": "codex-marketplace/plugins/writing-pack/skills/writing-with-clarity/references/routing.md",
+      "sha256": "e337ffb3186584f72509e17e7d65a85d6b60907a801af396ceb2a14c2f8320f5"
+    },
+    {
+      "path": "codex-marketplace/plugins/writing-pack/skills/writing-with-clarity/references/composition-and-flow.md",
+      "sha256": "182adbc537b9c58dbad39221fded5953a194d680de7c5999d6b30701f524939e"
+    },
+    {
+      "path": "codex-marketplace/plugins/writing-pack/skills/writing-with-clarity/references/final-edit.md",
+      "sha256": "06e58473bc7bb4d4235475475d44d48837d3238d87883239c2808ccb59bde346"
     }
   ],
   "evaluator_goldens": {
@@ -100,7 +124,11 @@
         "codex-marketplace/plugins/writing-pack/skills/writing-style/references/profile-contract.md",
         "codex-marketplace/plugins/writing-pack/skills/writing-style/references/voice-card.md",
         "codex-marketplace/plugins/writing-pack/skills/writing-style/references/profiles/fatigue/ai-prose-fatigue/profile.md",
-        "codex-marketplace/plugins/writing-pack/skills/writing-style/references/profiles/fatigue/ai-prose-fatigue/patterns.json"
+        "codex-marketplace/plugins/writing-pack/skills/writing-style/references/profiles/fatigue/ai-prose-fatigue/patterns.json",
+        "codex-marketplace/plugins/writing-pack/skills/writing-with-clarity/SKILL.md",
+        "codex-marketplace/plugins/writing-pack/skills/writing-with-clarity/references/routing.md",
+        "codex-marketplace/plugins/writing-pack/skills/writing-with-clarity/references/composition-and-flow.md",
+        "codex-marketplace/plugins/writing-pack/skills/writing-with-clarity/references/final-edit.md"
       ]
     }
   ],

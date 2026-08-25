@@ -5,10 +5,11 @@ rubric, and the machine-readable campaign contract. Task 4 designs and freezes
 the experiment but does not run either arm.
 
 Before any output is generated, verify the SHA-256 pins for the stimulus,
-hidden rubric, every treatment-readable intervention file, and the evaluator
-goldens. Abort the campaign without running a trial if any pin differs. Version
-1.1.0 records pre-output review corrections; no worker output existed and no
-arm had run before the prospective refreeze.
+hidden rubric, the complete treatment-readable writing-style and
+writing-with-clarity route, and the evaluator goldens. Abort the campaign
+without running a trial if any pin differs. Version 1.2.0 records the second
+pre-output review correction; no worker output existed and no arm had run
+before the prospective refreeze.
 
 Task 5 must first build and validate the deterministic profile evaluator using
 only the profile goldens. After engine GREEN, it may run the frozen campaign:

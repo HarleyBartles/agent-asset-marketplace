@@ -15,6 +15,7 @@ ROOT = Path(__file__).resolve().parents[1]
 STYLE_ROOT = ROOT / "codex-marketplace" / "plugins" / "writing-pack" / "skills" / "writing-style"
 FATIGUE_ROOT = STYLE_ROOT / "references" / "profiles" / "fatigue" / "ai-prose-fatigue"
 VOICE_ROOT = STYLE_ROOT / "references" / "profiles" / "voice"
+CLARITY_ROOT = ROOT / "codex-marketplace" / "plugins" / "writing-pack" / "skills" / "writing-with-clarity"
 SOURCE_REGISTER = ROOT / "research" / "ai-prose-fatigue" / "source-register.json"
 BLINDED_ROOT = ROOT / "tests" / "pressure" / "writing" / "blinded"
 
@@ -73,6 +74,12 @@ def _sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def _mandatory_reference_paths(skill_path: Path, section_heading: str) -> set[str]:
+    content = skill_path.read_text(encoding="utf-8")
+    section = content.split(section_heading, maxsplit=1)[1].split("\n## ", maxsplit=1)[0]
+    return set(re.findall(r"`(references/[^`]+)`", section))
+
+
 def _walk_keys(value: Any) -> set[str]:
     if isinstance(value, dict):
         return set(value) | {key for child in value.values() for key in _walk_keys(child)}
@@ -81,34 +88,94 @@ def _walk_keys(value: Any) -> set[str]:
     return set()
 
 
+def _normalized_tokens(value: str) -> set[str]:
+    snake_value = re.sub(r"([a-z0-9])([A-Z])", r"\1_\2", value)
+    return set(re.findall(r"[a-z0-9]+", snake_value.lower()))
+
+
+def _is_negative_boundary(sentence: str) -> bool:
+    return bool(
+        re.search(
+            r"\b(?:do|does|must|should)\s+not\b|\bnot\s+an?\b|\bwithout\b",
+            sentence,
+        )
+    )
+
+
+def _semantic_categories(tokens: set[str]) -> set[str]:
+    categories: set[str] = set()
+    lexical_targets = {
+        "occurrence",
+        "occurrences",
+        "phrase",
+        "phrases",
+        "term",
+        "terms",
+        "token",
+        "tokens",
+        "vocabulary",
+        "word",
+        "words",
+    }
+    restriction_actions = {
+        "always",
+        "ban",
+        "banned",
+        "block",
+        "blocked",
+        "delete",
+        "deleted",
+        "disallow",
+        "disallowed",
+        "eliminate",
+        "eliminated",
+        "exclude",
+        "excluded",
+        "forbid",
+        "forbidden",
+        "never",
+        "omit",
+        "omitted",
+        "prohibit",
+        "prohibited",
+        "remove",
+        "removed",
+        "strip",
+        "stripped",
+        "use",
+    }
+    origin_subjects = {"ai", "authorship", "detector", "evasion", "llm", "model"}
+    score_measures = {"confidence", "likelihood", "probability", "rating", "score"}
+    authorship_judgments = {
+        "assertion",
+        "claim",
+        "classification",
+        "conclusion",
+        "decision",
+        "judgment",
+        "label",
+        "result",
+        "verdict",
+    }
+
+    if tokens & lexical_targets and tokens & restriction_actions:
+        categories.add("universal_token_restriction")
+    if tokens & origin_subjects and tokens & score_measures:
+        categories.add("origin_or_detector_score")
+    if "authorship" in tokens and tokens & authorship_judgments:
+        categories.add("authorship_judgment")
+    return categories
+
+
 def _semantic_violations(value: Any, path: str = "$") -> list[str]:
-    """Return prohibited machine fields and affirmative profile semantics."""
+    """Apply the profile contract's bounded semantic-category grammar recursively."""
     violations: list[str] = []
-    token_restriction_key = re.compile(
-        r"(?:never_use|always_remove|forbid(?:den)?|ban(?:ned)?|prohibit(?:ed)?)"
-        r"(?:_[a-z0-9]+)*_(?:token|tokens|word|words|phrase|phrases|term|terms)$"
-        r"|^(?:token|tokens|word|words|phrase|phrases|term|terms)"
-        r"(?:_[a-z0-9]+)*_(?:ban|bans|forbidden|prohibited)$"
-    )
-    score_key = re.compile(
-        r"^(?:ai|detector|evasion)(?:_[a-z0-9]+)*_"
-        r"(?:score|probability|likelihood|confidence)$"
-    )
-    authorship_key = re.compile(
-        r"^authorship(?:_[a-z0-9]+)*_"
-        r"(?:score|probability|likelihood|confidence|verdict|conclusion|assertion|claim)$"
-    )
 
     if isinstance(value, dict):
         for key, child in value.items():
             snake_key = re.sub(r"([a-z0-9])([A-Z])", r"\1_\2", key)
             normalized_key = re.sub(r"[^a-z0-9]+", "_", snake_key.lower()).strip("_")
-            if (
-                normalized_key in UNSAFE_FIELD_NAMES
-                or token_restriction_key.fullmatch(normalized_key)
-                or score_key.fullmatch(normalized_key)
-                or authorship_key.fullmatch(normalized_key)
-            ):
+            if normalized_key in UNSAFE_FIELD_NAMES or _semantic_categories(_normalized_tokens(key)):
                 violations.append(f"{path}.{key}: prohibited key semantics")
             violations.extend(_semantic_violations(child, f"{path}.{key}"))
     elif isinstance(value, list):
@@ -117,33 +184,25 @@ def _semantic_violations(value: Any, path: str = "$") -> list[str]:
     elif isinstance(value, str):
         sentences = re.split(r"(?<=[.!?;])\s+|\n+", value.lower())
         for sentence in sentences:
-            boundary = re.search(r"\b(?:do|does|must|should)\s+not\b|\bnot\s+an?\b", sentence)
-            token_ban = re.search(
-                r"\b(?:never\s+use|always\s+(?:remove|delete)|ban|forbid|prohibit)\b"
-                r".{0,50}\b(?:token|word|phrase|term)s?\b",
-                sentence,
+            tokens = _normalized_tokens(sentence)
+            categories = _semantic_categories(tokens)
+            authorship_assertion = bool(
+                tokens
+                & {
+                    "assert",
+                    "asserted",
+                    "classify",
+                    "classified",
+                    "conclude",
+                    "concluded",
+                    "determine",
+                    "determined",
+                    "label",
+                    "labeled",
+                }
+                and tokens & {"ai", "authorship", "authored", "generated", "llm", "written"}
             )
-            score_assertion = re.search(
-                r"\b(?:ai|detector|evasion|authorship)(?:[- ]authorship)?[- ]?"
-                r"(?:score|probability|likelihood|confidence)\b"
-                r"\s*(?::|=|is|of)\s*(?:\d|high\b|low\b|likely\b|unlikely\b)",
-                sentence,
-            ) or re.search(
-                r"\b(?:assign|calculate|return|report|provide)\b.{0,50}"
-                r"\b(?:ai|detector|evasion|authorship).{0,20}"
-                r"(?:score|probability|likelihood|confidence)\b",
-                sentence,
-            )
-            authorship_assertion = re.search(
-                r"\b(?:conclude|assert|classify|label|determine)\b.{0,70}"
-                r"\b(?:ai[- ]generated|ai[- ]authored|written by ai|ai authorship|authorship)\b",
-                sentence,
-            ) or re.search(
-                r"\b(?:this|the)\s+(?:text|passage|draft|author)\b.{0,60}"
-                r"\b(?:was written by ai|is (?:likely )?ai[- ](?:generated|written|authored))\b",
-                sentence,
-            )
-            if token_ban or (not boundary and (score_assertion or authorship_assertion)):
+            if not _is_negative_boundary(sentence) and (categories or authorship_assertion):
                 violations.append(f"{path}: prohibited affirmative semantics")
 
     return violations
@@ -293,14 +352,20 @@ def test_profile_data_rejects_exact_token_bans_and_detector_scores(
         {"policy": {"never_use_tokens": ["delve"]}},
         {"policy": {"bannedWords": ["delve"]}},
         {"policy": {"forbidden_phrases": ["in conclusion"]}},
+        {"policy": {"blocked_words": ["delve"]}},
+        {"policy": {"disallowed_vocabulary": ["delve"]}},
         {"metrics": {"ai_likelihood": 0.92}},
         {"metrics": {"aiLikelihood": 0.92}},
         {"metrics": {"detector_confidence": 0.81}},
+        {"metrics": {"llm_detection_score": 0.81}},
         {"result": {"authorship_verdict": "AI-generated"}},
         {"result": {"authorshipConclusion": "AI-authored"}},
+        {"result": {"authorship_result": "AI-authored"}},
         {"rationale": "Conclude that this passage was written by AI."},
         {"rationale": "Label this draft as AI-authored."},
         {"rationale": "Report an authorship probability of 0.8."},
+        {"repair_guidance": "Remove every occurrence of delve."},
+        {"repair_guidance": "Words such as delve should always be removed."},
     ],
 )
 def test_prohibited_semantic_aliases_are_rejected_recursively(unsafe_fixture: dict[str, Any]) -> None:
@@ -496,9 +561,9 @@ def test_blinded_campaign_is_frozen_and_hides_the_judge_rubric_from_workers() ->
 
 def test_blinded_campaign_pins_intervention_and_goldens_before_output() -> None:
     campaign = _load_json(BLINDED_ROOT / "campaign.json")
-    assert campaign["campaign_version"] == "1.1.0"
+    assert campaign["campaign_version"] == "1.2.0"
     assert campaign["prospective_freeze"] == {
-        "correction_round": 1,
+        "correction_round": 2,
         "correction_scope": "pre_output_review_findings",
         "worker_outputs_existed_before_refreeze": False,
         "arms_run_before_refreeze": False,
@@ -523,6 +588,32 @@ def test_blinded_campaign_pins_intervention_and_goldens_before_output() -> None:
     assert verification["algorithm"] == "sha256"
     assert verification["timing"] == "before_any_worker_output"
     assert verification["on_mismatch"] == "abort_without_running_trials"
+
+
+def test_treatment_campaign_pins_complete_mandatory_clarity_route() -> None:
+    campaign = _load_json(BLINDED_ROOT / "campaign.json")
+    treatment = next(arm for arm in campaign["arms"] if arm["id"] == "treatment-writing-style")
+    allowed_reads = set(treatment["worker_allowed_reads"])
+    pinned_reads = {artifact["path"] for artifact in campaign["treatment_artifacts"]}
+    route = campaign["clarity_recheck"]
+
+    writing_style_skill = STYLE_ROOT / "SKILL.md"
+    assert "$writing-with-clarity" in writing_style_skill.read_text(encoding="utf-8")
+
+    clarity_skill_relative = "codex-marketplace/plugins/writing-pack/skills/writing-with-clarity/SKILL.md"
+    mandatory_references = _mandatory_reference_paths(CLARITY_ROOT / "SKILL.md", "## Read in bounded layers")
+    routed_primary = route["primary_reference"]
+    assert Path(routed_primary).name in (CLARITY_ROOT / "references" / "routing.md").read_text(encoding="utf-8")
+    assert route["routing_reference"] == "references/routing.md"
+    assert route["final_edit_reference"] == "references/final-edit.md"
+
+    required_reads = {clarity_skill_relative} | {
+        f"codex-marketplace/plugins/writing-pack/skills/writing-with-clarity/{path}"
+        for path in mandatory_references | {routed_primary}
+    }
+    assert required_reads <= allowed_reads
+    assert required_reads <= pinned_reads
+    assert route["optional_secondary_reference"] is None
 
 
 def test_hidden_rubric_requires_output_evidence_without_excluding_unsupported_signals() -> None:

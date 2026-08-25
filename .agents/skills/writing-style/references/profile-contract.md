@@ -67,7 +67,11 @@ approved for repository publication.
 Profiles must not contain exact-token bans, forbidden-word lists, detector or
 evasion scores, authorship probabilities, identity claims, or instructions to
 degrade prose. Voice cards must not retain source prose or a private corpus.
-This boundary applies to semantically equivalent field names and prose, not
-only to a fixed spelling. Validation must recurse through nested objects and
-arrays while preserving legitimate boundary statements such as “do not provide
-detector scores” or “this is not an authorship claim.”
+Validation recursively applies a bounded grammar to nested objects and arrays.
+It normalises snake case, hyphens, and camel case in field names, then rejects
+semantic categories for universal token restrictions, detector or origin
+scores, and authorship judgments. In prose it rejects affirmative combinations
+from those same categories, including universal removal instructions. This is
+not an open-ended natural-language equivalence proof; ambiguous constructions
+require human review. Legitimate negative boundary statements such as “do not
+provide detector scores” or “this is not an authorship claim” remain allowed.
