@@ -584,11 +584,17 @@ Mechanically review the branch diff against the current `reviewer-skills`, `revi
 
 Fix all actionable findings before external review.
 
-- [ ] **Step 4: Run iterative review**
+- [x] **Step 4: Run iterative review or record an authorized waiver**
 
 Invoke `/iterative-review` against the complete branch diff. Use the required independent lens and strong-review passes. Resolve every valid finding, rerun affected focused tests, then rerun `py -3 tools/run.py ci --check`. Record reviewer identity/profile, branch SHA reviewed, findings, repairs, and final verdict.
 
-- [ ] **Step 5: Complete the plan and publish**
+Closeout note: the graph reached its mandatory `reviewer-fast` node after clean
+preflight and scope-honesty checks, but the Codex reviewer dispatch failed for
+workspace credit exhaustion. On 2026-08-25 the user explicitly authorized
+skipping the remaining iterative review and accepting the completed mechanical
+`reviewer-skills`, `reviewer-marketplace`, and `reviewer-security` self-review.
+
+- [x] **Step 5: Complete the plan and publish**
 
 Mark each genuinely delivered checkbox complete, regenerate the mesh, run the final CI gate, and commit the closeout update:
 
@@ -603,7 +609,7 @@ git rev-parse HEAD
 
 Push `codex/mark-371-writing-pack-design` and open a **draft** PR into `main`. The PR body must name MARK-371, summarize the settled plugin boundary, list RED/GREEN and full-CI evidence, disclose the research limitations, and state that the feature is anti-fatigue/style guidance rather than detector evasion.
 
-- [ ] **Step 6: Return proof and update Linear**
+- [x] **Step 6: Return proof and update Linear**
 
 Verify the remote PR head equals local `HEAD`. Report:
 
