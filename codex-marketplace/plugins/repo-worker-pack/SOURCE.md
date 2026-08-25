@@ -7,6 +7,9 @@ This plugin projects the first-party repo worker baseline skills.
   compositional repo-worker entrypoint and supporting workflow skills.
 - The bundle stays narrow, first-party only, and aligns to the current manifest
   repo worker baseline without absorbing broader Superpowers+ or other workflow packs.
+- Writing workflow custody belongs to `writing-pack`; generic anti-slop engine
+  and profile custody belongs to `unslop-plus`. This plugin does not duplicate
+  either source tree.
 
 ## Provenance
 

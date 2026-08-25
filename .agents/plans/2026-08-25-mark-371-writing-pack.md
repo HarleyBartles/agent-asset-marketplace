@@ -428,11 +428,11 @@ git commit -m "feat(writing-pack): add writing profile engine"
 - Preserves: `/unslop-profiles` as the generic cross-domain router and `/unslop-engine` as the generic profile-generation concept.
 - Routes: prose creation/revision to `/writing`; direct clarity-only work may still invoke `/writing-with-clarity`.
 
-- [ ] **Step 1: Add failing uniqueness and reference tests**
+- [x] **Step 1: Add failing uniqueness and reference tests**
 
 Extend `tests/test_writing_pack.py` to assert exactly one canonical directory exists for each of `writing-with-clarity` and `unslop-profiles`, that no marketplace skill owns a top-level `profiles/` directory, and that live non-generated references point to their current owning plugin where a physical path is named. Run RED.
 
-- [ ] **Step 2: Remove the duplicate generic profile tree**
+- [x] **Step 2: Remove the duplicate generic profile tree**
 
 Delete only `codex-marketplace/plugins/repo-worker-pack/skills/unslop-profiles/`; its byte-identical canonical replacement remains in `unslop-plus`. Do not delete or relocate `unslop-plus/skills/unslop-engine` or `unslop-plus/skills/unslop-profiles`.
 
@@ -442,15 +442,15 @@ Move the retained generic library with `git mv` from
 router paths. This is a layout correction, not a transfer of ownership to the
 writing plugin.
 
-- [ ] **Step 3: Make the generic/writing boundary explicit**
+- [x] **Step 3: Make the generic/writing boundary explicit**
 
 Update `unslop-plus` prose so its generic writing profile routes sustained prose work to `$writing` when installed, while remaining usable by itself. Correct the stale `unslop-engine` output-contract reference: either add the referenced contract under its lawful `references/` root or remove the false claim, based on the live generic engine behavior. Do not expand MARK-371 into a generic-engine rewrite.
 
-- [ ] **Step 4: Update live cross-references**
+- [x] **Step 4: Update live cross-references**
 
 Audit the file list above plus a fresh repository-wide `rg`. Replace ownership/path statements, not historical completed specs. Update general prose routing to `$writing`; retain `$writing-with-clarity` where the call genuinely requests only clarity or final-edit review. Keep `/unslop-profiles` references for security, testing, code review, and other generic profiles.
 
-- [ ] **Step 5: Sync manifests and pass focused GREEN**
+- [x] **Step 5: Sync manifests and pass focused GREEN**
 
 ```powershell
 py -3 tools/new_plugin.py --sync writing-pack
@@ -463,7 +463,7 @@ git diff --check
 
 The final `rg` must return no live ownership references; historical completed specs may remain untouched and should be excluded if needed.
 
-- [ ] **Step 6: Commit Task 6**
+- [x] **Step 6: Commit Task 6**
 
 ```powershell
 git add AGENTS.md codex-marketplace/plugins tests/test_writing_pack.py .agents/plans/2026-08-25-mark-371-writing-pack.md
@@ -494,7 +494,7 @@ git commit -m "refactor: separate writing and generic unslop custody"
 - Produces: this repository's installed skills from `repo-worker-pack`, `superpowers-plus`, `mcp-usage-pack`, `writing-pack`, and `unslop-plus`.
 - Guarantees: `.agents/skills/writing`, `writing-with-clarity`, `writing-style`, `writing-profile-engine`, `unslop-engine`, and `unslop-profiles` are present and provenance points to the correct plugin owners.
 
-- [ ] **Step 1: Add failing installed-default tests**
+- [x] **Step 1: Add failing installed-default tests**
 
 Update focused tests to expect `writing-pack` and `unslop-plus` in `install_defaults` and `syncedPlugins`, and to reject stale provenance pointing `writing-with-clarity` or `unslop-profiles` at `repo-worker-pack`. Keep fixture order deterministic. Run RED:
 
@@ -502,11 +502,11 @@ Update focused tests to expect `writing-pack` and `unslop-plus` in `install_defa
 py -3 -m pytest tests/test_refresh_installed_skills.py tests/test_worktree_scripts.py tests/test_writing_pack.py -q
 ```
 
-- [ ] **Step 2: Update the editable default policy**
+- [x] **Step 2: Update the editable default policy**
 
 Add `writing-pack` and `unslop-plus` to `codex-marketplace/repo-local-marketplace-policy.json` `install_defaults` in marketplace order. Do not hand-edit generated policy results to disguise a generator mismatch.
 
-- [ ] **Step 3: Regenerate in dependency order**
+- [x] **Step 3: Regenerate in dependency order**
 
 Stage all canonical source additions, moves, removals, policy changes, tests, research, and plan updates before applying generators. Then run:
 
@@ -519,7 +519,7 @@ py -3 tools/run.py index-mesh --apply
 
 Review generated diffs. Confirm `.agents/skills/` contains installed copies, not a second editable source tree.
 
-- [ ] **Step 4: Pass package and installed-surface GREEN**
+- [x] **Step 4: Pass package and installed-surface GREEN**
 
 ```powershell
 py -3 -m pytest tests/test_refresh_installed_skills.py tests/test_worktree_scripts.py tests/test_writing_pack.py -q
@@ -530,7 +530,7 @@ py -3 tools/validate_authority_assets.py
 git diff --check
 ```
 
-- [ ] **Step 5: Commit Task 7**
+- [x] **Step 5: Commit Task 7**
 
 ```powershell
 git add -A

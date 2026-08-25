@@ -10,6 +10,11 @@ Catch generic AI prose before it becomes user-facing text. Apply before drafting
 
 Before drafting or revising: chat answers, documents, summaries, memos, release notes, issue descriptions, and explanatory copy.
 
+When `$writing` is installed, use it for sustained prose so clarity, authorised
+voice, fatigue review, and the final clarity gate compose in one workflow. Use
+this generic profile by itself for a narrow scan or when `writing-pack` is not
+installed.
+
 ## Slop Patterns to Avoid
 
 - Cliche openings and broad scene-setting before the actual subject

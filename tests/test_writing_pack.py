@@ -114,6 +114,29 @@ def test_writing_pack_skills_do_not_own_top_level_profiles_directories() -> None
     assert all(not (skill / "profiles").exists() for skill in skills_root.iterdir() if skill.is_dir())
 
 
+def test_marketplace_skills_use_only_canonical_skill_subdirectories() -> None:
+    plugins_root = ROOT / "codex-marketplace" / "plugins"
+    illegal = [
+        skill / "profiles"
+        for skill in plugins_root.glob("*/skills/*")
+        if skill.is_dir() and (skill / "profiles").exists()
+    ]
+
+    assert illegal == []
+
+
+def test_writing_and_unslop_skills_have_single_canonical_owners() -> None:
+    plugins_root = ROOT / "codex-marketplace" / "plugins"
+
+    for skill_name, owner in {
+        "writing-with-clarity": "writing-pack",
+        "unslop-profiles": "unslop-plus",
+    }.items():
+        matches = sorted(plugins_root.glob(f"*/skills/{skill_name}"))
+        assert len(matches) == 1
+        assert matches[0].parts[-3] == owner
+
+
 def test_installed_defaults_include_the_writing_and_generic_unslop_owners() -> None:
     policy = _load_json(ROOT / "codex-marketplace" / "repo-local-marketplace-policy.json")
     old_unslop_profiles = ROOT / "codex-marketplace" / "plugins" / "repo-worker-pack" / "skills" / "unslop-profiles"

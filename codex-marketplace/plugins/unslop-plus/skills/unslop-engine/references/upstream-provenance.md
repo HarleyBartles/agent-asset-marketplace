@@ -18,4 +18,4 @@ The upstream source and adaptation rationale are recorded in `SOURCE.md` for pro
 
 ## First-Party Profiles
 
-The thirteen profiles are first-party portable profiles authored by your human partner Bartles (Asset Marketplace) under MIT license. They are contained in `codex-marketplace/plugins/unslop-plus/skills/unslop-profiles/profiles/` and are not derived from upstream content.
+The thirteen profiles are first-party portable profiles authored by your human partner Bartles (Asset Marketplace) under MIT license. They are contained in `codex-marketplace/plugins/unslop-plus/skills/unslop-profiles/references/profiles/` and are not derived from upstream content.
