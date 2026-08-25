@@ -5,6 +5,7 @@ import subprocess
 import sys
 from pathlib import Path
 
+import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
 PLUGIN_ROOT = ROOT / "codex-marketplace" / "plugins" / "writing-pack"
@@ -25,6 +26,11 @@ INSTALLED_DEFAULTS = [
 
 def _load_json(path: Path) -> dict:
     return json.loads(path.read_text(encoding="utf-8"))
+
+
+def _load_frontmatter(text: str) -> dict:
+    _, frontmatter, _ = text.split("---", 2)
+    return yaml.safe_load(frontmatter)
 
 
 def test_writing_pack_is_an_enabled_marketplace_root() -> None:
@@ -69,10 +75,9 @@ def test_writing_router_declares_its_specialist_interfaces_and_order() -> None:
     writing_skill = PLUGIN_ROOT / "skills" / "writing"
     skill_text = (writing_skill / "SKILL.md").read_text(encoding="utf-8")
     workflow = (writing_skill / "references" / "workflow.md").read_text(encoding="utf-8")
+    metadata = _load_frontmatter(skill_text)["metadata"]
 
-    assert "related_skills:" in skill_text
-    assert "writing-with-clarity" in skill_text
-    assert "writing-style" in skill_text
+    assert {"writing-with-clarity", "writing-style"} <= set(metadata.get("related_skills", []))
 
     stages = [
         "1. Establish audience, purpose, facts, and hard constraints.",
