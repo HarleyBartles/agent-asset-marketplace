@@ -325,18 +325,25 @@ def _install_dependencies(repo_root: Path) -> int:
     if requirements.is_file():
         pip = shutil.which("pip") or shutil.which("pip3")
         if not pip:
-            print(f"error: requirements.txt present in {repo_root} but pip is not available", file=sys.stderr)
-            return 1
-        print(f"Installing Python requirements in {repo_root}")
-        pip_code = _run_command([pip, "install", "-r", "requirements.txt"], repo_root)
-        if pip_code != 0:
-            # pip is often blocked on externally-managed Python installs. Do not
-            # delete a freshly created worktree for this; the worktree is still
-            # useful and the user can install dependencies into a venv later.
+            # pip may be available only as `python -m pip` in some Python
+            # distributions. Do not delete the worktree for a missing pip
+            # executable; the user can install requirements manually.
             print(
-                f"warning: pip install failed in {repo_root}; leaving the worktree for manual Python setup",
+                f"warning: requirements.txt present in {repo_root} but pip is not on PATH; "
+                "leaving the worktree for manual Python setup",
                 file=sys.stderr,
             )
+        else:
+            print(f"Installing Python requirements in {repo_root}")
+            pip_code = _run_command([pip, "install", "-r", "requirements.txt"], repo_root)
+            if pip_code != 0:
+                # pip is often blocked on externally-managed Python installs. Do not
+                # delete a freshly created worktree for this; the worktree is still
+                # useful and the user can install dependencies into a venv later.
+                print(
+                    f"warning: pip install failed in {repo_root}; leaving the worktree for manual Python setup",
+                    file=sys.stderr,
+                )
 
     if _is_poetry_project(repo_root):
         if not shutil.which("poetry"):
@@ -346,26 +353,6 @@ def _install_dependencies(repo_root: Path) -> int:
         exit_codes.append(_run_command(["poetry", "install", "--no-interaction"], repo_root))
 
     return next((code for code in exit_codes if code != 0), 0)
-
-
-def _remove_worktree(worktree_root: Path, main_repo_root: Path, branch: str) -> None:
-    """Remove a newly created worktree and its branch so failed runs can be retried."""
-    remove = subprocess.run(
-        ["git", "worktree", "remove", "--force", str(worktree_root)],
-        cwd=main_repo_root,
-        env=_stripped_env(),
-        capture_output=True,
-    )
-    if remove.returncode != 0 and worktree_root.exists():
-        shutil.rmtree(worktree_root, ignore_errors=True)
-    # The branch was created by `git worktree add -b` in this run; delete it so
-    # the caller can retry with the same branch name.
-    subprocess.run(
-        ["git", "branch", "-D", branch],
-        cwd=main_repo_root,
-        env=_stripped_env(),
-        capture_output=True,
-    )
 
 
 def _init_submodules(worktree_root: Path) -> int:
@@ -638,13 +625,8 @@ def _apply_worktree(
     if result.returncode != 0:
         return result.returncode
 
-    try:
-        exit_code = _configure_worktree(worktree_root, main_repo_root, no_skill_refresh)
-    except BaseException:
-        _remove_worktree(worktree_root, main_repo_root, branch)
-        raise
+    exit_code = _configure_worktree(worktree_root, main_repo_root, no_skill_refresh)
     if exit_code != 0:
-        _remove_worktree(worktree_root, main_repo_root, branch)
         return exit_code
 
     scratch_root = _canonical_scratch_root(main_repo_root, branch)

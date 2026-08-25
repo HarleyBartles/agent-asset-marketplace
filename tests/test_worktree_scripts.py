@@ -480,8 +480,8 @@ def test_new_worktree_initializes_submodules_before_refresh(tmp_path: Path, monk
     assert (worktree_root / ".agents" / "skills" / "submod-skill").is_dir()
 
 
-def test_new_worktree_removes_dangling_worktree_on_refresh_failure(tmp_path: Path) -> None:
-    """A failed post-creation refresh must leave no registered worktree behind."""
+def test_new_worktree_keeps_dangling_worktree_on_refresh_failure(tmp_path: Path) -> None:
+    """A failed post-creation refresh keeps the worktree so an agent can inspect."""
     repo = _make_repo_with_failing_refresh(tmp_path, "failing-refresh-repo")
     worktree_root = tmp_path / "_agent-worktrees" / "failing-refresh-repo" / "feature"
     result = subprocess.run(
@@ -492,7 +492,7 @@ def test_new_worktree_removes_dangling_worktree_on_refresh_failure(tmp_path: Pat
         text=True,
     )
     assert result.returncode != 0, result.stdout
-    assert not worktree_root.exists()
+    assert worktree_root.is_dir()
     list_result = subprocess.run(
         ["git", "worktree", "list", "--porcelain"],
         cwd=repo,
@@ -500,7 +500,7 @@ def test_new_worktree_removes_dangling_worktree_on_refresh_failure(tmp_path: Pat
         text=True,
         check=True,
     )
-    assert str(worktree_root) not in list_result.stdout
+    assert worktree_root.as_posix() in list_result.stdout
 
 
 def test_new_worktree_from_linked_worktree_succeeds_without_flag(tmp_path: Path) -> None:
@@ -527,8 +527,8 @@ def test_new_worktree_from_linked_worktree_succeeds_without_flag(tmp_path: Path)
     assert "Worktree ready" in result.stdout
 
 
-def test_new_worktree_removes_branch_on_refresh_failure(tmp_path: Path) -> None:
-    """A failed post-creation refresh must remove the branch so the run can be retried."""
+def test_new_worktree_keeps_branch_on_refresh_failure(tmp_path: Path) -> None:
+    """A failed post-creation refresh keeps the branch and worktree for inspection."""
     repo = _make_repo_with_failing_refresh(tmp_path, "failing-branch-repo")
     worktree_root = tmp_path / "_agent-worktrees" / "failing-branch-repo" / "feature"
     result = subprocess.run(
@@ -539,7 +539,7 @@ def test_new_worktree_removes_branch_on_refresh_failure(tmp_path: Path) -> None:
         text=True,
     )
     assert result.returncode != 0, result.stdout
-    assert not worktree_root.exists()
+    assert worktree_root.is_dir()
     branch_result = subprocess.run(
         ["git", "branch", "--list", "feature"],
         cwd=repo,
@@ -547,7 +547,7 @@ def test_new_worktree_removes_branch_on_refresh_failure(tmp_path: Path) -> None:
         text=True,
         check=True,
     )
-    assert "feature" not in branch_result.stdout
+    assert "feature" in branch_result.stdout
 
 
 def test_new_worktree_from_main_succeeds_without_flag(tmp_path: Path) -> None:
@@ -765,7 +765,7 @@ def test_new_worktree_dispatches_through_command_bus_when_present(tmp_path: Path
     assert "Wrote index mesh" not in result.stdout
 
 
-def test_new_worktree_fails_closed_when_command_bus_fails(tmp_path: Path) -> None:
+def test_new_worktree_fails_and_keeps_worktree_when_command_bus_fails(tmp_path: Path) -> None:
     failing_bus = """\
 import sys
 print("repo-owned index-mesh failed", file=sys.stderr)
@@ -781,7 +781,7 @@ sys.exit(1)
         text=True,
     )
     assert result.returncode != 0, result.stdout
-    assert not worktree_root.exists()
+    assert worktree_root.is_dir()
     assert "repo-owned index-mesh failed" in result.stderr
     assert "Wrote index mesh" not in result.stdout
 
@@ -900,7 +900,7 @@ def test_new_worktree_installs_dependencies_from_manifest(
 
 
 def test_new_worktree_fails_when_manifest_has_no_installer(tmp_path: Path) -> None:
-    """A manifest without its required package manager should fail the worktree."""
+    """A manifest without its required package manager returns failure but keeps the worktree."""
     repo = _make_repo_with_bundled_refresh(tmp_path, "missing-npm-repo")
     (repo / "package-lock.json").write_text('{"lockfileVersion": 1}', encoding="utf-8")
     subprocess.run(["git", "add", "-A"], cwd=repo, check=True, capture_output=True)
@@ -921,7 +921,7 @@ def test_new_worktree_fails_when_manifest_has_no_installer(tmp_path: Path) -> No
         text=True,
     )
     assert result.returncode != 0, result.stdout
-    assert not worktree_root.exists()
+    assert worktree_root.is_dir()
     assert "npm is not available" in result.stderr
 
 
@@ -1053,8 +1053,8 @@ def test_new_worktree_keeps_worktree_when_pip_fails(tmp_path: Path) -> None:
     assert "pip install failed" in result.stderr
 
 
-def test_new_worktree_removes_worktree_when_npm_fails(tmp_path: Path) -> None:
-    """A failing Node installer should still fail closed and remove the worktree."""
+def test_new_worktree_keeps_worktree_when_npm_fails(tmp_path: Path) -> None:
+    """A failing Node installer keeps the worktree for the agent to inspect."""
     repo = _make_repo_with_bundled_refresh(tmp_path, "npm-fail-repo")
     (repo / "package.json").write_text('{"name": "npm-fail-repo"}', encoding="utf-8")
     subprocess.run(["git", "add", "-A"], cwd=repo, check=True, capture_output=True)
@@ -1080,7 +1080,33 @@ def test_new_worktree_removes_worktree_when_npm_fails(tmp_path: Path) -> None:
         text=True,
     )
     assert result.returncode != 0, result.stdout
-    assert not worktree_root.exists()
+    assert worktree_root.is_dir()
+
+
+def test_new_worktree_keeps_worktree_when_pip_is_missing(tmp_path: Path) -> None:
+    """A missing pip executable should not delete the worktree."""
+    repo = _make_repo_with_bundled_refresh(tmp_path, "missing-pip-repo")
+    (repo / "requirements.txt").write_text("requests", encoding="utf-8")
+    subprocess.run(["git", "add", "-A"], cwd=repo, check=True, capture_output=True)
+    subprocess.run(["git", "commit", "-m", "add requirements"], cwd=repo, check=True, capture_output=True)
+
+    # Restrict PATH to git only so pip is not found.
+    git_path = shutil.which("git")
+    assert git_path is not None
+    env = _stripped_env()
+    env["PATH"] = str(Path(git_path).parent)
+
+    worktree_root = tmp_path / "_agent-worktrees" / "missing-pip-repo" / "feature"
+    result = subprocess.run(
+        [sys.executable, str(NEW_WORKTREE), "feature", "--apply"],
+        cwd=repo,
+        env=env,
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode == 0, result.stderr
+    assert worktree_root.is_dir()
+    assert "pip is not on PATH" in result.stderr
 
 
 def test_remove_worktree_stops_on_locked_directory(tmp_path: Path) -> None:
