@@ -20,6 +20,7 @@ Use this runbook for Python and Markdown conventions in `agent-asset-marketplace
 - Use code formatting for literal commands, paths, identifiers, and values; do not use code formatting for emphasis.
 - Prefer active voice and concise sentences in human-facing prose.
 - Skill names are kebab-case. First-party source skills live under `codex-marketplace/plugins/<plugin>/skills/<name>/`.
+- Use `Optional[X]` rather than `X | None` for nullable type annotations.
 - Generated surfaces (`codex-marketplace/` and `.agents/skills/` from marketplace) are downstream outputs. Edit canonical source, then regenerate.
 
 ## Routing to skills
