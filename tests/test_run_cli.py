@@ -48,13 +48,14 @@ def test_allow_shared_checkout_requires_apply():
 
 
 def test_resolve_ci_order():
-    targets = run.resolve_targets(["ci"])
+    assert run.resolve_targets(["ci"]) == ["ci"]
+    targets = run._resolve_ci_deps()
     assert targets.index("lint") < targets.index("repo-standards") < targets.index("marketplace")
     assert targets.index("inventory") < targets.index("installed-skills")
     assert targets.index("installed-skills") < targets.index("repo-index")
     assert targets.index("repo-index") < targets.index("mesh")
     assert targets.index("mesh") < targets.index("validate")
-    assert targets[-1] == "ci"
+    assert targets[-1] == "archive-links"
 
 
 def test_resolve_all_aliases_to_ci():
@@ -239,7 +240,7 @@ def test_validate_fix_message(monkeypatch):
     assert "Fix: tools/run validate --apply" in str(exc_info.value)
 
 
-def test_ci_apply_runs_review_preflight_check(monkeypatch):
+def test_ci_apply_does_not_run_manual_review_preflight(monkeypatch):
     calls = []
 
     def fake_run(cmd, ctx):
@@ -253,8 +254,7 @@ def test_ci_apply_runs_review_preflight_check(monkeypatch):
     run.run_targets(run.resolve_targets(["ci"]), ctx)
 
     review_preflight_calls = [c for c in calls if "tools/review_preflight.py" in c]
-    assert review_preflight_calls
-    assert "--check" in review_preflight_calls[0]
+    assert not review_preflight_calls
 
 
 def test_validate_does_not_call_git_diff_exit_code(monkeypatch):

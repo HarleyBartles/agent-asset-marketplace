@@ -4,14 +4,7 @@ import yaml
 
 
 ROOT = Path(__file__).resolve().parents[1]
-SKILL_ROOT = (
-    ROOT
-    / "codex-marketplace"
-    / "plugins"
-    / "superpowers-plus"
-    / "skills"
-    / "iterative-review"
-)
+SKILL_ROOT = ROOT / "codex-marketplace" / "plugins" / "superpowers-plus" / "skills" / "iterative-review"
 
 
 def test_legacy_iterative_review_is_not_implicitly_invoked() -> None:
