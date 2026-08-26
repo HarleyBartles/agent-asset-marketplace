@@ -1,9 +1,7 @@
 from pathlib import Path
 import importlib.util
 
-SPEC = importlib.util.spec_from_file_location(
-    "review_preflight", str(Path("tools/review_preflight.py").resolve())
-)
+SPEC = importlib.util.spec_from_file_location("review_preflight", str(Path("tools/review_preflight.py").resolve()))
 review_preflight = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(review_preflight)
 
@@ -37,6 +35,16 @@ def test_email_is_flagged():
     findings = []
     review_preflight._scan_security(path, content, findings)
     assert any("email address" in f for f in findings)
+
+
+def test_email_in_hash_pinned_reference_snapshot_is_not_flagged():
+    path, content = _fixture(
+        "codex-marketplace/plugins/example/skills/example/assets/authority/reference-source/upstream/source.txt",
+        "Upstream contact: maintainer@example.com.\n",
+    )
+    findings = []
+    review_preflight._scan_security(path, content, findings)
+    assert not findings
 
 
 def test_stale_subagent_path_is_flagged():

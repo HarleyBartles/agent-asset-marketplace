@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "algorithm": "sha256",
+  "sealed_before_scoring": true,
+  "files": {
+    "trial-a": {"path": "sealed/trial-a.md", "sha256": "c212051e12db309bf2712c432bdc8c6c7b297d27e7a1c62d441edf207e3cf378", "word_count": 216},
+    "trial-b": {"path": "sealed/trial-b.md", "sha256": "b5c81047a9a317d463a0e697d299b23812d1d4676b197dfbdf45663747342937", "word_count": 202},
+    "trial-c": {"path": "sealed/trial-c.md", "sha256": "1406c55d45d8e997d730b98118b878dbcbe0aeb233dbd52ce422ce3aef692ac0", "word_count": 209},
+    "trial-d": {"path": "sealed/trial-d.md", "sha256": "45440833ad938bd3ec7c310d119540f4aab2b47bdcc4be9d6e69bffff25d0bd0", "word_count": 192},
+    "trial-e": {"path": "sealed/trial-e.md", "sha256": "8d48cb769296d0b3dd799d00c151077770e0668306cc0d29e5a4e1fd2de84b34", "word_count": 221},
+    "trial-f": {"path": "sealed/trial-f.md", "sha256": "ba724d70934039a949bf0f4c381790841549076d6de3c91ff7e738c40f871c37", "word_count": 197}
+  }
+}

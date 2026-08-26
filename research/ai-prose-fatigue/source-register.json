@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "title": "MARK-371 AI prose-fatigue source register",
+  "retrieved_at": "2026-08-25",
+  "sources": [
+    {
+      "id": "sourati-2026-linguistic-diversity",
+      "citation": "Sourati, Zhivar, et al. (2026). The shrinking landscape of linguistic diversity in the age of large language models. Nature Human Behaviour.",
+      "stable_url": "https://www.nature.com/articles/s41562-026-02550-0",
+      "publication_date": "2026-08-24",
+      "retrieved_at": "2026-08-25",
+      "study_domain": "Seven datasets spanning Reddit WritingPrompts, arXiv abstracts, local news, congressional speech, social posts, questionnaires, and empathic conversations; more than 880,000 texts.",
+      "evidence_class": "primary_empirical_multidomain",
+      "measured": "LLM polishing/rewriting retained core content while reducing writing-complexity variance by 21-50% across the reported datasets and models.",
+      "limitations": "The reported datasets, models, prompts, and complexity measures do not establish that any individual text is AI-written, that every rewrite is harmful, or a universal preferred writing style.",
+      "supports_operational_rule": "No direct rule; supports a contextual preserve-first review for meaningful personal or cultural variation.",
+      "next_review_date": "2027-02-25"
+    },
+    {
+      "id": "miletic-falk-2026-scientific-communication",
+      "citation": "Miletic, Filip and Neele Falk (2026). What Are LLMs Doing to Scientific Communication? Measuring Changes in Writing Practices and Reading Experience. LREC 2026, pp. 1811-1830.",
+      "stable_url": "https://aclanthology.org/2026.lrec-1.142/",
+      "publication_date": "2026-05",
+      "retrieved_at": "2026-08-25",
+      "study_domain": "Natural-language-processing scholarly communication: a corpus of more than 37,000 ACL Anthology papers (2020-2024), 3,000 human passages with LLM improvements, and a pilot of 20 domain experts.",
+      "evidence_class": "primary_empirical_domain_specific",
+      "measured": "The authors report diachronic lexical changes; LLM-modified passages more often had specified syntactic constructions, longer and more complex words, and lower lexical diversity. The 20-expert pilot reported both higher understandability/excitement and negative qualitative attitudes.",
+      "limitations": "This is NLP scholarly prose with a small subjective-reading pilot. It neither ranks general-purpose prose quality nor establishes that a named construction is intrinsically bad.",
+      "supports_operational_rule": "No direct rule; supports checking repeated patterns in context and retaining clarity where a change improves reading experience.",
+      "next_review_date": "2027-02-25"
+    },
+    {
+      "id": "agarwal-2025-cultural-homogenization",
+      "citation": "Agarwal, Dhruv, Mor Naaman, and Aditya Vashistha (2025). AI Suggestions Homogenize Writing Toward Western Styles and Diminish Cultural Nuances. CHI 2025, article 1117.",
+      "stable_url": "https://doi.org/10.1145/3706598.3713564",
+      "publication_date": "2025-04-25",
+      "retrieved_at": "2026-08-25",
+      "study_domain": "Controlled English-language, culturally grounded writing tasks completed by 118 participants in India and the United States with and without GPT-4o autocomplete suggestions.",
+      "evidence_class": "primary_empirical_controlled_study",
+      "measured": "The study reports higher efficiency gains for American participants and increased convergence of Indian writing toward American styles under the studied suggestions, including changes in cultural nuance.",
+      "limitations": "The result concerns one model, autocomplete interaction, two participant groups, English tasks, and the study design. It does not license a generic classifier for culture or a universal rule about directness, formality, or lexical diversity.",
+      "supports_operational_rule": "No direct rule; supports preserving user-supplied cultural and personal choices unless a concrete audience or factual need justifies change.",
+      "next_review_date": "2027-02-25"
+    },
+    {
+      "id": "kobak-2025-excess-vocabulary",
+      "citation": "Kobak, Dmitry, Rita Gonzalez-Marquez, Emoke-Agnes Horvat, and Jan Lause (2025). Delving into LLM-assisted writing in biomedical publications through excess vocabulary. Science Advances 11(27), eadt3813.",
+      "stable_url": "https://www.science.org/doi/10.1126/sciadv.adt3813",
+      "publication_date": "2025-07-02",
+      "retrieved_at": "2026-08-25",
+      "study_domain": "More than 15 million English-language PubMed biomedical abstracts from 2010-2024, analysed at corpus level.",
+      "evidence_class": "primary_empirical_corpus_study",
+      "measured": "The authors measured abrupt post-ChatGPT frequency increases in hundreds of style-affecting words and estimate a lower bound for LLM processing in 2024 biomedical abstracts using excess vocabulary.",
+      "limitations": "Corpus-level excess vocabulary cannot identify individual abstracts, prove authorship, evaluate all prose, or make any word universally undesirable. The record is biomedical abstracts, not general writing.",
+      "supports_operational_rule": "No direct rule; supports treating clusters and local repetition as candidates for review rather than word bans or authorship conclusions.",
+      "next_review_date": "2027-02-25"
+    },
+    {
+      "id": "weber-wulff-2023-detection-tools",
+      "citation": "Weber-Wulff, Debora, et al. (2023). Testing of detection tools for AI-generated text. International Journal for Educational Integrity 19, 26.",
+      "stable_url": "https://doi.org/10.1007/s40979-023-00146-z",
+      "publication_date": "2023-12-25",
+      "retrieved_at": "2026-08-25",
+      "study_domain": "Academic-context audit of 12 public and two commercial detection tools using an original document set, including translation and obfuscation conditions.",
+      "evidence_class": "primary_empirical_tool_audit",
+      "measured": "The authors evaluated detector accuracy and error types and concluded that the tested tools were neither accurate nor reliable under their conditions; obfuscation worsened performance.",
+      "limitations": "The 2023 tool set and test materials do not prove every later detector has identical performance. The study does not justify evasion, nor does it validate individual authorship claims.",
+      "supports_operational_rule": "Direct boundary: abstain from detector scores, authorship conclusions, and detector-evasion advice; offer legitimate clarity or style help instead.",
+      "next_review_date": "2027-02-25"
+    }
+  ]
+}

@@ -154,6 +154,15 @@
       "plugin_root": "codex-marketplace/plugins/unslop-plus",
       "manifest_path": "codex-marketplace/plugins/unslop-plus/.codex-plugin/plugin.json",
       "enabled": true
+    },
+    {
+      "order": 17,
+      "name": "writing-pack",
+      "category": "Productivity",
+      "registry_path": "./codex-marketplace/plugins/writing-pack",
+      "plugin_root": "codex-marketplace/plugins/writing-pack",
+      "manifest_path": "codex-marketplace/plugins/writing-pack/.codex-plugin/plugin.json",
+      "enabled": true
     }
   ]
 }

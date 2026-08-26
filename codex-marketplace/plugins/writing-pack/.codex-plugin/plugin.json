@@ -1,0 +1,33 @@
+{
+    "name": "writing-pack",
+    "version": "1.0.0",
+    "description": "Compositional, human-facing writing skills for Codex.",
+    "author": {
+        "name": "Harley Bartles"
+    },
+    "homepage": "https://github.com/HarleyBartles/agent-asset-marketplace",
+    "repository": "https://github.com/HarleyBartles/agent-asset-marketplace",
+    "license": "MIT",
+    "keywords": [
+        "writing",
+        "writing-with-clarity",
+        "writing-style",
+        "writing-profile-engine",
+        "human-facing",
+        "prose",
+        "editing"
+    ],
+    "skills": "./skills/",
+    "interface": {
+        "displayName": "Writing Pack",
+        "shortDescription": "Compositional skills for human-facing writing.",
+        "longDescription": "First-party writing capability: $writing composes clarity, authorised voice, and evidence-backed style review without replacing generic cross-domain profiles.",
+        "developerName": "Harley Bartles",
+        "category": "Productivity",
+        "capabilities": [],
+        "defaultPrompt": "Use $writing for ordinary drafting, revision, or review of prose intended for human readers.",
+        "brandColor": "#111827",
+        "composerIcon": "./assets/icon.svg",
+        "logo": "./assets/icon.svg"
+    }
+}
