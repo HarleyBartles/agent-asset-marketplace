@@ -5,7 +5,15 @@ from pathlib import Path
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
-SKILL_ROOT = REPO_ROOT / "sources" / "first_party" / "skills" / "repo-standards" / "scripts"
+SKILL_ROOT = (
+    REPO_ROOT
+    / "codex-marketplace"
+    / "plugins"
+    / "repo-worker-pack"
+    / "skills"
+    / "repo-standards"
+    / "scripts"
+)
 SCAFFOLD_AGENTS_MD = SKILL_ROOT / "scaffold_agents_md.py"
 SCAFFOLD_CONTRIBUTING = SKILL_ROOT / "scaffold_contributing.py"
 SCAFFOLD_GITIGNORE = SKILL_ROOT / "scaffold_gitignore.py"
@@ -234,7 +242,7 @@ def test_scaffold_marketplace_json_creates_minimal(tmp_path: Path) -> None:
 
     data = json.loads(marketplace.read_text(encoding="utf-8"))
     assert "repo" in data
-    assert data["repo"]["local_skill_prefixes"] == []
+    assert data["repo"]["local_skills"] == []
 
 
 def test_scaffold_marketplace_json_migrates_legacy(tmp_path: Path) -> None:
@@ -266,7 +274,7 @@ def test_scaffold_marketplace_json_migrates_legacy(tmp_path: Path) -> None:
     )
     assert result.returncode == 0, result.stderr
     data = json.loads(marketplace.read_text(encoding="utf-8"))
-    assert data["repo"]["local_skill_prefixes"] == ["mark-"]
+    assert data["repo"]["local_skills"] == ["mark-"]
     assert data["plugins"] == [{"name": "repo-worker-pack"}]
     assert "local_skill_prefixes" not in data
 
@@ -566,6 +574,7 @@ def test_repo_standards_allow_shared_checkout_combines_with_apply(tmp_path: Path
     repo = tmp_path / "allow-apply"
     repo.mkdir()
     _init_git_repo_with_commit(repo)
+    subprocess.run(["git", "branch", "-M", "main"], cwd=repo, check=True)
 
     result = subprocess.run(
         [sys.executable, str(REPO_STANDARDS), "--apply", "--yes", "--allow-shared-checkout"],
@@ -621,6 +630,7 @@ def test_repo_standards_apply_in_main_shared_checkout_requires_approval(tmp_path
     repo = tmp_path / "main-no-approval"
     repo.mkdir()
     _init_git_repo_with_commit(repo)
+    subprocess.run(["git", "branch", "-M", "main"], cwd=repo, check=True)
 
     result = subprocess.run(
         [sys.executable, str(REPO_STANDARDS), "--apply", "--yes"],
@@ -688,7 +698,7 @@ def test_scaffold_repo_runbook_policy_check_customized_passes(tmp_path: Path) ->
     repo.mkdir()
     _init_git_repo(repo)
 
-    policy_path = repo / ".agents" / "docs" / "repo-runbook-policy.md"
+    policy_path = repo / ".agents" / "doctrine" / "repo-runbook-policy.md"
     policy_path.parent.mkdir(parents=True)
     policy_path.write_text(
         "# Repo Runbook Policy\n\n"

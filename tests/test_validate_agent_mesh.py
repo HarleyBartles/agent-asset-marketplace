@@ -8,8 +8,9 @@ import pytest
 REPO_ROOT = Path(__file__).resolve().parents[1]
 CORE = (
     REPO_ROOT
-    / "sources"
-    / "first_party"
+    / "codex-marketplace"
+    / "plugins"
+    / "repo-worker-pack"
     / "skills"
     / "generating-agent-mesh"
     / "scripts"
@@ -17,8 +18,9 @@ CORE = (
 )
 GENERATE_CORE = (
     REPO_ROOT
-    / "sources"
-    / "first_party"
+    / "codex-marketplace"
+    / "plugins"
+    / "repo-worker-pack"
     / "skills"
     / "generating-agent-mesh"
     / "scripts"

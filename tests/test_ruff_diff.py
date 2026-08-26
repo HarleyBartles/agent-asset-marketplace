@@ -23,6 +23,15 @@ class _FakeRun:
         key = tuple(cmd)
         if key in self._responses:
             return self._responses[key]
+        if key in {
+            ("git", "diff", "--cached", "--name-only", "--diff-filter=ACMR"),
+            ("git", "diff", "--name-only", "--diff-filter=ACMR"),
+        }:
+            return SimpleNamespace(stdout="", stderr="", returncode=0)
+        if key[:4] == ("git", "diff", "--unified=0", "--cached"):
+            return SimpleNamespace(stdout="", stderr="", returncode=0)
+        if key[:3] == ("git", "diff", "--unified=0") and "...HEAD" not in key:
+            return SimpleNamespace(stdout="", stderr="", returncode=0)
         if "ruff" in key:
             return SimpleNamespace(stdout="", stderr="", returncode=0)
         raise AssertionError(f"unexpected command: {cmd}")

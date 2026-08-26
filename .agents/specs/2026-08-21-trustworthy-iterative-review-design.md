@@ -2,6 +2,12 @@
 
 > **Status:** Approved for implementation by the human partner on 2026-08-21.
 
+> **Legacy containment:** Until the version-2 cutover and benchmark gate land,
+> the shipped version-1 skill is explicit-human-opt-in review assistance for
+> non-frontier orchestrators only. Harness-designated frontier models, including
+> `gpt-5.6-sol`, use ordinary self-review and canonical repository validation.
+> A version-1 `ready` result is not evidence of `reviewed-green`.
+
 ## Problem
 
 The current `iterative-review` skill contains useful review-loop ideas, but it cannot safely prove that a pull request is reviewed green. Its router primarily sequences node names. It does not prove that every affected surface and risk obligation was assessed, that reviewer output is complete, that findings were resolved with evidence, or that all evidence applies to the exact remote pull-request snapshot presented to the human partner.
