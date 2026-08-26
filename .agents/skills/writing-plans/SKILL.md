@@ -117,7 +117,7 @@ A long plan with well-sliced, independently testable tasks is not a problem. The
 ```markdown
 # [Feature Name] Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use `/subagent-driven-development` (recommended) or `/executing-plans` to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use the `skill` tool to invoke `subagent-driven-development` (recommended) or `executing-plans` to implement this plan task-by-task. Steps use checkbox (\`- [ ]\`) syntax for tracking.
 
 **Goal:** [One sentence describing what this builds]
 
