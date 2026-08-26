@@ -45,9 +45,11 @@ Consumer-canonical variant:
    - Compare the branch diff to the PR description, the linked spec, and any linked plan.
    - If the implemented scope differs, update the spec/plan or PR body to match before reviewers see the diff.
 
-3. **Iterative review.**
-   - Once preflight is green, invoke `/iterative-review` and follow the graph in `references/review-state-graph.md` one node at a time.
-   - Do not flip the PR to ready until the `iterative-review` graph reaches `ready` and remote CI passes.
+3. **Self-review and optional legacy assistance.**
+   - Perform an ordinary whole-change self-review once preflight is green.
+   - A harness-designated frontier orchestrator, including `gpt-5.6-sol`, must not invoke `/iterative-review`.
+   - A non-frontier or unknown-capability orchestrator may offer `/iterative-review` as legacy review assistance, but must explain its limitations and obtain explicit human approval for this PR before invoking it.
+   - A legacy graph `ready` result proves only sequence completion. It does not authorize a green claim or a draft-to-ready transition; use the ordinary self-review, scope-honesty, and canonical-validation gates.
 
 ## Repo-specific guidance
 
@@ -68,6 +70,6 @@ Consumer-canonical variant:
 ## Routing to skills
 
 - `/repo-worker-base` for worktree, branch, and publication boundaries.
-- `/iterative-review` for the review process.
+- `/iterative-review` only for human-approved legacy assistance on a non-frontier or unknown-capability orchestrator; never for a harness-designated frontier orchestrator.
 - `/using-github-mcp` for PR evidence and GitHub proof.
 - `/verification-before-completion` before claiming the PR is green.
