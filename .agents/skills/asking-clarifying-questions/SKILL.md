@@ -3,7 +3,7 @@ name: asking-clarifying-questions
 description: Use when an ambiguity remains after safe internal resolution and a single answer from your human partner would unblock the next action, without needing a full design session or a pre-action risk gate.
 metadata:
   source-id: asking-clarifying-questions
-  source-path: codex-marketplace/plugins/repo-worker-pack/skills/asking-clarifying-questions/SKILL.md
+  source-path: codex-marketplace/plugins/superpowers-plus/skills/asking-clarifying-questions/SKILL.md
   provenance-name: Asking Clarifying Questions first-party skill
   source-category: first_party
   status: active
