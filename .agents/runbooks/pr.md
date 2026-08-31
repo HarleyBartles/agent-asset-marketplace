@@ -54,9 +54,9 @@ Consumer-canonical variant:
 ## Repo-specific guidance
 
 - Work in an isolated worktree on a task branch.
-- Do not run `py -3 tools/run.py ci --check` before every commit. It is an explicit CI-should-pass check on the working tree, not a pre-pre-commit step. The pre-commit hook already applies mechanical fixes and then runs `ci --check` on the staged tree; running it manually first is wasteful.
-- If you are confident the working change is correct, commit it. The pre-commit hook will keep you honest: it applies what it can, stages the result, and fails the commit if a non-mechanical check is broken.
-- If the pre-commit hook is not installed, run `py -3 tools/run.py ci --apply` and then `py -3 tools/run.py ci --check` manually before committing.
+- Do not run `py -3 tools/run.py ci --check` before every commit. It is an explicit CI-should-pass check on the working tree, not a pre-pre-commit step. The pre-commit hook already runs `py -3 tools/run.py precommit --apply`, which applies mechanical fixes and then reports every failing check on the staged tree; running `ci --check` manually first is wasteful.
+- If you are confident the working change is correct, commit it. The pre-commit hook will keep you honest: it applies mechanical fixes, reports every failing check, and fails the commit if any check is broken.
+- If the pre-commit hook is not installed, run `py -3 tools/run.py ci --apply` manually before committing. `ci --apply` already applies mechanical fixes and validates each step; do not run `ci --check` separately unless no commit follows.
 - Only run `py -3 tools/run.py ci --check` deliberately when you want to know whether the working tree would pass CI (for example, before pushing or flipping the PR to ready).
 - `py -3 tools/run.py marketplace --apply` regenerates derived surfaces; stage any generated changes before committing.
 - Do not use `git commit --no-verify` to bypass the pre-commit hook.

@@ -442,6 +442,31 @@ def _run_ci(ctx: Ctx) -> None:
             _run_steps(target, task, task.check, ctx)
 
 
+def _precommit_check(ctx: Ctx) -> None:
+    """Run every `ci` dependency check and report all failures."""
+    failures: list[RunnerError] = []
+    for target in _resolve_ci_deps():
+        task = _TASKS[target]
+        try:
+            _run_steps(target, task, task.check, ctx)
+        except RunnerError as exc:
+            failures.append(exc)
+    if failures:
+        fixes = "\n".join(f"  {exc.target}: {exc.fix}" for exc in failures)
+        raise RunnerError(
+            "precommit",
+            f"one or more precommit checks failed\n{fixes}",
+        )
+
+
+def _precommit_apply(ctx: Ctx) -> None:
+    """Apply mechanical surfaces, then run every check and report all failures."""
+    for target in _resolve_ci_deps():
+        task = _TASKS[target]
+        _run_steps(target, task, task.apply, ctx)
+    _precommit_check(Ctx("check", ctx.base_ref, ctx.allow_shared, ctx.verbose))
+
+
 _TASKS: dict[str, Task] = {
     "lint": Task(apply=(_run_lint,), check=(_run_lint,), fix="tools/run lint --apply"),
     "repo-standards": Task(
@@ -498,6 +523,11 @@ _TASKS: dict[str, Task] = {
         apply=(_apply_archive_links,),
         check=(_check_archive_links,),
         fix="tools/run archive-links --apply",
+    ),
+    "precommit": Task(
+        apply=(_precommit_apply,),
+        check=(_precommit_check,),
+        fix="tools/run precommit --apply",
     ),
     "review-preflight": Task(
         check=(_check_review_preflight,),

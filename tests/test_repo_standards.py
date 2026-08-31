@@ -723,8 +723,8 @@ def test_scaffold_repo_runbook_policy_check_customized_passes(tmp_path: Path) ->
     assert "OK" in result.stdout
 
 
-def test_pre_commit_hook_template_uses_apply_then_check(tmp_path: Path) -> None:
-    """repo-standards installs a pre-commit hook that runs tools/run.py ci --apply."""
+def test_pre_commit_hook_template_uses_precommit_apply(tmp_path: Path) -> None:
+    """repo-standards installs a pre-commit hook that runs tools/run.py precommit --apply."""
     repo = tmp_path / "precommit-check"
     repo.mkdir()
     _init_git_repo(repo)
@@ -766,4 +766,25 @@ def test_pre_commit_hook_template_uses_apply_then_check(tmp_path: Path) -> None:
     hook = repo / ".git" / "hooks" / "pre-commit"
     assert hook.is_file(), "pre-commit hook was not installed"
     text = hook.read_text(encoding="utf-8")
-    assert "tools/run.py ci --apply" in text, text
+    assert "tools/run.py precommit --apply" in text, text
+
+
+def test_ci_validation_pipeline_forbids_pre_commit_double_run() -> None:
+    """The pre-commit reference must not tell agents to run the full ci --check before a normal commit."""
+    path = (
+        REPO_ROOT
+        / "codex-marketplace"
+        / "plugins"
+        / "repo-worker-pack"
+        / "skills"
+        / "repo-standards"
+        / "references"
+        / "ci-validation-pipeline.md"
+    )
+    text = path.read_text(encoding="utf-8")
+    forbidden = (
+        "re-run `tools/run.py ci --check`",
+        "Run the repair command, then re-run `tools/run.py ci --check`",
+    )
+    for phrase in forbidden:
+        assert phrase not in text, f"{phrase!r} found in {path.relative_to(REPO_ROOT)}"

@@ -14,11 +14,11 @@ trap 'rm -f "$BEFORE_STATUS" "$AFTER_STATUS"' EXIT
 git status --porcelain --untracked-files=all > "$BEFORE_STATUS"
 
 if command -v py >/dev/null 2>&1; then
-  py -3 tools/run.py ci --apply --allow-shared-checkout
+  py -3 tools/run.py precommit --apply --allow-shared-checkout
 elif command -v python3 >/dev/null 2>&1; then
-  python3 tools/run.py ci --apply --allow-shared-checkout
+  python3 tools/run.py precommit --apply --allow-shared-checkout
 elif command -v python >/dev/null 2>&1; then
-  python tools/run.py ci --apply --allow-shared-checkout
+  python tools/run.py precommit --apply --allow-shared-checkout
 else
   echo "py, python3, or python not found" >&2
   exit 1
