@@ -15,21 +15,7 @@
   "plugin_author": "Harley Bartles",
   "plugin_license": "MIT",
   "entries": [
-    {
-      "canonical_name": "asking-clarifying-questions",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "source_family": "first_party",
-      "canonical_source_path": "codex-marketplace/plugins/repo-worker-pack/skills/asking-clarifying-questions",
-      "local_path": "skills/asking-clarifying-questions",
-      "source_path": "codex-marketplace/plugins/repo-worker-pack/skills/asking-clarifying-questions/SKILL.md",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "First-party skill bundled verbatim into the repo-worker-pack. Any-time clarifying-question skill for single ambiguities.",
-      "lane": "Worker",
-      "source_author": "Harley Bartles",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
-    },
+
     {
       "canonical_name": "base-doctrine",
       "source_category": "first_party",
