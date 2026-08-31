@@ -40,8 +40,10 @@ performs the mechanics.
 
 Run these in order. Stop at the first row that matches the change.
 
-1. **Validated?** If `tools/run ci --check` is not green on the staged tree,
-   stop and finish `verification-before-completion` first. Publication is not
+1. **Validated?** If the committed tree would not pass the pre-commit hook
+   (materialize staged snapshot, `ci --apply`, stage owned generated surfaces,
+   `ci --check --diagnostics`), stop and finish `verification-before-completion`
+   first. Do not run `ci --check` immediately before a normal commit. Publication is not
    a substitute for validation.
 2. **Marketplace source edited?** If `codex-marketplace/plugins/<plugin>/` skill content,
    `codex-marketplace/plugin-roots.json`, `codex-marketplace/plugins/<plugin>/SOURCE.md`, or `references/bundle-manifest.json` changed,
@@ -56,10 +58,10 @@ Run these in order. Stop at the first row that matches the change.
 
 ## Canonical sequences
 
-- **Direct-main commit (authorized only):** validate -> stage -> `ci --check`
-  -> commit -> push -> record SHA.
-- **PR (default):** validate -> stage -> `ci --check` -> branch -> push ->
-  open PR -> record PR URL and head SHA.
+- **Direct-main commit (authorized only):** regenerate -> stage intended tree
+  -> commit (pre-commit hook applies and checks) -> push -> record SHA.
+- **PR (default):** regenerate -> stage intended tree -> commit (pre-commit hook
+  applies and checks) -> branch -> push -> open PR -> record PR URL and head SHA.
 - **Tag/release:** finish the source change and merge -> tag the merged commit
   -> publish release notes -> record tag URL.
 - **Pack export:** regenerate marketplace -> validate -> export the pack

@@ -9,7 +9,7 @@ Defer to the repository root `AGENTS.md` for global repo and publication rules.
 - Use `[x]` in place of `[ ]` for completed steps.
 - Every task should include a final sub-step instructing the implementer to mark the task's own plan steps `[x]` before reporting back. If a task omits it, the implementer must still do so and the orchestrator must verify it.
 - Order implementation tasks so that all source and adapter/overlay edits are complete before any `tools/run * --apply` regeneration step. Run `tools/run heal --check` after overlay edits and before regeneration to catch line-number drift early.
-- Do not run `tools/run ci --check` on an uncommitted working tree. Regenerate surfaces, stage all changes, run `tools/run ci --check` on the staged tree before committing, then commit and let the pre-commit hook re-run the CI preflight. Do not use `git commit --no-verify` to bypass the hook.
+- Do not run `tools/run ci --check` immediately before a normal commit or immediately after a successful hooked commit. Regenerate surfaces, stage the intended tree, commit, and let the pre-commit hook materialize the staged snapshot, run `ci --apply`, stage the owned generated surfaces, and run `ci --check --diagnostics`. Do not use `git commit --no-verify` to bypass the hook.
 - If a plan is intentionally incomplete or left open, say why inside the plan itself.
 - This is local worker guidance, not a future PR-blocker doctrine.
 - Do not invent receipt requirements.

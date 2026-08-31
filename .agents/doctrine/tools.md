@@ -9,7 +9,7 @@ Defer to the repository root `AGENTS.md` for global doctrine, publication rules,
 
 The canonical task runner is `tools/run`. It composes the individual generator and validator scripts into a dependency-aware task graph.
 
-- `./tools/run ci --check` (or `.\tools\run.ps1 ci --check` on Windows PowerShell) is the full non-mutating CI gate (lint, repo-standards, marketplace, archive-links).
+- `./tools/run ci --check` (or `.\tools\run.ps1 ci --check` on Windows PowerShell) is the fail-fast CI gate (lint, repo-standards, marketplace, archive-links). Use `ci --check --diagnostics` for a complete multi-failure report.
 - `./tools/run marketplace --apply` (or `.\tools\run.ps1 marketplace --apply` on Windows PowerShell) is the canonical local full regeneration and validation entrypoint.
 - `tools/run <target> --apply` / `tools/run.ps1 <target> --apply` regenerates only the named target and its prerequisites.
 - `tools/run <target> --check` / `tools/run.ps1 <target> --check` validates only the named target and its prerequisites without writing.
@@ -33,8 +33,8 @@ Use `--check` to validate the current generated surface without rewriting it. `-
 - Partial regeneration paths are fallback-only repair tools and should not be advertised as a normal completion route.
 - The expected local green-path proof is `tools/run marketplace --apply`.
 - The expected CI green-path proof is `tools/run ci --check`.
-- After editing source, run the appropriate `tools/run <target> --apply` command to regenerate derived surfaces. Stage all changes. Then run the preflight (`tools/run ci --check`) on the staged tree before committing. The pre-commit hook also runs `ci --check` on the staged tree; if it is available, commit normally and it will re-run the same checks.
-- Run `tools/run ci --check` on the staged tree before committing. If the pre-commit hook is installed, commit normally and it will re-run the same checks. Do not use `--no-verify` to bypass the hook.
+- After editing source, run the appropriate `tools/run <target> --apply` command to regenerate derived surfaces. Stage the intended tree and commit normally; the pre-commit hook materializes the staged snapshot, runs `ci --apply`, stages the owned generated surfaces, and then runs `ci --check --diagnostics`. Do not use `--no-verify` to bypass the hook.
+- Do not run `tools/run ci --check` immediately before a normal commit or immediately after a successful hooked commit. Run `ci --check` only for an uncommitted verification, pipeline diagnosis, or explicit CI-parity work.
 - Both commands must be aligned so check mode fails if regeneration would be needed and write mode still performs the actual regeneration locally.
 - If a worker cannot run the full stack, it must say so explicitly instead of assuming CI will catch the missing regeneration.
 
