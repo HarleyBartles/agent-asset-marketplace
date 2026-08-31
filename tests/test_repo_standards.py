@@ -829,7 +829,7 @@ def apply():
         write(".agents/skills/owned.txt", "generated")
         os.makedirs("build", exist_ok=True)
         write("build/outside.txt", "untracked")
-    elif BEHAVIOR == "broken":
+    elif BEHAVIOR in ("broken", "ok"):
         pass
     print("OK apply")
 
@@ -978,3 +978,136 @@ def test_pre_commit_hook_stages_only_owned_generated_surfaces(tmp_path: Path) ->
         text=True,
     ).stdout
     assert "build/outside.txt" in status, status
+
+
+def _add_marketplace_submodule(repo: Path, marketplace: Path) -> None:
+    subprocess.run(
+        [
+            "git",
+            "-c",
+            "protocol.file.allow=always",
+            "submodule",
+            "add",
+            str(marketplace),
+            ".agents/plugins/marketplace-source",
+        ],
+        cwd=repo,
+        env=_stripped_env(),
+        check=True,
+    )
+    subprocess.run(
+        ["git", "commit", "--no-verify", "-m", "add marketplace submodule"],
+        cwd=repo,
+        env=_stripped_env(),
+        check=True,
+    )
+
+
+def _install_repo_standards_with_submodule(repo: Path) -> None:
+    exceptions = (
+        "- marketplace-json\n"
+        "- tools-run\n"
+        "- repo-runbook-policy\n"
+        "- runbooks-agents-md\n"
+        "- review-entry\n"
+        "- root-agents-md\n"
+        "- contributing-entry\n"
+        "- root-gitignore\n"
+    )
+    policy_dir = repo / ".agents" / "docs"
+    policy_dir.mkdir(parents=True)
+    (policy_dir / "repo-runbook-policy.md").write_text(
+        f"# Repo runbook policy\n\n## Exceptions\n\n{exceptions}",
+        encoding="utf-8",
+        newline="\n",
+    )
+    result = subprocess.run(
+        [sys.executable, str(REPO_STANDARDS), "--apply", "--yes", "--allow-shared-checkout"],
+        cwd=repo,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+    )
+    combined = result.stdout + result.stderr
+    assert result.returncode == 0, combined
+
+
+def test_pre_commit_hook_rejects_dirty_submodule(tmp_path: Path) -> None:
+    """The hook refuses to commit when a required marketplace submodule is dirty."""
+    marketplace = tmp_path / "marketplace"
+    marketplace.mkdir()
+    _init_git_repo_with_commit(marketplace)
+
+    repo = tmp_path / "consumer-dirty"
+    repo.mkdir()
+    _init_git_repo_with_commit(repo)
+    _add_marketplace_submodule(repo, marketplace)
+    _install_repo_standards_with_submodule(repo)
+
+    (repo / "tools").mkdir(exist_ok=True)
+    (repo / "tools" / "run.py").write_text(_fake_tools_run_py("ok"), encoding="utf-8", newline="\n")
+    subprocess.run(["git", "add", "tools/run.py"], cwd=repo, env=_stripped_env(), check=True)
+
+    (repo / ".agents" / "plugins" / "marketplace-source" / "dirty.txt").write_text(
+        "dirty", encoding="utf-8", newline="\n"
+    )
+
+    result = subprocess.run(
+        ["git", "commit", "-m", "test dirty submodule"],
+        cwd=repo,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode != 0, result.stdout + result.stderr
+    assert "submodule source does not match" in (result.stdout + result.stderr)
+
+
+def test_pre_commit_hook_rejects_wrong_head_submodule(tmp_path: Path) -> None:
+    """The hook refuses to commit when a required marketplace submodule is at the wrong commit."""
+    marketplace = tmp_path / "marketplace"
+    marketplace.mkdir()
+    _init_git_repo_with_commit(marketplace)
+
+    repo = tmp_path / "consumer-wrong-head"
+    repo.mkdir()
+    _init_git_repo_with_commit(repo)
+    _add_marketplace_submodule(repo, marketplace)
+
+    # Move the marketplace source forward without updating the superproject gitlink.
+    (marketplace / "extra.txt").write_text("extra", encoding="utf-8", newline="\n")
+    subprocess.run(["git", "add", "extra.txt"], cwd=marketplace, env=_stripped_env(), check=True)
+    subprocess.run(["git", "commit", "-m", "second"], cwd=marketplace, env=_stripped_env(), check=True)
+    new_head = subprocess.run(
+        ["git", "rev-parse", "HEAD"],
+        cwd=marketplace,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+        check=True,
+    ).stdout.strip()
+
+    _install_repo_standards_with_submodule(repo)
+
+    (repo / "tools").mkdir(exist_ok=True)
+    (repo / "tools" / "run.py").write_text(_fake_tools_run_py("ok"), encoding="utf-8", newline="\n")
+    subprocess.run(["git", "add", "tools/run.py"], cwd=repo, env=_stripped_env(), check=True)
+
+    submodule = repo / ".agents" / "plugins" / "marketplace-source"
+    subprocess.run(
+        ["git", "-c", "protocol.file.allow=always", "fetch", "origin"],
+        cwd=submodule,
+        env=_stripped_env(),
+        check=True,
+    )
+    subprocess.run(["git", "checkout", new_head], cwd=submodule, env=_stripped_env(), check=True)
+
+    result = subprocess.run(
+        ["git", "commit", "-m", "test wrong-head submodule"],
+        cwd=repo,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode != 0, result.stdout + result.stderr
+    assert "submodule source does not match" in (result.stdout + result.stderr)

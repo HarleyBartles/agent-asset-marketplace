@@ -657,20 +657,59 @@ def _write_provenance(
 
 
 def _is_submodule(repo_root: Path) -> bool:
-    result = subprocess.run(
-        ["git", "rev-parse", "--show-superproject-working-tree"],
-        cwd=repo_root,
-        capture_output=True,
-        text=True,
-        env=_stripped_env(),
-    )
+    try:
+        result = subprocess.run(
+            ["git", "rev-parse", "--show-superproject-working-tree"],
+            cwd=repo_root,
+            capture_output=True,
+            text=True,
+            env=_stripped_env(),
+        )
+    except (subprocess.CalledProcessError, FileNotFoundError, OSError):
+        return False
     return result.returncode == 0 and result.stdout.strip()
+
+
+def _marketplace_source_drift(repo_root: Path) -> str | None:
+    """Return the origin/main tip if the marketplace-source submodule is behind it.
+
+    Uses a read-only `git ls-remote` so --check can detect a stale pin without
+    changing the working tree.
+    """
+    submodule = _marketplace_source_path(repo_root)
+    if not _is_submodule(submodule):
+        return None
+    try:
+        remote = subprocess.run(
+            ["git", "-C", str(submodule), "ls-remote", "origin", "refs/heads/main"],
+            capture_output=True,
+            text=True,
+            check=True,
+            env=_stripped_env(),
+        )
+        lines = remote.stdout.strip().splitlines()
+        if not lines:
+            return None
+        main_tip = lines[0].split()[0]
+        current = subprocess.run(
+            ["git", "rev-parse", "HEAD"],
+            cwd=submodule,
+            capture_output=True,
+            text=True,
+            check=True,
+            env=_stripped_env(),
+        ).stdout.strip()
+        if main_tip == current:
+            return None
+        return main_tip
+    except (subprocess.CalledProcessError, OSError):
+        return None
 
 
 def _roll_marketplace_source(repo_root: Path) -> None:
     """Roll the marketplace-source submodule to origin/main when present."""
     submodule = _marketplace_source_path(repo_root)
-    if not submodule.is_dir() or not (submodule / ".git").exists():
+    if not _is_submodule(submodule):
         return
     print("Rolling marketplace-source to origin/main...")
     try:
@@ -704,9 +743,11 @@ def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         "Only pass this if you intend to mutate this checkout.",
     )
     parser.add_argument(
-        "--roll-marketplace-source",
-        action="store_true",
-        help="Roll the marketplace-source submodule to origin/main before syncing",
+        "--no-roll-marketplace-source",
+        dest="roll_marketplace_source",
+        action="store_false",
+        default=True,
+        help="Do not roll the marketplace-source submodule to origin/main before syncing",
     )
     return parser.parse_args(argv)
 
@@ -728,8 +769,12 @@ def main(argv: list[str] | None = None) -> int:
     if not args.check and not shared_checkout.approve_mutation(ROOT, _SCRIPT_NAME, args.allow_shared_checkout):
         return 1
 
-    if not args.check and args.roll_marketplace_source:
-        _roll_marketplace_source(ROOT)
+    marketplace_source_drift: str | None = None
+    if args.roll_marketplace_source:
+        if not args.check:
+            _roll_marketplace_source(ROOT)
+        else:
+            marketplace_source_drift = _marketplace_source_drift(ROOT)
 
     config = _load_marketplace_config()
     prefixes = _local_skill_prefixes(config)
@@ -803,7 +848,7 @@ def main(argv: list[str] | None = None) -> int:
     )
     provenance_needs_update = _provenance_needs_update(existing_provenance, new_state)
 
-    if not args.force and existing_provenance and not provenance_needs_update:
+    if not args.force and existing_provenance and not provenance_needs_update and marketplace_source_drift is None:
         if _marketplace_skill_inventory_is_current(installed_plugins, prefixes) and deploy_check == 0:
             print(f"Skills already synced at manifest SHA {current_manifest_sha}. Use --force to re-copy.")
             print(
@@ -864,6 +909,10 @@ def main(argv: list[str] | None = None) -> int:
     # Provenance metadata drift (plugin list, local skills, manifest SHA) is also
     # a change worth reporting and writing.
     changes_made = changes_made or provenance_needs_update
+
+    # A stale marketplace-source pin is itself a change; --apply would roll it.
+    if marketplace_source_drift is not None:
+        changes_made = True
 
     # Write provenance when the skill tree or provenance state changed. A forced
     # byte-identical refresh must remain a no-diff operation.
