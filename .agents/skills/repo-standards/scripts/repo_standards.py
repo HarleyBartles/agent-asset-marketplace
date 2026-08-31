@@ -197,17 +197,26 @@ def _check_hook_contract(hook_path: Path) -> list[str]:
         findings.append("pre-commit hook missing errexit/nounset/pipefail guard")
 
     non_comment_text = "\n".join(non_comment)
-    # Accept either the canonical 'ci --apply' or the legacy 'all --apply' alias,
-    # which is a safe backwards-compatibility bridge for older checkouts.
-    targets = ("tools/run.py ci --apply", "tools/run.py all --apply")
-    ci_apply = any(t in non_comment_text for t in targets)
-    if not ci_apply:
+    # The hook must apply mechanical surfaces and then run a complete
+    # multi-failure check on the staged snapshot.
+    apply_targets = ("tools/run.py ci --apply", "tools/run.py all --apply")
+    check_targets = ("tools/run.py ci --check --diagnostics", "tools/run.py ci --check")
+    has_apply = any(t in non_comment_text for t in apply_targets)
+    has_check = any(t in non_comment_text for t in check_targets)
+    if not has_apply:
         for prefix in ("py -3", "python3", "python"):
-            if any(f"{prefix} {t}" in non_comment_text for t in targets):
-                ci_apply = True
+            if any(f"{prefix} {t}" in non_comment_text for t in apply_targets):
+                has_apply = True
                 break
-    if not ci_apply:
+    if not has_check:
+        for prefix in ("py -3", "python3", "python"):
+            if any(f"{prefix} {t}" in non_comment_text for t in check_targets):
+                has_check = True
+                break
+    if not has_apply:
         findings.append("pre-commit hook must run 'tools/run.py ci --apply' (or 'all --apply')")
+    if not has_check:
+        findings.append("pre-commit hook must run 'tools/run.py ci --check --diagnostics' (or 'ci --check')")
     return findings
 
 

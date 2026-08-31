@@ -30,6 +30,7 @@ class Ctx:
     base_ref: str | None
     allow_shared: bool
     verbose: bool
+    diagnostics: bool = False
 
 
 @dataclass(frozen=True)
@@ -429,17 +430,37 @@ def _resolve_ci_deps() -> list[str]:
 def _run_ci(ctx: Ctx) -> None:
     """Run the `ci` meta-target.
 
-    In `--apply` mode each dependency is run in apply mode and then immediately
-    in check mode for fail-fast validation. In `--check` mode every dependency
-    is run in check mode only.
+    In `--apply` mode each dependency is run in apply mode only.
+    In `--check` mode each dependency is run in check mode; with `--diagnostics`
+    every failing target is collected and reported before the command exits.
     """
-    for target in _resolve_ci_deps():
+    deps = _resolve_ci_deps()
+    if ctx.mode == "apply":
+        for target in deps:
+            task = _TASKS[target]
+            _run_steps(target, task, task.apply, Ctx("apply", ctx.base_ref, ctx.allow_shared, ctx.verbose, False))
+        return
+    failures: list[RunnerError] = []
+    for target in deps:
         task = _TASKS[target]
-        if ctx.mode == "apply":
-            _run_steps(target, task, task.apply, Ctx("apply", ctx.base_ref, ctx.allow_shared, ctx.verbose))
-            _run_steps(target, task, task.check, Ctx("check", ctx.base_ref, ctx.allow_shared, ctx.verbose))
-        else:
-            _run_steps(target, task, task.check, ctx)
+        try:
+            _run_steps(
+                target,
+                task,
+                task.check,
+                Ctx("check", ctx.base_ref, ctx.allow_shared, ctx.verbose, ctx.diagnostics),
+            )
+        except RunnerError as exc:
+            if ctx.diagnostics:
+                failures.append(exc)
+            else:
+                raise
+    if failures:
+        fixes = "\n".join(f"  {exc.target}: {exc.fix}" for exc in failures)
+        raise RunnerError(
+            "ci",
+            f"one or more ci checks failed\n{fixes}",
+        )
 
 
 _TASKS: dict[str, Task] = {
@@ -578,8 +599,9 @@ def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         description="Dependency-aware task runner for the agent-asset-marketplace. (mixed)",
         epilog=(
             "Targets: " + ", ".join(_TASKS.keys()) + "\n"
-            "ci --check is the full non-mutating CI/PR verification gate.\n"
-            "ci --apply applies and verifies each step in order (apply then check per dependency).\n"
+            "ci --check is the full fail-fast CI/PR verification gate.\n"
+            "ci --check --diagnostics reports every independent failing target.\n"
+            "ci --apply applies mechanical outputs; pair it with `ci --check` for a full gate.\n"
             "For a single target, run `py -3 tools/run.py <target> --apply`. See .devin/rules/tools.md."
         ),
     )
@@ -602,6 +624,11 @@ def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         help="approve writes in the main shared checkout on the main branch (requires --apply)",
     )
     parser.add_argument(
+        "--diagnostics",
+        action="store_true",
+        help="collect all independent check failures before rejecting (ci --check only)",
+    )
+    parser.add_argument(
         "--verbose",
         "-v",
         action="store_true",
@@ -617,6 +644,9 @@ def main(argv: list[str] | None = None) -> int:
     if args.apply and args.check:
         print("error: --apply and --check are mutually exclusive", file=sys.stderr)
         return 1
+    if args.diagnostics and args.apply:
+        print("error: --diagnostics requires --check", file=sys.stderr)
+        return 1
     if args.allow_shared_checkout and not args.apply:
         print("error: --allow-shared-checkout requires --apply", file=sys.stderr)
         return 1
@@ -629,6 +659,7 @@ def main(argv: list[str] | None = None) -> int:
         base_ref=base_ref,
         allow_shared=args.allow_shared_checkout,
         verbose=args.verbose,
+        diagnostics=args.diagnostics,
     )
     try:
         targets = resolve_targets(args.targets)

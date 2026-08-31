@@ -635,7 +635,7 @@ def test_provenance_records_local_plugin_origin(tmp_path: Path) -> None:
     ):
         assert refresh_installed_skills.main() == 0
 
-    roll_mock.assert_not_called()
+    roll_mock.assert_called_once()
     provenance = json.loads(provenance_path.read_text(encoding="utf-8"))
     assert provenance["syncedPlugins"] == ["repo-worker-pack", "game-studio"]
     assert provenance["manifestSha"] == "pinned-sha"
@@ -652,40 +652,15 @@ def test_provenance_records_local_plugin_origin(tmp_path: Path) -> None:
     assert "sourcePath" not in provenance
 
 
-def test_default_roll_marketplace_source_is_off(tmp_path: Path) -> None:
-    """Without --roll-marketplace-source the pinned submodule is not rolled."""
+def test_roll_marketplace_source_by_default(tmp_path: Path) -> None:
+    """--apply rolls the marketplace-source submodule forward by default."""
     consumer = tmp_path / "consumer"
     consumer.mkdir()
     _git_init_and_commit(consumer)
+    marketplace_json = consumer / ".agents" / "plugins" / "marketplace.json"
+    marketplace_json.parent.mkdir(parents=True, exist_ok=True)
+    marketplace_json.write_text('{"plugins": []}', encoding="utf-8")
     submodule = consumer / ".agents" / "plugins" / "marketplace-source"
-    submodule.mkdir(parents=True)
-    _git_init_and_commit(submodule)
-
-    marketplace_json = consumer / ".agents" / "plugins" / "marketplace.json"
-    marketplace_json.parent.mkdir(parents=True, exist_ok=True)
-    marketplace_json.write_text('{"plugins": []}', encoding="utf-8")
-
-    with (
-        patch.object(refresh_installed_skills, "ROOT", consumer),
-        patch.object(refresh_installed_skills, "MARKETPLACE_PATH", marketplace_json),
-        patch.object(refresh_installed_skills, "AGENTS_SKILLS_PATH", consumer / ".agents" / "skills"),
-        patch.object(refresh_installed_skills, "PROVENANCE_PATH", consumer / ".agents" / "skills" / ".provenance.json"),
-        patch.object(refresh_installed_skills.shared_checkout, "approve_mutation", return_value=True),
-        patch.object(sys, "argv", ["refresh_installed_skills.py", "--apply"]),
-    ):
-        assert refresh_installed_skills.main() == 0
-
-    assert not (consumer / ".agents" / "skills" / ".provenance.json").exists()
-
-
-def test_roll_marketplace_source_flag_invokes_roll(tmp_path: Path) -> None:
-    """--roll-marketplace-source explicitly rolls the submodule forward."""
-    consumer = tmp_path / "consumer"
-    consumer.mkdir()
-    _git_init_and_commit(consumer)
-    marketplace_json = consumer / ".agents" / "plugins" / "marketplace.json"
-    marketplace_json.parent.mkdir(parents=True, exist_ok=True)
-    marketplace_json.write_text('{"plugins": []}', encoding="utf-8")
 
     roll_mock = MagicMock()
 
@@ -693,12 +668,46 @@ def test_roll_marketplace_source_flag_invokes_roll(tmp_path: Path) -> None:
         patch.object(refresh_installed_skills, "ROOT", consumer),
         patch.object(refresh_installed_skills, "MARKETPLACE_PATH", marketplace_json),
         patch.object(refresh_installed_skills.shared_checkout, "approve_mutation", return_value=True),
+        patch.object(
+            refresh_installed_skills,
+            "_is_submodule",
+            side_effect=lambda p: p == submodule,
+        ),
         patch.object(refresh_installed_skills, "_roll_marketplace_source", roll_mock),
-        patch.object(sys, "argv", ["refresh_installed_skills.py", "--apply", "--roll-marketplace-source"]),
+        patch.object(sys, "argv", ["refresh_installed_skills.py", "--apply"]),
     ):
         assert refresh_installed_skills.main() == 0
 
     roll_mock.assert_called_once()
+
+
+def test_no_roll_marketplace_source_opt_out(tmp_path: Path) -> None:
+    """--no-roll-marketplace-source skips the default submodule roll."""
+    consumer = tmp_path / "consumer"
+    consumer.mkdir()
+    _git_init_and_commit(consumer)
+    marketplace_json = consumer / ".agents" / "plugins" / "marketplace.json"
+    marketplace_json.parent.mkdir(parents=True, exist_ok=True)
+    marketplace_json.write_text('{"plugins": []}', encoding="utf-8")
+    submodule = consumer / ".agents" / "plugins" / "marketplace-source"
+
+    roll_mock = MagicMock()
+
+    with (
+        patch.object(refresh_installed_skills, "ROOT", consumer),
+        patch.object(refresh_installed_skills, "MARKETPLACE_PATH", marketplace_json),
+        patch.object(refresh_installed_skills.shared_checkout, "approve_mutation", return_value=True),
+        patch.object(
+            refresh_installed_skills,
+            "_is_submodule",
+            side_effect=lambda p: p == submodule,
+        ),
+        patch.object(refresh_installed_skills, "_roll_marketplace_source", roll_mock),
+        patch.object(sys, "argv", ["refresh_installed_skills.py", "--apply", "--no-roll-marketplace-source"]),
+    ):
+        assert refresh_installed_skills.main() == 0
+
+    roll_mock.assert_not_called()
 
 
 def test_allow_shared_checkout_requires_apply(capsys) -> None:

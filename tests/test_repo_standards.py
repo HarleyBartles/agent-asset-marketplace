@@ -5,15 +5,7 @@ from pathlib import Path
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
-SKILL_ROOT = (
-    REPO_ROOT
-    / "codex-marketplace"
-    / "plugins"
-    / "repo-worker-pack"
-    / "skills"
-    / "repo-standards"
-    / "scripts"
-)
+SKILL_ROOT = REPO_ROOT / "codex-marketplace" / "plugins" / "repo-worker-pack" / "skills" / "repo-standards" / "scripts"
 SCAFFOLD_AGENTS_MD = SKILL_ROOT / "scaffold_agents_md.py"
 SCAFFOLD_CONTRIBUTING = SKILL_ROOT / "scaffold_contributing.py"
 SCAFFOLD_GITIGNORE = SKILL_ROOT / "scaffold_gitignore.py"
@@ -723,8 +715,8 @@ def test_scaffold_repo_runbook_policy_check_customized_passes(tmp_path: Path) ->
     assert "OK" in result.stdout
 
 
-def test_pre_commit_hook_template_uses_apply_then_check(tmp_path: Path) -> None:
-    """repo-standards installs a pre-commit hook that runs tools/run.py ci --apply."""
+def test_pre_commit_hook_wired_to_ci_apply_and_diagnostics(tmp_path: Path) -> None:
+    """repo-standards installs a pre-commit hook that runs ci --apply then ci --check --diagnostics."""
     repo = tmp_path / "precommit-check"
     repo.mkdir()
     _init_git_repo(repo)
@@ -767,3 +759,355 @@ def test_pre_commit_hook_template_uses_apply_then_check(tmp_path: Path) -> None:
     assert hook.is_file(), "pre-commit hook was not installed"
     text = hook.read_text(encoding="utf-8")
     assert "tools/run.py ci --apply" in text, text
+    assert "tools/run.py ci --check --diagnostics" in text, text
+
+
+def _forbidden_ci_check_guidance() -> tuple[str, ...]:
+    return (
+        "re-run `tools/run.py ci --check`",
+        "Run the repair command, then re-run `tools/run.py ci --check`",
+        "re-run `py -3 tools/run.py ci --check`",
+        "Run the repair command, then re-run `py -3 tools/run.py ci --check`",
+        "run `py -3 tools/run.py ci --check` before",
+        "run `tools/run.py ci --check` before",
+        "re-run `ci --check`",
+        "before pushing or flipping",
+    )
+
+
+_GATED_FILES = (
+    REPO_ROOT
+    / "codex-marketplace"
+    / "plugins"
+    / "repo-worker-pack"
+    / "skills"
+    / "repo-standards"
+    / "references"
+    / "ci-validation-pipeline.md",
+    REPO_ROOT
+    / "codex-marketplace"
+    / "plugins"
+    / "repo-worker-pack"
+    / "skills"
+    / "repo-standards"
+    / "templates"
+    / "pr.md",
+    REPO_ROOT
+    / "codex-marketplace"
+    / "plugins"
+    / "repo-worker-pack"
+    / "skills"
+    / "repo-standards"
+    / "references"
+    / "repository-shape-standard.md",
+    REPO_ROOT / "AGENTS.md",
+    REPO_ROOT / ".agents" / "runbooks" / "pr.md",
+    REPO_ROOT / ".agents" / "doctrine" / "tools.md",
+    REPO_ROOT / ".agents" / "doctrine" / "plans.md",
+    REPO_ROOT / ".agents" / "runbooks" / "planning.md",
+    REPO_ROOT / "codex-marketplace" / "plugins" / "superpowers-plus" / "skills" / "handoff-gates" / "SKILL.md",
+    REPO_ROOT / "codex-marketplace" / "plugins" / "superpowers-plus" / "skills" / "publishing-source" / "SKILL.md",
+)
+
+
+def _fake_tools_run_py(behavior: str) -> str:
+    return f"""import sys, os
+
+BEHAVIOR = {behavior!r}
+
+def fail(msg):
+    print(msg, file=sys.stderr)
+    sys.exit(1)
+
+def write(path, content):
+    with open(path, "w", encoding="utf-8") as f:
+        f.write(content)
+
+def apply():
+    if BEHAVIOR == "outside":
+        os.makedirs(".agents/skills", exist_ok=True)
+        write(".agents/skills/owned.txt", "generated")
+        os.makedirs("build", exist_ok=True)
+        write("build/outside.txt", "untracked")
+    elif BEHAVIOR in ("broken", "ok"):
+        pass
+    print("OK apply")
+
+def check():
+    if BEHAVIOR == "broken":
+        with open("broken.txt", "r", encoding="utf-8") as f:
+            if "BAD" in f.read():
+                fail("broken.txt is still broken")
+    print("OK check")
+
+if __name__ == "__main__":
+    if "--apply" in sys.argv:
+        apply()
+    elif "--check" in sys.argv:
+        check()
+    else:
+        print("OK")
+"""
+
+
+def _install_repo_standards(repo: Path) -> None:
+    exceptions = (
+        "- marketplace-source-submodule\n"
+        "- marketplace-json\n"
+        "- tools-run\n"
+        "- repo-runbook-policy\n"
+        "- runbooks-agents-md\n"
+        "- review-entry\n"
+        "- root-agents-md\n"
+        "- contributing-entry\n"
+        "- root-gitignore\n"
+    )
+    policy_dir = repo / ".agents" / "docs"
+    policy_dir.mkdir(parents=True)
+    (policy_dir / "repo-runbook-policy.md").write_text(
+        f"# Repo runbook policy\n\n## Exceptions\n\n{exceptions}",
+        encoding="utf-8",
+        newline="\n",
+    )
+    result = subprocess.run(
+        [sys.executable, str(REPO_STANDARDS), "--apply", "--yes", "--allow-shared-checkout"],
+        cwd=repo,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+    )
+    combined = result.stdout + result.stderr
+    assert result.returncode == 0, combined
+
+
+def test_pre_commit_hook_blocks_staged_broken_with_unstaged_fix(tmp_path: Path) -> None:
+    """The hook materializes the index, so an unstaged fix cannot hide staged-broken content."""
+    repo = tmp_path / "staged-broken"
+    repo.mkdir()
+    _init_git_repo_with_commit(repo)
+    _install_repo_standards(repo)
+
+    (repo / "tools").mkdir(exist_ok=True)
+    (repo / "tools" / "run.py").write_text(_fake_tools_run_py("broken"), encoding="utf-8", newline="\n")
+    subprocess.run(["git", "add", "tools/run.py"], cwd=repo, env=_stripped_env(), check=True)
+
+    # Staged content is broken; working tree has a fix that is not staged.
+    broken = repo / "broken.txt"
+    broken.write_text("BAD", encoding="utf-8", newline="\n")
+    subprocess.run(["git", "add", "broken.txt"], cwd=repo, env=_stripped_env(), check=True)
+    broken.write_text("GOOD", encoding="utf-8", newline="\n")
+
+    result = subprocess.run(
+        ["git", "commit", "-m", "test staged broken"],
+        cwd=repo,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode != 0, result.stdout + result.stderr
+    # The unstaged fix is restored after the failed validation.
+    assert broken.read_text(encoding="utf-8").strip() == "GOOD"
+
+
+def test_pre_commit_hook_preserves_unstaged_edits(tmp_path: Path) -> None:
+    """The hook restores unstaged edits after running validation on the staged snapshot."""
+    repo = tmp_path / "preserve-edits"
+    repo.mkdir()
+    _init_git_repo_with_commit(repo)
+    _install_repo_standards(repo)
+
+    (repo / "tools").mkdir(exist_ok=True)
+    (repo / "tools" / "run.py").write_text(_fake_tools_run_py("ok"), encoding="utf-8", newline="\n")
+    subprocess.run(["git", "add", "tools/run.py"], cwd=repo, env=_stripped_env(), check=True)
+
+    keep = repo / "keep.txt"
+    keep.write_text("staged", encoding="utf-8", newline="\n")
+    subprocess.run(["git", "add", "keep.txt"], cwd=repo, env=_stripped_env(), check=True)
+    keep.write_text("staged plus unstaged", encoding="utf-8", newline="\n")
+
+    result = subprocess.run(
+        ["git", "commit", "-m", "test preserve edits"],
+        cwd=repo,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+    )
+    combined = result.stdout + result.stderr
+    assert result.returncode == 0, combined
+    assert keep.read_text(encoding="utf-8").strip() == "staged plus unstaged"
+
+
+def test_pre_commit_hook_stages_only_owned_generated_surfaces(tmp_path: Path) -> None:
+    """The hook stages allow-listed generated surfaces and fails on unexpected new files."""
+    repo = tmp_path / "owned-staging"
+    repo.mkdir()
+    _init_git_repo_with_commit(repo)
+    _install_repo_standards(repo)
+
+    (repo / "tools").mkdir(exist_ok=True)
+    (repo / "tools" / "run.py").write_text(_fake_tools_run_py("outside"), encoding="utf-8", newline="\n")
+    subprocess.run(["git", "add", "tools/run.py"], cwd=repo, env=_stripped_env(), check=True)
+
+    base = repo / "base.txt"
+    base.write_text("ok", encoding="utf-8", newline="\n")
+    subprocess.run(["git", "add", "base.txt"], cwd=repo, env=_stripped_env(), check=True)
+
+    result = subprocess.run(
+        ["git", "commit", "-m", "test owned staging"],
+        cwd=repo,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode != 0, result.stdout + result.stderr
+
+    # Owned generated surface is staged; the unexpected file remains untracked.
+    staged = subprocess.run(
+        ["git", "diff", "--cached", "--name-only"],
+        cwd=repo,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+    ).stdout
+    assert ".agents/skills/owned.txt" in staged, staged
+    status = subprocess.run(
+        ["git", "status", "--porcelain", "--untracked-files=all"],
+        cwd=repo,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+    ).stdout
+    assert "build/outside.txt" in status, status
+
+
+def _add_marketplace_submodule(repo: Path, marketplace: Path) -> None:
+    subprocess.run(
+        [
+            "git",
+            "-c",
+            "protocol.file.allow=always",
+            "submodule",
+            "add",
+            str(marketplace),
+            ".agents/plugins/marketplace-source",
+        ],
+        cwd=repo,
+        env=_stripped_env(),
+        check=True,
+    )
+    subprocess.run(
+        ["git", "commit", "--no-verify", "-m", "add marketplace submodule"],
+        cwd=repo,
+        env=_stripped_env(),
+        check=True,
+    )
+
+
+def _install_repo_standards_with_submodule(repo: Path) -> None:
+    exceptions = (
+        "- marketplace-json\n"
+        "- tools-run\n"
+        "- repo-runbook-policy\n"
+        "- runbooks-agents-md\n"
+        "- review-entry\n"
+        "- root-agents-md\n"
+        "- contributing-entry\n"
+        "- root-gitignore\n"
+    )
+    policy_dir = repo / ".agents" / "docs"
+    policy_dir.mkdir(parents=True)
+    (policy_dir / "repo-runbook-policy.md").write_text(
+        f"# Repo runbook policy\n\n## Exceptions\n\n{exceptions}",
+        encoding="utf-8",
+        newline="\n",
+    )
+    result = subprocess.run(
+        [sys.executable, str(REPO_STANDARDS), "--apply", "--yes", "--allow-shared-checkout"],
+        cwd=repo,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+    )
+    combined = result.stdout + result.stderr
+    assert result.returncode == 0, combined
+
+
+def test_pre_commit_hook_rejects_dirty_submodule(tmp_path: Path) -> None:
+    """The hook refuses to commit when a required marketplace submodule is dirty."""
+    marketplace = tmp_path / "marketplace"
+    marketplace.mkdir()
+    _init_git_repo_with_commit(marketplace)
+
+    repo = tmp_path / "consumer-dirty"
+    repo.mkdir()
+    _init_git_repo_with_commit(repo)
+    _add_marketplace_submodule(repo, marketplace)
+    _install_repo_standards_with_submodule(repo)
+
+    (repo / "tools").mkdir(exist_ok=True)
+    (repo / "tools" / "run.py").write_text(_fake_tools_run_py("ok"), encoding="utf-8", newline="\n")
+    subprocess.run(["git", "add", "tools/run.py"], cwd=repo, env=_stripped_env(), check=True)
+
+    (repo / ".agents" / "plugins" / "marketplace-source" / "dirty.txt").write_text(
+        "dirty", encoding="utf-8", newline="\n"
+    )
+
+    result = subprocess.run(
+        ["git", "commit", "-m", "test dirty submodule"],
+        cwd=repo,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode != 0, result.stdout + result.stderr
+    assert "submodule source does not match" in (result.stdout + result.stderr)
+
+
+def test_pre_commit_hook_rejects_wrong_head_submodule(tmp_path: Path) -> None:
+    """The hook refuses to commit when a required marketplace submodule is at the wrong commit."""
+    marketplace = tmp_path / "marketplace"
+    marketplace.mkdir()
+    _init_git_repo_with_commit(marketplace)
+
+    repo = tmp_path / "consumer-wrong-head"
+    repo.mkdir()
+    _init_git_repo_with_commit(repo)
+    _add_marketplace_submodule(repo, marketplace)
+
+    # Move the marketplace source forward without updating the superproject gitlink.
+    (marketplace / "extra.txt").write_text("extra", encoding="utf-8", newline="\n")
+    subprocess.run(["git", "add", "extra.txt"], cwd=marketplace, env=_stripped_env(), check=True)
+    subprocess.run(["git", "commit", "-m", "second"], cwd=marketplace, env=_stripped_env(), check=True)
+    new_head = subprocess.run(
+        ["git", "rev-parse", "HEAD"],
+        cwd=marketplace,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+        check=True,
+    ).stdout.strip()
+
+    _install_repo_standards_with_submodule(repo)
+
+    (repo / "tools").mkdir(exist_ok=True)
+    (repo / "tools" / "run.py").write_text(_fake_tools_run_py("ok"), encoding="utf-8", newline="\n")
+    subprocess.run(["git", "add", "tools/run.py"], cwd=repo, env=_stripped_env(), check=True)
+
+    submodule = repo / ".agents" / "plugins" / "marketplace-source"
+    subprocess.run(
+        ["git", "-c", "protocol.file.allow=always", "fetch", "origin"],
+        cwd=submodule,
+        env=_stripped_env(),
+        check=True,
+    )
+    subprocess.run(["git", "checkout", new_head], cwd=submodule, env=_stripped_env(), check=True)
+
+    result = subprocess.run(
+        ["git", "commit", "-m", "test wrong-head submodule"],
+        cwd=repo,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode != 0, result.stdout + result.stderr
+    assert "submodule source does not match" in (result.stdout + result.stderr)

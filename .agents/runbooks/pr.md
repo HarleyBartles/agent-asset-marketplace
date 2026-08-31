@@ -22,7 +22,7 @@ This repo's rules:
 - Keep a PR in draft while iterating, running local validation, and performing self-review.
 - Only flip a PR out of draft when:
   - self-review is complete,
-  - the preflight (`tools/run ci --check` on the staged tree) passes,
+  - the latest committed tree has passed the pre-commit hook on the staged snapshot,
   - the branch is ready for review or merge.
 - This repo's CI must not run on draft pull requests. The `marketplace-validation` workflow skips draft PRs and runs once a PR is no longer draft; it is gated by `github.event.pull_request.draft == false`.
 - After flipping a PR to ready, monitor CI and address failures before requesting human review.
@@ -38,7 +38,7 @@ Consumer-canonical variant:
 
 1. **Fast preflight first.**
    - `py -3 tools/run.py review-preflight --check`
-   - `py -3 tools/run.py ci --check`
+   - If the pre-commit hook is not available, run `py -3 tools/run.py ci --check` only as an explicit CI-parity or diagnostic step.
    - If either is red, fix the findings and re-run. Do not proceed past preflight while it is red.
 
 2. **Scope honesty.**
@@ -54,10 +54,10 @@ Consumer-canonical variant:
 ## Repo-specific guidance
 
 - Work in an isolated worktree on a task branch.
-- Do not run `py -3 tools/run.py ci --check` before every commit. It is an explicit CI-should-pass check on the working tree, not a pre-pre-commit step. The pre-commit hook already applies mechanical fixes and then runs `ci --check` on the staged tree; running it manually first is wasteful.
-- If you are confident the working change is correct, commit it. The pre-commit hook will keep you honest: it applies what it can, stages the result, and fails the commit if a non-mechanical check is broken.
-- If the pre-commit hook is not installed, run `py -3 tools/run.py ci --apply` and then `py -3 tools/run.py ci --check` manually before committing.
-- Only run `py -3 tools/run.py ci --check` deliberately when you want to know whether the working tree would pass CI (for example, before pushing or flipping the PR to ready).
+- Do not run `py -3 tools/run.py ci --check` immediately before a normal commit or immediately after a successful hooked commit. It is a complete CI/PR gate, not a pre-pre-commit step. The pre-commit hook already materializes the staged snapshot, runs `ci --apply`, stages only the owned generated surfaces, and runs `ci --check --diagnostics`; running `ci --check` manually first is wasteful.
+- If you are confident the working change is correct, stage the intended tree and commit it. The pre-commit hook will keep you honest: it applies mechanical fixes to the staged snapshot, reports every failing check, and fails the commit if any check is broken.
+- If the pre-commit hook is not installed, run `py -3 tools/run.py ci --apply` manually before committing. Then commit normally; the hook (or `ci --check --diagnostics` if the hook is absent) proves the staged tree. Do not run `ci --check` separately unless no commit follows.
+- Only run `py -3 tools/run.py ci --check` deliberately for uncommitted verification, pipeline diagnosis, or explicit CI-parity work.
 - `py -3 tools/run.py marketplace --apply` regenerates derived surfaces; stage any generated changes before committing.
 - Do not use `git commit --no-verify` to bypass the pre-commit hook.
 - Commit focused changes. Do not commit generated artifacts unless the generator produced them.

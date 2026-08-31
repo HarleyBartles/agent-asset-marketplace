@@ -29,6 +29,7 @@ Use this runbook for pull-request workflow and publication proof in this repo.
 ## Repo-specific guidance
 
 - Work in an isolated worktree on a task branch.
+- For a normal commit, stage the intended tree and let the tracked pre-commit hook run `tools/run.py ci --apply` and then `tools/run.py ci --check --diagnostics` on the exact staged snapshot. Do not run the full `ci --check` before a normal commit.
 - Run the relevant validation before pushing:
   - <!-- list validation commands here -->
 - Commit focused changes. Do not commit generated artifacts unless the generator produced them.

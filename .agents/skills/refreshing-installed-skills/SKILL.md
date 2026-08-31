@@ -38,7 +38,7 @@ py -3 .agents/skills/refreshing-installed-skills/scripts/refresh_installed_skill
 py -3 .agents/skills/refreshing-installed-skills/scripts/refresh_installed_skills.py --check
 ```
 
-This skill runs the bundled `refresh_installed_skills.py` core, which installs/refreshes `.agents/skills/` from the plugins declared in `.agents/plugins/marketplace.json`, and rolls the optional `marketplace-source` submodule to `origin/main`. It defaults to `--check` mode; pass `--apply` to write files. When running from a linked worktree, add `--apply --allow-shared-checkout`.
+This skill runs the bundled `refresh_installed_skills.py` core, which installs/refreshes `.agents/skills/` from the plugins declared in `.agents/plugins/marketplace.json`. When a `marketplace-source` submodule is present, `--apply` fetches it and resets it to `origin/main` before syncing, and `--check` reports if the submodule is behind its remote. It defaults to `--check` mode; pass `--apply` to write files. When running from a linked worktree, add `--apply --allow-shared-checkout`. Pass `--no-roll-marketplace-source` to skip the submodule roll.
 
 ## Plugin source types
 
