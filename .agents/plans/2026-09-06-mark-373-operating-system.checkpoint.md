@@ -1,11 +1,13 @@
 plan: .agents/plans/2026-09-06-mark-373-operating-system.md
 branch: codex/mark-373-operating-system
-head: b858e06de76aecaa6a55e4b12a8669d5b27055ce
-last_completed_task: 8
-next_task: closeout
-next_step: human-owned Ready decision for PR #311 after cross-repository campaign coordination
-working_tree_status: dirty only with this final closeout plan/checkpoint update; committed implementation/evidence head is b858e06de76aecaa6a55e4b12a8669d5b27055ce; ignored raw evidence remains local; temp upstream clone retained because exact cleanup command was rejected by environment policy
-working_diff_sha: pending (closeout plan/checkpoint update is intentionally uncommitted)
+head_at_capture: 2fb546735b8f9f45ec2f1fb4fb00f86a1f2a8d96
+last_completed_task: 6
+next_task: 7
+next_step: resolve the harness-blocked read-only smoke, then rerun the fixed campaign from a fresh immutable evidence head
+checkpoint_state: clean
+checkpoint_publication: committed checkpoint record; live HEAD may include this record's publication commit
+working_tree_status: clean
+working_diff_sha: none
 last_green_evidence:
   - branch refresh => fast-forwarded to 672becb21de42e0545f89ea95e1667ca95163ca1 [PR #311 remains Draft]
   - git -C <temp-clone> cat-file -e <v6.3>^{commit} => passed [b36e0829c6d0140e93cfef2ca599b1b07d4a7797]
@@ -43,8 +45,13 @@ last_green_evidence:
   - committed verification => clean status, git diff --check passed, mesh passed; review-preflight retained the four documented origin/main warnings
   - git push origin codex/mark-373-operating-system => published b858e06de76aecaa6a55e4b12a8669d5b27055ce
   - PR #311 verification => OPEN, Draft, base main, full head b858e06de76aecaa6a55e4b12a8669d5b27055ce; Draft workflow check skipped as expected
-evaluation_head: 82132d817
-unresolved_blockers: temporary upstream clone cleanup rejected by environment destructive-command policy; source application and record are durable; review-preflight retains four pre-existing origin/main warnings documented in the plan; Ready promotion remains a human-owned decision for the coordinated cross-repository campaign
+  - MARK-373 review repair commit => 6b030b94ca2c234a6dd1e9b7a3df06fa0b8ebac3 (source contracts, runner preflight, scan dispositions, focused tests)
+  - real Luna preflight at 6b030b94ca2c234a6dd1e9b7a3df06fa0b8ebac3 => harness-blocked; codex-cli 0.153.4 smoke exited 0 without SMOKE_OK; no behavioral trials started
+  - campaign invocation at 6b030b94ca2c234a6dd1e9b7a3df06fa0b8ebac3 => stopped after preflight and wrote ignored raw meta
+  - py -3 -m pytest tests/test_workflow_contracts.py::TestRepositoryCallersAndPressure tests/test_workflow_contracts.py::TestEvaluationCampaign -q => 12 passed
+  - normal hooked diagnostic-status commit => 2fb546735b8f9f45ec2f1fb4fb00f86a1f2a8d96
+evidence_head: 6b030b94ca2c234a6dd1e9b7a3df06fa0b8ebac3
+unresolved_blockers: revised campaign remains harness-blocked until the real read-only smoke produces SMOKE_OK; temporary upstream clone cleanup was rejected by environment destructive-command policy; review-preflight retains four pre-existing origin/main warnings; Ready promotion remains a human-owned decision for the coordinated cross-repository campaign
 resume_reads:
   - .agents/plans/2026-09-06-mark-373-operating-system.md: Luna Execution Contract, Global Constraints, Task 7
   - .agents/docs/mark-373-superpowers-v6.3-rebase.md
