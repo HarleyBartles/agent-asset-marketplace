@@ -25,7 +25,7 @@ last_green_evidence:
   - py -3 -m pytest tests/test_workflow_contracts.py -q => 22 passed
   - py -3 tools/validate_tool_cli.py --check => 22 tools pass, 0 warnings, 0 failures
   - normal hooked commit => cc7341e47 (ci check passed; 95 files changed)
-evaluation_head: not-set
+evaluation_head: cc7341e47
 unresolved_blockers: temporary upstream clone cleanup rejected by environment destructive-command policy; source application and record are durable, retry exact cleanup before final closeout
 resume_reads:
   - .agents/plans/2026-09-06-mark-373-operating-system.md: Luna Execution Contract, Global Constraints, Task 7
