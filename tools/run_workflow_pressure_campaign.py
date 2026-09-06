@@ -117,8 +117,20 @@ def preflight(
     executable = resolve("codex")
     if not executable:
         return {"status": "harness-unavailable", "reason": "codex executable not found on PATH"}
-    version = run([executable, "--version"], capture_output=True, text=True)
-    help_result = run([executable, "exec", "--help"], capture_output=True, text=True)
+    version = run(
+        [executable, "--version"],
+        capture_output=True,
+        text=True,
+        encoding="utf-8",
+        errors="replace",
+    )
+    help_result = run(
+        [executable, "exec", "--help"],
+        capture_output=True,
+        text=True,
+        encoding="utf-8",
+        errors="replace",
+    )
     help_text = (help_result.stdout or "") + (help_result.stderr or "")
     missing = sorted(capability for capability in REQUIRED_CAPABILITIES if capability not in help_text)
     if version.returncode != 0 or help_result.returncode != 0 or missing:
@@ -181,10 +193,12 @@ def run_campaign(
                     input=prompt,
                     capture_output=True,
                     text=True,
+                    encoding="utf-8",
+                    errors="replace",
                 )
                 elapsed_ms = round((time.time() - started) * 1000)
-                (run_dir / "events.jsonl").write_text(result.stdout, encoding="utf-8")
-                (run_dir / "stderr.txt").write_text(result.stderr, encoding="utf-8")
+                (run_dir / "events.jsonl").write_text(result.stdout or "", encoding="utf-8")
+                (run_dir / "stderr.txt").write_text(result.stderr or "", encoding="utf-8")
                 meta = {
                     "schema_version": 1,
                     "scenario": scenario["id"],
