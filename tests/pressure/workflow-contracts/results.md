@@ -1,52 +1,28 @@
 # MARK-373 workflow pressure results
 
-The fixed composed-stack campaign completed 52/52 trials: 13 scenarios across
-Luna, Terra, Sol, and Astra. The requested trial models were fixed to
-`gpt-5.6-luna`, `gpt-5.6-terra`, `gpt-5.6-sol`, and `gpt-6-astra`, each at
-medium reasoning effort. Post-hoc scoring was performed inline by the Luna
-executor; no second judge invocation was made.
+The revised campaign preflight is `harness-blocked` at evaluation head
+`6b030b94ca2c234a6dd1e9b7a3df06fa0b8ebac3`. Codex CLI `0.153.4` accepted the
+required executable and flag checks, but a real read-only Luna smoke invocation
+exited 0 without producing the required `SMOKE_OK` response. The runner
+therefore stopped before model classification and did not rerun the matrix.
 
-The first run completed 45 trials at evaluation head `cc7341e47` before the
-Windows capture layer raised a UTF-8 decoding error. The harness was repaired
-in `82132d817`, and the seven affected Astra trials were resumed there. The
-repair is a harness-capability correction, not a model-unavailable result.
+The 52 retained score records are historical traces from earlier heads. They
+remain useful diagnostic artifacts, but are explicitly superseded and must not
+be presented as a valid post-preflight behavioral baseline. Their prior 14
+pass / 38 `harness-capability` verdicts are not completion evidence for the
+revised campaign.
 
-## Verdicts
+## Revised campaign status
 
-| family | pass | fail | failure class for failed trials |
-|---|---:|---:|---|
-| Luna | 3 | 10 | harness-capability |
-| Terra | 2 | 11 | harness-capability |
-| Sol | 4 | 9 | harness-capability |
-| Astra | 5 | 8 | harness-capability |
-| **total** | **14** | **38** | **harness-capability** |
+| field | value |
+|---|---|
+| preflight | `harness-blocked` |
+| completed trials | `0` |
+| retained diagnostic traces | `52` |
+| model-unavailable verdicts | `0` — no trial reached model availability classification |
+| smoke evidence | recorded in `campaign-meta.json` with SHA-256 |
+| raw run custody | ignored and local-only |
 
-The passing cases are the traces whose requested boundary remained observable
-despite the managed runtime: authorized Draft publication dry-run, destructive
-stop/decision custody, selected repository-canon responses, selected evidence
-reuse responses, and one explicit proportionate no-approval response. The
-failed cases are execution-dependent scenarios where the runtime blocked the
-required local inspection before the requested action could be evidenced.
-Those failures are retained rather than treated as green. The traces generally
-stopped without fabrication or external side effects.
-
-## Observable limits
-
-`reads_before_useful_action` is `unobservable` for every score because the
-event stream does not prove that ordering. The CLI/API does not expose an
-effective observed model, reasoning mode, or separate judge identity beyond
-the fixed requested configuration, so those fields retain their explicit
-`unobservable`/pinned-contract values. Mechanical question, tool-call,
-verification, elapsed-time, and SHA-256 values live in the per-trial score
-records.
-
-Raw event streams remain local and ignored. This report links only durable score
-records, whose schema and evidence hashes are checked by
-`tests/test_workflow_contracts.py`:
-
-`scores/<evaluation-head>/<family>/<scenario-id>.json`
-
-The campaign definition and durable run metadata are
-[`campaign.json`](campaign.json) and
-[`campaign-meta.json`](campaign-meta.json). No raw local run is presented as a
-published artifact.
+The blocking condition is environmental/harness capability, not a model
+behavior verdict. A future run may establish a behavioral baseline only after
+the same controlled read-only smoke completes successfully.

@@ -1,8 +1,13 @@
 {
   "schema_version": 1,
-  "evaluation_head": "82132d817f1974cf43df8602e56c500c5fa1c772",
-  "status": "preflight-ready",
+  "evaluation_head": "6b030b94ca2c234a6dd1e9b7a3df06fa0b8ebac3",
+  "status": "harness-blocked",
   "codex_version": "codex-cli 0.153.4",
+  "reason": "read-only smoke invocation did not complete expected response",
+  "smoke_exit_code": 0,
+  "smoke_final_sha256": "7c5fce28b7d9675c9ac46016956a88a76d74fe5d06dabb5c0666664bf10068f4",
+  "project_config_paths": [],
+  "external_write_surfaces": [],
   "judge": {
     "family": "luna",
     "model": "gpt-5.6-luna",
@@ -16,12 +21,14 @@
     "astra": "gpt-6-astra"
   },
   "scenario_count": 13,
-  "completed_trials": 52,
+  "completed_trials": 0,
+  "superseded_diagnostic_trials": 52,
+  "score_validity": "superseded-diagnostic-only",
   "raw_evidence": {
     "heads": ["cc7341e47", "82132d817"],
-    "resume_note": "45 valid trials ran at cc7341e47; seven Astra trials were rerun at 82132d817 after the UTF-8 capture repair.",
+    "resume_note": "The retained 52 score records are historical diagnostic traces only; the revised preflight blocked a new behavioral baseline.",
     "runs_are_ignored": true,
     "api_reasoning_mode": "unobservable"
   },
-  "availability_policy": "model-unavailable is reserved for model capability absence after preflight; generic runtime failure is trial-error."
+  "availability_policy": "model-unavailable is reserved for model capability absence after preflight; this run stopped before trial classification because the read-only smoke was harness-blocked."
 }

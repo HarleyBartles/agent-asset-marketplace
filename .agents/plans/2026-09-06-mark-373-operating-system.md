@@ -357,7 +357,7 @@ At plan time the repo has one executable workflow `.github/workflows/marketplace
 
 ## Task 7: Run fixed composed-stack pressure campaign
 
-- [x] Read immutable `evidence_head` from checkpoint; do not run from dirty/moving state.
+- [x] Read immutable `evidence_head` from checkpoint; do not run from dirty/moving state. The revised evidence head is `6b030b94ca2c234a6dd1e9b7a3df06fa0b8ebac3`.
 - [x] Run the campaign command below. The runner performs the harness preflight first and stops before model classification if the harness is unavailable/incompatible/blocked:
 
 ```text
@@ -367,13 +367,13 @@ py -3 tools/run_workflow_pressure_campaign.py \
   --head <evaluation_head>
 ```
 
-- [x] Inspect `campaign-meta.json`. The harness was `preflight-ready`; the UTF-8 interruption was recorded as a generic harness capability failure and not converted into per-family `model-unavailable` results.
-- [x] For each completed trial, review frozen `events.jsonl` + `final.txt` + `meta.json` against the predeclared rubric and write the committed score using the fixed Score Adjudication Contract. No second model was launched to judge it.
+- [x] Inspect `campaign-meta.json`. The revised harness is `harness-blocked`: the real read-only Luna smoke exited 0 without `SMOKE_OK`, so no behavioral trials were started and no result was converted into `model-unavailable`.
+- [ ] For each completed trial, review frozen `events.jsonl` + `final.txt` + `meta.json` against the predeclared rubric and write the committed score using the fixed Score Adjudication Contract. Blocked: the revised preflight produced zero completed trials.
 - [x] Verify every score separates `trial` from `judge`, includes raw SHA-256 hashes, contains only trace-supported mechanical counts or `unobservable`, and includes criterion-level evidence locators.
-- [x] Summarize committed scores in `results.md`: unnecessary questions, reads before useful work, redundant verification, premature stop, completion quality, scope/authority violations, delegation/model quality, context/time cost, overall verdict, and failure class.
+- [x] Update `results.md` to identify the revised run as harness-blocked and label the 52 retained scores superseded diagnostic-only; no historical verdict is presented as a new baseline.
 - [x] Record reasoning-mode evidence honestly: `api_reasoning_mode: "unobservable"`; no unsupported inference was made.
 - [x] Confirm raw `runs/` remains ignored/uncommitted and inspect derived evidence for sensitive material before publication.
-- [x] Diagnose baseline failures as harness capability rather than model-unavailable; no instruction-composition owner repair was indicated by the traces.
+- [x] Diagnose the retained historical failures as harness capability rather than model-unavailable; the revised smoke block prevents unsupported behavioral claims.
 - [x] Only exact family/model absence after a green harness preflight is `model-unavailable`; no trial received that classification.
 - [x] Run `py -3 -m pytest tests/test_workflow_contracts.py::TestEvaluationCampaign -q` => 7 passed.
 - [x] **Green exit/checkpoint:** harness preflight green; 52/52 trials complete across all four requested families; all committed scores satisfy schema/provenance/hash rules; raw runs ignored; remaining failures honestly recorded as harness-capability results; checkpoint -> Task 8.
