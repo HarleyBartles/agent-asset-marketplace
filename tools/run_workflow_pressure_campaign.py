@@ -169,9 +169,11 @@ def run_campaign(
                     capture_output=True,
                     text=True,
                 )
-                prompt = campaign["prompt_prefix"] + "\n\n" + (
-                    campaign_path.parent / "prompts" / scenario["prompt"]
-                ).read_text(encoding="utf-8")
+                prompt = (
+                    campaign["prompt_prefix"]
+                    + "\n\n"
+                    + (campaign_path.parent / "prompts" / scenario["prompt"]).read_text(encoding="utf-8")
+                )
                 final_path = run_dir / "final.txt"
                 started = time.time()
                 result = subprocess.run(
@@ -209,9 +211,7 @@ def run_campaign(
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(
-        description="Run isolated, observable Codex pressure trials for MARK-373. (mixed)"
-    )
+    parser = argparse.ArgumentParser(description="Run isolated, observable Codex pressure trials for MARK-373. (mixed)")
     parser.add_argument(
         "--check",
         action="store_true",

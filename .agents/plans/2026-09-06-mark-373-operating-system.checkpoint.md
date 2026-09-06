@@ -1,11 +1,11 @@
 plan: .agents/plans/2026-09-06-mark-373-operating-system.md
 branch: codex/mark-373-operating-system
 head: 672becb21de42e0545f89ea95e1667ca95163ca1
-last_completed_task: 5
-next_task: 6
-next_step: 6.1 Inventory all executable workflow and automation callers from the live repository
-working_tree_status: modified canonical plugin sources plus untracked Task 2/3/4/5 durable artifacts; temp upstream clone retained because exact cleanup command was rejected by environment policy
-working_diff_sha: 87614e1dff250325cce1262795020fff722500d43e434cf2e7681de7d32f72ea (excludes this checkpoint to avoid self-reference)
+last_completed_task: 6
+next_task: 7
+next_step: 7.1 Read evaluation_head and run the fixed composed-stack campaign preflight
+working_tree_status: clean after hooked evaluation checkpoint commit; temp upstream clone retained because exact cleanup command was rejected by environment policy
+working_diff_sha: not-applicable (clean committed evaluation checkpoint; excludes this checkpoint to avoid self-reference)
 last_green_evidence:
   - branch refresh => fast-forwarded to 672becb21de42e0545f89ea95e1667ca95163ca1 [PR #311 remains Draft]
   - git -C <temp-clone> cat-file -e <v6.3>^{commit} => passed [b36e0829c6d0140e93cfef2ca599b1b07d4a7797]
@@ -19,10 +19,16 @@ last_green_evidence:
   - py -3 tools/workflow_pressure_scan.py ... => refreshed candidate scan after Task 3 source repair
   - py -3 -m pytest tests/test_workflow_contracts.py::TestValidationTddPublication -q => 4 passed
   - py -3 -m pytest tests/test_workflow_contracts.py::TestPlanningDelegationReview -q => 5 passed
+  - py -3 -m pytest tests/test_validate_agent_mesh.py tests/test_review_preflight.py tests/test_review_preflight_extensions.py -q => 29 passed
+  - py -3 tools/run.py mesh --check => passed
+  - py -3 -m pytest tests/test_workflow_contracts.py::TestRepositoryCallersAndPressure -q => 3 passed
+  - py -3 -m pytest tests/test_workflow_contracts.py -q => 22 passed
+  - py -3 tools/validate_tool_cli.py --check => 22 tools pass, 0 warnings, 0 failures
+  - normal hooked commit => cc7341e47 (ci check passed; 95 files changed)
 evaluation_head: not-set
 unresolved_blockers: temporary upstream clone cleanup rejected by environment destructive-command policy; source application and record are durable, retry exact cleanup before final closeout
 resume_reads:
-  - .agents/plans/2026-09-06-mark-373-operating-system.md: Luna Execution Contract, Global Constraints, Task 6
+  - .agents/plans/2026-09-06-mark-373-operating-system.md: Luna Execution Contract, Global Constraints, Task 7
   - .agents/docs/mark-373-superpowers-v6.3-rebase.md
   - tests/pressure/workflow-contracts/README.md
   - codex-marketplace/plugins/repo-worker-pack/skills/repo-worker-base/SKILL.md
