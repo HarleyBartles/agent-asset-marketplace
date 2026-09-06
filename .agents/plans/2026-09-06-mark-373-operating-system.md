@@ -2,640 +2,308 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use `/executing-plans` to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Establish a single model-agnostic operating-system contract in the marketplace so later repository adoption work can inherit clear authority, bounded reading, proportionate validation, review, and publication semantics.
+**Goal:** Establish one model-agnostic operating-system contract in the marketplace so later repository adoption work inherits clear authority, bounded reading, proportionate validation, evidence reuse, review, and Draft-first publication semantics.
 
-**Architecture:** Rebase the Superpowers+ derivation onto the pinned upstream v6.3.0 baseline first, then repair the original owners of contradictory behavior rather than layering compensating overrides on stale v6.2 semantics. Put cross-runtime authority and autonomy in `base-doctrine`, repository-facing validation choreography in `repo-worker-base`, and stage-specific behavior in the owning Superpowers+ skills. Validate deterministic source contracts and observed composed-stack behavior while leaving domain evidence and repository commands to downstream repos.
+**Architecture:** Rebase Superpowers+ onto one pinned upstream v6.3.0 source snapshot, then repair contradictory behavior at the owning skill rather than stacking compensating overrides. Put cross-runtime authority/autonomy in `base-doctrine`, repository validation choreography in `repo-worker-base`, and stage-specific behavior in the owning Superpowers+ skills. Validate deterministic source contracts and observed composed-stack behavior while keeping consumer-repository commands and domain evidence downstream.
 
-**Tech Stack:** Markdown skill/reference assets, JSON evaluation fixtures, pytest structural contract tests, a small Python pressure-scan tool, upstream Superpowers provenance/diffing, repository marketplace/index generators, the tracked pre-commit hook, and the repository's existing pressure-evaluation tooling.
+**Tech Stack:** Markdown skill/reference assets, pytest structural contract tests, JSON pressure fixtures, Python campaign/scanner tools, upstream Git provenance, Codex CLI trial execution, marketplace/index generators, the tracked pre-commit hook, and GitHub Actions.
 
-**Execution Strategy:** `executing-plans` — one executor makes the coupled semantic changes in dependency order. This plan is deliberately written to be executable by GPT-5.6 Luna without requiring Luna to recreate planner-level architectural decisions. PR #311 starts as the plan-only Draft. After this plan is approved, implementation continues in the same worktree and branch on top of the committed plan, and PR #311 remains the single Draft PR through implementation and validation.
+**Execution Strategy:** `executing-plans`. One GPT-5.6 Luna executor performs the coupled work in dependency order. This plan is intentionally decision-complete for Luna: consequential choices are pinned here; repository discovery is bounded and has explicit evidence destinations and exit conditions. PR #311 remains plan-only until human approval. After approval, implementation continues on the same branch/worktree and PR #311 remains Draft through implementation and local validation unless the PR has already been merged or closed.
 
 ## Luna Execution Contract
 
-This section is part of the plan contract, not advisory prose.
-
-OpenAI's current model guidance positions GPT-5.6 Luna as the efficient/high-volume member of the 5.6 family and recommends clear goals, constraints, output contracts, completion criteria, and verification for agentic work. This plan therefore moves consequential design choices into the plan and leaves Luna only bounded repository discovery. The plan must remain executable at Luna **medium reasoning**; higher reasoning may be used, but omitted planner decisions must not be recovered by relying on extra model effort.
-
-Official guidance used for this calibration:
-
-- `https://developers.openai.com/api/docs/models/gpt-5.6-luna`
-- `https://developers.openai.com/api/docs/guides/reasoning`
-- `https://developers.openai.com/tracks/building-agents`
-
-Execution rules for the Luna implementer:
-
-1. **Pinned decisions are not rediscovery tasks.** If this plan gives an exact SHA, file path, class name, schema, model configuration, command, classification enum, or acceptance condition, use it. Do not choose an alternative merely because another reasonable option exists.
-2. **Discovery is bounded.** A discovery step names the sources to inspect, the evidence to record, and the allowed outcomes. Inspect enough to decide among those outcomes, then stop reading.
-3. **Technical facts are resolved by inspection.** Do not ask the human about a repository fact that can be read from source, git state, generated metadata, tests, or workflows.
-4. **Escalate only plan-changing decisions.** Stop for the human only if evidence would require changing a pinned upstream revision, changing MARK-373 scope/authority, weakening a stated invariant, adding a new external mutation, or choosing between materially different product/architecture outcomes not covered here.
-5. **Task exit conditions are binding.** Do not advance because a task “looks done.” Run the task's named focused check and satisfy its explicit green condition.
-6. **Do not broaden validation opportunistically.** Use the named focused class/command for the task. The normal hooked commit supplies the broad local gate at the commit boundary.
-7. **Do not broaden the model matrix.** The baseline evaluation matrix below is fixed. Extra model/profile/reasoning variants are diagnostic only after a baseline failure.
-8. **Do not alter tests to make implementation green unless the contract changed.** If a RED assertion exposes a source defect, repair the owning source. Change the assertion only when repository evidence proves the test encoded the wrong requirement.
+1. **Pinned decisions are not rediscovery tasks.** Exact SHAs, paths, test classes, schemas, commands, model IDs, and acceptance conditions in this plan are binding.
+2. **Bounded discovery only.** A discovery step names sources, evidence destination, and allowed outcomes. Stop reading when one allowed outcome is established.
+3. **Resolve repository facts by inspection.** Do not ask the human about source, git, workflow, hook, generated metadata, test, or tool facts that can be observed.
+4. **Escalate only plan-changing decisions.** Ask only if evidence requires changing a pinned upstream revision, MARK-373 scope/authority, a stated invariant, an unauthorized external/destructive action, or a materially different product/architecture decision.
+5. **Task exits are binding.** Satisfy the task's named checks and green exit before advancing.
+6. **Do not broaden validation opportunistically.** Use named focused checks. Normal hooked commits provide the broad local gate at defined commit boundaries.
+7. **Do not broaden the evaluation matrix.** Extra profiles/reasoning levels are diagnostic only after a baseline failure.
+8. **Do not edit tests merely to obtain green.** Repair owning source when a test expresses the pinned contract; change a test only when evidence proves the assertion wrong.
+9. **Compaction does not reset work.** Resume from the durable checkpoint below; do not replay completed discovery or equivalent unchanged-state validation merely because context was compacted.
 
 ## Global Constraints
 
-- MARK-373 is the shared operating-system layer; it does not implement Bunch, Rooms, Portfolio, or Patch repository adoption.
-- The contract is model-agnostic and must remain viable for Luna, Terra, Sol, and Astra.
-- Superpowers+ rebases onto the **fixed** upstream v6.3.0 commit `b36e0829c6d0140e93cfef2ca599b1b07d4a7797`. A newer upstream revision may be recorded but must not be adopted in MARK-373 without a plan change approved by the human.
-- Preserve first-party additions deliberately; do not blindly replace the derivative with upstream.
-- The owning skill defines its own applicability and safety conditions; callers may request a capability but may not bypass or strengthen that owner gate.
-- The authority order is: explicit human instruction; repository canon/policy for the touched surface; owning-skill applicability and safety contract; caller/runbook routing advice; generic defaults.
-- Reversible investigation, diagnosis, repair, focused verification, and already-authorized publication preparation continue without synthetic approval pauses.
-- Human input is required only for unresolved requirements/authority or before unauthorized destructive, irreversible, permission-changing, or externally consequential actions.
-- Portable skills must not encode this repository's `Z:/` paths or `tools/run.py` commands; consumer repositories supply their own concrete paths, focused checks, canonical commit gate, and hosted-CI details.
-- Canonical skill source is under `codex-marketplace/plugins/<plugin>/`; generated bundles, manifests, installed skills, indexes, and mesh files are regenerated outputs.
-- Implementation PRs are Draft-first. A PR becomes ready only after the current committed head has local canonical hook evidence and completed local review/repair work.
-- Where hosted CI consumes billed capacity, Draft PRs must not trigger the paid validation loop. The local tracked hook materially mirrors hosted CI, and alternate triggers must not bypass the Draft skip policy.
-- Separate test-first discipline from test volume. Preserve meaningful RED/GREEN behavior but do not require ceremonial direct tests for implementation details that introduce no independent behavior or contract.
-- Do not introduce an Astra-only branch, model conditional, overlay skill, or alternate workflow stack.
-
----
+- MARK-373 owns shared agent workflow semantics; it does not implement BUNCH-152, ROOMS-55, PORT-15, or PATCH-53 consumer adoption.
+- The contract remains viable for Luna, Terra, Sol, and Astra without model-specific workflow forks.
+- Superpowers+ rebases onto exactly upstream v6.3.0 commit `b36e0829c6d0140e93cfef2ca599b1b07d4a7797`; the audited v6.2 comparison point is `3dcbd5c4b48e02263fbf4a3c01e3fe4f81d584d9`.
+- Newer upstream revisions may be recorded but are not adopted without a human-approved plan change.
+- Preserve first-party additions deliberately; do not blindly replace the derivative.
+- Owning skills define applicability/safety. Callers may route to a capability but may not bypass or strengthen its owner gate.
+- Authority order: explicit human instruction; repository canon/policy for touched surface; owning-skill applicability/safety; caller/runbook routing; generic defaults.
+- Continue reversible investigation, diagnosis, repair, focused verification, and already-authorized publication preparation without synthetic approval pauses.
+- Human input is required only for unresolved human-owned requirements/authority or before unauthorized destructive, irreversible, permission-changing, or externally consequential actions.
+- Portable skills must not encode this repository's machine paths or `tools/run.py` commands. Consumers supply their own paths, checks, commit gate, and hosted-CI implementation.
+- Canonical authored skill source lives under `codex-marketplace/plugins/<plugin>/`; installed skills, manifests, indexes, and mesh are generated outputs.
+- PR #311 stays Draft during implementation/local repair. Ready is a later evidence-backed transition.
+- Where hosted CI is billed, Draft iteration must not trigger the paid validation loop. The tracked local hook materially mirrors hosted CI and alternate automatic triggers must not bypass Draft policy.
+- Preserve meaningful RED/GREEN behavior without ceremonial direct tests for code with no independent behavior/contract.
+- Do not create an Astra-only overlay, alternate stack, or model conditional.
 
 ## Downstream Contract Map
 
-The implementation must make these later adoption boundaries explicit in the implementation PR description:
-
-| Related issue | Later repository responsibility | MARK-373 export |
+| Issue | Repository-owned meaning | MARK-373 export |
 |---|---|---|
-| `BUNCH-152` | DDD, CQRS, event sourcing, persistence, replay, API, and statistical/domain evidence | Authority, applicable-skill routing, focused-slice choreography, hooked commit gate, state-bound proof, and Draft-first publication |
-| `ROOMS-55` | Three-domain authority, canon, custody, retired workflow cleanup, and ambiguity ownership | Owning-skill applicability, human-authority boundary, progressive reading, model/delegation separation, and review/readiness distinction |
-| `PORT-15` | Visual, accessibility, editorial, public-route, and concrete hooked-gate evidence | Generic validation choreography and publication state; no visual/editorial policy |
-| `PATCH-53` | Thin creative-repo adoption, story/canon boundaries, compact validation, and regression proof | The smallest shared baseline; no imported domain hierarchy or creative canon |
+| `BUNCH-152` | DDD, CQRS, event sourcing, replay, persistence, API/domain evidence | authority, routing, focused/hooked/state-bound evidence, Draft-first publication |
+| `ROOMS-55` | three-domain authority, canon/custody, retired workflow cleanup | owner applicability, human boundary, progressive reading, review/readiness split |
+| `PORT-15` | visual/accessibility/editorial/public-route evidence | generic validation choreography and publication state |
+| `PATCH-53` | thin creative-repo adoption and story/canon evidence | smallest shared workflow baseline |
 
-## Fixed Evidence Artifacts
+## Fixed Durable Artifacts
 
-Use these exact durable paths. Do not invent alternate homes for the same evidence.
-
-- `.agents/docs/mark-373-superpowers-v6.3-rebase.md` — v6.2 -> pinned v6.3 upstream classification and merge record.
-- `tests/test_workflow_contracts.py` — deterministic structural contract tests, organized into the exact classes named below.
+- `.agents/docs/mark-373-superpowers-v6.3-rebase.md` — upstream classification/merge record.
+- `.agents/plans/2026-09-06-mark-373-operating-system.checkpoint.md` — Luna checkpoint/resume baton.
+- `tests/test_workflow_contracts.py` — structural contract tests.
 - `tools/workflow_pressure_scan.py` — candidate-only static pressure scanner.
-- `tests/pressure/workflow-contracts/pressure-scan.json` — generated raw scanner output.
-- `tests/pressure/workflow-contracts/pressure-scan.md` — reviewed/classified scanner findings.
-- `tests/pressure/workflow-contracts/red-baseline.md` — initial structural RED inventory after the upstream rebase.
-- `tests/pressure/workflow-contracts/ci-parity.md` — concrete local-hook/hosted-CI parity and trigger evidence for this repository.
-- `tests/pressure/workflow-contracts/README.md` — campaign instructions and evidence conventions.
-- `tests/pressure/workflow-contracts/campaign.json` — scenario definitions and canonical model matrix.
+- `tools/run_workflow_pressure_campaign.py` — composed-stack Codex trial runner.
+- `tests/pressure/workflow-contracts/red-baseline.md` — initial RED inventory.
+- `tests/pressure/workflow-contracts/pressure-scan.json` — raw scan.
+- `tests/pressure/workflow-contracts/pressure-scan.md` — classified scan.
+- `tests/pressure/workflow-contracts/workflow-inventory.md` — complete Actions/reusable-caller inventory.
+- `tests/pressure/workflow-contracts/ci-parity.md` — hook/hosted parity and trigger proof.
+- `tests/pressure/workflow-contracts/README.md` — campaign execution/evidence rules.
+- `tests/pressure/workflow-contracts/campaign.json` — scenarios and fixed model matrix.
 - `tests/pressure/workflow-contracts/prompts/` — scenario prompts.
-- `tests/pressure/workflow-contracts/results.md` — observed model results.
+- `tests/pressure/workflow-contracts/runs/` — raw per-trial evidence.
+- `tests/pressure/workflow-contracts/results.md` — reviewed per-family/per-scenario outcomes.
+
+## Checkpoint and Compaction Protocol
+
+Initialize `.agents/plans/2026-09-06-mark-373-operating-system.checkpoint.md` before Task 1 source mutation. After **every task**, update plan checkboxes and rewrite the checkpoint with:
+
+```text
+plan: .agents/plans/2026-09-06-mark-373-operating-system.md
+branch: <current branch>
+head: <git rev-parse HEAD>
+last_completed_task: <N>
+next_task: <N+1>
+next_step: <exact step number/title>
+working_tree_status: <git status --short output or clean>
+working_diff_sha: <hash of git diff --binary HEAD, or none when clean>
+last_green_evidence:
+  - <command> => <result> [artifact/reference]
+evaluation_head: <sha or not-set>
+unresolved_blockers: <none or concrete blocker>
+resume_reads:
+  - <exact plan section/task/reference needed next>
+```
+
+After each green exit: mark task boxes `[x]`; run `git diff --check`; record `HEAD`, `git status --short`, a content hash of `git diff --binary HEAD`, untracked paths, and only evidence establishing that task's claim; then point `next_task`, `next_step`, and `resume_reads` to the minimum next material.
+
+After compaction/restart/handoff: read checkpoint first; then this plan's Luna contract, Global Constraints, the named next task, and checkpoint `resume_reads`; compare live `git rev-parse HEAD` and `git status --short` to checkpoint; inspect/reconcile any difference; reuse completed evidence while relevant state/environment is unchanged; continue at `next_step`.
+
+Task 6 creates a normal hooked **evaluation checkpoint commit** after structural green. Task 7 trials run from exactly that immutable commit. If Task 7 exposes an instruction-composition defect, repair the owner, run its focused test, make another hooked repair commit, update `evaluation_head`, and rerun only affected trials.
 
 ## Structural Test Partition
 
-`tests/test_workflow_contracts.py` uses **pytest classes, not custom markers**, so interim RED state is unambiguous. Create these exact classes:
+`tests/test_workflow_contracts.py` uses these pytest classes:
 
-- `TestAuthorityBootstrapPortability` — Task 3 owner.
-- `TestValidationTddPublication` — Task 4 owner.
-- `TestPlanningDelegationReview` — Task 5 owner.
-- `TestRepositoryCallersAndPressure` — Task 6 owner.
-- `TestEvaluationCampaign` — Task 2 fixture/schema owner and Task 7 evidence-shape owner.
+- `TestAuthorityBootstrapPortability` — Task 3.
+- `TestValidationTddPublication` — Task 4.
+- `TestPlanningDelegationReview` — Task 5.
+- `TestRepositoryCallersAndPressure` — Task 6.
+- `TestEvaluationCampaign` — Task 2 fixture/runner schema and Task 7 evidence shape.
 
-Task 2 runs the whole file once to capture the initial RED inventory. Tasks 3-6 run only their owned class and require that class to become green; failures in classes owned by later tasks are expected and do not block interim progress. Run the entire file expecting green only after Task 6 has completed its source/repo-local repairs. Task 7 adds observed behavioral evidence; it must not weaken the already-green structural assertions.
+Task 2 runs the whole file once to record RED. Tasks 3-6 run only their owned class and require it green; later-task failures are expected. Task 6 runs the whole structural file once and requires full green before the evaluation checkpoint commit.
 
-## Canonical Evaluation Matrix
+## Canonical Evaluation Matrix and Codex Semantics
 
-The baseline is **one general-purpose standard run per model family**, not every exposed profile/reasoning combination:
+The baseline is one general-purpose run per family, not every profile/effort combination.
 
-| Family | Baseline model | Mode | Reasoning | Baseline profile rule |
-|---|---|---|---|---|
-| Luna | `gpt-5.6-luna` | standard | medium | one general-purpose Luna route |
-| Terra | `gpt-5.6-terra` | standard | medium | one general-purpose Terra route |
-| Sol | `gpt-5.6-sol` | standard | medium | one general-purpose Sol route |
-| Astra | `gpt-6-astra` | standard | medium | one general-purpose Astra route |
+| Family | Codex `--model` | Requested reasoning effort | API reasoning mode evidence |
+|---|---|---|---|
+| Luna | `gpt-5.6-luna` | `medium` | observed value if emitted; otherwise `unobservable` |
+| Terra | `gpt-5.6-terra` | `medium` | observed value if emitted; otherwise `unobservable` |
+| Sol | `gpt-5.6-sol` | `medium` | observed value if emitted; otherwise `unobservable` |
+| Astra | `gpt-6-astra` | `medium` | observed value if emitted; otherwise `unobservable` |
 
-If the live harness exposes named profiles rather than raw model/mode/effort controls, select exactly one general-purpose profile that resolves to each family and record its effective model/reasoning configuration. Do not use reviewer-specialist profiles as the family baseline. If a family is unavailable, record `unavailable` plus the observed reason. Additional reasoning levels or specialist profiles are allowed only as **diagnostic runs after a baseline failure** and do not become extra completion requirements.
+Do **not** use `standard` as a claimed observed Codex property. Current Codex exposes model selection and reasoning-effort configuration; Responses API `standard`/`pro` reasoning mode is a separate API concept and is not assumed observable from CLI. The runner requests no Pro override. Absence of a Pro request is not proof that an underlying API mode was `standard`. Store `api_reasoning_mode: "unobservable"` unless runtime event/metadata explicitly supplies it. Do not substitute service tier or profile name for reasoning mode.
 
-## Planned File Map
+No specialist profile is used for baseline. Direct `--model` selects each family. If the exact requested model is unavailable, record `unavailable` with CLI evidence and do not substitute another family. Additional profiles/efforts are diagnostic only after a baseline failure.
 
-### Upstream derivation and canonical portable source
+## Pressure Campaign Runner Contract
+
+Task 2 creates `tools/run_workflow_pressure_campaign.py` with:
 
-- Audit and rebase `codex-marketplace/plugins/superpowers-plus/` from the current v6.2-derived baseline onto pinned upstream `obra/superpowers` v6.3.0 commit `b36e0829c6d0140e93cfef2ca599b1b07d4a7797`.
-- Create `.agents/docs/mark-373-superpowers-v6.3-rebase.md` for the upstream classification/merge record.
-- Modify `codex-marketplace/plugins/repo-worker-pack/skills/base-doctrine/SKILL.md` and create `references/operating-contract.md` for precedence, owning-skill applicability, autonomy, and human-owned decision boundaries.
-- Modify `codex-marketplace/plugins/repo-worker-pack/skills/repo-worker-base/SKILL.md` and create `references/repository-validation-contract.md` for focused checks, hooked canonical gate, state-bound evidence, hosted-CI parity, Draft lifecycle, and anti-bypass semantics.
-- Modify the owning Superpowers+ skills: `using-superpowers-plus`, `brainstorming`, `verification-before-completion`, `test-driven-development`, `finishing-a-development-branch`, `publishing-source`, `handoff-gates`, `writing-plans`, `subagent-driven-development`, and `selecting-a-subagent`.
-- Modify `test-driven-development/writing-good-tests.md` only if the root cannot be reconciled cleanly without changing that reference.
-- Modify `agentic-evaluation/skills/agent-evaluation/SKILL.md` or the smallest existing operational reference after inspecting that skill's current source map.
-- Audit `base-doctrine`, `connector-safety`, `writing-skills`, and other broad roots surfaced by the pressure scan. Change only roots where the scan plus source inspection demonstrates a real trigger/context-cost or portability problem.
+```text
+py -3 tools/run_workflow_pressure_campaign.py \
+  --campaign tests/pressure/workflow-contracts/campaign.json \
+  --output-root tests/pressure/workflow-contracts/runs \
+  --head <evaluation-head>
+```
 
-### Repository-local contract consumers and evidence
+Optional diagnostic filters: `--family luna|terra|sol|astra` and `--scenario <scenario-id>`.
 
-- Modify `.agents/runbooks/implementing.md` and `.agents/runbooks/testing.md` for focused iteration and one hooked broad commit gate.
-- Modify `.agents/runbooks/pr.md` only where necessary to make current Draft/CI facts explicit or preserve parity after source changes.
-- Inspect `.github/workflows/marketplace-validation.yml`; it is the current hosted validation workflow and is the source of truth for the current trigger/command evidence described in Task 6.
-- Create `tests/test_workflow_contracts.py` with the fixed class partition above.
-- Create `tools/workflow_pressure_scan.py` and the fixed pressure/evaluation evidence artifacts above.
+For each family/scenario pair the runner must:
 
-### Generated outputs
+1. Create a fresh disposable detached git worktree at exactly `--head` under the system temp directory. Trials never share mutated worktrees.
+2. Create `runs/<head>/<family>/<scenario-id>/` in the controlling worktree.
+3. Compose prompt from `campaign.json` plus `prompts/<scenario>.md`; one trial equals one fresh Codex conversation.
+4. Launch with `subprocess` argv, never shell interpolation:
+
+```text
+codex exec
+  -C <disposable-worktree>
+  --ephemeral
+  --json
+  --model <exact matrix model>
+  -c model_reasoning_effort="medium"
+  -c hide_agent_reasoning=true
+  --sandbox <scenario sandbox from campaign.json>
+  --output-last-message <absolute-run-dir>/final.txt
+  -
+```
+
+Prompt goes on stdin. Do not request/persist hidden chain-of-thought. `--json` stdout is the observable event/tool-state trace.
 
-- Regenerate marketplace manifests, bundle manifests, `.agents/plugins/marketplace.json`, `.agents/skills/`, repository indexes, and `INDEX.md` mesh only after canonical source/test/tool edits are complete.
+5. Capture stdout verbatim as `events.jsonl`, stderr as `stderr.txt`, final output as `final.txt`, metadata as `meta.json`.
+6. `meta.json` contains schema version, scenario, family, requested model, observed/resolved model if emitted, requested/observed effort, `api_reasoning_mode` or `unobservable`, Codex version, sanitized argv, sandbox, trial head, controlling head, timestamps, exit code, availability status.
+7. Remove disposable worktree only after evidence is safely written. Record cleanup failure without deleting evidence.
+8. Reserve `unavailable` for observed model/runtime capability absence; a scenario failure is a failed result.
 
-## Task 1: Rebase Superpowers+ onto the pinned upstream v6.3 baseline
+After each trial, Luna adjudicates observable `events.jsonl` + `final.txt` against the predeclared rubric and writes `score.json`. This is executor scoring from evidence, never model self-rating. `results.md` summarizes/links raw runs.
+
+## Task 1: Rebase Superpowers+ onto pinned upstream v6.3
 
-**Files:**
+**Files:** `codex-marketplace/plugins/superpowers-plus/`, `.agents/docs/mark-373-superpowers-v6.3-rebase.md`, derivative provenance, checkpoint.
 
-- Inspect and modify: `codex-marketplace/plugins/superpowers-plus/`
-- Create: `.agents/docs/mark-373-superpowers-v6.3-rebase.md`
-- Update: derivative provenance metadata/files required by the existing marketplace structure.
-
-**Consumes:** current first-party derivative based on `obra/superpowers` v6.2.0.
-
-**Produces:** a clean derivative based on exactly `b36e0829c6d0140e93cfef2ca599b1b07d4a7797`, plus a durable classification record. No MARK-specific semantic repairs belong in this task.
-
-- [ ] **Step 1: Verify the pinned upstream object and current derivative provenance.**
-
-  Confirm the v6.2-derived source provenance currently recorded by the marketplace. Confirm upstream commit `b36e0829c6d0140e93cfef2ca599b1b07d4a7797` is retrievable and corresponds to v6.3.0.
-
-  **Decision:** that SHA is the MARK-373 implementation baseline. If upstream has a newer revision, record its SHA/tag/date in the rebase record under `Newer upstream observed`, but continue with `b36e0829...`. Do **not** adopt the newer revision. If the pinned commit itself cannot be retrieved or does not match v6.3.0, stop with that concrete blocker because the pinned source assumption is false.
-
-- [ ] **Step 2: Write the rebase record before modifying derivative source.**
-
-  Create `.agents/docs/mark-373-superpowers-v6.3-rebase.md` with these sections:
-
-  1. `Pinned baseline` — old v6.2 provenance, pinned v6.3 SHA/tag, retrieval source.
-  2. `Newer upstream observed` — newer SHA/tag/date if present, otherwise `none observed`; explicitly state it is out of scope.
-  3. `Skill classification` — table columns `skill | upstream v6.3 change | first-party overlap | action | rationale`.
-  4. `Merge notes` — conflicts and how each was resolved.
-  5. `Validation` — focused commands/results run for the rebased baseline.
-
-- [ ] **Step 3: Classify the v6.2 -> pinned-v6.3 changes.**
-
-  For every upstream-changed Superpowers skill, choose exactly one action in the record: `accept-upstream`, `merge-with-first-party`, `retain-first-party`, or `not-applicable`. Pay particular attention to brainstorming scaling, SDD rulings/not-stalls, pre-dispatch conflict scans, same-shaped microtask batching, reviewer evidence reuse, worktree cleanup, compression, testing guidance, and Codex/event-driven behavior.
-
-  Do not leave an action blank. `retain-first-party` requires a rationale showing why the local owner remains intentional.
-
-- [ ] **Step 4: Rebase the derivative.**
-
-  Apply the pinned v6.3 changes according to the classification table. Preserve intentional first-party additions, resolve conflicts according to the recorded action, and update provenance so the active derivative no longer claims v6.2 as its base.
-
-- [ ] **Step 5: Validate the rebased baseline.**
-
-  Run the smallest existing marketplace/skill structural checks needed to prove the derivative remains well formed and regenerable. Record exact commands/results in the rebase document. Do not run the repository-wide canonical CI gate merely because Task 1 ended.
-
-  **Green exit:** all upstream-changed skills have an explicit classification/action, active provenance names the pinned v6.3 baseline, and the focused structural/regeneration checks pass.
-
-- [ ] **Step 6: Mark Task 1 checklist items complete in this plan.**
-
-## Task 2: Lock the MARK contract with staged RED tests, the scanner contract, and evaluation fixtures
-
-**Files:**
-
-- Create: `tests/test_workflow_contracts.py`
-- Create: `tools/workflow_pressure_scan.py`
-- Create: `tests/pressure/workflow-contracts/README.md`
-- Create: `tests/pressure/workflow-contracts/campaign.json`
-- Create: `tests/pressure/workflow-contracts/prompts/`
-- Create: `tests/pressure/workflow-contracts/red-baseline.md`
-- Create/generated: `tests/pressure/workflow-contracts/pressure-scan.json`
-- Create: `tests/pressure/workflow-contracts/pressure-scan.md`
-- Create: `tests/pressure/workflow-contracts/results.md`
-
-**Consumes:** Task 1's pinned v6.3-derived baseline.
-
-**Produces:** deterministic contract tests with explicit ownership, a stable candidate-only scanner, a recorded RED inventory, and a fixed composed-scenario/model schema.
-
-- [ ] **Step 1: Create the five structural test classes.**
-
-  Use the exact class names from `Structural Test Partition`. Each test name should state one observable contract. Tests may inspect canonical Markdown/source content and fixture schemas; avoid brittle full-paragraph equality where a narrower semantic anchor proves the requirement.
-
-  Class ownership:
-
-  - `TestAuthorityBootstrapPortability`: classify-before-bootstrap, precedence, owning-skill applicability, autonomy, bounded roots, no portable machine/repo assumptions.
-  - `TestValidationTddPublication`: state-bound evidence, focused/hooked/hosted distinction, TDD test-volume rule, branch-finish evidence reuse, Draft-first publication, hosted-CI anti-bypass contract.
-  - `TestPlanningDelegationReview`: non-universal brainstorming gate, recipient-relative plans, early evidence-backed review adjudication, delegation-vs-model separation, Sol ordinary strong route/Astra exceptional escalation.
-  - `TestRepositoryCallersAndPressure`: marketplace runbooks do not resurrect conditional owners, force Linear writes, require ritual reruns, or mandate unbounded fix-while-here work; pressure scan artifacts conform to schema.
-  - `TestEvaluationCampaign`: scenario set, baseline matrix, per-run metadata, per-dimension result shape, and `unavailable` semantics.
-
-- [ ] **Step 2: Implement the pressure scanner as a dedicated tool.**
-
-  Create `tools/workflow_pressure_scan.py`. `tests/test_workflow_contracts.py` tests this tool's schema/behavior; do not bury scanning logic inside the pytest file.
-
-  Scan these active authored surfaces:
-
-  - `codex-marketplace/plugins/*/skills/**/SKILL.md`
-  - portable skill `references/*.md` reachable from those roots
-  - root `AGENTS.md`
-  - `.agents/runbooks/*.md`
-  - `.agents/doctrine/*.md`
-
-  Exclude generated `.agents/skills/`, completed/archived plans/specs, licenses, fixture prompts/results, and vendored upstream snapshots that are not active authored instruction surfaces.
-
-  Candidate rules include: `wait for approval`, `ask your human partner`, `full test suite`, `run multiple times`, `every new function`, `at session start`, `at every decision point`, `MUST READ`, unconditional connector writes, unconditional skill invocations, hard-coded personal paths, and repo-specific commands inside portable skills.
-
-  CLI contract for this plan:
-
-  `py -3 tools/workflow_pressure_scan.py --format json --output tests/pressure/workflow-contracts/pressure-scan.json`
-
-  Raw JSON schema:
-
-  - top level: `schema_version`, `commit`, `generated_at`, `patterns`, `hits`.
-  - each hit: `path`, `line`, `rule`, `excerpt`.
-  - scanner exits non-zero only for scanner/runtime/schema failure. Finding candidates is not itself failure.
-
-  Create `pressure-scan.md` with columns `path | line | rule | excerpt | owner | classification | action`. Classification is exactly one of `defect`, `intended`, `repo-local`, `deferred`. `deferred` requires a reason and durable tracking reference. An unresolved `defect` blocks final readiness.
-
-- [ ] **Step 3: Create the fixed evaluation campaign.**
-
-  Put the canonical four-family medium-reasoning matrix from this plan into `campaign.json`. Do not enumerate every runtime profile. Add the composed scenarios for: trivial docs correction; specified bug whose first focused test fails; genuine ambiguity; demonstrably wrong reviewer finding; authorized Draft PR creation; resume after compaction; unauthorized destructive work; parallelizable bounded work with mixed model selection; small reversible change where a full matrix is wasteful; repo-local rule conflicting with portable skill; tiny change that must not trigger universal design approval; branch-finish with valid canonical evidence and authorized publication; and no-independent-behavior helper that must not acquire a ceremonial direct test.
-
-  Each scenario records: expected authority decision, expected next action, evidence scope, expected stop/continue behavior, and rubric dimensions for unnecessary questions, instruction reads before useful work, redundant verification, premature stopping, completion quality, scope/authority violations, delegation/model quality, and context/time cost.
-
-- [ ] **Step 4: Capture the full initial RED inventory once.**
-
-  Run:
-
-  `py -3 -m pytest tests/test_workflow_contracts.py -q`
-
-  Record every failing test name and the owning future task in `red-baseline.md`. A test already green because upstream v6.3 fixed the behavior is recorded as `already green from upstream`; do not force it red.
-
-  **Important:** from this point through Task 6, do not repeatedly run the full file merely to observe known later-task failures. Each task runs only its owned pytest class.
-
-- [ ] **Step 5: Generate and classify the initial pressure scan.**
-
-  Run the scanner command above, populate `pressure-scan.md`, and use source inspection to classify every hit. Task 2 does not repair all defects; it establishes the inventory and ownership. Assign each `defect` to Task 3, 4, 5, or 6 in the `action` column.
-
-- [ ] **Step 6: Run the Task 2 fixture/schema class.**
-
-  Run:
-
-  `py -3 -m pytest tests/test_workflow_contracts.py::TestEvaluationCampaign -q`
-
-  **Green exit:** the scanner, evidence files, scenario schema, canonical model matrix, and RED inventory exist and `TestEvaluationCampaign` passes. Other classes may remain red according to `red-baseline.md`.
-
-- [ ] **Step 7: Mark Task 2 checklist items complete in this plan.**
-
-## Task 3: Establish shared authority, applicability, bounded reading, and autonomy ownership
-
-**Files:**
-
-- Modify: `codex-marketplace/plugins/repo-worker-pack/skills/base-doctrine/SKILL.md`
-- Create: `codex-marketplace/plugins/repo-worker-pack/skills/base-doctrine/references/operating-contract.md`
-- Modify: `codex-marketplace/plugins/superpowers-plus/skills/using-superpowers-plus/SKILL.md`
-- Modify only when Task 2 classified a defect there: `connector-safety/SKILL.md`, `writing-skills/SKILL.md`, or another broad root named in `pressure-scan.md`.
-
-**Consumes:** Task 2 defects assigned to Task 3.
-
-**Produces:** the cross-runtime authority/autonomy/read contract with no broad-bootstrap or portable-path leakage.
-
-- [ ] **Step 1: Add the operating contract.**
-
-  Define the exact authority precedence from Global Constraints; owning-skill applicability; reversible-work autonomy; technical investigation before human questions; human-owned requirement/authority boundaries; and model-agnostic applicability across Luna/Terra/Sol/Astra.
-
-- [ ] **Step 2: Make `base-doctrine` a bounded router.**
-
-  Keep reference selection, canonical source boundary, bounded-read doctrine, and the route to `operating-contract.md`. Do not make the root load every reference.
-
-- [ ] **Step 3: Refactor `using-superpowers-plus`.**
-
-  Request classification is the first semantic action. After classification, inspect only environment dimensions that can alter the selected route/next action; load only owning references needed by that route; stop reading once the next lawful action is known.
-
-- [ ] **Step 4: Repair only Task-3-owned broad-root/portability defects.**
-
-  Use `pressure-scan.md` as the worklist. For each Task-3 `defect`, either repair the owning source or, if inspection proves the hit intentional, change its classification with rationale. Remove existing hard-coded personal paths or marketplace-only commands from portable skills; do not merely add a rule forbidding future leakage.
-
-- [ ] **Step 5: Run only Task 3's structural class.**
-
-  `py -3 -m pytest tests/test_workflow_contracts.py::TestAuthorityBootstrapPortability -q`
-
-  Regenerate the pressure scan and update classifications only for paths changed in this task.
-
-  **Green exit:** `TestAuthorityBootstrapPortability` passes and no unresolved Task-3 `defect` remains in `pressure-scan.md`.
-
-- [ ] **Step 6: Mark Task 3 checklist items complete in this plan.**
-
-## Task 4: Export validation, TDD, branch-finish, and Draft-first publication semantics
-
-**Files:**
-
-- Modify: `codex-marketplace/plugins/repo-worker-pack/skills/repo-worker-base/SKILL.md`
-- Create: `codex-marketplace/plugins/repo-worker-pack/skills/repo-worker-base/references/repository-validation-contract.md`
-- Modify: `codex-marketplace/plugins/superpowers-plus/skills/verification-before-completion/SKILL.md`
-- Modify: `codex-marketplace/plugins/superpowers-plus/skills/test-driven-development/SKILL.md`
-- Modify if required by the root reconciliation: `codex-marketplace/plugins/superpowers-plus/skills/test-driven-development/writing-good-tests.md`
-- Modify: `codex-marketplace/plugins/superpowers-plus/skills/finishing-a-development-branch/SKILL.md`
-- Modify: `codex-marketplace/plugins/superpowers-plus/skills/handoff-gates/SKILL.md`
-- Modify: `codex-marketplace/plugins/superpowers-plus/skills/publishing-source/SKILL.md`
-
-**Consumes:** Task 3 operating contract plus Task-4 defects from `pressure-scan.md`.
-
-**Produces:** portable validation/publication choreography, state-bound proof, proportionate TDD, and branch-finish behavior.
-
-- [ ] **Step 1: Add `repository-validation-contract.md`.**
-
-  Define consumer inputs for: change-class -> focused-check mapping; canonical tracked pre-commit gate; hosted-CI workflow; Draft-skip/anti-bypass condition; state/evidence identifiers. Define the lifecycle exactly as:
-
-  `focused falsifying checks while editing -> normal hooked commits while Draft -> local review/repair -> Ready only on current local proof -> hosted CI confirmation`
-
-  Repositories own their commands/domain evidence. Marketplace owns choreography/evidence semantics.
-
-- [ ] **Step 2: Update `repo-worker-base`.**
-
-  Route to the validation contract without embedding this repository's concrete commands/paths.
-
-- [ ] **Step 3: Make verification state-bound.**
-
-  Replace conversational “run in this message” freshness with evidence keyed to tested tree/head/staged state, command/scope, relevant environment, and result. Reuse unchanged proof. Repeat/broaden only for new changes, failure, unresolved concern, nondeterminism, environment drift, or a different proof claim.
-
-- [ ] **Step 4: Reconcile TDD with behavior/contract evidence.**
-
-  Preserve RED/GREEN for changed behavior and bug fixes. Remove blanket “every new function/method has a direct test” semantics. Tests protect observable behavior/contracts; trivial forwarders/constants/helpers may be covered transitively when direct tests would mirror implementation. Do not introduce a new human approval gate for trivial glue/config/generated work.
-
-- [ ] **Step 5: Reconcile branch finish.**
-
-  Reuse current canonical state-bound proof instead of mandating a fresh full suite. If the integration/publication route is already authorized, continue on that route rather than presenting a generic menu. Preserve explicit confirmation for destructive discard and a real question when destination/authority is genuinely unknown.
-
-- [ ] **Step 6: Update handoff and publication owners.**
-
-  `handoff-gates`: readiness is recipient/stage-relative; Draft promotion requires current local canonical proof and completed local review/repair; numeric score is diagnostic, not work-generation pressure.
-
-  `publishing-source`: an already-authorized implementation PR opens Draft by default; Ready is a later evidence-backed transition, not a second creation choice.
-
-- [ ] **Step 7: Encode portable hosted-CI economics.**
-
-  Where hosted CI is billed, a tracked local hook materially mirrors it, Draft PRs skip hosted CI, alternate triggers cannot make ordinary Draft iteration consume the same paid validation, and a hosted failure reasonably catchable locally is parity drift to repair.
-
-- [ ] **Step 8: Repair Task-4 pressure defects and run only Task 4's class.**
-
-  `py -3 -m pytest tests/test_workflow_contracts.py::TestValidationTddPublication -q`
-
-  Regenerate/update pressure findings for changed paths.
-
-  **Green exit:** `TestValidationTddPublication` passes and no unresolved Task-4 `defect` remains.
-
-- [ ] **Step 9: Mark Task 4 checklist items complete in this plan.**
-
-## Task 5: Remove universal design approval and make planning, delegation, and review recipient-relative
-
-**Files:**
-
-- Modify: `codex-marketplace/plugins/superpowers-plus/skills/brainstorming/SKILL.md`
-- Modify: `codex-marketplace/plugins/superpowers-plus/skills/writing-plans/SKILL.md`
-- Modify: `codex-marketplace/plugins/superpowers-plus/skills/subagent-driven-development/SKILL.md`
-- Modify: `codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/SKILL.md`
-- Modify: `codex-marketplace/plugins/agentic-evaluation/skills/agent-evaluation/SKILL.md` or its smallest existing operational reference after source inspection.
-
-**Consumes:** Tasks 3-4 contracts plus Task-5 defects from `pressure-scan.md`.
-
-**Produces:** stage guidance that scales with uncertainty and recipient capability without model-specific workflow forks.
-
-- [ ] **Step 1: Reconcile `brainstorming`.**
-
-  Preserve collaborative design for ambiguous/consequential creative work. Remove universal “every project needs design approval” and repeated approvals for bounded work whose intent is already settled. Human-owned product/canon choices remain human decisions.
-
-- [ ] **Step 2: Make `writing-plans` explicitly recipient-relative.**
-
-  Preserve strong plans on goal, scope/exclusions, source seams, invariants, interfaces, acceptance evidence, authority, exact known commands/paths, and task decomposition. Exact implementation code is included when contractual or when the selected recipient needs it; it is not mandatory transcription for every capable executor.
-
-  Add the planner rule demonstrated by this plan: for lower-capability execution recipients such as Luna, pre-resolve consequential choices; name exact evidence artifacts and commands; turn unavoidable discovery into finite decision tables; and define a green exit per task. Do not use a stronger executor merely to compensate for an under-specified plan.
-
-- [ ] **Step 3: Refactor SDD adjudication.**
-
-  Preserve finding ledger, no-silent-discard, reviewer-fix loop, and churn cap. Permit evidence-backed technical ruling before a fix when source/tests/contracts falsify the finding. Requirements/authority disputes still route to the human.
-
-- [ ] **Step 4: Tighten subagent/model selection ownership.**
-
-  Stage/workflow decides whether to delegate. `selecting-a-subagent` chooses least-escalated adequate profile/model/reasoning/context from runtime inventory. Keep Sol as ordinary strong reviewer/orchestrator; Astra is explicit exceptional escalation for genuinely difficult/high-consequence reasoning or human choice. Do not redefine `strongest`/`reviewer-strong` as Astra.
-
-- [ ] **Step 5: Extend evaluation guidance.**
-
-  Composed instruction stacks are the evaluation unit. Require held-out scenarios where practical and per-scenario/per-dimension evidence. Keep model-specific observations separate from cross-model conclusions; rubric evidence is not model self-rating.
-
-- [ ] **Step 6: Repair Task-5 pressure defects and run only Task 5's class.**
-
-  `py -3 -m pytest tests/test_workflow_contracts.py::TestPlanningDelegationReview -q`
-
-  **Green exit:** `TestPlanningDelegationReview` passes and no unresolved Task-5 `defect` remains.
-
-- [ ] **Step 7: Mark Task 5 checklist items complete in this plan.**
-
-## Task 6: Align marketplace callers and prove concrete local/hosted CI parity
-
-**Files:**
-
-- Modify: `.agents/runbooks/implementing.md`
-- Modify: `.agents/runbooks/testing.md`
-- Modify only if current facts/changes require it: `.agents/runbooks/pr.md`
-- Inspect: `.github/workflows/marketplace-validation.yml`
-- Inspect: active tracked pre-commit hook and the shared `ci` task implementation/registry used by `tools/run.py`
-- Update: `tests/pressure/workflow-contracts/ci-parity.md`
-- Update: `tests/pressure/workflow-contracts/pressure-scan.md`
-
-**Consumes:** Tasks 3-5 portable contracts plus Task-6 pressure defects.
-
-**Produces:** repo-local callers that do not strengthen owners, plus concrete proof that local canonical validation and paid hosted validation cover the same CI contract and Draft iteration cannot trigger the paid loop accidentally.
-
-### Fixed current CI facts to verify, not redesign
-
-At plan time, `.github/workflows/marketplace-validation.yml` has these facts:
-
-- `pull_request` events: `opened`, `synchronize`, `reopened`, `ready_for_review`.
-- job guard: `${{ github.event_name != 'pull_request' || github.event.pull_request.draft == false }}`.
-- `push` is restricted to `main`.
-- `workflow_dispatch` exists as an explicit manual trigger.
-- hosted validation command is `tools/run ci --check`.
-
-At plan time, `.agents/runbooks/pr.md` states the normal pre-commit hook materializes the staged snapshot, runs `ci --apply`, stages only owned generated surfaces, then runs `ci --check --diagnostics`.
-
-If those facts are still true at implementation time, Luna records them and proceeds; do not invent a new CI design. If source has changed, compare the new state to the acceptance criteria below and repair only a real contract regression.
-
-- [ ] **Step 1: Remove ritual freshness/repetition from repo-local callers.**
-
-  Keep focused checks during editing and the hooked broad gate at normal commit. Remove “run validation multiple times” unless nondeterminism/flakiness is the claim being tested.
-
-- [ ] **Step 2: Remove caller-strengthened conditional workflows.**
-
-  `iterative-review` is not mandatory where its owner excludes the current frontier orchestrator. `systematic-debugging` is not mandatory for every ordinary failing test when bounded diagnosis suffices. Repo runbooks do not strengthen TDD beyond its owner or hard-code model/review routes owned elsewhere.
-
-- [ ] **Step 3: Return Linear mutation authority to the Linear owner.**
-
-  Keep scope honesty, but remove blanket “implementation agent must mutate Linear when scope changes.” Mutation follows `linear-issue-shaping`/connector authority. When unauthorized, report the discrepancy rather than writing anyway.
-
-- [ ] **Step 4: Bound fix-while-here.**
-
-  Opportunistic fixes are allowed only when low-risk, mechanically bounded, inside the already-touched surface, and not a new product/architecture/migration decision or validation campaign. Otherwise track separately.
-
-- [ ] **Step 5: Prove CI command parity using the shared `ci` task, not string similarity.**
-
-  In `ci-parity.md`, record:
-
-  - hosted workflow path and hosted command;
-  - active tracked hook path and hook command sequence;
-  - source location of the `ci` task registry/pipeline used by both commands;
-  - the set/order of checks dispatched by hosted `ci --check`;
-  - the set/order of checks dispatched by local `ci --check --diagnostics` after `ci --apply`;
-  - any difference and whether it is only execution mode/reporting (`apply`, diagnostics vs fail-fast) or an actual omitted check.
-
-  **Materially mirrors =** after local mechanical `ci --apply`, local `ci --check --diagnostics` and hosted `ci --check` invoke the same canonical CI check registry for the same repository state. Diagnostics/fail-fast presentation may differ; the local path must not omit a hosted validation target. If a hosted target is absent locally, parity is red and must be repaired before readiness.
-
-- [ ] **Step 6: Prove Draft anti-bypass from triggers.**
-
-  In `ci-parity.md`, record a trigger table with `event | branch/state | job runs? | rationale`.
-
-  **Green criteria for this repository:**
-
-  - Draft `pull_request` events reach the workflow but the validation job is skipped by the draft guard.
-  - Ready/non-Draft PR events can run the validation job.
-  - feature/task branch `push` does not trigger this hosted workflow because `push` is `main` only.
-  - `workflow_dispatch` is an explicit manual action and therefore is not an automatic Draft-iteration bypass; do not remove it merely to satisfy this policy.
-  - no other workflow or reusable-call path runs the paid equivalent CI command automatically on feature/task branch pushes or Draft PR synchronization.
-
-  If another workflow does run an equivalent paid validation automatically during Draft iteration, repair or gate that trigger.
-
-- [ ] **Step 7: Run repo-local focused checks and Task 6's structural class.**
-
-  Run:
-
-  - `py -3 -m pytest tests/test_validate_agent_mesh.py tests/test_review_preflight.py tests/test_review_preflight_extensions.py -q`
-  - `py -3 tools/run.py mesh --check`
-  - `py -3 -m pytest tests/test_workflow_contracts.py::TestRepositoryCallersAndPressure -q`
-
-  Add a focused workflow test only if the trigger/parity audit exposes an untested invariant that can regress mechanically.
-
-- [ ] **Step 8: Run the complete structural contract file once.**
-
-  `py -3 -m pytest tests/test_workflow_contracts.py -q`
-
-  **Green exit:** the whole structural file is green; `ci-parity.md` has a green parity/anti-bypass verdict; no unresolved `defect` remains in `pressure-scan.md`. If this full run exposes a failure owned by an earlier task, repair that owner and rerun only the failing class first, then rerun the full file once.
-
-- [ ] **Step 9: Mark Task 6 checklist items complete in this plan.**
-
-## Task 7: Run the fixed observed composed-stack evaluation matrix
-
-**Files:**
-
-- Update: `tests/pressure/workflow-contracts/results.md`
-- Update `campaign.json` only if an observed harness fact requires recording a resolved profile name/effective config; do not change scenarios/rubrics to make a failure pass.
-
-**Consumes:** structurally green contracts from Tasks 3-6 and the fixed matrix from this plan.
-
-**Produces:** observed evidence for one canonical run per available model family.
-
-- [ ] **Step 1: Resolve one baseline runtime route per family.**
-
-  For Luna, Terra, Sol, and Astra, resolve one general-purpose route to the fixed model/mode/reasoning row. Record exact profile name if the harness requires one and the effective model/reasoning it exposes.
-
-  If the harness cannot expose the exact medium setting for a family, use its one canonical general-purpose route, record the effective setting, and do not search all alternative profiles. If the family itself is unavailable, record `unavailable` with the observed reason.
-
-- [ ] **Step 2: Run every scenario once on each available family baseline.**
-
-  Record for each run: family, exact model/profile, mode/reasoning, harness/environment, commit SHA, timestamp, evidence source, and rubric dimensions. Do not run every exposed reasoning/profile combination.
-
-- [ ] **Step 3: Diagnose only baseline failures.**
-
-  If a baseline scenario fails, first decide whether the failure is instruction composition, harness capability, or model behavior. Repair instruction composition at its owning source. Rerun the smallest affected scenario/family set. A different reasoning level/profile may be run to diagnose the failure, but label it `diagnostic` and do not add it to baseline completion requirements.
-
-- [ ] **Step 4: Keep model conclusions separate.**
-
-  Do not average Luna/Terra/Sol/Astra into one score that hides regressions. Report per scenario/per family: unnecessary questions, instruction reads, redundant verification, premature stopping, completion quality, scope/authority violations, delegation/model quality, context/time cost.
-
-- [ ] **Step 5: Verify evaluation evidence shape.**
-
-  `py -3 -m pytest tests/test_workflow_contracts.py::TestEvaluationCampaign -q`
-
-  **Green exit:** every available family has one observed baseline result per scenario; unavailable families are explicitly recorded; any remaining failing baseline is either repaired or reported as a concrete observed model limitation rather than silently generalized away.
-
-- [ ] **Step 6: Mark Task 7 checklist items complete in this plan.**
-
-## Task 8: Regenerate, review, hook-validate, and continue the same Draft PR
-
-**Files:**
-
-- Generated by tooling: marketplace manifests, bundle manifests, installed skills, repository indexes, and `INDEX.md` mesh.
-- Modify: `.agents/plans/2026-09-06-mark-373-operating-system.md` to check off delivered implementation steps.
-
-**Consumes:** completed Tasks 1-7.
-
-**Produces:** committed, regenerated implementation work on the existing branch and worktree, published through the existing GitHub-visible Draft PR #311 into `main` with honest scope and evidence.
-
-- [ ] **Step 1: Confirm implementation branch and PR continuity.**
-
-  This task runs only after the plan content in PR #311 is approved. Confirm the existing implementation worktree is `Z:/_agent-worktrees/agent-asset-marketplace/codex/mark-373-operating-system`, the branch is `codex/mark-373-operating-system`, the approved plan is committed beneath `HEAD`, and PR #311 is the publication target. Do not create a fresh worktree/branch, wait for the plan to merge, or open a second PR.
-
-- [ ] **Step 2: Regenerate marketplace-owned surfaces.**
-
-  `py -3 tools/run.py marketplace --apply`
-
-  Inspect the diff: generated surfaces must reflect canonical authored source; no unrelated plugin content or hand-edited generated output is allowed.
-
-- [ ] **Step 3: Run final focused pre-commit checks, not a duplicate canonical gate.**
-
-  Run:
-
-  - `py -3 -m pytest tests/test_workflow_contracts.py tests/test_validate_agent_mesh.py tests/test_review_preflight.py tests/test_review_preflight_extensions.py -q`
-  - `py -3 tools/run.py review-preflight --check`
-  - `py -3 tools/run.py mesh --check`
-
-  These are focused/uncommitted proof. Do not immediately run a separate equivalent `ci --check` when a normal hooked commit follows.
-
-- [ ] **Step 4: Self-review the whole change against MARK-373 ownership.**
-
-  Confirm: generic workflow semantics only; downstream Bunch/Rooms/Portfolio/Patch details remain downstream; no private corpus/credential; no Astra-only branch; no hand-edited generated surface; no stale v6.2 active provenance; no caller-strengthened owner gate; no portable repo/machine assumption; no unresolved scanner `defect`; evaluation and CI-parity evidence are honest.
-
-- [ ] **Step 5: Stage and commit normally.**
-
-  `git add -A`, then commit without `--no-verify`. The tracked hook materializes the staged snapshot, applies mechanical CI surfaces, stages its owned generated outputs, and runs the canonical diagnostic check over that staged state. This hooked commit is the broad local proof.
-
-- [ ] **Step 6: Verify committed state without rerunning equivalent broad CI.**
-
-  Run `git status --short --branch`, `git diff --check HEAD^`, `py -3 tools/run.py review-preflight --check`, and `py -3 tools/run.py mesh --check`. Record the committed head SHA and clean-worktree result. If the hook was absent or failed to provide canonical proof, run the repository's canonical CI command as the named fallback/diagnostic and repair the cause.
-
-- [ ] **Step 7: Push implementation commits to the existing Draft PR.**
-
-  Push the implementation commits to `codex/mark-373-operating-system` and update PR #311's body to describe the combined plan and implementation. The body must link MARK-373, BUNCH-152, ROOMS-55, PORT-15, and PATCH-53; name portable contract surfaces changed; summarize the pinned upstream rebase record, structural/evaluation/CI-parity evidence; state downstream adoption is out of scope; and include the branch and full head SHA. Do not open a second PR.
-
-- [ ] **Step 8: Verify the existing Draft publication and no hosted-CI burn.**
-
-  Read PR #311 from GitHub. Confirm base `main`, Draft status, head SHA, combined plan/implementation scope, and that ordinary Draft synchronization did not execute the paid validation job. A skipped Draft workflow/job is acceptable evidence; an automatically running equivalent validation job is a parity/trigger defect.
-
-- [ ] **Step 9: Keep Draft through local review/repair.**
-
-  Continue normal hooked commits while Draft. Promote to Ready only when the current head has canonical hook proof, local review/repair is complete, the fixed evaluation baseline is complete for available families, structural tests are green, scanner defects are closed, and CI parity is green.
-
-- [ ] **Step 10: Treat catchable hosted failure as parity drift.**
-
-  After Ready, hosted CI is paid confirmation. If it finds a failure the local canonical hook reasonably should have caught, repair hook/hosted parity before treating the work as complete.
-
-- [ ] **Step 11: Finish plan state honestly.**
-
-  Mark delivered checkboxes `[x]`, leave any genuinely undelivered item unchecked with a concrete reason, commit the plan update normally, push, and re-read the implementation PR before reporting completion.
+- [ ] **1. Initialize checkpoint.** Record current branch/head/status; `last_completed_task: 0`; `next_task: 1`.
+- [ ] **2. Retrieve upstream by one fixed mechanism.** Resolve system temp with `py -3 -c "import tempfile; print(tempfile.gettempdir())"`; use `<system-temp>/mark-373-superpowers-upstream`; clone `https://github.com/obra/superpowers.git` with history sufficient for both pinned commits, e.g. `git clone --filter=blob:none <url> <temp-dir>`.
+
+  Do not add an upstream remote to marketplace; do not merge/cherry-pick/subtree-import upstream history. Verify both objects with `git -C <temp-dir> cat-file -e <sha>^{commit}` and compare exactly `3dcbd5c4b48e02263fbf4a3c01e3fe4f81d584d9` -> `b36e0829c6d0140e93cfef2ca599b1b07d4a7797`. If pinned v6.3 cannot be retrieved or does not match the audited source, stop with that concrete blocker. Newer upstream is record-only.
+
+- [ ] **3. Write rebase record before source mutation.** Table columns: `upstream path | upstream change | existing first-party delta | disposition | canonical destination | validation`. Disposition: `accept-upstream`, `preserve-first-party`, `manual-merge`, or `not-applicable`.
+- [ ] **4. Classify every upstream-changed skill/path.** Pay particular attention to brainstorming scaling, SDD rulings/not-stalls, pre-dispatch conflict scan, microtask batching, reviewer evidence reuse, worktree cleanup, compression, testing guidance, Codex/event behavior. No changed path remains unclassified.
+- [ ] **5. Apply classified changes deliberately to canonical Superpowers+ source.** Temporary clone is read-only source material; manually merge/copy accepted content; preserve first-party owners where classified; update active provenance to v6.3.
+- [ ] **6. Run smallest existing marketplace/skill structural/regeneration checks proving rebased baseline well formed.** Record exact commands/results; no broad repo gate solely because Task 1 ended.
+- [ ] **7. Remove temporary clone** after durable record/source application no longer needs it.
+- [ ] **8. Green exit/checkpoint.** All changed paths classified; active provenance pinned v6.3; focused checks green; checkpoint -> Task 2.
+
+## Task 2: Create staged RED tests, scanner, campaign fixture, and runner
+
+**Files:** `tests/test_workflow_contracts.py`, `tools/workflow_pressure_scan.py`, `tools/run_workflow_pressure_campaign.py`, `tests/pressure/workflow-contracts/**`, checkpoint.
+
+- [ ] **1. Create five fixed pytest classes.** Assert classify-before-bootstrap; authority; owner applicability; autonomy; state-bound evidence; focused/hooked/hosted proof; Draft-first publication; recipient-relative planning; evidence-backed adjudication; delegation/model separation; proportionate TDD; non-universal design approval; branch-finish evidence reuse; repo caller behavior; scanner/evaluation schemas; workflow inventory coverage; Draft-CI anti-bypass.
+- [ ] **2. Create pressure scanner.** Candidate patterns include approval waits, `full test suite`, repeated validation, every-function testing, universal startup reads, `MUST READ`, unconditional connector/skill calls, personal paths, repo commands in portable skills. JSON fields: `path`, `line`, `pattern`, `context`. Raw hits do not fail the scanner.
+- [ ] **3. Classify scan findings** as `defect`, `intended`, `repo-local`, or `deferred`; deferred requires reason/owner; unresolved `defect` blocks Task 6.
+- [ ] **4. Create campaign scenarios/prompts.** Include trivial docs correction; specified bug/focused RED; genuine ambiguity; wrong reviewer finding; authorized Draft PR creation; compaction resume; unauthorized destructive work; bounded parallel work; small reversible change; repo vs portable rule; tiny no-approval design case; branch finish with valid evidence; no-independent-behavior helper. Each declares expected authority, next action, evidence scope, sandbox, rubric.
+- [ ] **5. Implement runner exactly to the contract above.** Add `TestEvaluationCampaign` unit tests for argv construction, model mapping, run schema, `unobservable` mode, unavailable handling, worktree isolation, filters. Use fake Codex process; no live model spend in Task 2.
+- [ ] **6. Capture initial RED:** `py -3 -m pytest tests/test_workflow_contracts.py -q`; write failing tests/classes and owning tasks to `red-baseline.md`.
+- [ ] **7. Run scanner/classify hits.**
+- [ ] **8. Green exit/checkpoint.** Fixture/runner/scanner schema tests green; RED durably recorded; checkpoint -> Task 3.
+
+## Task 3: Establish authority, applicability, bounded reading, autonomy
+
+- [ ] Add `base-doctrine/references/operating-contract.md` with authority order, owner applicability, reversible-work autonomy, human stop boundary, model-agnostic scope.
+- [ ] Reduce `base-doctrine/SKILL.md` to bounded routing without eager reference loading.
+- [ ] Refactor `using-superpowers-plus`: classify first; inspect only environment dimensions that can change route; read only selected owner references; stop when next lawful action known.
+- [ ] Repair only scanner/source-demonstrated progressive-disclosure/portability defects in broad roots such as `connector-safety`/`writing-skills`.
+- [ ] Run `py -3 -m pytest tests/test_workflow_contracts.py::TestAuthorityBootstrapPortability -q`.
+- [ ] **Green exit/checkpoint:** owned class green; no unresolved Task-3 defect; checkpoint -> Task 4.
+
+## Task 4: Export validation, TDD, evidence reuse, Draft publication
+
+- [ ] Add `repo-worker-base/references/repository-validation-contract.md`: consumer supplies focused map, tracked gate, hosted workflow, Draft anti-bypass, state identifiers. Sequence: focused slice -> normal hooked commit -> reuse unchanged proof -> Draft local review/repair -> Ready on current local proof -> hosted confirmation.
+- [ ] Update `repo-worker-base` as bounded choreography owner; consumers own commands/domain evidence.
+- [ ] Make verification state-bound: tested state, command/scope, relevant environment, result; repeat only for change, failure, unresolved concern, nondeterminism, environment drift, or different claim.
+- [ ] Preserve RED/GREEN while removing every-function ceremony; trivial glue may be transitively covered.
+- [ ] Branch finish reuses valid proof and follows already-authorized publication route; destructive discard/unknown destination still requires human decision.
+- [ ] Readiness is recipient/stage-relative; authorized implementation PR defaults Draft; Ready is later evidence-backed transition.
+- [ ] Encode billed-CI contract and parity-drift semantics.
+- [ ] Run `py -3 -m pytest tests/test_workflow_contracts.py::TestValidationTddPublication -q`.
+- [ ] **Green exit/checkpoint:** class green; checkpoint -> Task 5.
+
+## Task 5: Make design, planning, delegation, review recipient-relative
+
+- [ ] Scale brainstorming to uncertainty/consequence; remove universal approval for clear bounded work while preserving human product/canon choices.
+- [ ] `writing-plans`: always specify observable goal, exclusions, seams, invariants, interfaces, authority, acceptance, task exits. For Luna/lower-capability executors, pre-resolve consequential alternatives, exact evidence homes/commands where known, and finite decision tables. Exact implementation code is optional unless code shape itself is the contract.
+- [ ] SDD may make evidence-backed technical ruling before churn cap; preserve ledger/no-silent-discard/reviewer loop; human owns unresolved requirements/authority.
+- [ ] Workflow/stage decides whether delegation is warranted; selector chooses least-escalated adequate profile/model/reasoning/context. Sol remains ordinary strong reviewer/orchestrator; Astra exceptional escalation, not renamed default.
+- [ ] Agent evaluation uses composed instruction stack, observable outcome rubric, per-scenario/per-model reporting, no model self-score.
+- [ ] Run `py -3 -m pytest tests/test_workflow_contracts.py::TestPlanningDelegationReview -q`.
+- [ ] **Green exit/checkpoint:** class green; checkpoint -> Task 6.
+
+## Task 6: Align callers and prove complete workflow/CI parity
+
+**Files:** `.agents/runbooks/implementing.md`, `.agents/runbooks/testing.md`, `.agents/runbooks/pr.md` only if required, every `.github/workflows/*.yml|*.yaml`, hook/CI registry, workflow inventory, CI parity, scan classifications, checkpoint.
+
+At plan time the repo has one executable workflow `.github/workflows/marketplace-validation.yml` plus non-executable `INDEX.md`. Current expected facts: PR events `opened/synchronize/reopened/ready_for_review`; job guard `${{ github.event_name != 'pull_request' || github.event.pull_request.draft == false }}`; push `main` only; explicit `workflow_dispatch`; hosted command `tools/run ci --check`. Verify rather than assume this snapshot.
+
+- [ ] Remove ritual freshness/repetition and caller-strengthened conditional workflows; repo callers do not force `iterative-review`, full debugging, stronger TDD, or model routes beyond owner contracts.
+- [ ] Return Linear mutation authority to Linear owner; scope honesty remains. Bound fix-while-here to low-risk mechanically bounded touched-surface fixes, not new product/architecture/migration/validation campaigns.
+- [ ] **Enumerate complete workflow surface** into `workflow-inventory.md`: every tracked workflow YAML path; triggers; `workflow_call`; jobs; validation command/called workflow; Draft guard; branch push; manual/scheduled/dispatch behavior; paid-equivalent status.
+- [ ] Search repo for local reusable `uses: ./.github/workflows/...`, `workflow_call`, `workflow_run`, `pull_request_target`, `repository_dispatch`, `schedule`, scripted `gh workflow run`, Actions dispatch API calls, and other automation invoking equivalent CI. Classify each hit as executable caller, manual-only, docs/test fixture, or irrelevant. `TestRepositoryCallersAndPressure` must fail if a tracked workflow YAML is absent from inventory.
+- [ ] **Prove command parity** in `ci-parity.md`: hosted workflow/command, hook sequence, shared CI registry source, hosted `ci --check` target sequence, local `ci --apply` + `ci --check --diagnostics` target sequence, differences. Material mirror means both check paths use the same canonical CI registry after mechanical apply; diagnostics/fail-fast may differ; local may not omit hosted target.
+- [ ] **Prove anti-bypass from full inventory** with table `workflow/caller | event | branch/state | automatic? | paid-equivalent? | runs during Draft? | rationale`. Green requires Draft PR validation skipped; Ready may run; feature branch push cannot auto-run equivalent paid validation; explicit manual dispatch classified separately; no inventory row auto-runs equivalent paid validation during Draft iteration.
+- [ ] Run `py -3 -m pytest tests/test_validate_agent_mesh.py tests/test_review_preflight.py tests/test_review_preflight_extensions.py -q`, `py -3 tools/run.py mesh --check`, and `py -3 -m pytest tests/test_workflow_contracts.py::TestRepositoryCallersAndPressure -q`.
+- [ ] Run full `py -3 -m pytest tests/test_workflow_contracts.py -q` once. Repair earlier-owner failure at owner; rerun failing class; then full file once.
+- [ ] No unresolved scanner `defect` remains.
+- [ ] **Create hooked evaluation checkpoint commit.** Update plan/checkpoint through Task 6, stage intended Tasks 1-6, commit normally without `--no-verify`; do not duplicate full gate immediately before/after successful hook.
+- [ ] After commit, set checkpoint `evaluation_head` to `git rev-parse HEAD`; checkpoint -> Task 7.
+
+**Green exit:** full structural file green; workflow inventory complete; parity/anti-bypass green; no scanner defect; hooked evaluation checkpoint commit exists.
+
+## Task 7: Run fixed composed-stack pressure campaign
+
+- [ ] Read immutable `evaluation_head` from checkpoint; do not run from dirty/moving state.
+- [ ] Run:
+
+```text
+py -3 tools/run_workflow_pressure_campaign.py \
+  --campaign tests/pressure/workflow-contracts/campaign.json \
+  --output-root tests/pressure/workflow-contracts/runs \
+  --head <evaluation_head>
+```
+
+  Runner directly selects family via Codex `--model`; Luna does not switch itself/search profiles. It requests medium reasoning and captures JSONL observable event/tool traces, stderr, final output, metadata.
+
+- [ ] Review each run against predeclared rubric; write `score.json`; summarize in `results.md` per family/scenario: unnecessary questions, reads before useful work, redundant verification, premature stop, completion quality, scope/authority violations, delegation/model quality, context/time cost.
+- [ ] Record reasoning-mode evidence honestly: explicit runtime value if emitted, else `api_reasoning_mode: "unobservable"`; never infer `standard` from no Pro request/service tier/profile.
+- [ ] Diagnose only baseline failures: instruction composition vs harness capability vs model behavior. Repair owner + focused test + hooked repair commit + new `evaluation_head`; rerun only affected trials. Alternate profiles/efforts are diagnostic, not baseline requirements.
+- [ ] Only actual inability to run exact family is `unavailable`; scenario failure remains failure; no substitution.
+- [ ] Run `py -3 -m pytest tests/test_workflow_contracts.py::TestEvaluationCampaign -q`.
+- [ ] **Green exit/checkpoint:** one observed baseline per scenario per available family; unavailable families concretely evidenced; remaining failed baseline honestly recorded as model limitation; checkpoint -> Task 8.
+
+## Task 8: Regenerate, review, hook-validate, publish, promote PR #311
+
+- [ ] Confirm human approval to implement and PR #311 still open Draft. If merged/closed before implementation, create fresh branch from then-current `main` carrying approved plan instead of mutating closed/merged branch.
+- [ ] `py -3 tools/run.py marketplace --apply`; inspect generated diff for canonical-source-derived changes only.
+- [ ] Final focused/uncommitted checks: `py -3 -m pytest tests/test_workflow_contracts.py tests/test_validate_agent_mesh.py tests/test_review_preflight.py tests/test_review_preflight_extensions.py -q`, `py -3 tools/run.py review-preflight --check`, `py -3 tools/run.py mesh --check`. No duplicate full CI when normal hooked commit follows.
+- [ ] Whole-change self-review: shared semantics only; downstream specifics downstream; no secret/private corpus; no Astra fork; no generated hand edit; no stale active v6.2; no caller-strengthened owner; no portable machine/repo assumption; no scanner defect; inventory/parity/evaluation honest.
+- [ ] Update plan/checkpoint to final local state, stage intended tree, commit normally. Hook is broad local proof; do not bypass/duplicate.
+- [ ] Verify committed state with `git status --short --branch`, `git diff --check HEAD^`, `py -3 tools/run.py review-preflight --check`, `py -3 tools/run.py mesh --check`; record full SHA. If hook absent/not canonical, run canonical CI as named fallback and repair cause.
+- [ ] Push/update PR #311. Body links MARK-373/BUNCH-152/ROOMS-55/PORT-15/PATCH-53; names portable surfaces; summarizes rebase, structural/scanner/workflow/parity/evaluation evidence; downstream adoption out of scope; branch/full SHA.
+- [ ] Verify GitHub base `main`, Draft, head SHA, scope, and no paid-equivalent validation ran automatically during Draft sync. Skipped Draft job acceptable; automatic equivalent job is defect.
+- [ ] Keep Draft through further local repair; each repair gets focused validation then hooked commit; reuse unchanged evidence.
+- [ ] Promote Ready only when current head has canonical hook proof, local review complete, available-model pressure evidence complete, workflow/parity green, no parity defect. Hosted CI then confirms.
+- [ ] Hosted failure that local hook reasonably should catch is hook/CI parity drift to repair.
 
 ## Acceptance Evidence
 
-- Superpowers+ active provenance is rebased onto exactly upstream v6.3.0 commit `b36e0829c6d0140e93cfef2ca599b1b07d4a7797`; any newer upstream observed is recorded but not adopted.
-- `.agents/docs/mark-373-superpowers-v6.3-rebase.md` contains a complete per-skill classification/merge record.
-- `tests/test_workflow_contracts.py` uses the fixed class partition; interim tasks make only their owned class green and the full file is green after Task 6.
-- `tools/workflow_pressure_scan.py` is the scanner implementation; raw JSON and reviewed Markdown use the fixed schema/classifications and no unresolved `defect` remains at readiness.
-- Universal design approval, unconditional branch-finish menus/full-suite reruns, message-bound verification, and blanket every-function testing no longer contradict the shared contract.
-- Marketplace callers no longer resurrect conditional `iterative-review`, over-scale debugging, force Linear mutation, or absorb unrelated cheap fixes merely because they are cheap.
-- Repository validation lifecycle is `focused checks while editing -> hooked commits while Draft -> local review/repair -> Ready -> hosted CI confirmation`.
-- `ci-parity.md` proves local/hosted parity through the shared canonical `ci` check registry, not by superficial command-string equality.
-- Draft PR validation job is skipped; feature-branch pushes do not trigger `marketplace-validation`; explicit `workflow_dispatch` is not misclassified as an automatic Draft bypass; no other automatic workflow runs the paid equivalent gate during Draft iteration.
-- Evaluation baseline is exactly one canonical run per available Luna/Terra/Sol/Astra family at standard/medium where exposed; diagnostic variants do not expand completion scope.
-- Observed composed-stack results exist for every available family/scenario; unavailable targets are explicit rather than inferred.
-- Generated outputs derive from canonical plugin files and are rebuilt after source edits.
-- A normal hooked commit supplies the single broad local proof over the exact staged/committed state; equivalent unchanged-state reruns are not required.
-- PR #311 is visible against `main` with a verified implementation head SHA; it began as the plan-only Draft and remains the single Draft publication surface for the implementation.
-- The implementation PR preserves all four downstream adoption boundaries.
+- Superpowers+ is based on exactly `b36e0829c6d0140e93cfef2ca599b1b07d4a7797`, compared from `3dcbd5c4b48e02263fbf4a3c01e3fe4f81d584d9`, retrieved by off-repo temporary clone with no persistent upstream remote/history import.
+- Every upstream-changed path has durable disposition/rationale.
+- Structural tests prove shared authority/bootstrap/validation/planning/publication/caller contracts.
+- Pressure candidates are classified, not silently ignored.
+- Universal design approval, message-bound verification, unconditional branch-finish full-suite reruns, blanket every-function testing, caller-forced conditional workflows, automatic Linear mutation, and unbounded cheap-fix behavior no longer contradict owners.
+- Checkpoint survives compaction with branch/head/dirty-state/evidence/next-step; compaction does not trigger evidence replay.
+- Campaign runner launches one ephemeral Codex trial per family/scenario from fresh detached worktrees at `evaluation_head`, selects exact models with `--model`, requests medium reasoning, captures JSONL event/tool traces/final output without hidden chain-of-thought, and records API reasoning mode only when observable.
+- One baseline result per scenario exists for each available Luna/Terra/Sol/Astra family; unavailable families are evidenced; no aggregate hides weaker-family regression.
+- Workflow inventory enumerates every current executable Actions workflow and discovered reusable/dispatch caller capable of paid-equivalent validation; structural test detects unrecorded workflow YAML.
+- CI parity is proven through shared canonical CI registry, not command-string similarity; Draft PRs/feature pushes cannot automatically burn equivalent paid loop; manual dispatch classified separately.
+- Hooked evaluation checkpoint and final commits provide broad local proof over exact states; unchanged-state equivalent reruns are not required.
+- PR #311 stays Draft during implementation and becomes Ready only after local completion; hosted CI is confirmation, not debugging loop.
+- Consumer adoption remains out of scope.
 
 ## Explicit Deferrals
 
-- `BUNCH-152`, `ROOMS-55`, `PORT-15`, and `PATCH-53` adoption changes are not implemented by MARK-373.
-- Upstream Superpowers revisions newer than pinned `b36e0829...` are not adopted by this plan.
-- Every reasoning/profile permutation is not an evaluation requirement; only the fixed family baseline is required.
-- A genuinely unavailable model family may remain unrun, but absence must be recorded explicitly; unavailable is not passed.
-- `iterative-review` itself is not redesigned unless its owning applicability contract is internally wrong; stale unconditional callers are in scope.
-- Progressive-disclosure work outside roots demonstrated defective by the pressure scan is not a blanket cleanup campaign.
-- This plan does not move Bunch domain architecture, Rooms canon/custody, Portfolio visual/public evidence, or Patch creative canon into the shared marketplace layer.
+- BUNCH-152, ROOMS-55, PORT-15, PATCH-53 implementation.
+- Superpowers revisions beyond pinned v6.3.0.
+- `iterative-review` redesign unless its owning applicability contract is proven internally wrong; stale callers remain in scope.
+- Broad progressive-disclosure cleanup outside scanner-demonstrated roots.
+- Extra reasoning/profile matrix runs except baseline-failure diagnostics.
 
 ## Plan-Readiness Self-Review
 
-- **Recipient:** worker-ready for GPT-5.6 Luna at medium reasoning; planner-level choices are pinned rather than delegated to execution.
-- **Spec coverage:** all ten MARK-373 findings, upstream v6.3 rebase, static pressure scan, observed mixed-model evaluation, Draft/CI economics, preservation/non-goals, and four downstream adoption boundaries map to Tasks 1-8.
-- **Five Luna ambiguities closed:** fixed upstream SHA and record path; fixed one-run-per-family evaluation matrix; named pytest class staging; dedicated scanner/tool/schema; concrete marketplace CI parity/trigger criteria.
-- **Source custody:** canonical plugin sources are authored; generated surfaces are rebuilt after source edits.
-- **Ordering:** pinned upstream rebase -> RED inventory -> shared authority -> validation/publication -> planning/review -> repo callers/CI parity -> observed evaluations -> final regeneration/hooked publication.
-- **Validation:** each semantic task owns one focused structural class and a green exit; full structural rerun happens once after source/caller repair, not at every intermediate stage.
-- **Authority:** human-owned decisions, repository policy, owning-skill applicability, connector mutation authority, and downstream domain ownership remain distinct.
-- **Publication:** PR #311 begins as the plan-only Draft; after approval, implementation continues in the same worktree and branch on top of the plan and remains in PR #311.
-- **No unresolved user choice:** implementation discovery is bounded to factual inspection with enumerated outcomes.
+Consequential choices are pinned for Luna-medium: upstream source/import mechanism, comparison SHAs, evidence homes, test partition, scanner vocabulary, checkpoint/resume, model IDs, Codex invocation, reasoning-mode evidence semantics, trial isolation/trace capture, complete workflow inventory, CI parity, commit boundaries, and Draft lifecycle. Remaining discovery is bounded to observed facts: exact upstream overlap, scanner-demonstrated roots, live Codex model availability, and current workflow/caller inventory.
 
-**Plan-readiness rating:** 9.5/10 for a Luna executor. Remaining uncertainty is factual repository state at execution time (for example, whether a source file moved or a runtime family is unavailable), and each such uncertainty now has a named evidence source, allowed outcome, and stop condition rather than an open design choice.
+**Plan-readiness rating:** 9.5/10. Remaining uncertainty is execution evidence, not unresolved planner choice.
