@@ -8,7 +8,7 @@
 
 **Tech Stack:** Markdown skill/reference assets, JSON evaluation fixtures, pytest structural contract tests, a small Python pressure-scan tool, upstream Superpowers provenance/diffing, repository marketplace/index generators, the tracked pre-commit hook, and the repository's existing pressure-evaluation tooling.
 
-**Execution Strategy:** `executing-plans` — one executor makes the coupled semantic changes in dependency order. This plan is deliberately written to be executable by GPT-5.6 Luna without requiring Luna to recreate planner-level architectural decisions. PR #311 is the plan-only PR. After this plan is approved and merged, implementation starts from current `main` in a fresh implementation worktree/branch and opens a separate Draft implementation PR.
+**Execution Strategy:** `executing-plans` — one executor makes the coupled semantic changes in dependency order. This plan is deliberately written to be executable by GPT-5.6 Luna without requiring Luna to recreate planner-level architectural decisions. PR #311 starts as the plan-only Draft. After this plan is approved, implementation continues in the same worktree and branch on top of the committed plan, and PR #311 remains the single Draft PR through implementation and validation.
 
 ## Luna Execution Contract
 
@@ -535,7 +535,7 @@ If those facts are still true at implementation time, Luna records them and proc
 
 - [ ] **Step 6: Mark Task 7 checklist items complete in this plan.**
 
-## Task 8: Regenerate, review, hook-validate, and publish the separate Draft implementation PR
+## Task 8: Regenerate, review, hook-validate, and continue the same Draft PR
 
 **Files:**
 
@@ -544,11 +544,11 @@ If those facts are still true at implementation time, Luna records them and proc
 
 **Consumes:** completed Tasks 1-7.
 
-**Produces:** a separate committed, regenerated, GitHub-visible Draft implementation PR into `main` with honest scope and evidence.
+**Produces:** committed, regenerated implementation work on the existing branch and worktree, published through the existing GitHub-visible Draft PR #311 into `main` with honest scope and evidence.
 
-- [ ] **Step 1: Confirm implementation branch provenance.**
+- [ ] **Step 1: Confirm implementation branch and PR continuity.**
 
-  This task runs only after PR #311 is approved and merged. Confirm the implementation worktree/branch started from then-current `main`, contains the merged plan, and is not `codex/mark-373-operating-system`.
+  This task runs only after the plan content in PR #311 is approved. Confirm the existing implementation worktree is `Z:/_agent-worktrees/agent-asset-marketplace/codex/mark-373-operating-system`, the branch is `codex/mark-373-operating-system`, the approved plan is committed beneath `HEAD`, and PR #311 is the publication target. Do not create a fresh worktree/branch, wait for the plan to merge, or open a second PR.
 
 - [ ] **Step 2: Regenerate marketplace-owned surfaces.**
 
@@ -578,13 +578,13 @@ If those facts are still true at implementation time, Luna records them and proc
 
   Run `git status --short --branch`, `git diff --check HEAD^`, `py -3 tools/run.py review-preflight --check`, and `py -3 tools/run.py mesh --check`. Record the committed head SHA and clean-worktree result. If the hook was absent or failed to provide canonical proof, run the repository's canonical CI command as the named fallback/diagnostic and repair the cause.
 
-- [ ] **Step 7: Push and open a separate Draft implementation PR.**
+- [ ] **Step 7: Push implementation commits to the existing Draft PR.**
 
-  PR body must link MARK-373, PR #311, BUNCH-152, ROOMS-55, PORT-15, and PATCH-53; name portable contract surfaces changed; summarize the pinned upstream rebase record, structural/evaluation/CI-parity evidence; state downstream adoption is out of scope; include branch and full head SHA.
+  Push the implementation commits to `codex/mark-373-operating-system` and update PR #311's body to describe the combined plan and implementation. The body must link MARK-373, BUNCH-152, ROOMS-55, PORT-15, and PATCH-53; name portable contract surfaces changed; summarize the pinned upstream rebase record, structural/evaluation/CI-parity evidence; state downstream adoption is out of scope; and include the branch and full head SHA. Do not open a second PR.
 
-- [ ] **Step 8: Verify Draft publication and no hosted-CI burn.**
+- [ ] **Step 8: Verify the existing Draft publication and no hosted-CI burn.**
 
-  Read the PR from GitHub. Confirm base `main`, Draft status, head SHA, scope, and that ordinary Draft creation/synchronization did not execute the paid validation job. A skipped Draft workflow/job is acceptable evidence; an automatically running equivalent validation job is a parity/trigger defect.
+  Read PR #311 from GitHub. Confirm base `main`, Draft status, head SHA, combined plan/implementation scope, and that ordinary Draft synchronization did not execute the paid validation job. A skipped Draft workflow/job is acceptable evidence; an automatically running equivalent validation job is a parity/trigger defect.
 
 - [ ] **Step 9: Keep Draft through local review/repair.**
 
@@ -613,7 +613,7 @@ If those facts are still true at implementation time, Luna records them and proc
 - Observed composed-stack results exist for every available family/scenario; unavailable targets are explicit rather than inferred.
 - Generated outputs derive from canonical plugin files and are rebuilt after source edits.
 - A normal hooked commit supplies the single broad local proof over the exact staged/committed state; equivalent unchanged-state reruns are not required.
-- A separate Draft implementation PR is visible against `main` with verified head SHA; PR #311 remains plan-only.
+- PR #311 is visible against `main` with a verified implementation head SHA; it began as the plan-only Draft and remains the single Draft publication surface for the implementation.
 - The implementation PR preserves all four downstream adoption boundaries.
 
 ## Explicit Deferrals
@@ -635,7 +635,7 @@ If those facts are still true at implementation time, Luna records them and proc
 - **Ordering:** pinned upstream rebase -> RED inventory -> shared authority -> validation/publication -> planning/review -> repo callers/CI parity -> observed evaluations -> final regeneration/hooked publication.
 - **Validation:** each semantic task owns one focused structural class and a green exit; full structural rerun happens once after source/caller repair, not at every intermediate stage.
 - **Authority:** human-owned decisions, repository policy, owning-skill applicability, connector mutation authority, and downstream domain ownership remain distinct.
-- **Publication:** PR #311 is plan-only; implementation starts from merged current `main` and opens a separate Draft PR.
+- **Publication:** PR #311 begins as the plan-only Draft; after approval, implementation continues in the same worktree and branch on top of the plan and remains in PR #311.
 - **No unresolved user choice:** implementation discovery is bounded to factual inspection with enumerated outcomes.
 
 **Plan-readiness rating:** 9.5/10 for a Luna executor. Remaining uncertainty is factual repository state at execution time (for example, whether a source file moved or a runtime family is unavailable), and each such uncertainty now has a named evidence source, allowed outcome, and stop condition rather than an open design choice.
