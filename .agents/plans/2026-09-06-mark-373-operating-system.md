@@ -376,13 +376,13 @@ py -3 tools/run_workflow_pressure_campaign.py \
 - [x] Diagnose the retained historical failures as harness capability rather than model-unavailable; the revised smoke block prevents unsupported behavioral claims.
 - [x] Only exact family/model absence after a green harness preflight is `model-unavailable`; no trial received that classification.
 - [x] Run `py -3 -m pytest tests/test_workflow_contracts.py::TestEvaluationCampaign -q` => 7 passed.
-- [x] **Green exit/checkpoint:** harness preflight green; 52/52 trials complete across all four requested families; all committed scores satisfy schema/provenance/hash rules; raw runs ignored; remaining failures honestly recorded as harness-capability results; checkpoint -> Task 8.
+- [ ] **Green exit/checkpoint:** blocked because the real read-only smoke did not complete; 0 revised trials are valid and the retained 52 scores are diagnostic-only. Do not advance Task 7 to a green behavioral baseline until the smoke passes.
 
 ## Task 8: Regenerate, review, hook-validate, publish, promote PR #311
 
 - [x] Confirmed explicit human approval to implement and verified PR #311 remains open Draft against `main`. If merged/closed before implementation, create fresh branch from then-current `main` carrying approved plan instead of mutating closed/merged branch.
 - [x] Ran `py -3 tools/run.py marketplace --apply`; no generated diff was produced outside the intended canonical-source-derived tree.
-- [x] Ran final focused checks: `52 passed` for the focused pytest set and mesh passed. `review-preflight --check` reports four pre-existing warnings also present on `origin/main` (two stale installed-skill path references and two legacy metadata keys); no new warning was introduced by this change. No duplicate full CI was run before the normal hooked commit.
+- [x] Ran final focused checks: `28 passed` for the workflow-contract test file and mesh passed. `review-preflight --check` reports eight pre-existing warnings also present on `origin/main` (the four duplicated across canonical and installed skill surfaces: stale installed-skill path references and legacy metadata keys); no new warning was introduced by this change. No duplicate full CI was run before the normal hooked commit.
 - [x] Whole-change self-review: shared semantics only; downstream specifics downstream; no secret/private corpus; no Astra fork; no generated hand edit; active v6.2 references are historical comparison/provenance only; no caller-strengthened owner; no portable machine/repo assumption; no scanner defect; inventory/parity/evaluation honest; no raw run traces staged.
 - [x] Updated the plan/checkpoint to the final local state and committed the intended tree normally. The hook is broad local proof; it was not bypassed or duplicated.
 - [x] Verified committed state with `git status --short --branch`, `git diff --check HEAD^`, the recorded review-preflight diagnostic, and `py -3 tools/run.py mesh --check`; recorded the full publication SHA. The canonical hook supplied the complete CI proof.

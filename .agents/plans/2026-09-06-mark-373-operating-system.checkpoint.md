@@ -1,6 +1,7 @@
 plan: .agents/plans/2026-09-06-mark-373-operating-system.md
 branch: codex/mark-373-operating-system
 head_at_capture: 2fb546735b8f9f45ec2f1fb4fb00f86a1f2a8d96
+published_head: efea8e03c15c45e1d3cc41d9393cc3c19ee0feae
 last_completed_task: 6
 next_task: 7
 next_step: resolve the harness-blocked read-only smoke, then rerun the fixed campaign from a fresh immutable evidence head
