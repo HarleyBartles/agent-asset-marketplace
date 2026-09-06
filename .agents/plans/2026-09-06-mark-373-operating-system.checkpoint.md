@@ -1,11 +1,11 @@
 plan: .agents/plans/2026-09-06-mark-373-operating-system.md
 branch: codex/mark-373-operating-system
-head: dd3129a0c
-last_completed_task: 7
-next_task: 8
-next_step: 8.1 Regenerate marketplace outputs and run final focused checks before the normal hooked commit
-working_tree_status: dirty with durable campaign metadata, 52 score records, results summary, score-schema test, and final plan/checkpoint edits; ignored raw evidence remains local; temp upstream clone retained because exact cleanup command was rejected by environment policy
-working_diff_sha: pending (Task 7 artifacts and final checkpoint are intentionally uncommitted)
+head: b858e06de76aecaa6a55e4b12a8669d5b27055ce
+last_completed_task: 8
+next_task: closeout
+next_step: human-owned Ready decision for PR #311 after cross-repository campaign coordination
+working_tree_status: dirty only with this final closeout plan/checkpoint update; committed implementation/evidence head is b858e06de76aecaa6a55e4b12a8669d5b27055ce; ignored raw evidence remains local; temp upstream clone retained because exact cleanup command was rejected by environment policy
+working_diff_sha: pending (closeout plan/checkpoint update is intentionally uncommitted)
 last_green_evidence:
   - branch refresh => fast-forwarded to 672becb21de42e0545f89ea95e1667ca95163ca1 [PR #311 remains Draft]
   - git -C <temp-clone> cat-file -e <v6.3>^{commit} => passed [b36e0829c6d0140e93cfef2ca599b1b07d4a7797]
@@ -39,8 +39,12 @@ last_green_evidence:
   - final focused pytest set => 52 passed
   - py -3 tools/run.py mesh --check => passed
   - py -3 tools/run.py review-preflight --check => four pre-existing warnings also present on origin/main; no new warning introduced by MARK-373
+  - normal hooked pressure-campaign commit => b858e06de76aecaa6a55e4b12a8669d5b27055ce (all hook CI targets passed)
+  - committed verification => clean status, git diff --check passed, mesh passed; review-preflight retained the four documented origin/main warnings
+  - git push origin codex/mark-373-operating-system => published b858e06de76aecaa6a55e4b12a8669d5b27055ce
+  - PR #311 verification => OPEN, Draft, base main, full head b858e06de76aecaa6a55e4b12a8669d5b27055ce; Draft workflow check skipped as expected
 evaluation_head: 82132d817
-unresolved_blockers: temporary upstream clone cleanup rejected by environment destructive-command policy; source application and record are durable; pressure campaign execution and scoring are complete; review-preflight retains four pre-existing origin/main warnings documented in the plan
+unresolved_blockers: temporary upstream clone cleanup rejected by environment destructive-command policy; source application and record are durable; review-preflight retains four pre-existing origin/main warnings documented in the plan; Ready promotion remains a human-owned decision for the coordinated cross-repository campaign
 resume_reads:
   - .agents/plans/2026-09-06-mark-373-operating-system.md: Luna Execution Contract, Global Constraints, Task 7
   - .agents/docs/mark-373-superpowers-v6.3-rebase.md

@@ -382,12 +382,12 @@ py -3 tools/run_workflow_pressure_campaign.py \
 - [x] Ran `py -3 tools/run.py marketplace --apply`; no generated diff was produced outside the intended canonical-source-derived tree.
 - [x] Ran final focused checks: `52 passed` for the focused pytest set and mesh passed. `review-preflight --check` reports four pre-existing warnings also present on `origin/main` (two stale installed-skill path references and two legacy metadata keys); no new warning was introduced by this change. No duplicate full CI was run before the normal hooked commit.
 - [x] Whole-change self-review: shared semantics only; downstream specifics downstream; no secret/private corpus; no Astra fork; no generated hand edit; active v6.2 references are historical comparison/provenance only; no caller-strengthened owner; no portable machine/repo assumption; no scanner defect; inventory/parity/evaluation honest; no raw run traces staged.
-- [ ] Update plan/checkpoint to final local state, stage intended tree, commit normally. Hook is broad local proof; do not bypass/duplicate.
-- [ ] Verify committed state with `git status --short --branch`, `git diff --check HEAD^`, `py -3 tools/run.py review-preflight --check`, `py -3 tools/run.py mesh --check`; record full SHA. If hook absent/not canonical, run canonical CI as named fallback and repair cause.
-- [ ] Push/update PR #311. Body links MARK-373/BUNCH-152/ROOMS-55/PORT-15/PATCH-53; names portable surfaces; summarizes rebase, structural/scanner/workflow/parity/evaluation evidence; downstream adoption out of scope; branch/full SHA.
-- [ ] Verify GitHub base `main`, Draft, head SHA, scope, and no paid-equivalent validation ran automatically during Draft sync. Skipped Draft job acceptable; automatic equivalent job is defect.
-- [ ] Keep Draft through further local repair; each repair gets focused validation then hooked commit; reuse unchanged evidence.
-- [ ] Promote Ready only when current head has canonical hook proof, local review complete, available-model pressure evidence complete, workflow/parity green, no parity defect. Hosted CI then confirms.
+- [x] Updated the plan/checkpoint to the final local state and committed the intended tree normally. The hook is broad local proof; it was not bypassed or duplicated.
+- [x] Verified committed state with `git status --short --branch`, `git diff --check HEAD^`, the recorded review-preflight diagnostic, and `py -3 tools/run.py mesh --check`; recorded the full publication SHA. The canonical hook supplied the complete CI proof.
+- [x] Pushed/updated PR #311. Its body links MARK-373/BUNCH-152/ROOMS-55/PORT-15/PATCH-53; names portable surfaces; summarizes rebase, structural/scanner/workflow/parity/evaluation evidence; keeps downstream adoption out of scope; and records branch/full SHA.
+- [x] Verified GitHub base `main`, Draft state, head SHA, scope, and that no paid-equivalent validation ran automatically during Draft sync. The skipped Draft job is expected and documented.
+- [x] Kept the PR Draft through local repair; each repair received focused validation then a hooked commit, and unchanged evidence was reused.
+- [ ] Promote Ready only when current head has canonical hook proof, local review complete, available-model pressure evidence complete, workflow/parity green, no parity defect. This remains a human-owned stage decision while the related cross-repository campaign is coordinated; PR #311 intentionally remains Draft.
 - [ ] Hosted failure that local hook reasonably should catch is hook/CI parity drift to repair.
 
 ## Acceptance Evidence
