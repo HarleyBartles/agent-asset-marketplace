@@ -145,6 +145,44 @@ class TestEvaluationCampaign:
             ROOT / ".agents" / "plans" / "2026-09-06-mark-373-operating-system.md"
         )
 
+    def test_committed_campaign_meta_and_scores_are_self_contained(self):
+        meta = json.loads(_read(DOCS / "campaign-meta.json"))
+        assert meta["schema_version"] == 1
+        assert meta["evaluation_head"] == "82132d817f1974cf43df8602e56c500c5fa1c772"
+        assert meta["completed_trials"] == 52
+        score_paths = sorted((DOCS / "scores").glob("*/*/*.json"))
+        assert len(score_paths) == 52
+        for path in score_paths:
+            score = json.loads(_read(path))
+            assert score["schema_version"] == 1
+            assert score["trial"]["status"] == "ok"
+            assert score["judge"] == {
+                "kind": "executor-inline",
+                "family": "luna",
+                "model": "gpt-5.6-luna",
+                "reasoning_effort": "medium",
+                "separate_codex_exec": False,
+            }
+            assert score["raw_evidence"]["committed"] is False
+            assert all(
+                len(score["raw_evidence"][name]) == 64
+                for name in (
+                    "events_jsonl_sha256",
+                    "stderr_sha256",
+                    "final_sha256",
+                    "meta_sha256",
+                )
+            )
+            assert score["mechanical"]["reads_before_useful_action"] == "unobservable"
+            assert score["criteria"]
+            assert score["overall_verdict"] in {"pass", "fail"}
+            assert score["failure_class"] in {
+                "none",
+                "instruction-composition",
+                "harness-capability",
+                "model-behavior",
+            }
+
     def test_trial_argv_has_exact_controls_and_least_privilege(self, tmp_path: Path):
         argv = campaign_runner.build_codex_argv(tmp_path, "gpt-5.6-luna", "read-only", tmp_path / "final.txt")
         assert argv[:2] == ["codex", "exec"]

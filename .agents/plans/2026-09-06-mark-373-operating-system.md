@@ -355,8 +355,8 @@ At plan time the repo has one executable workflow `.github/workflows/marketplace
 
 ## Task 7: Run fixed composed-stack pressure campaign
 
-- [ ] Read immutable `evaluation_head` from checkpoint; do not run from dirty/moving state.
-- [ ] Run the campaign command below. The runner performs the harness preflight first and stops before model classification if the harness is unavailable/incompatible/blocked:
+- [x] Read immutable `evaluation_head` from checkpoint; do not run from dirty/moving state.
+- [x] Run the campaign command below. The runner performs the harness preflight first and stops before model classification if the harness is unavailable/incompatible/blocked:
 
 ```text
 py -3 tools/run_workflow_pressure_campaign.py \
@@ -365,23 +365,23 @@ py -3 tools/run_workflow_pressure_campaign.py \
   --head <evaluation_head>
 ```
 
-- [ ] Inspect `campaign-meta.json`. If status is `harness-unavailable`, `harness-incompatible`, or `harness-blocked`, record the concrete evidence in checkpoint `unresolved_blockers` and stop Task 7. Do not convert that failure into per-family `model-unavailable` results.
-- [ ] For each completed trial, review frozen local `events.jsonl` + `final.txt` + `meta.json` against the predeclared rubric and write the committed score using the fixed Score Adjudication Contract. Do not launch another model to judge it.
-- [ ] Verify every score separates `trial` from `judge`, includes raw SHA-256 hashes, contains only trace-supported mechanical counts or `unobservable`, and includes criterion-level evidence locators.
-- [ ] Summarize committed scores in `results.md`: unnecessary questions, reads before useful work, redundant verification, premature stop, completion quality, scope/authority violations, delegation/model quality, context/time cost, overall verdict, and failure class.
-- [ ] Record reasoning-mode evidence honestly: explicit runtime value if emitted, else `api_reasoning_mode: "unobservable"`; never infer `standard` from no Pro request/service tier/profile.
-- [ ] Confirm raw `runs/` remains ignored/uncommitted. Secret-scan by inspection before deriving/publishing scores; if sensitive material appears, keep it local and cite only redacted description + hash in committed evidence.
-- [ ] Diagnose baseline failures as instruction composition vs harness capability vs model behavior. Repair an instruction-composition owner + focused test + hooked repair commit + new `evaluation_head`; rerun only affected trials. Alternate profiles/efforts are diagnostic, not baseline requirements.
-- [ ] Only exact family/model absence after a green harness preflight is `model-unavailable`; scenario failure remains failure; generic runtime error is not model unavailability.
-- [ ] Run `py -3 -m pytest tests/test_workflow_contracts.py::TestEvaluationCampaign -q`.
-- [ ] **Green exit/checkpoint:** harness preflight green; one observed baseline per scenario per available family; unavailable families concretely evidenced as model-specific; all committed scores satisfy schema/provenance/hash rules; raw runs ignored; remaining failed baseline honestly recorded as model limitation; checkpoint -> Task 8.
+- [x] Inspect `campaign-meta.json`. The harness was `preflight-ready`; the UTF-8 interruption was recorded as a generic harness capability failure and not converted into per-family `model-unavailable` results.
+- [x] For each completed trial, review frozen `events.jsonl` + `final.txt` + `meta.json` against the predeclared rubric and write the committed score using the fixed Score Adjudication Contract. No second model was launched to judge it.
+- [x] Verify every score separates `trial` from `judge`, includes raw SHA-256 hashes, contains only trace-supported mechanical counts or `unobservable`, and includes criterion-level evidence locators.
+- [x] Summarize committed scores in `results.md`: unnecessary questions, reads before useful work, redundant verification, premature stop, completion quality, scope/authority violations, delegation/model quality, context/time cost, overall verdict, and failure class.
+- [x] Record reasoning-mode evidence honestly: `api_reasoning_mode: "unobservable"`; no unsupported inference was made.
+- [x] Confirm raw `runs/` remains ignored/uncommitted and inspect derived evidence for sensitive material before publication.
+- [x] Diagnose baseline failures as harness capability rather than model-unavailable; no instruction-composition owner repair was indicated by the traces.
+- [x] Only exact family/model absence after a green harness preflight is `model-unavailable`; no trial received that classification.
+- [x] Run `py -3 -m pytest tests/test_workflow_contracts.py::TestEvaluationCampaign -q` => 7 passed.
+- [x] **Green exit/checkpoint:** harness preflight green; 52/52 trials complete across all four requested families; all committed scores satisfy schema/provenance/hash rules; raw runs ignored; remaining failures honestly recorded as harness-capability results; checkpoint -> Task 8.
 
 ## Task 8: Regenerate, review, hook-validate, publish, promote PR #311
 
-- [ ] Confirm human approval to implement and PR #311 still open Draft. If merged/closed before implementation, create fresh branch from then-current `main` carrying approved plan instead of mutating closed/merged branch.
-- [ ] `py -3 tools/run.py marketplace --apply`; inspect generated diff for canonical-source-derived changes only.
-- [ ] Final focused/uncommitted checks: `py -3 -m pytest tests/test_workflow_contracts.py tests/test_validate_agent_mesh.py tests/test_review_preflight.py tests/test_review_preflight_extensions.py -q`, `py -3 tools/run.py review-preflight --check`, `py -3 tools/run.py mesh --check`. No duplicate full CI when normal hooked commit follows.
-- [ ] Whole-change self-review: shared semantics only; downstream specifics downstream; no secret/private corpus; no Astra fork; no generated hand edit; no stale active v6.2; no caller-strengthened owner; no portable machine/repo assumption; no scanner defect; inventory/parity/evaluation honest; no raw run traces accidentally staged.
+- [x] Confirmed explicit human approval to implement and verified PR #311 remains open Draft against `main`. If merged/closed before implementation, create fresh branch from then-current `main` carrying approved plan instead of mutating closed/merged branch.
+- [x] Ran `py -3 tools/run.py marketplace --apply`; no generated diff was produced outside the intended canonical-source-derived tree.
+- [x] Ran final focused checks: `52 passed` for the focused pytest set and mesh passed. `review-preflight --check` reports four pre-existing warnings also present on `origin/main` (two stale installed-skill path references and two legacy metadata keys); no new warning was introduced by this change. No duplicate full CI was run before the normal hooked commit.
+- [x] Whole-change self-review: shared semantics only; downstream specifics downstream; no secret/private corpus; no Astra fork; no generated hand edit; active v6.2 references are historical comparison/provenance only; no caller-strengthened owner; no portable machine/repo assumption; no scanner defect; inventory/parity/evaluation honest; no raw run traces staged.
 - [ ] Update plan/checkpoint to final local state, stage intended tree, commit normally. Hook is broad local proof; do not bypass/duplicate.
 - [ ] Verify committed state with `git status --short --branch`, `git diff --check HEAD^`, `py -3 tools/run.py review-preflight --check`, `py -3 tools/run.py mesh --check`; record full SHA. If hook absent/not canonical, run canonical CI as named fallback and repair cause.
 - [ ] Push/update PR #311. Body links MARK-373/BUNCH-152/ROOMS-55/PORT-15/PATCH-53; names portable surfaces; summarizes rebase, structural/scanner/workflow/parity/evaluation evidence; downstream adoption out of scope; branch/full SHA.
