@@ -46,6 +46,13 @@ class TestAuthorityBootstrapPortability:
         assert "cannot bypass" in text
         assert "applicability" in text
 
+    def test_sdd_stops_for_human_owned_requirements_but_rules_technical_findings(self):
+        text = _read(SKILLS / "subagent-driven-development" / "SKILL.md").lower()
+        assert "human-owned requirements" in text
+        assert "product/canon" in text
+        assert "already authorized" in text
+        assert "only reasons to stop are the four named below" not in text
+
 
 class TestValidationTddPublication:
     def test_repository_validation_contract_defines_the_evidence_sequence(self):
@@ -102,6 +109,23 @@ class TestPlanningDelegationReview:
             path = SKILLS / owner / name
             assert "do not dispatch subagents" in _read(path).lower()
 
+    def test_bounded_and_spike_paths_do_not_require_ceremonial_approval(self):
+        text = _read(SKILLS / "brainstorming" / "SKILL.md")
+        lowered = text.lower()
+        assert '"human approves?"' not in lowered
+        assert "get a nod" not in lowered
+        assert "bounded: after approval" not in lowered
+        assert (
+            "each task gets its own classification; a human decision is required only when that task "
+            "contains a human-owned choice"
+        ) in lowered
+
+    def test_portable_surfaces_do_not_hardcode_marketplace_commands(self):
+        for name in ("handoff-gates", "publishing-source"):
+            text = _read(SKILLS / name / "SKILL.md")
+            assert "tools/run" not in text
+            assert "py -3" not in text
+
 
 class TestRepositoryCallersAndPressure:
     def test_workflow_inventory_covers_every_tracked_workflow(self):
@@ -124,6 +148,20 @@ class TestRepositoryCallersAndPressure:
         assert "classification" in classified
         assert all(label in classified for label in ("intended", "repo-local", "deferred"))
         assert "| defect |" not in classified
+
+    def test_pressure_scan_has_one_owned_disposition_per_candidate(self):
+        findings = json.loads(_read(DOCS / "pressure-scan.json"))
+        dispositions = json.loads(_read(DOCS / "pressure-scan-dispositions.json"))
+        assert len(dispositions) == len(findings)
+        assert all(
+            {"path", "line", "pattern", "classification", "owner", "reason"} <= set(item) for item in dispositions
+        )
+        assert all(item["classification"] in {"intended", "repo-local", "deferred"} for item in dispositions)
+        assert all(item["owner"] and item["reason"] for item in dispositions)
+        assert {(item["path"], item["line"], item["pattern"]) for item in dispositions} == {
+            (item["path"], item["line"], item["pattern"]) for item in findings
+        }
+        assert all(item["classification"] != "defect" for item in dispositions)
 
 
 class TestEvaluationCampaign:
@@ -148,8 +186,8 @@ class TestEvaluationCampaign:
     def test_committed_campaign_meta_and_scores_are_self_contained(self):
         meta = json.loads(_read(DOCS / "campaign-meta.json"))
         assert meta["schema_version"] == 1
-        assert meta["evaluation_head"] == "82132d817f1974cf43df8602e56c500c5fa1c772"
-        assert meta["completed_trials"] == 52
+        assert len(meta["evaluation_head"]) == 40
+        assert meta["status"] in {"harness-blocked", "preflight-ready"}
         score_paths = sorted((DOCS / "scores").glob("*/*/*.json"))
         assert len(score_paths) == 52
         for path in score_paths:
@@ -207,6 +245,40 @@ class TestEvaluationCampaign:
 
         incompatible = campaign_runner.preflight(resolve=lambda _: "codex", run=fake_run)
         assert incompatible["status"] == "harness-incompatible"
+
+    def test_preflight_runs_read_only_smoke_and_checks_project_config(self, tmp_path: Path):
+        calls = []
+
+        class Result:
+            returncode = 0
+            stdout = "Codex 1.0"
+            stderr = ""
+
+        def fake_run(argv, **kwargs):
+            calls.append((argv, kwargs))
+            result = Result()
+            if argv[-1] == "--help":
+                result.stdout = (
+                    "exec --ephemeral --json --model --sandbox --output-last-message --ignore-user-config -c"
+                )
+            if "--output-last-message" in argv:
+                final_path = Path(argv[argv.index("--output-last-message") + 1])
+                final_path.write_text("SMOKE_OK\n", encoding="utf-8")
+            return result
+
+        ready = campaign_runner.preflight(resolve=lambda _: "codex", run=fake_run, worktree=tmp_path)
+        assert ready["status"] == "preflight-ready"
+        assert len(calls) == 3
+        assert "--sandbox" in calls[-1][0] and "read-only" in calls[-1][0]
+        assert calls[-1][1]["input"].startswith("MARK-373 harness smoke")
+        assert "read-only command" in calls[-1][1]["input"]
+
+        config = tmp_path / ".codex" / "config.toml"
+        config.parent.mkdir()
+        config.write_text("mcp_servers = { github = { command = 'connector' } }\n", encoding="utf-8")
+        blocked = campaign_runner.preflight(resolve=lambda _: "codex", run=fake_run, worktree=tmp_path)
+        assert blocked["status"] == "harness-blocked"
+        assert "external" in blocked["reason"]
 
     def test_metrics_use_unobservable_for_unprovable_values(self):
         metrics = campaign_runner.extract_mechanical_metrics('{"type":"tool_call"}\n', "Need clarification?\n")

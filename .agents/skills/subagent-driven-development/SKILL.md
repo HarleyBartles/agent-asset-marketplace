@@ -44,21 +44,33 @@ Execute plan by dispatching a fresh implementer subagent per task, a task review
 **Narration:** between tool calls, narrate at most one short line — the
 ledger and the tool results carry the record.
 
-**Continuous execution:** Do not pause to check in with your human partner between tasks. Execute all tasks from the plan without stopping. The only reasons to stop are the four named below, or all tasks complete. "Should I continue?" prompts and progress summaries waste their time — they asked you to execute the plan, so execute it.
+**Continuous execution:** Do not pause to check in with your human partner
+between tasks. Execute all tasks from the plan without stopping. Pause only
+for a named human-owned, safety, authorization, or plan-integrity boundary,
+or when all tasks are complete. "Should I continue?" prompts and progress
+summaries waste their time — they asked you to execute the plan, so execute it.
 
-**Rulings, not stalls.** A running plan does not wait on a human. Conflicts,
-ambiguities, plan defects, a cap you would have asked to exceed — decide
-them. The spec is the binding authority, the plan is its argument, and your
-judgment settles what neither answers. Record every decision in the ledger as
+**Rulings, not stalls.** A running plan does not wait on a human for a
+falsifiable technical ruling. Conflicts, technical ambiguities, plan defects,
+or a cap you would have asked to exceed — decide them. The spec is the binding
+authority, the plan is its argument, and your technical judgment settles what
+neither answers. Record every decision in the ledger as
 `Ruling: <what you decided> — <why> — <what it costs if wrong>`, and keep
-going. A wrong ruling costs rework your human partner can see and undo; a
-session parked on a question costs their whole day and buys nothing.
+going. A wrong technical ruling costs rework your human partner can see and
+undo; a session parked on a question costs their whole day and buys nothing.
 
-Four things stop you, and only these: an irreversible or destructive
-operation; a security-sensitive action; a side effect outside this worktree
-that norms say you ask about first (a merge, a push to a shared branch, a
-publish); and a plan so broken that every path forward is a guess. For those,
-stop and ask.
+Human-owned requirements, product choices, canon/privacy/licensing decisions,
+and unresolved authority are not technical rulings. Stop and ask the human
+owner when one of those choices is required. External side effects stop only
+when they are not already authorized by explicit human instruction or the
+owning contract; an authorized side effect still follows its required safety
+and evidence gates.
+
+The reasons to stop are: an irreversible or destructive operation; a
+security-sensitive action; an unauthorized side effect outside this worktree
+(a merge, a push to a shared branch, or a publish); a human-owned requirement,
+product/canon choice, or authority decision; or a plan so broken that every
+path forward is a guess. For those, stop and ask.
 
 ## When to Use
 

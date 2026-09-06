@@ -7,6 +7,7 @@ import argparse
 import hashlib
 import json
 from pathlib import Path
+import re
 import shutil
 import subprocess
 import tempfile
@@ -31,6 +32,13 @@ REQUIRED_CAPABILITIES = {
     "--ignore-user-config",
     "-c",
 }
+PROJECT_CONFIG_PATHS = (
+    Path(".codex") / "config.toml",
+    Path(".codex") / "config.json",
+    Path(".codex") / "mcp.json",
+    Path(".mcp.json"),
+)
+EXTERNAL_WRITE_MARKERS = re.compile(r"(?i)(?:mcp|connector|github|linear|external|\bpush\b|dispatch|write)")
 
 
 def sha256_file(path: Path) -> str:
@@ -110,9 +118,27 @@ def extract_mechanical_metrics(
     }
 
 
+def inspect_project_config(worktree: Path) -> dict[str, Any]:
+    present: list[str] = []
+    external_write_surfaces: list[str] = []
+    for relative_path in PROJECT_CONFIG_PATHS:
+        path = worktree / relative_path
+        if not path.is_file():
+            continue
+        present.append(relative_path.as_posix())
+        text = path.read_text(encoding="utf-8", errors="replace")
+        if EXTERNAL_WRITE_MARKERS.search(text):
+            external_write_surfaces.append(relative_path.as_posix())
+    return {
+        "project_config_paths": present,
+        "external_write_surfaces": external_write_surfaces,
+    }
+
+
 def preflight(
     resolve: Callable[[str], str | None] = shutil.which,
     run: Callable[..., subprocess.CompletedProcess[str]] = subprocess.run,
+    worktree: Path | None = None,
 ) -> dict[str, Any]:
     executable = resolve("codex")
     if not executable:
@@ -139,7 +165,58 @@ def preflight(
             "version": (version.stdout or version.stderr).strip(),
             "missing_capabilities": missing,
         }
-    return {"status": "preflight-ready", "version": (version.stdout or version.stderr).strip()}
+    smoke_worktree = worktree or Path.cwd()
+    project_config = inspect_project_config(smoke_worktree)
+    if project_config["external_write_surfaces"]:
+        return {
+            "status": "harness-blocked",
+            "version": (version.stdout or version.stderr).strip(),
+            "reason": "project-scoped configuration exposes external write surfaces",
+            **project_config,
+        }
+    with tempfile.TemporaryDirectory(prefix="mark-373-harness-smoke-") as smoke_dir:
+        smoke_final = Path(smoke_dir) / "final.txt"
+        smoke = run(
+            build_codex_argv(smoke_worktree, MODEL_MATRIX["luna"], "read-only", smoke_final),
+            input=(
+                "MARK-373 harness smoke: perform no repository changes and respond with SMOKE_OK. "
+                "Run one read-only command that prints the repository root, then respond with SMOKE_OK. "
+                "Do not use connectors, web access, or publication."
+            ),
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+            timeout=60,
+        )
+        smoke_text = smoke_final.read_text(encoding="utf-8", errors="replace") if smoke_final.is_file() else ""
+        smoke_sha256 = sha256_file(smoke_final) if smoke_final.is_file() else None
+    if smoke.returncode != 0:
+        return {
+            "status": "harness-blocked",
+            "version": (version.stdout or version.stderr).strip(),
+            "reason": "read-only smoke invocation failed",
+            "smoke_exit_code": smoke.returncode,
+            "smoke_stderr": (smoke.stderr or "")[-500:],
+            "smoke_final_sha256": smoke_sha256,
+            **project_config,
+        }
+    if "SMOKE_OK" not in smoke_text:
+        return {
+            "status": "harness-blocked",
+            "version": (version.stdout or version.stderr).strip(),
+            "reason": "read-only smoke invocation did not complete expected response",
+            "smoke_exit_code": smoke.returncode,
+            "smoke_final_sha256": smoke_sha256,
+            **project_config,
+        }
+    return {
+        "status": "preflight-ready",
+        "version": (version.stdout or version.stderr).strip(),
+        "smoke_exit_code": smoke.returncode,
+        "smoke_final_sha256": smoke_sha256,
+        **project_config,
+    }
 
 
 def _load_campaign(path: Path) -> dict[str, Any]:
@@ -158,7 +235,7 @@ def run_campaign(
     campaign = _load_campaign(campaign_path)
     output_root.mkdir(parents=True, exist_ok=True)
     head_root = output_root / head
-    preflight_result = preflight()
+    preflight_result = preflight(worktree=Path.cwd())
     (head_root / "_harness").mkdir(parents=True, exist_ok=True)
     (head_root / "_harness" / "campaign-meta.json").write_text(
         json.dumps({"schema_version": 1, "evaluation_head": head, **preflight_result}, indent=2) + "\n",

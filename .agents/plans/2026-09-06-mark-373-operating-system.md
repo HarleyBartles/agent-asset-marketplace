@@ -85,15 +85,17 @@ Initialize `.agents/plans/2026-09-06-mark-373-operating-system.checkpoint.md` be
 ```text
 plan: .agents/plans/2026-09-06-mark-373-operating-system.md
 branch: <current branch>
-head: <git rev-parse HEAD>
+head_at_capture: <git rev-parse HEAD>
 last_completed_task: <N>
 next_task: <N+1>
 next_step: <exact step number/title>
+checkpoint_state: <clean or dirty; describes the recorded tree>
+checkpoint_publication: <committed or pending>
 working_tree_status: <git status --short output or clean>
 working_diff_sha: <hash of git diff --binary HEAD, or none when clean>
 last_green_evidence:
   - <command> => <result> [artifact/reference]
-evaluation_head: <sha or not-set>
+evidence_head: <sha or not-set>
 unresolved_blockers: <none or concrete blocker>
 resume_reads:
   - <exact plan section/task/reference needed next>
@@ -285,7 +287,7 @@ Mechanically derivable counts should come from the runner/event parser where pos
 - [x] **4. Classify every upstream-changed skill/path.** Pay particular attention to brainstorming scaling, SDD rulings/not-stalls, pre-dispatch conflict scan, microtask batching, reviewer evidence reuse, worktree cleanup, compression, testing guidance, Codex/event behavior. No changed path remains unclassified.
 - [x] **5. Apply classified changes deliberately to canonical Superpowers+ source.** Temporary clone is read-only source material; manually merge/copy accepted content; preserve first-party owners where classified; update active provenance to v6.3.
 - [x] **6. Run smallest existing marketplace/skill structural/regeneration checks proving rebased baseline well formed.** Record exact commands/results; no broad repo gate solely because Task 1 ended.
-- [x] **7. Remove temporary clone** after durable record/source application no longer needs it.
+- [ ] **7. Remove temporary clone** after durable record/source application no longer needs it. The clone remains retained under the environment's destructive-command restriction; this is a recorded cleanup blocker, not a completed step.
 - [x] **8. Green exit/checkpoint.** All changed paths classified; active provenance pinned v6.3; focused checks green; checkpoint -> Task 2.
 
 ## Task 2: Create staged RED tests, scanner, campaign fixture, and runner
@@ -355,7 +357,7 @@ At plan time the repo has one executable workflow `.github/workflows/marketplace
 
 ## Task 7: Run fixed composed-stack pressure campaign
 
-- [x] Read immutable `evaluation_head` from checkpoint; do not run from dirty/moving state.
+- [x] Read immutable `evidence_head` from checkpoint; do not run from dirty/moving state.
 - [x] Run the campaign command below. The runner performs the harness preflight first and stops before model classification if the harness is unavailable/incompatible/blocked:
 
 ```text

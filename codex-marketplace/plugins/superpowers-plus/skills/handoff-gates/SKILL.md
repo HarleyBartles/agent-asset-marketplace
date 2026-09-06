@@ -73,9 +73,9 @@ For SDD `plan-readiness`, rate the artifact against these items. Strengthen any 
 
 - [ ] **Plan-step tracking.** Each task includes a final sub-step for the implementer to mark the task's own checklist boxes `[x]` in the plan file.
 
-- [ ] **Clean CI gate.** Do not run the repo's canonical CI immediately before a normal commit or immediately after a successful hooked commit. Stage the intended tree and commit; the pre-commit hook will materialize the staged snapshot, run `ci --apply`, stage the owned generated surfaces, and run `ci --check --diagnostics` before allowing the commit. Use `tools/run ci --check` only for an uncommitted verification, pipeline diagnosis, or explicit CI-parity work. Do not use `git commit --no-verify` to bypass the pre-commit hook.
+- [ ] **Clean CI gate.** Do not run the repo's canonical CI immediately before a normal commit or immediately after a successful hooked commit. Stage the intended tree and commit; the pre-commit hook will materialize the staged snapshot, run the repository's canonical apply gate, stage the owned generated surfaces, and run the repository's canonical check gate with diagnostics before allowing the commit. Use the consumer's canonical check command only for an uncommitted verification, pipeline diagnosis, or explicit CI-parity work. Do not use `git commit --no-verify` to bypass the pre-commit hook.
 
-- [ ] **Explicit verification.** Each regeneration or distribution task names the exact consumer command and any follow-up CI check. Do not assume a `tools/run` target exists in every repo.
+- [ ] **Explicit verification.** Each regeneration or distribution task names the exact consumer command and any follow-up CI check. Do not assume a particular repository helper or command exists in every consumer repo.
 
 - [ ] **No temporary validation drift.** If a task is expected to leave the tree in a temporarily unbuildable state, it is explicitly documented so the implementer and reviewer know it is expected.
 

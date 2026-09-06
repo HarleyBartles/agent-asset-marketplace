@@ -45,9 +45,10 @@ Run these in order. Stop at the first row that matches the change.
    `ci --check --diagnostics`), stop and finish `verification-before-completion`
    first. Do not run `ci --check` immediately before a normal commit. Publication is not
    a substitute for validation.
-2. **Marketplace source edited?** If `codex-marketplace/plugins/<plugin>/` skill content,
-   `codex-marketplace/plugin-roots.json`, `codex-marketplace/plugins/<plugin>/SOURCE.md`, or `references/bundle-manifest.json` changed,
-   regenerate with `py -3 tools/run.py marketplace --apply` before publishing.
+2. **Marketplace source edited?** If the consumer's canonical marketplace source,
+   inventory, provenance, or bundle manifest changed, regenerate with the
+   consumer repository's canonical marketplace-generation command before
+   publishing. Do not assume a particular repository layout or command name.
 3. **Pick the surface.** Choose the smallest sufficient surface from
    [`references/publishing-decisions.md`](references/publishing-decisions.md).
 4. **Publish.** Hand off to the owning skill for the mechanics

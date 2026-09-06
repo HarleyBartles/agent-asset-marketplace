@@ -58,8 +58,8 @@ override it:
 
 - **Spike** — a feasibility question ("can we...", "is it possible...",
   "quick and dirty is fine") whose output is an answer, not code you
-  keep. Present the question and what you'll try in 2-3 sentences, get
-  a nod, then find out as cheaply as correctness allows. No design
+  keep. Present the question and what you'll try in 2-3 sentences, then
+  find out as cheaply as correctness allows. No design
   doc, no spec file. Report findings as a recommendation; anything you
   built stays labeled throwaway.
 - **Bounded** — a well-scoped change to code that already exists in
@@ -99,7 +99,7 @@ bounded work does not need a ceremonial pause.
 | "I understand this kind of app, so it's bounded" | Bounded measures the repo, not your familiarity. A new project has no existing flow — it is architectural. |
 | "The spike works, so I'll keep the code" | A spike's output is an answer. Keeping the code is a new request — classify it. |
 | "It grew, but I'm almost done — no need to re-classify" | Hidden complexity upgrades the path mid-task. Stop and say so. |
-| "They approved the spike, so the follow-up change is approved too" | Each task gets its own classification and its own approval. |
+| "They approved the spike, so the follow-up change is approved too" | Each task gets its own classification; a human decision is required only when that task contains a human-owned choice. |
 
 ## Checklist
 
@@ -109,9 +109,8 @@ your path and complete them in order.
 **Spike:**
 1. **Explore project context** — enough to frame the probe
 2. **Present question + probe plan** — 2-3 sentences
-3. **Get approval** — a nod is enough
-4. **Investigate** — as cheaply as correctness allows
-5. **Report findings** — a recommendation; label anything built as throwaway
+3. **Investigate** — as cheaply as correctness allows
+4. **Report findings** — a recommendation; label anything built as throwaway
 
 **Bounded:**
 1. **Explore project context** — check files, docs, recent commits
@@ -139,7 +138,6 @@ digraph brainstorming {
     "Present question + probe (2-3 sentences)" [shape=box];
     "Ask clarifying questions (bounded)" [shape=box];
     "Present short design in chat" [shape=box];
-    "Human approves?" [shape=diamond];
     "Investigate; report recommendation" [shape=doublecircle];
     "Implement via normal workflow (no plan doc)" [shape=doublecircle];
     "Explore project context" [shape=box];
@@ -158,11 +156,9 @@ digraph brainstorming {
     "Classify: spike / bounded / architectural" -> "Present question + probe (2-3 sentences)" [label="spike"];
     "Classify: spike / bounded / architectural" -> "Ask clarifying questions (bounded)" [label="bounded"];
     "Classify: spike / bounded / architectural" -> "Explore project context" [label="architectural"];
-    "Present question + probe (2-3 sentences)" -> "Human approves?";
     "Ask clarifying questions (bounded)" -> "Present short design in chat";
-    "Present short design in chat" -> "Human approves?";
-    "Human approves?" -> "Investigate; report recommendation" [label="spike: yes"];
-    "Human approves?" -> "Implement via normal workflow (no plan doc)" [label="bounded: yes"];
+    "Present question + probe (2-3 sentences)" -> "Investigate; report recommendation" [label="spike"];
+    "Present short design in chat" -> "Implement via normal workflow (no plan doc)" [label="bounded: authorized/no human-owned choice"];
     "Hidden complexity? Upgrade path" -> "Classify: spike / bounded / architectural";
 
     "Explore project context" -> "Scope too large for one spec?";
@@ -183,15 +179,16 @@ digraph brainstorming {
 
 **Terminal states are path-bound.** Architectural: the ONLY skill you
 invoke after brainstorming is writing-plans — never frontend-design,
-mcp-builder, or any other implementation skill. Bounded: after
-approval, implementation proceeds directly through the normal
-development workflow; no plan document. Spike: the terminal state is a
-reported recommendation.
+mcp-builder, or any other implementation skill. Bounded: after the short
+design is settled and no human-owned choice remains, implementation proceeds
+directly through the normal development workflow; no plan document. Spike:
+the terminal state is a reported recommendation.
 
 ## The Process
 
 The subsections below serve the bounded and architectural paths (a
-spike stops at "present the probe, get a nod"). Sections from
+spike stops after presenting the probe and reporting its recommendation).
+Sections from
 **Exploring approaches** onward are architectural-path depth — for
 bounded work, context plus a few questions plus a short in-chat design
 is the whole process.
