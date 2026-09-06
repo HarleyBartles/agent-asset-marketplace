@@ -32,7 +32,7 @@ license: MIT
 ---
 ## Provenance
 
-This skill is a first-party authored derivation of `obra/superpowers` v6.2.0, released under the MIT License. The original upstream snapshot is retained in `codex-marketplace/plugins/superpowers-plus/skills/verification-before-completion/` for reference.
+This skill is a first-party authored derivation of `obra/superpowers` v6.3.0, released under the MIT License. The original upstream snapshot is retained in `codex-marketplace/plugins/superpowers-plus/skills/verification-before-completion/` for reference.
 
 # Verification Before Completion
 
@@ -45,10 +45,15 @@ This skill is a first-party authored derivation of `obra/superpowers` v6.2.0, re
 ## The Iron Law
 
 ```
-NO COMPLETION CLAIMS WITHOUT FRESH VERIFICATION EVIDENCE
+NO COMPLETION CLAIMS WITHOUT STATE-BOUND VERIFICATION EVIDENCE
 ```
 
-If you haven't run the verification command in this message, you cannot claim it passes.
+Evidence is fresh when it proves the same tested state (tree/head/staged
+state),
+command and scope, relevant environment, and claim. A conversation turn is
+not a state identifier. Reuse unchanged proof; repeat only for a changed
+state, failure, unresolved concern, nondeterminism, environment drift, or a
+different proof claim.
 
 ## The Gate Function
 
@@ -56,12 +61,15 @@ If you haven't run the verification command in this message, you cannot claim it
 BEFORE claiming any status or expressing satisfaction:
 
 1. IDENTIFY: What command proves this claim?
-2. RUN: Execute the FULL command (fresh, complete)
-3. READ: Full output, check exit code, count failures
-4. VERIFY: Does output confirm the claim?
+2. CHECK STATE: Record the tested tree/head/staged state, relevant environment,
+   command scope, and whether existing evidence still covers the claim
+3. RUN OR REUSE: Execute the named command when state changed or evidence is
+   stale; otherwise reuse the unchanged proof
+4. READ: Full output, check exit code, count failures
+5. VERIFY: Does output confirm the claim?
    - If NO: State actual status with evidence
    - If YES: State claim WITH evidence
-5. ONLY THEN: Make the claim
+6. ONLY THEN: Make the claim
 
 Skip any step = lying, not verifying
 ```

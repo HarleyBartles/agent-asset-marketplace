@@ -30,7 +30,7 @@ license: MIT
 ---
 ## Provenance
 
-This skill is a first-party authored derivation of `obra/superpowers` v6.2.0, released under the MIT License. The original upstream snapshot is retained in `codex-marketplace/plugins/superpowers-plus/skills/writing-plans/` for reference.
+This skill is a first-party authored derivation of `obra/superpowers` v6.3.0, released under the MIT License. The original upstream snapshot is retained in `codex-marketplace/plugins/superpowers-plus/skills/writing-plans/` for reference.
 
 # Writing Plans
 
@@ -110,6 +110,17 @@ A long plan with well-sliced, independently testable tasks is not a problem. The
 - "Run the tests and make sure they pass" - step
 - "Commit" - step
 
+## Recipient-relative planning
+
+Write each plan for the executor and stage that will receive it. Always make
+the observable goal, exclusions, seams, invariants, interfaces, authority,
+acceptance evidence, and task exits explicit. For Luna or lower-capability
+executors, pre-resolve consequential alternatives, name exact evidence homes
+and commands when known, and use finite decision tables where a choice would
+otherwise be rediscovered during execution. Exact implementation code is
+optional unless the code shape itself is the contract; specify behavior,
+interfaces, and evidence rather than pretending pseudocode is a guarantee.
+
 ## Plan Document Header
 
 **Every plan MUST start with this header:**
@@ -124,6 +135,9 @@ A long plan with well-sliced, independently testable tasks is not a problem. The
 **Architecture:** [2-3 sentences about approach]
 
 **Tech Stack:** [Key technologies/libraries]
+
+**Spec:** [path to the spec/design doc this plan implements — the plan
+argues from the spec, so the spec travels with it; executors read both]
 
 **Execution Strategy:** `subagent-driven-development` (default for independent tasks) — `executing-plans` (for tightly coupled/sequential tasks), `dispatching-parallel-agents` (for 2+ independent parallel tracks), or `manual` (for human-driven work). The planner picks the recommended lane.
 

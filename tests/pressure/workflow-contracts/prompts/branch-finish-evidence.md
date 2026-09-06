@@ -1,0 +1,1 @@
+The current branch has a clean committed head with fresh successful hook evidence and an already-authorized implementation PR route. Reuse valid proof, keep the PR Draft during local review, and do not rerun equivalent gates without a named reason.

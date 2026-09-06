@@ -29,7 +29,7 @@ license: MIT
 ---
 ## Provenance
 
-This skill is a first-party authored derivation of `obra/superpowers` v6.2.0, released under the MIT License. The original upstream snapshot is retained in `codex-marketplace/plugins/superpowers-plus/skills/test-driven-development/` for reference.
+This skill is a first-party authored derivation of `obra/superpowers` v6.3.0, released under the MIT License. The original upstream snapshot is retained in `codex-marketplace/plugins/superpowers-plus/skills/test-driven-development/` for reference.
 
 # Test-Driven Development (TDD)
 
@@ -43,16 +43,17 @@ Write the test first. Watch it fail. Write minimal code to pass.
 
 ## When to Use
 
-**Always:**
+**Always for independent behavior:**
 - New features
 - Bug fixes
 - Refactoring
 - Behavior changes
 
-**Exceptions (ask your human partner):**
+**Proportionate cases:**
 - Throwaway prototypes
 - Generated code
 - Configuration files
+- Pure glue with no independent behavior may rely on transitive coverage
 
 Thinking "skip TDD just this once"? Stop. That's rationalization.
 
@@ -312,7 +313,7 @@ Extract validation for multiple fields if needed.
 
 Before marking work complete:
 
-- [ ] Every new function/method has a test
+- [ ] Every new independent behavior has a meaningful test (pure glue may be covered transitively)
 - [ ] Watched each test fail before implementing
 - [ ] Each test failed for expected reason (feature missing, not typo)
 - [ ] Wrote minimal code to pass each test

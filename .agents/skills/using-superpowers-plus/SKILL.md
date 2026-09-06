@@ -57,7 +57,7 @@ license: MIT
 
 ## Provenance
 
-This skill is a first-party authored derivation of `obra/superpowers` v6.2.0, released under the MIT License. The original upstream snapshot is retained in `codex-marketplace/plugins/superpowers-plus/skills/using-superpowers-plus/` for reference.
+This skill is a first-party authored derivation of `obra/superpowers` v6.3.0, released under the MIT License. The original upstream snapshot is retained in `codex-marketplace/plugins/superpowers-plus/skills/using-superpowers-plus/` for reference.
 
 <SUBAGENT-STOP>
 If you were dispatched as a subagent to execute a specific task, ignore this skill.
@@ -109,20 +109,20 @@ This skill is the generic workflow router for any repo that installs the
 superpowers-plus skill pack. At session start, resume, or when the next action
 is unclear, run these steps in order and then hand off.
 
-1. **The invocation rule.** If a skill applies to the request, invoke it before
-   any response or action. You do not have a choice if a skill matches.
-2. **Inspect the environment.** Invoke `/inspecting-the-environment` if the
-   current environment is unknown or may have changed. Record the shell, repo,
-   branch, worktree, and available connectors. Do not route until the
-   environment is known.
-3. **Load doctrine.** Invoke `/base-doctrine` for cross-runtime invariants,
-   then load the repo-local doctrine from `.agents/doctrine/` by reading
-   `.agents/doctrine/AGENTS.md` for scope and the relevant topic files.
-   For how local doctrine and user instructions shape routing, see
-   [`references/repo-doctrine.md`](references/repo-doctrine.md).
-4. **Classify the request.** Pick the smallest sufficient mode from
-   [`references/bootstrap-routing.md`](references/bootstrap-routing.md).
-5. **Route and stop.** Hand off to the owning skill. Do not load additional
+1. **Classify the request.** Pick the smallest sufficient mode from
+   [`references/bootstrap-routing.md`](references/bootstrap-routing.md) using
+   user intent and immediately available context. Announce the route so the
+   human can override it.
+2. **Inspect only route-changing environment dimensions.** Invoke
+   `/inspecting-the-environment` when shell, repository, branch, worktree, or
+   connector facts can change the selected route or immediate action. Do not
+   perform a broad inventory merely because the skill is available.
+3. **Load only selected doctrine.** Invoke `/base-doctrine` for cross-runtime
+   invariants, then read only the repo-local doctrine and owning references
+   required by the selected route. For local-doctrine and user-instruction
+   priority rules, see [`references/repo-doctrine.md`](references/repo-doctrine.md).
+4. **Route and stop.** Hand off to the owning skill and stop reading once the
+   next lawful action is known. Do not load additional
    skills unless the current skill leaves a decision unresolved and the
    candidate skill directly owns it.
 

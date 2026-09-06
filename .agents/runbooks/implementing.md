@@ -12,18 +12,25 @@ Read these standards documents before writing any code:
 ## Skills to Invoke
 
 - Invoke `/repo-worker-base` before any marketplace work that touches generation, validation, or tooling
-- Invoke `/test-driven-development` before implementing any feature or bugfix
-- Invoke `/systematic-debugging` before proposing fixes for any bug, test failure, or unexpected behavior
+- Invoke `/test-driven-development` before implementing independent behavior;
+  pure glue may use transitive coverage when its focused contract is tested
+- Invoke `/systematic-debugging` when diagnosing a bug, test failure, or
+  unexpected behavior; do not turn diagnosis into a prerequisite for every
+  routine implementation
 - Invoke `/writing-skills` when creating or editing skills
 
 ## TDD Discipline
 
-When implementing a feature or bugfix:
+When implementing independent behavior:
 1. Write a failing test first
 2. Verify it fails for the right reason
 3. Implement the minimum code to make it pass
 4. Verify the test passes
-5. Run the full suite to check for regressions
+5. Run the proportionate regression gate for the touched surface
+
+For pure glue with no independent behavior, record the focused contract and
+the transitive or caller coverage that proves it; do not manufacture a
+one-test-per-function ceremony.
 
 Record TDD evidence in your report: the RED command and failure output, then the GREEN command and passing output.
 
@@ -31,15 +38,22 @@ Record TDD evidence in your report: the RED command and failure output, then the
 
 Before claiming work is done, verify:
 
-- **All validation passes:** `tools/run ci --check` for CI validation
+- **Current-state validation passes:** use the repository's canonical gate for
+  the exact tree/staged state being claimed. A normal commit uses the tracked
+  pre-commit gate; run `tools/run ci --check` separately only for uncommitted
+  verification, diagnosis, or explicit CI-parity evidence.
 - **Marketplace regeneration succeeds:** `tools/run marketplace --apply` for local rebuild
 - **Vendored output changed as intended:** If the task claims to update a vendored asset or marketplace bundle, verify the published vendored output itself changed on the PR head. An overlay, manifest edit, or generator tweak is not sufficient if the resulting vendored file still shows the stale behavior.
 - **Build succeeds:** All Python scripts run without errors
-- **No flaky tests:** Run validation multiple times to ensure consistent results
+- **Repeat only when justified:** rerun when the state changed, a check failed,
+  nondeterminism is suspected, the environment drifted, or a different claim
+  needs proof.
 - **Workspace clean:** No phantom files, no stray debug artifacts, no uncommitted scratch files
 - **INDEX.md regenerated:** If files were added or removed, run `tools/run mesh --apply`
 - **No secrets committed:** Check your diff for credentials, API keys, or connection strings
-- **Skills refreshed:** If skills were modified, run `tools/run installed-skills --apply` to refresh installed skills
+- **Generated skills refreshed:** If canonical marketplace skills were modified,
+  run `py -3 tools/run.py marketplace --apply`; never hand-edit downstream
+  installed copies to bypass source review.
 - **Runtime subagent profiles synced:** If `reviewer-*.md` profiles in the Devin Desktop agents search path or other subagent profiles were added or changed, run `py -3 tools/run.py runtime-agents --apply --allow-shared-checkout` to stage them in the main checkout. Restart the IDE before dispatching `run_subagent` with the new profiles.
 - **Cross-repo consumer safety:** If the work changes a vendored skill, prompt, or marketplace bundle, confirm the change is safe for sister or consumer repos that install from this marketplace. Replace repo-specific commands and paths with consumer-canonical alternatives and avoid assumptions that do not hold in the consumer's environment.
 - **Self-review against lens checklists:** Before handoff, read the relevant `reviewer-*.md` profiles in the Devin Desktop agents search path `## Checklist` profiles (at minimum `reviewer-skills`, `reviewer-marketplace`, and `reviewer-security` for the surfaces you touched). Run the checklist mechanically against your diff and fix anything you can. The goal is to make the reviewer loop a mechanical verification, not a bug-hunting exercise. This self-review is not a substitute for the `iterative-review` lens/strong dispatch; it only reduces the number of findings the reviewers must find.

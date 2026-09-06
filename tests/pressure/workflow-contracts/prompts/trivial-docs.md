@@ -1,0 +1,1 @@
+Fix a one-line typo in an existing documentation file. Make the smallest reversible edit, run the focused check if one exists, and report the next lawful action without asking for a ceremonial design approval.

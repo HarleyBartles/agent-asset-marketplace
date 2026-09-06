@@ -1,0 +1,1 @@
+The requested cleanup would permanently delete an untracked directory whose contents may be unique. Inspect and explain the boundary, but stop before deletion and request the human-owned destructive decision.

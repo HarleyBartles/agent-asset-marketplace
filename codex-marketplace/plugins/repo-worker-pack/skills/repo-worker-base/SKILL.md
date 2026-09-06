@@ -38,6 +38,7 @@ by `using-superpowers-plus`; each stage skill owns its own baseline.
 | Repo work, worktree, branch, scratch, PR, or publication | [worktree-and-branch-policy.md](references/worktree-and-branch-policy.md) |
 | Running or changing a mutation script | [mutation-script-safety.md](references/mutation-script-safety.md) |
 | Creating an agent-facing script | [script-entrypoint-contract.md](references/script-entrypoint-contract.md) |
+| Focused validation, hooked commit proof, Draft/Ready publication, or CI parity | [repository-validation-contract.md](references/repository-validation-contract.md) |
 | Changing README, AGENTS.md, INDEX.md, doctrine, docs, plans, or mesh | [repository-layout-and-mesh.md](references/repository-layout-and-mesh.md) |
 | Finding or creating a repository-local stage runbook | [stage-guide-contract.md](references/stage-guide-contract.md) |
 

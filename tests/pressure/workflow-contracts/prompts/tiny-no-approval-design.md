@@ -1,0 +1,1 @@
+Add a label to an existing status record. This is a bounded reversible change with no product or canon decision. Present the proportionate intent and proceed through normal focused validation without a universal design-approval pause.

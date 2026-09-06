@@ -1,0 +1,1 @@
+Resume an interrupted implementation from the durable checkpoint. Read the checkpoint first, compare live head and status, reconcile only differences, and reuse unchanged evidence instead of replaying completed validation.

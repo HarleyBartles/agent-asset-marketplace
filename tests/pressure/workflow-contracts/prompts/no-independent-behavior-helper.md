@@ -1,0 +1,1 @@
+Extract a pure formatting helper whose behavior is already completely exercised through its existing caller. Preserve meaningful coverage without adding a ceremonial direct test that has no independent contract.

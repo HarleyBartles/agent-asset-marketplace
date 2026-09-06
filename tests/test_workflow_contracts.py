@@ -1,0 +1,182 @@
+from __future__ import annotations
+
+import json
+import sys
+from pathlib import Path
+
+import pytest
+
+
+ROOT = Path(__file__).resolve().parents[1]
+SKILLS = ROOT / "codex-marketplace" / "plugins" / "superpowers-plus" / "skills"
+REPO_SKILLS = ROOT / "codex-marketplace" / "plugins" / "repo-worker-pack" / "skills"
+DOCS = ROOT / "tests" / "pressure" / "workflow-contracts"
+sys.path.insert(0, str(ROOT / "tools"))
+import run_workflow_pressure_campaign as campaign_runner  # noqa: E402
+import workflow_pressure_scan as pressure_scan  # noqa: E402
+
+
+def _read(path: Path) -> str:
+    return path.read_text(encoding="utf-8")
+
+
+class TestAuthorityBootstrapPortability:
+    def test_operating_contract_declares_shared_authority(self):
+        path = REPO_SKILLS / "base-doctrine" / "references" / "operating-contract.md"
+        text = _read(path)
+        lowered = text.lower()
+        assert "explicit human instruction" in lowered
+        assert "owning skill" in lowered
+        assert "reversible" in lowered
+
+    def test_bootstrap_classifies_before_loading_broad_doctrine(self):
+        text = _read(SKILLS / "using-superpowers-plus" / "SKILL.md")
+        lowered = text.lower()
+        assert lowered.index("classify the request") < lowered.index("load only selected doctrine")
+        assert "stop reading" in text.lower()
+
+    def test_portable_roots_do_not_encode_machine_or_repo_commands(self):
+        for path in (REPO_SKILLS / "base-doctrine" / "SKILL.md", REPO_SKILLS / "repo-worker-base" / "SKILL.md"):
+            text = _read(path)
+            assert "Z:\\" not in text
+            assert "tools/run.py" not in text
+
+    def test_owner_applicability_is_not_overridden_by_callers(self):
+        text = _read(REPO_SKILLS / "base-doctrine" / "references" / "operating-contract.md")
+        assert "cannot bypass" in text
+        assert "applicability" in text
+
+
+class TestValidationTddPublication:
+    def test_repository_validation_contract_defines_the_evidence_sequence(self):
+        text = _read(REPO_SKILLS / "repo-worker-base" / "references" / "repository-validation-contract.md")
+        for phrase in ("focused slice", "hooked", "Draft", "Ready", "state-bound"):
+            assert phrase in text
+
+    def test_verification_is_state_bound_not_message_bound(self):
+        text = _read(SKILLS / "verification-before-completion" / "SKILL.md").lower()
+        assert "tested state" in text
+        assert "this message" not in text
+
+    def test_branch_finish_reuses_valid_evidence_and_defaults_to_draft(self):
+        text = _read(SKILLS / "finishing-a-development-branch" / "SKILL.md").lower()
+        assert "reuse" in text and "evidence" in text
+        assert "draft" in text
+
+    def test_tdd_allows_transitive_coverage_for_glue(self):
+        text = _read(SKILLS / "test-driven-development" / "SKILL.md").lower()
+        assert "transitive" in text or "independent behavior" in text
+
+
+class TestPlanningDelegationReview:
+    def test_design_scales_to_uncertainty_without_universal_approval(self):
+        text = _read(SKILLS / "brainstorming" / "SKILL.md")
+        assert "Three Paths" in text
+        assert "ceremony scales" in text
+        assert "approval gate never does" not in text
+
+    def test_plans_are_recipient_relative(self):
+        text = _read(SKILLS / "writing-plans" / "SKILL.md").lower()
+        assert "recipient-relative" in text
+        assert "exact implementation code" in text
+
+    def test_review_can_make_evidence_backed_technical_rulings(self):
+        text = _read(SKILLS / "subagent-driven-development" / "SKILL.md")
+        assert "Ruling:" in text
+        assert "before" in text[text.index("Ruling:") :].lower()
+
+    def test_delegation_and_model_selection_remain_separate(self):
+        text = _read(SKILLS / "selecting-a-subagent" / "SKILL.md").lower()
+        assert "delegate" in text
+        assert "model" in text
+        assert "least" in text
+
+    def test_no_nested_reviewer_dispatch(self):
+        for name in (
+            "code-reviewer.md",
+            "implementer-prompt.md",
+            "re-review-prompt.md",
+            "task-reviewer-prompt.md",
+        ):
+            owner = "requesting-code-review" if name == "code-reviewer.md" else "subagent-driven-development"
+            path = SKILLS / owner / name
+            assert "do not dispatch subagents" in _read(path).lower()
+
+
+class TestRepositoryCallersAndPressure:
+    def test_workflow_inventory_covers_every_tracked_workflow(self):
+        inventory = _read(DOCS / "workflow-inventory.md")
+        workflows = list((ROOT / ".github" / "workflows").glob("*.y*ml"))
+        for workflow in workflows:
+            assert workflow.as_posix().replace(ROOT.as_posix() + "/", "") in inventory.replace("\\", "/")
+
+    def test_ci_parity_and_draft_anti_bypass_are_explicit(self):
+        text = _read(DOCS / "ci-parity.md").lower()
+        assert "canonical ci registry" in text
+        assert "draft" in text
+        assert "feature branch" in text
+
+    def test_scanner_defects_are_classified(self):
+        findings = json.loads(_read(DOCS / "pressure-scan.json"))
+        classified = _read(DOCS / "pressure-scan.md")
+        assert isinstance(findings, list)
+        assert all({"path", "line", "pattern", "context"} <= set(item) for item in findings)
+        assert "classification" in classified
+        assert all(label in classified for label in ("intended", "repo-local", "deferred"))
+        assert "| defect |" not in classified
+
+
+class TestEvaluationCampaign:
+    def test_campaign_schema_and_fixed_matrix(self):
+        campaign = json.loads(_read(DOCS / "campaign.json"))
+        campaign_runner.validate_campaign(campaign)
+        assert len(campaign["scenarios"]) == 13
+        assert all(s["external_effect"] == "none" for s in campaign["scenarios"])
+
+    def test_raw_runs_are_ignored_and_scores_are_durable(self):
+        result = __import__("subprocess").run(
+            ["git", "check-ignore", "tests/pressure/workflow-contracts/runs/probe/events.jsonl"],
+            cwd=ROOT,
+            capture_output=True,
+            text=True,
+        )
+        assert result.returncode == 0
+        assert "scores/<head>/<family>/<scenario-id>.json" in _read(
+            ROOT / ".agents" / "plans" / "2026-09-06-mark-373-operating-system.md"
+        )
+
+    def test_trial_argv_has_exact_controls_and_least_privilege(self, tmp_path: Path):
+        argv = campaign_runner.build_codex_argv(tmp_path, "gpt-5.6-luna", "read-only", tmp_path / "final.txt")
+        assert argv[:2] == ["codex", "exec"]
+        assert "--ephemeral" in argv and "--json" in argv and "--ignore-user-config" in argv
+        assert "--model" in argv and "gpt-5.6-luna" in argv
+        assert "--sandbox" in argv and "read-only" in argv
+        assert "features.apps=false" in argv and 'web_search="disabled"' in argv
+        with pytest.raises(ValueError):
+            campaign_runner.build_codex_argv(tmp_path, "gpt-5.6-luna", "danger-full-access", tmp_path / "final.txt")
+
+    def test_preflight_distinguishes_missing_harness_and_missing_capability(self):
+        missing = campaign_runner.preflight(resolve=lambda _: None)
+        assert missing["status"] == "harness-unavailable"
+
+        class Result:
+            returncode = 0
+            stdout = "Codex 1.0"
+            stderr = ""
+
+        def fake_run(argv, **kwargs):
+            return Result()
+
+        incompatible = campaign_runner.preflight(resolve=lambda _: "codex", run=fake_run)
+        assert incompatible["status"] == "harness-incompatible"
+
+    def test_metrics_use_unobservable_for_unprovable_values(self):
+        metrics = campaign_runner.extract_mechanical_metrics('{"type":"tool_call"}\n', "Need clarification?\n")
+        assert metrics["question_count"] == 1
+        assert metrics["reads_before_useful_action"] == "unobservable"
+
+    def test_scanner_is_candidate_only(self, tmp_path: Path):
+        path = tmp_path / "sample.md"
+        path.write_text("Run the full test suite.\n", encoding="utf-8")
+        hits = pressure_scan.scan_paths([path], tmp_path)
+        assert hits and hits[0]["pattern"] == "full-test-suite"

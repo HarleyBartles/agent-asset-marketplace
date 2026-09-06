@@ -276,62 +276,62 @@ Mechanically derivable counts should come from the runner/event parser where pos
 
 **Files:** `codex-marketplace/plugins/superpowers-plus/`, `.agents/docs/mark-373-superpowers-v6.3-rebase.md`, derivative provenance, checkpoint.
 
-- [ ] **1. Initialize checkpoint.** Record current branch/head/status; `last_completed_task: 0`; `next_task: 1`.
-- [ ] **2. Retrieve upstream by one fixed mechanism.** Resolve system temp with `py -3 -c "import tempfile; print(tempfile.gettempdir())"`; use `<system-temp>/mark-373-superpowers-upstream`; clone `https://github.com/obra/superpowers.git` with history sufficient for both pinned commits, e.g. `git clone --filter=blob:none <url> <temp-dir>`.
+- [x] **1. Initialize checkpoint.** Record current branch/head/status; `last_completed_task: 0`; `next_task: 1`.
+- [x] **2. Retrieve upstream by one fixed mechanism.** Resolve system temp with `py -3 -c "import tempfile; print(tempfile.gettempdir())"`; use `<system-temp>/mark-373-superpowers-upstream`; clone `https://github.com/obra/superpowers.git` with history sufficient for both pinned commits, e.g. `git clone --filter=blob:none <url> <temp-dir>`.
 
   Do not add an upstream remote to marketplace; do not merge/cherry-pick/subtree-import upstream history. Verify both objects with `git -C <temp-dir> cat-file -e <sha>^{commit}` and compare exactly `3dcbd5c4b48e02263fbf4a3c01e3fe4f81d584d9` -> `b36e0829c6d0140e93cfef2ca599b1b07d4a7797`. If pinned v6.3 cannot be retrieved or does not match the audited source, stop with that concrete blocker. Newer upstream is record-only.
 
-- [ ] **3. Write rebase record before source mutation.** Table columns: `upstream path | upstream change | existing first-party delta | disposition | canonical destination | validation`. Disposition: `accept-upstream`, `preserve-first-party`, `manual-merge`, or `not-applicable`.
-- [ ] **4. Classify every upstream-changed skill/path.** Pay particular attention to brainstorming scaling, SDD rulings/not-stalls, pre-dispatch conflict scan, microtask batching, reviewer evidence reuse, worktree cleanup, compression, testing guidance, Codex/event behavior. No changed path remains unclassified.
-- [ ] **5. Apply classified changes deliberately to canonical Superpowers+ source.** Temporary clone is read-only source material; manually merge/copy accepted content; preserve first-party owners where classified; update active provenance to v6.3.
-- [ ] **6. Run smallest existing marketplace/skill structural/regeneration checks proving rebased baseline well formed.** Record exact commands/results; no broad repo gate solely because Task 1 ended.
-- [ ] **7. Remove temporary clone** after durable record/source application no longer needs it.
-- [ ] **8. Green exit/checkpoint.** All changed paths classified; active provenance pinned v6.3; focused checks green; checkpoint -> Task 2.
+- [x] **3. Write rebase record before source mutation.** Table columns: `upstream path | upstream change | existing first-party delta | disposition | canonical destination | validation`. Disposition: `accept-upstream`, `preserve-first-party`, `manual-merge`, or `not-applicable`.
+- [x] **4. Classify every upstream-changed skill/path.** Pay particular attention to brainstorming scaling, SDD rulings/not-stalls, pre-dispatch conflict scan, microtask batching, reviewer evidence reuse, worktree cleanup, compression, testing guidance, Codex/event behavior. No changed path remains unclassified.
+- [x] **5. Apply classified changes deliberately to canonical Superpowers+ source.** Temporary clone is read-only source material; manually merge/copy accepted content; preserve first-party owners where classified; update active provenance to v6.3.
+- [x] **6. Run smallest existing marketplace/skill structural/regeneration checks proving rebased baseline well formed.** Record exact commands/results; no broad repo gate solely because Task 1 ended.
+- [x] **7. Remove temporary clone** after durable record/source application no longer needs it.
+- [x] **8. Green exit/checkpoint.** All changed paths classified; active provenance pinned v6.3; focused checks green; checkpoint -> Task 2.
 
 ## Task 2: Create staged RED tests, scanner, campaign fixture, and runner
 
 **Files:** `tests/test_workflow_contracts.py`, `tools/workflow_pressure_scan.py`, `tools/run_workflow_pressure_campaign.py`, `.gitignore`, `tests/pressure/workflow-contracts/**`, checkpoint.
 
-- [ ] **1. Create five fixed pytest classes.** Assert classify-before-bootstrap; authority; owner applicability; autonomy; state-bound evidence; focused/hooked/hosted proof; Draft-first publication; recipient-relative planning; evidence-backed adjudication; delegation/model separation; proportionate TDD; non-universal design approval; branch-finish evidence reuse; repo caller behavior; scanner/evaluation schemas; workflow inventory coverage; Draft-CI anti-bypass.
-- [ ] **2. Create pressure scanner.** Candidate patterns include approval waits, `full test suite`, repeated validation, every-function testing, universal startup reads, `MUST READ`, unconditional connector/skill calls, personal paths, repo commands in portable skills. JSON fields: `path`, `line`, `pattern`, `context`. Raw hits do not fail the scanner.
-- [ ] **3. Classify scan findings** as `defect`, `intended`, `repo-local`, or `deferred`; deferred requires reason/owner; unresolved `defect` blocks Task 6.
-- [ ] **4. Create campaign scenarios/prompts.** Include trivial docs correction; specified bug/focused RED; genuine ambiguity; wrong reviewer finding; authorized Draft PR dry-run; compaction resume; unauthorized destructive work; bounded parallel work; small reversible change; repo vs portable rule; tiny no-approval design case; branch finish with valid evidence; no-independent-behavior helper. Each declares expected authority, next action, evidence scope, one allowed sandbox (`read-only` or `workspace-write`), external-effect expectation (`none`), and rubric.
-- [ ] **5. Add `tests/pressure/workflow-contracts/runs/` to `.gitignore`.** Tests assert the raw path is ignored and committed score/result artifacts do not depend on raw files being Git-tracked.
-- [ ] **6. Implement runner exactly to the contracts above.** Add `TestEvaluationCampaign` unit tests for harness preflight/failure classes, argv construction, fixed sandbox allowlist, external-effect controls, model mapping, run schema, `unobservable` mode, model-unavailable handling, worktree isolation, SHA-256 capture, filters, and score schema. Use fake Codex process; no live model spend in Task 2.
-- [ ] **7. Capture initial RED:** `py -3 -m pytest tests/test_workflow_contracts.py -q`; write failing tests/classes and owning tasks to `red-baseline.md`.
-- [ ] **8. Run scanner/classify hits.**
-- [ ] **9. Green exit/checkpoint.** Fixture/runner/scanner/schema tests green; RED durably recorded; checkpoint -> Task 3.
+- [x] **1. Create five fixed pytest classes.** Assert classify-before-bootstrap; authority; owner applicability; autonomy; state-bound evidence; focused/hooked/hosted proof; Draft-first publication; recipient-relative planning; evidence-backed adjudication; delegation/model separation; proportionate TDD; non-universal design approval; branch-finish evidence reuse; repo caller behavior; scanner/evaluation schemas; workflow inventory coverage; Draft-CI anti-bypass.
+- [x] **2. Create pressure scanner.** Candidate patterns include approval waits, `full test suite`, repeated validation, every-function testing, universal startup reads, `MUST READ`, unconditional connector/skill calls, personal paths, repo commands in portable skills. JSON fields: `path`, `line`, `pattern`, `context`. Raw hits do not fail the scanner.
+- [x] **3. Classify scan findings** as `defect`, `intended`, `repo-local`, or `deferred`; deferred requires reason/owner; unresolved `defect` blocks Task 6.
+- [x] **4. Create campaign scenarios/prompts.** Include trivial docs correction; specified bug/focused RED; genuine ambiguity; wrong reviewer finding; authorized Draft PR dry-run; compaction resume; unauthorized destructive work; bounded parallel work; small reversible change; repo vs portable rule; tiny no-approval design case; branch finish with valid evidence; no-independent-behavior helper. Each declares expected authority, next action, evidence scope, one allowed sandbox (`read-only` or `workspace-write`), external-effect expectation (`none`), and rubric.
+- [x] **5. Add `tests/pressure/workflow-contracts/runs/` to `.gitignore`.** Tests assert the raw path is ignored and committed score/result artifacts do not depend on raw files being Git-tracked.
+- [x] **6. Implement runner exactly to the contracts above.** Add `TestEvaluationCampaign` unit tests for harness preflight/failure classes, argv construction, fixed sandbox allowlist, external-effect controls, model mapping, run schema, `unobservable` mode, model-unavailable handling, worktree isolation, SHA-256 capture, filters, and score schema. Use fake Codex process; no live model spend in Task 2.
+- [x] **7. Capture initial RED:** `py -3 -m pytest tests/test_workflow_contracts.py -q`; write failing tests/classes and owning tasks to `red-baseline.md`.
+- [x] **8. Run scanner/classify hits.**
+- [x] **9. Green exit/checkpoint.** Fixture/runner/scanner/schema tests green; RED durably recorded; checkpoint -> Task 3.
 
 ## Task 3: Establish authority, applicability, bounded reading, autonomy
 
-- [ ] Add `base-doctrine/references/operating-contract.md` with authority order, owner applicability, reversible-work autonomy, human stop boundary, model-agnostic scope.
-- [ ] Reduce `base-doctrine/SKILL.md` to bounded routing without eager reference loading.
-- [ ] Refactor `using-superpowers-plus`: classify first; inspect only environment dimensions that can change route; read only selected owner references; stop when next lawful action known.
-- [ ] Repair only scanner/source-demonstrated progressive-disclosure/portability defects in broad roots such as `connector-safety`/`writing-skills`.
-- [ ] Run `py -3 -m pytest tests/test_workflow_contracts.py::TestAuthorityBootstrapPortability -q`.
-- [ ] **Green exit/checkpoint:** owned class green; no unresolved Task-3 defect; checkpoint -> Task 4.
+- [x] Add `base-doctrine/references/operating-contract.md` with authority order, owner applicability, reversible-work autonomy, human stop boundary, model-agnostic scope.
+- [x] Reduce `base-doctrine/SKILL.md` to bounded routing without eager reference loading.
+- [x] Refactor `using-superpowers-plus`: classify first; inspect only environment dimensions that can change route; read only selected owner references; stop when next lawful action known.
+- [x] Repair only scanner/source-demonstrated progressive-disclosure/portability defects in broad roots such as `connector-safety`/`writing-skills`.
+- [x] Run `py -3 -m pytest tests/test_workflow_contracts.py::TestAuthorityBootstrapPortability -q`.
+- [x] **Green exit/checkpoint:** owned class green; no unresolved Task-3 defect; checkpoint -> Task 4.
 
 ## Task 4: Export validation, TDD, evidence reuse, Draft publication
 
-- [ ] Add `repo-worker-base/references/repository-validation-contract.md`: consumer supplies focused map, tracked gate, hosted workflow, Draft anti-bypass, state identifiers. Sequence: focused slice -> normal hooked commit -> reuse unchanged proof -> Draft local review/repair -> Ready on current local proof -> hosted confirmation.
-- [ ] Update `repo-worker-base` as bounded choreography owner; consumers own commands/domain evidence.
-- [ ] Make verification state-bound: tested state, command/scope, relevant environment, result; repeat only for change, failure, unresolved concern, nondeterminism, environment drift, or different claim.
-- [ ] Preserve RED/GREEN while removing every-function ceremony; trivial glue may be transitively covered.
-- [ ] Branch finish reuses valid proof and follows already-authorized publication route; destructive discard/unknown destination still requires human decision.
-- [ ] Readiness is recipient/stage-relative; authorized implementation PR defaults Draft; Ready is later evidence-backed transition.
-- [ ] Encode billed-CI contract and parity-drift semantics.
-- [ ] Run `py -3 -m pytest tests/test_workflow_contracts.py::TestValidationTddPublication -q`.
-- [ ] **Green exit/checkpoint:** class green; checkpoint -> Task 5.
+- [x] Add `repo-worker-base/references/repository-validation-contract.md`: consumer supplies focused map, tracked gate, hosted workflow, Draft anti-bypass, state identifiers. Sequence: focused slice -> normal hooked commit -> reuse unchanged proof -> Draft local review/repair -> Ready on current local proof -> hosted confirmation.
+- [x] Update `repo-worker-base` as bounded choreography owner; consumers own commands/domain evidence.
+- [x] Make verification state-bound: tested state, command/scope, relevant environment, result; repeat only for change, failure, unresolved concern, nondeterminism, environment drift, or different claim.
+- [x] Preserve RED/GREEN while removing every-function ceremony; trivial glue may be transitively covered.
+- [x] Branch finish reuses valid proof and follows already-authorized publication route; destructive discard/unknown destination still requires human decision.
+- [x] Readiness is recipient/stage-relative; authorized implementation PR defaults Draft; Ready is later evidence-backed transition.
+- [x] Encode billed-CI contract and parity-drift semantics.
+- [x] Run `py -3 -m pytest tests/test_workflow_contracts.py::TestValidationTddPublication -q`.
+- [x] **Green exit/checkpoint:** class green; checkpoint -> Task 5.
 
 ## Task 5: Make design, planning, delegation, review recipient-relative
 
-- [ ] Scale brainstorming to uncertainty/consequence; remove universal approval for clear bounded work while preserving human product/canon choices.
-- [ ] `writing-plans`: always specify observable goal, exclusions, seams, invariants, interfaces, authority, acceptance, task exits. For Luna/lower-capability executors, pre-resolve consequential alternatives, exact evidence homes/commands where known, and finite decision tables. Exact implementation code is optional unless code shape itself is the contract.
-- [ ] SDD may make evidence-backed technical ruling before churn cap; preserve ledger/no-silent-discard/reviewer loop; human owns unresolved requirements/authority.
-- [ ] Workflow/stage decides whether delegation is warranted; selector chooses least-escalated adequate profile/model/reasoning/context. Sol remains ordinary strong reviewer/orchestrator; Astra exceptional escalation, not renamed default.
-- [ ] Agent evaluation uses composed instruction stack, observable outcome rubric, per-scenario/per-model reporting, explicit trial-model vs judge provenance, no model self-score, and no hidden second judge invocation.
-- [ ] Run `py -3 -m pytest tests/test_workflow_contracts.py::TestPlanningDelegationReview -q`.
-- [ ] **Green exit/checkpoint:** class green; checkpoint -> Task 6.
+- [x] Scale brainstorming to uncertainty/consequence; remove universal approval for clear bounded work while preserving human product/canon choices.
+- [x] `writing-plans`: always specify observable goal, exclusions, seams, invariants, interfaces, authority, acceptance, task exits. For Luna/lower-capability executors, pre-resolve consequential alternatives, exact evidence homes/commands where known, and finite decision tables. Exact implementation code is optional unless code shape itself is the contract.
+- [x] SDD may make evidence-backed technical ruling before churn cap; preserve ledger/no-silent-discard/reviewer loop; human owns unresolved requirements/authority.
+- [x] Workflow/stage decides whether delegation is warranted; selector chooses least-escalated adequate profile/model/reasoning/context. Sol remains ordinary strong reviewer/orchestrator; Astra exceptional escalation, not renamed default.
+- [x] Agent evaluation uses composed instruction stack, observable outcome rubric, per-scenario/per-model reporting, explicit trial-model vs judge provenance, no model self-score, and no hidden second judge invocation.
+- [x] Run `py -3 -m pytest tests/test_workflow_contracts.py::TestPlanningDelegationReview -q`.
+- [x] **Green exit/checkpoint:** class green; checkpoint -> Task 6.
 
 ## Task 6: Align callers and prove complete workflow/CI parity
 
@@ -339,17 +339,17 @@ Mechanically derivable counts should come from the runner/event parser where pos
 
 At plan time the repo has one executable workflow `.github/workflows/marketplace-validation.yml` plus non-executable `INDEX.md`. Current expected facts: PR events `opened/synchronize/reopened/ready_for_review`; job guard `${{ github.event_name != 'pull_request' || github.event.pull_request.draft == false }}`; push `main` only; explicit `workflow_dispatch`; hosted command `tools/run ci --check`. Verify rather than assume this snapshot.
 
-- [ ] Remove ritual freshness/repetition and caller-strengthened conditional workflows; repo callers do not force `iterative-review`, full debugging, stronger TDD, or model routes beyond owner contracts.
-- [ ] Return Linear mutation authority to Linear owner; scope honesty remains. Bound fix-while-here to low-risk mechanically bounded touched-surface fixes, not new product/architecture/migration/validation campaigns.
-- [ ] **Enumerate complete workflow surface** into `workflow-inventory.md`: every tracked workflow YAML path; triggers; `workflow_call`; jobs; validation command/called workflow; Draft guard; branch push; manual/scheduled/dispatch behavior; paid-equivalent status.
-- [ ] Search repo for local reusable `uses: ./.github/workflows/...`, `workflow_call`, `workflow_run`, `pull_request_target`, `repository_dispatch`, `schedule`, scripted `gh workflow run`, Actions dispatch API calls, and other automation invoking equivalent CI. Classify each hit as executable caller, manual-only, docs/test fixture, or irrelevant. `TestRepositoryCallersAndPressure` must fail if a tracked workflow YAML is absent from inventory.
-- [ ] **Prove command parity** in `ci-parity.md`: hosted workflow/command, hook sequence, shared CI registry source, hosted `ci --check` target sequence, local `ci --apply` + `ci --check --diagnostics` target sequence, differences. Material mirror means both check paths use the same canonical CI registry after mechanical apply; diagnostics/fail-fast may differ; local may not omit hosted target.
-- [ ] **Prove anti-bypass from full inventory** with table `workflow/caller | event | branch/state | automatic? | paid-equivalent? | runs during Draft? | rationale`. Green requires Draft PR validation skipped; Ready may run; feature branch push cannot auto-run equivalent paid validation; explicit manual dispatch classified separately; no inventory row auto-runs equivalent paid validation during Draft iteration.
-- [ ] Run `py -3 -m pytest tests/test_validate_agent_mesh.py tests/test_review_preflight.py tests/test_review_preflight_extensions.py -q`, `py -3 tools/run.py mesh --check`, and `py -3 -m pytest tests/test_workflow_contracts.py::TestRepositoryCallersAndPressure -q`.
-- [ ] Run full `py -3 -m pytest tests/test_workflow_contracts.py -q` once. Repair earlier-owner failure at owner; rerun failing class; then full file once.
-- [ ] No unresolved scanner `defect` remains.
-- [ ] **Create hooked evaluation checkpoint commit.** Update plan/checkpoint through Task 6, stage intended Tasks 1-6, commit normally without `--no-verify`; do not duplicate full gate immediately before/after successful hook.
-- [ ] After commit, set checkpoint `evaluation_head` to `git rev-parse HEAD`; checkpoint -> Task 7.
+- [x] Remove ritual freshness/repetition and caller-strengthened conditional workflows; repo callers do not force `iterative-review`, full debugging, stronger TDD, or model routes beyond owner contracts.
+- [x] Return Linear mutation authority to Linear owner; scope honesty remains. Bound fix-while-here to low-risk mechanically bounded touched-surface fixes, not new product/architecture/migration/validation campaigns.
+- [x] **Enumerate complete workflow surface** into `workflow-inventory.md`: every tracked workflow YAML path; triggers; `workflow_call`; jobs; validation command/called workflow; Draft guard; branch push; manual/scheduled/dispatch behavior; paid-equivalent status.
+- [x] Search repo for local reusable `uses: ./.github/workflows/...`, `workflow_call`, `workflow_run`, `pull_request_target`, `repository_dispatch`, `schedule`, scripted `gh workflow run`, Actions dispatch API calls, and other automation invoking equivalent CI. Classify each hit as executable caller, manual-only, docs/test fixture, or irrelevant. `TestRepositoryCallersAndPressure` must fail if a tracked workflow YAML is absent from inventory.
+- [x] **Prove command parity** in `ci-parity.md`: hosted workflow/command, hook sequence, shared CI registry source, hosted `ci --check` target sequence, local `ci --apply` + `ci --check --diagnostics` target sequence, differences. Material mirror means both check paths use the same canonical CI registry after mechanical apply; diagnostics/fail-fast may differ; local may not omit hosted target.
+- [x] **Prove anti-bypass from full inventory** with table `workflow/caller | event | branch/state | automatic? | paid-equivalent? | runs during Draft? | rationale`. Green requires Draft PR validation skipped; Ready may run; feature branch push cannot auto-run equivalent paid validation; explicit manual dispatch classified separately; no inventory row auto-runs equivalent paid validation during Draft iteration.
+- [x] Run `py -3 -m pytest tests/test_validate_agent_mesh.py tests/test_review_preflight.py tests/test_review_preflight_extensions.py -q`, `py -3 tools/run.py mesh --check`, and `py -3 -m pytest tests/test_workflow_contracts.py::TestRepositoryCallersAndPressure -q`.
+- [x] Run full `py -3 -m pytest tests/test_workflow_contracts.py -q` once. Repair earlier-owner failure at owner; rerun failing class; then full file once.
+- [x] No unresolved scanner `defect` remains.
+- [x] **Create hooked evaluation checkpoint commit.** Update plan/checkpoint through Task 6, stage intended Tasks 1-6, commit normally without `--no-verify`; do not duplicate full gate immediately before/after successful hook.
+- [x] After commit, set checkpoint `evaluation_head` to `git rev-parse HEAD`; checkpoint -> Task 7.
 
 **Green exit:** full structural file green; workflow inventory complete; parity/anti-bypass green; no scanner defect; hooked evaluation checkpoint commit exists.
 

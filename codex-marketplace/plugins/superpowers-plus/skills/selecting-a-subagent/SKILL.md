@@ -52,6 +52,13 @@ then choose the least escalated route the runtime actually exposes.
 Routing chooses a route; it does not authorize delegation. Follow the current
 task, environment, and repository rules before calling a child-dispatch tool.
 
+The workflow or stage owner decides whether delegation is warranted at all.
+This selector is only the second decision: if delegation is warranted, choose
+the least-escalated adequate profile, model, reasoning, and context mode that
+the live runtime exposes. Do not delegate merely because a reviewer profile
+exists, and do not escalate to Astra when Sol or a less capable adequate route
+can satisfy the contract.
+
 ## Profiles
 
 | Live dispatch signature | Profile |

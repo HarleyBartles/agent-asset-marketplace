@@ -15,11 +15,17 @@ Use this runbook for the test commands and conventions in `agent-asset-marketpla
 
 ## Repo-specific guidance
 
-- Run the full test suite with `py -3 -m pytest` from the repo root.
+- Start with the focused test or target that proves the changed behavior. Use
+  the full `py -3 -m pytest` suite when the touched surface, plan, or final
+  gate requires repository-wide regression proof.
 - Run a single test file with `py -3 -m pytest tests/<file>.py -v`.
-- This repo uses test-driven development. Write a failing test before implementation code, then make it pass.
+- This repo uses proportionate test-driven development: write a failing test
+  before independent behavior, then make it pass; pure glue can rely on a
+  focused contract and transitive caller coverage.
 - Contract tests live under `tests/`. Marketplace generation correctness is proven by `tools/run marketplace --apply` and `tools/run ci --check`.
-- After changing source custody, adapters, plugin shapes, bundle manifests, source maps, provenance maps, or generated zips, run the full marketplace rebuild as the green-path proof.
+- After changing source custody, adapters, plugin shapes, bundle manifests,
+  source maps, provenance maps, or generated zips, run the full marketplace
+  rebuild as the green-path proof.
 
 ## Routing to skills
 

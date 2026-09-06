@@ -1,0 +1,1 @@
+The user has already authorized creating the implementation PR as Draft. Describe the exact Draft publication action you would take after local proof, but do not perform any external write in this trial and do not ask again whether Draft is authorized.

@@ -1,0 +1,596 @@
+[
+  {
+    "path": "codex-marketplace/plugins/superpowers-plus/skills/dispatching-parallel-agents/SKILL.md",
+    "line": 44,
+    "pattern": "must-read",
+    "context": "If you are invoking this skill from a plan, read the `Execution Strategy` in the plan header and **MUST READ:** `references/execution-lane-override.md` before dispatching. Announce that you are using `dispatching-parallel-agents` and see it through unless the human asks to change."
+  },
+  {
+    "path": "codex-marketplace/plugins/superpowers-plus/skills/dispatching-parallel-agents/SKILL.md",
+    "line": 116,
+    "pattern": "full-test-suite",
+    "context": "- Run full test suite"
+  },
+  {
+    "path": "codex-marketplace/plugins/superpowers-plus/skills/dispatching-parallel-agents/SKILL.md",
+    "line": 191,
+    "pattern": "full-test-suite",
+    "context": "**Integration:** All fixes independent, no conflicts, full suite green"
+  },
+  {
+    "path": "codex-marketplace/plugins/superpowers-plus/skills/dispatching-parallel-agents/SKILL.md",
+    "line": 198,
+    "pattern": "full-test-suite",
+    "context": "3. **Run full suite** - Verify all fixes work together"
+  },
+  {
+    "path": "codex-marketplace/plugins/superpowers-plus/skills/executing-plans/SKILL.md",
+    "line": 54,
+    "pattern": "must-read",
+    "context": "3. Note the `Execution Strategy` in the plan header. **MUST READ:** `references/execution-lane-override.md` and confirm the lane you are using is the right one: human explicit direction wins, then your own assessment, then the plan's recommendation"
+  },
+  {
+    "path": "codex-marketplace/plugins/superpowers-plus/skills/handoff-gates/SKILL.md",
+    "line": 76,
+    "pattern": "portable-repo-command",
+    "context": "- [ ] **Clean CI gate.** Do not run the repo's canonical CI immediately before a normal commit or immediately after a successful hooked commit. Stage the intended tree and commit; the pre-commit hook will materialize the staged snapshot, run `ci --apply`, stage the owned generated surfaces, and run `ci --check --diagnostics` before allowing the commit. Use `tools/run ci --check` only for an uncommitted verification, pipeline diagnosis, or explicit CI-parity work. Do not use `git commit --no-verify` to bypass the pre-commit hook."
+  },
+  {
+    "path": "codex-marketplace/plugins/superpowers-plus/skills/publishing-source/SKILL.md",
+    "line": 50,
+    "pattern": "portable-repo-command",
+    "context": "regenerate with `py -3 tools/run.py marketplace --apply` before publishing."
+  },
+  {
+    "path": "codex-marketplace/plugins/superpowers-plus/skills/subagent-driven-development/implementer-prompt.md",
+    "line": 52,
+    "pattern": "full-test-suite",
+    "context": "full suite once before committing, not after every edit."
+  },
+  {
+    "path": "codex-marketplace/plugins/superpowers-plus/skills/subagent-driven-development/SKILL.md",
+    "line": 200,
+    "pattern": "must-read",
+    "context": "`Execution Strategy` in the plan header. **MUST READ:**"
+  },
+  {
+    "path": "codex-marketplace/plugins/superpowers-plus/skills/using-git-worktrees/SKILL.md",
+    "line": 153,
+    "pattern": "portable-repo-command",
+    "context": "py -3 tools/run.py install-deps --apply"
+  },
+  {
+    "path": "codex-marketplace/plugins/superpowers-plus/skills/using-git-worktrees/SKILL.md",
+    "line": 156,
+    "pattern": "portable-repo-command",
+    "context": "If the repo has no `tools/run.py` command bus, or it does not own `install-deps`, use the bundled fallback. Detect the package-manager manifest and run the matching command:"
+  },
+  {
+    "path": "codex-marketplace/plugins/superpowers-plus/skills/using-git-worktrees/SKILL.md",
+    "line": 166,
+    "pattern": "portable-repo-command",
+    "context": "A repo that wants to own dependency installation can add an `install-deps` target to `tools/run.py`. If a recognised manifest is present but its required installer is missing, fail closed and do not claim the workspace is ready."
+  },
+  {
+    "path": "codex-marketplace/plugins/superpowers-plus/skills/using-superpowers-plus/SKILL.md",
+    "line": 67,
+    "pattern": "universal-startup-read",
+    "context": "At the start of every conversation, invoke `/using-superpowers-plus` first. It is the sole first-turn router."
+  },
+  {
+    "path": "codex-marketplace/plugins/superpowers-plus/skills/writing-plans/SKILL.md",
+    "line": 100,
+    "pattern": "must-read",
+    "context": "If you think \"this is a lot\" or \"the plan is huge\" while writing, you are at a scope sizing decision point. **MUST READ:** `references/plan-scope-sizing.md` and follow one of the three escape hatches before continuing."
+  },
+  {
+    "path": "codex-marketplace/plugins/superpowers-plus/skills/writing-roadmaps/SKILL.md",
+    "line": 65,
+    "pattern": "must-read",
+    "context": "If a plan in progress grows beyond one deliverable, stop writing. **MUST READ:** `references/plan-scope-sizing.md` and use escape hatch 3:"
+  },
+  {
+    "path": "codex-marketplace/plugins/superpowers-plus/skills/writing-skills/testing-skills-with-subagents.md",
+    "line": 15,
+    "pattern": "full-test-suite",
+    "context": "**Complete worked example:** See examples/CLAUDE_MD_TESTING.md for a full test campaign testing CLAUDE.md documentation variants."
+  },
+  {
+    "path": "codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/assets/reviewer-strong.md",
+    "line": 37,
+    "pattern": "portable-repo-command",
+    "context": "4. **Marketplace tooling correctness.** `new_plugin.py` and `tools/run.py` have correct exit codes, `mutating` tags, and `--check`/`--apply` semantics."
+  },
+  {
+    "path": "codex-marketplace/plugins/superpowers-plus/skills/iterative-review/references/node-closeout.md",
+    "line": 20,
+    "pattern": "portable-repo-command",
+    "context": "7. Run `py -3 tools/run.py mesh --apply` and `py -3 tools/run.py marketplace --apply`."
+  },
+  {
+    "path": "codex-marketplace/plugins/superpowers-plus/skills/iterative-review/references/node-closeout.md",
+    "line": 21,
+    "pattern": "portable-repo-command",
+    "context": "8. Run `py -3 tools/run.py ci --check`; do not proceed if it fails."
+  },
+  {
+    "path": "codex-marketplace/plugins/superpowers-plus/skills/iterative-review/references/node-finding-fix.md",
+    "line": 30,
+    "pattern": "portable-repo-command",
+    "context": "- Run the consumer's preflight (e.g., `py -3 tools/run.py ci --check`) and confirm it passes."
+  },
+  {
+    "path": "codex-marketplace/plugins/superpowers-plus/skills/iterative-review/references/node-preflight.md",
+    "line": 12,
+    "pattern": "portable-repo-command",
+    "context": "1. Run the consumer's canonical preflight on the branch; for this repo use `py -3 tools/run.py ci --check`."
+  },
+  {
+    "path": "codex-marketplace/plugins/superpowers-plus/skills/iterative-review/references/node-re-preflight.md",
+    "line": 4,
+    "pattern": "portable-repo-command",
+    "context": "Re-run the consumer's canonical preflight after a fix to catch newly introduced deterministic issues. This is the consumer's `ci`/`preflight` command (e.g. `py -3 tools/run.py ci --check`), not the `reviewer-fast` pre-lens. Do not re-run `reviewer-fast` in this node."
+  },
+  {
+    "path": "codex-marketplace/plugins/superpowers-plus/skills/iterative-review/references/node-ready.md",
+    "line": 12,
+    "pattern": "portable-repo-command",
+    "context": "1. Run `py -3 tools/run.py ci --check` (or the consumer's equivalent); do not proceed if it fails."
+  },
+  {
+    "path": "codex-marketplace/plugins/superpowers-plus/skills/iterative-review/references/review-log-implementer-brief-template.md",
+    "line": 25,
+    "pattern": "portable-repo-command",
+    "context": "- {Consumer preflight command to run, e.g., `py -3 tools/run.py ci --check`}"
+  },
+  {
+    "path": "codex-marketplace/plugins/superpowers-plus/skills/iterative-review/references/review-state-graph.md",
+    "line": 61,
+    "pattern": "portable-repo-command",
+    "context": "|| `re-preflight` | `tools/run.py ci --check` | [node-re-preflight.md](node-re-preflight.md) | Re-run the deterministic checks on the post-fix range. |"
+  },
+  {
+    "path": "codex-marketplace/plugins/superpowers-plus/skills/iterative-review/tests/test_select_lenses.py",
+    "line": 93,
+    "pattern": "portable-repo-command",
+    "context": "self.assertTrue(module._glob_match(\"tools/*.py\", \"tools/run.py\"))"
+  },
+  {
+    "path": "codex-marketplace/plugins/superpowers-plus/skills/iterative-review/tests/test_select_lenses.py",
+    "line": 95,
+    "pattern": "portable-repo-command",
+    "context": "self.assertFalse(module._glob_match(\"tools/*.py\", \"src/tools/run.py\"))"
+  },
+  {
+    "path": "codex-marketplace/plugins/superpowers-plus/skills/iterative-review/tests/test_select_lenses.py",
+    "line": 96,
+    "pattern": "portable-repo-command",
+    "context": "self.assertTrue(module._glob_match(\"**/tools/*.py\", \"src/tools/run.py\"))"
+  },
+  {
+    "path": "codex-marketplace/plugins/repo-worker-pack/skills/repo-worker-base/references/repository-validation-contract.md",
+    "line": 34,
+    "pattern": "every-function",
+    "context": "not require a ceremonial direct test for every function or method."
+  },
+  {
+    "path": "codex-marketplace/plugins/repo-worker-pack/skills/repo-standards/references/ci-validation-pipeline.md",
+    "line": 3,
+    "pattern": "portable-repo-command",
+    "context": "Every repo that uses `repo-standards` should have a `tools/run.py` task runner"
+  },
+  {
+    "path": "codex-marketplace/plugins/repo-worker-pack/skills/repo-standards/references/ci-validation-pipeline.md",
+    "line": 15,
+    "pattern": "portable-repo-command",
+    "context": "## Preflight: `tools/run.py ci --check`"
+  },
+  {
+    "path": "codex-marketplace/plugins/repo-worker-pack/skills/repo-standards/references/ci-validation-pipeline.md",
+    "line": 32,
+    "pattern": "portable-repo-command",
+    "context": "3. runs `py -3 tools/run.py ci --apply --allow-shared-checkout`;"
+  },
+  {
+    "path": "codex-marketplace/plugins/repo-worker-pack/skills/repo-standards/references/ci-validation-pipeline.md",
+    "line": 34,
+    "pattern": "portable-repo-command",
+    "context": "5. runs `py -3 tools/run.py ci --check --diagnostics` on the exact staged snapshot;"
+  },
+  {
+    "path": "codex-marketplace/plugins/repo-worker-pack/skills/repo-standards/references/ci-validation-pipeline.md",
+    "line": 50,
+    "pattern": "portable-repo-command",
+    "context": "- lint -> `py -3 tools/run.py lint --apply`"
+  },
+  {
+    "path": "codex-marketplace/plugins/repo-worker-pack/skills/repo-standards/references/ci-validation-pipeline.md",
+    "line": 51,
+    "pattern": "portable-repo-command",
+    "context": "- repo shape -> `py -3 tools/run.py repo-standards --apply`"
+  },
+  {
+    "path": "codex-marketplace/plugins/repo-worker-pack/skills/repo-standards/references/ci-validation-pipeline.md",
+    "line": 52,
+    "pattern": "portable-repo-command",
+    "context": "- agent mesh -> `py -3 tools/run.py mesh --apply`"
+  },
+  {
+    "path": "codex-marketplace/plugins/repo-worker-pack/skills/repo-standards/references/ci-validation-pipeline.md",
+    "line": 53,
+    "pattern": "portable-repo-command",
+    "context": "- marketplace drift -> `py -3 tools/run.py marketplace --apply`"
+  },
+  {
+    "path": "codex-marketplace/plugins/repo-worker-pack/skills/repo-standards/references/ci-validation-pipeline.md",
+    "line": 54,
+    "pattern": "portable-repo-command",
+    "context": "- archive links -> `py -3 tools/run.py archive-links --apply`"
+  },
+  {
+    "path": "codex-marketplace/plugins/repo-worker-pack/skills/repo-standards/references/ci-validation-pipeline.md",
+    "line": 59,
+    "pattern": "portable-repo-command",
+    "context": "- `py -3 tools/run.py lint --check`"
+  },
+  {
+    "path": "codex-marketplace/plugins/repo-worker-pack/skills/repo-standards/references/ci-validation-pipeline.md",
+    "line": 60,
+    "pattern": "portable-repo-command",
+    "context": "- `py -3 tools/run.py repo-standards --check`"
+  },
+  {
+    "path": "codex-marketplace/plugins/repo-worker-pack/skills/repo-standards/references/ci-validation-pipeline.md",
+    "line": 61,
+    "pattern": "portable-repo-command",
+    "context": "- `py -3 tools/run.py mesh --check`"
+  },
+  {
+    "path": "codex-marketplace/plugins/repo-worker-pack/skills/repo-standards/references/ci-validation-pipeline.md",
+    "line": 62,
+    "pattern": "portable-repo-command",
+    "context": "- `py -3 tools/run.py marketplace --check`"
+  },
+  {
+    "path": "codex-marketplace/plugins/repo-worker-pack/skills/repo-standards/references/ci-validation-pipeline.md",
+    "line": 63,
+    "pattern": "portable-repo-command",
+    "context": "- `py -3 tools/run.py archive-links --check`"
+  },
+  {
+    "path": "codex-marketplace/plugins/repo-worker-pack/skills/repo-standards/references/ci-validation-pipeline.md",
+    "line": 65,
+    "pattern": "portable-repo-command",
+    "context": "Do not run the full `py -3 tools/run.py ci --check` immediately before a normal"
+  },
+  {
+    "path": "codex-marketplace/plugins/repo-worker-pack/skills/repo-standards/references/ci-validation-pipeline.md",
+    "line": 71,
+    "pattern": "portable-repo-command",
+    "context": "Run the complete `py -3 tools/run.py ci --check` only in these cases:"
+  },
+  {
+    "path": "codex-marketplace/plugins/repo-worker-pack/skills/repo-standards/references/ci-validation-pipeline.md",
+    "line": 79,
+    "pattern": "portable-repo-command",
+    "context": "- `py -3 tools/run.py ci --apply` (apply mechanical surfaces)"
+  },
+  {
+    "path": "codex-marketplace/plugins/repo-worker-pack/skills/repo-standards/references/ci-validation-pipeline.md",
+    "line": 80,
+    "pattern": "portable-repo-command",
+    "context": "- `py -3 tools/run.py ci --check --diagnostics` (pre-commit style, multi-failure)"
+  },
+  {
+    "path": "codex-marketplace/plugins/repo-worker-pack/skills/repo-standards/references/ci-validation-pipeline.md",
+    "line": 81,
+    "pattern": "portable-repo-command",
+    "context": "- `py -3 tools/run.py ci --check` (CI parity, fail-fast)"
+  },
+  {
+    "path": "codex-marketplace/plugins/repo-worker-pack/skills/repo-standards/references/repository-shape-manifest.json",
+    "line": 21,
+    "pattern": "portable-repo-command",
+    "context": "\"path\": \"tools/run.py\","
+  },
+  {
+    "path": "codex-marketplace/plugins/repo-worker-pack/skills/repo-standards/references/repository-shape-standard.md",
+    "line": 9,
+    "pattern": "portable-repo-command",
+    "context": "- `tools/run.py` - the repo's canonical `ci` (and other) task runner. See [ci-validation-pipeline.md](ci-validation-pipeline.md) for the contract."
+  },
+  {
+    "path": "codex-marketplace/plugins/repo-worker-pack/skills/repo-standards/references/repository-shape-standard.md",
+    "line": 10,
+    "pattern": "portable-repo-command",
+    "context": "- `.git/hooks/pre-commit` wired to `tools/run.py ci --apply` followed by `tools/run.py ci --check --diagnostics`. The hook is validated by contract (it must be executable on POSIX; it must carry a `#!` shebang on Windows/NT where the executable bit is not reliably represented; it must run `tools/run.py ci --apply` and `tools/run.py ci --check --diagnostics`; it must preserve and restore unstaged/untracked work; it must enable `errexit`, `nounset`, and `pipefail`), not by byte-for-byte comparison to a template."
+  },
+  {
+    "path": "codex-marketplace/plugins/repo-worker-pack/skills/repo-standards/references/skill-script-contract-validator.md",
+    "line": 13,
+    "pattern": "portable-repo-command",
+    "context": "Run it as part of `tools/run repo-standards --check` or `tools/run ci --check`. CI will fail if any non-deferred script fails."
+  },
+  {
+    "path": "codex-marketplace/plugins/repo-worker-pack/skills/repo-standards/scripts/repo_standards.py",
+    "line": 202,
+    "pattern": "portable-repo-command",
+    "context": "apply_targets = (\"tools/run.py ci --apply\", \"tools/run.py all --apply\")"
+  },
+  {
+    "path": "codex-marketplace/plugins/repo-worker-pack/skills/repo-standards/scripts/repo_standards.py",
+    "line": 203,
+    "pattern": "portable-repo-command",
+    "context": "check_targets = (\"tools/run.py ci --check --diagnostics\", \"tools/run.py ci --check\")"
+  },
+  {
+    "path": "codex-marketplace/plugins/repo-worker-pack/skills/repo-standards/scripts/repo_standards.py",
+    "line": 217,
+    "pattern": "portable-repo-command",
+    "context": "findings.append(\"pre-commit hook must run 'tools/run.py ci --apply' (or 'all --apply')\")"
+  },
+  {
+    "path": "codex-marketplace/plugins/repo-worker-pack/skills/repo-standards/scripts/repo_standards.py",
+    "line": 219,
+    "pattern": "portable-repo-command",
+    "context": "findings.append(\"pre-commit hook must run 'tools/run.py ci --check --diagnostics' (or 'ci --check')\")"
+  },
+  {
+    "path": "codex-marketplace/plugins/repo-worker-pack/skills/repo-standards/templates/pr.md",
+    "line": 32,
+    "pattern": "portable-repo-command",
+    "context": "- For a normal commit, stage the intended tree and let the tracked pre-commit hook run `tools/run.py ci --apply` and then `tools/run.py ci --check --diagnostics` on the exact staged snapshot. Do not run the full `ci --check` before a normal commit."
+  },
+  {
+    "path": ".agents/runbooks/code-review.md",
+    "line": 21,
+    "pattern": "portable-repo-command",
+    "context": "If marketplace configuration or source custody changed, regenerate with `tools/run marketplace --apply` and validate with `tools/run ci --check`."
+  },
+  {
+    "path": ".agents/runbooks/code-review.md",
+    "line": 28,
+    "pattern": "portable-repo-command",
+    "context": "- Regenerate `INDEX.md` files via `tools/run mesh --apply` when files are added or removed."
+  },
+  {
+    "path": ".agents/runbooks/code-review.md",
+    "line": 40,
+    "pattern": "portable-repo-command",
+    "context": "- Marketplace regeneration: `tools/run marketplace --apply` when source custody changes."
+  },
+  {
+    "path": ".agents/runbooks/code-review.md",
+    "line": 41,
+    "pattern": "portable-repo-command",
+    "context": "- CI validation: `tools/run ci --check`."
+  },
+  {
+    "path": ".agents/runbooks/code-review.md",
+    "line": 42,
+    "pattern": "portable-repo-command",
+    "context": "- Skill installation: `tools/run installed-skills --apply` when skills change."
+  },
+  {
+    "path": ".agents/runbooks/code-review.md",
+    "line": 43,
+    "pattern": "portable-repo-command",
+    "context": "- Index mesh: `tools/run mesh --apply` when files are added or removed."
+  },
+  {
+    "path": ".agents/runbooks/completing-plans.md",
+    "line": 56,
+    "pattern": "portable-repo-command",
+    "context": "py -3 tools/run.py mesh --apply"
+  },
+  {
+    "path": ".agents/runbooks/completing-plans.md",
+    "line": 57,
+    "pattern": "portable-repo-command",
+    "context": "py -3 tools/run.py marketplace --apply"
+  },
+  {
+    "path": ".agents/runbooks/completing-plans.md",
+    "line": 60,
+    "pattern": "portable-repo-command",
+    "context": "py -3 tools/run.py ci --check"
+  },
+  {
+    "path": ".agents/runbooks/implementing.md",
+    "line": 43,
+    "pattern": "portable-repo-command",
+    "context": "pre-commit gate; run `tools/run ci --check` separately only for uncommitted"
+  },
+  {
+    "path": ".agents/runbooks/implementing.md",
+    "line": 45,
+    "pattern": "portable-repo-command",
+    "context": "- **Marketplace regeneration succeeds:** `tools/run marketplace --apply` for local rebuild"
+  },
+  {
+    "path": ".agents/runbooks/implementing.md",
+    "line": 52,
+    "pattern": "portable-repo-command",
+    "context": "- **INDEX.md regenerated:** If files were added or removed, run `tools/run mesh --apply`"
+  },
+  {
+    "path": ".agents/runbooks/implementing.md",
+    "line": 55,
+    "pattern": "portable-repo-command",
+    "context": "run `py -3 tools/run.py marketplace --apply`; never hand-edit downstream"
+  },
+  {
+    "path": ".agents/runbooks/implementing.md",
+    "line": 57,
+    "pattern": "portable-repo-command",
+    "context": "- **Runtime subagent profiles synced:** If `reviewer-*.md` profiles in the Devin Desktop agents search path or other subagent profiles were added or changed, run `py -3 tools/run.py runtime-agents --apply --allow-shared-checkout` to stage them in the main checkout. Restart the IDE before dispatching `run_subagent` with the new profiles."
+  },
+  {
+    "path": ".agents/runbooks/marketplace-generation.md",
+    "line": 14,
+    "pattern": "portable-repo-command",
+    "context": "tools/run marketplace --apply"
+  },
+  {
+    "path": ".agents/runbooks/marketplace-generation.md",
+    "line": 67,
+    "pattern": "portable-repo-command",
+    "context": "tools/run ci --check"
+  },
+  {
+    "path": ".agents/runbooks/marketplace-generation.md",
+    "line": 80,
+    "pattern": "portable-repo-command",
+    "context": "tools/run installed-skills --apply"
+  },
+  {
+    "path": ".agents/runbooks/marketplace-generation.md",
+    "line": 92,
+    "pattern": "portable-repo-command",
+    "context": "tools/run installed-skills --check"
+  },
+  {
+    "path": ".agents/runbooks/marketplace-generation.md",
+    "line": 97,
+    "pattern": "portable-repo-command",
+    "context": "tools/run mesh --apply"
+  },
+  {
+    "path": ".agents/runbooks/marketplace-generation.md",
+    "line": 109,
+    "pattern": "portable-repo-command",
+    "context": "tools/run mesh --check"
+  },
+  {
+    "path": ".agents/runbooks/marketplace-generation.md",
+    "line": 114,
+    "pattern": "portable-repo-command",
+    "context": "You must run the full marketplace regeneration (`tools/run marketplace --apply`) after any change to:"
+  },
+  {
+    "path": ".agents/runbooks/marketplace-generation.md",
+    "line": 127,
+    "pattern": "portable-repo-command",
+    "context": "1. **All validation checks pass** \u2014 `tools/run marketplace --apply` runs validation automatically"
+  },
+  {
+    "path": ".agents/runbooks/marketplace-generation.md",
+    "line": 129,
+    "pattern": "portable-repo-command",
+    "context": "3. **Installed skills are current** \u2014 `tools/run installed-skills --check` passes"
+  },
+  {
+    "path": ".agents/runbooks/marketplace-generation.md",
+    "line": 130,
+    "pattern": "portable-repo-command",
+    "context": "4. **Index mesh is current** \u2014 `tools/run mesh --check` passes"
+  },
+  {
+    "path": ".agents/runbooks/planning.md",
+    "line": 51,
+    "pattern": "portable-repo-command",
+    "context": "1. **SDD task ordering.** For plans executed with `subagent-driven-development`, source and adapter/overlay edits must be complete before any `tools/run * --apply` regeneration step. `tools/run heal --check` must appear after overlay edits and before regeneration. Do not run `tools/run ci --check` immediately before a normal commit or immediately after a successful hooked commit; the plan should stage the intended tree, commit, and let the pre-commit hook materialize the staged snapshot, run `ci --apply`, and run `ci --check --diagnostics`. Do not use `git commit --no-verify` to bypass the hook. Each task should include a final sub-step for the implementer to mark the task's own plan steps `[x]`."
+  },
+  {
+    "path": ".agents/runbooks/planning.md",
+    "line": 52,
+    "pattern": "portable-repo-command",
+    "context": "2. **Marketplace regeneration completeness.** If the plan adds or modifies skills, verify the plan includes marketplace regeneration steps. Skills must be regenerated via `tools/run marketplace --apply` to project changes into all packs."
+  },
+  {
+    "path": ".agents/runbooks/planning.md",
+    "line": 53,
+    "pattern": "portable-repo-command",
+    "context": "3. **Validation command correctness.** Verify the plan uses the correct validation commands: `tools/run ci --check` for CI, `tools/run marketplace --apply` for local rebuild."
+  },
+  {
+    "path": ".agents/runbooks/planning.md",
+    "line": 68,
+    "pattern": "portable-repo-command",
+    "context": "- the plan does not hardcode this repo's `tools/run *` targets or paths that consumers do not share;"
+  },
+  {
+    "path": ".agents/runbooks/planning.md",
+    "line": 69,
+    "pattern": "portable-repo-command",
+    "context": "- the plan names the consumer's canonical commands (e.g. `tools/run.py ci --check` in this repo or the consumer's `tools/run.py skills --apply`);"
+  },
+  {
+    "path": ".agents/runbooks/pr.md",
+    "line": 34,
+    "pattern": "portable-repo-command",
+    "context": "- Consumer repos substitute their own preflight command for `tools/run ci --check`; the lifecycle (draft while WIP, ready when preflight is green) is identical."
+  },
+  {
+    "path": ".agents/runbooks/pr.md",
+    "line": 40,
+    "pattern": "portable-repo-command",
+    "context": "- `py -3 tools/run.py review-preflight --check`"
+  },
+  {
+    "path": ".agents/runbooks/pr.md",
+    "line": 41,
+    "pattern": "portable-repo-command",
+    "context": "- If the pre-commit hook is not available, run `py -3 tools/run.py ci --check` only as an explicit CI-parity or diagnostic step."
+  },
+  {
+    "path": ".agents/runbooks/pr.md",
+    "line": 57,
+    "pattern": "portable-repo-command",
+    "context": "- Do not run `py -3 tools/run.py ci --check` immediately before a normal commit or immediately after a successful hooked commit. It is a complete CI/PR gate, not a pre-pre-commit step. The pre-commit hook already materializes the staged snapshot, runs `ci --apply`, stages only the owned generated surfaces, and runs `ci --check --diagnostics`; running `ci --check` manually first is wasteful."
+  },
+  {
+    "path": ".agents/runbooks/pr.md",
+    "line": 59,
+    "pattern": "portable-repo-command",
+    "context": "- If the pre-commit hook is not installed, run `py -3 tools/run.py ci --apply` manually before committing. Then commit normally; the hook (or `ci --check --diagnostics` if the hook is absent) proves the staged tree. Do not run `ci --check` separately unless no commit follows."
+  },
+  {
+    "path": ".agents/runbooks/pr.md",
+    "line": 60,
+    "pattern": "portable-repo-command",
+    "context": "- Only run `py -3 tools/run.py ci --check` deliberately for uncommitted verification, pipeline diagnosis, or explicit CI-parity work."
+  },
+  {
+    "path": ".agents/runbooks/pr.md",
+    "line": 61,
+    "pattern": "portable-repo-command",
+    "context": "- `py -3 tools/run.py marketplace --apply` regenerates derived surfaces; stage any generated changes before committing."
+  },
+  {
+    "path": ".agents/runbooks/repo-doctrine.md",
+    "line": 30,
+    "pattern": "portable-repo-command",
+    "context": "Canonical validation and regeneration commands are `py -3 tools/run.py ci --check` and `py -3 tools/run.py marketplace --apply`."
+  },
+  {
+    "path": ".agents/runbooks/skill-authoring.md",
+    "line": 49,
+    "pattern": "portable-repo-command",
+    "context": "py -3 tools/run.py marketplace --apply"
+  },
+  {
+    "path": ".agents/runbooks/skill-authoring.md",
+    "line": 55,
+    "pattern": "portable-repo-command",
+    "context": "py -3 tools/run.py installed-skills --apply"
+  },
+  {
+    "path": ".agents/runbooks/skill-authoring.md",
+    "line": 61,
+    "pattern": "portable-repo-command",
+    "context": "py -3 tools/run.py ci --check"
+  },
+  {
+    "path": ".agents/runbooks/skill-authoring.md",
+    "line": 78,
+    "pattern": "portable-repo-command",
+    "context": "6. Apply marketplace and installed-skills changes with `py -3 tools/run.py marketplace --apply`."
+  },
+  {
+    "path": ".agents/runbooks/testing.md",
+    "line": 25,
+    "pattern": "portable-repo-command",
+    "context": "- Contract tests live under `tests/`. Marketplace generation correctness is proven by `tools/run marketplace --apply` and `tools/run ci --check`."
+  }
+]

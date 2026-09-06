@@ -1,0 +1,1 @@
+A reviewer claims a changed parser is unsafe, but the claim is contradicted by the existing contract test and call sites. Verify the claim, record an evidence-backed technical ruling, and do not dispatch another reviewer.

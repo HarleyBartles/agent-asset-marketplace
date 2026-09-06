@@ -42,6 +42,7 @@ Use this skill as the cross-runtime doctrine store for cross-project operating i
 - Tool, memory, connector, repository-route, source-availability, or evidence-route claims: read `references/tool-surface-and-evidence.md`.
 - Deciding where durable doctrine belongs, canonical source truth, installed-skill versus repo-source boundaries, or agent asset marketplace routing: read `references/durable-doctrine-routing.md`.
 - Bounded skill/reference reading, anti-loop stop rules, or "how much should I read before acting" questions: read `references/bounded-read-loop.md`.
+- Shared authority, owner applicability, reversible autonomy, human stop boundaries, or model-neutral operating semantics: read `references/operating-contract.md`.
 - Failure, correction, and trust posture: read `references/failure-and-trust-posture.md`.
 - Worker and subagent continuity, dispatch lifecycle, or evidence-based stall handling: read `references/worker-continuity.md`.
 - Output shape, reserved artifact forms, YAML-vs-non-YAML conflicts, worker-copy attention guards, or artifact authority: read `references/output-artifact-shape.md`.
@@ -50,7 +51,11 @@ Use this skill as the cross-runtime doctrine store for cross-project operating i
 
 ## Core control-plane rule
 
-This entrypoint should classify the kind of base doctrine needed and point to the smallest relevant reference. Do not perform source-route selection, connector inspection, repository lookup, memory claims, or tool-surface diagnosis from `SKILL.md` alone.
+This entrypoint should classify the kind of base doctrine needed and point to
+the smallest relevant reference. Do not perform source-route selection,
+connector inspection, repository lookup, memory claims, or tool-surface
+diagnosis from `SKILL.md` alone. Classification precedes broad environment or
+doctrine loading; stop reading once the next lawful action is known.
 
 For ordinary chat, acknowledgements, pings, or lightweight meta that does not require source or tool evidence, answer directly after any project bootstrap that was already required by the active project context. Connector presence, file presence, runtime tool availability, or plugin availability is not itself a reason to load a source-route reference.
 
