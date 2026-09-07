@@ -40,5 +40,5 @@
     "runs_are_ignored": true,
     "api_reasoning_mode": "unobservable"
   },
-  "availability_policy": "model-unavailable is reserved for model capability absence after preflight; this run stopped before trial classification because the read-only smoke was harness-blocked."
+  "availability_policy": "model-unavailable is reserved for model capability absence after preflight; this run stopped before trial classification because preflight found a non-empty MCP/plugin inventory before smoke."
 }

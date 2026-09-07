@@ -17,6 +17,15 @@
       "optional": false
     },
     {
+      "id": "repo-standards-commands",
+      "path": ".agents/doctrine/repo-standards-commands.json",
+      "kind": "command-declaration",
+      "source": null,
+      "scaffold": null,
+      "optional": false,
+      "required_with": "pre-commit-hook"
+    },
+    {
       "id": "tools-shared-checkout",
       "path": "tools/shared_checkout.py",
       "kind": "file",

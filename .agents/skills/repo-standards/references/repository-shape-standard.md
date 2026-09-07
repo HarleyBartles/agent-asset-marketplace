@@ -6,6 +6,7 @@ This file describes the surfaces `repo-standards` checks and can apply. It is th
 
 - `.agents/plugins/marketplace-source` as a git submodule pointing at the marketplace source.
 - `.agents/plugins/marketplace.json` with `repo.local_skills` configured.
+- `.agents/doctrine/repo-standards-commands.json` declaring the consumer's canonical `apply` and `check` command vectors whenever the `pre-commit-hook` surface is enabled. `repo-standards` validates this declaration but does not invent repository-specific commands; a consumer must supply it before `--apply` can install or repair the hook. Repositories that explicitly except the hook also except this dependent declaration.
 - The consumer's canonical validation capability, declared in its local repository guidance. See [ci-validation-pipeline.md](ci-validation-pipeline.md) for the contract.
 - `.git/hooks/pre-commit` wired to the consumer's canonical apply capability followed by its canonical check capability. The hook is validated by contract (it must be executable on POSIX; it must carry a `#!` shebang on Windows/NT where the executable bit is not reliably represented; it must apply and check the exact staged snapshot; it must preserve and restore unstaged/untracked work; it must enable `errexit`, `nounset`, and `pipefail`), not by byte-for-byte comparison to a template.
 - `.agents/doctrine/repo-runbook-policy.md` mapping the repo to `repo-standards`.

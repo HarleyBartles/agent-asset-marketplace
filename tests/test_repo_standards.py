@@ -515,7 +515,7 @@ def test_repo_standards_apply_force_overwrites_drifted_contributing(tmp_path: Pa
         "- root-agents-md\n"
         "- root-gitignore\n"
     )
-    policy_dir = repo / ".agents" / "docs"
+    policy_dir = repo / ".agents" / "doctrine"
     policy_dir.mkdir(parents=True)
     (policy_dir / "repo-runbook-policy.md").write_text(
         f"# Repo runbook policy\n\n## Exceptions\n\n{exceptions}",
@@ -571,6 +571,14 @@ def test_repo_standards_allow_shared_checkout_combines_with_apply(tmp_path: Path
     repo.mkdir()
     _init_git_repo_with_commit(repo)
     subprocess.run(["git", "branch", "-M", "main"], cwd=repo, check=True)
+
+    command_dir = repo / ".agents" / "doctrine"
+    command_dir.mkdir(parents=True)
+    (command_dir / "repo-standards-commands.json").write_text(
+        '{"apply":["@python","tools/run.py","ci","--apply"],'
+        '"check":["@python","tools/run.py","ci","--check","--diagnostics"]}\n',
+        encoding="utf-8",
+    )
 
     result = subprocess.run(
         [sys.executable, str(REPO_STANDARDS), "--apply", "--yes", "--allow-shared-checkout"],
@@ -657,7 +665,7 @@ def test_repo_standards_apply_in_shared_checkout_with_flag_succeeds(tmp_path: Pa
         "- root-agents-md\n"
         "- root-gitignore\n"
     )
-    policy_dir = repo / ".agents" / "docs"
+    policy_dir = repo / ".agents" / "doctrine"
     policy_dir.mkdir(parents=True)
     (policy_dir / "repo-runbook-policy.md").write_text(
         f"# Repo runbook policy\n\n## Exceptions\n\n{exceptions}",
@@ -1171,3 +1179,44 @@ def test_pre_commit_hook_rejects_wrong_head_submodule(tmp_path: Path) -> None:
     )
     assert result.returncode != 0, result.stdout + result.stderr
     assert "submodule source does not match" in (result.stdout + result.stderr)
+
+
+def test_repo_standards_apply_refuses_missing_consumer_command_declaration(tmp_path: Path) -> None:
+    repo = tmp_path / "missing-command-declaration"
+    repo.mkdir()
+    _init_git_repo_with_commit(repo)
+
+    exceptions = (
+        "- marketplace-source-submodule\n"
+        "- marketplace-json\n"
+        "- tools-shared-checkout\n"
+        "- repo-runbook-policy\n"
+        "- runbooks-agents-md\n"
+        "- review-entry\n"
+        "- root-agents-md\n"
+        "- contributing-entry\n"
+        "- root-gitignore\n"
+        "- completed-plans-rule\n"
+        "- completed-plans-doctrine\n"
+        "- plans-completed-dir\n"
+        "- specs-completed-dir\n"
+    )
+    policy_dir = repo / ".agents" / "doctrine"
+    policy_dir.mkdir(parents=True)
+    (policy_dir / "repo-runbook-policy.md").write_text(
+        f"# Repo runbook policy\n\n## Exceptions\n\n{exceptions}",
+        encoding="utf-8",
+        newline="\n",
+    )
+
+    result = subprocess.run(
+        [sys.executable, str(REPO_STANDARDS), "--apply", "--yes", "--allow-shared-checkout"],
+        cwd=repo,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+    )
+    combined = result.stdout + result.stderr
+    assert result.returncode != 0, combined
+    assert "missing consumer command declaration" in combined
+    assert not (repo / ".git" / "hooks" / "pre-commit").exists()

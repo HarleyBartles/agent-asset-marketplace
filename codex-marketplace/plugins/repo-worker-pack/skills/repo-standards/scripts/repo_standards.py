@@ -122,6 +122,29 @@ def _scaffold_script_path(surface: dict[str, object]) -> Path | None:
     return Path(__file__).resolve().parent / str(scaffold)
 
 
+def _surface_is_explicitly_excepted(surface: dict[str, object], exceptions: set[str]) -> bool:
+    rel = str(surface["path"])
+    surf_id = str(surface.get("id", ""))
+    return surf_id in exceptions or rel in exceptions
+
+
+def _enabled_surface_ids(surfaces: list[dict[str, object]], exceptions: set[str]) -> set[str]:
+    """Return manifest surface ids enabled after explicit exceptions and dependencies."""
+    by_id = {str(surface.get("id", "")): surface for surface in surfaces if surface.get("id")}
+    enabled = {
+        surf_id for surf_id, surface in by_id.items() if not _surface_is_explicitly_excepted(surface, exceptions)
+    }
+    changed = True
+    while changed:
+        changed = False
+        for surf_id in tuple(enabled):
+            required_with = by_id[surf_id].get("required_with")
+            if required_with and str(required_with) not in enabled:
+                enabled.remove(surf_id)
+                changed = True
+    return enabled
+
+
 def _git_hooks_dir(repo_root: Path) -> Path:
     result = subprocess.run(
         ["git", "rev-parse", "--git-path", "hooks"],
@@ -273,17 +296,29 @@ def _has_shell_guard(non_comment: list[str]) -> bool:
     return {"errexit", "nounset", "pipefail"}.issubset(enabled)
 
 
-def _check_surface(repo_root: Path, surface: dict[str, object], exceptions: set[str]) -> list[str]:
+def _check_surface(
+    repo_root: Path,
+    surface: dict[str, object],
+    exceptions: set[str],
+    enabled_surface_ids: set[str] | None = None,
+) -> list[str]:
     findings: list[str] = []
     rel = str(surface["path"])
     surf_id = str(surface.get("id", ""))
-    if surf_id in exceptions or rel in exceptions:
+    if _surface_is_explicitly_excepted(surface, exceptions):
+        return findings
+    if enabled_surface_ids is not None and surf_id and surf_id not in enabled_surface_ids:
         return findings
     kind = str(surface.get("kind", "file"))
     optional = bool(surface.get("optional", False))
     template = _template_path(surface)
     scaffold = _scaffold_script_path(surface)
     full = repo_root / rel
+
+    if kind == "command-declaration":
+        _, declaration_findings = _check_declared_commands(repo_root)
+        findings.extend(declaration_findings)
+        return findings
 
     if kind == "directory":
         if not full.is_dir() and not optional:
@@ -335,10 +370,18 @@ def _check_surface(repo_root: Path, surface: dict[str, object], exceptions: set[
     return findings
 
 
-def _apply_surface(repo_root: Path, surface: dict[str, object], exceptions: set[str], force: bool) -> bool:
+def _apply_surface(
+    repo_root: Path,
+    surface: dict[str, object],
+    exceptions: set[str],
+    force: bool,
+    enabled_surface_ids: set[str] | None = None,
+) -> bool:
     rel = str(surface["path"])
     surf_id = str(surface.get("id", ""))
-    if surf_id in exceptions or rel in exceptions:
+    if _surface_is_explicitly_excepted(surface, exceptions):
+        return False
+    if enabled_surface_ids is not None and surf_id and surf_id not in enabled_surface_ids:
         return False
     kind = str(surface.get("kind", "file"))
     template = _template_path(surface)
@@ -450,10 +493,11 @@ under the ## Exceptions heading are skipped."""
     manifest = json.loads(_manifest_path().read_text(encoding="utf-8"))
     surfaces = manifest.get("surfaces", [])
     exceptions = _load_exceptions(repo_root)
+    enabled_surface_ids = _enabled_surface_ids(surfaces, exceptions)
 
     findings: list[str] = []
     for surface in surfaces:
-        findings.extend(_check_surface(repo_root, surface, exceptions))
+        findings.extend(_check_surface(repo_root, surface, exceptions, enabled_surface_ids))
 
     # Deduplicate while preserving order
     seen = set()
@@ -479,11 +523,22 @@ under the ## Exceptions heading are skipped."""
     if not shared_checkout.approve_mutation(repo_root, _SCRIPT_NAME, args.allow_shared_checkout):
         return 1
 
+    _, declaration_findings = _check_declared_commands(repo_root)
+    if "repo-standards-commands" in enabled_surface_ids and declaration_findings:
+        for finding in declaration_findings:
+            print(f"DRIFT: {finding}")
+        print(
+            "error: supply a valid consumer command declaration before applying repo-standards",
+            file=sys.stderr,
+        )
+        return 1
+
     applied = 0
     for surface in surfaces:
-        if _check_surface(repo_root, surface, exceptions):
-            if _apply_surface(repo_root, surface, exceptions, args.force):
+        if _check_surface(repo_root, surface, exceptions, enabled_surface_ids):
+            if _apply_surface(repo_root, surface, exceptions, args.force, enabled_surface_ids):
                 applied += 1
+
     print(f"OK repo-standards: applied {applied} surface(s)")
     return 0
 
