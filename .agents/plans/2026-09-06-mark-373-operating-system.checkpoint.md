@@ -1,7 +1,7 @@
 plan: .agents/plans/2026-09-06-mark-373-operating-system.md
 branch: codex/mark-373-operating-system
-head_at_capture: 2fb546735b8f9f45ec2f1fb4fb00f86a1f2a8d96
-published_head: efea8e03c15c45e1d3cc41d9393cc3c19ee0feae
+head_at_capture: e88c6636de42a60b4409d5c339f91bee9157e39f
+published_head: e88c6636de42a60b4409d5c339f91bee9157e39f
 last_completed_task: 6
 next_task: 7
 next_step: resolve the harness-blocked read-only smoke, then rerun the fixed campaign from a fresh immutable evidence head
@@ -50,9 +50,12 @@ last_green_evidence:
   - real Luna preflight at 6b030b94ca2c234a6dd1e9b7a3df06fa0b8ebac3 => harness-blocked; codex-cli 0.153.4 smoke exited 0 without SMOKE_OK; no behavioral trials started
   - campaign invocation at 6b030b94ca2c234a6dd1e9b7a3df06fa0b8ebac3 => stopped after preflight and wrote ignored raw meta
   - py -3 -m pytest tests/test_workflow_contracts.py::TestRepositoryCallersAndPressure tests/test_workflow_contracts.py::TestEvaluationCampaign -q => 12 passed
-  - normal hooked diagnostic-status commit => 2fb546735b8f9f45ec2f1fb4fb00f86a1f2a8d96
-evidence_head: 6b030b94ca2c234a6dd1e9b7a3df06fa0b8ebac3
-unresolved_blockers: revised campaign remains harness-blocked until the real read-only smoke produces SMOKE_OK; temporary upstream clone cleanup was rejected by environment destructive-command policy; review-preflight retains four pre-existing origin/main warnings; Ready promotion remains a human-owned decision for the coordinated cross-repository campaign
+  - hook portability/validator repair and exact-head MCP/plugin inventory implementation => f4d66d27b6d38cfa45506dc1549745bab4de4e64
+  - campaign preflight at f4d66d27b6d38cfa45506dc1549745bab4de4e64 => harness-blocked while materializing/reporting the exact head; subsequent controlled run at 8f6280aa5dad59b33124f50af37b7f7150ea2afa recorded non-empty MCP inventory
+  - workflow-contract tests => 34 passed; repo-standards hook tests => 32 passed
+  - review-status commit => e88c6636de42a60b4409d5c339f91bee9157e39f
+evidence_head: 8f6280aa5dad59b33124f50af37b7f7150ea2afa
+unresolved_blockers: revised campaign remains harness-blocked because effective MCP inventory is non-empty; temporary upstream clone cleanup was rejected by environment destructive-command policy; review-preflight retains eight pre-existing origin/main warnings; Ready promotion remains a human-owned decision for the coordinated cross-repository campaign
 resume_reads:
   - .agents/plans/2026-09-06-mark-373-operating-system.md: Luna Execution Contract, Global Constraints, Task 7
   - .agents/docs/mark-373-superpowers-v6.3-rebase.md
