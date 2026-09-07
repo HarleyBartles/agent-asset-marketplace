@@ -126,6 +126,27 @@ class TestPlanningDelegationReview:
             assert "tools/run" not in text
             assert "py -3" not in text
 
+    def test_portable_superpowers_surfaces_do_not_encode_repo_command_bus(self):
+        paths = [
+            SKILLS / "using-git-worktrees" / "SKILL.md",
+            SKILLS / "selecting-a-subagent" / "assets" / "reviewer-strong.md",
+            *sorted((SKILLS / "iterative-review" / "references").glob("*.md")),
+            *sorted(REPO_SKILLS.rglob("*.md")),
+            *sorted(REPO_SKILLS.rglob("*.json")),
+            *sorted(REPO_SKILLS.rglob("*.py")),
+        ]
+        for path in paths:
+            text = _read(path).lower()
+            assert "tools/run.py" not in text
+            assert "tools/run ci" not in text
+            assert "py -3 tools/run" not in text
+
+    def test_sdd_implementer_defers_broad_proof_to_hooked_consumer_gate(self):
+        text = _read(SKILLS / "subagent-driven-development" / "implementer-prompt.md").lower()
+        assert "focused test" in text
+        assert "full suite once before committing" not in text
+        assert "consumer's canonical hooked gate" in text
+
 
 class TestRepositoryCallersAndPressure:
     def test_workflow_inventory_covers_every_tracked_workflow(self):
@@ -146,7 +167,8 @@ class TestRepositoryCallersAndPressure:
         assert isinstance(findings, list)
         assert all({"path", "line", "pattern", "context"} <= set(item) for item in findings)
         assert "classification" in classified
-        assert all(label in classified for label in ("intended", "repo-local", "deferred"))
+        assert all(label in classified for label in ("intended", "repo-local"))
+        assert "deferred" not in classified
         assert "| defect |" not in classified
 
     def test_pressure_scan_has_one_owned_disposition_per_candidate(self):
@@ -156,7 +178,7 @@ class TestRepositoryCallersAndPressure:
         assert all(
             {"path", "line", "pattern", "classification", "owner", "reason"} <= set(item) for item in dispositions
         )
-        assert all(item["classification"] in {"intended", "repo-local", "deferred"} for item in dispositions)
+        assert all(item["classification"] in {"intended", "repo-local"} for item in dispositions)
         assert all(item["owner"] and item["reason"] for item in dispositions)
         assert {(item["path"], item["line"], item["pattern"]) for item in dispositions} == {
             (item["path"], item["line"], item["pattern"]) for item in findings
@@ -282,6 +304,51 @@ class TestEvaluationCampaign:
         blocked = campaign_runner.preflight(resolve=lambda _: "codex", run=fake_run, worktree=tmp_path)
         assert blocked["status"] == "harness-blocked"
         assert "external" in blocked["reason"]
+
+    def test_campaign_preflight_is_bound_to_requested_immutable_head(self):
+        head = "a" * 40
+        calls = []
+
+        class Result:
+            returncode = 0
+            stdout = ""
+            stderr = ""
+
+        def fake_git(argv, **kwargs):
+            calls.append((argv, kwargs))
+            result = Result()
+            if "rev-parse" in argv:
+                result.stdout = head + "\n"
+            return result
+
+        def fake_preflight(*, worktree):
+            calls.append(("preflight", worktree))
+            return {"status": "preflight-ready", "version": "codex-cli test"}
+
+        result = campaign_runner.preflight_at_head(head, preflight_fn=fake_preflight, git_run=fake_git)
+        assert result["status"] == "preflight-ready"
+        assert result["preflight_head"] == head
+        add_call = next(
+            argv for argv, _ in calls if isinstance(argv, list) and argv[:4] == ["git", "worktree", "add", "--detach"]
+        )
+        assert add_call[-1] == head
+        preflight_call = next(item for item in calls if item[0] == "preflight")
+        assert str(preflight_call[1]) != str(Path.cwd())
+
+    def test_run_campaign_passes_head_to_bound_preflight(self, tmp_path: Path, monkeypatch):
+        head = "b" * 40
+        requested = []
+
+        def fake_preflight_at_head(value):
+            requested.append(value)
+            return {"status": "harness-blocked", "reason": "test block"}
+
+        monkeypatch.setattr(campaign_runner, "preflight_at_head", fake_preflight_at_head)
+        result = campaign_runner.run_campaign(DOCS / "campaign.json", tmp_path, head)
+        assert result == 2
+        assert requested == [head]
+        meta = json.loads(_read(tmp_path / head / "_harness" / "campaign-meta.json"))
+        assert meta["evaluation_head"] == head
 
     def test_metrics_use_unobservable_for_unprovable_values(self):
         metrics = campaign_runner.extract_mechanical_metrics('{"type":"tool_call"}\n', "Need clarification?\n")

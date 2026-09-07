@@ -199,8 +199,8 @@ def _check_hook_contract(hook_path: Path) -> list[str]:
     non_comment_text = "\n".join(non_comment)
     # The hook must apply mechanical surfaces and then run a complete
     # multi-failure check on the staged snapshot.
-    apply_targets = ("tools/run.py ci --apply", "tools/run.py all --apply")
-    check_targets = ("tools/run.py ci --check --diagnostics", "tools/run.py ci --check")
+    apply_targets = ("--apply",)
+    check_targets = ("--check",)
     has_apply = any(t in non_comment_text for t in apply_targets)
     has_check = any(t in non_comment_text for t in check_targets)
     if not has_apply:
@@ -214,9 +214,9 @@ def _check_hook_contract(hook_path: Path) -> list[str]:
                 has_check = True
                 break
     if not has_apply:
-        findings.append("pre-commit hook must run 'tools/run.py ci --apply' (or 'all --apply')")
+        findings.append("pre-commit hook must run the consumer's canonical apply capability")
     if not has_check:
-        findings.append("pre-commit hook must run 'tools/run.py ci --check --diagnostics' (or 'ci --check')")
+        findings.append("pre-commit hook must run the consumer's canonical check capability")
     return findings
 
 

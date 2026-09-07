@@ -10,7 +10,8 @@
 
 ## When to run it
 
-Run it as part of `tools/run repo-standards --check` or `tools/run ci --check`. CI will fail if any non-deferred script fails.
+Run it as part of the consumer's canonical repository-standards or CI check.
+CI will fail if any non-deferred script fails.
 
 ## How to fix a failure
 

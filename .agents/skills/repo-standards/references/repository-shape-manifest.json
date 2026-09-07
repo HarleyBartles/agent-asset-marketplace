@@ -17,14 +17,6 @@
       "optional": false
     },
     {
-      "id": "tools-run",
-      "path": "tools/run.py",
-      "kind": "file",
-      "source": null,
-      "scaffold": null,
-      "optional": false
-    },
-    {
       "id": "tools-shared-checkout",
       "path": "tools/shared_checkout.py",
       "kind": "file",

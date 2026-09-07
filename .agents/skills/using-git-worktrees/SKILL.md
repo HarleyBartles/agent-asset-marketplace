@@ -147,13 +147,11 @@ The dependency step depends on how the worktree was created:
 - **If you used `scripts/new_worktree.py --apply <branch>`:** dependencies were already installed while the worktree was being created. Do not run a separate install step.
 - **If you used `git worktree add` or any native/manual route:** dependencies have not been installed yet. Run them now before the baseline checks.
 
-For a manually created worktree, prefer the repo-owned capability if one exists:
-
-```bash
-py -3 tools/run.py install-deps --apply
-```
-
-If the repo has no `tools/run.py` command bus, or it does not own `install-deps`, use the bundled fallback. Detect the package-manager manifest and run the matching command:
+For a manually created worktree, inspect the consumer repository's local
+guidance for its canonical dependency-install capability and use it when one
+exists. If the repository does not own such a capability, use the bundled
+fallback by detecting the package-manager manifest and running the matching
+command:
 
 | manifest            | command                                        |
 | ------------------- | ---------------------------------------------- |
@@ -163,7 +161,9 @@ If the repo has no `tools/run.py` command bus, or it does not own `install-deps`
 | `package.json`      | `npm install`                                  |
 | `requirements.txt`  | `pip install -r requirements.txt`              |
 
-A repo that wants to own dependency installation can add an `install-deps` target to `tools/run.py`. If a recognised manifest is present but its required installer is missing, fail closed and do not claim the workspace is ready.
+If a recognised manifest is present but its required installer is missing, fail
+closed and do not claim the workspace is ready. The portable skill does not
+prescribe the consumer's command-bus name or target.
 
 ## Step 3: Verify Clean Baseline
 

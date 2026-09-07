@@ -16,9 +16,9 @@ Archive completed planning artifacts before flipping the PR to ready.
 3. `git mv .agents/plans/<plan-name>.md .agents/plans/completed/`
 4. If the plan lists a spec: `git mv .agents/specs/<spec-name>.md .agents/specs/completed/`
 5. Move any related roadmaps or research files referenced by the plan.
-6. Run `py -3 tools/heal_archive_links.py --apply` and `py -3 tools/check_archive_links.py`.
-7. Run `py -3 tools/run.py mesh --apply` and `py -3 tools/run.py marketplace --apply`.
-8. Run `py -3 tools/run.py ci --check`; do not proceed if it fails.
+6. Run the consumer's canonical archive-link repair/check helpers.
+7. Run the consumer's canonical mesh and marketplace regeneration helpers.
+8. Run the consumer's canonical CI check; do not proceed if it fails.
 9. Commit the archive with `git commit -m "archive: complete <plan-name>"`.
 
 ## Outputs

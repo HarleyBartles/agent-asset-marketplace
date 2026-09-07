@@ -219,6 +219,74 @@ def preflight(
     }
 
 
+def preflight_at_head(
+    head: str,
+    preflight_fn: Callable[..., dict[str, Any]] = preflight,
+    git_run: Callable[..., subprocess.CompletedProcess[str]] = subprocess.run,
+) -> dict[str, Any]:
+    """Run preflight from a clean disposable worktree at exactly ``head``."""
+    worktree = Path(tempfile.mkdtemp(prefix="mark-373-preflight-"))
+    added = False
+    try:
+        git_run(
+            ["git", "worktree", "add", "--detach", str(worktree), head],
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+        added = True
+        resolved = git_run(
+            ["git", "-C", str(worktree), "rev-parse", "HEAD"],
+            check=True,
+            capture_output=True,
+            text=True,
+        ).stdout.strip()
+        status = git_run(
+            ["git", "-C", str(worktree), "status", "--porcelain"],
+            check=True,
+            capture_output=True,
+            text=True,
+        ).stdout.strip()
+        if resolved != head:
+            return {
+                "status": "harness-blocked",
+                "reason": "preflight worktree resolved to a different head",
+                "requested_head": head,
+                "preflight_head": resolved,
+            }
+        if status:
+            return {
+                "status": "harness-blocked",
+                "reason": "preflight worktree is not clean",
+                "requested_head": head,
+                "preflight_head": resolved,
+                "preflight_worktree_status": status,
+            }
+        result = preflight_fn(worktree=worktree)
+        return {
+            **result,
+            "requested_head": head,
+            "preflight_head": resolved,
+            "preflight_worktree_status": "clean",
+        }
+    except (OSError, subprocess.CalledProcessError) as error:
+        return {
+            "status": "harness-blocked",
+            "reason": "could not materialize immutable preflight worktree",
+            "requested_head": head,
+            "details": str(error),
+        }
+    finally:
+        if added:
+            git_run(
+                ["git", "worktree", "remove", "--force", str(worktree)],
+                capture_output=True,
+                text=True,
+            )
+        if worktree.exists():
+            shutil.rmtree(worktree, ignore_errors=True)
+
+
 def _load_campaign(path: Path) -> dict[str, Any]:
     campaign = json.loads(path.read_text(encoding="utf-8"))
     validate_campaign(campaign)
@@ -235,7 +303,7 @@ def run_campaign(
     campaign = _load_campaign(campaign_path)
     output_root.mkdir(parents=True, exist_ok=True)
     head_root = output_root / head
-    preflight_result = preflight(worktree=Path.cwd())
+    preflight_result = preflight_at_head(head)
     (head_root / "_harness").mkdir(parents=True, exist_ok=True)
     (head_root / "_harness" / "campaign-meta.json").write_text(
         json.dumps({"schema_version": 1, "evaluation_head": head, **preflight_result}, indent=2) + "\n",
