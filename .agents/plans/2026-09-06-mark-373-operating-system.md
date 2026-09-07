@@ -367,7 +367,7 @@ py -3 tools/run_workflow_pressure_campaign.py \
   --head <evaluation_head>
 ```
 
-- [x] Inspect `campaign-meta.json`. The revised harness is `harness-blocked`: the real read-only Luna smoke exited 0 without `SMOKE_OK`, so no behavioral trials were started and no result was converted into `model-unavailable`.
+- [x] Inspect `campaign-meta.json`. The revised harness is `harness-blocked`: the exact-head disposable preflight found a non-empty MCP inventory before the read-only Luna smoke, so no behavioral trials were started and no result was converted into `model-unavailable`.
 - [ ] For each completed trial, review frozen `events.jsonl` + `final.txt` + `meta.json` against the predeclared rubric and write the committed score using the fixed Score Adjudication Contract. Blocked: the revised preflight produced zero completed trials.
 - [x] Verify every score separates `trial` from `judge`, includes raw SHA-256 hashes, contains only trace-supported mechanical counts or `unobservable`, and includes criterion-level evidence locators.
 - [x] Update `results.md` to identify the revised run as harness-blocked and label the 52 retained scores superseded diagnostic-only; no historical verdict is presented as a new baseline.
@@ -375,14 +375,14 @@ py -3 tools/run_workflow_pressure_campaign.py \
 - [x] Confirm raw `runs/` remains ignored/uncommitted and inspect derived evidence for sensitive material before publication.
 - [x] Diagnose the retained historical failures as harness capability rather than model-unavailable; the revised smoke block prevents unsupported behavioral claims.
 - [x] Only exact family/model absence after a green harness preflight is `model-unavailable`; no trial received that classification.
-- [x] Run `py -3 -m pytest tests/test_workflow_contracts.py::TestEvaluationCampaign -q` => 7 passed.
+- [x] Run the workflow-contract and hook-contract focused tests => 34 and 32 passed respectively.
 - [ ] **Green exit/checkpoint:** blocked because the real read-only smoke did not complete; 0 revised trials are valid and the retained 52 scores are diagnostic-only. Do not advance Task 7 to a green behavioral baseline until the smoke passes.
 
 ## Task 8: Regenerate, review, hook-validate, publish, promote PR #311
 
 - [x] Confirmed explicit human approval to implement and verified PR #311 remains open Draft against `main`. If merged/closed before implementation, create fresh branch from then-current `main` carrying approved plan instead of mutating closed/merged branch.
 - [x] Ran `py -3 tools/run.py marketplace --apply`; no generated diff was produced outside the intended canonical-source-derived tree.
-- [x] Ran final focused checks: `28 passed` for the workflow-contract test file and mesh passed. `review-preflight --check` reports eight pre-existing warnings also present on `origin/main` (the four duplicated across canonical and installed skill surfaces: stale installed-skill path references and legacy metadata keys); no new warning was introduced by this change. No duplicate full CI was run before the normal hooked commit.
+- [x] Ran final focused checks: `34 passed` for the workflow-contract test file and `32 passed` for repo-standards hook tests; mesh and the normal hooked gate passed. The hook is bound to a tracked consumer command declaration, and the pressure scanner includes shebang-bearing extensionless templates. `review-preflight --check` reports eight pre-existing warnings also present on `origin/main`; no new warning was introduced by this change.
 - [x] Whole-change self-review: shared semantics only; downstream specifics downstream; no secret/private corpus; no Astra fork; no generated hand edit; active v6.2 references are historical comparison/provenance only; no caller-strengthened owner; no portable machine/repo assumption; no scanner defect; inventory/parity/evaluation honest; no raw run traces staged.
 - [x] Updated the plan/checkpoint to the final local state and committed the intended tree normally. The hook is broad local proof; it was not bypassed or duplicated.
 - [x] Verified committed state with `git status --short --branch`, `git diff --check HEAD^`, the recorded review-preflight diagnostic, and `py -3 tools/run.py mesh --check`; recorded the full publication SHA. The canonical hook supplied the complete CI proof.
@@ -401,6 +401,7 @@ py -3 tools/run_workflow_pressure_campaign.py \
 - Universal design approval, message-bound verification, unconditional branch-finish full-suite reruns, blanket every-function testing, caller-forced conditional workflows, automatic Linear mutation, and unbounded cheap-fix behavior no longer contradict owners.
 - Checkpoint survives compaction with branch/head/dirty-state/evidence/next-step; compaction does not trigger evidence replay.
 - Campaign harness has an explicit preflight: missing CLI, missing required CLI capability, or generic auth/runtime failure blocks the campaign and cannot masquerade as model unavailability.
+- Campaign preflight is bound to the requested immutable head and fails closed when effective MCP/plugin inventory is unavailable or non-empty; the recorded run stopped on a non-empty MCP inventory before smoke.
 - Campaign runner launches one ephemeral Codex trial per family/scenario from fresh detached worktrees at `evaluation_head`, selects exact models with `--model`, requests medium reasoning, captures JSONL event/tool traces/final output without hidden chain-of-thought, uses only `read-only`/`workspace-write`, disables baseline web/apps, and records API reasoning mode only when observable.
 - External-action scenarios are dry-run decision tests; no pressure trial writes GitHub, Linear, dispatches CI, pushes a branch, or widens sandbox/network access.
 - Each committed score distinguishes `trial` and `judge`, is adjudicated inline by the Luna executor with no second judge model invocation, carries criterion-level evidence, and hashes the exact local raw files judged.

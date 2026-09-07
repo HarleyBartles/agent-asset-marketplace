@@ -390,7 +390,15 @@ def run_campaign(
     campaign = _load_campaign(campaign_path)
     output_root.mkdir(parents=True, exist_ok=True)
     head_root = output_root / head
-    preflight_result = preflight_at_head(head)
+    try:
+        preflight_result = preflight_at_head(head)
+    except BaseException as error:  # campaign metadata must record every fail-closed preflight outcome
+        preflight_result = {
+            "status": "harness-blocked",
+            "reason": "preflight orchestration failed",
+            "requested_head": head,
+            "details": f"{type(error).__name__}: {error}",
+        }
     (head_root / "_harness").mkdir(parents=True, exist_ok=True)
     (head_root / "_harness" / "campaign-meta.json").write_text(
         json.dumps({"schema_version": 1, "evaluation_head": head, **preflight_result}, indent=2) + "\n",

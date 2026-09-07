@@ -215,7 +215,7 @@ class TestEvaluationCampaign:
     def test_committed_campaign_meta_and_scores_are_self_contained(self):
         meta = json.loads(_read(DOCS / "campaign-meta.json"))
         assert meta["schema_version"] == 1
-        assert meta["evaluation_head"] == "6cdcabce6e5ffbc88a6f51a528705b8a75473e67"
+        assert meta["evaluation_head"] == "8f6280aa5dad59b33124f50af37b7f7150ea2afa"
         assert meta["status"] == "harness-blocked"
         assert meta["completed_trials"] == 0
         assert meta["superseded_diagnostic_trials"] == 52
@@ -223,6 +223,8 @@ class TestEvaluationCampaign:
         assert meta["requested_head"] == meta["evaluation_head"]
         assert meta["preflight_head"] == meta["evaluation_head"]
         assert meta["preflight_worktree_status"] == "clean"
+        assert meta["inventory"]["mcp"]["exposed"] is True
+        assert meta["smoke_status"] == "not-run"
         score_paths = sorted((DOCS / "scores").glob("*/*/*.json"))
         assert len(score_paths) == 52
         for path in score_paths:

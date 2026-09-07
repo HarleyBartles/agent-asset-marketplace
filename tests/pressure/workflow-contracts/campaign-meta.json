@@ -1,15 +1,22 @@
 {
   "schema_version": 1,
-  "evaluation_head": "6cdcabce6e5ffbc88a6f51a528705b8a75473e67",
+  "evaluation_head": "8f6280aa5dad59b33124f50af37b7f7150ea2afa",
   "status": "harness-blocked",
   "codex_version": "codex-cli 0.153.4",
-  "reason": "read-only smoke invocation did not complete expected response",
-  "smoke_exit_code": 0,
-  "smoke_final_sha256": "457f4c87ab1896852711aeb01d9e2e640f56ff76bced8a2e3bf9f4bfe42ca6c3",
+  "reason": "effective MCP/plugin tool inventory is not empty",
+  "inventory": {
+    "mcp": {
+      "command": ["mcp", "list"],
+      "exit_code": 0,
+      "output_sha256": "46b213ee4644228a6187dea00105ef73adca4e57a4de6e30b3b89d0d4fa3de69",
+      "exposed": true
+    }
+  },
+  "smoke_status": "not-run",
   "project_config_paths": [],
   "external_write_surfaces": [],
-  "requested_head": "6cdcabce6e5ffbc88a6f51a528705b8a75473e67",
-  "preflight_head": "6cdcabce6e5ffbc88a6f51a528705b8a75473e67",
+  "requested_head": "8f6280aa5dad59b33124f50af37b7f7150ea2afa",
+  "preflight_head": "8f6280aa5dad59b33124f50af37b7f7150ea2afa",
   "preflight_worktree_status": "clean",
   "judge": {
     "family": "luna",
