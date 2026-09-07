@@ -356,6 +356,13 @@ def preflight_at_head(
             "requested_head": head,
             "details": str(error),
         }
+    except Exception as error:  # fail closed if a runtime integration is malformed
+        return {
+            "status": "harness-blocked",
+            "reason": "immutable preflight raised an unexpected runtime error",
+            "requested_head": head,
+            "details": f"{type(error).__name__}: {error}",
+        }
     finally:
         if added:
             git_run(

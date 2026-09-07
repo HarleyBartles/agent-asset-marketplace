@@ -780,8 +780,7 @@ def test_hook_validator_rejects_unbound_apply_and_check_switches(tmp_path: Path)
     declaration = repo / ".agents" / "doctrine"
     declaration.mkdir(parents=True)
     (declaration / "repo-standards-commands.json").write_text(
-        '{"apply":["@python","consumer.py","--apply"],'
-        '"check":["@python","consumer.py","--check"]}\n',
+        '{"apply":["@python","consumer.py","--apply"],"check":["@python","consumer.py","--check"]}\n',
         encoding="utf-8",
     )
     hook = repo / "pre-commit"
