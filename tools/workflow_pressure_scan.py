@@ -23,10 +23,19 @@ PATTERNS = (
 )
 
 
+def _is_scannable_file(path: Path) -> bool:
+    if path.suffix.lower() in {".md", ".py", ".json", ".yml", ".yaml"}:
+        return True
+    try:
+        return path.read_bytes()[:2] == b"#!"
+    except OSError:
+        return False
+
+
 def scan_paths(paths: list[Path], root: Path) -> list[dict[str, object]]:
     hits: list[dict[str, object]] = []
     for path in paths:
-        if not path.is_file() or path.suffix.lower() not in {".md", ".py", ".json", ".yml", ".yaml"}:
+        if not path.is_file() or not _is_scannable_file(path):
             continue
         for number, line in enumerate(path.read_text(encoding="utf-8", errors="replace").splitlines(), start=1):
             for name, pattern in PATTERNS:

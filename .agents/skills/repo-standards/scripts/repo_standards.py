@@ -53,6 +53,7 @@ import shared_checkout  # noqa: E402
 
 
 _SCRIPT_NAME = "repo-standards"
+_COMMAND_DECLARATION = Path(".agents/doctrine/repo-standards-commands.json")
 
 
 def _is_submodule(repo_root: Path) -> bool:
@@ -165,7 +166,31 @@ def _run_scaffold_check(scaffold: Path, repo_root: Path) -> list[str]:
     return findings
 
 
-def _check_hook_contract(hook_path: Path) -> list[str]:
+def _check_declared_commands(repo_root: Path) -> tuple[dict[str, list[str]] | None, list[str]]:
+    path = repo_root / _COMMAND_DECLARATION
+    if not path.is_file():
+        return None, [f"missing consumer command declaration: {_COMMAND_DECLARATION.as_posix()}"]
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        return None, [f"consumer command declaration cannot be read: {exc}"]
+    if not isinstance(data, dict):
+        return None, ["consumer command declaration must be a JSON object"]
+    findings: list[str] = []
+    commands: dict[str, list[str]] = {}
+    for capability, switch in (("apply", "--apply"), ("check", "--check")):
+        command = data.get(capability)
+        if not isinstance(command, list) or not command or not all(isinstance(item, str) for item in command):
+            findings.append(f"consumer command declaration has invalid {capability} command")
+            continue
+        if switch not in command:
+            findings.append(f"declared {capability} command is missing {switch}")
+            continue
+        commands[capability] = command
+    return (commands if len(commands) == 2 else None), findings
+
+
+def _check_hook_contract(hook_path: Path, repo_root: Path) -> list[str]:
     """Validate a pre-commit hook by the repo-standards contract, not by byte comparison."""
     findings: list[str] = []
     if not hook_path.is_file():
@@ -196,27 +221,24 @@ def _check_hook_contract(hook_path: Path) -> list[str]:
     if not _has_shell_guard(non_comment):
         findings.append("pre-commit hook missing errexit/nounset/pipefail guard")
 
-    non_comment_text = "\n".join(non_comment)
-    # The hook must apply mechanical surfaces and then run a complete
-    # multi-failure check on the staged snapshot.
-    apply_targets = ("--apply",)
-    check_targets = ("--check",)
-    has_apply = any(t in non_comment_text for t in apply_targets)
-    has_check = any(t in non_comment_text for t in check_targets)
-    if not has_apply:
-        for prefix in ("py -3", "python3", "python"):
-            if any(f"{prefix} {t}" in non_comment_text for t in apply_targets):
-                has_apply = True
-                break
-    if not has_check:
-        for prefix in ("py -3", "python3", "python"):
-            if any(f"{prefix} {t}" in non_comment_text for t in check_targets):
-                has_check = True
-                break
-    if not has_apply:
-        findings.append("pre-commit hook must run the consumer's canonical apply capability")
-    if not has_check:
-        findings.append("pre-commit hook must run the consumer's canonical check capability")
+    declaration, declaration_findings = _check_declared_commands(repo_root)
+    findings.extend(declaration_findings)
+    declaration_marker = _COMMAND_DECLARATION.as_posix()
+    if declaration_marker not in text.replace("\\", "/"):
+        findings.append("pre-commit hook must source the consumer command declaration")
+    apply_marker = "run_declared apply"
+    check_marker = "run_declared check"
+    apply_index = text.find(apply_marker)
+    check_index = text.find(check_marker)
+    if apply_index < 0:
+        findings.append("pre-commit hook must invoke the declared apply capability")
+    if check_index < 0:
+        findings.append("pre-commit hook must invoke the declared check capability")
+    if apply_index >= 0 and check_index >= 0 and apply_index >= check_index:
+        findings.append("pre-commit hook must invoke apply before check")
+    if declaration is not None and apply_index >= 0 and check_index >= 0:
+        if "required_switch" not in text:
+            findings.append("pre-commit hook command runner must validate declared switches")
     return findings
 
 
@@ -291,7 +313,7 @@ def _check_surface(repo_root: Path, surface: dict[str, object], exceptions: set[
             findings.append(f"missing hook: {rel}")
             return findings
         # Validate the hook contract rather than requiring the exact template.
-        findings.extend(_check_hook_contract(hook_path))
+        findings.extend(_check_hook_contract(hook_path, repo_root))
         return findings
 
     if optional and not full.exists():

@@ -38,6 +38,10 @@ PROJECT_CONFIG_PATHS = (
     Path(".codex") / "mcp.json",
     Path(".mcp.json"),
 )
+EXTERNAL_SURFACE_COMMANDS = (
+    ("mcp", "list"),
+    ("plugin", "list"),
+)
 EXTERNAL_WRITE_MARKERS = re.compile(r"(?i)(?:mcp|connector|github|linear|external|\bpush\b|dispatch|write)")
 
 
@@ -47,6 +51,10 @@ def sha256_file(path: Path) -> str:
         for chunk in iter(lambda: stream.read(1024 * 1024), b""):
             digest.update(chunk)
     return digest.hexdigest()
+
+
+def sha256_text(value: str) -> str:
+    return hashlib.sha256(value.encode("utf-8")).hexdigest()
 
 
 def build_codex_argv(worktree: Path, model: str, sandbox: str, final_path: Path) -> list[str]:
@@ -135,6 +143,66 @@ def inspect_project_config(worktree: Path) -> dict[str, Any]:
     }
 
 
+def inspect_external_tool_surfaces(
+    executable: str,
+    run: Callable[..., subprocess.CompletedProcess[str]],
+) -> dict[str, Any]:
+    inventory: dict[str, Any] = {}
+    for command in EXTERNAL_SURFACE_COMMANDS:
+        help_result = run(
+            [executable, *command, "--help"],
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+        )
+        help_text = (help_result.stdout or "") + (help_result.stderr or "")
+        if help_result.returncode != 0 or "--json" not in help_text:
+            return {
+                "status": "harness-blocked",
+                "reason": "effective MCP/plugin tool inventory is unavailable",
+                "inventory": inventory,
+                "inventory_command": list(command),
+            }
+        result = run(
+            [executable, *command, "--json"],
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+        )
+        output = (result.stdout or "") + (result.stderr or "")
+        record = {
+            "command": list(command),
+            "exit_code": result.returncode,
+            "output_sha256": sha256_text(output),
+        }
+        if result.returncode != 0:
+            return {
+                "status": "harness-blocked",
+                "reason": "effective MCP/plugin tool inventory failed",
+                "inventory": {**inventory, command[0]: record},
+            }
+        try:
+            payload = json.loads(result.stdout or "null")
+        except json.JSONDecodeError:
+            return {
+                "status": "harness-blocked",
+                "reason": "effective MCP/plugin tool inventory was not valid JSON",
+                "inventory": {**inventory, command[0]: record},
+            }
+        exposed = bool(payload)
+        record["exposed"] = exposed
+        inventory[command[0]] = record
+        if exposed:
+            return {
+                "status": "harness-blocked",
+                "reason": "effective MCP/plugin tool inventory is not empty",
+                "inventory": inventory,
+            }
+    return {"status": "inventory-clear", "inventory": inventory}
+
+
 def preflight(
     resolve: Callable[[str], str | None] = shutil.which,
     run: Callable[..., subprocess.CompletedProcess[str]] = subprocess.run,
@@ -174,6 +242,15 @@ def preflight(
             "reason": "project-scoped configuration exposes external write surfaces",
             **project_config,
         }
+    external_tools = inspect_external_tool_surfaces(executable, run)
+    if external_tools["status"] != "inventory-clear":
+        return {
+            "status": external_tools["status"],
+            "reason": external_tools["reason"],
+            "inventory": external_tools["inventory"],
+            "version": (version.stdout or version.stderr).strip(),
+            **project_config,
+        }
     with tempfile.TemporaryDirectory(prefix="mark-373-harness-smoke-") as smoke_dir:
         smoke_final = Path(smoke_dir) / "final.txt"
         smoke = run(
@@ -199,6 +276,7 @@ def preflight(
             "smoke_exit_code": smoke.returncode,
             "smoke_stderr": (smoke.stderr or "")[-500:],
             "smoke_final_sha256": smoke_sha256,
+            "inventory": external_tools["inventory"],
             **project_config,
         }
     if "SMOKE_OK" not in smoke_text:
@@ -208,6 +286,7 @@ def preflight(
             "reason": "read-only smoke invocation did not complete expected response",
             "smoke_exit_code": smoke.returncode,
             "smoke_final_sha256": smoke_sha256,
+            **external_tools,
             **project_config,
         }
     return {
@@ -215,6 +294,7 @@ def preflight(
         "version": (version.stdout or version.stderr).strip(),
         "smoke_exit_code": smoke.returncode,
         "smoke_final_sha256": smoke_sha256,
+        "inventory": external_tools["inventory"],
         **project_config,
     }
 

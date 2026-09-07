@@ -1,4 +1,5 @@
 import os
+import importlib.util
 import subprocess
 import sys
 from pathlib import Path
@@ -12,6 +13,11 @@ SCAFFOLD_GITIGNORE = SKILL_ROOT / "scaffold_gitignore.py"
 SCAFFOLD_MARKETPLACE_JSON = SKILL_ROOT / "scaffold_marketplace_json.py"
 SCAFFOLD_REPO_RUNBOOK_POLICY = SKILL_ROOT / "scaffold_repo_runbook_policy.py"
 REPO_STANDARDS = SKILL_ROOT / "repo_standards.py"
+sys.path.insert(0, str(SKILL_ROOT))
+_SPEC = importlib.util.spec_from_file_location("repo_standards_under_test", REPO_STANDARDS)
+repo_standards = importlib.util.module_from_spec(_SPEC)
+assert _SPEC.loader is not None
+_SPEC.loader.exec_module(repo_standards)
 
 
 def _stripped_env():
@@ -322,7 +328,6 @@ def test_repo_standards_check_invalid_agents_md(tmp_path: Path) -> None:
         encoding="utf-8",
         newline="\n",
     )
-
     (repo / "AGENTS.md").write_text(
         "# Repo\n\n## Repository purpose\n\nPurpose.\n",
         encoding="utf-8",
@@ -517,7 +522,6 @@ def test_repo_standards_apply_force_overwrites_drifted_contributing(tmp_path: Pa
         encoding="utf-8",
         newline="\n",
     )
-
     (repo / "CONTRIBUTING.md").write_text("# Contributing\n\nStale.\n", encoding="utf-8", newline="\n")
 
     result = subprocess.run(
@@ -739,6 +743,13 @@ def test_pre_commit_hook_wired_to_ci_apply_and_diagnostics(tmp_path: Path) -> No
         encoding="utf-8",
         newline="\n",
     )
+    command_dir = repo / ".agents" / "doctrine"
+    command_dir.mkdir(parents=True)
+    (command_dir / "repo-standards-commands.json").write_text(
+        '{"apply":["@python","tools/run.py","ci","--apply"],'
+        '"check":["@python","tools/run.py","ci","--check","--diagnostics"]}\n',
+        encoding="utf-8",
+    )
 
     result = subprocess.run(
         [
@@ -758,8 +769,30 @@ def test_pre_commit_hook_wired_to_ci_apply_and_diagnostics(tmp_path: Path) -> No
     hook = repo / ".git" / "hooks" / "pre-commit"
     assert hook.is_file(), "pre-commit hook was not installed"
     text = hook.read_text(encoding="utf-8")
-    assert "tools/run.py ci --apply" in text, text
-    assert "tools/run.py ci --check --diagnostics" in text, text
+    assert "repo-standards-commands.json" in text, text
+    assert "run_declared apply" in text, text
+    assert "run_declared check" in text, text
+    assert "tools/run.py" not in text, text
+
+
+def test_hook_validator_rejects_unbound_apply_and_check_switches(tmp_path: Path) -> None:
+    repo = tmp_path / "unbound-hook"
+    declaration = repo / ".agents" / "doctrine"
+    declaration.mkdir(parents=True)
+    (declaration / "repo-standards-commands.json").write_text(
+        '{"apply":["@python","consumer.py","--apply"],'
+        '"check":["@python","consumer.py","--check"]}\n',
+        encoding="utf-8",
+    )
+    hook = repo / "pre-commit"
+    hook.write_text(
+        "#!/usr/bin/env bash\nset -euo pipefail\nsome-unrelated-tool --apply\nanother-tool --check\n",
+        encoding="utf-8",
+    )
+    findings = repo_standards._check_hook_contract(hook, repo)
+    assert "pre-commit hook must source the consumer command declaration" in findings
+    assert "pre-commit hook must invoke the declared apply capability" in findings
+    assert "pre-commit hook must invoke the declared check capability" in findings
 
 
 def _forbidden_ci_check_guidance() -> tuple[str, ...]:
@@ -868,6 +901,20 @@ def _install_repo_standards(repo: Path) -> None:
         f"# Repo runbook policy\n\n## Exceptions\n\n{exceptions}",
         encoding="utf-8",
         newline="\n",
+    )
+    command_dir = repo / ".agents" / "doctrine"
+    command_dir.mkdir(parents=True, exist_ok=True)
+    (command_dir / "repo-standards-commands.json").write_text(
+        '{"apply":["@python","tools/run.py","ci","--apply"],'
+        '"check":["@python","tools/run.py","ci","--check","--diagnostics"]}\n',
+        encoding="utf-8",
+    )
+    subprocess.run(
+        ["git", "add", ".agents/doctrine/repo-standards-commands.json"],
+        cwd=repo,
+        env=_stripped_env(),
+        check=True,
+        capture_output=True,
     )
     result = subprocess.run(
         [sys.executable, str(REPO_STANDARDS), "--apply", "--yes", "--allow-shared-checkout"],
@@ -1020,6 +1067,20 @@ def _install_repo_standards_with_submodule(repo: Path) -> None:
         f"# Repo runbook policy\n\n## Exceptions\n\n{exceptions}",
         encoding="utf-8",
         newline="\n",
+    )
+    command_dir = repo / ".agents" / "doctrine"
+    command_dir.mkdir(parents=True, exist_ok=True)
+    (command_dir / "repo-standards-commands.json").write_text(
+        '{"apply":["@python","tools/run.py","ci","--apply"],'
+        '"check":["@python","tools/run.py","ci","--check","--diagnostics"]}\n',
+        encoding="utf-8",
+    )
+    subprocess.run(
+        ["git", "add", ".agents/doctrine/repo-standards-commands.json"],
+        cwd=repo,
+        env=_stripped_env(),
+        check=True,
+        capture_output=True,
     )
     result = subprocess.run(
         [sys.executable, str(REPO_STANDARDS), "--apply", "--yes", "--allow-shared-checkout"],

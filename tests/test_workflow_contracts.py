@@ -140,6 +140,7 @@ class TestPlanningDelegationReview:
             *sorted(REPO_SKILLS.rglob("*.md")),
             *sorted(REPO_SKILLS.rglob("*.json")),
             *sorted(REPO_SKILLS.rglob("*.py")),
+            REPO_SKILLS / "repo-standards" / "templates" / "pre-commit",
         ]
         for path in paths:
             text = _read(path).lower()
@@ -295,6 +296,11 @@ class TestEvaluationCampaign:
                 result.stdout = (
                     "exec --ephemeral --json --model --sandbox --output-last-message --ignore-user-config -c"
                 )
+            if argv[:3] == ["codex", "mcp", "list"] or argv[:3] == ["codex", "plugin", "list"]:
+                if argv[-1] == "--help":
+                    result.stdout = "list --json"
+                else:
+                    result.stdout = "[]"
             if "--output-last-message" in argv:
                 final_path = Path(argv[argv.index("--output-last-message") + 1])
                 final_path.write_text("SMOKE_OK\n", encoding="utf-8")
@@ -302,7 +308,7 @@ class TestEvaluationCampaign:
 
         ready = campaign_runner.preflight(resolve=lambda _: "codex", run=fake_run, worktree=tmp_path)
         assert ready["status"] == "preflight-ready"
-        assert len(calls) == 3
+        assert len(calls) == 7
         assert "--sandbox" in calls[-1][0] and "read-only" in calls[-1][0]
         assert calls[-1][1]["input"].startswith("MARK-373 harness smoke")
         assert "read-only command" in calls[-1][1]["input"]
@@ -313,6 +319,21 @@ class TestEvaluationCampaign:
         blocked = campaign_runner.preflight(resolve=lambda _: "codex", run=fake_run, worktree=tmp_path)
         assert blocked["status"] == "harness-blocked"
         assert "external" in blocked["reason"]
+
+        config.unlink()
+        calls.clear()
+        plugin_payload = '[{"name":"external-plugin"}]'
+
+        def fake_plugin_run(argv, **kwargs):
+            result = fake_run(argv, **kwargs)
+            if argv[:3] == ["codex", "plugin", "list"] and argv[-1] == "--json":
+                result.stdout = plugin_payload
+            return result
+
+        plugin_blocked = campaign_runner.preflight(resolve=lambda _: "codex", run=fake_plugin_run, worktree=tmp_path)
+        assert plugin_blocked["status"] == "harness-blocked"
+        assert "MCP/plugin" in plugin_blocked["reason"]
+        assert not any("--output-last-message" in argv for argv, _ in calls)
 
     def test_campaign_preflight_is_bound_to_requested_immutable_head(self):
         head = "a" * 40
@@ -369,3 +390,9 @@ class TestEvaluationCampaign:
         path.write_text("Run the full test suite.\n", encoding="utf-8")
         hits = pressure_scan.scan_paths([path], tmp_path)
         assert hits and hits[0]["pattern"] == "full-test-suite"
+
+    def test_scanner_includes_extensionless_shebang_templates(self, tmp_path: Path):
+        path = tmp_path / "pre-commit"
+        path.write_text("#!/usr/bin/env bash\ntools/run.py ci --check\n", encoding="utf-8")
+        hits = pressure_scan.scan_paths([path], tmp_path)
+        assert hits and hits[0]["pattern"] == "portable-repo-command"
