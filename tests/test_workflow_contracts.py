@@ -21,6 +21,12 @@ def _read(path: Path) -> str:
 
 
 class TestAuthorityBootstrapPortability:
+    def test_superpowers_plus_version_matches_pinned_upstream_release(self):
+        plugin = json.loads(_read(SKILLS.parent / ".codex-plugin" / "plugin.json"))
+        bundle = json.loads(_read(SKILLS.parent / "references" / "bundle-manifest.json"))
+        assert plugin["version"] == "6.3.0"
+        assert bundle["bundle_version"] == "6.3.0"
+
     def test_operating_contract_declares_shared_authority(self):
         path = REPO_SKILLS / "base-doctrine" / "references" / "operating-contract.md"
         text = _read(path)
@@ -208,11 +214,14 @@ class TestEvaluationCampaign:
     def test_committed_campaign_meta_and_scores_are_self_contained(self):
         meta = json.loads(_read(DOCS / "campaign-meta.json"))
         assert meta["schema_version"] == 1
-        assert meta["evaluation_head"] == "6b030b94ca2c234a6dd1e9b7a3df06fa0b8ebac3"
+        assert meta["evaluation_head"] == "6cdcabce6e5ffbc88a6f51a528705b8a75473e67"
         assert meta["status"] == "harness-blocked"
         assert meta["completed_trials"] == 0
         assert meta["superseded_diagnostic_trials"] == 52
         assert meta["score_validity"] == "superseded-diagnostic-only"
+        assert meta["requested_head"] == meta["evaluation_head"]
+        assert meta["preflight_head"] == meta["evaluation_head"]
+        assert meta["preflight_worktree_status"] == "clean"
         score_paths = sorted((DOCS / "scores").glob("*/*/*.json"))
         assert len(score_paths) == 52
         for path in score_paths:

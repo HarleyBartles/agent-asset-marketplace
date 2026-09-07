@@ -1,7 +1,7 @@
 # MARK-373 workflow pressure results
 
 The revised campaign preflight is `harness-blocked` at evaluation head
-`6b030b94ca2c234a6dd1e9b7a3df06fa0b8ebac3`. Codex CLI `0.153.4` accepted the
+`6cdcabce6e5ffbc88a6f51a528705b8a75473e67`. Codex CLI `0.153.4` accepted the
 required executable and flag checks, but a real read-only Luna smoke invocation
 exited 0 without producing the required `SMOKE_OK` response. The runner
 therefore stopped before model classification and did not rerun the matrix.
@@ -11,6 +11,10 @@ remain useful diagnostic artifacts, but are explicitly superseded and must not
 be presented as a valid post-preflight behavioral baseline. Their prior 14
 pass / 38 `harness-capability` verdicts are not completion evidence for the
 revised campaign.
+
+The preflight ran from a disposable worktree resolved to the requested head;
+the recorded `preflight_head` matches the evaluation head and the worktree was
+clean before the smoke.
 
 ## Revised campaign status
 

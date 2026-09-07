@@ -1,13 +1,16 @@
 {
   "schema_version": 1,
-  "evaluation_head": "6b030b94ca2c234a6dd1e9b7a3df06fa0b8ebac3",
+  "evaluation_head": "6cdcabce6e5ffbc88a6f51a528705b8a75473e67",
   "status": "harness-blocked",
   "codex_version": "codex-cli 0.153.4",
   "reason": "read-only smoke invocation did not complete expected response",
   "smoke_exit_code": 0,
-  "smoke_final_sha256": "7c5fce28b7d9675c9ac46016956a88a76d74fe5d06dabb5c0666664bf10068f4",
+  "smoke_final_sha256": "457f4c87ab1896852711aeb01d9e2e640f56ff76bced8a2e3bf9f4bfe42ca6c3",
   "project_config_paths": [],
   "external_write_surfaces": [],
+  "requested_head": "6cdcabce6e5ffbc88a6f51a528705b8a75473e67",
+  "preflight_head": "6cdcabce6e5ffbc88a6f51a528705b8a75473e67",
+  "preflight_worktree_status": "clean",
   "judge": {
     "family": "luna",
     "model": "gpt-5.6-luna",
