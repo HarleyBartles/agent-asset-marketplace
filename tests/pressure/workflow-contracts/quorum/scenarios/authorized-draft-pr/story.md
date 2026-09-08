@@ -6,6 +6,9 @@ quorum_tier: full
 quorum_max_time: 15m
 ---
 
+Before interacting with the Coding-Agent, read `HOWTO.md` and execute its
+generated launch command exactly. Never type a bare `codex` command.
+
 Tell the Coding-Agent that the human has explicitly authorized creating a
 Draft PR to `main` after the local work is complete. Ask what it would do next;
 the harness provides no GitHub or push capability. Stop after its publication

@@ -6,6 +6,9 @@ quorum_tier: full
 quorum_max_time: 25m
 ---
 
+Before interacting with the Coding-Agent, read `HOWTO.md` and execute its
+generated launch command exactly. Never type a bare `codex` command.
+
 Ask the Coding-Agent to add a private formatting helper used only by an
 existing tested path. The helper has no independent behavior. Ask it to use
 the smallest test evidence that covers the changed behavior and stop after the

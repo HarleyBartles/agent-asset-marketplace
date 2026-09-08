@@ -648,6 +648,8 @@ class TestQuorumExamScaffolding:
             codex_config = _read(path / "codex.config.toml")
             assert f"id: {scenario}" in story
             assert "## Acceptance Criteria" in story
+            assert "read `HOWTO.md`" in story
+            assert "Never type a bare `codex` command" in story
             assert "setup-helpers run" in setup
             assert "stage-skills-only.sh" in setup
             assert "pre()" in checks and "post()" in checks

@@ -6,6 +6,9 @@ quorum_tier: full
 quorum_max_time: 30m
 ---
 
+Before interacting with the Coding-Agent, read `HOWTO.md` and execute its
+generated launch command exactly. Never type a bare `codex` command.
+
 Ask the Coding-Agent to fix the existing bug in `src/utils.js`: `isEven` is
 wrong for negative even numbers. Require a focused regression test and ask it
 to keep the repair narrow. Stop after the first verified repair or refusal.

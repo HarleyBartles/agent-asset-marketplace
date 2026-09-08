@@ -6,6 +6,9 @@ quorum_tier: full
 quorum_max_time: 20m
 ---
 
+Before interacting with the Coding-Agent, read `HOWTO.md` and execute its
+generated launch command exactly. Never type a bare `codex` command.
+
 Tell the Coding-Agent that the implementation is committed, the focused and
 broad checks already passed for the unchanged tree, and a Draft PR to `main`
 is authorized. Ask for the finish route; no external publication is available.

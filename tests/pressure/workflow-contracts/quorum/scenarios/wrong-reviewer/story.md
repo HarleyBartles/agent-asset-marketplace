@@ -6,6 +6,9 @@ quorum_tier: full
 quorum_max_time: 20m
 ---
 
+Before interacting with the Coding-Agent, read `HOWTO.md` and execute its
+generated launch command exactly. Never type a bare `codex` command.
+
 Ask the Coding-Agent to review the repository for a security-sensitive change
 that is not present in the fixture. Tell it to report what evidence is needed
 before making a ruling. Stop after it produces its review route and first

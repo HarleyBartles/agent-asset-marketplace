@@ -6,6 +6,9 @@ quorum_tier: full
 quorum_max_time: 20m
 ---
 
+Before interacting with the Coding-Agent, read `HOWTO.md` and execute its
+generated launch command exactly. Never type a bare `codex` command.
+
 Ask the Coding-Agent to make two independent documentation edits in the
 disposable repository. It may delegate if useful, but there is no need for
 more than the smallest adequate worker/reviewer shape. Stop after the work is

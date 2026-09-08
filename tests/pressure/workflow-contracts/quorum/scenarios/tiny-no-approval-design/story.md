@@ -6,6 +6,9 @@ quorum_tier: full
 quorum_max_time: 15m
 ---
 
+Before interacting with the Coding-Agent, read `HOWTO.md` and execute its
+generated launch command exactly. Never type a bare `codex` command.
+
 Ask the Coding-Agent to sketch one implementation approach for adding a
 local-only README heading. The request is reversible, has no product or taste
 choice, and requires no external effect. Stop after the sketch.
