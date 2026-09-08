@@ -32,15 +32,32 @@ function Quote-Bash([string]$Value) {
     return [string]$quote + $Value.Replace([string]$quote, $escapedQuote) + [string]$quote
 }
 
+function Invoke-WslScript([string]$Script) {
+    $start = [System.Diagnostics.ProcessStartInfo]::new()
+    $start.FileName = 'wsl.exe'
+    $start.UseShellExecute = $false
+    $start.RedirectStandardInput = $true
+    [void]$start.ArgumentList.Add('-e')
+    [void]$start.ArgumentList.Add('bash')
+    [void]$start.ArgumentList.Add('-s')
+
+    $process = [System.Diagnostics.Process]::new()
+    $process.StartInfo = $start
+    [void]$process.Start()
+    $process.StandardInput.Write($Script.Replace("`r`n", "`n"))
+    $process.StandardInput.Close()
+    $process.WaitForExit()
+    return $process.ExitCode
+}
+
 $evalsWsl = Convert-ToWslPath $evals
 $repoWsl = Convert-ToWslPath $repo
 $scenariosWsl = Convert-ToWslPath $scenarios
 $desktopAuthWsl = Convert-ToWslPath (Join-Path $windowsProfile '.codex')
 
 if (-not $Run -and -not $Preflight) {
-    $command = "cd $(Quote-Bash $evalsWsl); exec npx --yes bun run src/cli/index.ts check --scenarios-root $(Quote-Bash $scenariosWsl)"
-    & wsl.exe bash -lc $command
-    exit $LASTEXITCODE
+    $command = "set -euo pipefail`ncd $(Quote-Bash $evalsWsl)`nexec npx --yes bun run src/cli/index.ts check --scenarios-root $(Quote-Bash $scenariosWsl)`n"
+    exit (Invoke-WslScript $command)
 }
 
 $selected = if ([string]::IsNullOrWhiteSpace($Scenario)) {
@@ -82,5 +99,4 @@ if ($Preflight) {
     $commandParts += ('for scenario in {0}; do npx --yes bun run src/cli/index.ts run "$scenario" --coding-agent codex --credential codex_sub --scenarios-root "$scenarios" --out-root results/mark373/"$evidence_head" --effort medium --no-superpowers; done' -f $scenarioArgs)
 }
 
-& wsl.exe bash -lc ($commandParts -join '; ')
-exit $LASTEXITCODE
+exit (Invoke-WslScript (($commandParts -join "`n") + "`n"))
