@@ -668,8 +668,9 @@ class TestQuorumExamScaffolding:
         assert "--work-tree" in launcher
         assert 'mkdir -p "results/mark373/$evidence_head"' in launcher
         assert 'export PATH="$quorum_bin:$PATH"' in launcher
+        assert "OPENAI_API_KEY" in launcher
+        assert "--grader-model gpt-5.5" in launcher
         assert "[switch]$Preflight" in launcher
-        assert "OPENAI_API_KEY" not in launcher
 
         gauntlet = DOCS / "quorum" / "bin" / "gauntlet"
         shim = _read(gauntlet)

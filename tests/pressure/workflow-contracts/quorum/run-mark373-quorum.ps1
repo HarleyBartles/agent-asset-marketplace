@@ -38,6 +38,8 @@ function Invoke-WslScript([string]$Script) {
     $start.FileName = 'wsl.exe'
     $start.UseShellExecute = $false
     $start.RedirectStandardInput = $true
+    $wslEnv = @($start.Environment['WSLENV'] -split ':' | Where-Object { $_ -and $_ -notmatch '^OPENAI_API_KEY(?:/.*)?$' })
+    $start.Environment['WSLENV'] = (@($wslEnv) + 'OPENAI_API_KEY') -join ':'
     [void]$start.ArgumentList.Add('-e')
     [void]$start.ArgumentList.Add('bash')
     [void]$start.ArgumentList.Add('-s')
@@ -85,6 +87,7 @@ $commandParts = @(
     "quorum_bin=$(Quote-Bash $quorumBinWsl)",
     "desktop_auth=$(Quote-Bash $desktopAuthWsl)",
     'export PATH="$quorum_bin:$PATH"',
+    'test -n "${OPENAI_API_KEY:-}"',
     'test -z "$(git --git-dir="$repo_git_dir" --work-tree="$repo" status --porcelain)"',
     'evidence_head=$(git --git-dir="$repo_git_dir" --work-tree="$repo" rev-parse HEAD)',
     'auth_runtime=$(mktemp -d)',
@@ -107,7 +110,7 @@ if ($Preflight) {
     $commandParts += 'printf ''MARK-373 preflight-ready head=%s\n'' "$evidence_head"'
 } else {
     $commandParts += 'mkdir -p "results/mark373/$evidence_head"'
-    $commandParts += ('for scenario in {0}; do npx --yes bun run src/cli/index.ts run "$scenario" --coding-agent codex --credential codex_sub --scenarios-root "$scenarios" --out-root results/mark373/"$evidence_head" --effort medium --no-superpowers; done' -f $scenarioArgs)
+    $commandParts += ('for scenario in {0}; do npx --yes bun run src/cli/index.ts run "$scenario" --coding-agent codex --credential codex_sub --grader-model gpt-5.5 --scenarios-root "$scenarios" --out-root results/mark373/"$evidence_head" --effort medium --no-superpowers; done' -f $scenarioArgs)
 }
 
 exit (Invoke-WslScript (($commandParts -join "`n") + "`n"))
