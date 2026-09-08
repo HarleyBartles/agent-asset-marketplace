@@ -378,6 +378,25 @@ py -3 tools/run_workflow_pressure_campaign.py \
 - [x] Run the workflow-contract and hook-contract focused tests => 44 and 35 passed respectively after the fresh-eyes repair pass.
 - [ ] **Green exit/checkpoint:** blocked because the real read-only smoke did not complete; 0 revised trials are valid and the retained 52 scores are diagnostic-only. Do not advance Task 7 to a green behavioral baseline until the smoke passes.
 
+### Quorum/Luna execution attempt (2026-09-08)
+
+- [x] Cloned the separate `superpowers-evals` and `gauntlet` repositories under
+  this worktree's ignored `evals/` boundary and ran them only through WSL.
+- [x] Proved the immutable-head runner at
+  `f0c46994ad56deec962f50808ec190a69397b442` sees a clean tree, copies the
+  desktop Codex subscription auth into a private disposable runtime, and
+  observes empty effective MCP and plugin inventories with apps/plugins
+  disabled.
+- [x] Reached Quorum fixture setup and the Gauntlet boundary without starting a
+  valid Luna trial. Quorum's pinned Gauntlet child accepts only Anthropic grader
+  credentials; this environment has no `CLAUDE_CODE_OAUTH_TOKEN`,
+  `ANTHROPIC_AUTH_TOKEN`, or `ANTHROPIC_API_KEY`.
+- [x] Made the missing grader credential a fail-closed preflight result (exit 3)
+  rather than weakening Quorum's credential projection or misclassifying the
+  attempt as a Luna/model failure.
+- [ ] Resume the 13-scenario Luna exam only after an authorised Anthropic grader
+  credential is available. No Quorum score or behavioral verdict is valid yet.
+
 ## Task 8: Regenerate, review, hook-validate, publish, promote PR #311
 
 - [x] Confirmed explicit human approval to implement and verified PR #311 remains open Draft against `main`. If merged/closed before implementation, create fresh branch from then-current `main` carrying approved plan instead of mutating closed/merged branch.

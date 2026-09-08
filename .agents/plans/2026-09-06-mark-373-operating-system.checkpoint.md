@@ -1,10 +1,10 @@
 plan: .agents/plans/2026-09-06-mark-373-operating-system.md
 branch: codex/mark-373-operating-system
-head_at_capture: b3a901104426dcdcd4f7a18aacc316b29c8de5da
-published_head: b3a901104426dcdcd4f7a18aacc316b29c8de5da
+head_at_capture: f0c46994ad56deec962f50808ec190a69397b442
+published_head: f0c46994ad56deec962f50808ec190a69397b442
 last_completed_task: 6
 next_task: 7
-next_step: resolve the harness-blocked MCP/plugin inventory boundary, then create a fresh immutable evidence head and rerun the fixed campaign
+next_step: provide an authorised Anthropic grader credential, rerun the fail-closed Quorum preflight, then run the 13-scenario Luna exam from a fresh immutable evidence head
 checkpoint_state: clean published implementation state at head_at_capture
 checkpoint_publication: this record describes the published implementation head; its containing closeout commit is intentionally not self-referenced
 working_tree_status: clean at head_at_capture before authoring this closeout record
@@ -64,9 +64,12 @@ last_green_evidence:
   - fresh verification at b3a901104426dcdcd4f7a18aacc316b29c8de5da => workflow contracts 44 passed; repo-standards 35 passed; git diff --check HEAD^ passed; working tree clean
   - git push origin codex/mark-373-operating-system => published b3a901104426dcdcd4f7a18aacc316b29c8de5da
   - PR #311 verification => OPEN, Draft, base main, remote head b3a901104426dcdcd4f7a18aacc316b29c8de5da
+  - Quorum exam implementation and WSL runner repairs => published through f0c46994ad56deec962f50808ec190a69397b442 [all normal hooked commits passed]
+  - Quorum preflight at f0c46994ad56deec962f50808ec190a69397b442 => clean immutable source, desktop Codex auth staged privately, empty MCP inventory, empty plugin inventory, then fail-closed exit 3 because no Anthropic grader credential is available
+  - attempted Quorum runs before the final preflight repair => no valid Luna trial; failures occurred in harness setup or Gauntlet grader startup and remain ignored diagnostic traces
 historical_blocked_evidence_head: 8f6280aa5dad59b33124f50af37b7f7150ea2afa
-evidence_head: not-set; next behavioral campaign must use a fresh immutable head after the MCP/plugin blocker is resolved
-unresolved_blockers: revised campaign remains harness-blocked because effective MCP inventory is non-empty; temporary upstream clone cleanup was rejected by environment destructive-command policy; review-preflight retains eight pre-existing origin/main warnings; Ready promotion remains a human-owned decision for the coordinated cross-repository campaign
+evidence_head: f0c46994ad56deec962f50808ec190a69397b442; Quorum isolation preflight passed but grader-auth preflight blocked before any valid Luna trial
+unresolved_blockers: Quorum requires an authorised Anthropic grader credential and none is available in Windows or WSL; review-preflight retains eight pre-existing origin/main warnings; Ready promotion remains a human-owned decision for the coordinated cross-repository campaign
 resume_reads:
   - .agents/plans/2026-09-06-mark-373-operating-system.md: Luna Execution Contract, Global Constraints, Task 7
   - .agents/docs/mark-373-superpowers-v6.3-rebase.md
