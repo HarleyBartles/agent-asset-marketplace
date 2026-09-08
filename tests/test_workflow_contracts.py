@@ -667,17 +667,16 @@ class TestQuorumExamScaffolding:
         assert "--git-dir" in launcher
         assert "--work-tree" in launcher
         assert 'mkdir -p "results/mark373/$evidence_head"' in launcher
-        assert 'export MARK373_REPO_ROOT="$repo"' in launcher
-        assert 'export MARK373_EVIDENCE_HEAD="$evidence_head"' in launcher
         assert "[switch]$Preflight" in launcher
         assert "OPENAI_API_KEY" not in launcher
 
     def test_skills_only_stage_copies_the_exact_composed_stack(self):
         stage = _read(DOCS / "quorum" / "lib" / "stage-skills-only.sh")
-        assert "MARK373_REPO_ROOT" in stage
-        assert "MARK373_EVIDENCE_HEAD" in stage
         assert ".agents/skills" in stage
-        assert "git -C" not in stage
+        assert "wslpath -a" in stage
+        assert '--git-dir="$marketplace_git_dir"' in stage
+        assert '--work-tree="$marketplace_root"' in stage
+        assert "rev-parse HEAD" in stage
         assert "sha256sum" in stage
         assert "cp -a" in stage
 

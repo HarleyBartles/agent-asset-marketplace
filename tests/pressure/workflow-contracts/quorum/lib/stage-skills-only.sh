@@ -1,12 +1,14 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-marketplace_root=${MARK373_REPO_ROOT:?MARK373_REPO_ROOT is required}
-evidence_head=${MARK373_EVIDENCE_HEAD:?MARK373_EVIDENCE_HEAD is required}
+marketplace_root=$(realpath "$QUORUM_SCENARIO_DIR/../../../../../..")
+marketplace_git_dir=$(sed -n 's/^gitdir: //p' "$marketplace_root/.git")
+marketplace_git_dir=$(wslpath -a "$marketplace_git_dir")
 skills_source="$marketplace_root/.agents/skills"
 skills_target="$QUORUM_WORKDIR/.agents/skills"
 
 test -d "$skills_source"
+test -z "$(git --git-dir="$marketplace_git_dir" --work-tree="$marketplace_root" status --porcelain)"
 
 mkdir -p "$QUORUM_WORKDIR/.agents"
 cp -a "$skills_source" "$skills_target"
@@ -19,5 +21,6 @@ skills_sha256=$(
         sha256sum |
         cut -d ' ' -f 1
 )
+evidence_head=$(git --git-dir="$marketplace_git_dir" --work-tree="$marketplace_root" rev-parse HEAD)
 printf '%s\n' "$evidence_head" > "$QUORUM_WORKDIR/.agents/mark373-evidence-head"
 printf '%s\n' "$skills_sha256" > "$QUORUM_WORKDIR/.agents/mark373-skills-sha256"
