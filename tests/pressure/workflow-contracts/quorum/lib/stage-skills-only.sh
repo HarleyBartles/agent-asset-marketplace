@@ -16,6 +16,7 @@ test -z "$(git --git-dir="$marketplace_git_dir" --work-tree="$marketplace_root" 
 
 mkdir -p "$QUORUM_WORKDIR/.agents"
 cp -a "$skills_source" "$skills_target"
+printf '%s\n' '/.agents/' >> "$QUORUM_WORKDIR/.git/info/exclude"
 
 skills_sha256=$(
     cd "$skills_target"

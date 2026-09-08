@@ -640,16 +640,26 @@ class TestQuorumExamScaffolding:
         assert all(len(row["verdict_sha256"]) == 64 for row in summary["scenarios"])
 
     def test_pressure_repairs_are_owned_by_canonical_instruction_sources(self):
+        bootstrap = _read(SKILLS / "using-superpowers-plus" / "SKILL.md")
         routing = _read(SKILLS / "using-superpowers-plus" / "references" / "bootstrap-routing.md")
         questions = _read(SKILLS / "asking-clarifying-questions" / "SKILL.md")
         execution = _read(SKILLS / "executing-plans" / "SKILL.md")
         finishing = _read(SKILLS / "finishing-a-development-branch" / "SKILL.md")
         safety = _read(REPO_SKILLS / "risk-gates" / "references" / "gates" / "safety-gate.md")
         assert "tiny_reversible_change" in routing
+        assert "Tiny reversible fast path" in bootstrap
+        assert "Taste ambiguity stop" in bootstrap
+        assert "Checkpoint-first resume exception" in bootstrap
+        assert "Destructive-authority stop" in bootstrap
         assert "taste words" in questions
         assert "durable checkpoint before live repository inspection" in execution
         assert "inspect the current branch and status" in finishing
         assert "first response" in safety and "reversible alternative" in safety
+
+        staging = _read(DOCS / "quorum" / "lib" / "stage-skills-only.sh")
+        finishing_setup = _read(DOCS / "quorum" / "scenarios" / "branch-finish-evidence" / "setup.sh")
+        assert "/.agents/" in staging
+        assert "mark373-validation-evidence.json" in finishing_setup
 
         bounded = _read(DOCS / "quorum" / "scenarios" / "bounded-parallel" / "checks.sh")
         portable = _read(DOCS / "quorum" / "scenarios" / "repo-portable-conflict" / "checks.sh")

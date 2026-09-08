@@ -47,6 +47,21 @@ and identify the exact state-bound validation evidence being reused. A user's
 summary that work is committed or checks passed is context, not a substitute
 for these read-only observations.
 
+Complete all three observations before choosing a route:
+
+1. Read the current branch, `HEAD`, and status.
+2. Search the repository's declared evidence locations and bounded local
+   metadata (including `.agents/*evidence*` when present) for the focused and
+   broad validation receipts named by the request.
+3. Confirm that each receipt names the current `HEAD` and claim. Ignore
+   explicitly excluded harness/tool scaffolding when judging whether the
+   product tree changed; do not let such scaffolding substitute for reading the
+   evidence receipt.
+
+If the request says evidence exists but bounded discovery cannot find it, say
+that the evidence could not be verified and stop. Do not silently convert that
+state into a keep-local route.
+
 Use the repository's current canonical evidence. Reuse valid focused or hooked
 proof when the tested state and claim are unchanged; run the broad gate when
 the state changed, evidence is stale, or a different claim needs proof.

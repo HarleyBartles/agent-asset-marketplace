@@ -1,7 +1,7 @@
 ---
 name: using-superpowers-plus
-description: Use when starting any conversation - establishes how to find and use skills,
-  requiring skill invocation before ANY response including clarifying questions
+description: Use when starting a conversation to find the smallest lawful workflow,
+  subject to its explicit tiny-change, checkpoint, taste, and safety fast paths
 metadata:
   source-id: using-superpowers-plus
   source-path: codex-marketplace/plugins/superpowers-plus/skills/using-superpowers-plus/SKILL.md
@@ -9,8 +9,8 @@ metadata:
   source-category: first_party
   status: active
   owner: Harley Bartles
-  scope: Use when starting any conversation - establishes how to find and use skills,
-    requiring skill invocation before ANY response including clarifying questions
+  scope: First-turn workflow routing with explicit proportionality, checkpoint,
+    taste-ambiguity, and destructive-authority exceptions
   use_when:
   - Use when starting any conversation to find and invoke the right skill.
   - Use when unsure whether a skill applies to the current task.
@@ -64,14 +64,57 @@ If you were dispatched as a subagent to execute a specific task, ignore this ski
 </SUBAGENT-STOP>
 
 <EXTREMELY-IMPORTANT>
-At the start of every conversation, invoke `/using-superpowers-plus` first. It is the sole first-turn router.
+At the start of every conversation, use `/using-superpowers-plus` as the sole
+first-turn router, including the explicit exceptions and fast paths below.
 
 Do not invoke other skills before `/using-superpowers-plus` has routed you to the owning skill. Once the owning skill is active, invoke the skills it explicitly tells you to at the relevant points in its workflow.
 </EXTREMELY-IMPORTANT>
 
+## First-turn exceptions and fast paths
+
+These rules are part of this router. Apply them directly from the request; do
+not read another skill or inspect the repository first.
+
+### Tiny reversible fast path
+
+For one fully specified, local, reversible edit with one obvious target and no
+product, taste, authority, safety, publication, or architectural decision:
+
+1. Do not invoke `/inspecting-the-environment` or narrate skill selection.
+2. Give at most one short action update.
+3. Make the edit, run one focused check, and report the result.
+
+### Taste ambiguity stop
+
+An unresolved human-owned taste word such as “premium,” “playful,” “bold,” or
+“more polished” is not an implementation target. Invoke
+`/asking-clarifying-questions` immediately and ask one concrete question before
+reading source or editing. Do not silently translate taste into copy, colour,
+layout, or architecture.
+
+### Checkpoint-first resume exception
+
+When a resumed or compacted-work request explicitly identifies a durable
+checkpoint as the first source, read that checkpoint before this skill or any
+other repository source. Then invoke `/using-superpowers-plus`, reconcile the
+checkpoint against live state, and continue by the selected route. This narrow
+ordering exception preserves the checkpoint's role without treating its claims
+as current truth.
+
+### Destructive-authority stop
+
+When the request asks for destructive or irreversible work but does not grant
+clear authority, the first response must state that authority is missing and
+offer a reversible alternative. Do not inspect the repository or announce an
+intention to perform the destructive action first. Invoke `/risk-gates` only
+after that immediate safety response if further work remains.
+
 ## The Rule
 
-**Invoke `/using-superpowers-plus` before any response or action.** — including clarifying questions, exploring the codebase, or checking files. It will resolve the owning skill for the request.
+**Apply `/using-superpowers-plus` before any ordinary response or action.** Its
+first-turn exceptions above may require a bounded edit, checkpoint read,
+clarifying question, or safety response before another skill or repository
+inspection. Otherwise it resolves the owning skill for the request.
 
 **Then announce "Using [skill] to [purpose]" and follow that skill exactly.** If it has a checklist, create a todo per item. Do not load additional skills unless the current skill explicitly leaves a decision unresolved and another skill directly owns it.
 
