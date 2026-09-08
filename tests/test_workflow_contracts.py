@@ -651,6 +651,14 @@ class TestQuorumExamScaffolding:
             assert "read `HOWTO.md`" in story
             assert "Never type a bare `codex` command" in story
             assert "setup-helpers run" in setup
+            mode = subprocess.run(
+                ["git", "ls-files", "--stage", "--", str(path / "setup.sh")],
+                cwd=ROOT,
+                check=True,
+                capture_output=True,
+                text=True,
+            ).stdout.split()[0]
+            assert mode == "100755"
             assert "stage-skills-only.sh" in setup
             assert "pre()" in checks and "post()" in checks
             assert "$QUORUM_WORKDIR" not in checks
