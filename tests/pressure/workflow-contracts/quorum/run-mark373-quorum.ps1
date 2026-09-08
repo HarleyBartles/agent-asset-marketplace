@@ -1,6 +1,7 @@
 [CmdletBinding()]
 param(
     [switch]$Run,
+    [switch]$Preflight,
     [string]$Scenario
 )
 
@@ -9,8 +10,12 @@ $ErrorActionPreference = 'Stop'
 $repo = (Resolve-Path (Join-Path $PSScriptRoot '..\..\..\..')).Path
 $evals = Join-Path $repo 'evals'
 $scenarios = Join-Path $repo 'tests\pressure\workflow-contracts\quorum\scenarios'
-$superpowers = Join-Path $repo 'codex-marketplace\plugins\superpowers-plus'
 $windowsProfile = if ($env:USERPROFILE) { $env:USERPROFILE } else { throw 'USERPROFILE is unset' }
+$exam = Get-Content -Raw (Join-Path $PSScriptRoot 'exam.json') | ConvertFrom-Json
+
+if ($Run -and $Preflight) {
+    throw '-Run and -Preflight are mutually exclusive'
+}
 
 function Convert-ToWslPath([string]$Path) {
     $normalized = $Path.Replace('\', '/')
@@ -28,21 +33,53 @@ function Quote-Bash([string]$Value) {
 }
 
 $evalsWsl = Convert-ToWslPath $evals
+$repoWsl = Convert-ToWslPath $repo
 $scenariosWsl = Convert-ToWslPath $scenarios
-$superpowersWsl = Convert-ToWslPath $superpowers
-$authHomeWsl = Convert-ToWslPath (Join-Path $windowsProfile '.codex')
+$desktopAuthWsl = Convert-ToWslPath (Join-Path $windowsProfile '.codex')
+
+if (-not $Run -and -not $Preflight) {
+    $command = "cd $(Quote-Bash $evalsWsl); exec npx --yes bun run src/cli/index.ts check --scenarios-root $(Quote-Bash $scenariosWsl)"
+    & wsl.exe bash -lc $command
+    exit $LASTEXITCODE
+}
+
+$selected = if ([string]::IsNullOrWhiteSpace($Scenario)) {
+    @($exam.scenarios)
+} elseif ($exam.scenarios -contains $Scenario) {
+    @($Scenario)
+} else {
+    throw "Unknown MARK-373 scenario: $Scenario"
+}
+$scenarioArgs = ($selected | ForEach-Object { Quote-Bash ([string]$_) }) -join ' '
 
 $commandParts = @(
-    "cd $(Quote-Bash $evalsWsl)",
-    "export CODEX_AUTH_HOME=$(Quote-Bash $authHomeWsl)",
-    "export SUPERPOWERS_ROOT=$(Quote-Bash $superpowersWsl)"
+    'set -euo pipefail',
+    "repo=$(Quote-Bash $repoWsl)",
+    "evals=$(Quote-Bash $evalsWsl)",
+    "scenarios=$(Quote-Bash $scenariosWsl)",
+    "desktop_auth=$(Quote-Bash $desktopAuthWsl)",
+    'test -z "$(git -C "$repo" status --porcelain)"',
+    'evidence_head=$(git -C "$repo" rev-parse HEAD)',
+    'auth_runtime=$(mktemp -d)',
+    'preflight_runtime=$(mktemp -d)',
+    'trap ''rm -rf "$auth_runtime" "$preflight_runtime"'' EXIT',
+    'install -d -m 700 "$auth_runtime"',
+    'install -m 600 "$desktop_auth/auth.json" "$auth_runtime/auth.json"',
+    'export CODEX_AUTH_HOME="$auth_runtime"',
+    'mkdir -p "$preflight_runtime/home" "$preflight_runtime/codex"',
+    'install -m 600 "$auth_runtime/auth.json" "$preflight_runtime/codex/auth.json"',
+    'mcp_json=$(HOME="$preflight_runtime/home" CODEX_HOME="$preflight_runtime/codex" codex mcp list --json -c features.apps=false)',
+    'test "$(printf ''%s'' "$mcp_json" | tr -d ''[:space:]'')" = ''[]''',
+    'plugin_json=$(HOME="$preflight_runtime/home" CODEX_HOME="$preflight_runtime/codex" codex plugin list --json -c features.plugins=false)',
+    'plugin_compact=$(printf ''%s'' "$plugin_json" | tr -d ''[:space:]'')',
+    'case "$plugin_compact" in *''"installed":[]''*''"available":[]''*) ;; *) printf ''%s\n'' ''MARK-373 preflight: external plugin inventory is not empty'' >&2; exit 2 ;; esac',
+    'cd "$evals"'
 )
 
-if ($Run) {
-    $scenarioArg = if ([string]::IsNullOrWhiteSpace($Scenario)) { '' } else { " --scenarios $(Quote-Bash $Scenario)" }
-    $commandParts += "exec npx --yes bun run src/cli/index.ts run-all --coding-agents codex --credentials codex_sub --scenarios-root $(Quote-Bash $scenariosWsl) --jobs 1$scenarioArg --out-root results/mark373"
+if ($Preflight) {
+    $commandParts += 'printf ''MARK-373 preflight-ready head=%s\n'' "$evidence_head"'
 } else {
-    $commandParts += "exec npx --yes bun run src/cli/index.ts check --scenarios-root $(Quote-Bash $scenariosWsl)"
+    $commandParts += ('for scenario in {0}; do npx --yes bun run src/cli/index.ts run "$scenario" --coding-agent codex --credential codex_sub --scenarios-root "$scenarios" --out-root results/mark373/"$evidence_head" --effort medium --no-superpowers; done' -f $scenarioArgs)
 }
 
 & wsl.exe bash -lc ($commandParts -join '; ')

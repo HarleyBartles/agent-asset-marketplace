@@ -6,27 +6,33 @@ repository root's ignored `evals/` directory; the exam itself is tracked here
 so the campaign remains part of this repository's evidence contract.
 
 The thirteen scenario directories map one-to-one to the scenarios in
-`../campaign.json`. Each scenario has a fenced Gauntlet-Agent story, a
-disposable fixture setup, and independent deterministic checks. The stories
-grade judgment and authority; `checks.sh` corroborates observable skill calls,
-files, and prohibited actions without exposing the rubric answer to the
-subject.
+`../campaign.json`. Each fixture copies the exact committed `.agents/skills`
+tree into its disposable checkout and records both the marketplace evidence
+head and a deterministic aggregate skill hash. Codex plugins stay disabled;
+the composed skills are exercised as project-local assets rather than through
+the remote plugin surface.
+
+Each scenario has a fenced Gauntlet-Agent story, disposable setup, and
+independent deterministic checks. The stories grade judgment and authority;
+`checks.sh` corroborates observable skill calls, files, and prohibited actions
+without exposing the rubric answer to the subject.
 
 ## WSL and desktop ChatGPT auth
 
 Run the wrapper from PowerShell. It converts this checkout and the Windows
-profile's `.codex` directory to WSL paths, exports `CODEX_AUTH_HOME`, and then
-executes Quorum inside WSL. Quorum copies the subscription `auth.json` into a
-throwaway per-run home; no token is copied into this repository or passed as a
-general environment variable.
+profile's `.codex` directory to WSL paths, copies the subscription auth into a
+private temporary WSL auth home with mode `0600`, and exports that directory as
+`CODEX_AUTH_HOME`. Quorum then copies the auth into each throwaway run home. No
+token enters this repository or a general child environment.
 
 ```powershell
 pwsh -File tests/pressure/workflow-contracts/quorum/run-mark373-quorum.ps1
 ```
 
 The default action is static exam validation. A later live run must be an
-explicit `-Run` invocation after the MARK-373 fail-closed preflight is green.
-The current Quorum subscription credential uses the account-selected Codex
-model; exact Luna/Terra/Sol/Astra model claims remain owned by the fixed
-MARK-373 runner unless the harness gains a reviewed subscription model-threading
-adapter.
+explicit `-Run` invocation. Before spending a model call, the wrapper requires
+a clean immutable source tree and probes disposable Codex homes for empty MCP
+and plugin inventories. It runs each selected scenario separately with
+`--no-superpowers`; each scenario's `codex.config.toml` pins Luna-medium and
+disables plugins/apps. The fixed MARK-373 runner remains the owner of the later
+Terra/Sol/Astra matrix.

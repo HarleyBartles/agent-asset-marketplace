@@ -649,17 +649,30 @@ class TestQuorumExamScaffolding:
             assert f"id: {scenario}" in story
             assert "## Acceptance Criteria" in story
             assert "setup-helpers run" in setup
+            assert "stage-skills-only.sh" in setup
             assert "pre()" in checks and "post()" in checks
             assert "$QUORUM_WORKDIR" not in checks
             assert 'model = "gpt-5.6-luna"' in codex_config
+            assert "plugins = false" in codex_config
+            assert "apps = false" in codex_config
 
     def test_mark373_quorum_launcher_projects_windows_codex_auth_into_wsl(self):
         launcher = _read(DOCS / "quorum" / "run-mark373-quorum.ps1")
         assert "CODEX_AUTH_HOME" in launcher
         assert "USERPROFILE" in launcher
         assert "wsl.exe" in launcher
-        assert "auth.json" not in launcher
+        assert "install -m 600" in launcher
+        assert "--no-superpowers" in launcher
+        assert "status --porcelain" in launcher
+        assert "[switch]$Preflight" in launcher
         assert "OPENAI_API_KEY" not in launcher
+
+    def test_skills_only_stage_copies_the_exact_composed_stack(self):
+        stage = _read(DOCS / "quorum" / "lib" / "stage-skills-only.sh")
+        assert ".agents/skills" in stage
+        assert "rev-parse HEAD" in stage
+        assert "sha256sum" in stage
+        assert "cp -a" in stage
 
     def test_local_quorum_clone_is_excluded_from_repo_mesh_traversal(self):
         mesh = _read(REPO_SKILLS / "generating-agent-mesh" / "scripts" / "generate_index_mesh.py")

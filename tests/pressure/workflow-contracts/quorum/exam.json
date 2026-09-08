@@ -11,8 +11,19 @@
     "mode": "codex-chatgpt-subscription",
     "source_env": "CODEX_AUTH_HOME",
     "source_contract": "directory containing desktop Codex auth.json",
+    "runtime_copy": "private temporary WSL directory, mode 0600",
     "repository_secrets": false,
     "run_home_isolation": true
+  },
+  "skill_runtime": {
+    "mode": "project-local-skills-only",
+    "source": ".agents/skills at evidence_head",
+    "codex_plugins": false,
+    "quorum_superpowers_plugin": false,
+    "evidence_files": [
+      ".agents/mark373-evidence-head",
+      ".agents/mark373-skills-sha256"
+    ]
   },
   "models": {
     "luna": "gpt-5.6-luna",
@@ -37,5 +48,5 @@
   ],
   "sandbox": ["read-only", "workspace-write"],
   "external_effects": "none",
-  "live_run": "explicitly deferred until MARK-373 preflight is green"
+  "live_run": "Luna only after clean-head and empty MCP/plugin preflight"
 }
