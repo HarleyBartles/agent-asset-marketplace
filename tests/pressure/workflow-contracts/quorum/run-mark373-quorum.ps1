@@ -102,6 +102,7 @@ $commandParts = @(
 if ($Preflight) {
     $commandParts += 'printf ''MARK-373 preflight-ready head=%s\n'' "$evidence_head"'
 } else {
+    $commandParts += 'mkdir -p "results/mark373/$evidence_head"'
     $commandParts += ('for scenario in {0}; do npx --yes bun run src/cli/index.ts run "$scenario" --coding-agent codex --credential codex_sub --scenarios-root "$scenarios" --out-root results/mark373/"$evidence_head" --effort medium --no-superpowers; done' -f $scenarioArgs)
 }
 

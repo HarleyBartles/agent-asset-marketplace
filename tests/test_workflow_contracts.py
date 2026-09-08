@@ -666,6 +666,7 @@ class TestQuorumExamScaffolding:
         assert "status --porcelain" in launcher
         assert "--git-dir" in launcher
         assert "--work-tree" in launcher
+        assert 'mkdir -p "results/mark373/$evidence_head"' in launcher
         assert "[switch]$Preflight" in launcher
         assert "OPENAI_API_KEY" not in launcher
 
