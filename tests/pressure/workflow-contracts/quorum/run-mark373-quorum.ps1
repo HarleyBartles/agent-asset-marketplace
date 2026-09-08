@@ -89,7 +89,6 @@ $commandParts = @(
     "quorum_bin=$(Quote-Bash $quorumBinWsl)",
     "desktop_auth=$(Quote-Bash $desktopAuthWsl)",
     'export PATH="$quorum_bin:$PATH"',
-    'if [ -z "${CLAUDE_CODE_OAUTH_TOKEN:-}${ANTHROPIC_AUTH_TOKEN:-}${ANTHROPIC_API_KEY:-}" ]; then printf ''%s\n'' ''MARK-373 preflight: Quorum requires an Anthropic grader credential'' >&2; exit 3; fi',
     'test -z "$(git --git-dir="$repo_git_dir" --work-tree="$repo" status --porcelain)"',
     'evidence_head=$(git --git-dir="$repo_git_dir" --work-tree="$repo" rev-parse HEAD)',
     'auth_runtime=$(mktemp -d)',
@@ -105,6 +104,7 @@ $commandParts = @(
     'plugin_json=$(HOME="$preflight_runtime/home" CODEX_HOME="$preflight_runtime/codex" codex plugin list --json -c features.plugins=false)',
     'plugin_compact=$(printf ''%s'' "$plugin_json" | tr -d ''[:space:]'')',
     'case "$plugin_compact" in *''"installed":[]''*''"available":[]''*) ;; *) printf ''%s\n'' ''MARK-373 preflight: external plugin inventory is not empty'' >&2; exit 2 ;; esac',
+    'if [ -z "${CLAUDE_CODE_OAUTH_TOKEN:-}${ANTHROPIC_AUTH_TOKEN:-}${ANTHROPIC_API_KEY:-}" ]; then printf ''%s\n'' ''MARK-373 preflight: Quorum requires an Anthropic grader credential'' >&2; exit 3; fi',
     'cd "$evals"'
 )
 
