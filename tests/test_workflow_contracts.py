@@ -175,6 +175,8 @@ class TestPlanningDelegationReview:
         assert "if concerns: raise them with your human partner before starting" not in text
         assert "falsifiable technical" in text
         assert "human-owned" in text
+        assert "if a single missing fact blocks the next step" not in text
+        assert "stop when blocked, don't guess" not in text
 
     def test_implementing_runbook_routes_linear_and_bounds_fix_while_here(self):
         text = _read(ROOT / ".agents" / "runbooks" / "implementing.md").lower()

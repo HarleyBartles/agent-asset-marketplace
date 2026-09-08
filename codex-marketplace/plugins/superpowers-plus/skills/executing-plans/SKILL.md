@@ -86,7 +86,9 @@ verification are diagnosis inputs, not automatic human pauses. Investigate and
 rule when the question is falsifiable; ask rather than guess only when the
 shared human stop boundary is actually reached.
 
-If a single missing fact blocks the next step, invoke `/asking-clarifying-questions` before guessing.
+If a missing fact is human-owned or cannot lawfully be resolved by inspection,
+invoke `/asking-clarifying-questions`. Otherwise investigate the technical fact
+and continue without converting it into a permission question.
 
 ## When to Revisit Earlier Steps
 
@@ -103,5 +105,5 @@ technical path remains.
 - Follow plan steps exactly
 - Don't skip verifications
 - Reference skills when plan says to
-- Stop when blocked, don't guess
+- Stop only at the shared human/safety/authority boundary; investigate technical blockers rather than guessing
 - Never start implementation on main/master branch without explicit user consent
