@@ -686,6 +686,7 @@ class TestQuorumExamScaffolding:
         stage = _read(DOCS / "quorum" / "lib" / "stage-skills-only.sh")
         assert ".agents/skills" in stage
         assert "wslpath -a" in stage
+        assert 'test -d "$marketplace_root/.git"' in stage
         assert '--git-dir="$marketplace_git_dir"' in stage
         assert '--work-tree="$marketplace_root"' in stage
         assert "rev-parse HEAD" in stage

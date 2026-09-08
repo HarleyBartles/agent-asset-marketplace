@@ -2,8 +2,12 @@
 set -euo pipefail
 
 marketplace_root=$(realpath "$QUORUM_SCENARIO_DIR/../../../../../..")
-marketplace_git_dir=$(sed -n 's/^gitdir: //p' "$marketplace_root/.git")
-marketplace_git_dir=$(wslpath -a "$marketplace_git_dir")
+if test -d "$marketplace_root/.git"; then
+    marketplace_git_dir="$marketplace_root/.git"
+else
+    marketplace_git_dir=$(sed -n 's/^gitdir: //p' "$marketplace_root/.git")
+    marketplace_git_dir=$(wslpath -a "$marketplace_git_dir")
+fi
 skills_source="$marketplace_root/.agents/skills"
 skills_target="$QUORUM_WORKDIR/.agents/skills"
 
