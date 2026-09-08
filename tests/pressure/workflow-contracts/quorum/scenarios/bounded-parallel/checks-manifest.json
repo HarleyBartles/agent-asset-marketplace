@@ -19,10 +19,8 @@
     },
     {
       "phase": "post",
-      "check": "skill-called",
-      "args": [
-        "superpowers-plus:dispatching-parallel-agents"
-      ],
+      "check": "git-repo",
+      "args": [],
       "negated": false,
       "count": 1
     }
