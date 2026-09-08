@@ -458,12 +458,12 @@ not change the MARK-373 product scope or the blocked Task-7 readiness state.
 
 - [x] Regenerate marketplace/installed surfaces and pressure-scan artifacts from
   canonical source; no generated hand edits.
-- [ ] Run focused repo-standards and workflow-contract suites, then make a normal
+- [x] Run focused repo-standards and workflow-contract suites, then make a normal
   hooked commit so the canonical broad gate proves the exact staged state.
-- [ ] Refresh the checkpoint to the committed repair head and explicitly mark
+- [x] Refresh the checkpoint to the committed repair head and explicitly mark
   the prior `8f6280aa...` campaign result as historical blocked evidence; the
   next behavioral campaign must use a new immutable evidence head.
-- [ ] Push the existing Draft PR branch and verify remote head/base/Draft state;
+- [x] Push the existing Draft PR branch and verify remote head/base/Draft state;
   do not promote Ready while Task 7 remains harness-blocked.
 
 ## Acceptance Evidence

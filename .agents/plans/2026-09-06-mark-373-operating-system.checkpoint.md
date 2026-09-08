@@ -1,14 +1,14 @@
 plan: .agents/plans/2026-09-06-mark-373-operating-system.md
 branch: codex/mark-373-operating-system
-head_at_capture: e88c6636de42a60b4409d5c339f91bee9157e39f
-published_head: e88c6636de42a60b4409d5c339f91bee9157e39f
+head_at_capture: b3a901104426dcdcd4f7a18aacc316b29c8de5da
+published_head: b3a901104426dcdcd4f7a18aacc316b29c8de5da
 last_completed_task: 6
 next_task: 7
-next_step: resolve the harness-blocked read-only smoke, then rerun the fixed campaign from a fresh immutable evidence head
-checkpoint_state: clean
-checkpoint_publication: committed checkpoint record; live HEAD may include this record's publication commit
-working_tree_status: clean
-working_diff_sha: none
+next_step: resolve the harness-blocked MCP/plugin inventory boundary, then create a fresh immutable evidence head and rerun the fixed campaign
+checkpoint_state: clean published implementation state at head_at_capture
+checkpoint_publication: this record describes the published implementation head; its containing closeout commit is intentionally not self-referenced
+working_tree_status: clean at head_at_capture before authoring this closeout record
+working_diff_sha: none at head_at_capture
 last_green_evidence:
   - branch refresh => fast-forwarded to 672becb21de42e0545f89ea95e1667ca95163ca1 [PR #311 remains Draft]
   - git -C <temp-clone> cat-file -e <v6.3>^{commit} => passed [b36e0829c6d0140e93cfef2ca599b1b07d4a7797]
@@ -54,7 +54,18 @@ last_green_evidence:
   - campaign preflight at f4d66d27b6d38cfa45506dc1549745bab4de4e64 => harness-blocked while materializing/reporting the exact head; subsequent controlled run at 8f6280aa5dad59b33124f50af37b7f7150ea2afa recorded non-empty MCP inventory
   - workflow-contract tests => 34 passed; repo-standards hook tests => 32 passed
   - review-status commit => e88c6636de42a60b4409d5c339f91bee9157e39f
-evidence_head: 8f6280aa5dad59b33124f50af37b7f7150ea2afa
+  - fresh-eyes RED coverage => campaign evidence/filter/prompt, repo-standards hook/dependency, authority/caller/portability defects reproduced before repair
+  - workflow-contract tests => 44 passed on repaired source
+  - repo-standards tests => 35 passed on repaired source
+  - pressure scan => 54 semantic candidates retained; dispositions current; no new portable-path defect
+  - marketplace and installed-skill regeneration/checks => passed; generated skill mirrors current
+  - normal hooked repair commit => 41de557b51a897f3f3f484b53befc72ce7cea161 [full canonical apply/check gate passed]
+  - normal hooked executing-plans authority follow-up => b3a901104426dcdcd4f7a18aacc316b29c8de5da [full canonical apply/check gate passed]
+  - fresh verification at b3a901104426dcdcd4f7a18aacc316b29c8de5da => workflow contracts 44 passed; repo-standards 35 passed; git diff --check HEAD^ passed; working tree clean
+  - git push origin codex/mark-373-operating-system => published b3a901104426dcdcd4f7a18aacc316b29c8de5da
+  - PR #311 verification => OPEN, Draft, base main, remote head b3a901104426dcdcd4f7a18aacc316b29c8de5da
+historical_blocked_evidence_head: 8f6280aa5dad59b33124f50af37b7f7150ea2afa
+evidence_head: not-set; next behavioral campaign must use a fresh immutable head after the MCP/plugin blocker is resolved
 unresolved_blockers: revised campaign remains harness-blocked because effective MCP inventory is non-empty; temporary upstream clone cleanup was rejected by environment destructive-command policy; review-preflight retains eight pre-existing origin/main warnings; Ready promotion remains a human-owned decision for the coordinated cross-repository campaign
 resume_reads:
   - .agents/plans/2026-09-06-mark-373-operating-system.md: Luna Execution Contract, Global Constraints, Task 7
