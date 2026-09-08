@@ -20,11 +20,13 @@ without exposing the rubric answer to the subject.
 ## WSL and OpenAI authentication
 
 Run the wrapper from PowerShell with `OPENAI_API_KEY` present in the operator
-environment. The wrapper projects that one named credential into WSL. The
-tracked Quorum patch permits it in the isolated Gauntlet grader channel, where
-the grader is pinned to GPT-5.4; Quorum's `openai_responses_56luna` credential
-places it in the coding agent's private per-run credential file. No token enters
-this repository or an unrelated child environment.
+environment. The wrapper projects that one named credential into WSL. Following
+the proven Superpowers eval bridge, the launcher aliases it through Quorum's
+permitted grader slot and the private Gauntlet shim restores it to
+`OPENAI_API_KEY`, unsets the alias, and launches the GPT-5.4 grader. Quorum's
+`openai_responses_56luna` credential separately places the key in the coding
+agent's private per-run credential file. No token enters this repository or an
+unrelated child environment.
 
 ```powershell
 pwsh -File tests/pressure/workflow-contracts/quorum/run-mark373-quorum.ps1

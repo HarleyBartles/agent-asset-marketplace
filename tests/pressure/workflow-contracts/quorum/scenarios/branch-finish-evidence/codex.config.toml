@@ -1,5 +1,2 @@
-model = "gpt-5.6-luna"
-
-[features]
-plugins = false
-apps = false
+features.plugins = false
+features.apps = false

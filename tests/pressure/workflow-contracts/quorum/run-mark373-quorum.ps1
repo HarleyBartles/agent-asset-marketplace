@@ -11,7 +11,6 @@ $repo = (Resolve-Path (Join-Path $PSScriptRoot '..\..\..\..')).Path
 $evals = Join-Path $repo 'evals'
 $scenarios = Join-Path $repo 'tests\pressure\workflow-contracts\quorum\scenarios'
 $quorumBin = Join-Path $repo 'tests\pressure\workflow-contracts\quorum\bin'
-$quorumPatch = Join-Path $repo 'tests\pressure\workflow-contracts\quorum\patches\openai-grader.patch'
 $exam = Get-Content -Raw (Join-Path $PSScriptRoot 'exam.json') | ConvertFrom-Json
 
 if ($Run -and $Preflight) {
@@ -64,7 +63,6 @@ if ($LASTEXITCODE -ne 0 -or [string]::IsNullOrWhiteSpace($gitDir)) {
 $gitDirWsl = Convert-ToWslPath $gitDir
 $scenariosWsl = Convert-ToWslPath $scenarios
 $quorumBinWsl = Convert-ToWslPath $quorumBin
-$quorumPatchWsl = Convert-ToWslPath $quorumPatch
 
 if (-not $Run -and -not $Preflight) {
     $command = "set -euo pipefail`ncd $(Quote-Bash $evalsWsl)`nexec npx --yes bun run src/cli/index.ts check --scenarios-root $(Quote-Bash $scenariosWsl)`n"
@@ -87,8 +85,9 @@ $commandParts = @(
     "evals=$(Quote-Bash $evalsWsl)",
     "scenarios=$(Quote-Bash $scenariosWsl)",
     "quorum_bin=$(Quote-Bash $quorumBinWsl)",
-    "quorum_patch=$(Quote-Bash $quorumPatchWsl)",
     'export PATH="$quorum_bin:$PATH"',
+    'if [ -z "${OPENAI_API_KEY:-}" ]; then printf ''%s\n'' ''MARK-373 preflight: Quorum OpenAI grader requires OPENAI_API_KEY'' >&2; exit 3; fi',
+    'export ANTHROPIC_API_KEY="$OPENAI_API_KEY"',
     'test -z "$(git --git-dir="$repo_git_dir" --work-tree="$repo" status --porcelain)"',
     'evidence_head=$(git --git-dir="$repo_git_dir" --work-tree="$repo" rev-parse HEAD)',
     'preflight_runtime=$(mktemp -d)',
@@ -99,9 +98,6 @@ $commandParts = @(
     'plugin_json=$(HOME="$preflight_runtime/home" CODEX_HOME="$preflight_runtime/codex" codex plugin list --json -c features.plugins=false)',
     'plugin_compact=$(printf ''%s'' "$plugin_json" | tr -d ''[:space:]'')',
     'case "$plugin_compact" in *''"installed":[]''*''"available":[]''*) ;; *) printf ''%s\n'' ''MARK-373 preflight: external plugin inventory is not empty'' >&2; exit 2 ;; esac',
-    'if git -C "$evals" apply --reverse --check "$quorum_patch" >/dev/null 2>&1; then :; else git -C "$evals" apply --check "$quorum_patch" && git -C "$evals" apply "$quorum_patch"; fi',
-    'test "$(git -C "$evals" diff --name-only)" = ''src/runner/gauntlet-env.ts''',
-    'if [ -z "${OPENAI_API_KEY:-}" ]; then printf ''%s\n'' ''MARK-373 preflight: Quorum OpenAI grader requires OPENAI_API_KEY'' >&2; exit 3; fi',
     'cd "$evals"'
 )
 
@@ -109,7 +105,7 @@ if ($Preflight) {
     $commandParts += 'printf ''MARK-373 preflight-ready head=%s\n'' "$evidence_head"'
 } else {
     $commandParts += 'mkdir -p "results/mark373/$evidence_head"'
-    $commandParts += ('for scenario in {0}; do npx --yes bun run src/cli/index.ts run "$scenario" --coding-agent codex --credential openai_responses_56luna --grader-model gpt-5.4 --scenarios-root "$scenarios" --out-root results/mark373/"$evidence_head" --effort medium --no-superpowers; done' -f $scenarioArgs)
+    $commandParts += ('for scenario in {0}; do npx --yes bun run src/cli/index.ts run "$scenario" --coding-agent codex --credential openai_responses_56luna --grader-model gpt-5.4 --gauntlet-bin "$quorum_bin/gauntlet" --scenarios-root "$scenarios" --out-root results/mark373/"$evidence_head" --effort medium --no-superpowers; done' -f $scenarioArgs)
 }
 
 exit (Invoke-WslScript (($commandParts -join "`n") + "`n"))

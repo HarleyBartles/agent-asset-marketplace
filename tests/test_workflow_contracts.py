@@ -652,9 +652,9 @@ class TestQuorumExamScaffolding:
             assert "stage-skills-only.sh" in setup
             assert "pre()" in checks and "post()" in checks
             assert "$QUORUM_WORKDIR" not in checks
-            assert 'model = "gpt-5.6-luna"' in codex_config
-            assert "plugins = false" in codex_config
-            assert "apps = false" in codex_config
+            assert "[features]" not in codex_config
+            assert "features.plugins = false" in codex_config
+            assert "features.apps = false" in codex_config
 
     def test_mark373_quorum_launcher_projects_windows_codex_auth_into_wsl(self):
         launcher = _read(DOCS / "quorum" / "run-mark373-quorum.ps1")
@@ -668,13 +668,16 @@ class TestQuorumExamScaffolding:
         assert 'export PATH="$quorum_bin:$PATH"' in launcher
         assert "OPENAI_API_KEY" in launcher
         assert "--grader-model gpt-5.4" in launcher
-        assert "openai-grader.patch" in launcher
+        assert '--gauntlet-bin "$quorum_bin/gauntlet"' in launcher
+        assert 'export ANTHROPIC_API_KEY="$OPENAI_API_KEY"' in launcher
         assert "Quorum OpenAI grader requires OPENAI_API_KEY" in launcher
         assert "[switch]$Preflight" in launcher
 
         gauntlet = DOCS / "quorum" / "bin" / "gauntlet"
         shim = _read(gauntlet)
         assert "evals/gauntlet" in shim
+        assert "export OPENAI_API_KEY=${ANTHROPIC_API_KEY:" in shim
+        assert "unset ANTHROPIC_API_KEY" in shim
         assert "npx --yes bun run" in shim
 
     def test_skills_only_stage_copies_the_exact_composed_stack(self):
