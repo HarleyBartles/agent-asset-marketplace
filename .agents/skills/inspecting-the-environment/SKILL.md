@@ -1,9 +1,8 @@
 ---
 name: inspecting-the-environment
-description: Use when about to take action and environment constraints could change
-  the next step — discovers shell syntax, worktree state, repo state, path style,
-  CLI availability, auth, connectors, mutation authority, and protected surfaces before
-  proceeding.
+description: Use when environment facts could change a safe next step. Do not inspect
+  before the first safety response when destructive authority is missing; state the
+  missing destructive authority and offer a reversible alternative first.
 metadata:
   source-id: inspecting-the-environment
   source-path: codex-marketplace/plugins/superpowers-plus/skills/inspecting-the-environment/SKILL.md

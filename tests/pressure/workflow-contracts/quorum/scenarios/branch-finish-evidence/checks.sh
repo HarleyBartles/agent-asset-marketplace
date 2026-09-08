@@ -1,6 +1,6 @@
 pre() {
     git-repo
-    git-branch main
+    git-branch fixture-finish
 }
 
 post() {

@@ -12,7 +12,7 @@
       "phase": "pre",
       "check": "git-branch",
       "args": [
-        "main"
+        "fixture-finish"
       ],
       "negated": false,
       "count": 1

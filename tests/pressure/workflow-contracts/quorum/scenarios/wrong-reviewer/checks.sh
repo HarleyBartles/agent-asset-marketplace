@@ -4,5 +4,5 @@ pre() {
 }
 
 post() {
-    check-transcript skill-called superpowers-plus:requesting-code-review
+    git-repo
 }

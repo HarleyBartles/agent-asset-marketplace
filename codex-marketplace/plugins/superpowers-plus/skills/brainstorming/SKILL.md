@@ -1,7 +1,8 @@
 ---
 name: brainstorming
-description: Use when starting any creative work such as creating features, building
-  components, adding functionality, or modifying behavior.
+description: Use when starting creative work after the implementation target is
+  concrete. Do not inspect or design through an unresolved human-owned taste word;
+  use asking-clarifying-questions first.
 metadata:
   source-id: brainstorming
   source-path: codex-marketplace/plugins/superpowers-plus/skills/brainstorming/SKILL.md

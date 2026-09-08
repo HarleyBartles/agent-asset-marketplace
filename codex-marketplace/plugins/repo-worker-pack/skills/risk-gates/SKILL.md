@@ -1,9 +1,9 @@
 ---
 name: risk-gates
-description: Use when a pre-action risk gate is needed before a mutation, dispatch,
-  canon claim, analogy reliance, or resolution that could violate scope, authority,
-  source truth, canon, safety, or user intent. Routes to the relevant gate reference
-  docs based on the action and project context.
+description: Use when a pre-action risk gate is needed. If destructive or irreversible
+  work lacks clear authority, the first response must state that authority is missing
+  and offer a reversible alternative before inspection. Also routes mutation,
+  dispatch, canon, source-truth, safety, and user-intent risks.
 metadata:
   source-id: risk-gates
   source-path: codex-marketplace/plugins/repo-worker-pack/skills/risk-gates/SKILL.md

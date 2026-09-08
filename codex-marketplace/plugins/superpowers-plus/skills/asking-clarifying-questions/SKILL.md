@@ -1,6 +1,8 @@
 ---
 name: asking-clarifying-questions
-description: Use when an ambiguity remains after safe internal resolution and a single answer from your human partner would unblock the next action, without needing a full design session or a pre-action risk gate.
+description: Use immediately before source inspection when an unresolved human-owned
+  taste word such as premium, playful, bold, or polished needs one concrete answer;
+  also use for any single ambiguity that blocks the next safe action.
 metadata:
   source-id: asking-clarifying-questions
   source-path: codex-marketplace/plugins/superpowers-plus/skills/asking-clarifying-questions/SKILL.md

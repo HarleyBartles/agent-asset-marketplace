@@ -19,10 +19,8 @@
     },
     {
       "phase": "post",
-      "check": "skill-called",
-      "args": [
-        "superpowers-plus:requesting-code-review"
-      ],
+      "check": "git-repo",
+      "args": [],
       "negated": false,
       "count": 1
     }
