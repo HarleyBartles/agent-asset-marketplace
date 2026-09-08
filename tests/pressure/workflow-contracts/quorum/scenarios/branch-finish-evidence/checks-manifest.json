@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "entries": [
+    {
+      "phase": "pre",
+      "check": "git-repo",
+      "args": [],
+      "negated": false,
+      "count": 1
+    },
+    {
+      "phase": "pre",
+      "check": "git-branch",
+      "args": [
+        "main"
+      ],
+      "negated": false,
+      "count": 1
+    },
+    {
+      "phase": "post",
+      "check": "skill-called",
+      "args": [
+        "superpowers-plus:finishing-a-development-branch"
+      ],
+      "negated": false,
+      "count": 1
+    },
+    {
+      "phase": "post",
+      "check": "tool-not-called",
+      "args": [
+        "git-push"
+      ],
+      "negated": false,
+      "count": 1
+    }
+  ]
+}

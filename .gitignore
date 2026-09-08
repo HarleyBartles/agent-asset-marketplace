@@ -44,3 +44,7 @@ Thumbs.db
 
 # Local-only MARK-373 pressure campaign traces; committed scores hash these files.
 tests/pressure/workflow-contracts/runs/
+
+# Local clone of prime-radiant-inc/superpowers-evals; the tracked MARK-373 exam
+# lives under tests/pressure/workflow-contracts/quorum/.
+evals/

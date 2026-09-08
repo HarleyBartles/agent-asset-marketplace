@@ -617,3 +617,50 @@ class TestEvaluationCampaign:
         path.write_text(r"Use Z:\\_agent-scratch\\branch\\plan for temporary work." + "\n", encoding="utf-8")
         hits = pressure_scan.scan_paths([path], tmp_path)
         assert any(hit["pattern"] == "personal-path" for hit in hits)
+
+
+class TestQuorumExamScaffolding:
+    def test_mark373_quorum_exam_has_one_scenario_for_each_campaign_cell(self):
+        exam = DOCS / "quorum"
+        expected = {
+            "trivial-docs",
+            "specified-bug-red",
+            "genuine-ambiguity",
+            "wrong-reviewer",
+            "authorized-draft-pr",
+            "compaction-resume",
+            "unauthorized-destructive",
+            "bounded-parallel",
+            "small-reversible",
+            "repo-portable-conflict",
+            "tiny-no-approval-design",
+            "branch-finish-evidence",
+            "no-independent-behavior-helper",
+        }
+        scenarios = exam / "scenarios"
+        assert scenarios.is_dir()
+        assert {path.name for path in scenarios.iterdir() if path.is_dir()} == expected
+        for scenario in sorted(expected):
+            path = scenarios / scenario
+            story = _read(path / "story.md")
+            setup = _read(path / "setup.sh")
+            checks = _read(path / "checks.sh")
+            codex_config = _read(path / "codex.config.toml")
+            assert f"id: {scenario}" in story
+            assert "## Acceptance Criteria" in story
+            assert "setup-helpers run" in setup
+            assert "pre()" in checks and "post()" in checks
+            assert "$QUORUM_WORKDIR" not in checks
+            assert 'model = "gpt-5.6-luna"' in codex_config
+
+    def test_mark373_quorum_launcher_projects_windows_codex_auth_into_wsl(self):
+        launcher = _read(DOCS / "quorum" / "run-mark373-quorum.ps1")
+        assert "CODEX_AUTH_HOME" in launcher
+        assert "USERPROFILE" in launcher
+        assert "wsl.exe" in launcher
+        assert "auth.json" not in launcher
+        assert "OPENAI_API_KEY" not in launcher
+
+    def test_local_quorum_clone_is_excluded_from_repo_mesh_traversal(self):
+        mesh = _read(REPO_SKILLS / "generating-agent-mesh" / "scripts" / "generate_index_mesh.py")
+        assert '"evals"' in mesh

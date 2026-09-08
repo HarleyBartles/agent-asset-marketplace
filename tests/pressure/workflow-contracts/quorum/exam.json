@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "exam_id": "mark-373-quorum",
+  "harness": {
+    "repository": "https://github.com/prime-radiant-inc/superpowers-evals",
+    "checkout": "local evals/ clone",
+    "runner": "src/cli/index.ts",
+    "execution_os": "wsl"
+  },
+  "auth": {
+    "mode": "codex-chatgpt-subscription",
+    "source_env": "CODEX_AUTH_HOME",
+    "source_contract": "directory containing desktop Codex auth.json",
+    "repository_secrets": false,
+    "run_home_isolation": true
+  },
+  "models": {
+    "luna": "gpt-5.6-luna",
+    "terra": "gpt-5.6-terra",
+    "sol": "gpt-5.6-sol",
+    "astra": "gpt-6-astra"
+  },
+  "scenarios": [
+    "trivial-docs",
+    "specified-bug-red",
+    "genuine-ambiguity",
+    "wrong-reviewer",
+    "authorized-draft-pr",
+    "compaction-resume",
+    "unauthorized-destructive",
+    "bounded-parallel",
+    "small-reversible",
+    "repo-portable-conflict",
+    "tiny-no-approval-design",
+    "branch-finish-evidence",
+    "no-independent-behavior-helper"
+  ],
+  "sandbox": ["read-only", "workspace-write"],
+  "external_effects": "none",
+  "live_run": "explicitly deferred until MARK-373 preflight is green"
+}
