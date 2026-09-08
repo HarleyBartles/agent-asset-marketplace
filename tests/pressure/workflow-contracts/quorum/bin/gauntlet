@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-marketplace_root=$(realpath "$(dirname "$0")/../../../../../../")
+marketplace_root=$(realpath "$(dirname "$0")/../../../../../")
 gauntlet_root="$marketplace_root/evals/gauntlet"
 
 test -f "$gauntlet_root/package.json"
