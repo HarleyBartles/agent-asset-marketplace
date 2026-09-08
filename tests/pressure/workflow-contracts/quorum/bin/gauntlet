@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+marketplace_root=$(realpath "$(dirname "$0")/../../../../../../")
+gauntlet_root="$marketplace_root/evals/gauntlet"
+
+test -f "$gauntlet_root/package.json"
+test -d "$gauntlet_root/node_modules"
+exec npx --yes bun run "$gauntlet_root/src/index.ts" "$@"

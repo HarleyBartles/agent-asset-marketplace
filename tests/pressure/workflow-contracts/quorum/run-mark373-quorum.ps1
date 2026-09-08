@@ -10,6 +10,7 @@ $ErrorActionPreference = 'Stop'
 $repo = (Resolve-Path (Join-Path $PSScriptRoot '..\..\..\..')).Path
 $evals = Join-Path $repo 'evals'
 $scenarios = Join-Path $repo 'tests\pressure\workflow-contracts\quorum\scenarios'
+$quorumBin = Join-Path $repo 'tests\pressure\workflow-contracts\quorum\bin'
 $windowsProfile = if ($env:USERPROFILE) { $env:USERPROFILE } else { throw 'USERPROFILE is unset' }
 $exam = Get-Content -Raw (Join-Path $PSScriptRoot 'exam.json') | ConvertFrom-Json
 
@@ -58,6 +59,7 @@ if ($LASTEXITCODE -ne 0 -or [string]::IsNullOrWhiteSpace($gitDir)) {
 }
 $gitDirWsl = Convert-ToWslPath $gitDir
 $scenariosWsl = Convert-ToWslPath $scenarios
+$quorumBinWsl = Convert-ToWslPath $quorumBin
 $desktopAuthWsl = Convert-ToWslPath (Join-Path $windowsProfile '.codex')
 
 if (-not $Run -and -not $Preflight) {
@@ -80,7 +82,9 @@ $commandParts = @(
     "repo_git_dir=$(Quote-Bash $gitDirWsl)",
     "evals=$(Quote-Bash $evalsWsl)",
     "scenarios=$(Quote-Bash $scenariosWsl)",
+    "quorum_bin=$(Quote-Bash $quorumBinWsl)",
     "desktop_auth=$(Quote-Bash $desktopAuthWsl)",
+    'export PATH="$quorum_bin:$PATH"',
     'test -z "$(git --git-dir="$repo_git_dir" --work-tree="$repo" status --porcelain)"',
     'evidence_head=$(git --git-dir="$repo_git_dir" --work-tree="$repo" rev-parse HEAD)',
     'auth_runtime=$(mktemp -d)',

@@ -667,8 +667,14 @@ class TestQuorumExamScaffolding:
         assert "--git-dir" in launcher
         assert "--work-tree" in launcher
         assert 'mkdir -p "results/mark373/$evidence_head"' in launcher
+        assert 'export PATH="$quorum_bin:$PATH"' in launcher
         assert "[switch]$Preflight" in launcher
         assert "OPENAI_API_KEY" not in launcher
+
+        gauntlet = DOCS / "quorum" / "bin" / "gauntlet"
+        shim = _read(gauntlet)
+        assert "evals/gauntlet" in shim
+        assert "npx --yes bun run" in shim
 
     def test_skills_only_stage_copies_the_exact_composed_stack(self):
         stage = _read(DOCS / "quorum" / "lib" / "stage-skills-only.sh")
