@@ -664,6 +664,8 @@ class TestQuorumExamScaffolding:
         assert "install -m 600" in launcher
         assert "--no-superpowers" in launcher
         assert "status --porcelain" in launcher
+        assert "--git-dir" in launcher
+        assert "--work-tree" in launcher
         assert "[switch]$Preflight" in launcher
         assert "OPENAI_API_KEY" not in launcher
 

@@ -52,6 +52,11 @@ function Invoke-WslScript([string]$Script) {
 
 $evalsWsl = Convert-ToWslPath $evals
 $repoWsl = Convert-ToWslPath $repo
+$gitDir = (& git -C $repo rev-parse --absolute-git-dir).Trim()
+if ($LASTEXITCODE -ne 0 -or [string]::IsNullOrWhiteSpace($gitDir)) {
+    throw "git could not resolve the worktree git directory for $repo"
+}
+$gitDirWsl = Convert-ToWslPath $gitDir
 $scenariosWsl = Convert-ToWslPath $scenarios
 $desktopAuthWsl = Convert-ToWslPath (Join-Path $windowsProfile '.codex')
 
@@ -72,11 +77,12 @@ $scenarioArgs = ($selected | ForEach-Object { Quote-Bash ([string]$_) }) -join '
 $commandParts = @(
     'set -euo pipefail',
     "repo=$(Quote-Bash $repoWsl)",
+    "repo_git_dir=$(Quote-Bash $gitDirWsl)",
     "evals=$(Quote-Bash $evalsWsl)",
     "scenarios=$(Quote-Bash $scenariosWsl)",
     "desktop_auth=$(Quote-Bash $desktopAuthWsl)",
-    'test -z "$(git -C "$repo" status --porcelain)"',
-    'evidence_head=$(git -C "$repo" rev-parse HEAD)',
+    'test -z "$(git --git-dir="$repo_git_dir" --work-tree="$repo" status --porcelain)"',
+    'evidence_head=$(git --git-dir="$repo_git_dir" --work-tree="$repo" rev-parse HEAD)',
     'auth_runtime=$(mktemp -d)',
     'preflight_runtime=$(mktemp -d)',
     'trap ''rm -rf "$auth_runtime" "$preflight_runtime"'' EXIT',
