@@ -17,13 +17,14 @@ independent deterministic checks. The stories grade judgment and authority;
 `checks.sh` corroborates observable skill calls, files, and prohibited actions
 without exposing the rubric answer to the subject.
 
-## WSL and desktop ChatGPT auth
+## WSL and OpenAI authentication
 
-Run the wrapper from PowerShell. It converts this checkout and the Windows
-profile's `.codex` directory to WSL paths, copies the subscription auth into a
-private temporary WSL auth home with mode `0600`, and exports that directory as
-`CODEX_AUTH_HOME`. Quorum then copies the auth into each throwaway run home. No
-token enters this repository or a general child environment.
+Run the wrapper from PowerShell with `OPENAI_API_KEY` present in the operator
+environment. The wrapper projects that one named credential into WSL. The
+tracked Quorum patch permits it in the isolated Gauntlet grader channel, where
+the grader is pinned to GPT-5.4; Quorum's `openai_responses_56luna` credential
+places it in the coding agent's private per-run credential file. No token enters
+this repository or an unrelated child environment.
 
 ```powershell
 pwsh -File tests/pressure/workflow-contracts/quorum/run-mark373-quorum.ps1
@@ -33,6 +34,6 @@ The default action is static exam validation. A later live run must be an
 explicit `-Run` invocation. Before spending a model call, the wrapper requires
 a clean immutable source tree and probes disposable Codex homes for empty MCP
 and plugin inventories. It runs each selected scenario separately with
-`--no-superpowers`; each scenario's `codex.config.toml` pins Luna-medium and
-disables plugins/apps. The fixed MARK-373 runner remains the owner of the later
-Terra/Sol/Astra matrix.
+`--no-superpowers` and the declared `openai_responses_56luna` credential; each
+scenario's `codex.config.toml` pins Luna-medium and disables plugins/apps. The
+fixed MARK-373 runner remains the owner of the later Terra/Sol/Astra matrix.

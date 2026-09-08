@@ -658,10 +658,8 @@ class TestQuorumExamScaffolding:
 
     def test_mark373_quorum_launcher_projects_windows_codex_auth_into_wsl(self):
         launcher = _read(DOCS / "quorum" / "run-mark373-quorum.ps1")
-        assert "CODEX_AUTH_HOME" in launcher
-        assert "USERPROFILE" in launcher
         assert "wsl.exe" in launcher
-        assert "install -m 600" in launcher
+        assert "openai_responses_56luna" in launcher
         assert "--no-superpowers" in launcher
         assert "status --porcelain" in launcher
         assert "--git-dir" in launcher

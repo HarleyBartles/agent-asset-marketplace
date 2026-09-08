@@ -8,10 +8,10 @@
     "execution_os": "wsl"
   },
   "auth": {
-    "mode": "codex-chatgpt-subscription",
-    "source_env": "CODEX_AUTH_HOME",
-    "source_contract": "directory containing desktop Codex auth.json",
-    "runtime_copy": "private temporary WSL directory, mode 0600",
+    "mode": "openai-api-key",
+    "source_env": "OPENAI_API_KEY",
+    "source_contract": "operator environment projected by WSLENV into Quorum's declared grader and coding-agent credential channels",
+    "runtime_copy": "Quorum private per-run credential file",
     "repository_secrets": false,
     "run_home_isolation": true
   },

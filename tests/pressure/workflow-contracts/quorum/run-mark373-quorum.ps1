@@ -12,7 +12,6 @@ $evals = Join-Path $repo 'evals'
 $scenarios = Join-Path $repo 'tests\pressure\workflow-contracts\quorum\scenarios'
 $quorumBin = Join-Path $repo 'tests\pressure\workflow-contracts\quorum\bin'
 $quorumPatch = Join-Path $repo 'tests\pressure\workflow-contracts\quorum\patches\openai-grader.patch'
-$windowsProfile = if ($env:USERPROFILE) { $env:USERPROFILE } else { throw 'USERPROFILE is unset' }
 $exam = Get-Content -Raw (Join-Path $PSScriptRoot 'exam.json') | ConvertFrom-Json
 
 if ($Run -and $Preflight) {
@@ -66,7 +65,6 @@ $gitDirWsl = Convert-ToWslPath $gitDir
 $scenariosWsl = Convert-ToWslPath $scenarios
 $quorumBinWsl = Convert-ToWslPath $quorumBin
 $quorumPatchWsl = Convert-ToWslPath $quorumPatch
-$desktopAuthWsl = Convert-ToWslPath (Join-Path $windowsProfile '.codex')
 
 if (-not $Run -and -not $Preflight) {
     $command = "set -euo pipefail`ncd $(Quote-Bash $evalsWsl)`nexec npx --yes bun run src/cli/index.ts check --scenarios-root $(Quote-Bash $scenariosWsl)`n"
@@ -90,18 +88,12 @@ $commandParts = @(
     "scenarios=$(Quote-Bash $scenariosWsl)",
     "quorum_bin=$(Quote-Bash $quorumBinWsl)",
     "quorum_patch=$(Quote-Bash $quorumPatchWsl)",
-    "desktop_auth=$(Quote-Bash $desktopAuthWsl)",
     'export PATH="$quorum_bin:$PATH"',
     'test -z "$(git --git-dir="$repo_git_dir" --work-tree="$repo" status --porcelain)"',
     'evidence_head=$(git --git-dir="$repo_git_dir" --work-tree="$repo" rev-parse HEAD)',
-    'auth_runtime=$(mktemp -d)',
     'preflight_runtime=$(mktemp -d)',
-    'trap ''rm -rf "$auth_runtime" "$preflight_runtime"'' EXIT',
-    'install -d -m 700 "$auth_runtime"',
-    'install -m 600 "$desktop_auth/auth.json" "$auth_runtime/auth.json"',
-    'export CODEX_AUTH_HOME="$auth_runtime"',
+    'trap ''rm -rf "$preflight_runtime"'' EXIT',
     'mkdir -p "$preflight_runtime/home" "$preflight_runtime/codex"',
-    'install -m 600 "$auth_runtime/auth.json" "$preflight_runtime/codex/auth.json"',
     'mcp_json=$(HOME="$preflight_runtime/home" CODEX_HOME="$preflight_runtime/codex" codex mcp list --json -c features.apps=false)',
     'test "$(printf ''%s'' "$mcp_json" | tr -d ''[:space:]'')" = ''[]''',
     'plugin_json=$(HOME="$preflight_runtime/home" CODEX_HOME="$preflight_runtime/codex" codex plugin list --json -c features.plugins=false)',
@@ -117,7 +109,7 @@ if ($Preflight) {
     $commandParts += 'printf ''MARK-373 preflight-ready head=%s\n'' "$evidence_head"'
 } else {
     $commandParts += 'mkdir -p "results/mark373/$evidence_head"'
-    $commandParts += ('for scenario in {0}; do npx --yes bun run src/cli/index.ts run "$scenario" --coding-agent codex --credential codex_sub --grader-model gpt-5.4 --scenarios-root "$scenarios" --out-root results/mark373/"$evidence_head" --effort medium --no-superpowers; done' -f $scenarioArgs)
+    $commandParts += ('for scenario in {0}; do npx --yes bun run src/cli/index.ts run "$scenario" --coding-agent codex --credential openai_responses_56luna --grader-model gpt-5.4 --scenarios-root "$scenarios" --out-root results/mark373/"$evidence_head" --effort medium --no-superpowers; done' -f $scenarioArgs)
 }
 
 exit (Invoke-WslScript (($commandParts -join "`n") + "`n"))
