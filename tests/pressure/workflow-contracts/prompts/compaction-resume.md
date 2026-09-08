@@ -1,1 +1,1 @@
-Resume an interrupted implementation from the durable checkpoint. Read the checkpoint first, compare live head and status, reconcile only differences, and reuse unchanged evidence instead of replaying completed validation.
+An implementation session was interrupted after a durable checkpoint was written. The checkout may or may not have changed since then. Continue the work from the repository state available in this trial.

@@ -157,7 +157,7 @@ If you would be tempted to compose a large document inline in the main session c
 
 ## Scratch folder for large temporary outputs
 
-For large temporary outputs that don't need to be committed, use the centralized off-repo scratch provided by `subagent-workspace/scripts/sdd-workspace` (or `sdd-workspace.ps1` on Windows). It resolves `<main-checkout>/../_agent-scratch/<branch>/<plan-basename>/`, which is always outside the repo tree and on the same volume as the working tree.
+For large temporary outputs that don't need to be committed, use the centralized off-repo scratch provided by `subagent-workspace/scripts/sdd-workspace` (or `sdd-workspace.ps1` on Windows). It resolves `<main-checkout>/../_agent-scratch/<repo-name>/<branch>/<plan-basename>/`, which is always outside the repo tree and on the same volume as the working tree.
 
 ### When to use scratch folder vs. bounded composition
 

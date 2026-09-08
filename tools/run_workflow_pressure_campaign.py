@@ -10,6 +10,7 @@ from pathlib import Path
 import re
 import shutil
 import subprocess
+import sys
 import tempfile
 import time
 from typing import Any, Callable
@@ -43,6 +44,16 @@ EXTERNAL_SURFACE_COMMANDS = (
     ("plugin", "list"),
 )
 EXTERNAL_WRITE_MARKERS = re.compile(r"(?i)(?:mcp|connector|github|linear|external|\bpush\b|dispatch|write)")
+MODEL_UNAVAILABLE_MARKERS = (
+    "not available",
+    "unavailable",
+    "unsupported model",
+    "unknown model",
+    "model not found",
+    "does not exist",
+    "do not have access",
+    "don't have access",
+)
 
 
 def sha256_file(path: Path) -> str:
@@ -55,6 +66,39 @@ def sha256_file(path: Path) -> str:
 
 def sha256_text(value: str) -> str:
     return hashlib.sha256(value.encode("utf-8")).hexdigest()
+
+
+def classify_trial_availability(requested_model: str, returncode: int, stdout: str, stderr: str) -> str:
+    """Classify only explicit requested-model absence as model-unavailable."""
+    if returncode == 0:
+        return "ok"
+    combined = f"{stdout}\n{stderr}".lower()
+    model = requested_model.lower()
+    if model in combined and any(marker in combined for marker in MODEL_UNAVAILABLE_MARKERS):
+        return "model-unavailable"
+    return "trial-error"
+
+
+def sanitize_argv(argv: list[str], worktree: Path, run_dir: Path) -> list[str]:
+    """Remove machine-local trial paths while preserving the exact invocation shape."""
+    worktree_value = str(worktree)
+    final_value = str((run_dir / "final.txt").resolve())
+    return [
+        "<worktree>" if item == worktree_value else "<run-dir>/final.txt" if item == final_value else item
+        for item in argv
+    ]
+
+
+def _current_head() -> str:
+    result = subprocess.run(
+        ["git", "rev-parse", "HEAD"],
+        check=True,
+        capture_output=True,
+        text=True,
+        encoding="utf-8",
+        errors="replace",
+    )
+    return result.stdout.strip()
 
 
 def build_codex_argv(worktree: Path, model: str, sandbox: str, final_path: Path) -> list[str]:
@@ -380,6 +424,194 @@ def _load_campaign(path: Path) -> dict[str, Any]:
     return campaign
 
 
+def _write_trial_evidence(
+    run_dir: Path,
+    *,
+    events_text: str,
+    stderr_text: str,
+    final_text: str,
+    meta: dict[str, Any],
+) -> None:
+    events_path = run_dir / "events.jsonl"
+    stderr_path = run_dir / "stderr.txt"
+    final_path = run_dir / "final.txt"
+    meta_path = run_dir / "meta.json"
+    metrics_path = run_dir / "metrics.json"
+    hashes_path = run_dir / "hashes.json"
+
+    events_path.write_text(events_text, encoding="utf-8")
+    stderr_path.write_text(stderr_text, encoding="utf-8")
+    final_path.write_text(final_text, encoding="utf-8")
+    metrics_path.write_text(
+        json.dumps(extract_mechanical_metrics(events_text, final_text, meta["elapsed_ms"]), indent=2) + "\n",
+        encoding="utf-8",
+    )
+    meta_path.write_text(json.dumps(meta, indent=2) + "\n", encoding="utf-8")
+    hashes_path.write_text(
+        json.dumps(
+            {
+                "events_jsonl_sha256": sha256_file(events_path),
+                "stderr_sha256": sha256_file(stderr_path),
+                "final_sha256": sha256_file(final_path),
+                "meta_sha256": sha256_file(meta_path),
+            },
+            indent=2,
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+
+
+def _run_trial(
+    campaign_path: Path,
+    campaign: dict[str, Any],
+    head_root: Path,
+    head: str,
+    controlling_head: str,
+    codex_version: str,
+    current_family: str,
+    scenario: dict[str, Any],
+) -> tuple[str, bool]:
+    """Run one isolated trial and always leave durable local evidence."""
+    run_dir = head_root / current_family / scenario["id"]
+    run_dir.mkdir(parents=True, exist_ok=True)
+    worktree = Path(tempfile.mkdtemp(prefix=f"mark-373-{current_family}-"))
+    added = False
+    cleanup: dict[str, Any] = {"status": "not-needed"}
+    error: dict[str, str] | None = None
+    events_text = ""
+    stderr_text = ""
+    final_text = ""
+    exit_code: int | None = None
+    availability = "trial-error"
+    sanitized_argv: list[str] = []
+    started = time.time()
+
+    try:
+        add_result = subprocess.run(
+            ["git", "worktree", "add", "--detach", str(worktree), head],
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+        )
+        if add_result.returncode != 0:
+            error = {
+                "kind": "worktree-add",
+                "message": ((add_result.stderr or add_result.stdout) or "git worktree add failed")[-1000:],
+            }
+            stderr_text = add_result.stderr or add_result.stdout or ""
+        else:
+            added = True
+            prompt = (
+                campaign["prompt_prefix"]
+                + "\n\n"
+                + (campaign_path.parent / "prompts" / scenario["prompt"]).read_text(encoding="utf-8")
+            )
+            final_path = run_dir / "final.txt"
+            argv = build_codex_argv(worktree, MODEL_MATRIX[current_family], scenario["sandbox"], final_path)
+            sanitized_argv = sanitize_argv(argv, worktree, run_dir)
+            try:
+                result = subprocess.run(
+                    argv,
+                    input=prompt,
+                    capture_output=True,
+                    text=True,
+                    encoding="utf-8",
+                    errors="replace",
+                )
+                exit_code = result.returncode
+                events_text = result.stdout or ""
+                stderr_text = result.stderr or ""
+                if final_path.is_file():
+                    final_text = final_path.read_text(encoding="utf-8", errors="replace")
+                availability = classify_trial_availability(
+                    MODEL_MATRIX[current_family], result.returncode, events_text, stderr_text
+                )
+            except Exception as exc:
+                error = {"kind": type(exc).__name__, "message": str(exc)}
+                stderr_text = f"{type(exc).__name__}: {exc}\n"
+                availability = "trial-error"
+    except Exception as exc:
+        error = {"kind": type(exc).__name__, "message": str(exc)}
+        stderr_text = f"{type(exc).__name__}: {exc}\n"
+        availability = "trial-error"
+
+    elapsed_ms = round((time.time() - started) * 1000)
+    preliminary_meta = {
+        "schema_version": 1,
+        "scenario": scenario["id"],
+        "family": current_family,
+        "requested_model": MODEL_MATRIX[current_family],
+        "observed_model": "unobservable",
+        "requested_reasoning_effort": "medium",
+        "observed_reasoning_effort": "unobservable",
+        "api_reasoning_mode": "unobservable",
+        "codex_version": codex_version,
+        "sanitized_argv": sanitized_argv,
+        "sandbox": scenario["sandbox"],
+        "trial_head": head,
+        "controlling_head": controlling_head,
+        "started_at": started,
+        "finished_at": time.time(),
+        "elapsed_ms": elapsed_ms,
+        "exit_code": exit_code,
+        "availability": availability,
+        "cleanup": {"status": "pending" if added else "not-needed"},
+    }
+    if error is not None:
+        preliminary_meta["error"] = error
+
+    # Preserve raw trial evidence before cleanup. Cleanup outcome is then folded
+    # into the final meta and hashes without risking the trial trace itself.
+    _write_trial_evidence(
+        run_dir,
+        events_text=events_text,
+        stderr_text=stderr_text,
+        final_text=final_text,
+        meta=preliminary_meta,
+    )
+
+    if added:
+        try:
+            cleanup_result = subprocess.run(
+                ["git", "worktree", "remove", "--force", str(worktree)],
+                capture_output=True,
+                text=True,
+                encoding="utf-8",
+                errors="replace",
+            )
+            if cleanup_result.returncode == 0:
+                cleanup = {"status": "ok"}
+                if worktree.exists():
+                    shutil.rmtree(worktree)
+            else:
+                cleanup = {
+                    "status": "failed",
+                    "exit_code": cleanup_result.returncode,
+                    "details": ((cleanup_result.stderr or cleanup_result.stdout) or "cleanup failed")[-1000:],
+                    "worktree_retained": worktree.exists(),
+                }
+        except Exception as exc:
+            cleanup = {
+                "status": "failed",
+                "details": f"{type(exc).__name__}: {exc}",
+                "worktree_retained": worktree.exists(),
+            }
+    elif worktree.exists():
+        shutil.rmtree(worktree, ignore_errors=True)
+
+    final_meta = {**preliminary_meta, "cleanup": cleanup}
+    _write_trial_evidence(
+        run_dir,
+        events_text=events_text,
+        stderr_text=stderr_text,
+        final_text=final_text,
+        meta=final_meta,
+    )
+    return availability, cleanup.get("status") == "failed"
+
+
 def run_campaign(
     campaign_path: Path,
     output_root: Path,
@@ -388,80 +620,69 @@ def run_campaign(
     scenario_id: str | None = None,
 ) -> int:
     campaign = _load_campaign(campaign_path)
+    if family is not None and family not in MODEL_MATRIX:
+        print(f"error: unknown model family: {family}", file=sys.stderr)
+        return 2
+    scenarios = [s for s in campaign["scenarios"] if not scenario_id or s["id"] == scenario_id]
+    if scenario_id and not scenarios:
+        print(f"error: unknown campaign scenario: {scenario_id}", file=sys.stderr)
+        return 2
+
     output_root.mkdir(parents=True, exist_ok=True)
     head_root = output_root / head
     try:
-        preflight_result = preflight_at_head(head)
-    except BaseException as error:  # campaign metadata must record every fail-closed preflight outcome
+        controlling_head = _current_head()
+    except (OSError, subprocess.CalledProcessError) as error:
         preflight_result = {
             "status": "harness-blocked",
-            "reason": "preflight orchestration failed",
+            "reason": "could not resolve controlling repository head",
             "requested_head": head,
-            "details": f"{type(error).__name__}: {error}",
+            "details": str(error),
         }
+    else:
+        try:
+            preflight_result = preflight_at_head(head)
+        except BaseException as error:  # campaign metadata must record every fail-closed preflight outcome
+            preflight_result = {
+                "status": "harness-blocked",
+                "reason": "preflight orchestration failed",
+                "requested_head": head,
+                "details": f"{type(error).__name__}: {error}",
+            }
     (head_root / "_harness").mkdir(parents=True, exist_ok=True)
     (head_root / "_harness" / "campaign-meta.json").write_text(
-        json.dumps({"schema_version": 1, "evaluation_head": head, **preflight_result}, indent=2) + "\n",
+        json.dumps(
+            {
+                "schema_version": 1,
+                "evaluation_head": head,
+                "controlling_head": locals().get("controlling_head", "unobservable"),
+                **preflight_result,
+            },
+            indent=2,
+        )
+        + "\n",
         encoding="utf-8",
     )
     if preflight_result["status"] != "preflight-ready":
         return 2
 
     families = [family] if family else list(MODEL_MATRIX)
-    scenarios = [s for s in campaign["scenarios"] if not scenario_id or s["id"] == scenario_id]
+    had_trial_error = False
     for current_family in families:
         for scenario in scenarios:
-            run_dir = head_root / current_family / scenario["id"]
-            run_dir.mkdir(parents=True, exist_ok=True)
-            worktree = Path(tempfile.mkdtemp(prefix=f"mark-373-{current_family}-"))
-            try:
-                subprocess.run(
-                    ["git", "worktree", "add", "--detach", str(worktree), head],
-                    check=True,
-                    capture_output=True,
-                    text=True,
-                )
-                prompt = (
-                    campaign["prompt_prefix"]
-                    + "\n\n"
-                    + (campaign_path.parent / "prompts" / scenario["prompt"]).read_text(encoding="utf-8")
-                )
-                final_path = run_dir / "final.txt"
-                started = time.time()
-                result = subprocess.run(
-                    build_codex_argv(worktree, MODEL_MATRIX[current_family], scenario["sandbox"], final_path),
-                    input=prompt,
-                    capture_output=True,
-                    text=True,
-                    encoding="utf-8",
-                    errors="replace",
-                )
-                elapsed_ms = round((time.time() - started) * 1000)
-                (run_dir / "events.jsonl").write_text(result.stdout or "", encoding="utf-8")
-                (run_dir / "stderr.txt").write_text(result.stderr or "", encoding="utf-8")
-                meta = {
-                    "schema_version": 1,
-                    "scenario": scenario["id"],
-                    "family": current_family,
-                    "requested_model": MODEL_MATRIX[current_family],
-                    "observed_model": "unobservable",
-                    "requested_reasoning_effort": "medium",
-                    "observed_reasoning_effort": "unobservable",
-                    "api_reasoning_mode": "unobservable",
-                    "sandbox": scenario["sandbox"],
-                    "trial_head": head,
-                    "controlling_head": head,
-                    "started_at": started,
-                    "elapsed_ms": elapsed_ms,
-                    "exit_code": result.returncode,
-                    "availability": "ok" if result.returncode == 0 else "trial-error",
-                }
-                (run_dir / "meta.json").write_text(json.dumps(meta, indent=2) + "\n", encoding="utf-8")
-            finally:
-                subprocess.run(["git", "worktree", "remove", "--force", str(worktree)], capture_output=True, text=True)
-                if worktree.exists():
-                    shutil.rmtree(worktree, ignore_errors=True)
-    return 0
+            availability, cleanup_failed = _run_trial(
+                campaign_path,
+                campaign,
+                head_root,
+                head,
+                controlling_head,
+                str(preflight_result.get("version", "unobservable")),
+                current_family,
+                scenario,
+            )
+            if availability == "trial-error" or cleanup_failed:
+                had_trial_error = True
+    return 2 if had_trial_error else 0
 
 
 def main() -> int:

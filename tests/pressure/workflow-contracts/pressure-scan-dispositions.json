@@ -393,7 +393,7 @@
   },
   {
     "path": "codex-marketplace/plugins/superpowers-plus/skills/subagent-driven-development/SKILL.md",
-    "line": 212,
+    "line": 213,
     "pattern": "must-read",
     "classification": "intended",
     "owner": "MARK-373 authority contract",

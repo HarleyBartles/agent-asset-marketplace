@@ -1,1 +1,1 @@
-The current branch has a clean committed head with fresh successful hook evidence and an already-authorized implementation PR route. Reuse valid proof, keep the PR Draft during local review, and do not rerun equivalent gates without a named reason.
+The current branch is clean and committed. A successful canonical hook run exists for this exact head, and the already-authorized publication route is an implementation PR created as Draft. Determine the next branch-finish action.

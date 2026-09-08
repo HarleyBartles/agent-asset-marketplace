@@ -802,6 +802,28 @@ def test_hook_validator_rejects_unbound_apply_and_check_switches(tmp_path: Path)
     assert "pre-commit hook must invoke the declared check capability" in findings
 
 
+def test_hook_validator_rejects_marker_bearing_but_incomplete_hook(tmp_path: Path) -> None:
+    repo = tmp_path / "marker-only-hook"
+    declaration = repo / ".agents" / "doctrine"
+    declaration.mkdir(parents=True)
+    (declaration / "repo-standards-commands.json").write_text(
+        '{"apply":["@python","consumer.py","--apply"],"check":["@python","consumer.py","--check"]}\n',
+        encoding="utf-8",
+    )
+    hook = repo / "pre-commit"
+    hook.write_text(
+        "#!/usr/bin/env bash\n"
+        "set -euo pipefail\n"
+        'COMMAND_DECLARATION="$REPO_ROOT/.agents/doctrine/repo-standards-commands.json"\n'
+        'required_switch="--apply"\n'
+        "run_declared apply\n"
+        "run_declared check\n",
+        encoding="utf-8",
+    )
+    findings = repo_standards._check_hook_contract(hook, repo)
+    assert any("canonical staged-snapshot contract" in finding for finding in findings)
+
+
 def _forbidden_ci_check_guidance() -> tuple[str, ...]:
     return (
         "re-run `tools/run.py ci --check`",
@@ -1219,4 +1241,46 @@ def test_repo_standards_apply_refuses_missing_consumer_command_declaration(tmp_p
     combined = result.stdout + result.stderr
     assert result.returncode != 0, combined
     assert "missing consumer command declaration" in combined
+    assert not (repo / ".git" / "hooks" / "pre-commit").exists()
+
+
+def test_repo_standards_refuses_asymmetric_command_declaration_exception(tmp_path: Path) -> None:
+    repo = tmp_path / "except-command-only"
+    repo.mkdir()
+    _init_git_repo_with_commit(repo)
+
+    exceptions = (
+        "- marketplace-source-submodule\n"
+        "- marketplace-json\n"
+        "- repo-standards-commands\n"
+        "- tools-shared-checkout\n"
+        "- repo-runbook-policy\n"
+        "- runbooks-agents-md\n"
+        "- review-entry\n"
+        "- root-agents-md\n"
+        "- contributing-entry\n"
+        "- root-gitignore\n"
+        "- completed-plans-rule\n"
+        "- completed-plans-doctrine\n"
+        "- plans-completed-dir\n"
+        "- specs-completed-dir\n"
+    )
+    policy_dir = repo / ".agents" / "doctrine"
+    policy_dir.mkdir(parents=True)
+    (policy_dir / "repo-runbook-policy.md").write_text(
+        f"# Repo runbook policy\n\n## Exceptions\n\n{exceptions}",
+        encoding="utf-8",
+        newline="\n",
+    )
+
+    result = subprocess.run(
+        [sys.executable, str(REPO_STANDARDS), "--apply", "--yes", "--allow-shared-checkout"],
+        cwd=repo,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+    )
+    combined = result.stdout + result.stderr
+    assert result.returncode != 0, combined
+    assert "pre-commit-hook requires repo-standards-commands" in combined
     assert not (repo / ".git" / "hooks" / "pre-commit").exists()

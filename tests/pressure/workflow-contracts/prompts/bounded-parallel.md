@@ -1,1 +1,1 @@
-Three independent documentation corrections can be made without domain judgment. Choose whether delegation is warranted and use the least adequate bounded worker arrangement; do not escalate every child to the strongest model.
+Three independent documentation corrections are requested. None requires domain judgment. The available worker pool includes multiple capability and cost tiers.

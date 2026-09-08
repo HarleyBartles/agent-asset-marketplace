@@ -145,6 +145,22 @@ def _enabled_surface_ids(surfaces: list[dict[str, object]], exceptions: set[str]
     return enabled
 
 
+def _required_with_findings(surfaces: list[dict[str, object]], exceptions: set[str]) -> list[str]:
+    """Reject exception sets that leave a dependent surface without its prerequisite."""
+    by_id = {str(surface.get("id", "")): surface for surface in surfaces if surface.get("id")}
+    findings: list[str] = []
+    for surface in surfaces:
+        surf_id = str(surface.get("id", ""))
+        required_with = str(surface.get("required_with", ""))
+        if not surf_id or not required_with or required_with not in by_id:
+            continue
+        prerequisite_enabled = not _surface_is_explicitly_excepted(surface, exceptions)
+        dependent_enabled = not _surface_is_explicitly_excepted(by_id[required_with], exceptions)
+        if dependent_enabled and not prerequisite_enabled:
+            findings.append(f"{required_with} requires {surf_id}; except {required_with} as well or restore {surf_id}")
+    return findings
+
+
 def _git_hooks_dir(repo_root: Path) -> Path:
     result = subprocess.run(
         ["git", "rev-parse", "--git-path", "hooks"],
@@ -262,7 +278,28 @@ def _check_hook_contract(hook_path: Path, repo_root: Path) -> list[str]:
     if declaration is not None and apply_index >= 0 and check_index >= 0:
         if "required_switch" not in text:
             findings.append("pre-commit hook command runner must validate declared switches")
+    if not _retains_canonical_hook_contract(text):
+        findings.append("pre-commit hook must retain the canonical staged-snapshot contract command skeleton")
     return findings
+
+
+def _hook_contract_lines(text: str) -> list[str]:
+    """Normalize executable contract lines while ignoring comments and blank lines."""
+    return [line.strip() for line in text.splitlines() if line.strip() and not line.strip().startswith("#")]
+
+
+def _retains_canonical_hook_contract(text: str) -> bool:
+    """Allow local wrappers only when the canonical hook body remains in-order and intact."""
+    template = Path(__file__).resolve().parent.parent / "templates" / "pre-commit"
+    if not template.is_file():
+        return False
+    required = _hook_contract_lines(template.read_text(encoding="utf-8", errors="replace"))
+    actual = _hook_contract_lines(text)
+    index = 0
+    for line in actual:
+        if index < len(required) and line == required[index]:
+            index += 1
+    return index == len(required)
 
 
 def _has_shell_guard(non_comment: list[str]) -> bool:
@@ -494,8 +531,9 @@ under the ## Exceptions heading are skipped."""
     surfaces = manifest.get("surfaces", [])
     exceptions = _load_exceptions(repo_root)
     enabled_surface_ids = _enabled_surface_ids(surfaces, exceptions)
+    dependency_findings = _required_with_findings(surfaces, exceptions)
 
-    findings: list[str] = []
+    findings: list[str] = list(dependency_findings)
     for surface in surfaces:
         findings.extend(_check_surface(repo_root, surface, exceptions, enabled_surface_ids))
 
@@ -514,6 +552,12 @@ under the ## Exceptions heading are skipped."""
             return 1
         print("OK repo-standards: all surfaces present")
         return 0
+
+    if dependency_findings:
+        for finding in dependency_findings:
+            print(f"DRIFT: {finding}")
+        print("error: invalid repo-standards exception dependency", file=sys.stderr)
+        return 1
 
     if not args.yes:
         print(f"Will apply {len(unique_findings)} surfaces with drift: {unique_findings}")

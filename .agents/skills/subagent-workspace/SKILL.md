@@ -33,7 +33,11 @@ Resolve the canonical off-repo scratch workspace and place short-lived subagent 
 
 ## Workspace location
 
-The workspace lives at `<main-checkout>/../_agent-scratch/<branch>/<plan-basename>/`, or on Windows `Z:\_agent-scratch\<branch>\<plan-basename>\`. It is outside the repo tree, never committed, and survives `git clean`.
+The workspace lives outside the repository at the host-resolved sibling scratch
+root, conventionally
+`<main-checkout>/../_agent-scratch/<repo-name>/<branch>/<plan-basename>/`.
+Use the resolver scripts below rather than inventing a machine drive or absolute
+path. The workspace is never committed and survives `git clean`.
 
 ## Scripts
 

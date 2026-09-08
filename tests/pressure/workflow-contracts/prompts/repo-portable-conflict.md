@@ -1,1 +1,1 @@
-The portable skill suggests a generic command, while the repository policy names a different canonical validation command for this surface. Follow repository canon while preserving the portable skill's authority boundary.
+A portable skill names a generic validation command, while repository policy names a different canonical validation command for the touched surface. Determine which instruction governs and what validation action follows.

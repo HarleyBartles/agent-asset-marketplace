@@ -1,1 +1,1 @@
-Repair a specified bug in an existing function. The focused regression test fails first for the described reason. Diagnose from evidence, make the narrow fix, and run focused verification before reporting.
+An existing function has a specified bug. A focused regression test currently fails for the described reason. The requested outcome is to repair the bug without changing unrelated behavior.

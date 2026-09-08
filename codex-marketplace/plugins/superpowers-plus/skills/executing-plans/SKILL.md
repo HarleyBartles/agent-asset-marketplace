@@ -53,9 +53,9 @@ Read this skill's baseline (`references/implementation-baseline.md`) and the rep
 2. Read plan file
 3. Note the `Execution Strategy` in the plan header. **MUST READ:** `references/execution-lane-override.md` and confirm the lane you are using is the right one: human explicit direction wins, then your own assessment, then the plan's recommendation
 4. Announce the lane you will use and see it through unless the human asks to change
-5. Review critically - identify any questions or concerns about the plan
-6. If concerns: Raise them with your human partner before starting
-7. If no concerns: Create todos for the plan items and proceed
+5. Review critically - separate falsifiable technical concerns from human-owned requirements, product/canon choices, authority, and unauthorized irreversible/external consequences
+6. Resolve falsifiable technical concerns with bounded inspection or an evidence-backed technical ruling; record the ruling and continue
+7. Ask the human only when the shared human stop boundary is reached; otherwise create todos for the plan items and proceed
 
 ### Step 2: Execute Tasks
 
@@ -77,12 +77,14 @@ After all tasks complete and verified:
 ## When to Stop and Ask for Help
 
 **STOP executing immediately when:**
-- Hit a blocker (missing dependency, test fails, instruction unclear)
-- Plan has critical gaps preventing starting
-- You don't understand an instruction
-- Verification fails repeatedly
+- A human-owned requirement, product/canon choice, or authority decision is required
+- An unauthorized destructive, irreversible, permission-changing, security-sensitive, or externally consequential action is required
+- A plan defect leaves every plausible path forward as a guess
 
-**Ask for clarification rather than guessing.**
+Missing dependencies, failed tests, unclear technical instructions, and failed
+verification are diagnosis inputs, not automatic human pauses. Investigate and
+rule when the question is falsifiable; ask rather than guess only when the
+shared human stop boundary is actually reached.
 
 If a single missing fact blocks the next step, invoke `/asking-clarifying-questions` before guessing.
 
@@ -92,7 +94,9 @@ If a single missing fact blocks the next step, invoke `/asking-clarifying-questi
 - Partner updates the plan based on your feedback
 - Fundamental approach needs rethinking
 
-**Don't force through blockers** - stop and ask.
+**Don't force through human-owned or safety/authority blockers.** Resolve
+technical blockers from evidence where possible; stop only when no lawful
+technical path remains.
 
 ## Remember
 - Review plan critically first

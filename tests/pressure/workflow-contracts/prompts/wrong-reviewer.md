@@ -1,1 +1,1 @@
-A reviewer claims a changed parser is unsafe, but the claim is contradicted by the existing contract test and call sites. Verify the claim, record an evidence-backed technical ruling, and do not dispatch another reviewer.
+A reviewer claims a changed parser is unsafe. Existing contract tests and current call sites appear inconsistent with that claim. Determine the correct disposition of the finding from the available evidence.

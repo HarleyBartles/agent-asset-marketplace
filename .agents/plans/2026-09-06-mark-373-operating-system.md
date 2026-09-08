@@ -357,7 +357,7 @@ At plan time the repo has one executable workflow `.github/workflows/marketplace
 
 ## Task 7: Run fixed composed-stack pressure campaign
 
-- [x] Read immutable `evidence_head` from checkpoint; do not run from dirty/moving state. The revised evidence head is `6b030b94ca2c234a6dd1e9b7a3df06fa0b8ebac3`.
+- [x] Read immutable `evidence_head` from checkpoint; do not run from dirty/moving state. Historical repaired runs culminated at blocked evidence head `8f6280aa5dad59b33124f50af37b7f7150ea2afa`; after the fresh-eyes source repairs, the next behavioral campaign must use a new immutable evidence head rather than reusing this historical state.
 - [x] Run the campaign command below. The runner performs the harness preflight first and stops before model classification if the harness is unavailable/incompatible/blocked:
 
 ```text
@@ -375,14 +375,14 @@ py -3 tools/run_workflow_pressure_campaign.py \
 - [x] Confirm raw `runs/` remains ignored/uncommitted and inspect derived evidence for sensitive material before publication.
 - [x] Diagnose the retained historical failures as harness capability rather than model-unavailable; the revised smoke block prevents unsupported behavioral claims.
 - [x] Only exact family/model absence after a green harness preflight is `model-unavailable`; no trial received that classification.
-- [x] Run the workflow-contract and hook-contract focused tests => 34 and 32 passed respectively.
+- [x] Run the workflow-contract and hook-contract focused tests => 44 and 35 passed respectively after the fresh-eyes repair pass.
 - [ ] **Green exit/checkpoint:** blocked because the real read-only smoke did not complete; 0 revised trials are valid and the retained 52 scores are diagnostic-only. Do not advance Task 7 to a green behavioral baseline until the smoke passes.
 
 ## Task 8: Regenerate, review, hook-validate, publish, promote PR #311
 
 - [x] Confirmed explicit human approval to implement and verified PR #311 remains open Draft against `main`. If merged/closed before implementation, create fresh branch from then-current `main` carrying approved plan instead of mutating closed/merged branch.
 - [x] Ran `py -3 tools/run.py marketplace --apply`; no generated diff was produced outside the intended canonical-source-derived tree.
-- [x] Ran final focused checks: `34 passed` for the workflow-contract test file and `32 passed` for repo-standards hook tests; mesh and the normal hooked gate passed. The hook is bound to a tracked consumer command declaration, and the pressure scanner includes shebang-bearing extensionless templates. `review-preflight --check` reports eight pre-existing warnings also present on `origin/main`; no new warning was introduced by this change.
+- [x] Ran final focused checks: `44 passed` for the workflow-contract test file and `35 passed` for repo-standards hook tests. The hook is bound to a tracked consumer command declaration, preserves the canonical staged-snapshot skeleton, and the pressure scanner includes shebang-bearing extensionless templates plus generic absolute Windows drive paths. `review-preflight --check` retains only pre-existing warnings also present on `origin/main`; no new warning is attributed to MARK-373.
 - [x] Whole-change self-review: shared semantics only; downstream specifics downstream; no secret/private corpus; no Astra fork; no generated hand edit; active v6.2 references are historical comparison/provenance only; no caller-strengthened owner; no portable machine/repo assumption; no scanner defect; inventory/parity/evaluation honest; no raw run traces staged.
 - [x] Updated the plan/checkpoint to the final local state and committed the intended tree normally. The hook is broad local proof; it was not bypassed or duplicated.
 - [x] Verified committed state with `git status --short --branch`, `git diff --check HEAD^`, the recorded review-preflight diagnostic, and `py -3 tools/run.py mesh --check`; recorded the full publication SHA. The canonical hook supplied the complete CI proof.
@@ -391,6 +391,80 @@ py -3 tools/run_workflow_pressure_campaign.py \
 - [x] Kept the PR Draft through local repair; each repair received focused validation then a hooked commit, and unchanged evidence was reused.
 - [ ] Promote Ready only when current head has canonical hook proof, local review complete, available-model pressure evidence complete, workflow/parity green, no parity defect. This remains a human-owned stage decision while the related cross-repository campaign is coordinated; PR #311 intentionally remains Draft.
 - [ ] Hosted failure that local hook reasonably should catch is hook/CI parity drift to repair.
+
+## Fresh-eyes review repair pass (2026-09-08)
+
+The following repairs are required before the next immutable campaign head is
+created. They repair false-green paths found during whole-branch review; they do
+not change the MARK-373 product scope or the blocked Task-7 readiness state.
+
+### Repair A: Make the campaign runner evidence-complete and fail closed
+
+**Files:** `tools/run_workflow_pressure_campaign.py`,
+`tests/test_workflow_contracts.py`, `tests/pressure/workflow-contracts/prompts/*.md`.
+
+- [x] Add RED tests proving a successful post-preflight trial records Codex
+  version, sanitized argv, actual controlling head, mechanical metrics, hashes
+  for `events.jsonl`/`stderr.txt`/`final.txt`/`meta.json`, and cleanup outcome.
+- [x] Add RED tests proving a specifically observed model rejection becomes
+  `model-unavailable`, generic execution failure remains `trial-error`, trial
+  exceptions still leave durable metadata, cleanup failure is recorded, and an
+  unknown `--scenario` cannot return success with zero trials.
+- [x] Implement the minimum runner changes to satisfy those contracts without
+  widening sandbox/network/external-effect authority.
+- [x] Rewrite pressure prompts so they state scenario facts and authority state
+  without instructing the rubric answer; keep expected behavior only in
+  `campaign.json` rubrics and adjudication evidence.
+
+### Repair B: Make repo-standards hook certification fail closed
+
+**Files:**
+`codex-marketplace/plugins/repo-worker-pack/skills/repo-standards/scripts/repo_standards.py`,
+`codex-marketplace/plugins/repo-worker-pack/skills/repo-standards/references/repository-shape-standard.md`,
+`tests/test_repo_standards.py`.
+
+- [x] Add RED coverage for a marker-bearing but semantically incomplete hook;
+  it must fail contract validation.
+- [x] Add RED coverage for the asymmetric exception case where
+  `repo-standards-commands` is excepted while `pre-commit-hook` remains enabled;
+  `--check`/`--apply` must fail without installing an unusable hook.
+- [x] Require custom hooks to retain the canonical staged-snapshot command
+  skeleton in order while still allowing repository-local wrapper lines.
+- [x] Treat `required_with` mismatches as invalid exception configuration rather
+  than silently weakening a dependent surface.
+
+### Repair C: Finish authority/caller/portability cleanup
+
+**Files:**
+`codex-marketplace/plugins/superpowers-plus/skills/executing-plans/SKILL.md`,
+`codex-marketplace/plugins/superpowers-plus/skills/subagent-driven-development/SKILL.md`,
+`codex-marketplace/plugins/superpowers-plus/skills/subagent-workspace/SKILL.md`,
+`.agents/runbooks/implementing.md`, `tools/workflow_pressure_scan.py`,
+`tests/test_workflow_contracts.py`.
+
+- [x] Add RED structural tests proving `executing-plans` rules on falsifiable
+  technical concerns and asks only at the shared human stop boundary.
+- [x] Add RED structural tests proving the implementation runbook does not
+  directly authorize Linear mutation or an unbounded under-ten-minute
+  fix-while-here policy.
+- [x] Add RED coverage for generic absolute Windows machine paths across the
+  complete portable Superpowers+ skill tree; remove the `Z:\\_agent-scratch`
+  assumption and teach the candidate scanner to detect drive-root paths.
+- [x] Resolve the SDD stop-list contradiction so already-authorized destructive
+  or irreversible work is governed by its owning safety/evidence gate rather
+  than a second permission ceremony.
+
+### Repair D: Rebuild evidence and publication state
+
+- [x] Regenerate marketplace/installed surfaces and pressure-scan artifacts from
+  canonical source; no generated hand edits.
+- [ ] Run focused repo-standards and workflow-contract suites, then make a normal
+  hooked commit so the canonical broad gate proves the exact staged state.
+- [ ] Refresh the checkpoint to the committed repair head and explicitly mark
+  the prior `8f6280aa...` campaign result as historical blocked evidence; the
+  next behavioral campaign must use a new immutable evidence head.
+- [ ] Push the existing Draft PR branch and verify remote head/base/Draft state;
+  do not promote Ready while Task 7 remains harness-blocked.
 
 ## Acceptance Evidence
 

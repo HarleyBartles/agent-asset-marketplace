@@ -17,7 +17,10 @@ PATTERNS = (
     ("universal-startup-read", re.compile(r"at (?:the )?start of every (?:conversation|session)", re.I)),
     ("must-read", re.compile(r"MUST READ|must read", re.I)),
     ("unconditional-connector", re.compile(r"invoke .*connector|always .*connector", re.I)),
-    ("personal-path", re.compile(r"[A-Za-z]:\\Users\\|/Users/|/home/", re.I)),
+    (
+        "personal-path",
+        re.compile(r"(?<!\w)[A-Za-z]:[\\/]+[A-Za-z0-9_.-]|/Users/|/home/", re.I),
+    ),
     ("portable-repo-command", re.compile(r"tools/run\.py|tools/run ", re.I)),
     ("unconditional-skill", re.compile(r"invoke .* unconditionally|always invoke", re.I)),
 )
