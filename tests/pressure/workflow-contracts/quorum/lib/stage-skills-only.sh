@@ -1,17 +1,16 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-marketplace_root=$(git -C "$QUORUM_SCENARIO_DIR" rev-parse --show-toplevel)
+marketplace_root=${MARK373_REPO_ROOT:?MARK373_REPO_ROOT is required}
+evidence_head=${MARK373_EVIDENCE_HEAD:?MARK373_EVIDENCE_HEAD is required}
 skills_source="$marketplace_root/.agents/skills"
 skills_target="$QUORUM_WORKDIR/.agents/skills"
 
 test -d "$skills_source"
-test -z "$(git -C "$marketplace_root" status --porcelain)"
 
 mkdir -p "$QUORUM_WORKDIR/.agents"
 cp -a "$skills_source" "$skills_target"
 
-evidence_head=$(git -C "$marketplace_root" rev-parse HEAD)
 skills_sha256=$(
     cd "$skills_target"
     find . -type f -print0 |

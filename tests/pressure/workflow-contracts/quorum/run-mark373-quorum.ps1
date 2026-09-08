@@ -83,6 +83,8 @@ $commandParts = @(
     "desktop_auth=$(Quote-Bash $desktopAuthWsl)",
     'test -z "$(git --git-dir="$repo_git_dir" --work-tree="$repo" status --porcelain)"',
     'evidence_head=$(git --git-dir="$repo_git_dir" --work-tree="$repo" rev-parse HEAD)',
+    'export MARK373_REPO_ROOT="$repo"',
+    'export MARK373_EVIDENCE_HEAD="$evidence_head"',
     'auth_runtime=$(mktemp -d)',
     'preflight_runtime=$(mktemp -d)',
     'trap ''rm -rf "$auth_runtime" "$preflight_runtime"'' EXIT',
