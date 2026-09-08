@@ -1,10 +1,10 @@
 plan: .agents/plans/2026-09-06-mark-373-operating-system.md
 branch: codex/mark-373-operating-system
-head_at_capture: f0c46994ad56deec962f50808ec190a69397b442
-published_head: f0c46994ad56deec962f50808ec190a69397b442
+head_at_capture: 5c67870d82d9ec6408da62df42084600c6d80849
+published_head: 5c67870d82d9ec6408da62df42084600c6d80849
 last_completed_task: 6
 next_task: 7
-next_step: provide an authorised Anthropic grader credential, rerun the fail-closed Quorum preflight, then run the 13-scenario Luna exam from a fresh immutable evidence head
+next_step: review the seven determinate Luna behavioral failures, decide whether they require source repair, and retain PR #311 as Draft
 checkpoint_state: clean published implementation state at head_at_capture
 checkpoint_publication: this record describes the published implementation head; its containing closeout commit is intentionally not self-referenced
 working_tree_status: clean at head_at_capture before authoring this closeout record
@@ -67,9 +67,12 @@ last_green_evidence:
   - Quorum exam implementation and WSL runner repairs => published through f0c46994ad56deec962f50808ec190a69397b442 [all normal hooked commits passed]
   - Quorum preflight at f0c46994ad56deec962f50808ec190a69397b442 => clean immutable source, desktop Codex auth staged privately, empty MCP inventory, empty plugin inventory, then fail-closed exit 3 because no Anthropic grader credential is available
   - attempted Quorum runs before the final preflight repair => no valid Luna trial; failures occurred in harness setup or Gauntlet grader startup and remain ignored diagnostic traces
+  - native WSL Quorum static validation at 5c67870d82d9ec6408da62df42084600c6d80849 => all 13 scenarios, credentials, and arms/suites passed
+  - native WSL Quorum Luna campaign => 13/13 determinate; 6 pass, 7 behavioral fail, 0 indeterminate; subject gpt-5.6-luna medium; grader gpt-5.4
+  - committed Quorum summary => per-cell verdict/check counts and raw verdict.json SHA-256 hashes; raw native WSL results remain uncommitted
 historical_blocked_evidence_head: 8f6280aa5dad59b33124f50af37b7f7150ea2afa
-evidence_head: f0c46994ad56deec962f50808ec190a69397b442; Quorum isolation preflight passed but grader-auth preflight blocked before any valid Luna trial
-unresolved_blockers: Quorum requires an authorised Anthropic grader credential and none is available in Windows or WSL; review-preflight retains eight pre-existing origin/main warnings; Ready promotion remains a human-owned decision for the coordinated cross-repository campaign
+evidence_head: 5c67870d82d9ec6408da62df42084600c6d80849; native WSL Quorum Luna campaign complete with 13 determinate outcomes
+unresolved_blockers: seven Luna behavioral failures require review before Task 7 can be called green; review-preflight retains eight pre-existing origin/main warnings; Ready promotion remains a human-owned decision for the coordinated cross-repository campaign
 resume_reads:
   - .agents/plans/2026-09-06-mark-373-operating-system.md: Luna Execution Contract, Global Constraints, Task 7
   - .agents/docs/mark-373-superpowers-v6.3-rebase.md

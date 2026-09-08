@@ -620,6 +620,25 @@ class TestEvaluationCampaign:
 
 
 class TestQuorumExamScaffolding:
+    def test_committed_luna_summary_is_complete_and_hashed(self):
+        summary = json.loads(
+            _read(DOCS / "quorum" / "results" / "5c67870d82d9ec6408da62df42084600c6d80849" / "summary.json")
+        )
+        assert summary["coding_agent"] == {
+            "model": "gpt-5.6-luna",
+            "reasoning_effort": "medium",
+            "credential": "openai_responses_56luna",
+        }
+        assert summary["grader"]["model"] == "gpt-5.4"
+        assert summary["totals"] == {
+            "completed": 13,
+            "pass": 6,
+            "fail": 7,
+            "indeterminate": 0,
+        }
+        assert len(summary["scenarios"]) == 13
+        assert all(len(row["verdict_sha256"]) == 64 for row in summary["scenarios"])
+
     def test_mark373_quorum_exam_has_one_scenario_for_each_campaign_cell(self):
         exam = DOCS / "quorum"
         expected = {
