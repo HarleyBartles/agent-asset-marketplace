@@ -9,6 +9,7 @@ skill.
 | Mode | When | Route to |
 |---|---|---|
 | `ordinary_chat` | Acknowledgement, ping, preference, or side chat with no source evidence | Answer directly |
+| `tiny_reversible_change` | Fully specified, local, reversible edit with one obvious target and no product, taste, authority, safety, publication, or architectural decision | Read only `/using-superpowers-plus`, make the bounded edit, run one focused check, and report; do not load repo-worker, connector, design, or broad verification skills |
 | `continuity_ingress` | Resume packet, inherited worktree, or next-session block | `/using-git-worktrees` for state; then `/repo-worker-base` if there is repo work to continue |
 | `repo_worker` | Coding, repo-backed worker, issue handoff, PR gate, or source-truth claims | `/repo-worker-base` |
 | `github_proof` | PR/branch/commit/review/merge/main verification after a GitHub artifact exists | `/using-github-mcp` |
@@ -36,3 +37,8 @@ ordered stage composition table, see
 
 Do not invoke a stage skill directly for repo work without the `repo-worker-base`
 hygiene handoff.
+
+The `tiny_reversible_change` fast path is the narrow exception to that handoff.
+If inspection reveals ambiguity, protected state, broader scope, or a second
+decision, leave the fast path and route normally. Do not perform precautionary
+skill fan-out before that evidence exists.

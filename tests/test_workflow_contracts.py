@@ -639,6 +639,23 @@ class TestQuorumExamScaffolding:
         assert len(summary["scenarios"]) == 13
         assert all(len(row["verdict_sha256"]) == 64 for row in summary["scenarios"])
 
+    def test_pressure_repairs_are_owned_by_canonical_instruction_sources(self):
+        routing = _read(SKILLS / "using-superpowers-plus" / "references" / "bootstrap-routing.md")
+        questions = _read(SKILLS / "asking-clarifying-questions" / "SKILL.md")
+        execution = _read(SKILLS / "executing-plans" / "SKILL.md")
+        finishing = _read(SKILLS / "finishing-a-development-branch" / "SKILL.md")
+        safety = _read(REPO_SKILLS / "risk-gates" / "references" / "gates" / "safety-gate.md")
+        assert "tiny_reversible_change" in routing
+        assert "taste words" in questions
+        assert "durable checkpoint before live repository inspection" in execution
+        assert "inspect the current branch and status" in finishing
+        assert "first response" in safety and "reversible alternative" in safety
+
+        bounded = _read(DOCS / "quorum" / "scenarios" / "bounded-parallel" / "checks.sh")
+        portable = _read(DOCS / "quorum" / "scenarios" / "repo-portable-conflict" / "checks.sh")
+        assert "skill-called" not in bounded
+        assert "skill-called" not in portable
+
     def test_mark373_quorum_exam_has_one_scenario_for_each_campaign_cell(self):
         exam = DOCS / "quorum"
         expected = {

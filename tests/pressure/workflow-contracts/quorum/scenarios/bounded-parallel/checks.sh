@@ -4,5 +4,5 @@ pre() {
 }
 
 post() {
-    check-transcript skill-called superpowers-plus:dispatching-parallel-agents
+    git-repo
 }

@@ -25,3 +25,8 @@ Use before a destructive or irreversible action.
 - Use `internal_mode` for clearly scoped, recoverable actions.
 - Use `interactive_mode` for destructive actions without a clear recovery path.
 - Use `blocked_mode` when authority or target evidence is missing.
+
+When the request itself asks for an unauthorized destructive action, the first response
+must state that destructive authority is missing and offer a reversible alternative.
+Do this before repository inspection: inspection may refine the
+alternative, but it must not make the destructive request appear underway.

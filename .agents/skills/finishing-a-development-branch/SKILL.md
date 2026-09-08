@@ -42,6 +42,11 @@ This skill is a first-party authored derivation of `obra/superpowers` v6.3.0, re
 
 ## Step 1: Verify Tests
 
+Before selecting or stating a finish route, inspect the current branch and status
+and identify the exact state-bound validation evidence being reused. A user's
+summary that work is committed or checks passed is context, not a substitute
+for these read-only observations.
+
 Use the repository's current canonical evidence. Reuse valid focused or hooked
 proof when the tested state and claim are unchanged; run the broad gate when
 the state changed, evidence is stale, or a different claim needs proof.

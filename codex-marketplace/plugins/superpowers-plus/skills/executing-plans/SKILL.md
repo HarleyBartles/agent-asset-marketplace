@@ -49,13 +49,14 @@ Load plan, review critically, execute all tasks, report when complete.
 Read this skill's baseline (`references/implementation-baseline.md`) and the repo's `.agents/runbooks/implementing.md` before executing the stage checklist.
 
 ### Step 1: Load and Review Plan
-1. Ensure an isolated workspace: use /using-git-worktrees to create one or verify the existing one
-2. Read plan file
-3. Note the `Execution Strategy` in the plan header. **MUST READ:** `references/execution-lane-override.md` and confirm the lane you are using is the right one: human explicit direction wins, then your own assessment, then the plan's recommendation
-4. Announce the lane you will use and see it through unless the human asks to change
-5. Review critically - separate falsifiable technical concerns from human-owned requirements, product/canon choices, authority, and unauthorized irreversible/external consequences
-6. Resolve falsifiable technical concerns with bounded inspection or an evidence-backed technical ruling; record the ruling and continue
-7. Ask the human only when the shared human stop boundary is reached; otherwise create todos for the plan items and proceed
+1. On a resumed or compacted session, read the durable checkpoint before live repository inspection. Its claims are context, not current truth, but it determines the minimum state that must be reconciled.
+2. Ensure an isolated workspace: use /using-git-worktrees to create one or verify the existing one
+3. Read plan file (or the minimum sections named by the checkpoint)
+4. Note the `Execution Strategy` in the plan header. **MUST READ:** `references/execution-lane-override.md` and confirm the lane you are using is the right one: human explicit direction wins, then your own assessment, then the plan's recommendation
+5. Announce the lane you will use and see it through unless the human asks to change
+6. Review critically - separate falsifiable technical concerns from human-owned requirements, product/canon choices, authority, and unauthorized irreversible/external consequences
+7. Resolve falsifiable technical concerns with bounded inspection or an evidence-backed technical ruling; record the ruling and continue
+8. Ask the human only when the shared human stop boundary is reached; otherwise create todos for the plan items and proceed
 
 ### Step 2: Execute Tasks
 

@@ -51,6 +51,10 @@ This is an anytime escape hatch. If a single missing fact blocks the next step o
 - A single missing decision separates the agent from the next action.
 - The cost of guessing is wasted motion or reversible rework, not a canon or authority mistake.
 - One fact is missing now; further missing facts can wait their own turn.
+- Human-owned taste words such as “premium,” “playful,” “bold,” or “more
+  polished” do not supply an implementation target. Ask one question about the
+  intended audience, artifact, or concrete quality before inspecting or editing
+  source; do not silently translate taste into copy, color, or architecture.
 
 ## When not to use
 
