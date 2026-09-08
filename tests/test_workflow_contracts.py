@@ -668,8 +668,10 @@ class TestQuorumExamScaffolding:
         assert "--work-tree" in launcher
         assert 'mkdir -p "results/mark373/$evidence_head"' in launcher
         assert 'export PATH="$quorum_bin:$PATH"' in launcher
-        assert "OPENAI_API_KEY" in launcher
-        assert "--grader-model gpt-5.5" in launcher
+        assert "CLAUDE_CODE_OAUTH_TOKEN" in launcher
+        assert "ANTHROPIC_AUTH_TOKEN" in launcher
+        assert "ANTHROPIC_API_KEY" in launcher
+        assert "Quorum requires an Anthropic grader credential" in launcher
         assert "[switch]$Preflight" in launcher
 
         gauntlet = DOCS / "quorum" / "bin" / "gauntlet"
