@@ -1,7 +1,8 @@
 ---
 name: using-superpowers-plus
-description: Use when starting a conversation to find the smallest lawful workflow,
-  subject to its explicit tiny-change, checkpoint, taste, and safety fast paths
+description: Use when starting a conversation to find the smallest lawful workflow.
+  On an explicit checkpoint-first resume, read it before this or any other skill;
+  otherwise apply the tiny-change, taste, and safety fast paths here.
 metadata:
   source-id: using-superpowers-plus
   source-path: codex-marketplace/plugins/superpowers-plus/skills/using-superpowers-plus/SKILL.md

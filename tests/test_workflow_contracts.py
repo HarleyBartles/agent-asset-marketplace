@@ -662,6 +662,12 @@ class TestQuorumExamScaffolding:
         assert "technical assumption and focused proof" in brainstorming_header
         assert "Tiny bounded sketch" in brainstorming
         assert "missing destructive authority" in environment.split("---", 2)[1]
+        environment_header = " ".join(environment.split("---", 2)[1].split())
+        bootstrap_header = " ".join(bootstrap.split("---", 2)[1].split())
+        execution_header = " ".join(execution.split("---", 2)[1].split())
+        assert "read that checkpoint before this or any other skill" in environment_header
+        assert "read it before this or any other skill" in bootstrap_header
+        assert "read it before this or any other skill" in execution_header
         assert "durable checkpoint before live repository inspection" in execution
         assert "inspect the current branch and status" in finishing
         assert "find .agents -maxdepth 2 -type f -iname '*evidence*'" in finishing

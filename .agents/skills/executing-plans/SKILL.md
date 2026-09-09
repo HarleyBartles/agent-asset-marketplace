@@ -1,7 +1,8 @@
 ---
 name: executing-plans
-description: Use when you have a written implementation plan to execute in a separate
-  session with review checkpoints
+description: Use when executing an approved written plan. On a resumed or compacted
+  request that explicitly identifies a durable checkpoint as first, read it before
+  this or any other skill, then reconcile it against live state.
 metadata:
   source-id: executing-plans
   source-path: codex-marketplace/plugins/superpowers-plus/skills/executing-plans/SKILL.md

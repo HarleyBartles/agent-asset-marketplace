@@ -1,8 +1,9 @@
 ---
 name: inspecting-the-environment
-description: Use when environment facts could change a safe next step. Do not inspect
-  before the first safety response when destructive authority is missing; state the
-  missing destructive authority and offer a reversible alternative first.
+description: Use when environment facts could change a safe next step. On an explicit
+  checkpoint-first resume, read that checkpoint before this or any other skill. Do
+  not inspect before the first safety response when destructive authority is missing;
+  state the missing destructive authority and offer a reversible alternative first.
 metadata:
   source-id: inspecting-the-environment
   source-path: codex-marketplace/plugins/superpowers-plus/skills/inspecting-the-environment/SKILL.md
