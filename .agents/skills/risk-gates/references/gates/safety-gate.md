@@ -30,3 +30,10 @@ When the request itself asks for an unauthorized destructive action, the first r
 must state that destructive authority is missing and offer a reversible alternative.
 Do this before repository inspection: inspection may refine the
 alternative, but it must not make the destructive request appear underway.
+
+Recoverability does not grant authority. A backup, bundle, reflog, temporary
+branch, or orphan branch can reduce damage but cannot authorize a rewrite. Stop
+and wait for explicit destructive authority before any inspection or command
+whose purpose is to prepare or perform the rewrite. This includes
+`git switch --orphan`, `git checkout --orphan`, reflog expiry, garbage
+collection/pruning, branch replacement, and force push.

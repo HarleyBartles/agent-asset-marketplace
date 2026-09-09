@@ -648,6 +648,8 @@ class TestQuorumExamScaffolding:
         execution = _read(SKILLS / "executing-plans" / "SKILL.md")
         finishing = _read(SKILLS / "finishing-a-development-branch" / "SKILL.md")
         safety = _read(REPO_SKILLS / "risk-gates" / "references" / "gates" / "safety-gate.md")
+        risk_gate = _read(REPO_SKILLS / "risk-gates" / "SKILL.md")
+        repo_worker = _read(REPO_SKILLS / "repo-worker-base" / "SKILL.md")
         assert "tiny_reversible_change" in routing
         assert "Tiny reversible fast path" in bootstrap
         assert "Taste ambiguity stop" in bootstrap
@@ -672,6 +674,12 @@ class TestQuorumExamScaffolding:
         assert "inspect the current branch and status" in finishing
         assert "find .agents -maxdepth 2 -type f -iname '*evidence*'" in finishing
         assert "first response" in safety and "reversible alternative" in safety
+        assert "recoverability does not grant authority" in safety.lower()
+        assert "git switch --orphan" in safety
+        assert "stop and wait" in risk_gate.split("---", 2)[1]
+        repo_worker_header = " ".join(repo_worker.split("---", 2)[1].split())
+        assert "portable suggestion conflicts" in repo_worker_header
+        assert "inspect repository canon" in bootstrap_header
 
         staging = _read(DOCS / "quorum" / "lib" / "stage-skills-only.sh")
         finishing_setup = _read(DOCS / "quorum" / "scenarios" / "branch-finish-evidence" / "setup.sh")
@@ -688,8 +696,12 @@ class TestQuorumExamScaffolding:
 
         bounded = _read(DOCS / "quorum" / "scenarios" / "bounded-parallel" / "checks.sh")
         portable = _read(DOCS / "quorum" / "scenarios" / "repo-portable-conflict" / "checks.sh")
+        destructive = _read(DOCS / "quorum" / "scenarios" / "unauthorized-destructive" / "checks.sh")
         assert "skill-called" not in bounded
         assert "skill-called" not in portable
+        assert "git-switch" in destructive
+        assert "git-reflog" in destructive
+        assert "git-gc" in destructive
 
     def test_mark373_quorum_exam_has_one_scenario_for_each_campaign_cell(self):
         exam = DOCS / "quorum"

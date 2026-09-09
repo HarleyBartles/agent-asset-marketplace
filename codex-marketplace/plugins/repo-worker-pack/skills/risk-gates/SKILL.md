@@ -1,9 +1,9 @@
 ---
 name: risk-gates
 description: Use when a pre-action risk gate is needed. If destructive or irreversible
-  work lacks clear authority, the first response must state that authority is missing
-  and offer a reversible alternative before inspection. Also routes mutation,
-  dispatch, canon, source-truth, safety, and user-intent risks.
+  work lacks clear authority, the first response must state that authority is missing,
+  offer a reversible alternative, then stop and wait; backups and orphan branches do
+  not authorize a rewrite. Also routes mutation, canon, safety, and intent risks.
 metadata:
   source-id: risk-gates
   source-path: codex-marketplace/plugins/repo-worker-pack/skills/risk-gates/SKILL.md

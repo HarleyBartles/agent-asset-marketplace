@@ -2,7 +2,9 @@
 name: using-superpowers-plus
 description: Use when starting a conversation to find the smallest lawful workflow.
   On an explicit checkpoint-first resume, read it before this or any other skill;
-  otherwise apply the tiny-change, taste, and safety fast paths here.
+  otherwise apply the tiny-change, taste, and safety fast paths here. If a portable
+  command conflicts with repository guidance, inspect repository canon and the owner
+  gate and name required local evidence before ruling.
 metadata:
   source-id: using-superpowers-plus
   source-path: codex-marketplace/plugins/superpowers-plus/skills/using-superpowers-plus/SKILL.md
@@ -108,7 +110,10 @@ When the request asks for destructive or irreversible work but does not grant
 clear authority, the first response must state that authority is missing and
 offer a reversible alternative. Do not inspect the repository or announce an
 intention to perform the destructive action first. Invoke `/risk-gates` only
-after that immediate safety response if further work remains.
+after that immediate safety response if further work remains. A backup or
+reversible preparation does not grant authority: stop and wait for explicit
+authorization before inspection, `git switch --orphan`, reflog expiry, garbage
+collection, branch replacement, or another history-rewrite step.
 
 ## The Rule
 

@@ -1,6 +1,9 @@
 ---
 name: repo-worker-base
-description: Use when beginning or reviewing repo-backed work that needs portable worktree, source-custody, layout, validation, or publication guidance.
+description: Use when beginning or reviewing repo-backed work that needs portable
+  worktree, source-custody, validation, or publication guidance. When a portable
+  suggestion conflicts with repository guidance, inspect repository canon and the
+  owning applicability/safety gate, then name local evidence before ruling.
 metadata:
   source-id: repo-worker-base
   source-path: codex-marketplace/plugins/repo-worker-pack/skills/repo-worker-base/SKILL.md
