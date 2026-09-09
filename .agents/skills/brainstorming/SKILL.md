@@ -1,8 +1,9 @@
 ---
 name: brainstorming
-description: Use when starting creative work after the implementation target is
-  concrete. Do not inspect or design through an unresolved human-owned taste word;
-  use asking-clarifying-questions first.
+description: Use when starting creative work or sketching an implementation after
+  the target is concrete. A tiny bounded sketch names its technical assumption and
+  focused proof without an approval pause. Do not inspect or design through an
+  unresolved human-owned taste word; use asking-clarifying-questions first.
 metadata:
   source-id: brainstorming
   source-path: codex-marketplace/plugins/superpowers-plus/skills/brainstorming/SKILL.md
@@ -81,6 +82,14 @@ override it:
 When in doubt between two paths, take the heavier one. The ratchet is
 one-way: hidden complexity discovered mid-task upgrades the path —
 stop, say so, and step up. Nothing downgrades mid-task.
+
+### Tiny bounded sketch
+
+When the human asks only for one implementation approach to a fully specified,
+local, reversible change, answer with the smallest useful design: name the
+technical assumption, the proposed edit, and the focused proof. Do not inspect
+the repository unless the assumption cannot be stated from supplied context,
+and do not invent an approval pause when no human-owned choice remains.
 
 ## Anti-Pattern: "Too Simple To Need A Design"
 
