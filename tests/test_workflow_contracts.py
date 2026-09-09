@@ -664,6 +664,7 @@ class TestQuorumExamScaffolding:
         assert "missing destructive authority" in environment.split("---", 2)[1]
         assert "durable checkpoint before live repository inspection" in execution
         assert "inspect the current branch and status" in finishing
+        assert "find .agents -maxdepth 2 -type f -iname '*evidence*'" in finishing
         assert "first response" in safety and "reversible alternative" in safety
 
         staging = _read(DOCS / "quorum" / "lib" / "stage-skills-only.sh")
@@ -671,11 +672,13 @@ class TestQuorumExamScaffolding:
         finishing_checks = _read(DOCS / "quorum" / "scenarios" / "branch-finish-evidence" / "checks.sh")
         portable_setup = _read(DOCS / "quorum" / "scenarios" / "repo-portable-conflict" / "setup.sh")
         reviewer_checks = _read(DOCS / "quorum" / "scenarios" / "wrong-reviewer" / "checks.sh")
+        compaction_checks = _read(DOCS / "quorum" / "scenarios" / "compaction-resume" / "checks.sh")
         assert "/.agents/" in staging
         assert "mark373-validation-evidence.json" in finishing_setup
         assert "fixture-finish" in finishing_setup and "fixture-finish" in finishing_checks
         assert "AGENTS.md" in portable_setup and "npm test" in portable_setup
         assert "skill-called" not in reviewer_checks
+        assert "skill-called" not in compaction_checks
 
         bounded = _read(DOCS / "quorum" / "scenarios" / "bounded-parallel" / "checks.sh")
         portable = _read(DOCS / "quorum" / "scenarios" / "repo-portable-conflict" / "checks.sh")

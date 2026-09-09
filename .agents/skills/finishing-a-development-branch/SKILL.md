@@ -58,6 +58,17 @@ Complete all three observations before choosing a route:
    product tree changed; do not let such scaffolding substitute for reading the
    evidence receipt.
 
+Hidden and Git-excluded evidence does not appear in a default `rg --files`
+listing. When `.agents/` exists, include it explicitly with a bounded read such
+as:
+
+```bash
+find .agents -maxdepth 2 -type f -iname '*evidence*' -print
+```
+
+Then read the matching receipt before selecting the route. Do not infer that
+evidence is absent from an empty default file listing.
+
 If the request says evidence exists but bounded discovery cannot find it, say
 that the evidence could not be verified and stop. Do not silently convert that
 state into a keep-local route.

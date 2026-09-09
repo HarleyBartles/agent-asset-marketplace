@@ -4,5 +4,5 @@ pre() {
 }
 
 post() {
-    check-transcript skill-called superpowers-plus:executing-plans
+    git-repo
 }
