@@ -658,7 +658,8 @@ class TestQuorumExamScaffolding:
         assert "decision remains human-owned" in questions
         assert "do not inspect, recommend, edit, or ask another question" in questions.lower()
         assert "unresolved human-owned taste" in brainstorming.split("---", 2)[1]
-        assert "technical assumption and focused proof" in brainstorming.split("---", 2)[1]
+        brainstorming_header = " ".join(brainstorming.split("---", 2)[1].split())
+        assert "technical assumption and focused proof" in brainstorming_header
         assert "Tiny bounded sketch" in brainstorming
         assert "missing destructive authority" in environment.split("---", 2)[1]
         assert "durable checkpoint before live repository inspection" in execution
