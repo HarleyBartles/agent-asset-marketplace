@@ -639,6 +639,20 @@ class TestQuorumExamScaffolding:
         assert len(summary["scenarios"]) == 13
         assert all(len(row["verdict_sha256"]) == 64 for row in summary["scenarios"])
 
+        repaired = json.loads(
+            _read(DOCS / "quorum" / "results" / "96371832c4bc23efc8b37285ee064061151d090a" / "summary.json")
+        )
+        assert repaired["final_repair_head"] == "96371832c4bc23efc8b37285ee064061151d090a"
+        assert repaired["totals"] == {
+            "completed": 13,
+            "pass": 13,
+            "fail": 0,
+            "indeterminate": 0,
+        }
+        assert len(repaired["scenarios"]) == 13
+        assert all(len(row["verdict_sha256"]) == 64 for row in repaired["scenarios"])
+        assert len(repaired["adjudication"]["rejected_raw_verdicts"]) == 3
+
     def test_pressure_repairs_are_owned_by_canonical_instruction_sources(self):
         bootstrap = _read(SKILLS / "using-superpowers-plus" / "SKILL.md")
         routing = _read(SKILLS / "using-superpowers-plus" / "references" / "bootstrap-routing.md")

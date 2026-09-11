@@ -1,11 +1,11 @@
 plan: .agents/plans/2026-09-06-mark-373-operating-system.md
 branch: codex/mark-373-operating-system
-head_at_capture: 5c67870d82d9ec6408da62df42084600c6d80849
-published_head: 5c67870d82d9ec6408da62df42084600c6d80849
-last_completed_task: 6
-next_task: 7
-next_step: review the seven determinate Luna behavioral failures, decide whether they require source repair, and retain PR #311 as Draft
-checkpoint_state: clean published implementation state at head_at_capture
+head_at_capture: 96371832c4bc23efc8b37285ee064061151d090a
+published_head: 96371832c4bc23efc8b37285ee064061151d090a
+last_completed_task: 7
+next_task: 8
+next_step: commit and publish the truthful repaired Luna evidence summary, verify PR #311 remains Draft, and hand it to Harley for review
+checkpoint_state: clean published repair state before evidence-summary closeout
 checkpoint_publication: this record describes the published implementation head; its containing closeout commit is intentionally not self-referenced
 working_tree_status: clean at head_at_capture before authoring this closeout record
 working_diff_sha: none at head_at_capture
@@ -71,8 +71,8 @@ last_green_evidence:
   - native WSL Quorum Luna campaign => 13/13 determinate; 6 pass, 7 behavioral fail, 0 indeterminate; subject gpt-5.6-luna medium; grader gpt-5.4
   - committed Quorum summary => per-cell verdict/check counts and raw verdict.json SHA-256 hashes; raw native WSL results remain uncommitted
 historical_blocked_evidence_head: 8f6280aa5dad59b33124f50af37b7f7150ea2afa
-evidence_head: 5c67870d82d9ec6408da62df42084600c6d80849; native WSL Quorum Luna campaign complete with 13 determinate outcomes
-unresolved_blockers: seven Luna behavioral failures require review before Task 7 can be called green; review-preflight retains eight pre-existing origin/main warnings; Ready promotion remains a human-owned decision for the coordinated cross-repository campaign
+evidence_head: 96371832c4bc23efc8b37285ee064061151d090a; effective native WSL Luna evidence is 13 pass, 0 fail, 0 indeterminate using Task 7 affected-trial reruns
+unresolved_blockers: further paid Quorum testing stopped on human instruction because grader credits were exhausted; no Terra/Sol/Astra Quorum extension is claimed; review-preflight retains pre-existing origin/main warnings; Ready promotion remains human-owned
 resume_reads:
   - .agents/plans/2026-09-06-mark-373-operating-system.md: Luna Execution Contract, Global Constraints, Task 7
   - .agents/docs/mark-373-superpowers-v6.3-rebase.md

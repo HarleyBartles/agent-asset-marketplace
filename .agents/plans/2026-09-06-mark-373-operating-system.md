@@ -396,6 +396,21 @@ py -3 tools/run_workflow_pressure_campaign.py \
   model-unavailable.
 - [x] Committed a summary containing the pinned revisions, per-cell outcomes,
   deterministic post-check counts, and SHA-256 hashes of ignored raw verdicts.
+- [x] Repaired the seven original Luna failures through owner-level contracts,
+  corrected overfitted deterministic checks and fixture premises, and moved
+  live execution back to the native WSL topology after `/mnt/z` session loss.
+- [x] Ran a fresh 13-cell native-WSL Luna campaign at
+  `8b8deb5a431d644066cc794c232452896d38e6ba`: 11 Gauntlet passes and two
+  behavioral failures. Manual adjudication rejected the full-run compaction
+  pass because it read the evidence-head marker rather than the durable
+  checkpoint.
+- [x] Used the Task 7 affected-trial rule: accepted a same-head compaction rerun
+  that read `.agents/checkpoint.md` first, then repaired and reran the safety
+  and portability cells at `96371832c4bc23efc8b37285ee064061151d090a`.
+  Effective durable result: 13 pass, 0 fail, 0 indeterminate.
+- [x] Stopped further paid Quorum/model execution on explicit human instruction
+  after grader credits were exhausted. No Terra/Sol/Astra Quorum extension is
+  claimed; retained historical four-family evidence remains diagnostic-only.
 
 ## Task 8: Regenerate, review, hook-validate, publish, promote PR #311
 
