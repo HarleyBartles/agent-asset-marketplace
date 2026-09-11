@@ -12,13 +12,7 @@ import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPTS = (
-    ROOT
-    / "codex-marketplace"
-    / "plugins"
-    / "repo-worker-pack"
-    / "skills"
-    / "refreshing-installed-skills"
-    / "scripts"
+    ROOT / "codex-marketplace" / "plugins" / "repo-worker-pack" / "skills" / "refreshing-installed-skills" / "scripts"
 )
 if str(SCRIPTS) not in sys.path:
     sys.path.insert(0, str(SCRIPTS))
@@ -85,9 +79,7 @@ def test_clean_orphan_skills_preserves_mark_skill(tmp_path: Path) -> None:
         patch.object(refresh_installed_skills, "AGENTS_SKILLS_PATH", skills_path),
     ):
         assert (
-            refresh_installed_skills._clean_orphan_skills(
-                synced_skill_names=set(), local_skill_names=["mark-example"]
-            )
+            refresh_installed_skills._clean_orphan_skills(synced_skill_names=set(), local_skill_names=["mark-example"])
             is False
         )
 
@@ -109,9 +101,7 @@ def test_local_skill_registration_does_not_preserve_prefix_siblings(tmp_path: Pa
         patch.object(refresh_installed_skills, "ROOT", tmp_path),
         patch.object(refresh_installed_skills, "AGENTS_SKILLS_PATH", skills_path),
     ):
-        refresh_installed_skills._clean_orphan_skills(
-            synced_skill_names=set(), local_skill_names=["alpha"]
-        )
+        refresh_installed_skills._clean_orphan_skills(synced_skill_names=set(), local_skill_names=["alpha"])
 
     assert declared.is_dir()
     assert not undeclared.exists()

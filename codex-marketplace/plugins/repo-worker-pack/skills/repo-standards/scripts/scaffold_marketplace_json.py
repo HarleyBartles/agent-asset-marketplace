@@ -89,8 +89,7 @@ def _migrate(data: dict[str, object], repo_root: Path | None = None) -> dict[str
         ]
         if unresolved:
             raise ValueError(
-                "legacy local_skill_prefixes have no matching local skill directories: "
-                + ", ".join(unresolved)
+                "legacy local_skill_prefixes have no matching local skill directories: " + ", ".join(unresolved)
             )
         local_skills.extend(expanded)
     local_skills = sorted(set(local_skills))

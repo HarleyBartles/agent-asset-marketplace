@@ -109,9 +109,9 @@
 - [x] **Step 1: Regenerate owned outputs.** Run `py -3 tools/run.py installed-skills --apply` and `py -3 tools/run.py mesh --apply`.
 - [x] **Step 2: Run focused suites and inventories.** Cover installer, repo-standards, workflow contracts, marketplace generation, provenance, custody, and runbook boundaries.
 - [x] **Step 3: Review adversarially.** Check exact registration, legacy migration isolation, source/generated parity, consumer portability, provenance accuracy, contract custody, and absence of Quorum artifacts.
-- [ ] **Step 4: Update plan and checkpoint truthfully.** Record deterministic evidence and the semantic-review boundary without creating a duplicate receipt.
-- [ ] **Step 5: Commit normally and push.** Let the tracked pre-commit apply/check hook provide the broad gate; push the existing branch.
-- [ ] **Step 6: Update and verify Draft PR #311.** Keep it Draft; confirm clean tree, local/remote head equality, base `main`, and honest PR text.
+- [x] **Step 4: Update plan and checkpoint truthfully.** Record deterministic evidence and the semantic-review boundary without creating a duplicate receipt.
+- [x] **Step 5: Commit normally and push.** Let the tracked pre-commit apply/check hook provide the broad gate; push the existing branch.
+- [x] **Step 6: Update and verify Draft PR #311.** Keep it Draft; confirm clean tree, local/remote head equality, base `main`, and honest PR text.
 
 ## Acceptance evidence
 
