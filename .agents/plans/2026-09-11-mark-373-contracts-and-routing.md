@@ -159,7 +159,7 @@
 - [x] **Step 6: Remove stale plan/checkpoint claims.** Delete references that treat removed scores, metadata, summaries, or external tooling as durable evidence. Preserve only the decision that paid evaluation is retired and no behavioral baseline is claimed.
 - [x] **Step 7: Delete ignored local runs.** Resolve the exact ignored path under this worktree, verify it is inside `tests/pressure/workflow-contracts/runs/`, and remove it without touching external repositories or other worktrees.
 - [x] **Step 8: Regenerate indexes and prove custody.** Run `py -3 tools/run.py mesh --apply`, focused workflow-contract tests, `git status --ignored --short tests/pressure/workflow-contracts`, and a literal scan for removed artifact names.
-- [ ] **Step 9: Mark Task 4 complete and commit normally.** Stage the cleanup, tests, plan, checkpoint, and generated indexes; let the hook provide the broad gate.
+- [x] **Step 9: Mark Task 4 complete and commit normally.** Stage the cleanup, tests, plan, checkpoint, and generated indexes; let the hook provide the broad gate.
 
 ### Task 5: Close the sub-slice and publish review evidence
 
@@ -175,9 +175,9 @@
 - [x] **Step 1: Run final falsification scans.** Confirm one `.agents/contracts/` tree, no former contract directory under `.agents/docs/`, no command contract under doctrine, no stale old-path links, and no local runbook-owned multi-skill composition.
 - [x] **Step 2: Review the complete diff.** Check contract custody, generated-source direction, consumer portability, local-rule preservation, and absence of compatibility duplicates.
 - [x] **Step 3: Update plan and checkpoint truthfully.** Record only current state, decisive validation, and evidence boundaries; do not recreate a chronological Git/test receipt.
-- [ ] **Step 4: Commit normally.** Let the tracked pre-commit apply/check gate validate the exact staged state; do not duplicate the broad gate before or after a successful commit.
-- [ ] **Step 5: Push the existing branch and update Draft PR #311.** Summarize the unified contract boundary and sole-router cleanup. Keep the PR Draft.
-- [ ] **Step 6: Verify publication.** Confirm local/remote head equality, clean worktree, PR base `main`, and Draft state.
+- [x] **Step 4: Commit normally.** Let the tracked pre-commit apply/check gate validate the exact staged state; do not duplicate the broad gate before or after a successful commit.
+- [x] **Step 5: Push the existing branch and update Draft PR #311.** Summarize the unified contract boundary and sole-router cleanup. Keep the PR Draft.
+- [x] **Step 6: Verify publication.** Confirm local/remote head equality, clean worktree, PR base `main`, and Draft state.
 
 ## Acceptance evidence
 
