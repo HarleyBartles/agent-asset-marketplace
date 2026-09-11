@@ -283,11 +283,6 @@ def _check_hook_contract(hook_path: Path, repo_root: Path) -> list[str]:
     return findings
 
 
-def _hook_contract_lines(text: str) -> list[str]:
-    """Normalize executable contract lines while ignoring comments and blank lines."""
-    return [line.strip() for line in text.splitlines() if line.strip() and not line.strip().startswith("#")]
-
-
 def _retains_canonical_hook_contract(text: str) -> bool:
     """Require the canonical executable body; customize commands via its declaration."""
     template = Path(__file__).resolve().parent.parent / "templates" / "pre-commit"
