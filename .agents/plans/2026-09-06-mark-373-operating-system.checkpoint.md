@@ -1,11 +1,11 @@
 plan: .agents/plans/2026-09-06-mark-373-operating-system.md
 branch: codex/mark-373-operating-system
-implementation_head: 194d32c8b44a7f855ccb72d2277d1ddf941597a3
-last_completed_task: contracts-and-routing Task 5
-next_task: contracts-and-routing Task 6
-next_step: repair routing review findings, normalize active skill references, regenerate, validate, and push Draft PR #311
-checkpoint_state: MARK-373 implementation is under final routing-contract repair
-working_tree_status: dirty during the approved Task 6 implementation pass
+implementation_head: this checkpoint's containing commit
+last_completed_task: contracts-and-routing Task 6
+next_task: human review
+next_step: review Draft PR #311; do not promote Ready without human instruction
+checkpoint_state: MARK-373 implementation and approved contracts/routing repair are complete
+working_tree_status: clean at the containing commit
 
 current_evidence:
   - focused repo-standards and workflow-contract suites: 85 passed

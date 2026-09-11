@@ -51,13 +51,15 @@ def _active_instruction_surfaces() -> list[Path]:
             paths.extend(
                 path
                 for path in root.rglob("*")
-                if path.suffix.lower() in {".md", ".json", ".yaml", ".yml"} and "completed" not in path.parts
+                if path.is_file()
+                and path.suffix.lower() in {"", ".md", ".json", ".yaml", ".yml"}
+                and "completed" not in path.parts
             )
     plugin_root = ROOT / "codex-marketplace" / "plugins"
     paths.extend(
         path
         for path in plugin_root.rglob("*")
-        if path.is_file() and path.suffix.lower() in {".md", ".json", ".yaml", ".yml"}
+        if path.is_file() and path.suffix.lower() in {"", ".md", ".json", ".yaml", ".yml"}
     )
     return sorted(set(paths))
 

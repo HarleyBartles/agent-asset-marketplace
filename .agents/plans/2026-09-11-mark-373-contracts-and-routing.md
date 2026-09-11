@@ -202,7 +202,7 @@
 - [x] **Step 5: Normalize canonical prose.** Replace slash-prefixed skill invocation notation with skill identifiers across active canonical sources and prompts. Use `superpowers-plus:` only where namespace qualification is semantically required.
 - [x] **Step 6: Regenerate derived surfaces.** Run the installed-skills and mesh generators; do not hand-edit generated copies.
 - [x] **Step 7: Falsify completeness.** Run focused tests plus exact deep scans over active authored and generated surfaces; adjudicate every remaining hit rather than relying on invocation verbs.
-- [ ] **Step 8: Review, commit, push, and re-review.** Let the tracked hook provide the broad gate, push the existing Draft PR branch, verify publication, and conduct a fresh adversarial review without promoting the PR Ready.
+- [x] **Step 8: Review, commit, push, and re-review.** Let the tracked hook provide the broad gate, push the existing Draft PR branch, verify publication, and conduct a fresh adversarial review without promoting the PR Ready.
 
 ## Acceptance evidence
 
