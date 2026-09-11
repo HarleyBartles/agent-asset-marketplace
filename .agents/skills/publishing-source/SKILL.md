@@ -63,7 +63,7 @@ Run these in order. Stop at the first row that matches the change.
   -> commit (pre-commit hook applies and checks) -> push -> record SHA.
 - **PR (default):** regenerate -> stage intended tree -> commit (pre-commit hook
   applies and checks) -> branch -> push -> open a **Draft** PR -> record the PR
-  URL and head SHA. Keep it Draft during local review and repair; move it to
+  URL. Keep it Draft during local review and repair; move it to
   Ready only when the current committed state has the required evidence and
   review. Do not ask a second permission question when the publication route
   was already authorized.

@@ -155,6 +155,7 @@ The epic is done only when all seven plans are merged, canonical staged CI and e
 
 ## Handoff notes
 
-- The earlier `iterative-review-triage-and-selection` roadmap remains historical evidence for completed Plan 1. Its pending generation-aware selection and automated triage work is superseded by Plans 3 and 4 here.
+- Earlier generation-aware selection and automated triage work is superseded by
+  Plans 3 and 4 here.
 - Plans 2-7 are intentionally written just-in-time after the previous plan lands. Their titles and acceptance boundaries are fixed by this roadmap, but implementation detail must use the then-current source.
 - Plan 1 is sequential because its transition policy consumes the model and store produced by earlier tasks. Use `executing-plans` for Plan 1; later plans may select `subagent-driven-development` when their tasks are independent.

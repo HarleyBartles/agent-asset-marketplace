@@ -1633,7 +1633,7 @@ if ($irPlanPrs.Count -eq 0) {
 
 - [ ] **Step 9: Record publication evidence and mark Task 6 complete**
 
-Read the PR number and implementation commit SHA from GitHub/git. Keep roadmap Plan 1 at `executing`, record that implementation SHA and PR number, and record the plan-readiness rating. Mark every Task 6 checkbox, including this one, `[x]`; stage the plan and roadmap; run canonical CI; then commit and push the tracking update. Verify the final remote head SHA and keep the pull request draft.
+Keep roadmap Plan 1 at `executing`. Run the plan-readiness gate and report its rating in the current handoff without persisting it. Mark every Task 6 checkbox, including this one, `[x]`; stage the plan and roadmap; run canonical CI; then commit and push the implementation. Verify publication from GitHub and keep the pull request draft.
 
 Return the PR URL, branch, full final remote head SHA, implementation commit SHA, focused test result, staged CI result, and remaining roadmap gate. Report implementation as ready for review, not roadmap-done; move Plan 1 to `done` only after the PR lands and repository state proves it.
 

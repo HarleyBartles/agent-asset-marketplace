@@ -172,4 +172,4 @@ Lens subagents write their own `review-log-<lens>.md` files with `write` and end
 - Letting `reviewer-fixes` drift into a full branch review. Keep the input tightly scoped to the fix.
 - Blindly applying reviewer findings without verification. Use `receiving-code-review` for each finding.
 - Skipping CI after the reviewer loop. The reviewer "green" signal is not the draft/ready gate.
-- Flipping a PR to ready without archiving the completed plan/spec/roadmap it implements. The ready state should represent the completed plan, including the moved planning artifacts.
+- Flipping a PR to ready while completed plans, specs, roadmaps, checkpoints, or similar planning artifacts remain tracked.

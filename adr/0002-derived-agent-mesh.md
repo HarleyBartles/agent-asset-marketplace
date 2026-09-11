@@ -21,8 +21,3 @@ validation. Navigation files do not preserve historical plan archives.
 ## Current authority
 
 `.agents/doctrine/mesh-policy.md` and the canonical mesh generator.
-
-## Historical origin context
-
-Completed plans `2026-07-12-agents-mesh-discoverability.md` and
-`2026-08-09-zone-index-json-sidecars-phase-1.md`.

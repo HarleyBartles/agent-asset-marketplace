@@ -265,7 +265,7 @@
   },
   {
     "path": ".agents/runbooks/pr.md",
-    "line": 27,
+    "line": 31,
     "pattern": "portable-repo-command",
     "classification": "repo-local",
     "owner": "agent-asset-marketplace runbook",
@@ -297,7 +297,7 @@
   },
   {
     "path": ".agents/runbooks/repo-doctrine.md",
-    "line": 32,
+    "line": 34,
     "pattern": "portable-repo-command",
     "classification": "repo-local",
     "owner": "agent-asset-marketplace runbook",

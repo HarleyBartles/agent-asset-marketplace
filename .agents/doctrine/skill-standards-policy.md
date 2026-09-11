@@ -83,7 +83,9 @@ See `.agents/contracts/openai-agent-yaml.md` for the full contract.
 
 ## Bundled scripts
 
-Every executable Python script bundled with a first-party skill must support the CLI contract in `.agents/specs/completed/2026-08-04-skill-script-cli-contract-design.md`:
+Every executable Python script bundled with a first-party skill must support the
+CLI contract in the repo-standards
+[`skill-script-contract-validator.md`](../../codex-marketplace/plugins/repo-worker-pack/skills/repo-standards/references/skill-script-contract-validator.md):
 
 - `--help` prints usage, a one-line description, and the read-only or mutating classification for each flag.
 - `--check` is the default mode: report what the script would do and exit `0` when no mutation is needed.
@@ -125,7 +127,10 @@ Pure reference skills (syntax guides, API docs) and skills without a concrete fa
 ### Required artifacts when pressure testing
 
 1. **Scenario file in the skill:** Add `assets/pressure-tests.md` to the skill describing the RED and GREEN paths and the tool or decision under pressure. Keep it short and scenario-focused. The scenario ships with the skill so any consumer can run it.
-2. **Recorded RED/GREEN runs:** Run the scenario once without the skill (RED) and once with the skill (GREEN) using subagents. Record the results in `tests/pressure/<skill-name>/`. These proof records are consumer-specific and do not ship with the skill.
+2. **RED/GREEN comparison:** When the acceptance claim depends on behavior,
+   compare the scenario without and with the skill. Keep reusable prompts and
+   deterministic assertions; do not retain run-by-run transcripts, score
+   folders, or copied model metadata as permanent repository proof.
 3. **Tool-calling fidelity:** Subagents cannot invoke skills, but they can read the skill files from disk and call available MCP or other tools directly. Do not pre-truncate or fabricate tool-list fixtures; let the subagent call the actual MCP server (e.g., `mcp_list_tools`) and experience the same truncation or discovery cost a real agent would.
 4. **Cross-reference:** Link to the scenario from `assets/pressure-tests.md` and, where relevant, from the skill body.
 

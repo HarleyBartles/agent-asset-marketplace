@@ -415,10 +415,6 @@ def _scan_file(path: Path, findings: list[str]) -> None:
     # do not scan the preflight's own test files.
     if "tests" in path.parts:
         return
-    # Completed plans and specs are historical; do not enforce current
-    # conventions against them.
-    if "completed" in path.parts:
-        return
     try:
         content = path.read_text(encoding="utf-8")
     except (OSError, UnicodeDecodeError):

@@ -70,8 +70,8 @@ Plans are durable, tracked files. The in-flight plan is the source of truth for 
 
 - **In-flight home:** `.agents/plans/YYYY-MM-DD-<feature-name>.md` (or `.agents/plans/<epic-name>/YYYY-MM-DD-<feature-name>.md` for epic plans). Off-repo scratch is for transient session artifacts only; the plan itself always lives in the in-flight plan home.
 - **Commit before handoff:** A plan must exist and be committed before it can be handed to `executing-plans` or `subagent-driven-development`. Execution skills read the saved, committed file, not unsaved editor state.
-- **Completion:** When the work is complete, promote enduring decisions to ADRs or current doctrine, copy the plan to the consumer's verified off-repo completed-plan cold store, then remove it from Git.
-- **Roadmap and index links:** Remove tracked archive links rather than maintaining a completed-plan index. See the consumer's `completing-plans` runbook for its archive-and-removal sequence.
+- **Completion:** When the work is complete, promote enduring decisions to ADRs or current doctrine, then remove the finished plan and associated planning artifacts from Git. A convenience copy may live in the consumer's central completed-artifact scratch store but is disposable and not evidence.
+- **Roadmap and index links:** Remove tracked archive links rather than maintaining a completed-artifact index. See the consumer's completion runbook for its archive-and-removal sequence.
 
 ## File Structure
 
@@ -220,13 +220,15 @@ After writing the complete plan, look at the spec with fresh eyes and check the 
 
 **5. Plan Size Check:** Did you think the plan was too large while writing? If yes, did you apply one of the escape hatches in `references/plan-scope-sizing.md`? Is the `Execution Strategy` field filled with an allowed value and a clear rationale?
 
-**4. Plan-readiness rating:** Use `handoff-gates` `plan-readiness` lane. Rate the plan for execution confidence (8/10 floor, 9/10 target). Report the final rating in the handoff. Do not execute below 8/10.
+**4. Plan-readiness rating:** Use the `handoff-gates` `plan-readiness` lane.
+Rate the plan for execution confidence (8/10 floor, 9/10 target), report the
+rating in the current handoff, and do not persist it or execute below 8/10.
 
 If you find issues during the self-review, fix them inline and re-run the plan-readiness gate. If you find a spec requirement with no task, add the task.
 
 ## Execution Handoff
 
-After the plan is saved and the plan-readiness rating meets the floor, read the `Execution Strategy` and present it to the user:
+After the saved plan meets the readiness floor, read the `Execution Strategy` and present it to the user:
 
 > "Plan complete and saved to `.agents/plans/<filename>.md`. The `Execution Strategy` is `<strategy>`. The plan-readiness rating is `<X>/10`.
 > Do you want to proceed with the recommended strategy, or switch to another lane?"

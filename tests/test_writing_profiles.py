@@ -592,7 +592,6 @@ def test_blinded_campaign_is_frozen_and_hides_the_judge_rubric_from_workers() ->
     forbidden_worker_reads = {
         "tests/pressure/writing/blinded/hidden-rubric.md",
         "tests/pressure/writing/blinded/campaign.json",
-        "tests/pressure/writing/blinded/results.md",
     }
     arms = {arm["id"]: arm for arm in campaign["arms"]}
     assert set(arms) == {"control-no-writing-style", "treatment-writing-style"}

@@ -278,9 +278,18 @@ class TestRepositoryCallersAndPressure:
         assert "b36e0829c6d0140e93cfef2ca599b1b07d4a7797" in source
         assert "Retained snapshot" not in source
         offenders = []
-        for path in (ROOT / "codex-marketplace" / "plugins" / "superpowers-plus" / "skills").glob("*/SKILL.md"):
-            if "upstream snapshot is retained" in _read(path):
-                offenders.append(path.name)
+        plugin = ROOT / "codex-marketplace" / "plugins" / "superpowers-plus"
+        for path in plugin.rglob("*"):
+            if not path.is_file() or path.suffix.lower() not in {".md", ".json", ".yaml", ".yml"}:
+                continue
+            text = _read(path).lower()
+            stale_claims = (
+                "upstream snapshot is retained",
+                "snapshot retained in",
+                "retained upstream snapshot",
+            )
+            if any(claim in text for claim in stale_claims):
+                offenders.append(path.relative_to(plugin).as_posix())
         assert offenders == []
 
     def test_portable_clarification_trigger_is_consumer_neutral(self):
@@ -503,6 +512,21 @@ class TestEvaluationCampaign:
         )
         for name in discarded:
             assert not (DOCS / name).exists()
+
+    def test_pressure_fixtures_do_not_retain_run_results(self):
+        pressure_root = ROOT / "tests" / "pressure"
+        forbidden_names = {"results.md", "fresh-context-pressure-results.md"}
+        retained = [
+            path.relative_to(ROOT).as_posix()
+            for path in pressure_root.rglob("*")
+            if path.is_file() and (path.name in forbidden_names or "outputs" in path.parts)
+        ]
+        assert retained == []
+
+        for campaign in pressure_root.rglob("campaign.json"):
+            payload = json.loads(_read(campaign))
+            assert "runtime_results" not in payload, campaign
+            assert "runtime_execution" not in payload, campaign
 
     def test_trial_argv_has_exact_controls_and_least_privilege(self, tmp_path: Path):
         argv = campaign_runner.build_codex_argv(tmp_path, "gpt-5.6-luna", "read-only", tmp_path / "final.txt")

@@ -1,6 +1,8 @@
 # Repo Doctrine Runbook
 
-This runbook contains the worker procedures and reference pointers that were previously in the root `AGENTS.md` and `tools/AGENTS.md` (now `.devin/rules/tools.md`). It is a runbook, not operative law; the root `AGENTS.md` and `.agents/doctrine/mesh-policy.md` remain the rule surfaces.
+This runbook contains repo-specific worker procedures and reference pointers.
+It is not operative law; the root `AGENTS.md` and
+`.agents/doctrine/mesh-policy.md` remain the rule surfaces.
 
 ## Testing instructions
 
@@ -19,7 +21,7 @@ For Devin Review and the full review methodology, see `REVIEW.md` and `.agents/r
 
 ## PR instructions
 
-PRs must include publication proof per the root `AGENTS.md` "Publication proof for repo work" section.
+The published PR is the publication proof defined by root `AGENTS.md`.
 For the PR workflow, see `.agents/runbooks/pr.md`.
 For what reviewers check, see `.agents/runbooks/code-review.md`.
 

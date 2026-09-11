@@ -353,6 +353,11 @@ def _check_surface(
             findings.append(f"missing directory: {rel}")
         return findings
 
+    if kind == "absent":
+        if full.exists():
+            findings.append(f"retired path remains: {rel}")
+        return findings
+
     if kind == "submodule":
         gitmodules = repo_root / ".gitmodules"
         if not gitmodules.is_file():

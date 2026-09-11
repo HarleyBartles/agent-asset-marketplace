@@ -67,7 +67,7 @@ For each task:
 ### Step 3: Complete Development
 
 After all tasks complete and verified:
-1. Run `handoff-gates` completion-readiness lane. Rate the completed work against the plan and the repo code review guide (9/10 target). Report the final rating. Do not hand off below 9/10.
+1. Run the `handoff-gates` completion-readiness lane against the plan and repo code-review guide. Rate the work (9/10 target), report the rating in the current handoff, and do not persist it or hand off below 8/10.
 2. Invoke `requesting-code-review` for the final whole-branch review.
 3. Announce: "I'm using the finishing-a-development-branch skill to complete this work."
 4. **REQUIRED SUB-SKILL:** Use `finishing-a-development-branch`

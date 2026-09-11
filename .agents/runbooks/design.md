@@ -10,17 +10,8 @@ A design that ignores the repo's standards will produce specs that do not hand o
 - **[`AGENTS.md`](../../AGENTS.md)** - repository source-of-truth and publication rules
 - **[`.agents/doctrine/custody-and-marketplace-doctrine.md`](../../.agents/doctrine/custody-and-marketplace-doctrine.md)** - source custody rules, provenance modes, plugin curation rules
 
-## Design Spec Expectations
+## Marketplace design checks
 
-Write architectural design specs to
-`.agents/specs/YYYY-MM-DD-<topic>-design.md` and commit them; the `specs/`
-surface is repo-resident and indexed.
-
-- Write the spec to `.agents/specs/YYYY-MM-DD-<topic>-design.md`.
-  Do not create design specs under `.agents/docs/design/` or another tracked
-  docs directory.
-- Keep the design spec in the `specs/` surface while the design is being
-  developed and reviewed; it is tracked, not ignored.
 - Use the repo's existing vocabulary and file locations. The spec should not invent a new terminology layer when the repo already has one
 - Include only the additional repo-specific facts the planner will need, not the full text of the brainstorming workflow
 - Verify marketplace file paths, skill names, custody, and contract details
@@ -32,6 +23,6 @@ When the design produces a vendored asset, skill, or prompt that will be consume
 
 ## Workflow ownership
 
-`brainstorming` owns design method, spec self-review, readiness, approval, and
-the subsequent planning handoff. This runbook adds only the repository paths,
-custody, marketplace source checks, and cross-repo consumer constraint above.
+`brainstorming` owns design method, spec location and custody, self-review,
+readiness, approval, and the subsequent planning handoff. This runbook adds
+only marketplace source checks and the cross-repo consumer constraint above.

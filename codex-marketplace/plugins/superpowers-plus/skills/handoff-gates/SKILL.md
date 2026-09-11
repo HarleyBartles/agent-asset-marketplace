@@ -39,7 +39,9 @@ license: MIT
 
 ## Overview
 
-Rate stage-boundary artifacts for execution confidence. Never hand off below 8/10. Target 9/10+.
+Rate stage-boundary artifacts for execution confidence. Never hand off below
+8/10. Target 9/10+. The score is a behavioral forcing function used during the
+handoff; do not persist it in a roadmap, ledger, PR, or other durable record.
 
 ## Lanes
 
@@ -47,21 +49,23 @@ Rate stage-boundary artifacts for execution confidence. Never hand off below 8/1
 - **plan-readiness** (planning → execution): Can the implementing agent or orchestrator plus subagents execute this plan without improvising mid-flight?
 - **completion-readiness** (execution → code review): What will a code reviewer find when they review this work against the plan and the repo's code review guide?
 
-## Rating Scale
+## Rating scale
 
-1–10 execution-confidence scale.
+Use a 1–10 execution-confidence scale.
 
-- **< 8:** Identify gaps, strengthen, re-rate. Never proceed below 8.
+- **< 8:** Identify gaps, strengthen, and re-rate. Never proceed below 8.
 - **8–8.9:** Try one bounded strengthening pass to reach 9+.
-- **≥ 9:** Proceed to handoff. Report the final rating and record it in the roadmap.
+- **≥ 9:** Proceed to handoff and report the final rating in the current
+  conversation only.
 
 ## How to Use
 
 1. Read the artifact produced by the previous stage.
 2. Pick the lane matching the boundary.
-3. Score the artifact against the lane question.
-4. Strengthen gaps until the score is ≥ 8 (target ≥ 9).
-5. Report the final rating and hand off to the next stage.
+3. Score the artifact against the lane question and checklist.
+4. Strengthen gaps until the score is at least 8, targeting 9+.
+5. Report the rating in the current handoff and proceed, or return `blocked`
+   with the unresolved gaps.
 
 ## Plan-Readiness Checklist
 
@@ -70,8 +74,6 @@ For SDD `plan-readiness`, rate the artifact against these items. Strengthen any 
 - [ ] **Dependency-order coherence.** Each task's `Consumes` block only references earlier tasks. If a later output is needed earlier, move the producer, split a step, or add a bridge.
 
 - [ ] **Task ordering.** Schedule producers before consumers. In this repo, source and overlay edits precede regeneration and CI. In consumer repos, use the consumer's canonical regeneration and preflight commands.
-
-- [ ] **Plan-step tracking.** Each task includes a final sub-step for the implementer to mark the task's own checklist boxes `[x]` in the plan file.
 
 - [ ] **Clean CI gate.** Do not run the repo's canonical CI immediately before a normal commit or immediately after a successful hooked commit. Stage the intended tree and commit; the pre-commit hook will materialize the staged snapshot, run the repository's canonical apply gate, stage the owned generated surfaces, and run the repository's canonical check gate with diagnostics before allowing the commit. Use the consumer's canonical check command only for an uncommitted verification, pipeline diagnosis, or explicit CI-parity work. Do not use `git commit --no-verify` to bypass the pre-commit hook.
 
@@ -85,5 +87,5 @@ If the artifact is intentionally thin, blocked externally, or touches `verificat
 
 ## Common Mistakes
 
-- Handing off at 7/10 because the plan is "good enough." → Scores below 8 are blocked.
-- Chasing a 10 forever. → One strengthening pass from 8–8.9 is enough.
+- Handing off at 7/10 because the artifact is "good enough."
+- Chasing a 10 forever instead of handing off after the bounded strengthening pass.

@@ -24,17 +24,19 @@ There are no generated flat skill zip exports. Skills install from the Codex plu
 ## Boundary
 - `superpowers-plus` is the first-party plugin bundle for the
   Superpowers+ workflow skill family.
-- Editable custody lives in `codex-marketplace/plugins/superpowers-plus/skills/<name>/`. The retained
-  upstream provenance record is this `SOURCE.md` and is reference-only
-  and is not the editable surface.
+- Editable custody lives in `codex-marketplace/plugins/superpowers-plus/skills/<name>/`.
+  This `SOURCE.md` records the upstream comparison pin; it is not an upstream
+  source snapshot or an editable skill surface.
 - No adapter overlay is applied; first-party skills are distributed as-authored.
 - `codex-marketplace/plugin-roots.json` lists the active plugin roots.
 - `superpowers-mega-pack` is retired and is not maintained as an active
   marketplace bundle.
 
-## Retention note
+## Prior comparison point
 
-The `obra/superpowers` v6.2.0 MIT snapshot was previously retained under the deleted third-party source tree `superpowers/obra-superpowers/v6.2.0/`; it is the audited comparison point recorded above. The source custody tree has been removed as part of the `sources/` layer retirement. The v6.3.0 upstream snapshot is not kept as a live file tree; the canonical source for the Superpowers+ plugin is now `codex-marketplace/plugins/superpowers-plus/skills/<name>/`.
+The v6.2.0 commit above is the prior audited comparison point. The current
+comparison pin is v6.3.0. Upstream source is read from its repository when a
+comparison is needed; this plugin contains only its first-party skill sources.
 
 ## Plugin custody
 

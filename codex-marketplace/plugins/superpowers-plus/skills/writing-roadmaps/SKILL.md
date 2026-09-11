@@ -57,7 +57,7 @@ Break large goals into a roadmap of consecutive plans, execute them, and keep th
 3. Use `writing-plans` to write the next plan just-in-time, including all prior commits, PRs, worktree state, and learnings.
 4. Run `handoff-gates` plan-readiness.
 5. Execute the plan.
-6. Update the roadmap with status, commit, PR, final rating, and notes.
+6. Update the roadmap only when the remaining sequence, scope, or blockers changed.
 7. Repeat until done. Run `handoff-gates` completion-readiness before code review.
 
 ## Lane 3 — Split an Oversized Plan
@@ -78,7 +78,10 @@ Status values: `pending`, `writing`, `ready`, `executing`, `done`, `blocked`.
 
 ## Blocked Plans
 
-If a plan is stuck below 8/10 and cannot be strengthened autonomously, ask the human one focused question. Do not proceed below 8/10. Do not reduce scope without human consultation. Update the roadmap item to `blocked`.
+If a plan remains below 8/10 and cannot be strengthened autonomously, ask the
+human one focused question. Do not proceed below 8/10 or reduce scope without
+human consultation. Update the roadmap only when the blocker changes the
+remaining route; do not store the rating.
 
 ## Scope Changes
 
@@ -91,4 +94,4 @@ If a roadmap item should split into a new epic, a scope change invalidates multi
 ## Common Mistakes
 
 - Writing all plans upfront. → Write each plan just-in-time with current context.
-- Skipping the rating gate. → Every plan must pass `handoff-gates` plan-readiness before execution.
+- Skipping the rating gate. → Every plan must meet the `handoff-gates` readiness floor before execution.

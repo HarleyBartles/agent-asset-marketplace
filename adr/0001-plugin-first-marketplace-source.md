@@ -22,7 +22,3 @@ An installed copy is never an authority for a source edit.
 ## Current authority
 
 Root `AGENTS.md` and `.agents/doctrine/custody-and-marketplace-doctrine.md`.
-
-## Historical origin context
-
-Completed plans including `2026-06-18-mark-233-implement-marketplace-source-custody-and-plugin-projection-normalization.md` and `2026-06-19-mark-260-make-plugin-onboarding-generation-metadata-driven.md`.

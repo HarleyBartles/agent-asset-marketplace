@@ -1,8 +1,8 @@
 # Planning Runbook
 
-Use this reference for repository-specific plan custody, marketplace constraints,
-and validation in `agent-asset-marketplace`. General planning semantics belong to
-the `writing-plans` skill.
+Use this reference for marketplace constraints and validation in
+`agent-asset-marketplace`. General planning semantics and plan custody belong
+to the `writing-plans` skill.
 
 ## Required repository context
 
@@ -12,18 +12,6 @@ the `writing-plans` skill.
 
 Enter through `using-superpowers-plus` and follow its planning handoff. This
 runbook does not select or sequence workflow skills.
-
-## Plan custody
-
-- Keep in-flight plans under `.agents/plans/`; epic plans may use
-  `.agents/plans/<epic-name>/`.
-- Keep session-only briefs, reports, and review diffs in the off-repo scratch
-  workspace. Do not put the durable plan there.
-- Commit the plan before execution handoff so workers read tracked state.
-- On completion, use the `completing-plans` runbook to verify the off-repo plan
-  archive and remove the tracked plan. Do not move a matching spec automatically.
-- Do not create loose planning artifacts at repository root or under product
-  source directories.
 
 ## Marketplace planning constraints
 

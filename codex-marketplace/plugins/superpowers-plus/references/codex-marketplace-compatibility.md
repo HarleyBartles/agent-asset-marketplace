@@ -12,11 +12,11 @@ This note applies to the active Codex distribution of the first-party Superpower
 
 - `superpowers-plus` is the first-party plugin bundle for the Superpowers+ workflow skill family.
 - The active plugin includes the first-party Superpowers+ skills, including the `using-superpowers-plus` workflow-selection entrypoint, plus the compositional helper skills (`handoff-gates`, `inspecting-the-environment`, `iterative-review`, `requesting-code-review`, `receiving-code-review`, `selecting-a-subagent`, `writing-roadmaps`).
-- The retained `obra/superpowers` v6.3.0 MIT snapshot is recorded in `SOURCE.md` for reference; it is not the editable surface and no adapter overlay is applied.
+- `SOURCE.md` records the `obra/superpowers` v6.3.0 MIT commit used as the comparison basis. The upstream source tree is not vendored here.
 - Editable custody lives in `codex-marketplace/plugins/superpowers-plus/skills/<name>/`. When a Superpowers+ skill needs to change, edit the canonical plugin skill directly.
-- The repo-specific adaptation text lives only in the plugin skill; the canonical plugin skill is the editable surface and is not folded into the retained upstream snapshot.
-- The retained upstream source snapshot is reference-only; see `SOURCE.md` `## Retention note` and `## Plugin custody`. Do not fold Codex-safe wording, frontmatter normalization, marketplace policy, or adaptation into the retained provenance record.
-- Keep only the latest retained upstream source snapshot in the per-pack `SOURCE.md` provenance record. Older versions are replaced, not accumulated.
+- The repo-specific adaptation text lives only in the plugin skill; the canonical plugin skill is the editable surface and remains separate from the upstream comparison basis.
+- Keep provenance and comparison instructions in `SOURCE.md`; do not describe that record as a retained source snapshot.
+- Keep only the current upstream comparison pin in `SOURCE.md`. Replace older pins rather than accumulating them.
 - Installation and export artifacts are derived from the plugin tree. Do not hand-edit generated zips or registry entries.
 - Frontmatter contract: [.agents/contracts/skill-frontmatter.md](../../../.agents/contracts/skill-frontmatter.md)
 - OpenAI agent contract: [.agents/contracts/openai-agent-yaml.md](../../../.agents/contracts/openai-agent-yaml.md)
@@ -34,4 +34,4 @@ This note applies to the active Codex distribution of the first-party Superpower
 
 ## Purpose
 
-This file keeps the active plugin aligned with the Asset Marketplace operating model without changing the retained upstream source snapshot.
+This file keeps the active plugin aligned with the Asset Marketplace operating model while preserving a precise upstream comparison pin.

@@ -9,7 +9,7 @@ tools/run ci --check
 ```
 
 The shared registry is `_TASKS["ci"]` in `tools/run.py`. Its dependency list
-is exactly `lint`, `repo-standards`, `validate`, and `archive-links`; normal DAG
+is exactly `lint`, `repo-standards`, and `validate`; normal DAG
 resolution adds the transitive `mesh` dependency of `validate`.
 
 ## Local and hosted sequences

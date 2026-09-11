@@ -480,9 +480,9 @@ parked-with-ruling at the cap.
 ## Final Review
 
 Once all task-level reviews are complete, run `handoff-gates` `completion-readiness`
-against the completed work. Rate it against the plan and the repo's code review
-guide (8/10 floor, 9/10 target). Report the final rating and do not proceed
-below the floor.
+against the completed work, the plan, and the repo's code-review guide. Rate it
+(8/10 floor, 9/10 target), report the rating in the current handoff, and do not
+persist it or proceed below the floor.
 
 If the completion-readiness rating meets the floor, dispatch the final whole-branch
 review with `requesting-code-review`. The skill reviews the full branch diff and

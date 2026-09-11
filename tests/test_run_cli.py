@@ -55,7 +55,7 @@ def test_resolve_ci_order():
     assert targets.index("installed-skills") < targets.index("repo-index")
     assert targets.index("repo-index") < targets.index("mesh")
     assert targets.index("mesh") < targets.index("validate")
-    assert targets[-1] == "archive-links"
+    assert "archive-links" not in targets
 
 
 def test_resolve_all_aliases_to_ci():

@@ -76,7 +76,10 @@ Approved plans live in the repo under `.agents/plans/`. After a plan merges, pla
 
 If the approved plan is stale but the drift is repairable and stays inside the approved scope, repair the repo-resident plan in the execution branch, keep the route-state block current, and include the repaired plan in the execution PR. If the drift changes scope materially, invalidates the approved direction, or makes execution unsafe, stop for human review.
 
-Every execution PR must include the updated repo-resident plan file with checked boxes. If the plan was stale, the execution PR must include the repaired plan plus implementation. If the plan was fresh, the execution PR must still include the updated checked-off plan.
+Keep an approved plan current while it governs implementation and review. When
+the PR completes it, follow the consumer's completed-artifact custody rule:
+promote durable decisions, verify the off-repo archive, and remove the finished
+planning artifacts from the final tracked tree.
 
 Return to this skill after those gates to write or update the Linear issue only when the latest instruction authorizes mutation.
 

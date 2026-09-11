@@ -26,7 +26,7 @@ Local file changes are not repo completion. A worker must not return GREEN, clai
 
 If repo files changed, the worker must publish the changes to GitHub before claiming completion. A valid repo-work return must include one of:
 
-1. an open PR URL with branch name and full head SHA;
+1. an open PR URL (GitHub supplies its branch and head identity);
 2. a verified direct-main commit SHA when direct-main work was explicitly authorized;
 3. a concrete publication blocker explaining why the local changes could not be pushed or turned into a PR.
 
@@ -46,7 +46,7 @@ Security review must apply the relevant profile and the repository lenses in `.a
 - [Worker guidance](.agents/runbooks/repo-doctrine.md)
 - [Implementing workflow](.agents/runbooks/implementing.md)
 - [Runbook stage routing](.agents/runbooks/AGENTS.md), [repo runbook policy](.agents/doctrine/repo-runbook-policy.md), and [completing plans](.agents/runbooks/completing-plans.md)
-- [Completed-plan custody](.agents/doctrine/completed-plans.md) and the root [ADR log](adr/README.md) for the in-flight, archival, and durable-decision boundary
+- [Completed-artifact custody](.agents/doctrine/completed-artifacts.md) and the root [ADR log](adr/README.md) for the in-flight, removal, and durable-decision boundary
 - [Worktree and scratch policy](.agents/doctrine/non-repo-locations-policy.md)
 
 ## Maintenance responsibility

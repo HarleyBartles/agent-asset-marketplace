@@ -52,6 +52,18 @@ def _create_worktree(repo: Path, name: str) -> Path:
     return worktree
 
 
+def test_absent_surface_reports_tracked_completed_artifact_directory(tmp_path: Path) -> None:
+    """A completed-artifact directory must be drift rather than a supported repo surface."""
+    completed = tmp_path / ".agents" / "specs" / "completed"
+    completed.mkdir(parents=True)
+    findings = repo_standards._check_surface(
+        tmp_path,
+        {"id": "retired-specs", "path": ".agents/specs/completed", "kind": "absent"},
+        set(),
+    )
+    assert findings == ["retired path remains: .agents/specs/completed"]
+
+
 def test_scaffold_agents_md_check_missing_fails(tmp_path: Path) -> None:
     """scaffold_agents_md --check fails when root AGENTS.md is missing."""
     repo = tmp_path / "no-agents"
@@ -1256,10 +1268,10 @@ def test_repo_standards_apply_refuses_missing_consumer_command_declaration(tmp_p
         "- root-agents-md\n"
         "- contributing-entry\n"
         "- root-gitignore\n"
-        "- completed-plans-rule\n"
-        "- completed-plans-doctrine\n"
-        "- plans-completed-dir\n"
-        "- specs-completed-dir\n"
+        "- completed-artifacts-doctrine\n"
+        "- retired-plans-completed-dir\n"
+        "- retired-specs-completed-dir\n"
+        "- retired-roadmaps-completed-dir\n"
     )
     policy_dir = repo / ".agents" / "doctrine"
     policy_dir.mkdir(parents=True)
@@ -1298,10 +1310,10 @@ def test_repo_standards_refuses_asymmetric_command_declaration_exception(tmp_pat
         "- root-agents-md\n"
         "- contributing-entry\n"
         "- root-gitignore\n"
-        "- completed-plans-rule\n"
-        "- completed-plans-doctrine\n"
-        "- plans-completed-dir\n"
-        "- specs-completed-dir\n"
+        "- completed-artifacts-doctrine\n"
+        "- retired-plans-completed-dir\n"
+        "- retired-specs-completed-dir\n"
+        "- retired-roadmaps-completed-dir\n"
     )
     policy_dir = repo / ".agents" / "doctrine"
     policy_dir.mkdir(parents=True)

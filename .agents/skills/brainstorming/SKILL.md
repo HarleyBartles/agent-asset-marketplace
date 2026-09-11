@@ -133,8 +133,8 @@ your path and complete them in order.
 4. **Propose 2-3 approaches** — with trade-offs and your recommendation
 5. **Present design** — in sections scaled to their complexity, get user approval after each section
 6. **Write design doc** — save to `.agents/specs/YYYY-MM-DD-<topic>-design.md` and commit
-7. **Spec self-review & readiness gate** — quick inline check for placeholders, contradictions, ambiguity, scope; then use a reviewer subagent or `handoff-gates` spec-readiness lane. Rate the spec (8/10 floor, 9/10 target). Report the final rating.
-8. **User reviews written spec** — ask user to review the spec file and the final rating before proceeding.
+7. **Spec self-review & readiness gate** — quick inline check for placeholders, contradictions, ambiguity, and scope; then use a reviewer subagent or `handoff-gates` spec-readiness lane. Rate the spec (8/10 floor, 9/10 target) and report the rating in the current handoff without persisting it.
+8. **User reviews written spec** — ask the user to review the spec and current rating before proceeding.
 9. **Transition to implementation** — invoke writing-plans skill to create implementation plan
 
 ## Process Flow

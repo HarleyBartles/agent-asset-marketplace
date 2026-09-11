@@ -20,7 +20,8 @@ This repo's rules:
 
 - Open pull requests as **draft**.
 - This repo's CI must not run on draft pull requests. The `marketplace-validation` workflow skips draft PRs and runs once a PR is no longer draft; it is gated by `github.event.pull_request.draft == false`.
-- The PR body must include publication proof per root `AGENTS.md`.
+- The published PR is the publication proof; its body describes scope and
+  material evidence boundaries rather than restating its own metadata.
 
 ## Repo-specific guidance
 
