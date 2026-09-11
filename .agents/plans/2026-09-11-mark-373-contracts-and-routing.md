@@ -1,0 +1,167 @@
+# MARK-373 Contracts and Routing Cleanup Implementation Plan
+
+> **For agentic workers:** REQUIRED SUB-SKILL: Use `/subagent-driven-development` (recommended) or `/executing-plans` to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+
+**Goal:** Establish one unambiguous `.agents/contracts/` home for repository contracts and make `/using-superpowers-plus` the sole skill-composition router for repo-backed workflows.
+
+**Architecture:** Move both human-readable and machine-readable repository contracts into `.agents/contracts/`; contract format does not determine custody. Update the canonical `repo-standards` source before regenerating installed copies. Portable stage skills select workflows, while local runbooks retain only repository-specific paths, commands, constraints, and acceptance evidence.
+
+**Tech Stack:** Markdown, JSON, Python, pytest, repository generators.
+
+**Spec:** `.agents/plans/2026-09-06-mark-373-operating-system.md`, extended by the human-approved unified-contract and sole-router decisions captured in this plan.
+
+**Execution Strategy:** `subagent-driven-development` — the contract migration and routing cleanup are separable review units, but canonical-source edits must precede generated installed-skill refreshes.
+
+## Global Constraints
+
+- A contract is a contract regardless of serialization; every repo-level contract lives under `.agents/contracts/`.
+- Delete `.agents/docs/contracts/` after migration. Do not preserve a forwarding directory, duplicate copy, or compatibility contract.
+- `.agents/doctrine/` contains policy and authority statements, not executable command declarations or format contracts.
+- Skill-owned schemas and contracts remain colocated with their canonical skill when they are not repository-level contracts.
+- `/using-superpowers-plus` remains the sole session bootstrap and skill-composition router.
+- Local runbooks contain only repository-specific facts and constraints; they do not independently compose skills.
+- Stage skills continue to own their portable workflow semantics and read the applicable local runbook after bootstrap routing.
+- Edit canonical plugin skill sources first. Regenerate `.agents/skills/`; do not hand-edit generated installed copies.
+- Preserve Draft PR #311. Do not run paid model evaluation and do not promote the PR Ready.
+
+## Decision table
+
+| Surface | Classification | Destination/action |
+|---|---|---|
+| `.agents/docs/contracts/openai-agent-yaml.md` | repository-level human-readable contract | move to `.agents/contracts/openai-agent-yaml.md` |
+| `.agents/docs/contracts/skill-frontmatter.md` | repository-level human-readable contract | move to `.agents/contracts/skill-frontmatter.md` |
+| `.agents/doctrine/repo-standards-commands.json` | repository-level machine-readable contract | move to `.agents/contracts/repo-standards-commands.json` |
+| `.agents/docs/contracts/INDEX.md` | generated navigation | replace with generated `.agents/contracts/INDEX.md` |
+| `.agents/doctrine/docs-contracts.md` | custody/routing policy, not a contract | rename to `.agents/doctrine/contracts.md` and describe the unified boundary |
+| skill-local schemas, authority maps, and result contracts | owner-local contracts | keep with their owning canonical skill |
+| plugin bundle manifests and marketplace JSON | generated/configuration surfaces | keep with their current consumers |
+| completed-plan JSON evidence | historical evidence | keep in completed-plan custody |
+
+---
+
+### Task 1: Move repository contracts into one boundary
+
+**Files:**
+- Move: `.agents/docs/contracts/openai-agent-yaml.md` -> `.agents/contracts/openai-agent-yaml.md`
+- Move: `.agents/docs/contracts/skill-frontmatter.md` -> `.agents/contracts/skill-frontmatter.md`
+- Move: `.agents/doctrine/repo-standards-commands.json` -> `.agents/contracts/repo-standards-commands.json`
+- Move: `.agents/doctrine/docs-contracts.md` -> `.agents/doctrine/contracts.md`
+- Modify: `.devin/rules/docs-contracts.md`
+- Modify: `.agents/docs/AGENTS.md`
+- Modify: `.agents/doctrine/skill-standards-policy.md`
+- Modify: `codex-marketplace/plugins/superpowers-plus/references/codex-marketplace-compatibility.md`
+- Modify: `codex-marketplace/plugins/superpowers-plus/skills/writing-skills/references/skill-authoring-checklist.md`
+- Modify: any tracked historical Markdown link found by the exact old-path scan
+- Test: `tests/test_repo_standards.py`
+- Test: `tests/test_workflow_contracts.py`
+
+**Interfaces:**
+- Consumes: existing contract contents and repository index/link generators.
+- Produces: one `.agents/contracts/` boundary with no live or historical link to `.agents/docs/contracts/` or `.agents/doctrine/repo-standards-commands.json`.
+
+- [ ] **Step 1: Add RED custody assertions.** Assert that all three repository contracts exist under `.agents/contracts/`, both former contract homes are absent, `.agents/doctrine/contracts.md` scopes the unified boundary, and tracked non-plan live surfaces contain no old path.
+- [ ] **Step 2: Verify RED.** Run the new focused tests and confirm they fail only because the old paths still exist.
+- [ ] **Step 3: Move the authored files with Git-aware moves.** Preserve their contents except for headings or scope text needed to describe the unified contract boundary.
+- [ ] **Step 4: Update canonical live references.** Repoint the Devin rule, docs router, skill standards, compatibility reference, and writing-skills checklist to `.agents/contracts/`.
+- [ ] **Step 5: Heal historical links.** Run `py -3 tools/heal_archive_links.py --apply`; inspect every resulting historical-plan/spec edit and retain only deterministic path rewrites.
+- [ ] **Step 6: Regenerate navigation.** Run `py -3 tools/run.py mesh --apply`; verify `.agents/contracts/INDEX.md` exists and `.agents/docs/contracts/` is absent.
+- [ ] **Step 7: Prove the migration.** Run the focused custody tests, `py -3 tools/check_archive_links.py --check`, and `rg -n "\.agents/docs/contracts|\.agents/doctrine/repo-standards-commands\.json" . --glob "!evals/**" --glob "!.git/**"`; expected result is no stale reference outside intentionally quoted migration history in this plan.
+- [ ] **Step 8: Mark Task 1 complete and commit normally.** Stage only the contract migration and deterministic link/index updates; let the tracked hook provide the broad gate.
+
+### Task 2: Teach portable repo standards the unified contract path and sole-router architecture
+
+**Files:**
+- Modify: `codex-marketplace/plugins/repo-worker-pack/skills/repo-standards/SKILL.md`
+- Modify: `codex-marketplace/plugins/repo-worker-pack/skills/repo-standards/references/repository-runbook-standard.md`
+- Modify: `codex-marketplace/plugins/repo-worker-pack/skills/repo-standards/references/repository-shape-standard.md`
+- Modify: `codex-marketplace/plugins/repo-worker-pack/skills/repo-standards/references/repository-shape-manifest.json`
+- Modify: `codex-marketplace/plugins/repo-worker-pack/skills/repo-standards/scripts/repo_standards.py`
+- Modify: `codex-marketplace/plugins/repo-worker-pack/skills/repo-standards/templates/pre-commit`
+- Modify: `codex-marketplace/plugins/repo-worker-pack/skills/repo-standards/templates/contributing-template.md`
+- Modify: `codex-marketplace/plugins/repo-worker-pack/skills/repo-standards/templates/REVIEW.md`
+- Modify: `codex-marketplace/plugins/repo-worker-pack/skills/repo-standards/templates/repo-runbook-policy.md`
+- Test: `tests/test_repo_standards.py`
+- Test: `tests/test_workflow_contracts.py`
+
+**Interfaces:**
+- Consumes: Task 1's `.agents/contracts/repo-standards-commands.json` path and the existing `/using-superpowers-plus` bootstrap contract.
+- Produces: portable scaffolds and validators that install the unified contract path and delegate skill composition to the sole router.
+
+- [ ] **Step 1: Add RED portable tests.** Assert the shape manifest, validator constant, hook template, and reference docs use `.agents/contracts/repo-standards-commands.json`. Assert portable contributor/review/runbook templates enter through `/using-superpowers-plus` and do not independently prescribe a multi-skill invocation stack.
+- [ ] **Step 2: Verify RED.** Run the owned repo-standards tests and confirm failures identify old contract paths and duplicated routing.
+- [ ] **Step 3: Change the command-contract seam.** Update the manifest dependency, validator lookup, hook template, and explanatory references to the unified path without weakening exact hook-template validation.
+- [ ] **Step 4: Correct portable workflow ownership.** Replace `repo-standards -> repo-worker-base -> local runbook -> selected Superpowers lane` and direct stage-skill invocation tables with `using-superpowers-plus -> routed owners -> local runbook`. Keep `repo-standards` responsible only for shape/runbook alignment after routing.
+- [ ] **Step 5: Thin portable templates.** Templates may name `/using-superpowers-plus` as the entrypoint and describe repository-specific evidence obligations, but must not recreate bootstrap composition.
+- [ ] **Step 6: Run focused canonical-source tests.** Run the repo-standards and workflow routing tests before regeneration.
+- [ ] **Step 7: Regenerate installed skills.** Run `py -3 tools/run.py installed-skills --apply`, then verify canonical and generated copies match and contain no old command-contract path.
+- [ ] **Step 8: Mark Task 2 complete and commit normally.** Stage canonical source, generated installed copies, provenance, and owned tests; let the hook provide the broad gate.
+
+### Task 3: Thin repository entrypoints and runbooks to local deltas
+
+**Files:**
+- Modify: `CONTRIBUTING.md`
+- Modify: `REVIEW.md`
+- Modify: `.agents/doctrine/repo-runbook-policy.md`
+- Modify: `.agents/runbooks/implementing.md`
+- Modify: `.agents/runbooks/planning.md`
+- Modify: `.agents/runbooks/testing.md`
+- Modify: `.agents/runbooks/pr.md`
+- Modify: `.agents/runbooks/security.md`
+- Modify: `.agents/runbooks/code-review.md`
+- Modify: `.agents/runbooks/code-style.md`
+- Modify: `.agents/runbooks/repo-doctrine.md`
+- Modify: `.agents/runbooks/skill-authoring.md`
+- Test: `tests/test_workflow_contracts.py`
+
+**Interfaces:**
+- Consumes: Task 2's portable sole-router architecture.
+- Produces: local guidance that adds marketplace facts without selecting or sequencing bootstrap/owner skills.
+
+- [ ] **Step 1: Add RED local-routing tests.** Enumerate the live entrypoints/runbooks above. Permit one `/using-superpowers-plus` entrypoint instruction; reject headings or prose that independently instruct readers to invoke multiple workflow skills. Do not reject skill names used as ownership links or factual references.
+- [ ] **Step 2: Verify RED.** Run the routing test and record which files currently duplicate composition.
+- [ ] **Step 3: Thin contributor and review entrypoints.** Keep stage descriptions and repository review concerns, but route skill selection once through `/using-superpowers-plus`.
+- [ ] **Step 4: Thin stage runbooks.** Remove `Skills to Invoke`/`Routing to skills` composition sections and generic TDD, planning, review, debugging, security-profile, or publication workflows already owned by skills. Keep repository paths, commands, generated-source rules, Draft-CI behavior, and marketplace-specific acceptance checks.
+- [ ] **Step 5: Preserve specialised local deltas.** Keep skill-authoring paths/scaffold commands, marketplace regeneration behavior, repository test locations, local security surfaces, and local PR/CI commands. Skill names may identify the portable owner but must not create a second invocation sequence.
+- [ ] **Step 6: Verify semantic completeness.** Compare each thinned runbook with its pre-edit version and prove every removed generic rule is owned by `/using-superpowers-plus` or the routed stage skill; restore any repository-specific fact that has no owner.
+- [ ] **Step 7: Run focused routing tests and a literal scan.** Search live entrypoints/runbooks for imperative `invoke /...` or multi-skill routing lists; adjudicate every remaining hit.
+- [ ] **Step 8: Regenerate navigation if file headings or links changed.** Run `py -3 tools/run.py mesh --apply` only when required by the edited surfaces.
+- [ ] **Step 9: Mark Task 3 complete and commit normally.** Stage the local overlays and tests; let the hook provide the broad gate.
+
+### Task 4: Close the sub-slice and publish review evidence
+
+**Files:**
+- Modify: `.agents/plans/2026-09-11-mark-373-contracts-and-routing.md`
+- Modify: `.agents/plans/2026-09-06-mark-373-operating-system.checkpoint.md`
+- Modify: PR #311 body
+
+**Interfaces:**
+- Consumes: Tasks 1-3 committed outputs and hook evidence.
+- Produces: an honest Draft PR and durable resume state for human review.
+
+- [ ] **Step 1: Run final falsification scans.** Confirm one `.agents/contracts/` tree, no `.agents/docs/contracts/`, no command contract under doctrine, no stale old-path links, and no local runbook-owned multi-skill composition.
+- [ ] **Step 2: Review the complete diff.** Check contract custody, generated-source direction, consumer portability, local-rule preservation, and absence of compatibility duplicates.
+- [ ] **Step 3: Update plan and checkpoint truthfully.** Record only current state, decisive validation, and evidence boundaries; do not recreate a chronological Git/test receipt.
+- [ ] **Step 4: Commit normally.** Let the tracked pre-commit apply/check gate validate the exact staged state; do not duplicate the broad gate before or after a successful commit.
+- [ ] **Step 5: Push the existing branch and update Draft PR #311.** Summarize the unified contract boundary and sole-router cleanup. Keep the PR Draft.
+- [ ] **Step 6: Verify publication.** Confirm local/remote head equality, clean worktree, PR base `main`, and Draft state.
+
+## Acceptance evidence
+
+- `.agents/contracts/` is the only repository-level contract directory and contains both Markdown and JSON contracts.
+- `.agents/docs/contracts/` and `.agents/doctrine/repo-standards-commands.json` are absent.
+- Contract consumers, canonical repo-standards source, generated installed skills, hooks, tests, indexes, and historical links resolve the new paths.
+- `/using-superpowers-plus` is the sole bootstrap/composition router in portable standards and local runbooks.
+- Local runbooks preserve repository-specific commands, paths, exceptions, and acceptance evidence without duplicating portable workflow semantics.
+- Focused tests prove path migration and routing ownership; normal hooked commits provide broad validation for each committed state.
+- PR #311 remains Draft and contains no paid evaluation rerun.
+
+## Plan-readiness self-review
+
+- Dependency order is explicit: contract destination first, portable source second, local overlays third, publication last.
+- Canonical source and generated copies are separated.
+- Historical-link migration and index regeneration are explicit; no compatibility folder is allowed.
+- Routing tests distinguish imperative composition from factual owner references to avoid false positives.
+- Repository-specific facts receive an explicit preservation check before generic guidance is removed.
+- No consequential choice is deferred to the executor.
+
+**Plan-readiness rating:** 9.3/10.
