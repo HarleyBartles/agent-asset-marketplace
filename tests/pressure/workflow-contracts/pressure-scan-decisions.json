@@ -288,46 +288,6 @@
     "reason": "Repository-local guidance intentionally names this repository command surface."
   },
   {
-    "path": ".agents/runbooks/planning.md",
-    "line": 49,
-    "pattern": "portable-repo-command",
-    "classification": "repo-local",
-    "owner": "agent-asset-marketplace repository runbooks",
-    "reason": "Repository-local guidance intentionally names this repository command surface."
-  },
-  {
-    "path": ".agents/runbooks/planning.md",
-    "line": 50,
-    "pattern": "portable-repo-command",
-    "classification": "repo-local",
-    "owner": "agent-asset-marketplace repository runbooks",
-    "reason": "Repository-local guidance intentionally names this repository command surface."
-  },
-  {
-    "path": ".agents/runbooks/planning.md",
-    "line": 51,
-    "pattern": "portable-repo-command",
-    "classification": "repo-local",
-    "owner": "agent-asset-marketplace repository runbooks",
-    "reason": "Repository-local guidance intentionally names this repository command surface."
-  },
-  {
-    "path": ".agents/runbooks/planning.md",
-    "line": 66,
-    "pattern": "portable-repo-command",
-    "classification": "repo-local",
-    "owner": "agent-asset-marketplace repository runbooks",
-    "reason": "Repository-local guidance intentionally names this repository command surface."
-  },
-  {
-    "path": ".agents/runbooks/planning.md",
-    "line": 67,
-    "pattern": "portable-repo-command",
-    "classification": "repo-local",
-    "owner": "agent-asset-marketplace repository runbooks",
-    "reason": "Repository-local guidance intentionally names this repository command surface."
-  },
-  {
     "path": ".agents/runbooks/pr.md",
     "line": 34,
     "pattern": "portable-repo-command",
@@ -425,7 +385,7 @@
   },
   {
     "path": ".agents/runbooks/testing.md",
-    "line": 25,
+    "line": 22,
     "pattern": "portable-repo-command",
     "classification": "repo-local",
     "owner": "agent-asset-marketplace repository runbooks",

@@ -25,5 +25,5 @@ Use this runbook for Python and Markdown conventions in `agent-asset-marketplace
 
 ## Workflow routing
 
-Invoke `/using-superpowers-plus` once and follow its handoff. This runbook owns
+Invoke `using-superpowers-plus` once and follow its handoff. This runbook owns
 only repository-specific Python and Markdown conventions.

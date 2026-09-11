@@ -534,7 +534,8 @@ def test_repo_standards_apply_force_overwrites_drifted_contributing(tmp_path: Pa
     combined = result.stdout + result.stderr
     assert result.returncode == 0, combined
     text = (repo / "CONTRIBUTING.md").read_text(encoding="utf-8")
-    assert "/using-superpowers-plus" in text
+    assert "using-superpowers-plus" in text
+    assert "/using-superpowers-plus" not in text
 
 
 def test_scaffold_contributing_check_customized_passes(tmp_path: Path) -> None:
@@ -547,7 +548,7 @@ def test_scaffold_contributing_check_customized_passes(tmp_path: Path) -> None:
         "# Contributing\n\n"
         "Our own contributor process.\n\n"
         "## Workflow routing\n\n"
-        "Invoke `/using-superpowers-plus` once and follow its handoff.\n",
+        "Invoke `using-superpowers-plus` once and follow its handoff.\n",
         encoding="utf-8",
         newline="\n",
     )
@@ -691,7 +692,8 @@ def test_repo_standards_apply_in_shared_checkout_with_flag_succeeds(tmp_path: Pa
     combined = result.stdout + result.stderr
     assert result.returncode == 0, combined
     text = (worktree / "CONTRIBUTING.md").read_text(encoding="utf-8")
-    assert "/using-superpowers-plus" in text
+    assert "using-superpowers-plus" in text
+    assert "/using-superpowers-plus" not in text
 
 
 def test_scaffold_repo_runbook_policy_check_customized_passes(tmp_path: Path) -> None:

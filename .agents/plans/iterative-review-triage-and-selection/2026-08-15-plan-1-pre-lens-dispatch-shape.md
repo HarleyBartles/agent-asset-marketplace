@@ -1,6 +1,6 @@
 # Pre-lens Dispatch Shape and Cheap-Lens Hygiene
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use `/subagent-driven-development` (recommended) or `/executing-plans` to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use `subagent-driven-development` (recommended) or `executing-plans` to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** Close out the `iterative-review-improvements` epic, then make `reviewer-fast` a true pre-lens that gates `lens-dispatch` and stop `reviewer-security` from matching every non-empty diff.
 

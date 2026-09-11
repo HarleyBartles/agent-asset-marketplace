@@ -1,6 +1,6 @@
 # Repo Runbook Policy
 
-This repo follows the `repo-standards` layout. Invoke `/using-superpowers-plus`
+This repo follows the `repo-standards` layout. Invoke `using-superpowers-plus`
 once and follow its handoff; local runbooks supply repository-specific deltas.
 
 ## Standard-to-local mapping

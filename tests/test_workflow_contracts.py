@@ -22,6 +22,46 @@ def _read(path: Path) -> str:
     return path.read_text(encoding="utf-8")
 
 
+def _canonical_skill_names() -> set[str]:
+    names = set()
+    for path in (ROOT / "codex-marketplace" / "plugins").rglob("SKILL.md"):
+        match = re.search(r"^name:\s*['\"]?([^\s'\"]+)", _read(path), re.MULTILINE)
+        if match:
+            names.add(match.group(1))
+    return names
+
+
+def _active_instruction_surfaces() -> list[Path]:
+    local_roots = [
+        ROOT / "AGENTS.md",
+        ROOT / "CONTRIBUTING.md",
+        ROOT / "REVIEW.md",
+        ROOT / ".agents" / "doctrine",
+        ROOT / ".agents" / "contracts",
+        ROOT / ".agents" / "plans",
+        ROOT / ".agents" / "runbooks",
+        ROOT / ".agents" / "skills",
+        ROOT / ".devin" / "rules",
+    ]
+    paths = []
+    for root in local_roots:
+        if root.is_file():
+            paths.append(root)
+        elif root.is_dir():
+            paths.extend(
+                path
+                for path in root.rglob("*")
+                if path.suffix.lower() in {".md", ".json", ".yaml", ".yml"} and "completed" not in path.parts
+            )
+    plugin_root = ROOT / "codex-marketplace" / "plugins"
+    paths.extend(
+        path
+        for path in plugin_root.rglob("*")
+        if path.is_file() and path.suffix.lower() in {".md", ".json", ".yaml", ".yml"}
+    )
+    return sorted(set(paths))
+
+
 class TestAuthorityBootstrapPortability:
     def test_superpowers_plus_version_matches_pinned_upstream_release(self):
         plugin = json.loads(_read(SKILLS.parent / ".codex-plugin" / "plugin.json"))
@@ -198,13 +238,64 @@ class TestRepositoryCallersAndPressure:
         assert not (ROOT / ".agents" / "doctrine" / "repo-standards-commands.json").exists()
 
     def test_local_runbooks_delegate_skill_composition_to_bootstrap(self):
-        surfaces = [ROOT / "CONTRIBUTING.md", ROOT / "REVIEW.md", *sorted((ROOT / ".agents" / "runbooks").glob("*.md"))]
+        surfaces = [
+            ROOT / "AGENTS.md",
+            ROOT / "CONTRIBUTING.md",
+            ROOT / "REVIEW.md",
+            *sorted((ROOT / ".agents" / "doctrine").glob("*.md")),
+            *sorted((ROOT / ".agents" / "runbooks").glob("*.md")),
+        ]
+        skill_names = "|".join(map(re.escape, sorted(_canonical_skill_names(), key=len, reverse=True)))
+        imperative_skill = re.compile(
+            rf"(?:\b(?:invoke|route to|handoff to)\s+`?"
+            rf"|\buse\s+(?:the\s+)?(?:first-party\s+)?(?:\[`?)?"
+            rf"|\bapply\b[^\n]{{0,60}}?\bfrom\s+`?)"
+            rf"({skill_names})\b",
+            re.IGNORECASE,
+        )
         for path in surfaces:
             text = _read(path).lower()
             assert "skills to invoke" not in text
             assert "routing to skills" not in text
-            imperative = re.findall(r"(?:invoke|route to)\s+`?(/[a-z][a-z0-9-]+)", text)
-            assert set(imperative) <= {"/using-superpowers-plus"}, (path, imperative)
+            targets = imperative_skill.findall(text)
+            assert set(targets) <= {"using-superpowers-plus"}, (path, targets)
+
+    def test_active_prose_uses_skill_identifiers_not_slash_invocations(self):
+        skill_names = sorted(_canonical_skill_names(), key=len, reverse=True)
+        slash_skill = re.compile(
+            r"(?<![A-Za-z0-9._~*\-])/(?:" + "|".join(map(re.escape, skill_names)) + r")(?![a-z0-9-])"
+        )
+        offenders = []
+        for path in _active_instruction_surfaces():
+            for line_number, line in enumerate(_read(path).splitlines(), start=1):
+                if slash_skill.search(line):
+                    offenders.append(f"{path.relative_to(ROOT).as_posix()}:{line_number}")
+        assert offenders == []
+
+    def test_superpowers_plus_uses_its_own_namespace(self):
+        offenders = []
+        for path in (ROOT / "codex-marketplace" / "plugins" / "superpowers-plus").rglob("*"):
+            if not path.is_file() or path.suffix.lower() not in {".md", ".json", ".yaml", ".yml"}:
+                continue
+            if re.search(r"\bsuperpowers:[a-z][a-z0-9-]+", _read(path)):
+                offenders.append(path.relative_to(ROOT).as_posix())
+        assert offenders == []
+
+    def test_repo_standards_delegates_composition_to_using_superpowers_plus(self):
+        repo_standard = REPO_SKILLS / "repo-standards"
+        surfaces = [
+            repo_standard / "SKILL.md",
+            repo_standard / "agents" / "openai.yaml",
+            repo_standard / "templates" / "pr.md",
+            repo_standard / "references" / "repository-runbook-standard.md",
+        ]
+        for path in surfaces:
+            text = _read(path).lower()
+            assert "using-superpowers-plus" in text
+            assert "routing to skills" not in text
+            assert "route to the matching superpowers skill" not in text
+        assert "repo-worker-base" not in _read(repo_standard / "agents" / "openai.yaml")
+        assert "requesting-code-review" not in _read(repo_standard / "references" / "repository-runbook-standard.md")
 
     def test_workflow_inventory_covers_every_tracked_workflow(self):
         inventory = _read(DOCS / "workflow-inventory.md")

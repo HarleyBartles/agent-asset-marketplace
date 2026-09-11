@@ -1,6 +1,6 @@
 # MARK-371 Writing Pack Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use `/subagent-driven-development` (recommended) or `/executing-plans` to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use `subagent-driven-development` (recommended) or `executing-plans` to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Deliver a first-party `writing-pack` whose clarity, author-voice, and evidence-backed anti-fatigue controls compose cleanly; retain `unslop-plus` as the generic engine/profile home; and remove duplicate writing custody from `repo-worker-pack` without breaking this repository's installed skill set.
 
@@ -425,8 +425,8 @@ git commit -m "feat(writing-pack): add writing profile engine"
 
 **Interfaces:**
 - Produces: one canonical `unslop-profiles` tree under `unslop-plus` and one canonical `writing-with-clarity` tree under `writing-pack`.
-- Preserves: `/unslop-profiles` as the generic cross-domain router and `/unslop-engine` as the generic profile-generation concept.
-- Routes: prose creation/revision to `/writing`; direct clarity-only work may still invoke `/writing-with-clarity`.
+- Preserves: `unslop-profiles` as the generic cross-domain router and `unslop-engine` as the generic profile-generation concept.
+- Routes: prose creation/revision to `writing`; direct clarity-only work may still invoke `writing-with-clarity`.
 
 - [x] **Step 1: Add failing uniqueness and reference tests**
 
@@ -448,7 +448,7 @@ Update `unslop-plus` prose so its generic writing profile routes sustained prose
 
 - [x] **Step 4: Update live cross-references**
 
-Audit the file list above plus a fresh repository-wide `rg`. Replace ownership/path statements, not historical completed specs. Update general prose routing to `$writing`; retain `$writing-with-clarity` where the call genuinely requests only clarity or final-edit review. Keep `/unslop-profiles` references for security, testing, code review, and other generic profiles.
+Audit the file list above plus a fresh repository-wide `rg`. Replace ownership/path statements, not historical completed specs. Update general prose routing to `$writing`; retain `$writing-with-clarity` where the call genuinely requests only clarity or final-edit review. Keep `unslop-profiles` references for security, testing, code review, and other generic profiles.
 
 - [x] **Step 5: Sync manifests and pass focused GREEN**
 
@@ -568,7 +568,7 @@ py -3 tools/run.py ci --check
 git diff --check
 ```
 
-The second full gate is a determinism check. If either run fails, invoke `/systematic-debugging`, fix the root cause, and rerun both gates from fresh output.
+The second full gate is a determinism check. If either run fails, invoke `systematic-debugging`, fix the root cause, and rerun both gates from fresh output.
 
 - [x] **Step 3: Self-review with the required lenses**
 
@@ -586,7 +586,7 @@ Fix all actionable findings before external review.
 
 - [x] **Step 4: Run iterative review or record an authorized waiver**
 
-Invoke `/iterative-review` against the complete branch diff. Use the required independent lens and strong-review passes. Resolve every valid finding, rerun affected focused tests, then rerun `py -3 tools/run.py ci --check`. Record reviewer identity/profile, branch SHA reviewed, findings, repairs, and final verdict.
+Invoke `iterative-review` against the complete branch diff. Use the required independent lens and strong-review passes. Resolve every valid finding, rerun affected focused tests, then rerun `py -3 tools/run.py ci --check`. Record reviewer identity/profile, branch SHA reviewed, findings, repairs, and final verdict.
 
 Closeout note: the graph reached its mandatory `reviewer-fast` node after clean
 preflight and scope-honesty checks, but the Codex reviewer dispatch failed for

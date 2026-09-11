@@ -6,7 +6,7 @@ Use this runbook for pull-request workflow and publication proof in `agent-asset
 
 - Read root [`AGENTS.md`](../../AGENTS.md) `## Publication proof for repo work` and `## Draft PR policy` for the durable doctrine.
 - Read [`.devin/rules/pr.md`](../../.devin/rules/pr.md) for the conditional rule trigger that loads this runbook.
-- Invoke `/using-superpowers-plus` once and follow its publication handoff.
+- Invoke `using-superpowers-plus` once and follow its publication handoff.
 
 ## When to use
 

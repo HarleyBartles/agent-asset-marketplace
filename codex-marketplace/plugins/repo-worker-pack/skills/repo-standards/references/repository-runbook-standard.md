@@ -20,8 +20,8 @@ Every repo using this standard must have:
   11. `## Routing pointers` (repo-specific router table)
   12. `## Maintenance responsibility`
 
-- `REVIEW.md` — review entry point. It contains first-class review concerns and routes to `.agents/runbooks/code-review.md` for detailed review methodology and to `/requesting-code-review` for execution.
-- `CONTRIBUTING.md` — contributor entry point. It routes to the design, planning, implementation, and review runbooks and to the relevant repo-worker-pack and Superpowers skills. It may be a thin pointer to `.agents/runbooks/contributing.md` when the repo keeps detailed guidance there.
+- `REVIEW.md` — review entry point. It contains first-class review concerns and routes through `using-superpowers-plus` to the review owner, with `.agents/runbooks/code-review.md` supplying the local review delta.
+- `CONTRIBUTING.md` — contributor entry point. It routes through `using-superpowers-plus`; the selected owner reads the matching local runbook. It may be a thin pointer to `.agents/runbooks/contributing.md` when the repo keeps detailed guidance there.
 
 ## Core runbook set
 
@@ -78,7 +78,7 @@ The canonical stage order is:
 design -> planning -> implementing -> review
 ```
 
-At every stage, `/using-superpowers-plus` classifies the request and hands off
+At every stage, `using-superpowers-plus` classifies the request and hands off
 to the required hygiene and workflow owners. The selected workflow owner reads
 this standard, the repo's `.agents/doctrine/repo-runbook-policy.md`, and the
 matching local runbook. Entry points and runbooks must not reproduce the skill
@@ -89,4 +89,4 @@ selection table.
 `repo-standards` owns runbook layout and stage order, not session composition.
 `repo-worker-base` owns worktree, branch, scratch, validation, and publication
 boundaries. Each stage skill owns its baseline and reads the matching local
-runbook. `/using-superpowers-plus` composes those owners.
+runbook. `using-superpowers-plus` composes those owners.

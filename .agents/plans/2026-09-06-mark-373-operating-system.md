@@ -1,6 +1,6 @@
 # MARK-373 Operating-System Contract Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use `/executing-plans` to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use `executing-plans` to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Establish one model-agnostic operating-system contract in the marketplace so later repository adoption work inherits clear authority, bounded reading, proportionate validation, evidence reuse, review, and Draft-first publication semantics.
 

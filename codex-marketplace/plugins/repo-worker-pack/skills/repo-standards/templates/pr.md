@@ -6,7 +6,7 @@ Use this runbook for pull-request workflow and publication proof in this repo.
 
 - Read root [`AGENTS.md`](../../AGENTS.md) `## Publication proof for repo work`.
 - Read [`.devin/rules/tools.md`](../../.devin/rules/tools.md) for validation commands.
-- Invoke `/repo-worker-base`.
+- Enter through `using-superpowers-plus` and follow its publication handoff.
 
 ## When to use
 
@@ -39,8 +39,5 @@ Use this runbook for pull-request workflow and publication proof in this repo.
   2. a verified direct-main commit SHA;
   3. a concrete publication blocker.
 
-## Routing to skills
-
-- `/repo-worker-base` for worktree, branch, and publication boundaries.
-- `/using-github-mcp` for PR evidence and GitHub proof.
-- `/verification-before-completion` before claiming the PR is green.
+Skill selection and sequencing belong to `using-superpowers-plus`; this runbook
+adds only the consumer repository's pull-request policy and commands.

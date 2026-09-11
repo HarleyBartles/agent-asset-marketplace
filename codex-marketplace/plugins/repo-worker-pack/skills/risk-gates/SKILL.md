@@ -107,7 +107,7 @@ Rooms-specific gate profiles (canon pressure, ambiguity preservation, analogy va
 6. Surface only unresolved legitimate choices.
 7. Return green only when the next action has a lawful route, required authority, sufficient evidence, and the correct output surface.
 
-If a single missing fact blocks the next step, invoke `/asking-clarifying-questions` before guessing.
+If a single missing fact blocks the next step, invoke `asking-clarifying-questions` before guessing.
 
 ## Boundaries
 

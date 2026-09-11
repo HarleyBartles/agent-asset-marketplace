@@ -16,7 +16,7 @@ interface:
   display_name: Using Superpowers Plus
   short_description: Use when starting any conversation to find and invoke the right
     skill
-  default_prompt: Use /using-superpowers-plus to find and invoke the right skill at
+  default_prompt: Use using-superpowers-plus to find and invoke the right skill at
     the start of any conversation.
 policy:
   allow_implicit_invocation: true

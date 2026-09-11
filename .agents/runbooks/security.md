@@ -5,7 +5,7 @@ Use this runbook for repo-specific security posture when working in `agent-asset
 ## Before you begin
 
 - Read [`REVIEW.md`](../../REVIEW.md) and [`.agents/runbooks/code-review.md`](./code-review.md) for review expectations.
-- Invoke `/using-superpowers-plus` once and follow its security-review handoff.
+- Invoke `using-superpowers-plus` once and follow its security-review handoff.
 
 ## When to use
 

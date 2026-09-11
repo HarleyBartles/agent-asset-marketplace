@@ -1,6 +1,6 @@
 # Iterative review diff slicing implementation plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use `/subagent-driven-development` or `/executing-plans` to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use `subagent-driven-development` or `executing-plans` to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** Add `diff_slicer.py` to the `iterative-review` skill so each deep lens receives only the diff hunks it is qualified to review, while orchestrator-level reviewers keep the full diff.
 

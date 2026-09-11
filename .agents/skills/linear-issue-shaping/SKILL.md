@@ -49,7 +49,7 @@ Linear is the durable issue/control plane. The boring default is:
 4. switch to GitHub proof only after a GitHub PR, branch, commit, or URL exists;
 5. never claim execution, publication, merge, or closeout unless the target system proves it.
 
-If a Linear write is blocked, rejected, safety-filtered, permission-rejected, schema-rejected, or validation-rejected, route the recovery into `/connector-safety` immediately. Do not paraphrase the payload from memory or retry the same mutation shape from the same surface.
+If a Linear write is blocked, rejected, safety-filtered, permission-rejected, schema-rejected, or validation-rejected, route the recovery into `connector-safety` immediately. Do not paraphrase the payload from memory or retry the same mutation shape from the same surface.
 
 Use the same discover/read/mutate/discover/readback loop for issue create or update, project moves, document creation or updates, milestone changes, relation or blocker changes, labels, statuses, comments, and assignee fields.
 
@@ -66,7 +66,7 @@ For ordinary worker issues, keep the safe default as `assignee: me`, with `deleg
 When a Linear issue is intended to become worker-send-ready for repo or code execution, always compose this stack:
 
 ```text
-/using-superpowers-plus -> linear-issue-shaping -> verification-before-completion
+using-superpowers-plus -> linear-issue-shaping -> verification-before-completion
 ```
 
 Use this skill first to fetch or create the durable Linear issue surface, classify the lane, and preserve the Linear state convention.

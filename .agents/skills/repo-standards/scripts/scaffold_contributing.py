@@ -36,7 +36,7 @@ def _template_path() -> Path:
 def _has_required_boilerplate(content: str) -> bool:
     lines = content.splitlines()
     has_heading = any(line.strip() == "# Contributing" for line in lines)
-    has_bootstrap = "/using-superpowers-plus" in content
+    has_bootstrap = "using-superpowers-plus" in content
     return has_heading and has_bootstrap
 
 
@@ -48,7 +48,7 @@ examples:
   %(prog)s --force               overwrite CONTRIBUTING.md with the template
 
 The template expects the file to keep the `# Contributing` heading and the
-`/using-superpowers-plus` bootstrap route. Use --force to restore the scaffold
+`using-superpowers-plus` bootstrap route. Use --force to restore the scaffold
 after heavy customization.
 
 exit codes:

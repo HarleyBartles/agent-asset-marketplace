@@ -41,7 +41,7 @@ Load plan, review critically, execute all tasks, report when complete.
 
 **Announce at start:** "I'm using the executing-plans skill to implement this plan."
 
-**Note:** Tell your human partner that Superpowers works much better with access to subagents (Claude Code, Codex CLI, Codex App, Copilot CLI, and Gemini CLI all qualify; see the per-platform tool refs in `../using-superpowers-plus/references/`). If subagents are available, use /subagent-driven-development instead of this skill.
+**Note:** Tell your human partner that Superpowers works much better with access to subagents (Claude Code, Codex CLI, Codex App, Copilot CLI, and Gemini CLI all qualify; see the per-platform tool refs in `../using-superpowers-plus/references/`). If subagents are available, use subagent-driven-development instead of this skill.
 
 ## The Process
 
@@ -51,7 +51,7 @@ Read this skill's baseline (`references/implementation-baseline.md`) and the rep
 
 ### Step 1: Load and Review Plan
 1. On a resumed or compacted session, read the durable checkpoint before live repository inspection. Its claims are context, not current truth, but it determines the minimum state that must be reconciled.
-2. Ensure an isolated workspace: use /using-git-worktrees to create one or verify the existing one
+2. Ensure an isolated workspace: use using-git-worktrees to create one or verify the existing one
 3. Read plan file (or the minimum sections named by the checkpoint)
 4. Note the `Execution Strategy` in the plan header. **MUST READ:** `references/execution-lane-override.md` and confirm the lane you are using is the right one: human explicit direction wins, then your own assessment, then the plan's recommendation
 5. Announce the lane you will use and see it through unless the human asks to change
@@ -71,9 +71,9 @@ For each task:
 
 After all tasks complete and verified:
 1. Run `handoff-gates` completion-readiness lane. Rate the completed work against the plan and the repo code review guide (9/10 target). Report the final rating. Do not hand off below 9/10.
-2. Invoke `/requesting-code-review` for the final whole-branch review.
+2. Invoke `requesting-code-review` for the final whole-branch review.
 3. Announce: "I'm using the finishing-a-development-branch skill to complete this work."
-4. **REQUIRED SUB-SKILL:** Use `/finishing-a-development-branch`
+4. **REQUIRED SUB-SKILL:** Use `finishing-a-development-branch`
 5. Follow that skill to verify tests, present options, execute choice
 
 ## When to Stop and Ask for Help
@@ -89,7 +89,7 @@ rule when the question is falsifiable; ask rather than guess only when the
 shared human stop boundary is actually reached.
 
 If a missing fact is human-owned or cannot lawfully be resolved by inspection,
-invoke `/asking-clarifying-questions`. Otherwise investigate the technical fact
+invoke `asking-clarifying-questions`. Otherwise investigate the technical fact
 and continue without converting it into a permission question.
 
 ## When to Revisit Earlier Steps

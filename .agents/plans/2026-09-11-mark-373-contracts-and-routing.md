@@ -1,8 +1,8 @@
 # MARK-373 Contracts and Routing Cleanup Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use `/subagent-driven-development` (recommended) or `/executing-plans` to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use `subagent-driven-development` (recommended) or `executing-plans` to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
-**Goal:** Establish one unambiguous `.agents/contracts/` home for repository contracts and make `/using-superpowers-plus` the sole skill-composition router for repo-backed workflows.
+**Goal:** Establish one unambiguous `.agents/contracts/` home for repository contracts and make `using-superpowers-plus` the sole skill-composition router for repo-backed workflows.
 
 **Architecture:** Move both human-readable and machine-readable repository contracts into `.agents/contracts/`; contract format does not determine custody. Update the canonical `repo-standards` source before regenerating installed copies. Portable stage skills select workflows, while local runbooks retain only repository-specific paths, commands, constraints, and acceptance evidence.
 
@@ -15,10 +15,12 @@
 ## Global Constraints
 
 - A contract is a contract regardless of serialization; every repo-level contract lives under `.agents/contracts/`.
-- Delete `.agents/contracts/` after migration. Do not preserve a forwarding directory, duplicate copy, or compatibility contract.
+- Delete the former `.agents/docs/contracts/` directory after migration. Do not preserve a forwarding directory, duplicate copy, or compatibility contract.
 - `.agents/doctrine/` contains policy and authority statements, not executable command declarations or format contracts.
 - Skill-owned schemas and contracts remain colocated with their canonical skill when they are not repository-level contracts.
-- `/using-superpowers-plus` remains the sole session bootstrap and skill-composition router.
+- `using-superpowers-plus` remains the sole session bootstrap and skill-composition router.
+- Active authored prose names skills as identifiers, without slash-prefixed IDE invocation syntax.
+- Superpowers+ uses unqualified skill names by default and `superpowers-plus:<skill-name>` when a namespace is needed; active guidance must not use `superpowers:<skill-name>`.
 - Local runbooks contain only repository-specific facts and constraints; they do not independently compose skills.
 - Stage skills continue to own their portable workflow semantics and read the applicable local runbook after bootstrap routing.
 - Edit canonical plugin skill sources first. Regenerate `.agents/skills/`; do not hand-edit generated installed copies.
@@ -84,14 +86,14 @@
 - Test: `tests/test_workflow_contracts.py`
 
 **Interfaces:**
-- Consumes: Task 1's `.agents/contracts/repo-standards-commands.json` path and the existing `/using-superpowers-plus` bootstrap contract.
+- Consumes: Task 1's `.agents/contracts/repo-standards-commands.json` path and the existing `using-superpowers-plus` bootstrap contract.
 - Produces: portable scaffolds and validators that install the unified contract path and delegate skill composition to the sole router.
 
-- [x] **Step 1: Add RED portable tests.** Assert the shape manifest, validator constant, hook template, and reference docs use `.agents/contracts/repo-standards-commands.json`. Assert portable contributor/review/runbook templates enter through `/using-superpowers-plus` and do not independently prescribe a multi-skill invocation stack.
+- [x] **Step 1: Add RED portable tests.** Assert the shape manifest, validator constant, hook template, and reference docs use `.agents/contracts/repo-standards-commands.json`. Assert portable contributor/review/runbook templates enter through `using-superpowers-plus` and do not independently prescribe a multi-skill invocation stack.
 - [x] **Step 2: Verify RED.** Run the owned repo-standards tests and confirm failures identify old contract paths and duplicated routing.
 - [x] **Step 3: Change the command-contract seam.** Update the manifest dependency, validator lookup, hook template, and explanatory references to the unified path without weakening exact hook-template validation.
 - [x] **Step 4: Correct portable workflow ownership.** Replace `repo-standards -> repo-worker-base -> local runbook -> selected Superpowers lane` and direct stage-skill invocation tables with `using-superpowers-plus -> routed owners -> local runbook`. Keep `repo-standards` responsible only for shape/runbook alignment after routing.
-- [x] **Step 5: Thin portable templates.** Templates may name `/using-superpowers-plus` as the entrypoint and describe repository-specific evidence obligations, but must not recreate bootstrap composition.
+- [x] **Step 5: Thin portable templates.** Templates may name `using-superpowers-plus` as the entrypoint and describe repository-specific evidence obligations, but must not recreate bootstrap composition.
 - [x] **Step 6: Run focused canonical-source tests.** Run the repo-standards and workflow routing tests before regeneration.
 - [x] **Step 7: Regenerate installed skills.** Run `py -3 tools/run.py installed-skills --apply`, then verify canonical and generated copies match and contain no old command-contract path.
 - [x] **Step 8: Mark Task 2 complete and commit normally.** Stage canonical source, generated installed copies, provenance, and owned tests; let the hook provide the broad gate.
@@ -117,12 +119,12 @@
 - Consumes: Task 2's portable sole-router architecture.
 - Produces: local guidance that adds marketplace facts without selecting or sequencing bootstrap/owner skills.
 
-- [x] **Step 1: Add RED local-routing tests.** Enumerate the live entrypoints/runbooks above. Permit one `/using-superpowers-plus` entrypoint instruction; reject headings or prose that independently instruct readers to invoke multiple workflow skills. Do not reject skill names used as ownership links or factual references.
+- [x] **Step 1: Add RED local-routing tests.** Enumerate the live entrypoints/runbooks above. Permit one `using-superpowers-plus` entrypoint instruction; reject headings or prose that independently instruct readers to invoke multiple workflow skills. Do not reject skill names used as ownership links or factual references.
 - [x] **Step 2: Verify RED.** Run the routing test and record which files currently duplicate composition.
-- [x] **Step 3: Thin contributor and review entrypoints.** Keep stage descriptions and repository review concerns, but route skill selection once through `/using-superpowers-plus`.
+- [x] **Step 3: Thin contributor and review entrypoints.** Keep stage descriptions and repository review concerns, but route skill selection once through `using-superpowers-plus`.
 - [x] **Step 4: Thin stage runbooks.** Remove `Skills to Invoke`/`Routing to skills` composition sections and generic TDD, planning, review, debugging, security-profile, or publication workflows already owned by skills. Keep repository paths, commands, generated-source rules, Draft-CI behavior, and marketplace-specific acceptance checks.
 - [x] **Step 5: Preserve specialised local deltas.** Keep skill-authoring paths/scaffold commands, marketplace regeneration behavior, repository test locations, local security surfaces, and local PR/CI commands. Skill names may identify the portable owner but must not create a second invocation sequence.
-- [x] **Step 6: Verify semantic completeness.** Compare each thinned runbook with its pre-edit version and prove every removed generic rule is owned by `/using-superpowers-plus` or the routed stage skill; restore any repository-specific fact that has no owner.
+- [x] **Step 6: Verify semantic completeness.** Compare each thinned runbook with its pre-edit version and prove every removed generic rule is owned by `using-superpowers-plus` or the routed stage skill; restore any repository-specific fact that has no owner.
 - [x] **Step 7: Run focused routing tests and a literal scan.** Search live entrypoints/runbooks for imperative `invoke /...` or multi-skill routing lists; adjudicate every remaining hit.
 - [x] **Step 8: Regenerate navigation if file headings or links changed.** Run `py -3 tools/run.py mesh --apply` only when required by the edited surfaces.
 - [x] **Step 9: Mark Task 3 complete and commit normally.** Stage the local overlays and tests; let the hook provide the broad gate.
@@ -179,12 +181,36 @@
 - [x] **Step 5: Push the existing branch and update Draft PR #311.** Summarize the unified contract boundary and sole-router cleanup. Keep the PR Draft.
 - [x] **Step 6: Verify publication.** Confirm local/remote head equality, clean worktree, PR base `main`, and Draft state.
 
+### Task 6: Repair routing review findings and normalize skill references
+
+**Files:**
+- Modify: canonical skill prose and `agents/openai.yaml` prompts under `codex-marketplace/plugins/`
+- Modify: portable `repo-standards` source, templates, and validators
+- Modify: active root, doctrine, and runbook guidance
+- Modify: `.agents/runbooks/planning.md` and `.agents/runbooks/testing.md`
+- Modify: `tests/test_workflow_contracts.py` and `tests/test_repo_standards.py`
+- Regenerate: `.agents/skills/` and marketplace-derived surfaces
+
+**Interfaces:**
+- Consumes: the human-approved sole-router and skill-identifier conventions.
+- Produces: one composition router, thin local planning/testing overlays, and structural regression coverage across active authored surfaces.
+
+- [x] **Step 1: Add RED structural tests.** Derive canonical skill names from tracked `SKILL.md` files; reject slash-prefixed references to those names across active authored Markdown/YAML/JSON, reject `superpowers:<skill-name>` inside Superpowers+, and directly assert the repo-standards surfaces delegate composition to `using-superpowers-plus`.
+- [x] **Step 2: Verify RED.** Confirm the new tests expose all current slash references and the competing repo-standards routers.
+- [x] **Step 3: Repair portable routing.** Remove direct skill stacks from the PR template, repository standard, and OpenAI prompt; retain only the `using-superpowers-plus` ingress and repo-standards' shape/runbook responsibility.
+- [x] **Step 4: Thin local guidance.** Reduce planning to repository custody and marketplace constraints, correct testing's stale TDD pointer, and remove remaining local skill-composition duplication.
+- [x] **Step 5: Normalize canonical prose.** Replace slash-prefixed skill invocation notation with skill identifiers across active canonical sources and prompts. Use `superpowers-plus:` only where namespace qualification is semantically required.
+- [x] **Step 6: Regenerate derived surfaces.** Run the installed-skills and mesh generators; do not hand-edit generated copies.
+- [x] **Step 7: Falsify completeness.** Run focused tests plus exact deep scans over active authored and generated surfaces; adjudicate every remaining hit rather than relying on invocation verbs.
+- [ ] **Step 8: Review, commit, push, and re-review.** Let the tracked hook provide the broad gate, push the existing Draft PR branch, verify publication, and conduct a fresh adversarial review without promoting the PR Ready.
+
 ## Acceptance evidence
 
 - `.agents/contracts/` is the only repository-level contract directory and contains both Markdown and JSON contracts.
 - The former contract directory under `.agents/docs/` and the former command declaration under `.agents/doctrine/` are absent.
 - Contract consumers, canonical repo-standards source, generated installed skills, hooks, tests, indexes, and historical links resolve the new paths.
-- `/using-superpowers-plus` is the sole bootstrap/composition router in portable standards and local runbooks.
+- `using-superpowers-plus` is the sole bootstrap/composition router in portable standards and local runbooks.
+- Active authored prose contains no slash-prefixed skill invocation notation, and Superpowers+ contains no active `superpowers:<skill-name>` qualification.
 - Local runbooks preserve repository-specific commands, paths, exceptions, and acceptance evidence without duplicating portable workflow semantics.
 - Focused tests prove path migration and routing ownership; normal hooked commits provide broad validation for each committed state.
 - PR #311 remains Draft and contains no paid evaluation rerun.

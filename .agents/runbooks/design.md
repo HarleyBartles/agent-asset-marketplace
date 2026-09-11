@@ -1,6 +1,6 @@
 # Design Runbook
 
-Use this reference when turning an idea into a repo-ready design spec for the agent-asset-marketplace repo. This guide only adds repo-specific design and handoff rules. The general brainstorming workflow comes from `/brainstorming`.
+Use this reference when turning an idea into a repo-ready design spec for the agent-asset-marketplace repo. This guide only adds repo-specific design and handoff rules. The general brainstorming workflow comes from `brainstorming`.
 
 ## Before You Begin: Read the Standards
 
@@ -38,7 +38,7 @@ After writing the spec, review it against these checks before handing it off:
 3. **Scope check** - confirm the spec is narrow enough for one implementation plan
 4. **Ambiguity check** - if a requirement could be interpreted two ways, make it explicit now
 5. **Source sanity** - verify the file paths, skill names, and contract details against the live repo
-6. **Repo-only content check** - remove any generic brainstorming instructions that are already covered by `/brainstorming`
+6. **Repo-only content check** - remove any generic brainstorming instructions that are already covered by `brainstorming`
 
 If the spec fails any of those checks, fix it before proceeding.
 

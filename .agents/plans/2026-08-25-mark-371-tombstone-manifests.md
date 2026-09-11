@@ -1,6 +1,6 @@
 # MARK-371 Tombstone Manifests Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use `/subagent-driven-development` (recommended) or `/executing-plans` to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use `subagent-driven-development` (recommended) or `executing-plans` to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Replace the full-plan and full-spec archives in `.agents/plans/completed/` and `.agents/specs/completed/` with one deterministic JSONL tombstone manifest per artifact type, and add the only canonical tool that can write to them.
 

@@ -5,7 +5,7 @@ This runbook contains the worker procedures and reference pointers that were pre
 ## Testing instructions
 
 This repo uses test-driven development. See `.agents/runbooks/testing.md` for
-repository-specific test commands; `/using-superpowers-plus` selects the
+repository-specific test commands; `using-superpowers-plus` selects the
 applicable workflow owner.
 
 ## Code style guidelines

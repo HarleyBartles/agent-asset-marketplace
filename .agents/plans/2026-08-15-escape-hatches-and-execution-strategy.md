@@ -1,6 +1,6 @@
 # Escape Hatches and Execution Strategy Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use `/subagent-driven-development` (recommended) or `/executing-plans` to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use `subagent-driven-development` (recommended) or `executing-plans` to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** Surface plan-escape hatches in the planning skills, encode a recommended `Execution Strategy` in every plan header, and make execution skills read and respect that recommendation without re-litigating the plan.
 
@@ -94,7 +94,7 @@ Use when the execution skill you are in differs from the `Execution Strategy` wr
 
 When picking an execution lane, follow this order:
 
-1. **Human explicit direction.** The user told you which skill to use, or explicitly chose a lane (for example, by typing `/executing-plans`). This wins over all other signals.
+1. **Human explicit direction.** The user told you which skill to use, or explicitly chose a lane (for example, by typing `executing-plans`). This wins over all other signals.
 2. **Your own assessment of the plan.** If the user did not direct the lane, read the plan, look at the task shape, and choose the lane that fits best.
 3. **The plan's `Execution Strategy`.** This is a recommendation, not a command. It is one input to your decision.
 
@@ -302,7 +302,7 @@ In `### Step 1: Load and Review Plan`, replace the numbered list with this:
 
 ```markdown
 ### Step 1: Load and Review Plan
-1. Ensure an isolated workspace: use /using-git-worktrees to create one or verify the existing one
+1. Ensure an isolated workspace: use using-git-worktrees to create one or verify the existing one
 2. Read plan file
 3. Note the `Execution Strategy` in the plan header. **MUST READ:** `references/execution-lane-override.md` and confirm the lane you are using is the right one: human explicit direction wins, then your own assessment, then the plan's recommendation
 4. Announce the lane you will use and see it through unless the human asks to change

@@ -67,10 +67,10 @@ If you were dispatched as a subagent to execute a specific task, ignore this ski
 </SUBAGENT-STOP>
 
 <EXTREMELY-IMPORTANT>
-At the start of every conversation, use `/using-superpowers-plus` as the sole
+At the start of every conversation, use `using-superpowers-plus` as the sole
 first-turn router, including the explicit exceptions and fast paths below.
 
-Do not invoke other skills before `/using-superpowers-plus` has routed you to the owning skill. Once the owning skill is active, invoke the skills it explicitly tells you to at the relevant points in its workflow.
+Do not invoke other skills before `using-superpowers-plus` has routed you to the owning skill. Once the owning skill is active, invoke the skills it explicitly tells you to at the relevant points in its workflow.
 </EXTREMELY-IMPORTANT>
 
 ## First-turn exceptions and fast paths
@@ -83,7 +83,7 @@ not read another skill or inspect the repository first.
 For one fully specified, local, reversible edit with one obvious target and no
 product, taste, authority, safety, publication, or architectural decision:
 
-1. Do not invoke `/inspecting-the-environment` or narrate skill selection.
+1. Do not invoke `inspecting-the-environment` or narrate skill selection.
 2. Give at most one short action update.
 3. Make the edit, run one focused check, and report the result.
 
@@ -91,7 +91,7 @@ product, taste, authority, safety, publication, or architectural decision:
 
 An unresolved human-owned taste word such as “premium,” “playful,” “bold,” or
 “more polished” is not an implementation target. Invoke
-`/asking-clarifying-questions` immediately and ask one concrete question before
+`asking-clarifying-questions` immediately and ask one concrete question before
 reading source or editing. Do not silently translate taste into copy, colour,
 layout, or architecture.
 
@@ -99,7 +99,7 @@ layout, or architecture.
 
 When a resumed or compacted-work request explicitly identifies a durable
 checkpoint as the first source, read that checkpoint before this skill or any
-other repository source. Then invoke `/using-superpowers-plus`, reconcile the
+other repository source. Then invoke `using-superpowers-plus`, reconcile the
 checkpoint against live state, and continue by the selected route. This narrow
 ordering exception preserves the checkpoint's role without treating its claims
 as current truth.
@@ -109,7 +109,7 @@ as current truth.
 When the request asks for destructive or irreversible work but does not grant
 clear authority, the first response must state that authority is missing and
 offer a reversible alternative. Do not inspect the repository or announce an
-intention to perform the destructive action first. Invoke `/risk-gates` only
+intention to perform the destructive action first. Invoke `risk-gates` only
 after that immediate safety response if further work remains. A backup or
 reversible preparation does not grant authority: stop and wait for explicit
 authorization before inspection, `git switch --orphan`, reflog expiry, garbage
@@ -117,21 +117,21 @@ collection, branch replacement, or another history-rewrite step.
 
 ## The Rule
 
-**Apply `/using-superpowers-plus` before any ordinary response or action.** Its
+**Apply `using-superpowers-plus` before any ordinary response or action.** Its
 first-turn exceptions above may require a bounded edit, checkpoint read,
 clarifying question, or safety response before another skill or repository
 inspection. Otherwise it resolves the owning skill for the request.
 
 **Then announce "Using [skill] to [purpose]" and follow that skill exactly.** If it has a checklist, create a todo per item. Do not load additional skills unless the current skill explicitly leaves a decision unresolved and another skill directly owns it.
 
-**Before entering plan mode:** `/using-superpowers-plus` will route to `/brainstorming` if the request needs shaping, or directly to `/writing-plans` if an approved spec already exists.
+**Before entering plan mode:** `using-superpowers-plus` will route to `brainstorming` if the request needs shaping, or directly to `writing-plans` if an approved spec already exists.
 
 ## Skill Priority
 
 When multiple skills apply, process skills come first — they set the approach, then implementation skills (frontend-design, etc.) carry it out. Brainstorming and systematic-debugging are Superpowers' most common process skills, but the rule holds for any of them.
 
-- "Let's build X" → /brainstorming first, then implementation skills.
-- "Fix this bug" → /systematic-debugging first, then domain skills.
+- "Let's build X" → brainstorming first, then implementation skills.
+- "Fix this bug" → systematic-debugging first, then domain skills.
 
 ## Red Flags
 
@@ -163,10 +163,10 @@ is unclear, run these steps in order and then hand off.
    user intent and immediately available context. Announce the route so the
    human can override it.
 2. **Inspect only route-changing environment dimensions.** Invoke
-   `/inspecting-the-environment` when shell, repository, branch, worktree, or
+   `inspecting-the-environment` when shell, repository, branch, worktree, or
    connector facts can change the selected route or immediate action. Do not
    perform a broad inventory merely because the skill is available.
-3. **Load only selected doctrine.** Invoke `/base-doctrine` for cross-runtime
+3. **Load only selected doctrine.** Invoke `base-doctrine` for cross-runtime
    invariants, then read only the repo-local doctrine and owning references
    required by the selected route. For local-doctrine and user-instruction
    priority rules, see [`references/repo-doctrine.md`](references/repo-doctrine.md).

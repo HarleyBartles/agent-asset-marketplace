@@ -1,6 +1,6 @@
 # Scratch directory namespacing and cleanup policy
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use /subagent-driven-development (recommended) or /executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use subagent-driven-development (recommended) or executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Make the shared `_agent-scratch` root namespaced by repository, add validation so cross-repo dumping cannot happen again, and provide a cleanup tool to remove orphan scratch directories.
 

@@ -1,6 +1,6 @@
 # Repo Runbook Policy
 
-This repo follows the `repo-standards` layout. Invoke `/using-superpowers-plus`
+This repo follows the `repo-standards` layout. Invoke `using-superpowers-plus`
 once and follow its handoff; local runbooks supply repository-specific deltas.
 
 ## Standard-to-local mapping
@@ -28,7 +28,7 @@ Root `AGENTS.md` is a router. The 12 canonical topics are covered by the union o
 
 ## Root contributor and review surfaces
 
-- `REVIEW.md` is the review entry point. It contains first-class review concerns and routes to `.agents/runbooks/code-review.md` for detailed review methodology and to `/requesting-code-review` for execution.
+- `REVIEW.md` is the review entry point. It enters through `using-superpowers-plus`; the review owner reads `.agents/runbooks/code-review.md` for the repository-specific methodology.
 - `CONTRIBUTING.md` is the substantive contributor entry point. It routes to the design, planning, implementation, and review runbooks and to the relevant repo-worker-pack and Superpowers skills.
 
 ## Exceptions

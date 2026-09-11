@@ -128,11 +128,11 @@ digraph process {
 
     "Setup: worktree, ledger check, read plan, pre-flight review" [shape=box];
     "More tasks remain?" [shape=diamond];
-    "Use /handoff-gates completion-readiness (self-review)" [shape=box];
-    "Invoke /requesting-code-review for final whole-branch review" [shape=box];
+    "Use handoff-gates completion-readiness (self-review)" [shape=box];
+    "Invoke requesting-code-review for final whole-branch review" [shape=box];
     "Final findings? ONE fix dispatch, one scoped re-review, adjudicate residuals" [shape=box];
     "Final review clean: delete this plan's workspace" [shape=box];
-    "Use /finishing-a-development-branch" [shape=box style=filled fillcolor=lightgreen];
+    "Use finishing-a-development-branch" [shape=box style=filled fillcolor=lightgreen];
 
     "Setup: worktree, ledger check, read plan, pre-flight review" -> "Dispatch implementer subagent (./implementer-prompt.md)";
     "Dispatch implementer subagent (./implementer-prompt.md)" -> "Implementer asks questions?";
@@ -158,19 +158,19 @@ digraph process {
     "Park findings in ledger with rulings" -> "Append completion to ledger, mark todo complete";
     "Append completion to ledger, mark todo complete" -> "More tasks remain?";
     "More tasks remain?" -> "Dispatch implementer subagent (./implementer-prompt.md)" [label="yes"];
-    "More tasks remain?" -> "Use /handoff-gates completion-readiness (self-review)" [label="no"];
-    "Use /handoff-gates completion-readiness (self-review)" -> "Invoke /requesting-code-review for final whole-branch review" [label="meets floor"];
-    "Use /handoff-gates completion-readiness (self-review)" -> "Dispatch implementer subagent (./implementer-prompt.md)" [label="fix issues"];
-    "Invoke /requesting-code-review for final whole-branch review" -> "Final findings? ONE fix dispatch, one scoped re-review, adjudicate residuals";
+    "More tasks remain?" -> "Use handoff-gates completion-readiness (self-review)" [label="no"];
+    "Use handoff-gates completion-readiness (self-review)" -> "Invoke requesting-code-review for final whole-branch review" [label="meets floor"];
+    "Use handoff-gates completion-readiness (self-review)" -> "Dispatch implementer subagent (./implementer-prompt.md)" [label="fix issues"];
+    "Invoke requesting-code-review for final whole-branch review" -> "Final findings? ONE fix dispatch, one scoped re-review, adjudicate residuals";
     "Final findings? ONE fix dispatch, one scoped re-review, adjudicate residuals" -> "Final review clean: delete this plan's workspace";
-    "Final review clean: delete this plan's workspace" -> "Use /finishing-a-development-branch";
+    "Final review clean: delete this plan's workspace" -> "Use finishing-a-development-branch";
 }
 ```
 
 ## Setup
 
 Ensure the work happens in an isolated workspace: use
-/using-git-worktrees to create one or verify the existing one.
+using-git-worktrees to create one or verify the existing one.
 Never start implementation on a main/master branch without your human
 partner's explicit consent.
 
@@ -238,11 +238,11 @@ Rule on each conflict it surfaces — the spec is the binding authority, the
 plan is its argument — record the ruling beside its row, and dispatch
 Task 1. The review loop remains the net for conflicts that only emerge from
 implementation. If a single missing fact
-blocks the next step, invoke `/asking-clarifying-questions` before guessing.
+blocks the next step, invoke `asking-clarifying-questions` before guessing.
 
 ## Model Selection
 
-Invoke `/selecting-a-subagent` to select the right subagent profile for the
+Invoke `selecting-a-subagent` to select the right subagent profile for the
 current task and environment. This applies to both the **implementer** and the
 **task reviewer/re-reviewer**.
 
@@ -328,7 +328,7 @@ Implementer subagents report one of four statuses. Handle each appropriately:
 
 **BLOCKED:** The implementer cannot complete the task. Assess the blocker:
 1. If it's a context problem, provide more context and re-dispatch with the same profile
-2. If the task requires more reasoning, re-dispatch with a more capable profile by invoking `/selecting-a-subagent` to pick one (e.g. `implementer-strong` or `reviewer-strong`).
+2. If the task requires more reasoning, re-dispatch with a more capable profile by invoking `selecting-a-subagent` to pick one (e.g. `implementer-strong` or `reviewer-strong`).
 3. If the task is too large, break it into smaller pieces
 4. If the plan itself is wrong, rule on the correction, ledger it, and re-dispatch with the ruling carried in the dispatch
 
@@ -346,7 +346,7 @@ report missing either verdict — spec compliance AND task quality are both
 required. Implementer self-review never replaces the task review; both are
 needed.
 
-Before dispatching the task reviewer, invoke `/selecting-a-subagent` to pick the
+Before dispatching the task reviewer, invoke `selecting-a-subagent` to pick the
 right reviewer profile (`reviewer`, `reviewer-strong`, or `reviewer-fixes`)
 for the task diff.
 
@@ -481,13 +481,13 @@ parked-with-ruling at the cap.
 
 ## Final Review
 
-Once all task-level reviews are complete, run `/handoff-gates` `completion-readiness`
+Once all task-level reviews are complete, run `handoff-gates` `completion-readiness`
 against the completed work. Rate it against the plan and the repo's code review
 guide (8/10 floor, 9/10 target). Report the final rating and do not proceed
 below the floor.
 
 If the completion-readiness rating meets the floor, dispatch the final whole-branch
-review with `/requesting-code-review`. The skill reviews the full branch diff and
+review with `requesting-code-review`. The skill reviews the full branch diff and
 reports findings; no additional review package is needed.
 
 If the final whole-branch review returns findings, dispatch ONE fix subagent
@@ -518,7 +518,7 @@ delete this plan's workspace (`rm -rf <workspace>`) — the git history is
 the record now. Sibling directories belong to other plans; leave them
 alone.
 
-Use /finishing-a-development-branch.
+Use finishing-a-development-branch.
 
 ## Common Rationalizations
 
@@ -593,10 +593,10 @@ Re-reviewer: Missing progress reporting — ADDRESSED (src/recovery.js:41).
 ...
 
 [After all tasks]
-[Invoke /requesting-code-review for final whole-branch review]
+[Invoke requesting-code-review for final whole-branch review]
 Final reviewer: All requirements met. Deferred minors triaged: none block merge.
 
 [Delete this plan's workspace — the record now lives in git]
 
-Done! Using /finishing-a-development-branch.
+Done! Using finishing-a-development-branch.
 ```

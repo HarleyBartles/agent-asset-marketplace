@@ -7,7 +7,7 @@ This policy is stricter than upstream sources where noted; otherwise the upstrea
 - The [agentskills.io specification](https://agentskills.io/specification) defines the base `SKILL.md` frontmatter format.
 - The installed `superpowers-plus:writing-skills` plugin skill defines the TDD-based approach to skill creation and discovery optimization.
 
-Use the first-party [`writing-skills`](../../codex-marketplace/plugins/superpowers-plus/skills/writing-skills/SKILL.md) skill when creating or reviewing a skill. It owns the authoring lanes, custody-aware scaffolding, authority evidence, scholarly citations, and clean-room boundaries. See `writing-skills/references/local-and-marketplace-custody.md` and `writing-skills/references/source-grounded-authoring.md` for the authoring lanes and `writing-skills/scripts/new_skill.py` for the scaffolder.
+The first-party [`writing-skills`](../../codex-marketplace/plugins/superpowers-plus/skills/writing-skills/SKILL.md) skill owns skill-authoring lanes, custody-aware scaffolding, authority evidence, scholarly citations, and clean-room boundaries. See `writing-skills/references/local-and-marketplace-custody.md` and `writing-skills/references/source-grounded-authoring.md` for the authoring lanes and `writing-skills/scripts/new_skill.py` for the scaffolder.
 
 ## External references
 
@@ -32,7 +32,7 @@ The skill directory name must match the `name` field in `SKILL.md` frontmatter.
 
 ## Local skills
 
-Local `.agents/skills/mark-*` skills are tracked local custody. They require normal local skill frontmatter and are excluded from marketplace provenance. Use `writing-skills` for their authoring method.
+Local `.agents/skills/mark-*` skills are tracked local custody. They require normal local skill frontmatter and are excluded from marketplace provenance; their authoring method is owned by `writing-skills`.
 
 ## Authority and source custody
 

@@ -42,9 +42,9 @@ Assume they are a skilled developer, but know almost nothing about our toolset o
 
 **Announce at start:** "I'm using the writing-plans skill to create the implementation plan."
 
-**First step:** If you were not already routed here by `/using-superpowers-plus`, invoke `/using-superpowers-plus` first. Then read this skill's baseline (`references/planning-baseline.md`) and the repo's `.agents/runbooks/planning.md` before executing the stage checklist.
+**First step:** If you were not already routed here by `using-superpowers-plus`, invoke `using-superpowers-plus` first. Then read this skill's baseline (`references/planning-baseline.md`) and the repo's `.agents/runbooks/planning.md` before executing the stage checklist.
 
-**Context:** If working in an isolated worktree, it should have been created via the `/using-git-worktrees` skill at execution time.
+**Context:** If working in an isolated worktree, it should have been created via the `using-git-worktrees` skill at execution time.
 
 **Save plans to:** `.agents/plans/YYYY-MM-DD-<feature-name>.md`
 - (User preferences for plan location override this default)
@@ -59,19 +59,19 @@ Before drafting a task, decide what to do when a plan item is missing scope or d
 
 | Situation | Use |
 |---|---|
-| Plan item has no acceptance criteria and the answer is not in durable source or the spec | `/asking-clarifying-questions` |
-| The whole shape of the solution is unknown | `/brainstorming` to update the spec first |
+| Plan item has no acceptance criteria and the answer is not in durable source or the spec | `asking-clarifying-questions` |
+| The whole shape of the solution is unknown | `brainstorming` to update the spec first |
 | Plan item has acceptance criteria but is large | Write the plan as a high-level draft and iterate |
 | Scope is in the spec but not yet broken into tasks | Write the plan, then review |
 
-If a single missing fact blocks the next step, invoke `/asking-clarifying-questions` before guessing.
+If a single missing fact blocks the next step, invoke `asking-clarifying-questions` before guessing.
 
 ## Plan Lifecycle
 
 Plans are durable, tracked files. The in-flight plan is the source of truth for the work, not a transient scratch note.
 
 - **In-flight home:** `.agents/plans/YYYY-MM-DD-<feature-name>.md` (or `.agents/plans/<epic-name>/YYYY-MM-DD-<feature-name>.md` for epic plans). Off-repo scratch is for transient session artifacts only; the plan itself always lives in the in-flight plan home.
-- **Commit before handoff:** A plan must exist and be committed before it can be handed to `/executing-plans` or `/subagent-driven-development`. Execution skills read the saved, committed file, not unsaved editor state.
+- **Commit before handoff:** A plan must exist and be committed before it can be handed to `executing-plans` or `subagent-driven-development`. Execution skills read the saved, committed file, not unsaved editor state.
 - **Completion:** When the work is complete, move the plan file to `.agents/plans/completed/<plan-file>`.
 - **Roadmap and index links:** Any roadmap, `INDEX.md`, or spec link that points to the in-flight path must be updated when the plan is archived. See the `completing-plans` runbook for the exact move-and-link-rewrite sequence.
 
@@ -128,7 +128,7 @@ interfaces, and evidence rather than pretending pseudocode is a guarantee.
 ```markdown
 # [Feature Name] Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use `/subagent-driven-development` (recommended) or `/executing-plans` to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use `subagent-driven-development` (recommended) or `executing-plans` to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** [One sentence describing what this builds]
 
