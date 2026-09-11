@@ -144,30 +144,6 @@
     "reason": "This repository runbook records a local command or evidence requirement and does not impose it on consumers."
   },
   {
-    "path": ".agents/runbooks/completing-plans.md",
-    "line": 56,
-    "pattern": "portable-repo-command",
-    "classification": "repo-local",
-    "owner": "agent-asset-marketplace runbook",
-    "reason": "This repository runbook records a local command or evidence requirement and does not impose it on consumers."
-  },
-  {
-    "path": ".agents/runbooks/completing-plans.md",
-    "line": 57,
-    "pattern": "portable-repo-command",
-    "classification": "repo-local",
-    "owner": "agent-asset-marketplace runbook",
-    "reason": "This repository runbook records a local command or evidence requirement and does not impose it on consumers."
-  },
-  {
-    "path": ".agents/runbooks/completing-plans.md",
-    "line": 60,
-    "pattern": "portable-repo-command",
-    "classification": "repo-local",
-    "owner": "agent-asset-marketplace runbook",
-    "reason": "This repository runbook records a local command or evidence requirement and does not impose it on consumers."
-  },
-  {
     "path": ".agents/runbooks/implementing.md",
     "line": 24,
     "pattern": "portable-repo-command",

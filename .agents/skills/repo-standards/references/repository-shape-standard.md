@@ -20,9 +20,8 @@ This file describes the surfaces `repo-standards` checks and can apply. It is th
 - `.agents/runbooks/<standard-runbook>.md` for the core and declared runbook set.
 - Root `AGENTS.md` as a router with five core sections and a routing table.
 - `.agents/runbooks/AGENTS.md` as an optional router for the runbook set (may be scaffolded by `scaffold-runbooks`).
-- `.agents/plans/completed/` and `.agents/specs/completed/` as the historical archive for in-flight plans and specs that have been completed. `repo-standards --apply` creates these directories and places a `.gitkeep` placeholder in each so they survive a clean checkout.
-- `.agents/doctrine/completed-plans.md` stating that completed plans/specs are historical context, not live pattern sources.
-- `.devin/rules/completed-plans.md` as a conditional trigger on completed plan/spec files, routing to `.agents/doctrine/completed-plans.md`.
+- `.agents/specs/completed/` only where the consumer intentionally retains completed specifications. Completed implementation plans leave the tracked tree after an archive-then-verify operation.
+- `.agents/doctrine/completed-plans.md` stating that completed plans are off-repo historical scratch and durable decisions belong in ADRs or current doctrine.
 
 ## Router AGENTS.md model
 
@@ -88,3 +87,17 @@ The root `.gitignore` must not contain a stale in-repo rule such as:
 ```
 
 `scaffold-gitignore` removes the stale rule and any leftover `.agents/superpowers/sdd/.gitignore` directory from older repo layouts.
+
+## Completed-plan cold store
+
+Completed plans are not a tracked archive. Before removing a completed plan from
+Git, copy it to the protected off-repo archive:
+
+```text
+<main-checkout>/../_agent-scratch/<repo-name>/archive/completed-plans/
+```
+
+The archive contains a deterministic hash manifest. It is convenience retrieval
+only; Git history remains the immutable receipt. The `archive` directory is a
+protected cold-store lane, not branch scratch and not disposable cleanup input.
+Promote any enduring architecture decision to an ADR before removing its plan.

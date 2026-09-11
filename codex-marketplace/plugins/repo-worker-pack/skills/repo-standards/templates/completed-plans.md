@@ -1,14 +1,18 @@
 ## Scope
 
-`.agents/plans/completed/` and `.agents/specs/completed/`
+Completed-plan custody and retained completed specifications.
 
 ## Purpose
 
-The `completed/` folders hold historical records of finished work. They preserve context, sequencing, and the state of the repo at a point in time. They are not live pattern sources.
+Completed implementation plans are not retained in the tracked repository.
+They are copied to the protected off-repo cold store at
+`<main-checkout>/../_agent-scratch/<repo-name>/archive/completed-plans/`, with
+a deterministic hash manifest, before removal from Git. Git history is the
+immutable receipt; the cold store is convenience retrieval only.
 
 ## Rule
 
-Do not use completed plans or specs as:
+Do not use a completed plan as:
 - a source of canonical command sequences,
 - a template for current implementation,
 - or an authoritative example of repo conventions.
@@ -21,4 +25,7 @@ For current conventions, use:
 - active plans and specs in `.agents/plans/` and `.agents/specs/`
 - the `repo-standards` and `handoff-gates` skills
 
-Completed plans and specs are still useful for understanding how the repo evolved, but any pattern they contain must be cross-checked against current doctrine before use.
+Before plan removal, promote any enduring decision into an ADR or current
+doctrine/runbook. A consumer may retain completed specs when it has explicitly
+decided they are durable architecture records; completed specs are not an
+automatic substitute for ADRs.

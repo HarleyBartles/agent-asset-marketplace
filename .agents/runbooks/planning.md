@@ -20,9 +20,8 @@ runbook does not select or sequence workflow skills.
 - Keep session-only briefs, reports, and review diffs in the off-repo scratch
   workspace. Do not put the durable plan there.
 - Commit the plan before execution handoff so workers read tracked state.
-- On completion, use the `completing-plans` runbook to move the plan to
-  `.agents/plans/completed/`, move any matching spec to
-  `.agents/specs/completed/`, and run `tools/heal_archive_links.py --apply`.
+- On completion, use the `completing-plans` runbook to verify the off-repo plan
+  archive and remove the tracked plan. Do not move a matching spec automatically.
 - Do not create loose planning artifacts at repository root or under product
   source directories.
 

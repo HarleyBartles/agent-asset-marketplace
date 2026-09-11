@@ -16,4 +16,4 @@ Defer to the repository root `AGENTS.md` for global repo and publication rules.
 
 ## Maintenance responsibility
 
-This file must stay aligned with the repo's plan documentation practices. When plan formats change or new guidance is needed for plan structure, review and update this file to reflect current expectations. Completed implementation plans must be checked off and committed with their implementation PR so reviewers can compare planned vs. delivered work. Plans remain repo resident as historical records and are not removed or archived; they must not be left open or uncommitted as stale in-progress guidance.
+This file must stay aligned with the repo's plan documentation practices. When plan formats change or new guidance is needed for plan structure, review and update this file to reflect current expectations. Completed implementation plans must be checked off and committed with their implementation PR so reviewers can compare planned versus delivered work. After completion, archive the plan off-repo under the completed-plan custody doctrine; do not preserve it as mutable tracked history.

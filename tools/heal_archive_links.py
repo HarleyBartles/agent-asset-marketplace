@@ -1,10 +1,8 @@
 #!/usr/bin/env python3
-"""Heal internal markdown links after plans/specs are archived to completed/.
+"""Heal internal markdown links after retained specs are archived to completed/.
 
-When a plan or spec is moved into .agents/plans/completed/ or
-.agents/specs/completed/, the links inside it only need to be re-resolved
-against the new source location. The target files are the same except that
-.agents/plans/... and .agents/specs/... paths now live under completed/.
+When a retained spec moves into `.agents/specs/completed/`, links inside it
+need to be re-resolved against the new source location.
 
 CLI contract:
 - --help prints usage and classifies each flag.
@@ -23,9 +21,7 @@ from pathlib import Path
 _LINK_RE = re.compile(r"!\[([^\]]*)\]\(([^)\s]+)(?:\s+\"([^\"]*)\")?\)|\[([^\]]*)\]\(([^)\s]+)(?:\s+\"([^\"]*)\")?\)")
 _URL_RE = re.compile(r"^(?:[a-z]+://|mailto:|tel:|#)")
 
-_PLANS_COMPLETED = Path(".agents/plans/completed")
 _SPECS_COMPLETED = Path(".agents/specs/completed")
-_PLANS_ACTIVE = Path(".agents/plans")
 _SPECS_ACTIVE = Path(".agents/specs")
 
 
@@ -37,7 +33,7 @@ REPO_ROOT = _repo_root()
 
 
 def _completed_dirs() -> list[Path]:
-    return [d for d in (REPO_ROOT / _PLANS_COMPLETED, REPO_ROOT / _SPECS_COMPLETED) if d.is_dir()]
+    return [d for d in (REPO_ROOT / _SPECS_COMPLETED,) if d.is_dir()]
 
 
 def _markdown_files() -> list[Path]:
@@ -51,7 +47,6 @@ def _old_src_dir(src: Path) -> Path:
     """Return the directory the archived file used to live in before completion."""
     src_dir = src.parent
     for completed, active in (
-        (REPO_ROOT / _PLANS_COMPLETED, REPO_ROOT / _PLANS_ACTIVE),
         (REPO_ROOT / _SPECS_COMPLETED, REPO_ROOT / _SPECS_ACTIVE),
     ):
         try:
@@ -65,7 +60,6 @@ def _old_src_dir(src: Path) -> Path:
 def _map_completed(target: Path) -> Path:
     """If a target is an active plan/spec, return its completed counterpart if it exists."""
     for active, completed in (
-        (REPO_ROOT / _PLANS_ACTIVE, REPO_ROOT / _PLANS_COMPLETED),
         (REPO_ROOT / _SPECS_ACTIVE, REPO_ROOT / _SPECS_COMPLETED),
     ):
         try:
@@ -191,7 +185,7 @@ def _heal_file(src: Path, fix: bool) -> tuple[list[str], list[str]]:
 
 def _build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
-        description="Heal markdown links in archived plans and specs. (mixed: supports --check and --apply)",
+        description="Heal markdown links in retained completed specs. (mixed: supports --check and --apply)",
         epilog="Default mode is --check. Use --apply to rewrite files.",
     )
     mode = parser.add_mutually_exclusive_group()

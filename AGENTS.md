@@ -46,7 +46,7 @@ Security review must apply the relevant profile and the repository lenses in `.a
 - [Worker guidance](.agents/runbooks/repo-doctrine.md)
 - [Implementing workflow](.agents/runbooks/implementing.md)
 - [Runbook stage routing](.agents/runbooks/AGENTS.md), [repo runbook policy](.agents/doctrine/repo-runbook-policy.md), and [completing plans](.agents/runbooks/completing-plans.md)
-- [Completed plans doctrine](.agents/doctrine/completed-plans.md) and [completed plans rule](.devin/rules/completed-plans.md) for the in-flight vs completed boundary
+- [Completed-plan custody](.agents/doctrine/completed-plans.md) and the root [ADR log](adr/README.md) for the in-flight, archival, and durable-decision boundary
 - [Worktree and scratch policy](.agents/doctrine/non-repo-locations-policy.md)
 
 ## Maintenance responsibility

@@ -24,7 +24,7 @@ Use `--check` to validate the current generated surface without rewriting it. `-
 
 `py -3 tools/validate_marketplace.py` verifies the plugin manifest, bundle manifest, and referenced surfaces for each plugin.
 
-`py -3 tools/check_archive_links.py` checks for stale plan/spec archive links. `py -3 tools/heal_archive_links.py --check` (read-only) and `--apply` (mutating) heal relative markdown links inside `.agents/plans/completed/` and `.agents/specs/completed/`.
+`py -3 tools/check_archive_links.py` checks stale links in retained completed specs. `py -3 tools/heal_archive_links.py --check` (read-only) and `--apply` (mutating) heal relative markdown links inside `.agents/specs/completed/`.
 
 ## Policy for agent work
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Check for stale archive links after moving plans/specs to completed/."""
+"""Check for stale archive links in retained completed specifications."""
 
 from __future__ import annotations
 
@@ -13,10 +13,7 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 _FENCE_RE = re.compile(r"^\s*(```+|~~~+).*$")
 
 
-_COMPLETED_DIRS = [
-    REPO_ROOT / ".agents/plans/completed",
-    REPO_ROOT / ".agents/specs/completed",
-]
+_COMPLETED_DIRS = [REPO_ROOT / ".agents/specs/completed"]
 _ACTIVE_DIRS = [
     REPO_ROOT / ".agents/plans",
     REPO_ROOT / ".agents/specs",
@@ -47,9 +44,9 @@ def _code_block_lines(text: str) -> set[int]:
     return inside
 
 
-# Active .agents/plans/ or .agents/specs/ path that is not inside completed/
+# Active .agents/specs/ path that is not inside completed/
 _STALE_ACTIVE_RE = re.compile(
-    r"\.agents/(?:plans|specs)/(?!completed/)(?:[A-Za-z0-9_\-]+/)*\d{4}-\d{2}-\d{2}-[A-Za-z0-9_\-]+\.md"
+    r"\.agents/specs/(?!completed/)(?:[A-Za-z0-9_\-]+/)*\d{4}-\d{2}-\d{2}-[A-Za-z0-9_\-]+\.md"
 )
 
 
@@ -79,7 +76,7 @@ def _old_active_path(completed: Path) -> Path | None:
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
-        description="Check for stale archive links after moving plans and specs to completed/. (read-only)",
+        description="Check for stale archive links in retained completed specifications. (read-only)",
     )
     parser.add_argument(
         "--check",
@@ -92,7 +89,7 @@ def main(argv: list[str] | None = None) -> int:
     active = _active_files()
     stale: list[str] = []
 
-    # 1. completed/ files should reference other completed/ files, not active .agents/plans/ or .agents/specs/ paths
+    # Retained completed specs should reference other retained specs, not active specs.
     for c in completed:
         text = c.read_text(encoding="utf-8", errors="replace")
         code_lines = _code_block_lines(text)

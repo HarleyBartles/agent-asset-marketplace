@@ -44,6 +44,12 @@ def _valid_name(name: str) -> bool:
     return bool(name) and name not in (".", "..") and not _FORBIDDEN.intersection(name)
 
 
+def _valid_archive(entry: Path) -> bool:
+    """Return whether the protected completed-plan cold-store lane is well formed."""
+    completed = entry / "completed-plans"
+    return entry.name == "archive" and completed.is_dir() and (completed / "manifest.json").is_file()
+
+
 def _remove_path(path: Path) -> bool:
     """Remove a file or directory and return True on success."""
     try:
@@ -82,8 +88,10 @@ def _validate(apply: bool) -> int:
     issues = 0
     failures = 0
     for entry in repo_scratch.iterdir():
+        if _valid_archive(entry):
+            continue
         if entry.is_file():
-            print(f"FAIL: {repo_name} contains a file {entry.name}, expected branch/task folders")
+            print(f"FAIL: {repo_name} contains a file {entry.name}, expected branch/task folders or archive")
             if apply:
                 if _remove_path(entry):
                     print(f"  removed {entry}")
@@ -92,7 +100,7 @@ def _validate(apply: bool) -> int:
             issues += 1
             continue
         if not _valid_name(entry.name):
-            print(f"FAIL: {repo_name}/{entry.name} is not a valid branch/task folder")
+            print(f"FAIL: {repo_name}/{entry.name} is not a valid branch/task folder or protected archive")
             if apply:
                 if _remove_path(entry):
                     print(f"  removed {entry}")

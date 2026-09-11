@@ -13,8 +13,8 @@ Archive completed planning artifacts before flipping the PR to ready.
 ## Recipe
 1. Identify the plan and spec named in the PR body, linked issues, or `.agents/plans/` and `.agents/specs/`.
 2. Confirm the plan is complete: every top-level checkbox is checked or the plan records the implementation PR.
-3. `git mv .agents/plans/<plan-name>.md .agents/plans/completed/`
-4. If the plan lists a spec: `git mv .agents/specs/<spec-name>.md .agents/specs/completed/`
+3. Follow the consumer's completed-plan custody: verify its off-repo archive copy, then remove the exact tracked plan path with Git-aware deletion.
+4. A completed spec needs a separate durability decision; do not move it automatically.
 5. Move any related roadmaps or research files referenced by the plan.
 6. Run the consumer's canonical archive-link repair/check helpers.
 7. Run the consumer's canonical mesh and marketplace regeneration helpers.

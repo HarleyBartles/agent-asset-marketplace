@@ -1,13 +1,10 @@
 ---
-description: "Completed plans and specs are historical context, not live patterns"
-trigger: glob
-globs:
-  - ".agents/plans/completed/**"
-  - ".agents/specs/completed/**"
+description: "Completed-plan custody is defined by current doctrine"
+trigger: manual
 ---
 ## Scope
 
-`.agents/plans/completed/` and `.agents/specs/completed/`
+Completed-plan and retained-spec custody.
 
 For the canonical doctrine, read `.agents/doctrine/completed-plans.md`.
 

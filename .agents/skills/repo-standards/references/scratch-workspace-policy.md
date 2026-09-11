@@ -3,22 +3,26 @@
 ## Scope
 
 This policy covers the off-repo `_agent-scratch` directory used for
-plan-scoped, branch-scoped, and task-scoped temporary files.
+plan-scoped, branch-scoped, task-scoped temporary files and a protected
+completed-plan cold store.
 
 ## Layout
 
 ```text
 _agent-scratch/
   <repo-name>/
+    archive/
+      completed-plans/
+        manifest.json
     <branch-name>/
       <plan-or-task-basename>/
         ...
 ```
 
 The top level of `_agent-scratch` may only contain folders named after the
-repositories that use it. Each repo folder may only contain folders named
-after in-flight branches or active tasks. Leaf contents are disposable
-scratch for that task.
+repositories that use it. Within a repo folder, `archive/completed-plans/` is
+the sole protected cold-store lane; all other folders are named after in-flight
+branches or active tasks. Leaf contents under a branch are disposable scratch.
 
 ## Naming
 
@@ -51,3 +55,7 @@ any repo folder that contains entries not matching a branch or task.
 
 When a branch is merged and its worktree is removed, its scratch directory is
 `delete_now` unless another active task or plan still references it.
+
+Never classify `archive/completed-plans/` as branch scratch. It is retained
+cold-store convenience material whose manifest must agree with its copied plan
+files; Git history remains the canonical immutable record.

@@ -1,11 +1,11 @@
 plan: .agents/plans/2026-09-06-mark-373-operating-system.md
 branch: codex/mark-373-operating-system
 implementation_head: this checkpoint's containing commit
-last_completed_task: local contracts, provenance, and all-runbook boundary audit
+last_completed_task: completed-plan cold-store migration and ADR log
 next_task: human review
 next_step: review Draft PR #311; do not promote Ready without human instruction
-checkpoint_state: MARK-373 implementation and approved follow-up slices are complete
-working_tree_status: this checkpoint's containing commit is the published closeout record
+checkpoint_state: MARK-373 implementation and approved follow-up slices are complete pending this closeout commit
+working_tree_status: pending normal hooked commit and push
 
 current_evidence:
   - focused repo-standards and workflow-contract suites: 91 passed
@@ -22,6 +22,8 @@ current_evidence:
   - repo-resident unslop contract lives at .agents/contracts/unslop/repository.md
   - all runbooks were audited: generic method is routed to skills; repo paths, commands, custody, exceptions, and evidence stay local
   - Superpowers+ records its upstream v6.3.0 pin without claiming a retained upstream snapshot
+  - 136 completed-plan files were hash-verified at Z:/_agent-scratch/agent-asset-marketplace/archive/completed-plans/ then removed from the tracked tree
+  - root adr/ records plugin-first source, derived mesh, and completed-plan custody
 
 evidence_boundaries:
   - no behavioral model baseline is claimed
