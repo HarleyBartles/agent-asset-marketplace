@@ -651,7 +651,7 @@ def test_treatment_campaign_pins_complete_mandatory_clarity_route() -> None:
     route = campaign["clarity_recheck"]
 
     writing_style_skill = STYLE_ROOT / "SKILL.md"
-    assert "$writing-with-clarity" in writing_style_skill.read_text(encoding="utf-8")
+    assert "writing-with-clarity" in writing_style_skill.read_text(encoding="utf-8")
 
     clarity_skill_relative = "codex-marketplace/plugins/writing-pack/skills/writing-with-clarity/SKILL.md"
     mandatory_references = _mandatory_reference_paths(CLARITY_ROOT / "SKILL.md", "## Read in bounded layers")

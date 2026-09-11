@@ -10,11 +10,11 @@ This plugin contains the first-party Superpowers+ workflow skills, including the
   `b36e0829c6d0140e93cfef2ca599b1b07d4a7797`
 - Audited comparison point: v6.2.0 at commit
   `3dcbd5c4b48e02263fbf4a3c01e3fe4f81d584d9`
-- Retained snapshot: this `SOURCE.md`
+- Provenance record: this `SOURCE.md`
 - License: `MIT`
-- The retained upstream snapshot is reference-only. The editable first-party
-  skills live under `codex-marketplace/plugins/superpowers-plus/skills/<name>/`.
-  No adapter overlay is applied.
+- Upstream source is not vendored. Compare against the repository URL and pinned
+  commit above. Editable marketplace-maintained skills live under
+  `codex-marketplace/plugins/superpowers-plus/skills/<name>/`.
 
 ## First-Party Source Custody
 

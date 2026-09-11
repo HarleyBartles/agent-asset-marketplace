@@ -1,8 +1,7 @@
 ---
 name: asking-clarifying-questions
-description: Use when an unresolved human-owned taste word such as premium, playful,
-  bold, or polished must be settled before source inspection, or when any single
-  ambiguity blocks the next safe action.
+description: Use when an ambiguity remains after safe internal resolution and one
+  human answer would materially determine the next action.
 metadata:
   source-id: asking-clarifying-questions
   source-path: codex-marketplace/plugins/superpowers-plus/skills/asking-clarifying-questions/SKILL.md
@@ -10,7 +9,7 @@ metadata:
   source-category: first_party
   status: active
   owner: Harley Bartles
-  scope: mid-flight ambiguity resolution through a single clarifying question
+  scope: Mid-flight ambiguity resolution through a single clarifying question.
   use_when:
   - an ambiguity is internally unresolved and a single human decision would unblock the immediate next step.
   - the agent is mid-plan, mid-execution, or inside another skill and a missing fact, term, scope, boundary, or output shape prevents safe progress.

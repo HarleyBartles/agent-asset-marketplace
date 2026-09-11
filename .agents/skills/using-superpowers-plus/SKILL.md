@@ -57,7 +57,7 @@ license: MIT
 
 ## Provenance
 
-This skill is a first-party authored derivation of `obra/superpowers` v6.3.0, released under the MIT License. The original upstream snapshot is retained in `codex-marketplace/plugins/superpowers-plus/skills/using-superpowers-plus/` for reference.
+This marketplace-maintained skill succeeds upstream `using-superpowers` and is based on `obra/superpowers` v6.3.0 commit `b36e0829c6d0140e93cfef2ca599b1b07d4a7797` under the MIT License. Upstream source is not vendored; this directory contains the maintained Superpowers+ implementation.
 
 <SUBAGENT-STOP>
 If you were dispatched as a subagent to execute a specific task, ignore this skill.

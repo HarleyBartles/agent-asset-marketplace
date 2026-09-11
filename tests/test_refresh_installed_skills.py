@@ -7,6 +7,8 @@ import sys
 from pathlib import Path
 from unittest.mock import MagicMock, patch
 
+import pytest
+
 
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPTS = (
@@ -78,15 +80,63 @@ def test_clean_orphan_skills_preserves_mark_skill(tmp_path: Path) -> None:
         encoding="utf-8",
     )
 
-    with patch.object(refresh_installed_skills, "AGENTS_SKILLS_PATH", skills_path):
+    with (
+        patch.object(refresh_installed_skills, "ROOT", tmp_path),
+        patch.object(refresh_installed_skills, "AGENTS_SKILLS_PATH", skills_path),
+    ):
         assert (
             refresh_installed_skills._clean_orphan_skills(
-                synced_skill_names=set(), prefixes=["mark-example"]
+                synced_skill_names=set(), local_skill_names=["mark-example"]
             )
             is False
         )
 
     assert local_skill.is_dir()
+
+
+def test_local_skill_registration_does_not_preserve_prefix_siblings(tmp_path: Path) -> None:
+    skills_path = tmp_path / "skills"
+    declared = skills_path / "alpha"
+    undeclared = skills_path / "alpha-extra"
+    for skill_dir in (declared, undeclared):
+        skill_dir.mkdir(parents=True)
+        (skill_dir / "SKILL.md").write_text(
+            f"---\nname: {skill_dir.name}\ndescription: Use when testing exact local identity.\n---\n",
+            encoding="utf-8",
+        )
+
+    with (
+        patch.object(refresh_installed_skills, "ROOT", tmp_path),
+        patch.object(refresh_installed_skills, "AGENTS_SKILLS_PATH", skills_path),
+    ):
+        refresh_installed_skills._clean_orphan_skills(
+            synced_skill_names=set(), local_skill_names=["alpha"]
+        )
+
+    assert declared.is_dir()
+    assert not undeclared.exists()
+
+
+def test_runtime_rejects_legacy_local_skill_prefixes() -> None:
+    with pytest.raises(ValueError, match="legacy local_skill_prefixes"):
+        refresh_installed_skills._local_skills({"repo": {"local_skill_prefixes": ["mark-"]}})
+
+
+def test_main_reports_legacy_local_skill_prefixes_without_traceback(capsys) -> None:
+    with (
+        patch.object(
+            refresh_installed_skills,
+            "_load_marketplace_config",
+            return_value={"plugins": [], "repo": {"local_skill_prefixes": ["mark-"]}},
+        ),
+        patch.object(sys, "argv", ["refresh_installed_skills.py", "--check"]),
+    ):
+        result = refresh_installed_skills.main()
+
+    captured = capsys.readouterr()
+    assert result == 1
+    assert "ERROR: legacy local_skill_prefixes" in captured.out
+    assert "Traceback" not in captured.err
 
 
 def test_validate_local_skill_dirs_rejects_mark_skill_without_skill_md(tmp_path: Path) -> None:
@@ -609,7 +659,7 @@ def test_provenance_records_local_plugin_origin(tmp_path: Path) -> None:
         },
     ]
 
-    def install_side_effect(plugin, check_mode=False, synced_skill_names=None, prefixes=None):
+    def install_side_effect(plugin, check_mode=False, synced_skill_names=None, local_skill_names=None):
         if synced_skill_names is not None:
             synced_skill_names.add(plugin.get("name", "unknown"))
         return True

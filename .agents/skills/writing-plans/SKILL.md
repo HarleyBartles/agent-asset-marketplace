@@ -1,7 +1,7 @@
 ---
 name: writing-plans
-description: Use when you have a spec or requirements for a multi-step task, before
-  touching code.
+description: Use when an approved specification or settled requirements need to become
+  an executable multi-step implementation plan.
 metadata:
   source-id: writing-plans
   source-path: codex-marketplace/plugins/superpowers-plus/skills/writing-plans/SKILL.md
@@ -28,7 +28,7 @@ license: MIT
 ---
 ## Provenance
 
-This skill is a first-party authored derivation of `obra/superpowers` v6.3.0, released under the MIT License. The original upstream snapshot is retained in `codex-marketplace/plugins/superpowers-plus/skills/writing-plans/` for reference.
+This marketplace-maintained derivative is based on `obra/superpowers` v6.3.0 commit `b36e0829c6d0140e93cfef2ca599b1b07d4a7797` under the MIT License. Upstream source is not vendored; this directory contains the maintained Superpowers+ implementation.
 
 # Writing Plans
 

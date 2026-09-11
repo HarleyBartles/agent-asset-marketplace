@@ -35,20 +35,11 @@ Every repo using this standard must have:
 
 ## Pull request runbook policy
 
-Every repo using this standard must define a PR workflow in `.agents/runbooks/pr.md` that includes the following policy:
-
-- Open pull requests as **draft**.
-- Keep a PR in draft while iterating, running local validation, and performing self-review.
-- Only flip a PR out of draft when:
-  - self-review is complete,
-  - the relevant validation commands pass,
-  - the branch is ready for review or merge.
-- The repo's CI must not run on draft pull requests. For GitHub Actions, gate `pull_request` workflows so they run only when `github.event.pull_request.draft == false` or on `ready_for_review` activity.
-- After flipping a PR to ready, wait for the remote CI run to finish and pass. Do not report the PR as green or ready based only on a passing local `ci --check`. Address remote failures before requesting human review.
-- The PR body must include publication proof per the repo's `AGENTS.md`.
-- Each repo's `.agents/runbooks/pr.md` must map this policy to the repo's specific remote CI command (e.g., `gh pr checks`, the repository's status check API, or an external build link).
-
-This policy reduces wasted CI minutes while a branch is still being iterated on and ensures CI only runs on PRs the author believes are ready.
+Every repo using this standard must define a thin `.agents/runbooks/pr.md`
+overlay containing only its local base branch, validation and remote-check
+commands, draft-aware CI configuration, exceptions, and publication-proof
+surface. Generic Draft lifecycle, commit discipline, review sequencing, and
+publication handoff belong to `publishing-source` and `repo-worker-base`.
 
 ## Allowed additional runbooks
 
@@ -60,6 +51,10 @@ Additional `<topic>.md` files may live in `.agents/runbooks/`. They must be thin
 - `code-style.md`
 - `marketplace-generation.md`
 - `skill-authoring.md`
+
+For every runbook, retain only repository paths, commands, custody, exceptions,
+and local evidence requirements. Generic method, sequencing, self-review, and
+handoff behavior belong to the owning portable skill.
 
 ## Local overlay policy
 

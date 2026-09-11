@@ -36,11 +36,11 @@
 - Test: `tests/test_refresh_installed_skills.py`
 - Test: `tests/test_repo_standards.py`
 
-- [ ] **Step 1: Add RED exact-registration tests.** Prove that `repo.local_skills: [alpha]` preserves `alpha` but not `alpha-extra`, that undeclared local directories are rejected, and that legacy `local_skill_prefixes` is migrated only by the scaffold.
-- [ ] **Step 2: Verify RED.** Run the focused installer and scaffold tests and confirm prefix matching is the cause.
-- [ ] **Step 3: Implement exact identity semantics.** Rename internal variables and helpers, compare directory names by exact membership, pass exact names to extension hooks, and emit exact names in provenance and generated manifests.
-- [ ] **Step 4: Retire active prefix language.** Update portable skill/reference prose, examples, function names, diagnostics, and current tests while retaining narrowly labelled legacy migration coverage.
-- [ ] **Step 5: Run focused tests.** Require exact registration, orphan cleanup, provenance, scaffold migration, and marketplace generation to pass.
+- [x] **Step 1: Add RED exact-registration tests.** Prove that `repo.local_skills: [alpha]` preserves `alpha` but not `alpha-extra`, that undeclared local directories are rejected, and that legacy `local_skill_prefixes` is migrated only by the scaffold.
+- [x] **Step 2: Verify RED.** Run the focused installer and scaffold tests and confirm prefix matching is the cause.
+- [x] **Step 3: Implement exact identity semantics.** Rename internal variables and helpers, compare directory names by exact membership, pass exact names to extension hooks, and emit exact names in provenance and generated manifests.
+- [x] **Step 4: Retire active prefix language.** Update portable skill/reference prose, examples, function names, diagnostics, and current tests while retaining narrowly labelled legacy migration coverage.
+- [x] **Step 5: Run focused tests.** Require exact registration, orphan cleanup, provenance, scaffold migration, and marketplace generation to pass.
 
 ### Task 2: Put repo-resident unslop profiles under contract custody
 
@@ -52,11 +52,11 @@
 - Modify: `tools/generate_repo_index.py`
 - Modify: affected indexes and tests
 
-- [ ] **Step 1: Add RED custody assertions.** Require the marketplace profile at `.agents/contracts/unslop/repository.md`, reject active `.agents/docs/unslop/` and root `.agents/unslop/` custody, and require repo-standards to define scoped and repo-wide consumer locations.
-- [ ] **Step 2: Verify RED.** Confirm the current docs location and generated index entry fail.
-- [ ] **Step 3: Move and classify the marketplace profile.** Preserve binding repository-specific constraints, remove any generic profile material already owned by the portable skill, and update references.
-- [ ] **Step 4: Define the consumer convention.** Use `.agents/contracts/unslop/` for repo-wide profiles and `<scope>/.agents/contracts/unslop/` for justified subsystem overlays; require explicit indexing and local ownership.
-- [ ] **Step 5: Regenerate indexes and verify custody.** Ensure no obsolete live unslop folder remains and no consumer-specific profile is added to the portable pack.
+- [x] **Step 1: Add RED custody assertions.** Require the marketplace profile at `.agents/contracts/unslop/repository.md`, reject active `.agents/docs/unslop/` and root `.agents/unslop/` custody, and require repo-standards to define scoped and repo-wide consumer locations.
+- [x] **Step 2: Verify RED.** Confirm the current docs location and generated index entry fail.
+- [x] **Step 3: Move and classify the marketplace profile.** Preserve binding repository-specific constraints, remove any generic profile material already owned by the portable skill, and update references.
+- [x] **Step 4: Define the consumer convention.** Use `.agents/contracts/unslop/` for repo-wide profiles and `<scope>/.agents/contracts/unslop/` for justified subsystem overlays; require explicit indexing and local ownership.
+- [x] **Step 5: Regenerate indexes and verify custody.** Ensure no obsolete live unslop folder remains and no consumer-specific profile is added to the portable pack.
 
 ### Task 3: Correct Superpowers+ provenance
 
@@ -65,11 +65,11 @@
 - Modify: affected `codex-marketplace/plugins/superpowers-plus/skills/*/SKILL.md`
 - Test: `tests/test_workflow_contracts.py`
 
-- [ ] **Step 1: Add RED provenance tests.** Reject claims that an upstream snapshot is retained locally; require the pinned commit and distinguish upstream-derived skill names from entirely first-party additions.
-- [ ] **Step 2: Verify RED.** Confirm current boilerplate falsely identifies each maintained skill directory as an upstream snapshot.
-- [ ] **Step 3: Rewrite plugin provenance.** Call `SOURCE.md` a provenance record, state that upstream source is not vendored, and point comparisons to the repository URL and immutable commit.
-- [ ] **Step 4: Rewrite per-skill provenance.** Use “marketplace-maintained derivative” only for skills corresponding to upstream v6.3.0 skills; label marketplace-only additions as first-party without an upstream-derivation claim. Treat `using-superpowers-plus` as the maintained successor to upstream `using-superpowers`.
-- [ ] **Step 5: Run focused provenance and marketplace tests.** Require no false snapshot claim in canonical or generated skill prose.
+- [x] **Step 1: Add RED provenance tests.** Reject claims that an upstream snapshot is retained locally; require the pinned commit and distinguish upstream-derived skill names from entirely first-party additions.
+- [x] **Step 2: Verify RED.** Confirm current boilerplate falsely identifies each maintained skill directory as an upstream snapshot.
+- [x] **Step 3: Rewrite plugin provenance.** Call `SOURCE.md` a provenance record, state that upstream source is not vendored, and point comparisons to the repository URL and immutable commit.
+- [x] **Step 4: Rewrite per-skill provenance.** Use “marketplace-maintained derivative” only for skills corresponding to upstream v6.3.0 skills; label marketplace-only additions as first-party without an upstream-derivation claim. Treat `using-superpowers-plus` as the maintained successor to upstream `using-superpowers`.
+- [x] **Step 5: Run focused provenance and marketplace tests.** Require no false snapshot claim in canonical or generated skill prose.
 
 ### Task 4: Restore the skill/runbook boundary repo-wide
 
@@ -79,11 +79,11 @@
 - Test: `tests/test_workflow_contracts.py`
 - Test: `tests/test_repo_standards.py`
 
-- [ ] **Step 1: Inventory every runbook by sentence ownership.** Classify each substantive instruction as repository path, command, custody, exception, local evidence, or generic workflow method.
-- [ ] **Step 2: Add RED boundary tests.** Require runbooks to identify their local scope and reject duplicated generic stage checklists, generic reviewer personas, generic self-review loops, and generic skill sequencing.
-- [ ] **Step 3: Thin all violating runbooks.** Keep marketplace-specific facts in runbooks; route generic design, planning, implementation, testing, review, and publication behaviour to their owning skills without copying it.
-- [ ] **Step 4: Repair portable owners where needed.** Move a generic invariant into the canonical skill only when the runbook is its sole current owner; otherwise delete the duplicate.
-- [ ] **Step 5: Review the complete runbook set.** Confirm `design.md`, `code-review.md`, `implementing.md`, `pr.md`, `testing.md`, and every other runbook satisfy the same boundary.
+- [x] **Step 1: Inventory every runbook by sentence ownership.** Classify each substantive instruction as repository path, command, custody, exception, local evidence, or generic workflow method.
+- [x] **Step 2: Add RED boundary tests.** Require runbooks to identify their local scope and reject duplicated generic stage checklists, generic reviewer personas, generic self-review loops, and generic skill sequencing.
+- [x] **Step 3: Thin all violating runbooks.** Keep marketplace-specific facts in runbooks; route generic design, planning, implementation, testing, review, and publication behaviour to their owning skills without copying it.
+- [x] **Step 4: Repair portable owners where needed.** Move a generic invariant into the canonical skill only when the runbook is its sole current owner; otherwise delete the duplicate.
+- [x] **Step 5: Review the complete runbook set.** Confirm `design.md`, `code-review.md`, `implementing.md`, `pr.md`, `testing.md`, and every other runbook satisfy the same boundary.
 
 ### Task 5: Make skill discovery consumer-neutral
 
@@ -92,11 +92,11 @@
 - Modify: other canonical vendored `SKILL.md` and `agents/openai.yaml` files found by the inventory
 - Test: `tests/test_workflow_contracts.py`
 
-- [ ] **Step 1: Add RED portability tests.** Require asking-clarifying-questions to describe unresolved ambiguity generally and reject product-, portfolio-, repository-, architecture-, or taste-specific trigger assumptions in portable descriptions.
-- [ ] **Step 2: Verify RED.** Confirm the current taste-word and source-inspection description fails.
-- [ ] **Step 3: Repair asking-clarifying-questions.** Define it as the anytime escalation for one unresolved ambiguity that one human answer can settle after safe internal resolution.
-- [ ] **Step 4: Audit all canonical descriptions and wrappers.** Keep domain terms only where the skill itself owns that domain; move consumer-specific constraints to local contracts or body guidance.
-- [ ] **Step 5: Run the structural and semantic inventory.** Require zero known malformed, misleading, or consumer-specific discovery fields.
+- [x] **Step 1: Add RED portability tests.** Require asking-clarifying-questions to describe unresolved ambiguity generally and reject product-, portfolio-, repository-, architecture-, or taste-specific trigger assumptions in portable descriptions.
+- [x] **Step 2: Verify RED.** Confirm the current taste-word and source-inspection description fails.
+- [x] **Step 3: Repair asking-clarifying-questions.** Define it as the anytime escalation for one unresolved ambiguity that one human answer can settle after safe internal resolution.
+- [x] **Step 4: Audit all canonical descriptions and wrappers.** Keep domain terms only where the skill itself owns that domain; move consumer-specific constraints to local contracts or body guidance.
+- [x] **Step 5: Run the structural and semantic inventory.** Require zero known malformed, misleading, or consumer-specific discovery fields.
 
 ### Task 6: Regenerate, review, and publish
 
@@ -106,9 +106,9 @@
 - Modify: PR #311 body
 - Regenerate: `.agents/skills/`, marketplace manifests, and index mesh
 
-- [ ] **Step 1: Regenerate owned outputs.** Run `py -3 tools/run.py installed-skills --apply` and `py -3 tools/run.py mesh --apply`.
-- [ ] **Step 2: Run focused suites and inventories.** Cover installer, repo-standards, workflow contracts, marketplace generation, provenance, custody, and runbook boundaries.
-- [ ] **Step 3: Review adversarially.** Check exact registration, legacy migration isolation, source/generated parity, consumer portability, provenance accuracy, contract custody, and absence of Quorum artifacts.
+- [x] **Step 1: Regenerate owned outputs.** Run `py -3 tools/run.py installed-skills --apply` and `py -3 tools/run.py mesh --apply`.
+- [x] **Step 2: Run focused suites and inventories.** Cover installer, repo-standards, workflow contracts, marketplace generation, provenance, custody, and runbook boundaries.
+- [x] **Step 3: Review adversarially.** Check exact registration, legacy migration isolation, source/generated parity, consumer portability, provenance accuracy, contract custody, and absence of Quorum artifacts.
 - [ ] **Step 4: Update plan and checkpoint truthfully.** Record deterministic evidence and the semantic-review boundary without creating a duplicate receipt.
 - [ ] **Step 5: Commit normally and push.** Let the tracked pre-commit apply/check hook provide the broad gate; push the existing branch.
 - [ ] **Step 6: Update and verify Draft PR #311.** Keep it Draft; confirm clean tree, local/remote head equality, base `main`, and honest PR text.

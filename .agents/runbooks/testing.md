@@ -15,9 +15,6 @@ Use this runbook for the test commands and conventions in `agent-asset-marketpla
 
 ## Repo-specific guidance
 
-- Start with the focused test or target that proves the changed behavior. Use
-  the full `py -3 -m pytest` suite when the touched surface, plan, or final
-  gate requires repository-wide regression proof.
 - Run a single test file with `py -3 -m pytest tests/<file>.py -v`.
 - Contract tests live under `tests/`. Marketplace generation correctness is proven by `tools/run marketplace --apply` and `tools/run ci --check`.
 - After changing source custody, adapters, plugin shapes, bundle manifests,

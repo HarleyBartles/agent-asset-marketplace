@@ -251,6 +251,7 @@ def test_scaffold_marketplace_json_migrates_legacy(tmp_path: Path) -> None:
     repo.mkdir()
     _init_git_repo(repo)
     (repo / ".agents" / "plugins").mkdir(parents=True)
+    (repo / ".agents" / "skills" / "mark-example").mkdir(parents=True)
     marketplace = repo / ".agents" / "plugins" / "marketplace.json"
     marketplace.write_text(
         json.dumps(
@@ -272,7 +273,7 @@ def test_scaffold_marketplace_json_migrates_legacy(tmp_path: Path) -> None:
     )
     assert result.returncode == 0, result.stderr
     data = json.loads(marketplace.read_text(encoding="utf-8"))
-    assert data["repo"]["local_skills"] == ["mark-"]
+    assert data["repo"]["local_skills"] == ["mark-example"]
     assert data["plugins"] == [{"name": "repo-worker-pack"}]
     assert "local_skill_prefixes" not in data
 
@@ -299,8 +300,35 @@ def test_scaffold_marketplace_json_check_after_migration(tmp_path: Path) -> None
         capture_output=True,
         text=True,
     )
-    assert result.returncode == 0, result.stdout + result.stderr
-    assert "OK" in result.stdout
+    assert result.returncode == 1, result.stdout + result.stderr
+    assert "local_skill_prefixes" in result.stdout
+
+
+def test_scaffold_marketplace_json_rejects_unresolved_legacy_prefix(tmp_path: Path) -> None:
+    """Migration must not silently discard a prefix with no matching local skill."""
+    import json
+
+    repo = tmp_path / "unresolved-legacy-marketplace"
+    repo.mkdir()
+    _init_git_repo(repo)
+    (repo / ".agents" / "plugins").mkdir(parents=True)
+    marketplace = repo / ".agents" / "plugins" / "marketplace.json"
+    marketplace.write_text(
+        json.dumps({"repo": {"local_skill_prefixes": ["missing-"]}, "plugins": []}),
+        encoding="utf-8",
+        newline="\n",
+    )
+
+    result = subprocess.run(
+        [sys.executable, str(SCAFFOLD_MARKETPLACE_JSON)],
+        cwd=repo,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode == 1
+    assert "no matching local skill directories" in result.stdout
+    assert "Traceback" not in result.stderr
 
 
 def test_repo_standards_check_invalid_agents_md(tmp_path: Path) -> None:

@@ -5,11 +5,15 @@ This file describes the surfaces `repo-standards` checks and can apply. It is th
 ## Required surfaces
 
 - `.agents/plugins/marketplace-source` as a git submodule pointing at the marketplace source.
-- `.agents/plugins/marketplace.json` with `repo.local_skills` configured.
+- `.agents/plugins/marketplace.json` with exact repo-local skill identifiers in `repo.local_skills`; naming prefixes are not required.
 - `.agents/contracts/repo-standards-commands.json` declaring the consumer's canonical `apply` and `check` command vectors whenever the `pre-commit-hook` surface is enabled. `repo-standards` validates this declaration but does not invent repository-specific commands; a consumer must supply it before `--apply` can install or repair the hook. Repositories that explicitly except the hook also except this dependent declaration.
 - The consumer's canonical validation capability, declared in its local repository guidance. See [ci-validation-pipeline.md](ci-validation-pipeline.md) for the contract.
 - `.git/hooks/pre-commit` wired to the consumer's canonical apply capability followed by its canonical check capability. The hook is validated by contract (it must be executable on POSIX; it must carry a `#!` shebang on Windows/NT where the executable bit is not reliably represented; it must apply and check the exact staged snapshot; it must preserve and restore unstaged/untracked work; it must enable `errexit`, `nounset`, and `pipefail`). Repository-local wrapper lines are allowed, but the canonical staged-snapshot command skeleton from the template must remain intact and in order so a marker-only/no-op hook cannot certify itself.
 - `.agents/doctrine/repo-runbook-policy.md` mapping the repo to `repo-standards`.
+- `.agents/contracts/unslop/` for binding repo-specific anti-slop profiles when
+  the consumer maintains them. Justified subsystem overlays use
+  `<scope>/.agents/contracts/unslop/`; generic reusable profiles remain owned
+  by the portable `unslop-profiles` skill.
 - `REVIEW.md` at the repo root pointing to the review runbook and required skill invocations.
 - `CONTRIBUTING.md` at the repo root as the contributor entry point.
 - `.gitignore` at the repo root, free of stale `.agents/superpowers/sdd/**` or `!.agents/superpowers/sdd/.gitignore` rules.
@@ -61,6 +65,9 @@ Repos may record surface exceptions in the `## Exceptions` section of `.agents/d
 ## Local overrides
 
 Each repo supplies its own `repo.local_skills` in `.agents/plugins/marketplace.json` so local skills are not pruned by `refreshing-installed-skills`.
+Entries are complete skill directory/frontmatter names and are matched exactly.
+Legacy `local_skill_prefixes` input is accepted only by `scaffold-marketplace-json`,
+which expands matching directories into explicit names before removing the legacy key.
 
 ## SDD scratch
 

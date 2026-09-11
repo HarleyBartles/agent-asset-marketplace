@@ -59,11 +59,11 @@ DEFAULT_ROOT_INDEX: dict[str, Any] = {
             "index_json": "codex-marketplace/plugins/INDEX.json",
         },
         {
-            "name": "docs-unslop-profile",
-            "path": ".agents/docs/unslop/profile.md",
-            "purpose": "Canonical repo unslop profile for anti-slop custody and discovery.",
+            "name": "contracts-unslop-profile",
+            "path": ".agents/contracts/unslop/repository.md",
+            "purpose": "Canonical repo-specific anti-slop contract.",
             "surface_kind": "hand-authored",
-            "nearest_scoped_agents_md": ".devin/rules/docs.md",
+            "nearest_scoped_agents_md": ".agents/AGENTS.md",
             "key_validation_scripts": [
                 "tools/validate_repo_index.py",
             ],

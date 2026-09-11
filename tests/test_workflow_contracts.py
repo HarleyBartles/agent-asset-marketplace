@@ -228,9 +228,8 @@ class TestPlanningDelegationReview:
         assert "linear issues must be updated" not in text
         assert "create a linear issue" not in text
         assert "under 10 minutes" not in text
-        assert "linear" in text and "owning" in text
-        assert "touched surface" in text
-        assert "product/architecture" in text
+        assert "## pr, linear, and plan honesty" not in text
+        assert "fix-while-here is bounded" not in text
 
 
 class TestRepositoryCallersAndPressure:
@@ -266,6 +265,45 @@ class TestRepositoryCallersAndPressure:
         assert (contracts / "repo-standards-commands.json").is_file()
         assert not (ROOT / ".agents" / "docs" / "contracts").exists()
         assert not (ROOT / ".agents" / "doctrine" / "repo-standards-commands.json").exists()
+
+    def test_repo_unslop_profile_has_contract_custody(self):
+        assert (ROOT / ".agents" / "contracts" / "unslop" / "repository.md").is_file()
+        assert not (ROOT / ".agents" / "docs" / "unslop").exists()
+        standard = _read(REPO_SKILLS / "repo-standards" / "references" / "repository-shape-standard.md")
+        assert ".agents/contracts/unslop/" in standard
+        assert "<scope>/.agents/contracts/unslop/" in standard
+
+    def test_superpowers_provenance_does_not_claim_a_retained_snapshot(self):
+        source = _read(ROOT / "codex-marketplace" / "plugins" / "superpowers-plus" / "SOURCE.md")
+        assert "b36e0829c6d0140e93cfef2ca599b1b07d4a7797" in source
+        assert "Retained snapshot" not in source
+        offenders = []
+        for path in (ROOT / "codex-marketplace" / "plugins" / "superpowers-plus" / "skills").glob("*/SKILL.md"):
+            if "upstream snapshot is retained" in _read(path):
+                offenders.append(path.name)
+        assert offenders == []
+
+    def test_portable_clarification_trigger_is_consumer_neutral(self):
+        skill = _read(SKILLS / "asking-clarifying-questions" / "SKILL.md")
+        description = " ".join(skill.split("---", 2)[1].lower().split())
+        assert "one human answer" in description
+        assert "taste" not in description
+        assert "premium" not in description
+        assert "before source inspection" not in description
+
+    def test_runbooks_keep_generic_method_in_skills(self):
+        design = _read(ROOT / ".agents" / "runbooks" / "design.md")
+        review = _read(ROOT / ".agents" / "runbooks" / "code-review.md")
+        implementing = _read(ROOT / ".agents" / "runbooks" / "implementing.md")
+        security = _read(ROOT / ".agents" / "runbooks" / "security.md")
+        skill_authoring = _read(ROOT / ".agents" / "runbooks" / "skill-authoring.md")
+        assert "## Spec Self-Review" not in design
+        assert "Apply three core lenses to every review" not in review
+        assert "## Repo Improvement Check" not in review
+        assert "## PR, Linear, and Plan Honesty" not in implementing
+        assert "No secrets committed" not in implementing
+        assert "## When to use" not in security
+        assert "## Publication handoff" not in skill_authoring
 
     def test_local_runbooks_delegate_skill_composition_to_bootstrap(self):
         surfaces = [
@@ -792,7 +830,7 @@ class TestPressureRepairContracts:
         assert "Checkpoint-first resume exception" in bootstrap
         assert "Destructive-authority stop" in bootstrap
         assert "taste words" in questions
-        assert "before source inspection" in questions.split("---", 2)[1]
+        assert "before source inspection" not in questions.split("---", 2)[1]
         assert "decision remains human-owned" in questions
         assert "invites collaboration" in questions
         assert "unresolved human-owned taste" in brainstorming.split("---", 2)[1]

@@ -1,6 +1,7 @@
 ---
 name: publishing-source
-description: Use when deciding how to publish source work in this repo - whether to commit, tag, release, push source, or export a pack - and which publication sequence fits the change.
+description: Use when completed source work needs a decision about whether to commit,
+  push, tag, release, or export it.
 metadata:
   source-id: publishing-source
   source-path: codex-marketplace/plugins/superpowers-plus/skills/publishing-source/SKILL.md

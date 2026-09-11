@@ -1,7 +1,7 @@
 # Skill Authoring Runbook
 
-Use this runbook for repository paths, commands, generated-surface rules, and
-publication handoff when authoring skills in the agent-asset-marketplace repo.
+Use this runbook for repository paths, commands, and generated-surface rules
+when authoring skills in the agent-asset-marketplace repo.
 
 ## Authoring route
 
@@ -10,8 +10,7 @@ publication handoff when authoring skills in the agent-asset-marketplace repo.
    `writing-skills/references/source-grounded-authoring.md` when the skill needs
    lane selection, custody placement, source decomposition, scholarly citations,
    or scaffolding.
-3. Use this runbook for repository paths, commands, generated-surface rules, and
-   publication handoff.
+3. Use this runbook for repository paths, commands, and generated-surface rules.
 
 Scaffold a local skill with:
 
@@ -27,7 +26,8 @@ py -3 codex-marketplace/plugins/superpowers-plus/skills/writing-skills/scripts/n
 
 ## Repository paths
 
-- Local skills: `.agents/skills/mark-<skill-name>/`
+- Local skills: `.agents/skills/<skill-name>/`, registered by exact identifier in
+  `.agents/plugins/marketplace.json` under `repo.local_skills`.
 - Marketplace-custodied sources: `codex-marketplace/plugins/<plugin-pack>/skills/<skill-name>/`
 - Generated marketplace and installed skill surfaces are downstream outputs;
   do not edit them directly.
@@ -76,10 +76,3 @@ py -3 tools/new_plugin.py --sync mcp-usage-pack
 ```
 
 6. Apply marketplace and installed-skills changes with `py -3 tools/run.py marketplace --apply`.
-
-## Publication handoff
-
-After the relevant checks pass, stage only the intended canonical sources and
-their required generated outputs, commit the focused change, push the task
-branch, and hand off its GitHub-visible PR or explicitly authorized direct-main
-commit as the publication proof.
