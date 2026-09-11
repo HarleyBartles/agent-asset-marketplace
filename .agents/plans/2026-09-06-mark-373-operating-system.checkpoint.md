@@ -1,80 +1,26 @@
 plan: .agents/plans/2026-09-06-mark-373-operating-system.md
 branch: codex/mark-373-operating-system
-head_at_capture: 96371832c4bc23efc8b37285ee064061151d090a
-published_head: 96371832c4bc23efc8b37285ee064061151d090a
-last_completed_task: 7
-next_task: 8
-next_step: commit and publish the truthful repaired Luna evidence summary, verify PR #311 remains Draft, and hand it to Harley for review
-checkpoint_state: clean published repair state before evidence-summary closeout
-checkpoint_publication: this record describes the published implementation head; its containing closeout commit is intentionally not self-referenced
-working_tree_status: clean at head_at_capture before authoring this closeout record
-working_diff_sha: none at head_at_capture
-last_green_evidence:
-  - branch refresh => fast-forwarded to 672becb21de42e0545f89ea95e1667ca95163ca1 [PR #311 remains Draft]
-  - git -C <temp-clone> cat-file -e <v6.3>^{commit} => passed [b36e0829c6d0140e93cfef2ca599b1b07d4a7797]
-  - git -C <temp-clone> cat-file -e <v6.2>^{commit} => passed [3dcbd5c4b48e02263fbf4a3c01e3fe4f81d584d9]
-  - git diff --check => passed
-  - py -3 tools/run.py marketplace --check => passed
-  - py -3 -m pytest tests/test_workflow_contracts.py::TestEvaluationCampaign -q => 6 passed
-  - py -3 tools/workflow_pressure_scan.py ... => 104 candidate hits recorded in [pressure-scan.json]; classifications in [pressure-scan.md]
-  - py -3 -m pytest tests/test_workflow_contracts.py -q => initial RED preserved in [red-baseline.md]
-  - py -3 -m pytest tests/test_workflow_contracts.py::TestAuthorityBootstrapPortability -q => 4 passed
-  - py -3 tools/workflow_pressure_scan.py ... => refreshed candidate scan after Task 3 source repair
-  - py -3 -m pytest tests/test_workflow_contracts.py::TestValidationTddPublication -q => 4 passed
-  - py -3 -m pytest tests/test_workflow_contracts.py::TestPlanningDelegationReview -q => 5 passed
-  - py -3 -m pytest tests/test_validate_agent_mesh.py tests/test_review_preflight.py tests/test_review_preflight_extensions.py -q => 29 passed
-  - py -3 tools/run.py mesh --check => passed
-  - py -3 -m pytest tests/test_workflow_contracts.py::TestRepositoryCallersAndPressure -q => 3 passed
-  - py -3 -m pytest tests/test_workflow_contracts.py -q => 22 passed
-  - py -3 tools/validate_tool_cli.py --check => 22 tools pass, 0 warnings, 0 failures
-  - normal hooked commit => cc7341e47 (ci check passed; 95 files changed)
-  - campaign preflight at evaluation_head cc7341e47 => preflight-ready, codex-cli 0.153.4
-  - campaign trials before harness repair => 45/52 complete; Luna/Terra/Sol 13 each, Astra 6; failure was UTF-8 output decoded through Windows cp1252 and is not a model-unavailable result
-  - py -3 -m pytest tests/test_workflow_contracts.py::TestEvaluationCampaign -q => 6 passed after capture repair
-  - py -3 tools/run_workflow_pressure_campaign.py --check => passed after capture repair
-  - normal hooked harness repair commit => 82132d817 (ci check passed)
-  - repaired campaign resume at evaluation_head 82132d817 => seven Astra trials completed; 52/52 valid trial records across both immutable heads
-  - campaign-meta.json => preflight-ready, fixed four-family matrix, 52 completed trials, explicit unobservable API reasoning mode
-  - committed score schema => 52 records, raw hashes, trial/judge provenance, criterion evidence, 14 pass and 38 harness-capability failure verdicts
-  - py -3 -m pytest tests/test_workflow_contracts.py::TestEvaluationCampaign -q => 7 passed
-  - PR #311 verification => OPEN, Draft, base main, head branch codex/mark-373-operating-system
-  - py -3 tools/run.py marketplace --apply => passed; generated outputs current with no unrelated generated diff
-  - final focused pytest set => 52 passed
-  - py -3 tools/run.py mesh --check => passed
-  - py -3 tools/run.py review-preflight --check => four pre-existing warnings also present on origin/main; no new warning introduced by MARK-373
-  - normal hooked pressure-campaign commit => b858e06de76aecaa6a55e4b12a8669d5b27055ce (all hook CI targets passed)
-  - committed verification => clean status, git diff --check passed, mesh passed; review-preflight retained the four documented origin/main warnings
-  - git push origin codex/mark-373-operating-system => published b858e06de76aecaa6a55e4b12a8669d5b27055ce
-  - PR #311 verification => OPEN, Draft, base main, full head b858e06de76aecaa6a55e4b12a8669d5b27055ce; Draft workflow check skipped as expected
-  - MARK-373 review repair commit => 6b030b94ca2c234a6dd1e9b7a3df06fa0b8ebac3 (source contracts, runner preflight, scan dispositions, focused tests)
-  - real Luna preflight at 6b030b94ca2c234a6dd1e9b7a3df06fa0b8ebac3 => harness-blocked; codex-cli 0.153.4 smoke exited 0 without SMOKE_OK; no behavioral trials started
-  - campaign invocation at 6b030b94ca2c234a6dd1e9b7a3df06fa0b8ebac3 => stopped after preflight and wrote ignored raw meta
-  - py -3 -m pytest tests/test_workflow_contracts.py::TestRepositoryCallersAndPressure tests/test_workflow_contracts.py::TestEvaluationCampaign -q => 12 passed
-  - hook portability/validator repair and exact-head MCP/plugin inventory implementation => f4d66d27b6d38cfa45506dc1549745bab4de4e64
-  - campaign preflight at f4d66d27b6d38cfa45506dc1549745bab4de4e64 => harness-blocked while materializing/reporting the exact head; subsequent controlled run at 8f6280aa5dad59b33124f50af37b7f7150ea2afa recorded non-empty MCP inventory
-  - workflow-contract tests => 34 passed; repo-standards hook tests => 32 passed
-  - review-status commit => e88c6636de42a60b4409d5c339f91bee9157e39f
-  - fresh-eyes RED coverage => campaign evidence/filter/prompt, repo-standards hook/dependency, authority/caller/portability defects reproduced before repair
-  - workflow-contract tests => 44 passed on repaired source
-  - repo-standards tests => 35 passed on repaired source
-  - pressure scan => 54 semantic candidates retained; dispositions current; no new portable-path defect
-  - marketplace and installed-skill regeneration/checks => passed; generated skill mirrors current
-  - normal hooked repair commit => 41de557b51a897f3f3f484b53befc72ce7cea161 [full canonical apply/check gate passed]
-  - normal hooked executing-plans authority follow-up => b3a901104426dcdcd4f7a18aacc316b29c8de5da [full canonical apply/check gate passed]
-  - fresh verification at b3a901104426dcdcd4f7a18aacc316b29c8de5da => workflow contracts 44 passed; repo-standards 35 passed; git diff --check HEAD^ passed; working tree clean
-  - git push origin codex/mark-373-operating-system => published b3a901104426dcdcd4f7a18aacc316b29c8de5da
-  - PR #311 verification => OPEN, Draft, base main, remote head b3a901104426dcdcd4f7a18aacc316b29c8de5da
-  - temporary external WSL evaluation => strongest retained observation was 12 pass, 1 fail, 0 indeterminate after affected-trial repairs; a later same-head compaction failure supersedes the earlier apparent pass
-  - external evaluation custody => Quorum source, adapters, scenarios, summaries, and raw traces are not repository artifacts; raw traces remain uncommitted
-  - external evaluation limitation => launcher sandbox bypass means separate empty MCP/plugin inventory probes do not prove evaluated-process isolation
-historical_blocked_evidence_head: 8f6280aa5dad59b33124f50af37b7f7150ea2afa
-evidence_head: 96371832c4bc23efc8b37285ee064061151d090a; historical external Luna observation is 12 pass, 1 fail, 0 indeterminate and is diagnostic rather than final-head proof
-unresolved_blockers: further paid external evaluation stopped on human instruction because grader credits were exhausted; no Terra/Sol/Astra extension is claimed; review-preflight retains pre-existing origin/main warnings; Ready promotion remains human-owned
-resume_reads:
-  - .agents/plans/2026-09-06-mark-373-operating-system.md: Luna Execution Contract, Global Constraints, Task 7
-  - .agents/docs/mark-373-superpowers-v6.3-rebase.md
-  - tests/pressure/workflow-contracts/README.md
-  - codex-marketplace/plugins/repo-worker-pack/skills/repo-worker-base/SKILL.md
-  - AGENTS.md
+implementation_head: 29eecdb278928ab2ab24ed8bf5c44c3495fffcbd
+last_completed_task: 8
+next_task: human review
+next_step: review Draft PR #311; do not promote Ready without human instruction
+checkpoint_state: implementation complete; this file is the current published resume baton
+working_tree_status: clean at the containing commit
 
-Review correction: the later compaction trial failed on the same source head as an earlier pass. The earlier observation does not erase that failure. The temporary external tooling is not vendored, and its observations do not establish a clean final-head campaign or proven trial isolation. Paid evaluation is retired by human instruction. Subsequent repairs use local checks and code review only.
+current_evidence:
+  - focused review suites: 81 passed before the final documentation-only cleanup
+  - implementation_head passed the complete tracked pre-commit apply/check gate
+  - PR #311 was OPEN, Draft, based on main, and matched implementation_head
+  - the PR contains no Quorum paths; temporary external evaluation tooling is not vendored
+
+evidence_boundaries:
+  - paid external evaluation stopped on human instruction after grader credits were exhausted
+  - the strongest historical external Luna observation is 12 pass, 1 fail, 0 indeterminate
+  - that observation is diagnostic, not final-head proof or proof of evaluated-process isolation
+  - retained historical four-family pressure records are diagnostic only
+  - review-preflight warnings inherited from origin/main are not attributed to MARK-373
+
+resume_reads:
+  - .agents/plans/2026-09-06-mark-373-operating-system.md: Global Constraints, Task 8
+  - tests/pressure/workflow-contracts/results.md
+  - AGENTS.md
