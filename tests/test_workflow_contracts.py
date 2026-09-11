@@ -619,40 +619,7 @@ class TestEvaluationCampaign:
         assert any(hit["pattern"] == "personal-path" for hit in hits)
 
 
-class TestQuorumExamScaffolding:
-    def test_committed_luna_summary_is_complete_and_hashed(self):
-        summary = json.loads(
-            _read(DOCS / "quorum" / "results" / "5c67870d82d9ec6408da62df42084600c6d80849" / "summary.json")
-        )
-        assert summary["coding_agent"] == {
-            "model": "gpt-5.6-luna",
-            "reasoning_effort": "medium",
-            "credential": "openai_responses_56luna",
-        }
-        assert summary["grader"]["model"] == "gpt-5.4"
-        assert summary["totals"] == {
-            "completed": 13,
-            "pass": 6,
-            "fail": 7,
-            "indeterminate": 0,
-        }
-        assert len(summary["scenarios"]) == 13
-        assert all(len(row["verdict_sha256"]) == 64 for row in summary["scenarios"])
-
-        repaired = json.loads(
-            _read(DOCS / "quorum" / "results" / "96371832c4bc23efc8b37285ee064061151d090a" / "summary.json")
-        )
-        assert repaired["final_repair_head"] == "96371832c4bc23efc8b37285ee064061151d090a"
-        assert repaired["totals"] == {
-            "completed": 13,
-            "pass": 13,
-            "fail": 0,
-            "indeterminate": 0,
-        }
-        assert len(repaired["scenarios"]) == 13
-        assert all(len(row["verdict_sha256"]) == 64 for row in repaired["scenarios"])
-        assert len(repaired["adjudication"]["rejected_raw_verdicts"]) == 3
-
+class TestPressureRepairContracts:
     def test_pressure_repairs_are_owned_by_canonical_instruction_sources(self):
         bootstrap = _read(SKILLS / "using-superpowers-plus" / "SKILL.md")
         routing = _read(SKILLS / "using-superpowers-plus" / "references" / "bootstrap-routing.md")
@@ -672,7 +639,7 @@ class TestQuorumExamScaffolding:
         assert "taste words" in questions
         assert "before source inspection" in questions.split("---", 2)[1]
         assert "decision remains human-owned" in questions
-        assert "do not inspect, recommend, edit, or ask another question" in questions.lower()
+        assert "invites collaboration" in questions
         assert "unresolved human-owned taste" in brainstorming.split("---", 2)[1]
         brainstorming_header = " ".join(brainstorming.split("---", 2)[1].split())
         assert "technical assumption and focused proof" in brainstorming_header
@@ -694,110 +661,3 @@ class TestQuorumExamScaffolding:
         repo_worker_header = " ".join(repo_worker.split("---", 2)[1].split())
         assert "portable suggestion conflicts" in repo_worker_header
         assert "inspect repository canon" in bootstrap_header
-
-        staging = _read(DOCS / "quorum" / "lib" / "stage-skills-only.sh")
-        finishing_setup = _read(DOCS / "quorum" / "scenarios" / "branch-finish-evidence" / "setup.sh")
-        finishing_checks = _read(DOCS / "quorum" / "scenarios" / "branch-finish-evidence" / "checks.sh")
-        portable_setup = _read(DOCS / "quorum" / "scenarios" / "repo-portable-conflict" / "setup.sh")
-        reviewer_checks = _read(DOCS / "quorum" / "scenarios" / "wrong-reviewer" / "checks.sh")
-        compaction_checks = _read(DOCS / "quorum" / "scenarios" / "compaction-resume" / "checks.sh")
-        assert "/.agents/" in staging
-        assert "mark373-validation-evidence.json" in finishing_setup
-        assert "fixture-finish" in finishing_setup and "fixture-finish" in finishing_checks
-        assert "AGENTS.md" in portable_setup and "npm test" in portable_setup
-        assert "skill-called" not in reviewer_checks
-        assert "skill-called" not in compaction_checks
-
-        bounded = _read(DOCS / "quorum" / "scenarios" / "bounded-parallel" / "checks.sh")
-        portable = _read(DOCS / "quorum" / "scenarios" / "repo-portable-conflict" / "checks.sh")
-        destructive = _read(DOCS / "quorum" / "scenarios" / "unauthorized-destructive" / "checks.sh")
-        assert "skill-called" not in bounded
-        assert "skill-called" not in portable
-        assert "git-switch" in destructive
-        assert "git-reflog" in destructive
-        assert "git-gc" in destructive
-
-    def test_mark373_quorum_exam_has_one_scenario_for_each_campaign_cell(self):
-        exam = DOCS / "quorum"
-        expected = {
-            "trivial-docs",
-            "specified-bug-red",
-            "genuine-ambiguity",
-            "wrong-reviewer",
-            "authorized-draft-pr",
-            "compaction-resume",
-            "unauthorized-destructive",
-            "bounded-parallel",
-            "small-reversible",
-            "repo-portable-conflict",
-            "tiny-no-approval-design",
-            "branch-finish-evidence",
-            "no-independent-behavior-helper",
-        }
-        scenarios = exam / "scenarios"
-        assert scenarios.is_dir()
-        assert {path.name for path in scenarios.iterdir() if path.is_dir()} == expected
-        for scenario in sorted(expected):
-            path = scenarios / scenario
-            story = _read(path / "story.md")
-            setup = _read(path / "setup.sh")
-            checks = _read(path / "checks.sh")
-            codex_config = _read(path / "codex.config.toml")
-            assert f"id: {scenario}" in story
-            assert "## Acceptance Criteria" in story
-            assert "read `HOWTO.md`" in story
-            assert "Never type a bare `codex` command" in story
-            assert "setup-helpers run" in setup
-            mode = subprocess.run(
-                ["git", "ls-files", "--stage", "--", str(path / "setup.sh")],
-                cwd=ROOT,
-                check=True,
-                capture_output=True,
-                text=True,
-            ).stdout.split()[0]
-            assert mode == "100755"
-            assert "stage-skills-only.sh" in setup
-            assert "pre()" in checks and "post()" in checks
-            assert "$QUORUM_WORKDIR" not in checks
-            assert "[features]" not in codex_config
-            assert "features.plugins = false" in codex_config
-            assert "features.apps = false" in codex_config
-
-    def test_mark373_quorum_launcher_projects_windows_codex_auth_into_wsl(self):
-        launcher = _read(DOCS / "quorum" / "run-mark373-quorum.ps1")
-        assert "wsl.exe" in launcher
-        assert "openai_responses_56luna" in launcher
-        assert "--no-superpowers" in launcher
-        assert "status --porcelain" in launcher
-        assert "--git-dir" in launcher
-        assert "--work-tree" in launcher
-        assert 'mkdir -p "results/mark373/$evidence_head"' in launcher
-        assert 'export PATH="$quorum_bin:$PATH"' in launcher
-        assert "OPENAI_API_KEY" in launcher
-        assert "--grader-model gpt-5.4" in launcher
-        assert '--gauntlet-bin "$quorum_bin/gauntlet"' in launcher
-        assert 'export ANTHROPIC_API_KEY="$OPENAI_API_KEY"' in launcher
-        assert "Quorum OpenAI grader requires OPENAI_API_KEY" in launcher
-        assert "[switch]$Preflight" in launcher
-
-        gauntlet = DOCS / "quorum" / "bin" / "gauntlet"
-        shim = _read(gauntlet)
-        assert "evals/gauntlet" in shim
-        assert "export OPENAI_API_KEY=${ANTHROPIC_API_KEY:" in shim
-        assert "unset ANTHROPIC_API_KEY" in shim
-        assert "npx --yes bun run" in shim
-
-    def test_skills_only_stage_copies_the_exact_composed_stack(self):
-        stage = _read(DOCS / "quorum" / "lib" / "stage-skills-only.sh")
-        assert ".agents/skills" in stage
-        assert "wslpath -a" in stage
-        assert 'test -d "$marketplace_root/.git"' in stage
-        assert '--git-dir="$marketplace_git_dir"' in stage
-        assert '--work-tree="$marketplace_root"' in stage
-        assert "rev-parse HEAD" in stage
-        assert "sha256sum" in stage
-        assert "cp -a" in stage
-
-    def test_local_quorum_clone_is_excluded_from_repo_mesh_traversal(self):
-        mesh = _read(REPO_SKILLS / "generating-agent-mesh" / "scripts" / "generate_index_mesh.py")
-        assert '"evals"' in mesh

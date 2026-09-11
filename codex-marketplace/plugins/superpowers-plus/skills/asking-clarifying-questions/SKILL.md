@@ -44,10 +44,10 @@ This is an anytime escape hatch. If a single missing fact blocks the next step o
 3. State the risk of guessing.
 4. Give a concrete recommendation and the available options.
 5. Ask one question.
-6. Record the answer. If the human says they still need to decide, that the
-   decision must be made together, or otherwise does not resolve the requested
-   choice, acknowledge that the decision remains human-owned and stop.
-   In that turn, do not inspect, recommend, edit, or ask another question.
+6. Record the answer. The decision remains human-owned. Stop when the human
+   explicitly defers the decision or asks to pause. A request to decide together
+   invites collaboration: offer a bounded recommendation or ask the next useful
+   question, without implementing an unresolved choice.
 7. Continue only when the answer resolves the immediate ambiguity.
 8. If another missing fact still blocks the next step, repeat from step 1 in the next turn.
 
@@ -74,9 +74,8 @@ This is an anytime escape hatch. If a single missing fact blocks the next step o
 - Asking when the answer is already in durable source or policy.
 - Treating a clarifying question as a substitute for a missing design or risk gate.
 - Asking multiple questions in one turn — one fact per message, as many turns as needed.
-- Treating “I need to decide that with you” or another explicit deferral as an
-  invitation to inspect, recommend an answer, or ask a second question. It is a
-  terminal human-owned state for the current turn.
+- Treating a request to decide together as a pause. Distinguish collaborative
+  discussion from an explicit deferral, and keep implementation behind the decision.
 
 ## Relation to other skills
 

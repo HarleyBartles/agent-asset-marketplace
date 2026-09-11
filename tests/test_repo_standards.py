@@ -824,6 +824,16 @@ def test_hook_validator_rejects_marker_bearing_but_incomplete_hook(tmp_path: Pat
     assert any("canonical staged-snapshot contract" in finding for finding in findings)
 
 
+def test_hook_rejects_inserted_control_flow() -> None:
+    template = Path(repo_standards.__file__).parent.parent / "templates" / "pre-commit"
+    text = template.read_text(encoding="utf-8")
+    assert repo_standards._retains_canonical_hook_contract(text)
+    for injected in ("exit 0", "set +e", "run_declared() { :; }"):
+        altered = text.replace("run_declared apply", injected + "\nrun_declared apply", 1)
+        assert not repo_standards._retains_canonical_hook_contract(altered)
+    assert not repo_standards._retains_canonical_hook_contract("if false; then\n" + text + "\nfi\n")
+
+
 def _forbidden_ci_check_guidance() -> tuple[str, ...]:
     return (
         "re-run `tools/run.py ci --check`",

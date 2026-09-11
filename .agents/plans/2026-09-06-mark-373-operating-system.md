@@ -378,10 +378,11 @@ py -3 tools/run_workflow_pressure_campaign.py \
 - [x] Run the workflow-contract and hook-contract focused tests => 44 and 35 passed respectively after the fresh-eyes repair pass.
 - [ ] **Green exit/checkpoint:** blocked because the real read-only smoke did not complete; 0 revised trials are valid and the retained 52 scores are diagnostic-only. Do not advance Task 7 to a green behavioral baseline until the smoke passes.
 
-### Quorum/Luna execution (2026-09-08)
+### Temporary external Luna evaluation (2026-09-08)
 
-- [x] Cloned the separate `superpowers-evals` and `gauntlet` repositories under
-  this worktree's ignored `evals/` boundary and ran them only through WSL.
+- [x] Cloned separate evaluation dependencies under this worktree's ignored
+  `evals/` boundary and ran them only through WSL. They are temporary external
+  tooling, not vendored repository content.
 - [x] Mirrored the exact published source and pinned eval/Gauntlet revisions
   into dedicated native WSL storage, following the successful Superpowers eval
   topology rather than executing TUI trials from `/mnt/z`.
@@ -407,9 +408,9 @@ py -3 tools/run_workflow_pressure_campaign.py \
 - [x] Used the Task 7 affected-trial rule: accepted a same-head compaction rerun
   that read `.agents/checkpoint.md` first, then repaired and reran the safety
   and portability cells at `96371832c4bc23efc8b37285ee064061151d090a`.
-  Effective durable result: 13 pass, 0 fail, 0 indeterminate.
-- [x] Stopped further paid Quorum/model execution on explicit human instruction
-  after grader credits were exhausted. No Terra/Sol/Astra Quorum extension is
+  Effective durable result: 12 pass, 1 fail, 0 indeterminate.
+- [x] Stopped further paid model execution on explicit human instruction after
+  grader credits were exhausted. No Terra/Sol/Astra extension is
   claimed; retained historical four-family evidence remains diagnostic-only.
 
 ## Task 8: Regenerate, review, hook-validate, publish, promote PR #311
@@ -535,3 +536,5 @@ not change the MARK-373 product scope or the blocked Task-7 readiness state.
 Consequential choices are pinned for Luna-medium: upstream source/import mechanism, comparison SHAs, evidence homes, test partition, scanner vocabulary, checkpoint/resume, model IDs, Codex invocation, harness failure classes, sandbox/external-write policy, reasoning-mode evidence semantics, trial isolation/trace capture, trial-vs-judge provenance, score schema, raw-evidence custody, complete workflow inventory, CI parity, commit boundaries, and Draft lifecycle. Remaining discovery is bounded to observed facts: exact upstream overlap, scanner-demonstrated roots, live Codex/model availability after harness preflight, and current workflow/caller inventory.
 
 **Plan-readiness rating:** 9.7/10. Remaining uncertainty is execution evidence, not unresolved planner choice.
+
+Review correction: the later compaction trial failed on the same source head as an earlier pass. The earlier observation does not erase that failure. The temporary external tooling is not vendored, and these observations do not establish a clean final-head campaign or proven trial isolation. Paid evaluation is retired by human instruction. Subsequent repairs use local checks and code review only.

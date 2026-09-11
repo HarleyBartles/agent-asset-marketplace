@@ -64,18 +64,17 @@ last_green_evidence:
   - fresh verification at b3a901104426dcdcd4f7a18aacc316b29c8de5da => workflow contracts 44 passed; repo-standards 35 passed; git diff --check HEAD^ passed; working tree clean
   - git push origin codex/mark-373-operating-system => published b3a901104426dcdcd4f7a18aacc316b29c8de5da
   - PR #311 verification => OPEN, Draft, base main, remote head b3a901104426dcdcd4f7a18aacc316b29c8de5da
-  - Quorum exam implementation and WSL runner repairs => published through f0c46994ad56deec962f50808ec190a69397b442 [all normal hooked commits passed]
-  - Quorum preflight at f0c46994ad56deec962f50808ec190a69397b442 => clean immutable source, desktop Codex auth staged privately, empty MCP inventory, empty plugin inventory, then fail-closed exit 3 because no Anthropic grader credential is available
-  - attempted Quorum runs before the final preflight repair => no valid Luna trial; failures occurred in harness setup or Gauntlet grader startup and remain ignored diagnostic traces
-  - native WSL Quorum static validation at 5c67870d82d9ec6408da62df42084600c6d80849 => all 13 scenarios, credentials, and arms/suites passed
-  - native WSL Quorum Luna campaign => 13/13 determinate; 6 pass, 7 behavioral fail, 0 indeterminate; subject gpt-5.6-luna medium; grader gpt-5.4
-  - committed Quorum summary => per-cell verdict/check counts and raw verdict.json SHA-256 hashes; raw native WSL results remain uncommitted
+  - temporary external WSL evaluation => strongest retained observation was 12 pass, 1 fail, 0 indeterminate after affected-trial repairs; a later same-head compaction failure supersedes the earlier apparent pass
+  - external evaluation custody => Quorum source, adapters, scenarios, summaries, and raw traces are not repository artifacts; raw traces remain uncommitted
+  - external evaluation limitation => launcher sandbox bypass means separate empty MCP/plugin inventory probes do not prove evaluated-process isolation
 historical_blocked_evidence_head: 8f6280aa5dad59b33124f50af37b7f7150ea2afa
-evidence_head: 96371832c4bc23efc8b37285ee064061151d090a; effective native WSL Luna evidence is 13 pass, 0 fail, 0 indeterminate using Task 7 affected-trial reruns
-unresolved_blockers: further paid Quorum testing stopped on human instruction because grader credits were exhausted; no Terra/Sol/Astra Quorum extension is claimed; review-preflight retains pre-existing origin/main warnings; Ready promotion remains human-owned
+evidence_head: 96371832c4bc23efc8b37285ee064061151d090a; historical external Luna observation is 12 pass, 1 fail, 0 indeterminate and is diagnostic rather than final-head proof
+unresolved_blockers: further paid external evaluation stopped on human instruction because grader credits were exhausted; no Terra/Sol/Astra extension is claimed; review-preflight retains pre-existing origin/main warnings; Ready promotion remains human-owned
 resume_reads:
   - .agents/plans/2026-09-06-mark-373-operating-system.md: Luna Execution Contract, Global Constraints, Task 7
   - .agents/docs/mark-373-superpowers-v6.3-rebase.md
   - tests/pressure/workflow-contracts/README.md
   - codex-marketplace/plugins/repo-worker-pack/skills/repo-worker-base/SKILL.md
   - AGENTS.md
+
+Review correction: the later compaction trial failed on the same source head as an earlier pass. The earlier observation does not erase that failure. The temporary external tooling is not vendored, and its observations do not establish a clean final-head campaign or proven trial isolation. Paid evaluation is retired by human instruction. Subsequent repairs use local checks and code review only.

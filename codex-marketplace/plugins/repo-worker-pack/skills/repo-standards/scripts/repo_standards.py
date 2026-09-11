@@ -289,17 +289,13 @@ def _hook_contract_lines(text: str) -> list[str]:
 
 
 def _retains_canonical_hook_contract(text: str) -> bool:
-    """Allow local wrappers only when the canonical hook body remains in-order and intact."""
+    """Require the canonical executable body; customize commands via its declaration."""
     template = Path(__file__).resolve().parent.parent / "templates" / "pre-commit"
     if not template.is_file():
         return False
-    required = _hook_contract_lines(template.read_text(encoding="utf-8", errors="replace"))
-    actual = _hook_contract_lines(text)
-    index = 0
-    for line in actual:
-        if index < len(required) and line == required[index]:
-            index += 1
-    return index == len(required)
+    required = template.read_text(encoding="utf-8", errors="replace").splitlines()
+    actual = text.splitlines()
+    return actual == required
 
 
 def _has_shell_guard(non_comment: list[str]) -> bool:
