@@ -1,0 +1,434 @@
+[
+  {
+    "path": "codex-marketplace/plugins/superpowers-plus/skills/dispatching-parallel-agents/SKILL.md",
+    "line": 44,
+    "pattern": "must-read",
+    "classification": "intended",
+    "owner": "owning portable skill",
+    "reason": "The owning portable skill uses this phrase conditionally within its scoped workflow."
+  },
+  {
+    "path": "codex-marketplace/plugins/superpowers-plus/skills/dispatching-parallel-agents/SKILL.md",
+    "line": 116,
+    "pattern": "full-test-suite",
+    "classification": "intended",
+    "owner": "owning portable skill",
+    "reason": "The owning portable skill uses this phrase conditionally within its scoped workflow."
+  },
+  {
+    "path": "codex-marketplace/plugins/superpowers-plus/skills/dispatching-parallel-agents/SKILL.md",
+    "line": 191,
+    "pattern": "full-test-suite",
+    "classification": "intended",
+    "owner": "owning portable skill",
+    "reason": "The owning portable skill uses this phrase conditionally within its scoped workflow."
+  },
+  {
+    "path": "codex-marketplace/plugins/superpowers-plus/skills/dispatching-parallel-agents/SKILL.md",
+    "line": 198,
+    "pattern": "full-test-suite",
+    "classification": "intended",
+    "owner": "owning portable skill",
+    "reason": "The owning portable skill uses this phrase conditionally within its scoped workflow."
+  },
+  {
+    "path": "codex-marketplace/plugins/superpowers-plus/skills/executing-plans/SKILL.md",
+    "line": 56,
+    "pattern": "must-read",
+    "classification": "intended",
+    "owner": "owning portable skill",
+    "reason": "The owning portable skill uses this phrase conditionally within its scoped workflow."
+  },
+  {
+    "path": "codex-marketplace/plugins/superpowers-plus/skills/subagent-driven-development/SKILL.md",
+    "line": 213,
+    "pattern": "must-read",
+    "classification": "intended",
+    "owner": "owning portable skill",
+    "reason": "The owning portable skill uses this phrase conditionally within its scoped workflow."
+  },
+  {
+    "path": "codex-marketplace/plugins/superpowers-plus/skills/using-superpowers-plus/SKILL.md",
+    "line": 70,
+    "pattern": "universal-startup-read",
+    "classification": "intended",
+    "owner": "owning portable skill",
+    "reason": "The owning portable skill uses this phrase conditionally within its scoped workflow."
+  },
+  {
+    "path": "codex-marketplace/plugins/superpowers-plus/skills/writing-plans/SKILL.md",
+    "line": 100,
+    "pattern": "must-read",
+    "classification": "intended",
+    "owner": "owning portable skill",
+    "reason": "The owning portable skill uses this phrase conditionally within its scoped workflow."
+  },
+  {
+    "path": "codex-marketplace/plugins/superpowers-plus/skills/writing-roadmaps/SKILL.md",
+    "line": 65,
+    "pattern": "must-read",
+    "classification": "intended",
+    "owner": "owning portable skill",
+    "reason": "The owning portable skill uses this phrase conditionally within its scoped workflow."
+  },
+  {
+    "path": "codex-marketplace/plugins/superpowers-plus/skills/writing-skills/testing-skills-with-subagents.md",
+    "line": 15,
+    "pattern": "full-test-suite",
+    "classification": "intended",
+    "owner": "owning portable skill",
+    "reason": "The owning portable skill uses this phrase conditionally within its scoped workflow."
+  },
+  {
+    "path": "codex-marketplace/plugins/repo-worker-pack/skills/repo-worker-base/references/repository-validation-contract.md",
+    "line": 34,
+    "pattern": "every-function",
+    "classification": "intended",
+    "owner": "owning portable skill",
+    "reason": "The owning portable skill uses this phrase conditionally within its scoped workflow."
+  },
+  {
+    "path": "codex-marketplace/plugins/repo-worker-pack/skills/repo-standards/references/ci-validation-pipeline.md",
+    "line": 67,
+    "pattern": "must-read",
+    "classification": "intended",
+    "owner": "owning portable skill",
+    "reason": "The owning portable skill uses this phrase conditionally within its scoped workflow."
+  },
+  {
+    "path": ".agents/runbooks/code-review.md",
+    "line": 21,
+    "pattern": "portable-repo-command",
+    "classification": "repo-local",
+    "owner": "agent-asset-marketplace repository runbooks",
+    "reason": "Repository-local guidance intentionally names this repository command surface."
+  },
+  {
+    "path": ".agents/runbooks/code-review.md",
+    "line": 28,
+    "pattern": "portable-repo-command",
+    "classification": "repo-local",
+    "owner": "agent-asset-marketplace repository runbooks",
+    "reason": "Repository-local guidance intentionally names this repository command surface."
+  },
+  {
+    "path": ".agents/runbooks/code-review.md",
+    "line": 40,
+    "pattern": "portable-repo-command",
+    "classification": "repo-local",
+    "owner": "agent-asset-marketplace repository runbooks",
+    "reason": "Repository-local guidance intentionally names this repository command surface."
+  },
+  {
+    "path": ".agents/runbooks/code-review.md",
+    "line": 41,
+    "pattern": "portable-repo-command",
+    "classification": "repo-local",
+    "owner": "agent-asset-marketplace repository runbooks",
+    "reason": "Repository-local guidance intentionally names this repository command surface."
+  },
+  {
+    "path": ".agents/runbooks/code-review.md",
+    "line": 42,
+    "pattern": "portable-repo-command",
+    "classification": "repo-local",
+    "owner": "agent-asset-marketplace repository runbooks",
+    "reason": "Repository-local guidance intentionally names this repository command surface."
+  },
+  {
+    "path": ".agents/runbooks/code-review.md",
+    "line": 43,
+    "pattern": "portable-repo-command",
+    "classification": "repo-local",
+    "owner": "agent-asset-marketplace repository runbooks",
+    "reason": "Repository-local guidance intentionally names this repository command surface."
+  },
+  {
+    "path": ".agents/runbooks/completing-plans.md",
+    "line": 56,
+    "pattern": "portable-repo-command",
+    "classification": "repo-local",
+    "owner": "agent-asset-marketplace repository runbooks",
+    "reason": "Repository-local guidance intentionally names this repository command surface."
+  },
+  {
+    "path": ".agents/runbooks/completing-plans.md",
+    "line": 57,
+    "pattern": "portable-repo-command",
+    "classification": "repo-local",
+    "owner": "agent-asset-marketplace repository runbooks",
+    "reason": "Repository-local guidance intentionally names this repository command surface."
+  },
+  {
+    "path": ".agents/runbooks/completing-plans.md",
+    "line": 60,
+    "pattern": "portable-repo-command",
+    "classification": "repo-local",
+    "owner": "agent-asset-marketplace repository runbooks",
+    "reason": "Repository-local guidance intentionally names this repository command surface."
+  },
+  {
+    "path": ".agents/runbooks/implementing.md",
+    "line": 24,
+    "pattern": "portable-repo-command",
+    "classification": "repo-local",
+    "owner": "agent-asset-marketplace repository runbooks",
+    "reason": "Repository-local guidance intentionally names this repository command surface."
+  },
+  {
+    "path": ".agents/runbooks/implementing.md",
+    "line": 26,
+    "pattern": "portable-repo-command",
+    "classification": "repo-local",
+    "owner": "agent-asset-marketplace repository runbooks",
+    "reason": "Repository-local guidance intentionally names this repository command surface."
+  },
+  {
+    "path": ".agents/runbooks/implementing.md",
+    "line": 33,
+    "pattern": "portable-repo-command",
+    "classification": "repo-local",
+    "owner": "agent-asset-marketplace repository runbooks",
+    "reason": "Repository-local guidance intentionally names this repository command surface."
+  },
+  {
+    "path": ".agents/runbooks/implementing.md",
+    "line": 36,
+    "pattern": "portable-repo-command",
+    "classification": "repo-local",
+    "owner": "agent-asset-marketplace repository runbooks",
+    "reason": "Repository-local guidance intentionally names this repository command surface."
+  },
+  {
+    "path": ".agents/runbooks/implementing.md",
+    "line": 38,
+    "pattern": "portable-repo-command",
+    "classification": "repo-local",
+    "owner": "agent-asset-marketplace repository runbooks",
+    "reason": "Repository-local guidance intentionally names this repository command surface."
+  },
+  {
+    "path": ".agents/runbooks/marketplace-generation.md",
+    "line": 14,
+    "pattern": "portable-repo-command",
+    "classification": "repo-local",
+    "owner": "agent-asset-marketplace repository runbooks",
+    "reason": "Repository-local guidance intentionally names this repository command surface."
+  },
+  {
+    "path": ".agents/runbooks/marketplace-generation.md",
+    "line": 67,
+    "pattern": "portable-repo-command",
+    "classification": "repo-local",
+    "owner": "agent-asset-marketplace repository runbooks",
+    "reason": "Repository-local guidance intentionally names this repository command surface."
+  },
+  {
+    "path": ".agents/runbooks/marketplace-generation.md",
+    "line": 80,
+    "pattern": "portable-repo-command",
+    "classification": "repo-local",
+    "owner": "agent-asset-marketplace repository runbooks",
+    "reason": "Repository-local guidance intentionally names this repository command surface."
+  },
+  {
+    "path": ".agents/runbooks/marketplace-generation.md",
+    "line": 92,
+    "pattern": "portable-repo-command",
+    "classification": "repo-local",
+    "owner": "agent-asset-marketplace repository runbooks",
+    "reason": "Repository-local guidance intentionally names this repository command surface."
+  },
+  {
+    "path": ".agents/runbooks/marketplace-generation.md",
+    "line": 97,
+    "pattern": "portable-repo-command",
+    "classification": "repo-local",
+    "owner": "agent-asset-marketplace repository runbooks",
+    "reason": "Repository-local guidance intentionally names this repository command surface."
+  },
+  {
+    "path": ".agents/runbooks/marketplace-generation.md",
+    "line": 109,
+    "pattern": "portable-repo-command",
+    "classification": "repo-local",
+    "owner": "agent-asset-marketplace repository runbooks",
+    "reason": "Repository-local guidance intentionally names this repository command surface."
+  },
+  {
+    "path": ".agents/runbooks/marketplace-generation.md",
+    "line": 114,
+    "pattern": "portable-repo-command",
+    "classification": "repo-local",
+    "owner": "agent-asset-marketplace repository runbooks",
+    "reason": "Repository-local guidance intentionally names this repository command surface."
+  },
+  {
+    "path": ".agents/runbooks/marketplace-generation.md",
+    "line": 127,
+    "pattern": "portable-repo-command",
+    "classification": "repo-local",
+    "owner": "agent-asset-marketplace repository runbooks",
+    "reason": "Repository-local guidance intentionally names this repository command surface."
+  },
+  {
+    "path": ".agents/runbooks/marketplace-generation.md",
+    "line": 129,
+    "pattern": "portable-repo-command",
+    "classification": "repo-local",
+    "owner": "agent-asset-marketplace repository runbooks",
+    "reason": "Repository-local guidance intentionally names this repository command surface."
+  },
+  {
+    "path": ".agents/runbooks/marketplace-generation.md",
+    "line": 130,
+    "pattern": "portable-repo-command",
+    "classification": "repo-local",
+    "owner": "agent-asset-marketplace repository runbooks",
+    "reason": "Repository-local guidance intentionally names this repository command surface."
+  },
+  {
+    "path": ".agents/runbooks/planning.md",
+    "line": 49,
+    "pattern": "portable-repo-command",
+    "classification": "repo-local",
+    "owner": "agent-asset-marketplace repository runbooks",
+    "reason": "Repository-local guidance intentionally names this repository command surface."
+  },
+  {
+    "path": ".agents/runbooks/planning.md",
+    "line": 50,
+    "pattern": "portable-repo-command",
+    "classification": "repo-local",
+    "owner": "agent-asset-marketplace repository runbooks",
+    "reason": "Repository-local guidance intentionally names this repository command surface."
+  },
+  {
+    "path": ".agents/runbooks/planning.md",
+    "line": 51,
+    "pattern": "portable-repo-command",
+    "classification": "repo-local",
+    "owner": "agent-asset-marketplace repository runbooks",
+    "reason": "Repository-local guidance intentionally names this repository command surface."
+  },
+  {
+    "path": ".agents/runbooks/planning.md",
+    "line": 66,
+    "pattern": "portable-repo-command",
+    "classification": "repo-local",
+    "owner": "agent-asset-marketplace repository runbooks",
+    "reason": "Repository-local guidance intentionally names this repository command surface."
+  },
+  {
+    "path": ".agents/runbooks/planning.md",
+    "line": 67,
+    "pattern": "portable-repo-command",
+    "classification": "repo-local",
+    "owner": "agent-asset-marketplace repository runbooks",
+    "reason": "Repository-local guidance intentionally names this repository command surface."
+  },
+  {
+    "path": ".agents/runbooks/pr.md",
+    "line": 34,
+    "pattern": "portable-repo-command",
+    "classification": "repo-local",
+    "owner": "agent-asset-marketplace repository runbooks",
+    "reason": "Repository-local guidance intentionally names this repository command surface."
+  },
+  {
+    "path": ".agents/runbooks/pr.md",
+    "line": 40,
+    "pattern": "portable-repo-command",
+    "classification": "repo-local",
+    "owner": "agent-asset-marketplace repository runbooks",
+    "reason": "Repository-local guidance intentionally names this repository command surface."
+  },
+  {
+    "path": ".agents/runbooks/pr.md",
+    "line": 41,
+    "pattern": "portable-repo-command",
+    "classification": "repo-local",
+    "owner": "agent-asset-marketplace repository runbooks",
+    "reason": "Repository-local guidance intentionally names this repository command surface."
+  },
+  {
+    "path": ".agents/runbooks/pr.md",
+    "line": 58,
+    "pattern": "portable-repo-command",
+    "classification": "repo-local",
+    "owner": "agent-asset-marketplace repository runbooks",
+    "reason": "Repository-local guidance intentionally names this repository command surface."
+  },
+  {
+    "path": ".agents/runbooks/pr.md",
+    "line": 60,
+    "pattern": "portable-repo-command",
+    "classification": "repo-local",
+    "owner": "agent-asset-marketplace repository runbooks",
+    "reason": "Repository-local guidance intentionally names this repository command surface."
+  },
+  {
+    "path": ".agents/runbooks/pr.md",
+    "line": 61,
+    "pattern": "portable-repo-command",
+    "classification": "repo-local",
+    "owner": "agent-asset-marketplace repository runbooks",
+    "reason": "Repository-local guidance intentionally names this repository command surface."
+  },
+  {
+    "path": ".agents/runbooks/pr.md",
+    "line": 62,
+    "pattern": "portable-repo-command",
+    "classification": "repo-local",
+    "owner": "agent-asset-marketplace repository runbooks",
+    "reason": "Repository-local guidance intentionally names this repository command surface."
+  },
+  {
+    "path": ".agents/runbooks/repo-doctrine.md",
+    "line": 32,
+    "pattern": "portable-repo-command",
+    "classification": "repo-local",
+    "owner": "agent-asset-marketplace repository runbooks",
+    "reason": "Repository-local guidance intentionally names this repository command surface."
+  },
+  {
+    "path": ".agents/runbooks/skill-authoring.md",
+    "line": 49,
+    "pattern": "portable-repo-command",
+    "classification": "repo-local",
+    "owner": "agent-asset-marketplace repository runbooks",
+    "reason": "Repository-local guidance intentionally names this repository command surface."
+  },
+  {
+    "path": ".agents/runbooks/skill-authoring.md",
+    "line": 55,
+    "pattern": "portable-repo-command",
+    "classification": "repo-local",
+    "owner": "agent-asset-marketplace repository runbooks",
+    "reason": "Repository-local guidance intentionally names this repository command surface."
+  },
+  {
+    "path": ".agents/runbooks/skill-authoring.md",
+    "line": 61,
+    "pattern": "portable-repo-command",
+    "classification": "repo-local",
+    "owner": "agent-asset-marketplace repository runbooks",
+    "reason": "Repository-local guidance intentionally names this repository command surface."
+  },
+  {
+    "path": ".agents/runbooks/skill-authoring.md",
+    "line": 78,
+    "pattern": "portable-repo-command",
+    "classification": "repo-local",
+    "owner": "agent-asset-marketplace repository runbooks",
+    "reason": "Repository-local guidance intentionally names this repository command surface."
+  },
+  {
+    "path": ".agents/runbooks/testing.md",
+    "line": 25,
+    "pattern": "portable-repo-command",
+    "classification": "repo-local",
+    "owner": "agent-asset-marketplace repository runbooks",
+    "reason": "Repository-local guidance intentionally names this repository command surface."
+  }
+]

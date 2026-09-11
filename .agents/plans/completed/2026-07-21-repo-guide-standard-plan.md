@@ -609,7 +609,7 @@ Replace the `## Routing pointers` block with:
 - `INDEX.md` for docs-owned doctrine surfaces
 - `repo-runbook-policy.md` for this repo's mapping to the cross-repo guide standard
 - `../guides/AGENTS.md` for guide-stage routing
-- `../../.agents/docs/contracts/AGENTS.md` for contract-doc routing when docs-owned contracts are the target
+- `../../.agents/contracts/AGENTS.md` for contract-doc routing when docs-owned contracts are the target
 ```
 
 - [x] **Step 3: Update `docs/AGENTS.md` routing pointers**

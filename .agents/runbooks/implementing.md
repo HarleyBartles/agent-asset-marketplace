@@ -1,6 +1,7 @@
 # Implementing Runbook
 
-Use this reference when implementing work in the agent-asset-marketplace repo — whether as a direct implementer or as a controller dispatching implementer subagents. This runbook covers the implementer workflow: what to read before starting, what skills to invoke, and what to verify before claiming done.
+Use this reference for repository-specific implementation commands,
+marketplace custody, and completion checks in agent-asset-marketplace.
 
 ## Before You Begin: Read the Standards
 
@@ -9,30 +10,10 @@ Read these standards documents before writing any code:
 - **[`.agents/doctrine/custody-and-marketplace-doctrine.md`](../../.agents/doctrine/custody-and-marketplace-doctrine.md)** — source custody rules, provenance modes, plugin curation rules
 - **[`.devin/rules/tools.md`](../../.devin/rules/tools.md)** — marketplace generation and validation tooling
 
-## Skills to Invoke
+## Workflow routing
 
-- Invoke `/repo-worker-base` before any marketplace work that touches generation, validation, or tooling
-- Invoke `/test-driven-development` before implementing independent behavior;
-  pure glue may use transitive coverage when its focused contract is tested
-- Invoke `/systematic-debugging` when diagnosing a bug, test failure, or
-  unexpected behavior; do not turn diagnosis into a prerequisite for every
-  routine implementation
-- Invoke `/writing-skills` when creating or editing skills
-
-## TDD Discipline
-
-When implementing independent behavior:
-1. Write a failing test first
-2. Verify it fails for the right reason
-3. Implement the minimum code to make it pass
-4. Verify the test passes
-5. Run the proportionate regression gate for the touched surface
-
-For pure glue with no independent behavior, record the focused contract and
-the transitive or caller coverage that proves it; do not manufacture a
-one-test-per-function ceremony.
-
-Record TDD evidence in your report: the RED command and failure output, then the GREEN command and passing output.
+Invoke `/using-superpowers-plus` once and follow its implementation handoff.
+This runbook supplies only marketplace-specific constraints.
 
 ## Pre-Completion Verification
 

@@ -21,8 +21,8 @@ Use this checklist when creating, reviewing, or refreshing a skill.
 
 ## 4. Validate
 
-- [ ] Frontmatter passes `.agents/docs/contracts/skill-frontmatter.md`.
-- [ ] `agents/openai.yaml` passes `.agents/docs/contracts/openai-agent-yaml.md`.
+- [ ] Frontmatter passes `.agents/contracts/skill-frontmatter.md`.
+- [ ] `agents/openai.yaml` passes `.agents/contracts/openai-agent-yaml.md`.
 - [ ] Bundled scripts support `--help` and `--check` per the skill-bundled CLI contract.
 - [ ] The consuming repository's canonical marketplace-generation check passes.
 - [ ] The consuming repository's canonical integration gate passes.

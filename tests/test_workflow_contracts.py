@@ -189,6 +189,23 @@ class TestPlanningDelegationReview:
 
 
 class TestRepositoryCallersAndPressure:
+    def test_repo_contracts_have_one_home(self):
+        contracts = ROOT / ".agents" / "contracts"
+        assert (contracts / "openai-agent-yaml.md").is_file()
+        assert (contracts / "skill-frontmatter.md").is_file()
+        assert (contracts / "repo-standards-commands.json").is_file()
+        assert not (ROOT / ".agents" / "docs" / "contracts").exists()
+        assert not (ROOT / ".agents" / "doctrine" / "repo-standards-commands.json").exists()
+
+    def test_local_runbooks_delegate_skill_composition_to_bootstrap(self):
+        surfaces = [ROOT / "CONTRIBUTING.md", ROOT / "REVIEW.md", *sorted((ROOT / ".agents" / "runbooks").glob("*.md"))]
+        for path in surfaces:
+            text = _read(path).lower()
+            assert "skills to invoke" not in text
+            assert "routing to skills" not in text
+            imperative = re.findall(r"(?:invoke|route to)\s+`?(/[a-z][a-z0-9-]+)", text)
+            assert set(imperative) <= {"/using-superpowers-plus"}, (path, imperative)
+
     def test_workflow_inventory_covers_every_tracked_workflow(self):
         inventory = _read(DOCS / "workflow-inventory.md")
         workflows = list((ROOT / ".github" / "workflows").glob("*.y*ml"))
@@ -202,18 +219,20 @@ class TestRepositoryCallersAndPressure:
         assert "feature branch" in text
 
     def test_scanner_defects_are_classified(self):
-        findings = json.loads(_read(DOCS / "pressure-scan.json"))
-        classified = _read(DOCS / "pressure-scan.md")
+        roots = [SKILLS, REPO_SKILLS, ROOT / ".agents" / "runbooks"]
+        files = [path for root in roots for path in root.rglob("*")]
+        findings = pressure_scan.scan_paths(files, ROOT)
+        classified = json.loads(_read(DOCS / "pressure-scan-decisions.json"))
         assert isinstance(findings, list)
         assert all({"path", "line", "pattern", "context"} <= set(item) for item in findings)
-        assert "classification" in classified
-        assert all(label in classified for label in ("intended", "repo-local"))
-        assert "deferred" not in classified
-        assert "| defect |" not in classified
+        assert all(item["classification"] in {"intended", "repo-local"} for item in classified)
+        assert all(item["classification"] != "defect" for item in classified)
 
     def test_pressure_scan_has_one_owned_disposition_per_candidate(self):
-        findings = json.loads(_read(DOCS / "pressure-scan.json"))
-        dispositions = json.loads(_read(DOCS / "pressure-scan-dispositions.json"))
+        roots = [SKILLS, REPO_SKILLS, ROOT / ".agents" / "runbooks"]
+        files = [path for root in roots for path in root.rglob("*")]
+        findings = pressure_scan.scan_paths(files, ROOT)
+        dispositions = json.loads(_read(DOCS / "pressure-scan-decisions.json"))
         assert len(dispositions) == len(findings)
         assert all(
             {"path", "line", "pattern", "classification", "owner", "reason"} <= set(item) for item in dispositions
@@ -252,7 +271,7 @@ class TestEvaluationCampaign:
             prompt = _read(DOCS / "prompts" / scenario["prompt"]).lower()
             assert not any(fragment in prompt for fragment in leaked_imperatives), scenario["id"]
 
-    def test_raw_runs_are_ignored_and_scores_are_durable(self):
+    def test_raw_runs_are_ignored_and_historical_result_artifacts_are_absent(self):
         result = __import__("subprocess").run(
             ["git", "check-ignore", "tests/pressure/workflow-contracts/runs/probe/events.jsonl"],
             cwd=ROOT,
@@ -260,55 +279,16 @@ class TestEvaluationCampaign:
             text=True,
         )
         assert result.returncode == 0
-        assert "scores/<head>/<family>/<scenario-id>.json" in _read(
-            ROOT / ".agents" / "plans" / "2026-09-06-mark-373-operating-system.md"
+        discarded = (
+            "campaign-meta.json",
+            "scores",
+            "results.md",
+            "red-baseline.md",
+            "pressure-scan.json",
+            "pressure-scan.md",
         )
-
-    def test_committed_campaign_meta_and_scores_are_self_contained(self):
-        meta = json.loads(_read(DOCS / "campaign-meta.json"))
-        assert meta["schema_version"] == 1
-        assert meta["evaluation_head"] == "8f6280aa5dad59b33124f50af37b7f7150ea2afa"
-        assert meta["status"] == "harness-blocked"
-        assert meta["completed_trials"] == 0
-        assert meta["superseded_diagnostic_trials"] == 52
-        assert meta["score_validity"] == "superseded-diagnostic-only"
-        assert meta["requested_head"] == meta["evaluation_head"]
-        assert meta["preflight_head"] == meta["evaluation_head"]
-        assert meta["preflight_worktree_status"] == "clean"
-        assert meta["inventory"]["mcp"]["exposed"] is True
-        assert meta["smoke_status"] == "not-run"
-        score_paths = sorted((DOCS / "scores").glob("*/*/*.json"))
-        assert len(score_paths) == 52
-        for path in score_paths:
-            score = json.loads(_read(path))
-            assert score["schema_version"] == 1
-            assert score["trial"]["status"] == "ok"
-            assert score["judge"] == {
-                "kind": "executor-inline",
-                "family": "luna",
-                "model": "gpt-5.6-luna",
-                "reasoning_effort": "medium",
-                "separate_codex_exec": False,
-            }
-            assert score["raw_evidence"]["committed"] is False
-            assert all(
-                len(score["raw_evidence"][name]) == 64
-                for name in (
-                    "events_jsonl_sha256",
-                    "stderr_sha256",
-                    "final_sha256",
-                    "meta_sha256",
-                )
-            )
-            assert score["mechanical"]["reads_before_useful_action"] == "unobservable"
-            assert score["criteria"]
-            assert score["overall_verdict"] in {"pass", "fail"}
-            assert score["failure_class"] in {
-                "none",
-                "instruction-composition",
-                "harness-capability",
-                "model-behavior",
-            }
+        for name in discarded:
+            assert not (DOCS / name).exists()
 
     def test_trial_argv_has_exact_controls_and_least_privilege(self, tmp_path: Path):
         argv = campaign_runner.build_codex_argv(tmp_path, "gpt-5.6-luna", "read-only", tmp_path / "final.txt")

@@ -47,13 +47,10 @@ Each repo supplies a thin overlay at `.agents/doctrine/repo-runbook-policy.md` t
 
 ## Composition contract
 
-For any runbook work, use:
-
-```text
-repo-standards -> repo-worker-base -> local runbook -> selected Superpowers lane
-```
-
-`repo-standards` supplies the universal runbook standard and workflow order. `repo-worker-base` supplies worktree, branch, validation, and publication boundaries. The local runbook supplies repo-specific details. The Superpowers lane supplies stage technique.
+`/using-superpowers-plus` is the sole bootstrap and composition router. It
+selects the required hygiene and stage owners; the selected stage skill reads
+the local runbook for repository-specific paths, commands, constraints, and
+evidence. `repo-standards` does not recreate that routing sequence.
 
 ## Workflow order
 
@@ -70,11 +67,10 @@ After the owning Superpowers stage skill has routed you (e.g., `/writing-plans` 
 - the repo's `AGENTS.md` or local runbook points you to `repo-standards`,
 - the task involves scaffolds, runbook layout, or the `repository-shape-manifest.json`.
 
-The typical `repo-standards` workflow is:
+After routing, the `repo-standards` workflow is:
 1. Read `references/repository-runbook-standard.md` and `references/repository-shape-standard.md`.
-2. Invoke `/repo-worker-base` if the work touches worktree, branch, validation, or publication.
-3. Read the repo's `.agents/doctrine/repo-runbook-policy.md`.
-4. Apply or check the surfaces the stage skill needs.
+2. Read the repo's `.agents/doctrine/repo-runbook-policy.md`.
+3. Apply or check the surfaces the routed owner needs.
 
 ## Script usage notes
 

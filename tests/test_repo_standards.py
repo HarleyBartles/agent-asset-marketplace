@@ -534,12 +534,11 @@ def test_repo_standards_apply_force_overwrites_drifted_contributing(tmp_path: Pa
     combined = result.stdout + result.stderr
     assert result.returncode == 0, combined
     text = (repo / "CONTRIBUTING.md").read_text(encoding="utf-8")
-    assert "/repo-standards" in text
-    assert "/repo-worker-base" in text
+    assert "/using-superpowers-plus" in text
 
 
 def test_scaffold_contributing_check_customized_passes(tmp_path: Path) -> None:
-    """scaffold_contributing --check passes when only the heading and skill invocations are kept."""
+    """scaffold_contributing --check passes with the heading and sole bootstrap route."""
     repo = tmp_path / "custom-contributing"
     repo.mkdir()
     _init_git_repo(repo)
@@ -547,9 +546,8 @@ def test_scaffold_contributing_check_customized_passes(tmp_path: Path) -> None:
     (repo / "CONTRIBUTING.md").write_text(
         "# Contributing\n\n"
         "Our own contributor process.\n\n"
-        "## Required skill invocations\n\n"
-        "- `/repo-standards` for repo-shape and runbook routing.\n"
-        "- `/repo-worker-base` for worktree, branch, validation, and publication boundaries.\n",
+        "## Workflow routing\n\n"
+        "Invoke `/using-superpowers-plus` once and follow its handoff.\n",
         encoding="utf-8",
         newline="\n",
     )
@@ -572,7 +570,7 @@ def test_repo_standards_allow_shared_checkout_combines_with_apply(tmp_path: Path
     _init_git_repo_with_commit(repo)
     subprocess.run(["git", "branch", "-M", "main"], cwd=repo, check=True)
 
-    command_dir = repo / ".agents" / "doctrine"
+    command_dir = repo / ".agents" / "contracts"
     command_dir.mkdir(parents=True)
     (command_dir / "repo-standards-commands.json").write_text(
         '{"apply":["@python","tools/run.py","ci","--apply"],'
@@ -693,7 +691,7 @@ def test_repo_standards_apply_in_shared_checkout_with_flag_succeeds(tmp_path: Pa
     combined = result.stdout + result.stderr
     assert result.returncode == 0, combined
     text = (worktree / "CONTRIBUTING.md").read_text(encoding="utf-8")
-    assert "/repo-standards" in text
+    assert "/using-superpowers-plus" in text
 
 
 def test_scaffold_repo_runbook_policy_check_customized_passes(tmp_path: Path) -> None:
@@ -751,7 +749,7 @@ def test_pre_commit_hook_wired_to_ci_apply_and_diagnostics(tmp_path: Path) -> No
         encoding="utf-8",
         newline="\n",
     )
-    command_dir = repo / ".agents" / "doctrine"
+    command_dir = repo / ".agents" / "contracts"
     command_dir.mkdir(parents=True)
     (command_dir / "repo-standards-commands.json").write_text(
         '{"apply":["@python","tools/run.py","ci","--apply"],'
@@ -785,7 +783,7 @@ def test_pre_commit_hook_wired_to_ci_apply_and_diagnostics(tmp_path: Path) -> No
 
 def test_hook_validator_rejects_unbound_apply_and_check_switches(tmp_path: Path) -> None:
     repo = tmp_path / "unbound-hook"
-    declaration = repo / ".agents" / "doctrine"
+    declaration = repo / ".agents" / "contracts"
     declaration.mkdir(parents=True)
     (declaration / "repo-standards-commands.json").write_text(
         '{"apply":["@python","consumer.py","--apply"],"check":["@python","consumer.py","--check"]}\n',
@@ -804,7 +802,7 @@ def test_hook_validator_rejects_unbound_apply_and_check_switches(tmp_path: Path)
 
 def test_hook_validator_rejects_marker_bearing_but_incomplete_hook(tmp_path: Path) -> None:
     repo = tmp_path / "marker-only-hook"
-    declaration = repo / ".agents" / "doctrine"
+    declaration = repo / ".agents" / "contracts"
     declaration.mkdir(parents=True)
     (declaration / "repo-standards-commands.json").write_text(
         '{"apply":["@python","consumer.py","--apply"],"check":["@python","consumer.py","--check"]}\n',
@@ -814,7 +812,7 @@ def test_hook_validator_rejects_marker_bearing_but_incomplete_hook(tmp_path: Pat
     hook.write_text(
         "#!/usr/bin/env bash\n"
         "set -euo pipefail\n"
-        'COMMAND_DECLARATION="$REPO_ROOT/.agents/doctrine/repo-standards-commands.json"\n'
+        'COMMAND_DECLARATION="$REPO_ROOT/.agents/contracts/repo-standards-commands.json"\n'
         'required_switch="--apply"\n'
         "run_declared apply\n"
         "run_declared check\n",
@@ -941,7 +939,7 @@ def _install_repo_standards(repo: Path) -> None:
         encoding="utf-8",
         newline="\n",
     )
-    command_dir = repo / ".agents" / "doctrine"
+    command_dir = repo / ".agents" / "contracts"
     command_dir.mkdir(parents=True, exist_ok=True)
     (command_dir / "repo-standards-commands.json").write_text(
         '{"apply":["@python","tools/run.py","ci","--apply"],'
@@ -949,7 +947,7 @@ def _install_repo_standards(repo: Path) -> None:
         encoding="utf-8",
     )
     subprocess.run(
-        ["git", "add", ".agents/doctrine/repo-standards-commands.json"],
+        ["git", "add", ".agents/contracts/repo-standards-commands.json"],
         cwd=repo,
         env=_stripped_env(),
         check=True,
@@ -1107,7 +1105,7 @@ def _install_repo_standards_with_submodule(repo: Path) -> None:
         encoding="utf-8",
         newline="\n",
     )
-    command_dir = repo / ".agents" / "doctrine"
+    command_dir = repo / ".agents" / "contracts"
     command_dir.mkdir(parents=True, exist_ok=True)
     (command_dir / "repo-standards-commands.json").write_text(
         '{"apply":["@python","tools/run.py","ci","--apply"],'
@@ -1115,7 +1113,7 @@ def _install_repo_standards_with_submodule(repo: Path) -> None:
         encoding="utf-8",
     )
     subprocess.run(
-        ["git", "add", ".agents/doctrine/repo-standards-commands.json"],
+        ["git", "add", ".agents/contracts/repo-standards-commands.json"],
         cwd=repo,
         env=_stripped_env(),
         check=True,

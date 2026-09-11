@@ -78,18 +78,15 @@ The canonical stage order is:
 design -> planning -> implementing -> review
 ```
 
-At each stage:
-
-1. Read this standard.
-2. Read the repo's `.agents/doctrine/repo-runbook-policy.md`.
-3. Invoke `/repo-worker-base` for worktree, branch, validation, and publication boundaries.
-4. Read the repo-local runbook for the stage.
-5. Route to the matching Superpowers skill:
-   - design -> `/brainstorming`
-   - planning -> `/writing-plans`
-   - implementation -> `/executing-plans` or `/subagent-driven-development`
-   - review -> `/requesting-code-review`
+At every stage, `/using-superpowers-plus` classifies the request and hands off
+to the required hygiene and workflow owners. The selected workflow owner reads
+this standard, the repo's `.agents/doctrine/repo-runbook-policy.md`, and the
+matching local runbook. Entry points and runbooks must not reproduce the skill
+selection table.
 
 ## Relationship to repo-worker-base
 
-`repo-standards` owns runbook layout, invocation, and workflow order. `repo-worker-base` owns worktree, branch, scratch, validation, and publication boundaries. Each stage skill owns its own baseline reference and reads it as part of its own first step. Use both together for every repo-backed stage.
+`repo-standards` owns runbook layout and stage order, not session composition.
+`repo-worker-base` owns worktree, branch, scratch, validation, and publication
+boundaries. Each stage skill owns its baseline and reads the matching local
+runbook. `/using-superpowers-plus` composes those owners.

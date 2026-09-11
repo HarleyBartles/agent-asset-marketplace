@@ -5,8 +5,8 @@ publication handoff when authoring skills in the agent-asset-marketplace repo.
 
 ## Authoring route
 
-1. Use `writing-skills` for general skill TDD and discovery quality.
-2. Use `writing-skills/references/local-and-marketplace-custody.md` and
+1. Invoke `/using-superpowers-plus` once and follow its skill-authoring handoff.
+2. Read `writing-skills/references/local-and-marketplace-custody.md` and
    `writing-skills/references/source-grounded-authoring.md` when the skill needs
    lane selection, custody placement, source decomposition, scholarly citations,
    or scaffolding.

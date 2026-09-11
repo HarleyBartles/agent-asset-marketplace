@@ -6,7 +6,7 @@ Use this runbook for pull-request workflow and publication proof in `agent-asset
 
 - Read root [`AGENTS.md`](../../AGENTS.md) `## Publication proof for repo work` and `## Draft PR policy` for the durable doctrine.
 - Read [`.devin/rules/pr.md`](../../.devin/rules/pr.md) for the conditional rule trigger that loads this runbook.
-- Invoke `/repo-worker-base`.
+- Invoke `/using-superpowers-plus` once and follow its publication handoff.
 
 ## When to use
 
@@ -47,9 +47,10 @@ Consumer-canonical variant:
 
 3. **Self-review and optional legacy assistance.**
    - Perform an ordinary whole-change self-review once preflight is green.
-   - A harness-designated frontier orchestrator, including `gpt-5.6-sol`, must not invoke `/iterative-review`.
-   - A non-frontier or unknown-capability orchestrator may offer `/iterative-review` as legacy review assistance, but must explain its limitations and obtain explicit human approval for this PR before invoking it.
-   - A legacy graph `ready` result proves only sequence completion. It does not authorize a green claim or a draft-to-ready transition; use the ordinary self-review, scope-honesty, and canonical-validation gates.
+   - Follow the routed review owner's rules for any optional legacy assistance.
+   - A helper's sequence completion does not authorize a green claim or a
+     draft-to-ready transition; use the ordinary self-review, scope-honesty,
+     and canonical-validation gates.
 
 ## Repo-specific guidance
 
@@ -66,10 +67,3 @@ Consumer-canonical variant:
   1. an open PR URL with branch name and full head SHA;
   2. a verified direct-main commit SHA;
   3. a concrete publication blocker.
-
-## Routing to skills
-
-- `/repo-worker-base` for worktree, branch, and publication boundaries.
-- `/iterative-review` only for human-approved legacy assistance on a non-frontier or unknown-capability orchestrator; never for a harness-designated frontier orchestrator.
-- `/using-github-mcp` for PR evidence and GitHub proof.
-- `/verification-before-completion` before claiming the PR is green.

@@ -27,8 +27,7 @@ Use this runbook for the test commands and conventions in `agent-asset-marketpla
   source maps, provenance maps, or generated zips, run the full marketplace
   rebuild as the green-path proof.
 
-## Routing to skills
+## Workflow routing
 
-- For TDD implementation, invoke `/test-driven-development`.
-- For test design and coverage, invoke `/unslop-profiles` with the `testing` profile.
-- For repo hygiene and publication, invoke `/repo-worker-base`.
+Invoke `/using-superpowers-plus` once and follow its testing or implementation
+handoff. This runbook owns only the repository's test commands and locations.

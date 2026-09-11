@@ -53,7 +53,7 @@ import shared_checkout  # noqa: E402
 
 
 _SCRIPT_NAME = "repo-standards"
-_COMMAND_DECLARATION = Path(".agents/doctrine/repo-standards-commands.json")
+_COMMAND_DECLARATION = Path(".agents/contracts/repo-standards-commands.json")
 
 
 def _is_submodule(repo_root: Path) -> bool:

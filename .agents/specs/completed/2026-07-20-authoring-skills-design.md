@@ -107,7 +107,7 @@ and must not become competing skill-authoring authorities:
 | `sources/first_party/skills/repo-worker-base/references/design-baseline.md` | Portable design-stage baseline | Retain; it owns design-stage evidence and handoff, not skill-authoring content |
 | `.agents/guides/design-guide.md` | Repository-specific design-spec paths, required sections, and handoff confidence | Retain; `authoring-skills` must follow it when the new skill is authored here |
 | `docs/overlay-adapter-policy.md` | Third-party adaptation and overlay rules | Retain; add only a cross-reference if needed, never duplicate first-party source-grounded rules |
-| `.agents/docs/contracts/skill-frontmatter.md` | Installable projection frontmatter contract | Retain as the projection contract; `authoring-skills` references it rather than restating it |
+| `.agents/contracts/skill-frontmatter.md` | Installable projection frontmatter contract | Retain as the projection contract; `authoring-skills` references it rather than restating it |
 | `.agents/skills/writing-skills/` | Installed third-party projection/cache | Do not edit; it is not a repository-local authoring authority |
 
 The cleanup rule is simple: one rule has one authoritative home. The

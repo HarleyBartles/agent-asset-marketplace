@@ -27,7 +27,7 @@ Current live repo inspection shows:
 - root `AGENTS.md` is still carrying a lot of marketplace and publication detail
 - `.agents/doctrine/mesh-policy.md` already exists but is short and not yet as explicit as the Wild Bunch mesh policy
 - `.agents/docs/guides/AGENTS.md` does not exist
-- `.agents/docs/contracts/AGENTS.md` does not exist
+- `.agents/contracts/AGENTS.md` does not exist
 - `docs/AGENTS.md`, `tools/AGENTS.md`, `codex-marketplace/AGENTS.md`, `codex-marketplace/plugins/AGENTS.md`, `adapters/AGENTS.md`, `sources/AGENTS.md`, and `provenance/AGENTS.md` already exist and are slim enough to keep, but they do not yet route agents by work stage
 
 The generated navigation surfaces that will change are:
@@ -36,7 +36,7 @@ The generated navigation surfaces that will change are:
 - `.agents/docs/INDEX.md`
 - `.agents/docs/guides/INDEX.md`
 - `docs/INDEX.md`
-- `.agents/docs/contracts/INDEX.md`
+- `.agents/contracts/INDEX.md`
 
 ## Plan
 
@@ -56,9 +56,9 @@ Before editing anything, re-open the live files that define the current mesh sha
 - `.agents/docs/AGENTS.md`
 - `.agents/doctrine/mesh-policy.md`
 - `docs/AGENTS.md`
-- `.agents/docs/contracts/INDEX.md`
-- `.agents/docs/contracts/skill-frontmatter.md`
-- `.agents/docs/contracts/openai-agent-yaml.md`
+- `.agents/contracts/INDEX.md`
+- `.agents/contracts/skill-frontmatter.md`
+- `.agents/contracts/openai-agent-yaml.md`
 - `tools/AGENTS.md`
 - `codex-marketplace/AGENTS.md`
 - `codex-marketplace/plugins/AGENTS.md`
@@ -67,7 +67,7 @@ Before editing anything, re-open the live files that define the current mesh sha
 - `provenance/AGENTS.md`
 - `.agents/docs/guides/INDEX.md`
 
-Confirm that `.agents/docs/contracts/` is a meaningful routing boundary because it contains only the two contract docs and the generated index. Confirm that the guides subtree is the right place for stage-based routing because it already contains design, planning, implementing, review, marketplace-generation, and skill-authoring guidance.
+Confirm that `.agents/contracts/` is a meaningful routing boundary because it contains only the two contract docs and the generated index. Confirm that the guides subtree is the right place for stage-based routing because it already contains design, planning, implementing, review, marketplace-generation, and skill-authoring guidance.
 
 **Expected result**
 
@@ -135,9 +135,9 @@ Move marketplace/tooling detail out of the root node and into the scope-specific
 
 Update `.agents/AGENTS.md` so it becomes the tracked agent-doctrine entrypoint for `.agents/` and points agents at `.agents/doctrine/mesh-policy.md`, `.agents/docs/INDEX.md`, and the docs/guides and docs/contracts routing nodes instead of repeating doctrine.
 
-Update `.agents/docs/AGENTS.md` so it points agents at the mesh policy, the docs index, `.agents/docs/guides/AGENTS.md`, and `.agents/docs/contracts/AGENTS.md`.
+Update `.agents/docs/AGENTS.md` so it points agents at the mesh policy, the docs index, `.agents/docs/guides/AGENTS.md`, and `.agents/contracts/AGENTS.md`.
 
-Update `docs/AGENTS.md` so it routes agents into the docs-owned guidance surfaces, including `.agents/docs/contracts/AGENTS.md`, `docs/INDEX.md`, and `.agents/docs/unslop/profile.md`, instead of leaving the docs tree as a single broad bucket.
+Update `docs/AGENTS.md` so it routes agents into the docs-owned guidance surfaces, including `.agents/contracts/AGENTS.md`, `docs/INDEX.md`, and `.agents/docs/unslop/profile.md`, instead of leaving the docs tree as a single broad bucket.
 
 **Expected result**
 
@@ -156,7 +156,7 @@ Update `docs/AGENTS.md` so it routes agents into the docs-owned guidance surface
 **Files:**
 
 - Create: `.agents/docs/guides/AGENTS.md`
-- Create: `.agents/docs/contracts/AGENTS.md`
+- Create: `.agents/contracts/AGENTS.md`
 - Modify: `tools/AGENTS.md`
 - Modify: `codex-marketplace/AGENTS.md`
 - Modify: `codex-marketplace/plugins/AGENTS.md`
@@ -177,7 +177,7 @@ Create `.agents/docs/guides/AGENTS.md` as the stage-routing entrypoint for the g
 
 The file should point to `.agents/docs/guides/INDEX.md` as the generated file list, but the AGENTS node is what teaches agents when to look there.
 
-Create `.agents/docs/contracts/AGENTS.md` as the local routing node for the contract docs subtree. It is required because `.agents/docs/contracts/` contains a distinct contract-doc boundary with only two authored docs. It should tell agents to read:
+Create `.agents/contracts/AGENTS.md` as the local routing node for the contract docs subtree. It is required because `.agents/contracts/` contains a distinct contract-doc boundary with only two authored docs. It should tell agents to read:
 
 - `skill-frontmatter.md` when editing skill frontmatter contracts or projection metadata contracts
 - `openai-agent-yaml.md` when editing OpenAI agent YAML contract surfaces
@@ -233,7 +233,7 @@ Keep each scoped file short. If a file grows into substantive doctrine, move tha
 - Modify: `.agents/docs/INDEX.md`
 - Modify: `.agents/docs/guides/INDEX.md`
 - Modify: `docs/INDEX.md`
-- Modify: `.agents/docs/contracts/INDEX.md`
+- Modify: `.agents/contracts/INDEX.md`
 
 **Commands:**
 
@@ -251,7 +251,7 @@ Spot-check the generated indexes to confirm:
 
 - `.agents/superpowers/plans/INDEX.md` lists this plan file
 - `.agents/docs/guides/INDEX.md` includes the new `AGENTS.md`
-- `.agents/docs/contracts/INDEX.md` includes the new `AGENTS.md`
+- `.agents/contracts/INDEX.md` includes the new `AGENTS.md`
 - the generated indexes still remain generated files, not hand-edited docs
 
 **Expected result**
@@ -272,7 +272,7 @@ Spot-check the generated indexes to confirm:
 - [x] Root `AGENTS.md` retains only the explicit pointer block and the minimal repo-purpose/source-truth/publication sections
 - [x] `.agents/AGENTS.md`, `.agents/docs/AGENTS.md`, and `docs/AGENTS.md` route to the exact target docs named in this plan and do not repeat long doctrine
 - [x] `.agents/docs/guides/AGENTS.md` exists and routes by work stage
-- [x] `.agents/docs/contracts/AGENTS.md` exists and routes contract-doc work to the right files
+- [x] `.agents/contracts/AGENTS.md` exists and routes contract-doc work to the right files
 - [x] `tools/AGENTS.md`, `codex-marketplace/AGENTS.md`, `codex-marketplace/plugins/AGENTS.md`, `adapters/AGENTS.md`, `sources/AGENTS.md`, and `provenance/AGENTS.md` all point agents at the right doctrine before work starts
 - [x] The generated `INDEX.md` files reflect the new routing nodes
 - [x] `py -3 tools/generate_index_mesh.py --check` passes

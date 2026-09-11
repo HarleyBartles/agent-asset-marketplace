@@ -2098,8 +2098,8 @@ This repository uses two distinct layers for the dotnet-pack bundle:
 - Installation/export layer is derived from the projection and is produced only by canonical tooling.
 - The custody flow is `source custody -> projection layer -> installation/export layer`.
 - The projected skill is materialized from `sources/first_party/skills/dotnet/` per the registry.
-- Frontmatter contract: [.agents/docs/contracts/skill-frontmatter.md](../../../.agents/docs/contracts/skill-frontmatter.md)
-- OpenAI agent contract: [.agents/docs/contracts/openai-agent-yaml.md](../../../.agents/docs/contracts/openai-agent-yaml.md)
+- Frontmatter contract: [.agents/contracts/skill-frontmatter.md](../../../.agents/contracts/skill-frontmatter.md)
+- OpenAI agent contract: [.agents/contracts/openai-agent-yaml.md](../../../.agents/contracts/openai-agent-yaml.md)
 
 The split is deliberate:
 

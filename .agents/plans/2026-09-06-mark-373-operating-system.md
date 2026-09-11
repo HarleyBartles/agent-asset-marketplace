@@ -58,17 +58,12 @@
 - `tests/test_workflow_contracts.py` — structural contract tests.
 - `tools/workflow_pressure_scan.py` — candidate-only static pressure scanner.
 - `tools/run_workflow_pressure_campaign.py` — composed-stack Codex trial runner.
-- `tests/pressure/workflow-contracts/red-baseline.md` — initial RED inventory.
-- `tests/pressure/workflow-contracts/pressure-scan.json` — raw scan.
-- `tests/pressure/workflow-contracts/pressure-scan.md` — classified scan.
+- `tests/pressure/workflow-contracts/pressure-scan-decisions.json` — human adjudication of current scanner candidates.
 - `tests/pressure/workflow-contracts/workflow-inventory.md` — complete Actions/reusable-caller inventory.
 - `tests/pressure/workflow-contracts/ci-parity.md` — hook/hosted parity and trigger proof.
 - `tests/pressure/workflow-contracts/README.md` — campaign execution/evidence rules.
 - `tests/pressure/workflow-contracts/campaign.json` — scenarios and fixed model matrix.
 - `tests/pressure/workflow-contracts/prompts/` — scenario prompts.
-- `tests/pressure/workflow-contracts/campaign-meta.json` — committed harness/version/evaluation-head summary with no secrets.
-- `tests/pressure/workflow-contracts/scores/<head>/<family>/<scenario-id>.json` — committed post-hoc score records with hashes of raw evidence.
-- `tests/pressure/workflow-contracts/results.md` — reviewed per-family/per-scenario outcomes.
 
 ## Local-Only Evaluation Evidence
 
@@ -76,7 +71,9 @@
 
 Do not commit raw run evidence automatically. Raw event streams may contain absolute machine paths, environment-derived metadata, tool output, or other material inappropriate for source control. Before any score is committed, Luna checks the raw evidence for obvious secret/token material; if any is observed, stop publication of that raw evidence, record only a redacted description in the score/result, and keep the raw file local.
 
-Reproducibility is provided by committed campaign/prompts/runner, immutable `evaluation_head`, Codex version, sanitized invocation metadata, score records, and SHA-256 hashes of the exact local raw files used for adjudication. A raw hash proves which local evidence was judged without requiring the raw trace to become repository content.
+The repository retains reusable campaign inputs, not unverifiable historical
+result paperwork. Any future run evidence remains local unless a separately
+approved evidence format is independently inspectable and safe to publish.
 
 ## Checkpoint and Compaction Protocol
 
@@ -138,7 +135,7 @@ No specialist profile is used for baseline. Direct `--model` selects each family
 
 Campaign-level capability and per-model availability are separate states.
 
-Before any trial, `tools/run_workflow_pressure_campaign.py` performs one harness preflight and writes `tests/pressure/workflow-contracts/campaign-meta.json` plus local raw preflight output under `runs/<head>/_harness/`.
+Before any trial, `tools/run_workflow_pressure_campaign.py` performs one harness preflight and writes local raw preflight output under `runs/<head>/_harness/`.
 
 The runner must:
 
@@ -219,7 +216,9 @@ Prompt goes on stdin. Do not request/persist hidden chain-of-thought. `--json` s
 
 Scoring is **not** a second model invocation and is **not** performed by `run_workflow_pressure_campaign.py` beyond mechanical metric extraction. There is no judge `codex exec` call.
 
-After each completed trial, the Task 7 Luna executor reads the frozen local `events.jsonl`, `final.txt`, `meta.json`, scenario rubric, and any mechanically extracted counts, then writes the committed score file at `tests/pressure/workflow-contracts/scores/<head>/<family>/<scenario-id>.json`.
+After each completed trial, an executor may inspect frozen local output against
+the predeclared rubric. Local observations are not committed as proof when the
+underlying trace is unavailable to reviewers.
 
 This is post-hoc executor adjudication. The evaluated trial does not see its score and does not self-rate. The score must distinguish the evaluated model from the judge provenance with this fixed shape:
 
@@ -272,7 +271,7 @@ This is post-hoc executor adjudication. The evaluated trial does not see its sco
 
 `judge.model` records the executor role mandated by this plan; if the executing harness exposes a different effective judge model than `gpt-5.6-luna`, Luna must not silently write the pinned value. Record the observed model and treat the mismatch as a plan/execution blocker because the campaign would no longer be the specified Luna adjudication pass.
 
-Mechanically derivable counts should come from the runner/event parser where possible; Luna may not invent a number that the trace cannot support. Use `unobservable` rather than estimation. `results.md` summarizes the committed score records and points to their paths; it does not link to raw local `runs/` as though those files were published.
+Mechanically derivable counts should come from the runner/event parser where possible; Luna may not invent a number that the trace cannot support. Use `unobservable` rather than estimation.
 
 ## Task 1: Rebase Superpowers+ onto pinned upstream v6.3
 
@@ -300,7 +299,7 @@ Mechanically derivable counts should come from the runner/event parser where pos
 - [x] **4. Create campaign scenarios/prompts.** Include trivial docs correction; specified bug/focused RED; genuine ambiguity; wrong reviewer finding; authorized Draft PR dry-run; compaction resume; unauthorized destructive work; bounded parallel work; small reversible change; repo vs portable rule; tiny no-approval design case; branch finish with valid evidence; no-independent-behavior helper. Each declares expected authority, next action, evidence scope, one allowed sandbox (`read-only` or `workspace-write`), external-effect expectation (`none`), and rubric.
 - [x] **5. Add `tests/pressure/workflow-contracts/runs/` to `.gitignore`.** Tests assert the raw path is ignored and committed score/result artifacts do not depend on raw files being Git-tracked.
 - [x] **6. Implement runner exactly to the contracts above.** Add `TestEvaluationCampaign` unit tests for harness preflight/failure classes, argv construction, fixed sandbox allowlist, external-effect controls, model mapping, run schema, `unobservable` mode, model-unavailable handling, worktree isolation, SHA-256 capture, filters, and score schema. Use fake Codex process; no live model spend in Task 2.
-- [x] **7. Capture initial RED:** `py -3 -m pytest tests/test_workflow_contracts.py -q`; write failing tests/classes and owning tasks to `red-baseline.md`.
+- [x] **7. Capture initial RED:** `py -3 -m pytest tests/test_workflow_contracts.py -q`; verify the staged contract tests fail for their intended missing behavior.
 - [x] **8. Run scanner/classify hits.**
 - [x] **9. Green exit/checkpoint.** Fixture/runner/scanner/schema tests green; RED durably recorded; checkpoint -> Task 3.
 
@@ -367,51 +366,11 @@ py -3 tools/run_workflow_pressure_campaign.py \
   --head <evaluation_head>
 ```
 
-- [x] Inspect `campaign-meta.json`. The revised harness is `harness-blocked`: the exact-head disposable preflight found a non-empty MCP inventory before the read-only Luna smoke, so no behavioral trials were started and no result was converted into `model-unavailable`.
-- [ ] For each completed trial, review frozen `events.jsonl` + `final.txt` + `meta.json` against the predeclared rubric and write the committed score using the fixed Score Adjudication Contract. Blocked: the revised preflight produced zero completed trials.
-- [x] Verify every score separates `trial` from `judge`, includes raw SHA-256 hashes, contains only trace-supported mechanical counts or `unobservable`, and includes criterion-level evidence locators.
-- [x] Update `results.md` to identify the revised run as harness-blocked and label the 52 retained scores superseded diagnostic-only; no historical verdict is presented as a new baseline.
-- [x] Record reasoning-mode evidence honestly: `api_reasoning_mode: "unobservable"`; no unsupported inference was made.
-- [x] Confirm raw `runs/` remains ignored/uncommitted and inspect derived evidence for sensitive material before publication.
-- [x] Diagnose the retained historical failures as harness capability rather than model-unavailable; the revised smoke block prevents unsupported behavioral claims.
+- [x] The revised harness stopped before behavioral trials because isolation was not established; no model-unavailable classification or behavioral baseline is claimed.
+- [x] Confirm raw `runs/` remains ignored and disposable.
 - [x] Only exact family/model absence after a green harness preflight is `model-unavailable`; no trial received that classification.
 - [x] Run the workflow-contract and hook-contract focused tests => 44 and 35 passed respectively after the fresh-eyes repair pass.
-- [ ] **Green exit/checkpoint:** blocked because the real read-only smoke did not complete; 0 revised trials are valid and the retained 52 scores are diagnostic-only. Do not advance Task 7 to a green behavioral baseline until the smoke passes.
-
-### Temporary external Luna evaluation (2026-09-08)
-
-- [x] Cloned separate evaluation dependencies under this worktree's ignored
-  `evals/` boundary and ran them only through WSL. They are temporary external
-  tooling, not vendored repository content.
-- [x] Mirrored the exact published source and pinned eval/Gauntlet revisions
-  into dedicated native WSL storage, following the successful Superpowers eval
-  topology rather than executing TUI trials from `/mnt/z`.
-- [x] Proved the immutable-head runner at
-  `5c67870d82d9ec6408da62df42084600c6d80849` sees a clean source, observes
-  empty effective MCP and plugin inventories, and uses the proven temporary
-  provider bridge without persisting the OpenAI key.
-- [x] Ran all 13 scenarios with `gpt-5.6-luna` at medium reasoning through
-  `openai_responses_56luna` and an independent GPT-5.4 Gauntlet actor.
-- [x] Recorded 13 determinate outcomes: 6 pass, 7 behavioral fail, 0
-  indeterminate. No result was reclassified as harness-capability or
-  model-unavailable.
-- [x] Committed a summary containing the pinned revisions, per-cell outcomes,
-  deterministic post-check counts, and SHA-256 hashes of ignored raw verdicts.
-- [x] Repaired the seven original Luna failures through owner-level contracts,
-  corrected overfitted deterministic checks and fixture premises, and moved
-  live execution back to the native WSL topology after `/mnt/z` session loss.
-- [x] Ran a fresh 13-cell native-WSL Luna campaign at
-  `8b8deb5a431d644066cc794c232452896d38e6ba`: 11 Gauntlet passes and two
-  behavioral failures. Manual adjudication rejected the full-run compaction
-  pass because it read the evidence-head marker rather than the durable
-  checkpoint.
-- [x] Used the Task 7 affected-trial rule: accepted a same-head compaction rerun
-  that read `.agents/checkpoint.md` first, then repaired and reran the safety
-  and portability cells at `96371832c4bc23efc8b37285ee064061151d090a`.
-  Effective durable result: 12 pass, 1 fail, 0 indeterminate.
-- [x] Stopped further paid model execution on explicit human instruction after
-  grader credits were exhausted. No Terra/Sol/Astra extension is
-  claimed; retained historical four-family evidence remains diagnostic-only.
+- [ ] **Green exit/checkpoint:** no behavioral baseline was established. Paid evaluation is retired by human instruction; reusable prompts remain for future work.
 
 ## Task 8: Regenerate, review, hook-validate, publish, promote PR #311
 

@@ -18,7 +18,7 @@
     },
     {
       "id": "repo-standards-commands",
-      "path": ".agents/doctrine/repo-standards-commands.json",
+      "path": ".agents/contracts/repo-standards-commands.json",
       "kind": "command-declaration",
       "source": null,
       "scaffold": null,

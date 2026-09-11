@@ -23,7 +23,7 @@ Use this runbook for Python and Markdown conventions in `agent-asset-marketplace
 - Use `Optional[X]` rather than `X | None` for nullable type annotations.
 - Generated surfaces (`codex-marketplace/` and `.agents/skills/` from marketplace) are downstream outputs. Edit canonical source, then regenerate.
 
-## Routing to skills
+## Workflow routing
 
-- `/writing-with-clarity` for human-facing prose.
-- `/repo-worker-base` for repo hygiene and publication boundaries.
+Invoke `/using-superpowers-plus` once and follow its handoff. This runbook owns
+only repository-specific Python and Markdown conventions.

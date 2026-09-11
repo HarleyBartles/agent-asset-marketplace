@@ -12,7 +12,7 @@ Remove stale, redundant, and split-brain repository surfaces that no longer serv
 - Delete `generated/`. The zip-export lane is retired and no tooling writes here; the directory only contains a generated `INDEX.md`.
 - Delete `docs/overlay-adapter-policy.md` — the overlay machinery is retired.
 - Delete `.devin/rules/adapters.md` and `.agents/doctrine/adapters.md` — retired with the `adapters/` tree.
-- Re-point `.devin/rules/docs.md` and `.devin/rules/docs-contracts.md` to `.agents/docs/` and `.agents/docs/contracts/` instead of the old `docs/` tree; do **not** delete them.
+- Re-point `.devin/rules/docs.md` and `.devin/rules/contracts.md` to `.agents/docs/` and `.agents/contracts/` instead of the old `docs/` tree; do **not** delete them.
 - Remove `adapters` and `generated` entries from `.gitignore`.
 
 ### 2. Consolidate docs and doctrine
@@ -46,7 +46,7 @@ Remove stale, redundant, and split-brain repository surfaces that no longer serv
 
 ### 4. Reference refresh and validation
 
-- Update hard-coded references to the moved/removed paths in root `AGENTS.md`, `README.md`, `REVIEW.md`, `CONTRIBUTING.md`, `.agents/docs/AGENTS.md`, `.agents/doctrine/docs.md`, `.agents/doctrine/docs-contracts.md`, runbooks, skill sources, and repo tooling.
+- Update hard-coded references to the moved/removed paths in root `AGENTS.md`, `README.md`, `REVIEW.md`, `CONTRIBUTING.md`, `.agents/docs/AGENTS.md`, `.agents/doctrine/docs.md`, `.agents/doctrine/contracts.md`, runbooks, skill sources, and repo tooling.
 - Run `py -3 tools/run.py mesh --apply` to regenerate `INDEX.md` files and prune removed surfaces.
 - Run `py -3 tools/run.py ci --check` for final validation.
 
@@ -98,9 +98,9 @@ The following files carry hard-coded references to the moved or removed surfaces
 - `README.md` — `.agents/docs/mesh-policy.md` link.
 - `REVIEW.md` and `CONTRIBUTING.md` — `.agents/docs/repo-runbook-policy.md` links.
 - `.agents/docs/AGENTS.md` — scope from "agent doctrine, mesh policy, and other agent-facing docs" to the new docs-only scope; routing pointers to `mesh-policy.md` and `repo-runbook-policy.md` must point into `.agents/doctrine/`.
-- `.agents/doctrine/docs.md` and `.agents/doctrine/docs-contracts.md` — re-scope to `.agents/docs/` and `.agents/docs/contracts/`.
+- `.agents/doctrine/docs.md` and `.agents/doctrine/contracts.md` — re-scope to `.agents/docs/` and `.agents/contracts/`.
 - `.devin/rules/adapters.md` and `.agents/doctrine/adapters.md` — delete with `adapters/`.
-- `.devin/rules/docs.md` and `.devin/rules/docs-contracts.md` — re-point to `.agents/docs/` and `.agents/docs/contracts/`, not deleted.
+- `.devin/rules/docs.md` and `.devin/rules/contracts.md` — re-point to `.agents/docs/` and `.agents/contracts/`, not deleted.
 - `docs/skill-standards-policy.md` — remove `docs/overlay-adapter-policy.md` cross-reference before moving to `.agents/doctrine/`.
 - `codex-marketplace/plugins/superpowers-plus/skills/publishing-source/SKILL.md` and `references/publishing-decisions.md` — remove `adapters/codex/` references.
 - `tools/validate_agents_md.py` — `.agents/docs/mesh-policy.md` string.

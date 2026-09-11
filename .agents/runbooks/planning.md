@@ -1,6 +1,7 @@
 # Planning Runbook
 
-Use this reference when planning work in the agent-asset-marketplace repo — before writing an implementation plan, before touching code. This runbook covers the planner workflow: what to read before planning, what skills to invoke, what a plan must contain, and where plan artifacts go.
+Use this reference for repository-specific plan custody, marketplace
+constraints, and validation in agent-asset-marketplace.
 
 ## Before You Begin: Read the Standards
 
@@ -10,14 +11,11 @@ A plan that doesn't account for the repo's standards will produce implementation
 - **[`AGENTS.md`](../../AGENTS.md)** — repository source-of-truth and publication rules
 - **[`.devin/rules/tools.md`](../../.devin/rules/tools.md)** — marketplace generation and validation tooling
 
-## Skills to Invoke
+## Workflow routing
 
-At the start of any planning session, invoke `/using-superpowers-plus` to route to the owning skill.
-
-- When the request is to write an implementation plan, `/using-superpowers-plus` will route to `/writing-plans`.
-- Invoke `/repo-worker-base` when the plan touches worktree, branch, validation, or publication boundaries.
-- Invoke `/repo-standards` when the plan touches repo shape, runbook layout, scaffolds, or standard alignment.
-- Invoke `/brainstorming` only when the spec is missing or the solution shape is unknown; otherwise it is not a first-turn skill.
+Invoke `/using-superpowers-plus` once and follow its planning handoff. This
+runbook supplies repository-specific plan custody, marketplace constraints, and
+validation commands; it does not select the workflow stack.
 
 ## Plan Structure
 

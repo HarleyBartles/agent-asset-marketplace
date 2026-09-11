@@ -13,8 +13,8 @@ Use the first-party [`writing-skills`](../../codex-marketplace/plugins/superpowe
 
 - [agentskills.io specification](https://agentskills.io/specification)
 - `superpowers-plus:writing-skills`
-- `.agents/docs/contracts/skill-frontmatter.md`
-- `.agents/docs/contracts/openai-agent-yaml.md`
+- `.agents/contracts/skill-frontmatter.md`
+- `.agents/contracts/openai-agent-yaml.md`
 - `custody-and-marketplace-doctrine.md`
 
 ## Directory structure
@@ -46,7 +46,7 @@ Authority lanes are defined in `assets/authority/authority.yaml`:
 
 ## SKILL.md frontmatter
 
-See `.agents/docs/contracts/skill-frontmatter.md` for the base shape and parsing rules.
+See `.agents/contracts/skill-frontmatter.md` for the base shape and parsing rules.
 
 This repo adds:
 
@@ -77,7 +77,7 @@ Required for skills bundled into a Codex marketplace plugin.
 - `policy.allow_implicit_invocation` must be explicit (boolean).
 - Add `dependencies` only when the skill actually needs them.
 
-See `.agents/docs/contracts/openai-agent-yaml.md` for the full contract.
+See `.agents/contracts/openai-agent-yaml.md` for the full contract.
 
 ## Bundled scripts
 

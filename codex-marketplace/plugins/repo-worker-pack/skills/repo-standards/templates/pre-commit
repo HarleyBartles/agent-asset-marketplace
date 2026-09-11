@@ -87,7 +87,7 @@ else
   exit 1
 fi
 
-COMMAND_DECLARATION="$REPO_ROOT/.agents/doctrine/repo-standards-commands.json"
+COMMAND_DECLARATION="$REPO_ROOT/.agents/contracts/repo-standards-commands.json"
 if [ ! -f "$COMMAND_DECLARATION" ]; then
   echo "pre-commit: missing consumer command declaration: $COMMAND_DECLARATION" >&2
   exit 1

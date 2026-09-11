@@ -18,4 +18,4 @@ navigation.
 - `.agents/doctrine/repo-runbook-policy.md` for this repo's mapping to the cross-repo runbook standard
 - `../runbooks/AGENTS.md` for runbook-stage routing
 - `../runbooks/completing-plans.md` for completing and archiving a plan and its spec
-- `../../.devin/rules/docs-contracts.md` for contract-doc routing when docs-owned contracts are the target
+- `../../.devin/rules/contracts.md` for repository contract routing
