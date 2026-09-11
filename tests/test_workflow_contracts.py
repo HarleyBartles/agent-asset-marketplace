@@ -287,9 +287,40 @@ class TestRepositoryCallersAndPressure:
                 "upstream snapshot is retained",
                 "snapshot retained in",
                 "retained upstream snapshot",
+                "snapshot is recorded in `source.md`",
             )
             if any(claim in text for claim in stale_claims):
                 offenders.append(path.relative_to(plugin).as_posix())
+        assert offenders == []
+
+    def test_completed_artifact_guidance_does_not_require_archival(self):
+        owners = (
+            ROOT / ".agents" / "doctrine" / "plans.md",
+            ROOT / ".agents" / "runbooks" / "AGENTS.md",
+            ROOT / ".agents" / "runbooks" / "code-review.md",
+            ROOT
+            / "codex-marketplace"
+            / "plugins"
+            / "repo-worker-pack"
+            / "skills"
+            / "linear-issue-shaping"
+            / "SKILL.md",
+            ROOT / "codex-marketplace" / "plugins" / "superpowers-plus" / "skills" / "writing-plans" / "SKILL.md",
+            ROOT
+            / "codex-marketplace"
+            / "plugins"
+            / "superpowers-plus"
+            / "skills"
+            / "iterative-review"
+            / "references"
+            / "review-state-graph.md",
+        )
+        stale_phrases = ("archive-and-removal", "off-repo archive", "plan archival", "archiving a plan")
+        offenders = [
+            path.relative_to(ROOT).as_posix()
+            for path in owners
+            if any(phrase in _read(path).lower() for phrase in stale_phrases)
+        ]
         assert offenders == []
 
     def test_portable_clarification_trigger_is_consumer_neutral(self):
@@ -515,18 +546,37 @@ class TestEvaluationCampaign:
 
     def test_pressure_fixtures_do_not_retain_run_results(self):
         pressure_root = ROOT / "tests" / "pressure"
-        forbidden_names = {"results.md", "fresh-context-pressure-results.md"}
-        retained = [
-            path.relative_to(ROOT).as_posix()
-            for path in pressure_root.rglob("*")
-            if path.is_file() and (path.name in forbidden_names or "outputs" in path.parts)
-        ]
+        contract_path = ROOT / ".agents" / "contracts" / "pressure-artifacts.json"
+        contract = json.loads(_read(contract_path))
+
+        tracked = (
+            __import__("subprocess")
+            .run(
+                ["git", "ls-files", "tests/pressure"],
+                cwd=ROOT,
+                capture_output=True,
+                text=True,
+                check=True,
+            )
+            .stdout.splitlines()
+        )
+        forbidden_names = set(contract["forbidden_tracked_basenames"])
+        retained = [path for path in tracked if Path(path).name in forbidden_names or "/runs/" in path]
         assert retained == []
 
+        transient_fields = set(contract["transient_result_fields"])
+
+        def find_transient_fields(value):
+            if isinstance(value, dict):
+                return (set(value) & transient_fields) | set().union(
+                    *(find_transient_fields(child) for child in value.values()), set()
+                )
+            if isinstance(value, list):
+                return set().union(*(find_transient_fields(child) for child in value), set())
+            return set()
+
         for campaign in pressure_root.rglob("campaign.json"):
-            payload = json.loads(_read(campaign))
-            assert "runtime_results" not in payload, campaign
-            assert "runtime_execution" not in payload, campaign
+            assert find_transient_fields(json.loads(_read(campaign))) == set(), campaign
 
     def test_trial_argv_has_exact_controls_and_least_privilege(self, tmp_path: Path):
         argv = campaign_runner.build_codex_argv(tmp_path, "gpt-5.6-luna", "read-only", tmp_path / "final.txt")

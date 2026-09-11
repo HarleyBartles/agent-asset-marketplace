@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "tracked_artifacts": [
+    "prompts",
+    "rubrics",
+    "campaign_configuration",
+    "deterministic_expected_outputs",
+    "deterministic_assertions"
+  ],
+  "transient_artifacts": [
+    "model_outputs",
+    "grader_outputs",
+    "scores",
+    "verdicts",
+    "transcripts",
+    "runtime_identities",
+    "run_metadata"
+  ],
+  "transient_run_location": "tests/pressure/<campaign>/runs/",
+  "forbidden_tracked_basenames": [
+    "results.md",
+    "fresh-context-pressure-results.md"
+  ],
+  "transient_result_fields": [
+    "runtime_results",
+    "runtime_execution",
+    "raw_response",
+    "raw_response_excerpt",
+    "source_rollout",
+    "score",
+    "scores",
+    "verdict",
+    "judgment",
+    "transcript"
+  ]
+}

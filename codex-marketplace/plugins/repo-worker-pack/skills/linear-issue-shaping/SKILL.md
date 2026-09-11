@@ -78,8 +78,8 @@ If the approved plan is stale but the drift is repairable and stays inside the a
 
 Keep an approved plan current while it governs implementation and review. When
 the PR completes it, follow the consumer's completed-artifact custody rule:
-promote durable decisions, verify the off-repo archive, and remove the finished
-planning artifacts from the final tracked tree.
+promote durable decisions and remove the finished planning artifacts from the
+final tracked tree. A disposable scratch copy is optional and proves nothing.
 
 Return to this skill after those gates to write or update the Linear issue only when the latest instruction authorizes mutation.
 

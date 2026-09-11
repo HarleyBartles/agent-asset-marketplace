@@ -18,6 +18,5 @@ Defer to the repository root `AGENTS.md` for global repo and publication rules.
 
 This file must stay aligned with the repo's plan documentation practices. When
 plan formats change or new guidance is needed for plan structure, review and
-update this file to reflect current expectations. After completion, archive all
-finished planning artifacts off-repo under the completed-artifact custody
-doctrine; do not preserve them as mutable tracked history.
+update this file to reflect current expectations. After completion, remove all
+finished planning artifacts under the completed-artifact custody doctrine.

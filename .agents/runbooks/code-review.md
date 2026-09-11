@@ -30,6 +30,6 @@ Verify the work is validated. Key checks:
 - Index mesh: `tools/run mesh --apply` when files are added or removed.
 - Vendored output: generated or installed vendored assets must reflect the change.
 
-Publication proof is defined by root `AGENTS.md`; plan archival mechanics are
+Publication proof is defined by root `AGENTS.md`; completed-artifact removal is
 defined by [`completing-plans.md`](completing-plans.md). Do not duplicate either
 contract here.

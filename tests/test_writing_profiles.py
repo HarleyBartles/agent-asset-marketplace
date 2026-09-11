@@ -611,13 +611,8 @@ def test_blinded_campaign_is_frozen_and_hides_the_judge_rubric_from_workers() ->
 
 def test_blinded_campaign_pins_remain_coherent_after_product_divergence() -> None:
     campaign = _load_json(BLINDED_ROOT / "campaign.json")
-    assert campaign["campaign_version"] == "1.4.0"
-    assert campaign["prospective_freeze"] == {
-        "correction_round": 4,
-        "correction_scope": "pre_output_review_findings",
-        "worker_outputs_existed_before_refreeze": False,
-        "arms_run_before_refreeze": False,
-    }
+    assert campaign["campaign_version"] == "1.5.0"
+    assert "prospective_freeze" not in campaign
     treatment = next(arm for arm in campaign["arms"] if arm["id"] == "treatment-writing-style")
     intervention_paths = set(treatment["worker_allowed_reads"]) - {"tests/pressure/writing/blinded/stimulus.md"}
     pinned_intervention = {artifact["path"]: artifact["sha256"] for artifact in campaign["treatment_artifacts"]}
@@ -634,6 +629,14 @@ def test_blinded_campaign_pins_remain_coherent_after_product_divergence() -> Non
         "references/profiles/fatigue/ai-prose-fatigue/goldens.json"
     )
     assert evaluator_pins[goldens["path"]] == goldens["sha256"]
+
+    all_pins = {
+        **pinned_intervention,
+        goldens["path"]: goldens["sha256"],
+        **evaluator_pins,
+    }
+    for path, expected_hash in all_pins.items():
+        assert _sha256(ROOT / path) == expected_hash, path
 
     verification = campaign["pre_output_verification"]
     assert verification["required"] is True

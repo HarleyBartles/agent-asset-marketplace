@@ -101,7 +101,7 @@ flowchart TD
 || `final-strong` | `closeout` | `reviewer-strong` reports `reviewer-strong: clean`. |
 || `final-strong` | `metrics-track` | `reviewer-strong` reports findings. |
 || `final-strong` | `blocked` | A finding is contested or load-bearing. |
-|| `closeout` | `ready` | Archives (if any) are committed and the local tree passes `ci --check`. |
+|| `closeout` | `ready` | Completed planning artifacts are removed and the local tree passes the consumer's canonical validation. |
 
 ## Round counting
 

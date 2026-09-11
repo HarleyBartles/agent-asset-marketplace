@@ -71,7 +71,7 @@ Plans are durable, tracked files. The in-flight plan is the source of truth for 
 - **In-flight home:** `.agents/plans/YYYY-MM-DD-<feature-name>.md` (or `.agents/plans/<epic-name>/YYYY-MM-DD-<feature-name>.md` for epic plans). Off-repo scratch is for transient session artifacts only; the plan itself always lives in the in-flight plan home.
 - **Commit before handoff:** A plan must exist and be committed before it can be handed to `executing-plans` or `subagent-driven-development`. Execution skills read the saved, committed file, not unsaved editor state.
 - **Completion:** When the work is complete, promote enduring decisions to ADRs or current doctrine, then remove the finished plan and associated planning artifacts from Git. A convenience copy may live in the consumer's central completed-artifact scratch store but is disposable and not evidence.
-- **Roadmap and index links:** Remove tracked archive links rather than maintaining a completed-artifact index. See the consumer's completion runbook for its archive-and-removal sequence.
+- **Roadmap and index links:** Remove links to completed artifacts rather than maintaining a completed-artifact index. See the consumer's completion runbook for its removal sequence.
 
 ## File Structure
 
