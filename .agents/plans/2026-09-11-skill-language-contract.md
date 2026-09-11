@@ -77,10 +77,10 @@
 - Modify: PR #311 body
 
 - [x] **Step 1: Review the complete diff adversarially.** Check semantic accuracy, grammar, trigger discovery, relationship direction, safety preservation, generated-source custody, and absence of client syntax.
-- [ ] **Step 2: Mark plan and checkpoint truthfully.** Record the focused evidence and any irreducibly manual boundary without producing a duplicate receipt.
-- [ ] **Step 3: Commit normally.** Let the tracked pre-commit apply/check gate validate the staged state.
-- [ ] **Step 4: Push and update Draft PR #311.** Keep it Draft and describe the language contract and repo-wide migration.
-- [ ] **Step 5: Verify publication.** Confirm clean tree, local/remote head equality, base `main`, and Draft state.
+- [x] **Step 2: Mark plan and checkpoint truthfully.** Record the focused evidence and any irreducibly manual boundary without producing a duplicate receipt.
+- [x] **Step 3: Commit normally.** Let the tracked pre-commit apply/check gate validate the staged state.
+- [x] **Step 4: Push and update Draft PR #311.** Keep it Draft and describe the language contract and repo-wide migration.
+- [x] **Step 5: Verify publication.** Confirm clean tree, local/remote head equality, base `main`, and Draft state.
 
 ## Acceptance evidence
 

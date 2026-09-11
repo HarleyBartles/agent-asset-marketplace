@@ -74,9 +74,7 @@ def validate_skill_markdown_frontmatter(skill_root: Path) -> None:
     if "use when use" in description.lower():
         raise ValueError(f"{skill_md} description must not contain 'Use when use'")
     metadata = parsed_frontmatter.get("metadata")
-    is_first_party = (
-        isinstance(metadata, dict) and metadata.get("source_category") == "first_party"
-    )
+    is_first_party = isinstance(metadata, dict) and metadata.get("source_category") == "first_party"
     if is_first_party and not isinstance(metadata, dict):
         raise ValueError(f"{skill_md} frontmatter metadata must be a mapping")
     if metadata is not None and not isinstance(metadata, dict):
@@ -150,6 +148,5 @@ def validate_skill_markdown_frontmatter(skill_root: Path) -> None:
         elif metadata.get("content_mode") == "normalised":
             if metadata.get("adapted_author") or metadata.get("adaptation_note"):
                 raise ValueError(
-                    f"{skill_md} frontmatter: normalised skills must not "
-                    "declare adapted_author or adaptation_note"
+                    f"{skill_md} frontmatter: normalised skills must not declare adapted_author or adaptation_note"
                 )
