@@ -10,11 +10,11 @@ metadata:
   owner: Harley Bartles
   scope: Install or refresh .agents/skills/ from the plugin source.
   use_when:
-  - Use when creating a new worktree.
-  - Use after updating the marketplace-source submodule.
-  - Use when .agents/skills/ appears stale.
+  - creating a new worktree.
+  - the marketplace-source submodule has been updated.
+  - .agents/skills/ appears stale.
   do_not_use_when:
-  - Do not use when only the INDEX.md mesh is stale without any skill changes; use generating-agent-mesh instead.
+  - only the INDEX.md mesh is stale without any skill changes; use generating-agent-mesh instead.
   related_skills:
   - generating-agent-mesh
   - using-git-worktrees
@@ -51,15 +51,15 @@ Both `local` and `github` sources are normalized and must resolve to a directory
 
 ## Local skill validation extension
 
-After the bundled core validates that local skill directories match their frontmatter names and do not collide with reserved marketplace prefixes, it calls a repo-supplied extension script if one exists:
+After the bundled core validates that explicitly registered local skill directories match their frontmatter names and do not collide with marketplace skill names, it calls a repo-supplied extension script if one exists:
 
-- `scripts/validate_local_skills_extra.sh` — bash script; receives `--check` followed by the skills root and any local skill prefixes.
+- `scripts/validate_local_skills_extra.sh` — bash script; receives `--check` followed by the skills root and exact local skill names.
 - `scripts/validate_local_skills_extra.ps1` — PowerShell script; must declare `param([switch]$Check, [Parameter(ValueFromRemainingArguments=$true)][string[]]$Remaining)`.
 
 Example invocation:
 
 ```text
-scripts/validate_local_skills_extra.sh .agents/skills wild-bunch-
+scripts/validate_local_skills_extra.sh .agents/skills wild-bunch-domain-modeling
 ```
 
 In `--check` mode the script must report errors and exit non-zero if invalid. In write mode it may also auto-fix or just validate. The skill fails with a clear error if the hook exits non-zero.
@@ -70,7 +70,7 @@ In `--check` mode the script must report errors and exit non-zero if invalid. In
 
 It also records:
 
-- `localSkills`: the names of any skills installed from the consumer repo's local skill source (declared by `repo.local_skill_prefixes`).
+- `localSkills`: the exact names of skills installed from the consumer repo's local skill source (declared by `repo.local_skills`).
 - `localPlugins`: the names of any plugins whose skills were installed from a `local` source.
 - `marketplace`: the source repository and source path used for the marketplace.
 - `marketplaceFile`: the path to `.agents/plugins/marketplace.json`.

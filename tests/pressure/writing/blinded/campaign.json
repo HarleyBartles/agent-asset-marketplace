@@ -1,15 +1,9 @@
 {
   "schema_version": 1,
   "campaign_id": "writing-style-adversarial-ab",
-  "campaign_version": "1.4.0",
+  "campaign_version": "1.5.0",
   "status": "frozen_unrun",
-  "frozen_at": "2026-08-25",
-  "prospective_freeze": {
-    "correction_round": 4,
-    "correction_scope": "pre_output_review_findings",
-    "worker_outputs_existed_before_refreeze": false,
-    "arms_run_before_refreeze": false
-  },
+  "frozen_at": "2026-09-12",
   "designer": {
     "shared_role": "reviewer",
     "named_profile": null,
@@ -42,11 +36,11 @@
   "treatment_artifacts": [
     {
       "path": "codex-marketplace/plugins/writing-pack/skills/writing-style/SKILL.md",
-      "sha256": "a81a8089f8dda59718e8ff3ce607790865aabe0f267433a28074957ec84098b0"
+      "sha256": "2749da998cbef2044a245c725c506903e787db70dae1915e971e4590baf094ae"
     },
     {
       "path": "codex-marketplace/plugins/writing-pack/skills/writing-style/references/profile-contract.md",
-      "sha256": "2554ecd33206b2f517deb65238fb999a1f8ae46a5ece78bbc94f881b90b58b95"
+      "sha256": "8dcce0de9ce6c4c27bca38a4cf26eb2c973880838fab582402e4343f0b9335c6"
     },
     {
       "path": "codex-marketplace/plugins/writing-pack/skills/writing-style/references/voice-card.md",
@@ -58,11 +52,11 @@
     },
     {
       "path": "codex-marketplace/plugins/writing-pack/skills/writing-style/references/profiles/fatigue/ai-prose-fatigue/patterns.json",
-      "sha256": "4ff7f5df7093bb814912787df8256f44218dc67e7ab089198964fb50220b8199"
+      "sha256": "74110b29ebe41c5fbaffd7fe128e73b3f9ee49018850c3d68a7264cc2c14a5e1"
     },
     {
       "path": "codex-marketplace/plugins/writing-pack/skills/writing-with-clarity/SKILL.md",
-      "sha256": "3881eb85bc3826715a6366c18d8f98099eb3d6b3715897be380779f00e641d23"
+      "sha256": "7af9f68a5de577f02a9df2c5253949ec7444b9d5ed54066ae1711b7330076a18"
     },
     {
       "path": "codex-marketplace/plugins/writing-pack/skills/writing-with-clarity/references/routing.md",
@@ -79,7 +73,7 @@
   ],
   "evaluator_goldens": {
     "path": "codex-marketplace/plugins/writing-pack/skills/writing-style/references/profiles/fatigue/ai-prose-fatigue/goldens.json",
-    "sha256": "905e69aa5ea422a94d0e72ffdb1b3d9538ecbe754ed37afcf9552b000882f4dd"
+    "sha256": "efb2bf6aba9b5883168c291c609a6bdd14da3cdf4de2ad04081be2d9d9878a28"
   },
   "pre_output_verification": {
     "required": true,

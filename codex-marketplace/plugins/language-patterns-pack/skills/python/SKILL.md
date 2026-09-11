@@ -9,14 +9,12 @@ metadata:
   source-category: first_party
   status: active
   owner: Harley Bartles
-  scope: Use when writing, reviewing, or debugging Python code and the task
-    calls for idiomatic language patterns, concurrency, testing, or type-safety guidance.
   use_when:
-  - Use when writing or reviewing Python code.
-  - Use when choosing between async and sync patterns.
-  - Use when diagnosing test, type, or performance issues in Python.
+  - writing or reviewing Python code.
+  - choosing between async and sync patterns.
+  - diagnosing test, type, or performance issues in Python.
   do_not_use_when:
-  - Do not use when another language-specific or framework-specific skill owns the task.
+  - another language-specific or framework-specific skill owns the task.
   related_skills:
   - python-frameworks
   - typescript

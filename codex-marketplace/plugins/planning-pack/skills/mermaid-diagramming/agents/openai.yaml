@@ -4,7 +4,7 @@ metadata:
   source_category: first_party
 interface:
   display_name: Mermaid Diagramming
-  short_description: Use when selecting, writing, or reviewing Mermaid diagrams for technical documentation.
+  short_description: Guidance for selecting, writing, or reviewing Mermaid diagrams for technical documentation.
   default_prompt: Use mermaid-diagramming when selecting, writing, or reviewing Mermaid diagrams for technical documentation.
 policy:
   allow_implicit_invocation: true

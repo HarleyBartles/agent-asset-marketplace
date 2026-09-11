@@ -5,7 +5,7 @@ Use this runbook for the test commands and conventions in `agent-asset-marketpla
 ## Before you begin
 
 - Read [`.devin/rules/tools.md`](../../.devin/rules/tools.md) for the canonical validation commands.
-- Read [`.agents/runbooks/implementing.md`](./implementing.md) for the TDD workflow.
+- Read [`.agents/runbooks/implementing.md`](./implementing.md) for repository-specific implementation constraints.
 
 ## When to use
 
@@ -15,14 +15,13 @@ Use this runbook for the test commands and conventions in `agent-asset-marketpla
 
 ## Repo-specific guidance
 
-- Run the full test suite with `py -3 -m pytest` from the repo root.
 - Run a single test file with `py -3 -m pytest tests/<file>.py -v`.
-- This repo uses test-driven development. Write a failing test before implementation code, then make it pass.
 - Contract tests live under `tests/`. Marketplace generation correctness is proven by `tools/run marketplace --apply` and `tools/run ci --check`.
-- After changing source custody, adapters, plugin shapes, bundle manifests, source maps, provenance maps, or generated zips, run the full marketplace rebuild as the green-path proof.
+- After changing source custody, adapters, plugin shapes, bundle manifests,
+  source maps, provenance maps, or generated zips, run the full marketplace
+  rebuild as the green-path proof.
 
-## Routing to skills
+## Workflow routing
 
-- For TDD implementation, invoke `/test-driven-development`.
-- For test design and coverage, invoke `/unslop-profiles` with the `testing` profile.
-- For repo hygiene and publication, invoke `/repo-worker-base`.
+Invoke `using-superpowers-plus` once and follow its testing or implementation
+handoff. This runbook owns only the repository's test commands and locations.

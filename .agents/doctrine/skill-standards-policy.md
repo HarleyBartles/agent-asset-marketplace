@@ -7,14 +7,14 @@ This policy is stricter than upstream sources where noted; otherwise the upstrea
 - The [agentskills.io specification](https://agentskills.io/specification) defines the base `SKILL.md` frontmatter format.
 - The installed `superpowers-plus:writing-skills` plugin skill defines the TDD-based approach to skill creation and discovery optimization.
 
-Use the first-party [`writing-skills`](../../codex-marketplace/plugins/superpowers-plus/skills/writing-skills/SKILL.md) skill when creating or reviewing a skill. It owns the authoring lanes, custody-aware scaffolding, authority evidence, scholarly citations, and clean-room boundaries. See `writing-skills/references/local-and-marketplace-custody.md` and `writing-skills/references/source-grounded-authoring.md` for the authoring lanes and `writing-skills/scripts/new_skill.py` for the scaffolder.
+The first-party [`writing-skills`](../../codex-marketplace/plugins/superpowers-plus/skills/writing-skills/SKILL.md) skill owns skill-authoring lanes, custody-aware scaffolding, authority evidence, scholarly citations, and clean-room boundaries. See `writing-skills/references/local-and-marketplace-custody.md` and `writing-skills/references/source-grounded-authoring.md` for the authoring lanes and `writing-skills/scripts/new_skill.py` for the scaffolder.
 
 ## External references
 
 - [agentskills.io specification](https://agentskills.io/specification)
 - `superpowers-plus:writing-skills`
-- `.agents/docs/contracts/skill-frontmatter.md`
-- `.agents/docs/contracts/openai-agent-yaml.md`
+- `.agents/contracts/skill-frontmatter.md`
+- `.agents/contracts/openai-agent-yaml.md`
 - `custody-and-marketplace-doctrine.md`
 
 ## Directory structure
@@ -32,7 +32,7 @@ The skill directory name must match the `name` field in `SKILL.md` frontmatter.
 
 ## Local skills
 
-Local `.agents/skills/mark-*` skills are tracked local custody. They require normal local skill frontmatter and are excluded from marketplace provenance. Use `writing-skills` for their authoring method.
+Local `.agents/skills/mark-*` skills are tracked local custody. They require normal local skill frontmatter and are excluded from marketplace provenance; their authoring method is owned by `writing-skills`.
 
 ## Authority and source custody
 
@@ -46,7 +46,7 @@ Authority lanes are defined in `assets/authority/authority.yaml`:
 
 ## SKILL.md frontmatter
 
-See `.agents/docs/contracts/skill-frontmatter.md` for the base shape and parsing rules.
+See `.agents/contracts/skill-frontmatter.md` for the base shape and parsing rules.
 
 This repo adds:
 
@@ -73,15 +73,19 @@ Required for skills bundled into a Codex marketplace plugin.
 
 - `version: 1` is required.
 - `metadata` is required and must be a mapping.
-- `interface.display_name`, `interface.short_description`, and `interface.default_prompt` must align to the canonical skill name and trigger language, using "Use when" phrasing.
+- `interface.display_name`, `interface.short_description`, and
+  `interface.default_prompt` must follow `.agents/contracts/openai-agent-yaml.md`;
+  do not impose description-style `Use when` phrasing on wrapper fields.
 - `policy.allow_implicit_invocation` must be explicit (boolean).
 - Add `dependencies` only when the skill actually needs them.
 
-See `.agents/docs/contracts/openai-agent-yaml.md` for the full contract.
+See `.agents/contracts/openai-agent-yaml.md` for the full contract.
 
 ## Bundled scripts
 
-Every executable Python script bundled with a first-party skill must support the CLI contract in `.agents/specs/completed/2026-08-04-skill-script-cli-contract-design.md`:
+Every executable Python script bundled with a first-party skill must support the
+CLI contract in the repo-standards
+[`skill-script-contract-validator.md`](../../codex-marketplace/plugins/repo-worker-pack/skills/repo-standards/references/skill-script-contract-validator.md):
 
 - `--help` prints usage, a one-line description, and the read-only or mutating classification for each flag.
 - `--check` is the default mode: report what the script would do and exit `0` when no mutation is needed.
@@ -123,7 +127,10 @@ Pure reference skills (syntax guides, API docs) and skills without a concrete fa
 ### Required artifacts when pressure testing
 
 1. **Scenario file in the skill:** Add `assets/pressure-tests.md` to the skill describing the RED and GREEN paths and the tool or decision under pressure. Keep it short and scenario-focused. The scenario ships with the skill so any consumer can run it.
-2. **Recorded RED/GREEN runs:** Run the scenario once without the skill (RED) and once with the skill (GREEN) using subagents. Record the results in `tests/pressure/<skill-name>/`. These proof records are consumer-specific and do not ship with the skill.
+2. **RED/GREEN comparison:** When the acceptance claim depends on behavior,
+   compare the scenario without and with the skill. Keep reusable prompts and
+   deterministic assertions; do not retain run-by-run transcripts, score
+   folders, or copied model metadata as permanent repository proof.
 3. **Tool-calling fidelity:** Subagents cannot invoke skills, but they can read the skill files from disk and call available MCP or other tools directly. Do not pre-truncate or fabricate tool-list fixtures; let the subagent call the actual MCP server (e.g., `mcp_list_tools`) and experience the same truncation or discovery cost a real agent would.
 4. **Cross-reference:** Link to the scenario from `assets/pressure-tests.md` and, where relevant, from the skill body.
 

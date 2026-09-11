@@ -372,16 +372,6 @@ def _run_repo_standards(ctx: Ctx) -> None:
         _run(cmd, ctx)
 
 
-def _check_archive_links(ctx: Ctx) -> None:
-    _run([sys.executable, "tools/heal_archive_links.py", "--check"], ctx)
-    _run([sys.executable, "tools/check_archive_links.py"], ctx)
-
-
-def _apply_archive_links(ctx: Ctx) -> None:
-    _run([sys.executable, "tools/heal_archive_links.py", "--apply"], ctx)
-    _run([sys.executable, "tools/check_archive_links.py"], ctx)
-
-
 def _check_review_preflight(ctx: Ctx) -> None:
     cmd = [sys.executable, "tools/review_preflight.py", "--check"]
     if ctx.base_ref:
@@ -515,11 +505,6 @@ _TASKS: dict[str, Task] = {
         check=(_run_validate,),
         fix="tools/run validate --apply",
     ),
-    "archive-links": Task(
-        apply=(_apply_archive_links,),
-        check=(_check_archive_links,),
-        fix="tools/run archive-links --apply",
-    ),
     "review-preflight": Task(
         check=(_check_review_preflight,),
         fix="review-preflight findings are manual; run `tools/review_preflight.py --check` to see them",
@@ -533,7 +518,7 @@ _TASKS: dict[str, Task] = {
         fix="tools/run runtime-agents --apply --allow-shared-checkout",
     ),
     "ci": Task(
-        deps=("lint", "repo-standards", "validate", "archive-links"),
+        deps=("lint", "repo-standards", "validate"),
         apply=(_run_ci,),
         check=(_run_ci,),
         fix="tools/run ci --apply",

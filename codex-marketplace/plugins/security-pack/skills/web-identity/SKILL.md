@@ -10,12 +10,12 @@ metadata:
   owner: Harley Bartles
   scope: OAuth 2.0 / OIDC flow selection, token validation, and identity-provider integration
   use_when:
-  - Use when selecting OAuth 2.0 / OIDC flows
-  - Use when validating access, refresh, or ID tokens
-  - Use when integrating identity providers or designing client consent
+  - selecting OAuth 2.0 / OIDC flows
+  - validating access, refresh, or ID tokens
+  - integrating identity providers or designing client consent
   do_not_use_when:
-  - Do not use when building bespoke session management
-  - Do not use when configuring platform-specific IAM policy
+  - building bespoke session management
+  - configuring platform-specific IAM policy
 license: MIT
 ---
 

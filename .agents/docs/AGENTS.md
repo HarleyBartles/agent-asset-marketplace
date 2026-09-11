@@ -17,5 +17,5 @@ navigation.
 - `INDEX.md` for docs-owned discovery surfaces
 - `.agents/doctrine/repo-runbook-policy.md` for this repo's mapping to the cross-repo runbook standard
 - `../runbooks/AGENTS.md` for runbook-stage routing
-- `../runbooks/completing-plans.md` for completing and archiving a plan and its spec
-- `../../.devin/rules/docs-contracts.md` for contract-doc routing when docs-owned contracts are the target
+- `../runbooks/completing-plans.md` for removing completed planning artifacts
+- `../../.devin/rules/contracts.md` for repository contract routing

@@ -4,7 +4,7 @@ metadata:
   source_category: first_party
 interface:
   display_name: Python Frameworks
-  short_description: Use when building, reviewing, or choosing Python web or task frameworks.
+  short_description: Guidance for building, reviewing, or choosing Python web or task frameworks.
   default_prompt: Use python-frameworks when building, reviewing, or choosing Python web or task frameworks.
 policy:
   allow_implicit_invocation: true

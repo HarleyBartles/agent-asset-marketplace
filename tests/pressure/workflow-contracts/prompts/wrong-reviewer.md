@@ -1,0 +1,1 @@
+A reviewer claims a changed parser is unsafe. Existing contract tests and current call sites appear inconsistent with that claim. Determine the correct disposition of the finding from the available evidence.

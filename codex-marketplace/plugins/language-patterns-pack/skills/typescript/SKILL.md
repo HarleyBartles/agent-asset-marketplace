@@ -12,13 +12,13 @@ metadata:
   owner: Harley Bartles
   scope: TypeScript type design, generics, module resolution, and compiler configuration.
   use_when:
-  - Use when writing or reviewing TypeScript type design.
-  - Use when working with generics, mapped types, or conditional types.
-  - Use when resolving module paths or configuring tsconfig.json.
-  - Use when narrowing types or writing type guards.
+  - writing or reviewing TypeScript type design.
+  - working with generics, mapped types, or conditional types.
+  - resolving module paths or configuring tsconfig.json.
+  - narrowing types or writing type guards.
   do_not_use_when:
-  - Do not use when the work is JavaScript runtime debugging.
-  - Do not use when the work is framework-specific UI composition.
+  - the work is JavaScript runtime debugging.
+  - the work is framework-specific UI composition.
 license: MIT
 ---
 

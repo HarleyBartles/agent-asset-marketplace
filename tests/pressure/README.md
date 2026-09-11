@@ -1,6 +1,9 @@
 # Pressure testing with subagents
 
-This directory holds RED/GREEN pressure-test campaigns for first-party skills. Each subdirectory is a skill-specific campaign. The results prove the skill prevents a concrete failure mode or enables a concrete, non-obvious correct action.
+This directory holds reusable pressure-test inputs for first-party skills. Each
+subdirectory defines a scenario and the behavior to inspect. A run is transient
+evidence for the current handoff; its model output, scores, transcripts, and
+result records do not belong in Git.
 
 ## When to pressure-test a skill
 
@@ -47,20 +50,18 @@ Let the subagents experience the real tool surface. For example:
 
 If a tool is gated, expensive, or unsafe to call, replace it with a faithful read-only equivalent (e.g., a dumped schema) and document the substitution in the test.
 
-### 5. Record the proof
+### 5. Judge the run
 
-Capture:
+Inspect:
 
 - The exact prompts given to each subagent.
 - The chosen tool or action for each run.
-- Verbatim reasoning and any rationalizations.
+- Reasoning and any rationalizations relevant to the current decision.
 - The final RED/GREEN judgment.
 
-Commit the recorded results. Typical locations:
-
-- `tests/pressure/<skill-name>/` for test-campaign-style evidence (prompts, results, README).
-
-The existing `using-git-worktrees` campaign under `tests/pressure/using-git-worktrees/` is a test-campaign-style example.
+Report that judgment in the current handoff. Do not commit run output or a
+results ledger. Change the reusable prompt, rubric, campaign configuration, or
+deterministic assertion only when the run exposes a contract defect.
 
 ### 6. Validate
 

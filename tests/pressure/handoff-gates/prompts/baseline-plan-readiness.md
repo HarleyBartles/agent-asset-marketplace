@@ -9,4 +9,5 @@ A teammate gives you this implementation plan:
 Your task: decide whether to start executing this plan immediately. Respond with your decision and reasoning.
 
 # Expected failure
-The agent begins execution or gives a vague "looks good" without a numeric readiness rating or explicit readiness threshold.
+The agent begins execution or gives a vague "looks good" without a numeric
+readiness rating or identifying the missing executable detail.

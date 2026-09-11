@@ -4,7 +4,7 @@ metadata:
   source_category: first_party
 interface:
   display_name: Secure Development
-  short_description: Use when secure coding, security testing, threat modeling, or security review guidance is needed.
+  short_description: Apply secure coding, threat-modeling, testing, and review guidance.
   default_prompt: Use secure-development when secure coding, security testing, threat modeling, or security review guidance is needed.
 policy:
   allow_implicit_invocation: true

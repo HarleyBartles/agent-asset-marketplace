@@ -8,13 +8,12 @@ metadata:
   source-category: first_party
   status: active
   owner: Harley Bartles
-  scope: Use when evaluating agent outputs, designing benchmarks, or building self-evaluation rubrics.
   use_when:
-  - Use when evaluating an agent's output against a rubric.
-  - Use when designing or running a benchmark.
-  - Use when building a self-evaluation workflow.
+  - evaluating an agent's output against a rubric.
+  - designing or running a benchmark.
+  - building a self-evaluation workflow.
   do_not_use_when:
-  - Do not use when another more specific skill owns the task.
+  - another more specific skill owns the task.
   related_skills:
   - agentic-harness
   - research-ops

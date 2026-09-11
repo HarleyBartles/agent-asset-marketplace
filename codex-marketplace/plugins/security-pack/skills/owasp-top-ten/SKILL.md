@@ -13,12 +13,12 @@ metadata:
   scope: Review web application security risks, map controls to the OWASP Top 10,
     and establish an ASVS verification route.
   use_when:
-  - Use when reviewing web application security risks.
-  - Use when mapping controls to OWASP Top 10.
-  - Use when establishing an ASVS verification route.
+  - reviewing web application security risks.
+  - mapping controls to OWASP Top 10.
+  - establishing an ASVS verification route.
   do_not_use_when:
-  - Do not use when the task is pen-testing execution.
-  - Do not use when the task is vendor tool selection.
+  - the task is pen-testing execution.
+  - the task is vendor tool selection.
   related_skills:
   - security-review
   - threat-modeling-techniques

@@ -53,6 +53,13 @@ _STALE_SCRIPT_PATH = re.compile(r"subagent-driven-development/scripts")
 # py -m without the repo's py -3 convention.
 _PY_M = re.compile(r"(?:\bpython(?:3)? -m |\bpy -m )")
 
+# A second imperative clause in discovery metadata is a review candidate, not
+# proof of a defect. Semantic trigger quality still requires human judgment.
+_WORKFLOW_LIKE_DESCRIPTION = re.compile(
+    r"(?:^|[.;])\s*(?:then\s+)?(?:invoke|run|read|write|create|inspect|ask|route|handoff)\b",
+    re.IGNORECASE,
+)
+
 _SOURCE_PATHS: set[str] | None = None
 
 
@@ -262,12 +269,30 @@ def _scan_skill_metadata(path: Path, content: str, findings: list[str]) -> None:
         "use_when",
         "do_not_use_when",
         "related_skills",
+        "use_before",
+        "use_after",
         "use_instead",
         "use_with",
     }
     for key in metadata:
         if key not in allowed:
             _warn(findings, path, 1, f"`metadata` contains unexpected key `{key}`")
+
+
+def _scan_skill_language(path: Path, content: str, findings: list[str]) -> None:
+    if path.name != "SKILL.md":
+        return
+    front = _load_skill_frontmatter(path, content)
+    if front is None:
+        return
+    description = front.get("description")
+    if isinstance(description, str) and _WORKFLOW_LIKE_DESCRIPTION.search(description[9:]):
+        _warn(
+            findings,
+            path,
+            1,
+            "description contains a workflow-like clause; confirm it is a trigger or move the procedure to the body",
+        )
 
 
 def _scan_stale_paths(path: Path, content: str, findings: list[str]) -> None:
@@ -390,10 +415,6 @@ def _scan_file(path: Path, findings: list[str]) -> None:
     # do not scan the preflight's own test files.
     if "tests" in path.parts:
         return
-    # Completed plans and specs are historical; do not enforce current
-    # conventions against them.
-    if "completed" in path.parts:
-        return
     try:
         content = path.read_text(encoding="utf-8")
     except (OSError, UnicodeDecodeError):
@@ -402,6 +423,7 @@ def _scan_file(path: Path, findings: list[str]) -> None:
     _scan_security(path, content, findings)
     _scan_skill_frontmatter(path, content, findings)
     _scan_skill_metadata(path, content, findings)
+    _scan_skill_language(path, content, findings)
     _scan_stale_paths(path, content, findings)
     _scan_canonical_paths(path, content, findings)
     _scan_markdown_tables(path, content, findings)

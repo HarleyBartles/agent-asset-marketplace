@@ -7,7 +7,7 @@ metadata:
   provenance-name: Observability first-party skill
 interface:
   display_name: Observability
-  short_description: Use when building or reviewing OpenTelemetry instrumentation and telemetry pipelines.
-  default_prompt: Use /observability when building or reviewing OpenTelemetry instrumentation, trace/metric/log pipeline design, or observability architecture.
+  short_description: Guidance for building or reviewing OpenTelemetry instrumentation and telemetry pipelines.
+  default_prompt: Use observability when building or reviewing OpenTelemetry instrumentation, trace/metric/log pipeline design, or observability architecture.
 policy:
   allow_implicit_invocation: true

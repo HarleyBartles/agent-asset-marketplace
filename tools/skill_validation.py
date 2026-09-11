@@ -69,15 +69,38 @@ def validate_skill_markdown_frontmatter(skill_root: Path) -> None:
         raise ValueError(f"{skill_md} frontmatter must include nonblank name")
     if not isinstance(description, str) or not description.strip():
         raise ValueError(f"{skill_md} frontmatter must include nonblank description")
+    if not description.startswith("Use when "):
+        raise ValueError(f"{skill_md} description must be a standalone 'Use when' trigger sentence")
+    if "use when use" in description.lower():
+        raise ValueError(f"{skill_md} description must not contain 'Use when use'")
     metadata = parsed_frontmatter.get("metadata")
-    is_first_party = (
-        isinstance(metadata, dict) and metadata.get("source_category") == "first_party"
-    )
+    is_first_party = isinstance(metadata, dict) and metadata.get("source_category") == "first_party"
     if is_first_party and not isinstance(metadata, dict):
         raise ValueError(f"{skill_md} frontmatter metadata must be a mapping")
     if metadata is not None and not isinstance(metadata, dict):
         raise ValueError(f"{skill_md} frontmatter metadata must be a mapping when present")
     if isinstance(metadata, dict):
+        scope = metadata.get("scope")
+        if isinstance(scope, str) and scope.lower().startswith("use when"):
+            raise ValueError(f"{skill_md} metadata scope must name ownership, not repeat a trigger")
+        if isinstance(scope, str) and " ".join(scope.lower().split()) == " ".join(description.lower().split()):
+            raise ValueError(f"{skill_md} metadata scope must not copy the description")
+        for field_name, repeated_prefix in (
+            ("use_when", "use "),
+            ("do_not_use_when", "do not use"),
+        ):
+            values = metadata.get(field_name, [])
+            if values is not None and not isinstance(values, list):
+                raise ValueError(f"{skill_md} frontmatter metadata {field_name} must be a list")
+            for value in values or []:
+                if not isinstance(value, str) or not value.strip():
+                    raise ValueError(f"{skill_md} frontmatter metadata {field_name} values must be nonblank strings")
+                if value.lower().startswith(repeated_prefix):
+                    raise ValueError(
+                        f"{skill_md} frontmatter metadata {field_name} values must answer the field "
+                        "without repeating it"
+                    )
+
         def require_string(field_names: tuple[str, ...], *, allow_empty: bool = False) -> None:
             for field_name in field_names:
                 if field_name not in metadata:
@@ -125,6 +148,5 @@ def validate_skill_markdown_frontmatter(skill_root: Path) -> None:
         elif metadata.get("content_mode") == "normalised":
             if metadata.get("adapted_author") or metadata.get("adaptation_note"):
                 raise ValueError(
-                    f"{skill_md} frontmatter: normalised skills must not "
-                    "declare adapted_author or adaptation_note"
+                    f"{skill_md} frontmatter: normalised skills must not declare adapted_author or adaptation_note"
                 )

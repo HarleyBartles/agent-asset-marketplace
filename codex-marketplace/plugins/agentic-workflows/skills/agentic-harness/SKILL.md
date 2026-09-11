@@ -8,13 +8,12 @@ metadata:
   source-category: first_party
   status: active
   owner: Harley Bartles
-  scope: Use when designing, reviewing, or debugging agent loops, harness construction, tool/action spaces, or multi-agent orchestration.
   use_when:
-  - Use when designing or reviewing an agent loop.
-  - Use when choosing or constructing a harness for tools and actions.
-  - Use when orchestrating multiple agents or merging parallel results.
+  - designing or reviewing an agent loop.
+  - choosing or constructing a harness for tools and actions.
+  - orchestrating multiple agents or merging parallel results.
   do_not_use_when:
-  - Do not use when another more specific skill owns the task.
+  - another more specific skill owns the task.
   related_skills:
   - agent-evaluation
   - research-ops

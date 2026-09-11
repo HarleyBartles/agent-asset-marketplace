@@ -12,13 +12,13 @@ metadata:
   owner: Harley Bartles
   scope: First-party guidance for PostgreSQL, SQLite, and selective MS-SQL
   use_when:
-  - Use when choosing or operating a relational SQL engine
-  - Use when connecting drivers, managing schemas, writing queries, or tuning indexes
-  - Use when the user names PostgreSQL, SQLite, or MS-SQL
+  - choosing or operating a relational SQL engine
+  - connecting drivers, managing schemas, writing queries, or tuning indexes
+  - the user names PostgreSQL, SQLite, or MS-SQL
   do_not_use_when:
-  - Do not use for database design theory; prefer database-design-patterns
-  - Do not use for NoSQL or document databases
-  - Do not use for cloud-managed operational tasks beyond engine selection
+  - database design theory; prefer database-design-patterns
+  - NoSQL or document databases
+  - cloud-managed operational tasks beyond engine selection
 license: MIT
 ---
 

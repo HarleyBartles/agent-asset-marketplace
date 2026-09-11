@@ -4,7 +4,7 @@ metadata:
   source_category: first_party
 interface:
   display_name: Agentic Harness
-  short_description: Use when designing, reviewing, or debugging agent loops, harness construction, tool/action spaces, or multi-agent orchestration.
+  short_description: Guidance for designing, reviewing, or debugging agent loops, harness construction, tool/action spaces, or multi-agent orchestration.
   default_prompt: Use agentic-harness when designing, reviewing, or debugging agent loops, harness construction, tool/action spaces, or multi-agent orchestration.
 policy:
   allow_implicit_invocation: true

@@ -8,14 +8,13 @@ metadata:
   source-category: first_party
   status: active
   owner: Harley Bartles
-  scope: Use when estimating effort, risk, and uncertainty for sprints, milestones, or releases.
   use_when:
-  - Use when planning sprints, milestones, or releases.
-  - Use when comparing candidate approaches by effort and risk.
-  - Use when communicating confidence and buffer to stakeholders.
-  - Use when reviewing estimates against actuals to calibrate.
+  - planning sprints, milestones, or releases.
+  - comparing candidate approaches by effort and risk.
+  - communicating confidence and buffer to stakeholders.
+  - reviewing estimates against actuals to calibrate.
   do_not_use_when:
-  - Do not use when another more specific skill owns the task.
+  - another more specific skill owns the task.
   related_skills:
   - requirements-elicitation
   - risk-gates

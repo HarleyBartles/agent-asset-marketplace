@@ -26,7 +26,7 @@ Local file changes are not repo completion. A worker must not return GREEN, clai
 
 If repo files changed, the worker must publish the changes to GitHub before claiming completion. A valid repo-work return must include one of:
 
-1. an open PR URL with branch name and full head SHA;
+1. an open PR URL (GitHub supplies its branch and head identity);
 2. a verified direct-main commit SHA when direct-main work was explicitly authorized;
 3. a concrete publication blocker explaining why the local changes could not be pushed or turned into a PR.
 
@@ -38,7 +38,7 @@ Open pull requests as **draft**; keep them in draft while iterating and validati
 Canonical: `py -3 tools/run.py ci --check`, `py -3 tools/run.py ci --apply`, and `py -3 tools/run.py marketplace --apply`. For a normal commit, stage the intended tree and let the tracked pre-commit hook materialize the staged snapshot, run `py -3 tools/run.py ci --apply`, and then run `py -3 tools/run.py ci --check --diagnostics` as the single complete local gate. Do not run `py -3 tools/run.py ci --check` immediately before a normal commit or immediately after a successful hooked commit; run it only for an uncommitted verification, when diagnosing the pipeline, or when explicitly proving CI parity. Use `py -3 .agents/skills/selecting-a-subagent/scripts/install_profiles.py --apply` to install portable subagent profiles to the user-global agents directory; use `py -3 tools/run.py runtime-agents --apply --allow-shared-checkout` only for repo-local `.agents/agents/` profiles when working in a worktree; see `.agents/doctrine/non-repo-locations-policy.md`.
 ## Security considerations
 
-Apply the `security-review` profile from `/unslop-profiles` to relevant work and review the security lenses in `.agents/runbooks/security.md`.
+Security review must apply the relevant profile and the repository lenses in `.agents/runbooks/security.md`; `using-superpowers-plus` selects the owning workflow.
 ## Routing pointers
 
 - [Mesh policy](.agents/doctrine/mesh-policy.md)
@@ -46,7 +46,7 @@ Apply the `security-review` profile from `/unslop-profiles` to relevant work and
 - [Worker guidance](.agents/runbooks/repo-doctrine.md)
 - [Implementing workflow](.agents/runbooks/implementing.md)
 - [Runbook stage routing](.agents/runbooks/AGENTS.md), [repo runbook policy](.agents/doctrine/repo-runbook-policy.md), and [completing plans](.agents/runbooks/completing-plans.md)
-- [Completed plans doctrine](.agents/doctrine/completed-plans.md) and [completed plans rule](.devin/rules/completed-plans.md) for the in-flight vs completed boundary
+- [Completed-artifact custody](.agents/doctrine/completed-artifacts.md) and the root [ADR log](adr/README.md) for the in-flight, removal, and durable-decision boundary
 - [Worktree and scratch policy](.agents/doctrine/non-repo-locations-policy.md)
 
 ## Maintenance responsibility
