@@ -549,6 +549,31 @@ class TestEvaluationCampaign:
         contract_path = ROOT / ".agents" / "contracts" / "pressure-artifacts.json"
         contract = json.loads(_read(contract_path))
 
+        required_transient_artifacts = {
+            "model_outputs",
+            "grader_outputs",
+            "scores",
+            "verdicts",
+            "transcripts",
+            "runtime_identities",
+            "run_metadata",
+        }
+        required_transient_fields = {
+            "runtime_results",
+            "runtime_execution",
+            "raw_response",
+            "raw_response_excerpt",
+            "source_rollout",
+            "score",
+            "scores",
+            "verdict",
+            "judgment",
+            "transcript",
+        }
+        assert required_transient_artifacts <= set(contract["transient_artifacts"])
+        assert required_transient_fields <= set(contract["transient_result_fields"])
+        assert contract["transient_run_location"] == "tests/pressure/<campaign>/runs/"
+
         tracked = (
             __import__("subprocess")
             .run(
@@ -564,7 +589,7 @@ class TestEvaluationCampaign:
         retained = [path for path in tracked if Path(path).name in forbidden_names or "/runs/" in path]
         assert retained == []
 
-        transient_fields = set(contract["transient_result_fields"])
+        transient_fields = required_transient_fields
 
         def find_transient_fields(value):
             if isinstance(value, dict):
@@ -575,8 +600,28 @@ class TestEvaluationCampaign:
                 return set().union(*(find_transient_fields(child) for child in value), set())
             return set()
 
-        for campaign in pressure_root.rglob("campaign.json"):
-            assert find_transient_fields(json.loads(_read(campaign))) == set(), campaign
+        for fixture in pressure_root.rglob("*.json"):
+            assert find_transient_fields(json.loads(_read(fixture))) == set(), fixture
+
+        forbidden_stem_tokens = {"result", "results", "score", "scores", "verdict", "transcript", "response"}
+        for path in tracked:
+            tokens = set(__import__("re").split(r"[-_.]", Path(path).stem.lower()))
+            assert not (tokens & forbidden_stem_tokens), path
+
+    def test_every_pressure_run_directory_is_ignored(self):
+        probes = (
+            "tests/pressure/workflow-contracts/runs/probe.json",
+            "tests/pressure/writing/blinded/runs/probe.json",
+            "tests/pressure/asking-clarifying-questions/runs/probe.json",
+        )
+        result = __import__("subprocess").run(
+            ["git", "check-ignore", *probes],
+            cwd=ROOT,
+            capture_output=True,
+            text=True,
+        )
+        assert result.returncode == 0
+        assert set(result.stdout.splitlines()) == set(probes)
 
     def test_trial_argv_has_exact_controls_and_least_privilege(self, tmp_path: Path):
         argv = campaign_runner.build_codex_argv(tmp_path, "gpt-5.6-luna", "read-only", tmp_path / "final.txt")

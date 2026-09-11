@@ -42,9 +42,8 @@ Thumbs.db
 # accidentally tracking any stale .superpowers/ workspace that appears.
 .superpowers/
 
-# Local-only MARK-373 pressure campaign traces; committed scores hash these files.
-tests/pressure/workflow-contracts/runs/
+# Local-only pressure campaign traces.
+tests/pressure/**/runs/
 
-# Local clone of prime-radiant-inc/superpowers-evals; the tracked MARK-373 exam
-# lives under tests/pressure/workflow-contracts/quorum/.
+# Local evaluation harness clones.
 evals/
