@@ -1,7 +1,7 @@
 ---
 name: subagent-driven-development
 description: Use when executing implementation plans with independent tasks in the
-  current session
+  current session.
 metadata:
   source-id: subagent-driven-development
   source-path: codex-marketplace/plugins/superpowers-plus/skills/subagent-driven-development/SKILL.md
@@ -9,17 +9,15 @@ metadata:
   source-category: first_party
   status: active
   owner: Harley Bartles
-  scope: Use when executing implementation plans with independent tasks in the current
-    session
   use_when:
-  - Use when executing an implementation plan with independent tasks and subagent
+  - executing an implementation plan with independent tasks and subagent
     support is available.
-  - Use when tasks can be delegated to fresh implementer subagents in the same session.
-  - Use when per-task review and a final whole-branch review are appropriate.
+  - tasks can be delegated to fresh implementer subagents in the same session.
+  - per-task review and a final whole-branch review are appropriate.
   do_not_use_when:
-  - Do not use when subagents are unavailable.
-  - Do not use without a written plan.
-  - Do not use when tasks are tightly coupled; use executing-plans instead.
+  - subagents are unavailable.
+  - without a written plan.
+  - tasks are tightly coupled; use executing-plans instead.
   related_skills:
   - writing-plans
   - executing-plans

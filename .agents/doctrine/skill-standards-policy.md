@@ -73,7 +73,9 @@ Required for skills bundled into a Codex marketplace plugin.
 
 - `version: 1` is required.
 - `metadata` is required and must be a mapping.
-- `interface.display_name`, `interface.short_description`, and `interface.default_prompt` must align to the canonical skill name and trigger language, using "Use when" phrasing.
+- `interface.display_name`, `interface.short_description`, and
+  `interface.default_prompt` must follow `.agents/contracts/openai-agent-yaml.md`;
+  do not impose description-style `Use when` phrasing on wrapper fields.
 - `policy.allow_implicit_invocation` must be explicit (boolean).
 - Add `dependencies` only when the skill actually needs them.
 

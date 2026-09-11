@@ -1,8 +1,7 @@
 ---
 name: executing-plans
-description: Use when executing an approved written plan. On a resumed or compacted
-  request that explicitly identifies a durable checkpoint as first, read it before
-  this or any other skill, then reconcile it against live state.
+description: Use when executing an approved written plan in a separate session or
+  resuming plan execution from a durable checkpoint.
 metadata:
   source-id: executing-plans
   source-path: codex-marketplace/plugins/superpowers-plus/skills/executing-plans/SKILL.md
@@ -10,17 +9,15 @@ metadata:
   source-category: first_party
   status: active
   owner: Harley Bartles
-  scope: Use when you have a written implementation plan to execute in a separate
-    session with review checkpoints
   use_when:
-  - Use when a written implementation plan exists and the work stays in the current
+  - a written implementation plan exists and the work stays in the current
     session.
-  - Use when tasks are sequential or tightly coupled.
-  - Use when subagent support is unavailable or not desired.
+  - tasks are sequential or tightly coupled.
+  - subagent support is unavailable or not desired.
   do_not_use_when:
-  - Do not use when tasks are independent and subagents are available; prefer subagent-driven-development.
-  - Do not use without an approved plan.
-  - Do not use when the plan has critical gaps or unresolved blockers.
+  - tasks are independent and subagents are available; prefer subagent-driven-development.
+  - without an approved plan.
+  - the plan has critical gaps or unresolved blockers.
   related_skills:
   - handoff-gates
   - writing-plans

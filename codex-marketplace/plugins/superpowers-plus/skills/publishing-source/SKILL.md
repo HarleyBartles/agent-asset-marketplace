@@ -8,15 +8,14 @@ metadata:
   source-category: first_party
   status: active
   owner: Harley Bartles
-  scope: Use when deciding how to publish source work in this repo - whether to commit, tag, release, push source, or export a pack - and which publication sequence fits the change.
   use_when:
-  - Use when source work is finished and you must decide whether to commit, tag, release, push source, or export a pack.
-  - Use when choosing between a direct-main commit, a PR, a tag/release, or a pack export for the current change.
-  - Use when publication proof is required and you must pick the right GitHub-visible surface.
+  - source work is finished and you must decide whether to commit, tag, release, push source, or export a pack.
+  - choosing between a direct-main commit, a PR, a tag/release, or a pack export for the current change.
+  - publication proof is required and you must pick the right GitHub-visible surface.
   do_not_use_when:
-  - Do not use when the change is not yet validated; finish verification-before-completion first.
-  - Do not use when the task is GitHub mechanics (PR/branch/commit reads or writes) rather than the publication decision; use using-github-mcp.
-  - Do not use when the task is release pipeline or CI/CD operation rather than the source-publication decision; use release-engineering.
+  - the change is not yet validated; finish verification-before-completion first.
+  - the task is GitHub mechanics (PR/branch/commit reads or writes) rather than the publication decision; use using-github-mcp.
+  - the task is release pipeline or CI/CD operation rather than the source-publication decision; use release-engineering.
   use_instead:
   - using-github-mcp
   - release-engineering

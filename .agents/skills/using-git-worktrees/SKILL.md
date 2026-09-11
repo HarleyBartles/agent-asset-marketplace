@@ -1,8 +1,6 @@
 ---
 name: using-git-worktrees
-description: Use when starting feature work that needs isolation from current
-  workspace or before executing implementation plans - ensures an isolated
-  workspace exists via native tools or git worktree fallback
+description: Use when feature work or plan execution needs an isolated Git workspace.
 metadata:
   source-id: using-git-worktrees
   source-path: codex-marketplace/plugins/superpowers-plus/skills/using-git-worktrees/SKILL.md
@@ -10,17 +8,14 @@ metadata:
   source-category: first_party
   status: active
   owner: Harley Bartles
-  scope: Use when starting feature work that needs isolation from current workspace
-    or before executing implementation plans - ensures an isolated workspace exists
-    via native tools or git worktree fallback
   use_when:
-  - Use when starting feature work that needs isolation from the current workspace.
-  - Use before executing implementation plans if no isolated workspace exists.
-  - Use when the repo declares or expects a canonical sibling-folder worktree root.
+  - starting feature work that needs isolation from the current workspace.
+  - an implementation plan is ready but no isolated workspace exists.
+  - the repo declares or expects a canonical sibling-folder worktree root.
   do_not_use_when:
-  - Do not use when already in an isolated workspace.
-  - Do not use when the user declines a worktree.
-  - Do not use when native tools already manage isolation.
+  - already in an isolated workspace.
+  - the user declines a worktree.
+  - native tools already manage isolation.
   related_skills:
   - using-superpowers-plus
   - refreshing-installed-skills

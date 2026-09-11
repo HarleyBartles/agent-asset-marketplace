@@ -9,13 +9,11 @@ metadata:
   source-category: first_party
   status: active
   owner: Harley Bartles
-  scope: Use when observed AI output defaults in a domain are repetitive and you
-    need a durable anti-slop profile to counter them.
   use_when:
-  - Use when generating a domain-specific anti-slop profile from samples or observed
+  - generating a domain-specific anti-slop profile from samples or observed
     defaults.
   do_not_use_when:
-  - Do not use when applying an existing anti-slop profile to a task.
+  - applying an existing anti-slop profile to a task.
   related_skills:
   - unslop-profiles
 license: MIT
@@ -27,7 +25,7 @@ license: MIT
 
 Use this skill when you need to empirically detect repetitive AI output patterns in a domain and generate a reusable anti-slop profile.
 
-Do not use this skill when applying an existing anti-slop profile; use `$unslop-profiles` instead.
+Do not use this skill when applying an existing anti-slop profile; use `unslop-profiles` instead.
 
 ## Core Pattern
 

@@ -1,7 +1,7 @@
 ---
 name: systematic-debugging
 description: Use when encountering any bug, test failure, or unexpected behavior,
-  before proposing fixes
+  before proposing fixes.
 metadata:
   source-id: systematic-debugging
   source-path: codex-marketplace/plugins/superpowers-plus/skills/systematic-debugging/SKILL.md
@@ -9,17 +9,15 @@ metadata:
   source-category: first_party
   status: active
   owner: Harley Bartles
-  scope: Use when encountering any bug, test failure, or unexpected behavior, before
-    proposing fixes
   use_when:
-  - Use when encountering a bug, test failure, or unexpected behavior before proposing
+  - encountering a bug, test failure, or unexpected behavior before proposing
     fixes.
-  - Use when the root cause is unknown.
-  - Use when use especially when time pressure makes guessing tempting.
+  - the root cause is unknown.
+  - time pressure makes an evidence-free guess tempting.
   do_not_use_when:
-  - Do not use when the fix is already verified.
-  - Do not use as a substitute for testing or verification.
-  - Do not use to justify a pre-selected fix.
+  - the fix is already verified.
+  - a substitute for testing or verification.
+  - to justify a pre-selected fix.
   related_skills:
   - test-driven-development
   - executing-plans

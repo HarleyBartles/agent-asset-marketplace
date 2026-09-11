@@ -10,13 +10,13 @@ metadata:
   owner: Harley Bartles
   scope: Guidance for designing and reviewing OpenTelemetry-based observability.
   use_when:
-    - Use when building or reviewing OpenTelemetry instrumentation.
-    - Use when designing trace, metric, and log pipelines.
-    - Use when deciding sampling, context propagation, and resource attributes.
+    - building or reviewing OpenTelemetry instrumentation.
+    - designing trace, metric, and log pipelines.
+    - deciding sampling, context propagation, and resource attributes.
   do_not_use_when:
-    - Do not use when configuring a specific vendor backend or dashboard.
-    - Do not use when authoring incident response runbooks.
-    - Do not use when the task is performance or load testing.
+    - configuring a specific vendor backend or dashboard.
+    - authoring incident response runbooks.
+    - the task is performance or load testing.
   related_skills:
     - deployment-patterns
 license: MIT

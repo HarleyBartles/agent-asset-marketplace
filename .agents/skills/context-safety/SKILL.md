@@ -12,13 +12,13 @@ metadata:
   owner: Harley Bartles
   scope: very large text write safety, bounded composition, compaction boundaries, and atomic replacement.
   use_when:
-  - Use when a text write is expected to exceed 2,000 lines or 1 MB of UTF-8 text.
-  - Use when inline composition would risk consuming the remaining session context.
-  - Use when safe staging and atomic replacement are required for a large text write.
-  - Use when `/compact` should happen only after durable state has been preserved.
+  - a text write is expected to exceed 2,000 lines or 1 MB of UTF-8 text.
+  - inline composition would risk consuming the remaining session context.
+  - safe staging and atomic replacement are required for a large text write.
+  - deliberate context compaction is needed after durable state has been preserved.
   do_not_use_when:
-  - Do not use when the change is small and can be written directly.
-  - Do not use when the task is unrelated to large or context-heavy text writes.
+  - the change is small and can be written directly.
+  - the task is unrelated to large or context-heavy text writes.
   related_skills:
   - repo-worker-base
   - connector-safety

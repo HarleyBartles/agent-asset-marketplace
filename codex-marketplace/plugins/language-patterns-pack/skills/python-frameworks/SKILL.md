@@ -9,16 +9,14 @@ metadata:
   source-category: first_party
   status: active
   owner: Harley Bartles
-  scope: Use when building, reviewing, or choosing Python web or task frameworks,
-    and the task calls for Django, FastAPI, or Celery patterns.
   use_when:
-  - Use when building or reviewing Django applications.
-  - Use when designing FastAPI services.
-  - Use when adding Celery task queues.
-  - Use when choosing between Django, FastAPI, and Celery for a component.
+  - building or reviewing Django applications.
+  - designing FastAPI services.
+  - adding Celery task queues.
+  - choosing between Django, FastAPI, and Celery for a component.
   do_not_use_when:
-  - Do not use when the question is about pure Python language patterns (see python).
-  - Do not use when another framework-specific skill owns the task.
+  - the question is about pure Python language patterns (see python).
+  - another framework-specific skill owns the task.
   related_skills:
   - python
   - typescript

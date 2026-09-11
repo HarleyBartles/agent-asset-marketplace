@@ -10,12 +10,12 @@ metadata:
   owner: Harley Bartles
   scope: Decompose large goals into roadmaps and execute consecutive plans.
   use_when:
-  - Use when writing-plans scope check fails because the spec covers multiple independent subsystems.
-  - Use when the human frames a request as a large or epic goal.
-  - Use when continuing an existing epic roadmap.
+  - writing-plans scope check fails because the spec covers multiple independent subsystems.
+  - the human frames a request as a large or epic goal.
+  - continuing an existing epic roadmap.
   do_not_use_when:
-  - Do not use when the goal fits a single tight writing-plans plan (see references/scope-notes.md for the one-plan-vs-epic boundary)
-  - Do not use as a substitute for writing-plans on small, well-defined tasks.
+  - the goal fits a single tight writing-plans plan (see references/scope-notes.md for the one-plan-vs-epic boundary)
+  - a substitute for writing-plans on small, well-defined tasks.
   related_skills:
   - handoff-gates
   - writing-plans

@@ -10,12 +10,12 @@ metadata:
   owner: Harley Bartles
   scope: Readiness gates for brainstorming, planning, execution, and code-review handoffs.
   use_when:
-  - Use when a spec is ready to move from brainstorming to planning.
-  - Use when a plan is ready to move from writing-plans to execution.
-  - Use when completed work is ready to move from executing-plans to code review.
+  - a spec is ready to move from brainstorming to planning.
+  - a plan is ready to move from writing-plans to execution.
+  - completed work is ready to move from executing-plans to code review.
   do_not_use_when:
-  - Do not use when the artifact is not clearly at a stage boundary (see references/scope-notes.md for boundary cases)
-  - Do not use as a substitute for risk-gates when the question is pre-action risk.
+  - the artifact is not clearly at a stage boundary (see references/scope-notes.md for boundary cases)
+  - a substitute for risk-gates when the question is pre-action risk.
   related_skills:
   - risk-gates
   - writing-plans

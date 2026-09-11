@@ -4,7 +4,7 @@ metadata:
   source_category: first_party
 interface:
   display_name: Database Engines
-  short_description: Use when choosing, connecting to, querying, or operating a relational database engine.
-  default_prompt: Which relational database engine are you using?
+  short_description: Guidance for choosing, connecting to, querying, or operating a relational database engine.
+  default_prompt: Use database-engines to identify the relevant relational engine, ask for it only when unresolved, and provide engine-specific operational guidance.
 policy:
   allow_implicit_invocation: true

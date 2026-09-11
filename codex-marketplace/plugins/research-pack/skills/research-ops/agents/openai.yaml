@@ -4,7 +4,7 @@ metadata:
   source_category: first_party
 interface:
   display_name: Research Ops
-  short_description: Use when planning research, triaging sources, synthesizing evidence, or managing citations.
+  short_description: Guidance for planning research, triaging sources, synthesizing evidence, or managing citations.
   default_prompt: Use research-ops when planning research, triaging sources, synthesizing evidence, or managing citations.
 policy:
   allow_implicit_invocation: true

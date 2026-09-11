@@ -8,11 +8,10 @@ metadata:
   source-category: first_party
   status: active
   owner: Harley Bartles
-  scope: Use when working with the Playwright MCP server, choosing the right browser tool call, or falling back to non-MCP Playwright surfaces when the MCP does not cover the task.
   use_when:
-  - Use when working with the Playwright MCP server, choosing the right browser tool call, or falling back to non-MCP Playwright surfaces when the MCP does not cover the task.
+  - working with the Playwright MCP server, choosing the right browser tool call, or falling back to non-MCP Playwright surfaces when the MCP does not cover the task.
   do_not_use_when:
-  - Do not use when another more specific skill owns the task.
+  - another more specific skill owns the task.
 license: MIT
 ---
 

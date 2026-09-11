@@ -1,7 +1,7 @@
 ---
 name: subagent-workspace
 description: Use when resolving the off-repo scratch workspace for subagent tasks and placing short-lived subagent inputs and outputs.
-license: MIT
+license: MIT.
 metadata:
   source-id: subagent-workspace
   source-path: codex-marketplace/plugins/superpowers-plus/skills/subagent-workspace/SKILL.md
@@ -9,14 +9,13 @@ metadata:
   source-category: first_party
   status: active
   owner: Harley Bartles
-  scope: Use when resolving the off-repo scratch workspace for subagent tasks and placing short-lived subagent inputs and outputs.
   use_when:
-  - Use when a subagent task needs an off-repo scratch directory.
-  - Use when materializing inputs (diffs, PR descriptions, issues) for subagents to read.
-  - Use when routing subagent briefs, reports, review packages, or review logs to a disposable location.
+  - a subagent task needs an off-repo scratch directory.
+  - materializing inputs (diffs, PR descriptions, issues) for subagents to read.
+  - routing subagent briefs, reports, review packages, or review logs to a disposable location.
   do_not_use_when:
-  - Do not use for durable custody, canonical source, provenance, or publication proof.
-  - Do not use when the artifact must survive beyond the current task.
+  - durable custody, canonical source, provenance, or publication proof.
+  - the artifact must survive beyond the current task.
   related_skills:
   - subagent-driven-development
   - iterative-review

@@ -8,12 +8,11 @@ metadata:
   source-category: first_party
   status: active
   owner: Harley Bartles
-  scope: Use when selecting, writing, or reviewing Mermaid diagrams for technical documentation.
   use_when:
-  - Use when selecting a diagram type for a process, interaction, data model, or state machine.
-  - Use when writing or reviewing Mermaid syntax in documentation.
+  - selecting a diagram type for a process, interaction, data model, or state machine.
+  - writing or reviewing Mermaid syntax in documentation.
   do_not_use_when:
-  - Do not use when the audience needs interactive or pixel-perfect visuals that Mermaid cannot provide.
+  - the audience needs interactive or pixel-perfect visuals that Mermaid cannot provide.
   related_skills:
   - clean-architecture
   - api-design

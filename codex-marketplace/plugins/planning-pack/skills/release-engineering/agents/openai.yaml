@@ -4,7 +4,7 @@ metadata:
   source_category: first_party
 interface:
   display_name: Release Engineering
-  short_description: Use when building, reviewing, or operating CI/CD pipelines, container images, releases, rollbacks, or deployment patterns.
+  short_description: Guidance for building, reviewing, or operating CI/CD pipelines, container images, releases, rollbacks, or deployment patterns.
   default_prompt: Use release-engineering when building, reviewing, or operating CI/CD pipelines, container images, releases, rollbacks, or deployment patterns.
 policy:
   allow_implicit_invocation: true

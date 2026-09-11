@@ -4,7 +4,7 @@ metadata:
   source_category: first_party
 interface:
   display_name: Repo Standards
-  short_description: Use repo-standards when reading, creating, updating, or aligning repo standards, enforcing the AGENTS.md router model, and migrating marketplace.json schema.
+  short_description: Inspect and align repository shape, runbooks, and routing surfaces.
   default_prompt: Use using-superpowers-plus for workflow composition. Use repo-standards only to inspect or align repository shape, runbook layout, workflow order, and handoff requirements. Read references/repository-runbook-standard.md, the consumer's .agents/doctrine/repo-runbook-policy.md, and the applicable local runbook. Enforce the canonical root AGENTS.md router and use scaffold-marketplace-json to migrate legacy marketplace.json keys into repo.local_skills.
 policy:
   allow_implicit_invocation: true

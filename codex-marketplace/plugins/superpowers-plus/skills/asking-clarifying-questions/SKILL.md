@@ -1,8 +1,8 @@
 ---
 name: asking-clarifying-questions
-description: Use immediately before source inspection when an unresolved human-owned
-  taste word such as premium, playful, bold, or polished needs one concrete answer;
-  also use for any single ambiguity that blocks the next safe action.
+description: Use when an unresolved human-owned taste word such as premium, playful,
+  bold, or polished must be settled before source inspection, or when any single
+  ambiguity blocks the next safe action.
 metadata:
   source-id: asking-clarifying-questions
   source-path: codex-marketplace/plugins/superpowers-plus/skills/asking-clarifying-questions/SKILL.md
@@ -12,13 +12,13 @@ metadata:
   owner: Harley Bartles
   scope: mid-flight ambiguity resolution through a single clarifying question
   use_when:
-  - Use when an ambiguity is internally unresolved and a single human decision would unblock the immediate next step.
-  - Use when the agent is mid-plan, mid-execution, or inside another skill and a missing fact, term, scope, boundary, or output shape prevents safe progress.
-  - Use when the answer is a concrete decision, not a design.
+  - an ambiguity is internally unresolved and a single human decision would unblock the immediate next step.
+  - the agent is mid-plan, mid-execution, or inside another skill and a missing fact, term, scope, boundary, or output shape prevents safe progress.
+  - the answer is a concrete decision, not a design.
   do_not_use_when:
-  - Do not use when the ambiguity needs a full spec or design; use brainstorming.
-  - Do not use when the next action could violate scope, authority, source truth, canon, safety, or involve irreversible mutation; use risk-gates.
-  - Do not use when the answer is already forced by durable source, policy, or a safe default; resolve internally.
+  - the ambiguity needs a full spec or design; use brainstorming.
+  - the next action could violate scope, authority, source truth, canon, safety, or involve irreversible mutation; use risk-gates.
+  - the answer is already forced by durable source, policy, or a safe default; resolve internally.
   use_instead:
   - brainstorming
   - risk-gates

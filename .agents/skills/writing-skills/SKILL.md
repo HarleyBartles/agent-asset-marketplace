@@ -1,7 +1,7 @@
 ---
 name: writing-skills
 description: Use when creating new skills, editing existing skills, or verifying skills
-  work before deployment
+  work before deployment.
 metadata:
   source-id: writing-skills
   source-path: codex-marketplace/plugins/superpowers-plus/skills/writing-skills/SKILL.md
@@ -9,16 +9,14 @@ metadata:
   source-category: first_party
   status: active
   owner: Harley Bartles
-  scope: Use when creating new skills, editing existing skills, or verifying skills
-    work before deployment
   use_when:
-  - Use when creating, editing, or verifying a skill before deployment.
-  - Use when turning a learned technique into reusable guidance.
-  - Use when a skill needs pressure-tested process documentation.
+  - creating, editing, or verifying a skill before deployment.
+  - turning a learned technique into reusable guidance.
+  - a skill needs pressure-tested process documentation.
   do_not_use_when:
-  - Do not use for one-off solutions.
-  - Do not use for project-specific conventions.
-  - Do not use when mechanical validation or regex suffices.
+  - one-off solutions.
+  - project-specific conventions.
+  - mechanical validation or regex suffices.
   related_skills:
   - test-driven-development
   - requesting-code-review
@@ -130,6 +128,12 @@ skills/
   - Include specific symptoms, situations, and contexts
   - **NEVER summarize the skill's process or workflow** (see SDO section for why)
   - Keep under 500 characters if possible
+
+Field names carry grammar. Follow `.agents/contracts/skill-frontmatter.md` in
+repositories that provide it: `scope` names ownership, trigger-list values
+answer their keys without repeating them, and relationship fields contain skill
+identifiers. For Codex wrappers, `short_description` is capability copy and
+`default_prompt` directly instructs the already-selected skill.
 
 ```markdown
 ---

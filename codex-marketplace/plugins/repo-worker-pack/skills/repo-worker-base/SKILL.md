@@ -1,9 +1,8 @@
 ---
 name: repo-worker-base
 description: Use when beginning or reviewing repo-backed work that needs portable
-  worktree, source-custody, validation, or publication guidance. When a portable
-  suggestion conflicts with repository guidance, inspect repository canon and the
-  owning applicability/safety gate, then name local evidence before ruling.
+  worktree, source-custody, validation, or publication guidance, especially when a
+  portable suggestion conflicts with repository policy.
 metadata:
   source-id: repo-worker-base
   source-path: codex-marketplace/plugins/repo-worker-pack/skills/repo-worker-base/SKILL.md
@@ -13,9 +12,9 @@ metadata:
   owner: Harley Bartles
   scope: Portable repo-worker routing, hygiene, and publication boundaries.
   use_when:
-  - Use when repo work needs worktree, branch, scratch, source, layout, validation, evidence, review, closeout, or publication guidance.
+  - repo work needs worktree, branch, scratch, source, layout, validation, evidence, review, closeout, or publication guidance.
   do_not_use_when:
-  - Do not use when work is not repo-backed or a repository-specific policy alone owns the decision.
+  - work is not repo-backed or a repository-specific policy alone owns the decision.
   use_with:
   - using-superpowers-plus
   - brainstorming

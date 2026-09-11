@@ -9,15 +9,13 @@ metadata:
   source-category: first_party
   status: active
   owner: Harley Bartles
-  scope: Use when designing, writing, reviewing, or testing code and the task
-    calls for secure coding, security testing, threat modeling, or security review guidance.
   use_when:
-  - Use when designing, writing, or reviewing code that handles sensitive data, trust boundaries, or external input.
-  - Use when selecting or interpreting security tests, threat models, or review checklists.
-  - Use when a task touches OWASP Top 10, CWE, CAPEC, or NIST control categories.
+  - designing, writing, or reviewing code that handles sensitive data, trust boundaries, or external input.
+  - selecting or interpreting security tests, threat models, or review checklists.
+  - a task touches OWASP Top 10, CWE, CAPEC, or NIST control categories.
   do_not_use_when:
-  - Do not use when the task is purely infrastructure deployment or operations.
-  - Do not use when another more specific skill owns the task.
+  - the task is purely infrastructure deployment or operations.
+  - another more specific skill owns the task.
   related_skills:
   - owasp-top-ten
   - risk-gates

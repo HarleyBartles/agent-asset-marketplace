@@ -1,6 +1,6 @@
 ---
 name: iterative-review
-description: Use only after human approval when an orchestrator not known to be frontier-capable needs legacy subagent review assistance for a draft PR. Do not use with Sol or another harness-designated frontier model.
+description: Use when a human-approved draft-PR review needs legacy subagent assistance because the orchestrator is not known to be frontier-capable. Do not use with Sol or another harness-designated frontier model.
 metadata:
   source-id: iterative-review
   source-path: codex-marketplace/plugins/superpowers-plus/skills/iterative-review/SKILL.md
@@ -10,13 +10,13 @@ metadata:
   owner: Harley Bartles
   scope: Human-approved legacy review assistance for orchestrators not known to be frontier-capable reviewing a draft PR.
   use_when:
-  - Use only when the human explicitly approves this workflow for the current PR.
-  - Use only when the orchestrator is non-frontier, or its classification is unknown and the human approves after being told that limitation.
+  - the human explicitly approves this workflow for the current PR.
+  - the orchestrator is non-frontier, or its classification is unknown and the human approves after being told that limitation.
   do_not_use_when:
-  - Do not use when the orchestrator is gpt-5.6-sol or another model the harness designates as frontier-capable; use ordinary self-review and canonical validation instead.
+  - the orchestrator is gpt-5.6-sol or another model the harness designates as frontier-capable; use ordinary self-review and canonical validation instead.
   - Do not start the graph when model capability is unknown or human approval is absent.
-  - Do not use when the PR has no changes to review.
-  - Do not use as a substitute for the repo's canonical CI preflight.
+  - the PR has no changes to review.
+  - a substitute for the repo's canonical CI preflight.
   related_skills:
   - requesting-code-review
   - receiving-code-review

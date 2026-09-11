@@ -11,27 +11,23 @@ metadata:
   source-category: first_party
   status: active
   owner: Harley Bartles
-  scope: Use when a software development workflow would benefit from anti-slop
-    guidance for writing, documentation, implementation plans, code review, worker
-    returns, debugging, React work, UI design, API design, architecture, testing, security
-    review, or repository cleanup.
   use_when:
-  - Use when writing general prose.
-  - Use when writing or reviewing technical documentation.
-  - Use when drafting implementation plans.
-  - Use when reviewing code changes.
-  - Use when writing worker return reports.
-  - Use when debugging software.
-  - Use when building React frontends.
-  - Use when designing generic UI.
-  - Use when designing APIs.
-  - Use when reasoning about architecture.
-  - Use when writing or reviewing tests.
-  - Use when performing security reviews.
-  - Use when classifying repository cleanup or custody.
+  - writing general prose.
+  - writing or reviewing technical documentation.
+  - drafting implementation plans.
+  - reviewing code changes.
+  - writing worker return reports.
+  - debugging software.
+  - building React frontends.
+  - designing generic UI.
+  - designing APIs.
+  - reasoning about architecture.
+  - writing or reviewing tests.
+  - performing security reviews.
+  - classifying repository cleanup or custody.
   do_not_use_when:
-  - Do not use when generating a new domain-specific profile.
-  - Do not use as the primary workflow for sustained prose when $writing is installed.
+  - generating a new domain-specific profile.
+  - the primary workflow for sustained prose when writing is installed.
   related_skills:
   - unslop-engine
   - writing
@@ -42,9 +38,9 @@ license: MIT
 
 Do not apply a profile from memory. Pick the profile matching the current task and read the file before applying its avoid/prefer rules.
 
-For sustained prose, route through `$writing` when it is installed; that workflow
+For sustained prose, route through `writing` when it is installed; that workflow
 composes clarity, authorised voice, fatigue review, and a final clarity gate. The
-generic writing profile remains available when `$writing` is not installed or
+generic writing profile remains available when `writing` is not installed or
 when a caller explicitly requests the generic profile only.
 
 | Task | Profile file |

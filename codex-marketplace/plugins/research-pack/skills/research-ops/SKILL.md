@@ -8,13 +8,12 @@ metadata:
   source-category: first_party
   status: active
   owner: Harley Bartles
-  scope: Use when planning research, triaging sources, synthesizing evidence, or managing citations.
   use_when:
-  - Use when planning a research task or systematic review.
-  - Use when triaging and recording sources.
-  - Use when synthesizing evidence into a cited conclusion.
+  - planning a research task or systematic review.
+  - triaging and recording sources.
+  - synthesizing evidence into a cited conclusion.
   do_not_use_when:
-  - Do not use when another more specific skill owns the task.
+  - another more specific skill owns the task.
   related_skills:
   - agentic-harness
   - agent-evaluation

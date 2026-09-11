@@ -1,8 +1,7 @@
 ---
 name: receiving-code-review
-description: Use when receiving code review feedback, before implementing suggestions,
-  especially if feedback seems unclear or technically questionable - requires technical
-  rigor and verification, not performative agreement or blind implementation
+description: Use when received code-review feedback is unclear, technically questionable,
+  or needs verification before implementation.
 metadata:
   source-id: receiving-code-review
   source-path: codex-marketplace/plugins/superpowers-plus/skills/receiving-code-review/SKILL.md
@@ -10,17 +9,14 @@ metadata:
   source-category: first_party
   status: active
   owner: Harley Bartles
-  scope: Use when receiving code review feedback, before implementing suggestions,
-    especially if feedback seems unclear or technically questionable - requires technical
-    rigor and verification, not performative agreement or blind implementation
   use_when:
-  - Use when receiving code review feedback before implementing suggestions.
-  - Use when feedback is unclear or technically questionable.
-  - Use when the suggestion needs verification against codebase reality.
+  - receiving code review feedback before implementing suggestions.
+  - feedback is unclear or technically questionable.
+  - the suggestion needs verification against codebase reality.
   do_not_use_when:
-  - Do not use when there is no external feedback to evaluate.
-  - Do not use to dismiss feedback without technical reasoning.
-  - Do not use to implement suggestions blindly.
+  - there is no external feedback to evaluate.
+  - to dismiss feedback without technical reasoning.
+  - to implement suggestions blindly.
   related_skills:
   - requesting-code-review
   - iterative-review

@@ -1,9 +1,8 @@
 ---
 name: brainstorming
-description: Use when starting creative work or sketching an implementation after
-  the target is concrete. A tiny bounded sketch names its technical assumption and
-  focused proof without an approval pause. Do not inspect or design through an
-  unresolved human-owned taste word; use asking-clarifying-questions first.
+description: Use when starting creative work, shaping an uncertain design, or sketching
+  an implementation after its target is concrete, unless an unresolved human-owned taste
+  decision still blocks the design.
 metadata:
   source-id: brainstorming
   source-path: codex-marketplace/plugins/superpowers-plus/skills/brainstorming/SKILL.md
@@ -11,16 +10,14 @@ metadata:
   source-category: first_party
   status: active
   owner: Harley Bartles
-  scope: Use when starting any creative work such as creating features, building components,
-    adding functionality, or modifying behavior.
   use_when:
-  - Use when starting any new feature, component, or modification.
-  - Use when the human frames a creative or build goal and no approved spec exists.
-  - Use when a project needs intent, constraints, and approach clarified before implementation.
+  - starting any new feature, component, or modification.
+  - the human frames a creative or build goal and no approved spec exists.
+  - a project needs intent, constraints, and approach clarified before implementation.
   do_not_use_when:
-  - Do not use when an approved spec or plan already exists and is ready for execution.
-  - Do not use as a substitute for writing-plans or executing-plans.
-  - Do not use when the task is pure execution without design decisions.
+  - an approved spec or plan already exists and is ready for execution.
+  - a substitute for writing-plans or executing-plans.
+  - the task is pure execution without design decisions.
   related_skills:
   - using-superpowers-plus
   - handoff-gates

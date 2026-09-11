@@ -1,7 +1,7 @@
 ---
 name: finishing-a-development-branch
 description: Use when implementation is complete, all tests pass, and you need to
-  decide how to integrate the work
+  decide how to integrate the work.
 metadata:
   source-id: finishing-a-development-branch
   source-path: codex-marketplace/plugins/superpowers-plus/skills/finishing-a-development-branch/SKILL.md
@@ -9,17 +9,15 @@ metadata:
   source-category: first_party
   status: active
   owner: Harley Bartles
-  scope: Use when implementation is complete, all tests pass, and you need to decide
-    how to integrate the work
   use_when:
-  - Use when implementation is complete, tests pass, and you need to decide how to
+  - implementation is complete, tests pass, and you need to decide how to
     integrate the work.
-  - Use after executing-plans or subagent-driven-development.
-  - Use when the branch needs merge, PR, keep, or discard.
+  - implementation through executing-plans or subagent-driven-development is complete.
+  - the branch needs merge, PR, keep, or discard.
   do_not_use_when:
-  - Do not use when tests are failing.
-  - Do not use when the work is incomplete.
-  - Do not use as a substitute for code review.
+  - tests are failing.
+  - the work is incomplete.
+  - a substitute for code review.
   related_skills:
   - executing-plans
   - subagent-driven-development

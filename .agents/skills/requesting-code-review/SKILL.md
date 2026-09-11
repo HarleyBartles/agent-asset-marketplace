@@ -1,7 +1,7 @@
 ---
 name: requesting-code-review
 description: Use when completing tasks, implementing major features, or before merging
-  to verify work meets requirements
+  to verify work meets requirements.
 metadata:
   source-id: requesting-code-review
   source-path: codex-marketplace/plugins/superpowers-plus/skills/requesting-code-review/SKILL.md
@@ -9,16 +9,14 @@ metadata:
   source-category: first_party
   status: active
   owner: Harley Bartles
-  scope: Use when completing tasks, implementing major features, or before merging
-    to verify work meets requirements
   use_when:
-  - Use when completing a task or major feature, or before merging.
-  - Use after subagent-driven-development per-task review.
-  - Use when a fresh reviewer perspective will catch issues before they cascade.
+  - completing a task or major feature, or before merging.
+  - subagent-driven-development per-task review is complete and whole-branch review is due.
+  - a fresh reviewer perspective will catch issues before they cascade.
   do_not_use_when:
-  - Do not use before tests pass.
-  - Do not use when no changes exist to review.
-  - Do not use as a substitute for self-review.
+  - before tests pass.
+  - no changes exist to review.
+  - a substitute for self-review.
   related_skills:
   - receiving-code-review
   - iterative-review

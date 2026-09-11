@@ -1,7 +1,7 @@
 ---
 name: writing-plans
 description: Use when you have a spec or requirements for a multi-step task, before
-  touching code
+  touching code.
 metadata:
   source-id: writing-plans
   source-path: codex-marketplace/plugins/superpowers-plus/skills/writing-plans/SKILL.md
@@ -9,17 +9,15 @@ metadata:
   source-category: first_party
   status: active
   owner: Harley Bartles
-  scope: Use when you have a spec or requirements for a multi-step task, before touching
-    code
   use_when:
-  - Use when an approved spec exists for a multi-step task.
-  - Use when the goal fits a single tight implementation plan.
-  - Use before touching implementation code.
+  - an approved spec exists for a multi-step task.
+  - the goal fits a single tight implementation plan.
+  - implementation code has not yet been changed.
   do_not_use_when:
-  - Do not use when the spec covers multiple independent subsystems; invoke writing-roadmaps
+  - the spec covers multiple independent subsystems; invoke writing-roadmaps
     to create a roadmap before writing plans.
-  - Do not use when implementation has already started.
-  - Do not use as a substitute for brainstorming.
+  - implementation has already started.
+  - a substitute for brainstorming.
   related_skills:
   - brainstorming
   - handoff-gates

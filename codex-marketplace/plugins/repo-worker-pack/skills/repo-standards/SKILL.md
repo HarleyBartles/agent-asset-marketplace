@@ -10,11 +10,11 @@ metadata:
   owner: Harley Bartles
   scope: Cross-repo runbook layout, invocation, workflow order, and handoff requirements.
   use_when:
-  - Use when reading, creating, updating, or aligning any repo-local runbook.
-  - Use when determining the workflow order for repo-backed design, planning, implementation, or review.
-  - Use when a repo's runbook set is missing or misaligned with the standard.
+  - reading, creating, updating, or aligning any repo-local runbook.
+  - determining the workflow order for repo-backed design, planning, implementation, or review.
+  - a repo's runbook set is missing or misaligned with the standard.
   do_not_use_when:
-  - Do not use for generic repo hygiene such as worktree, branch, source custody, or publication boundaries — defer to repo-worker-base for those.
+  - generic repo hygiene such as worktree, branch, source custody, or publication boundaries — defer to repo-worker-base for those.
 license: MIT
 ---
 

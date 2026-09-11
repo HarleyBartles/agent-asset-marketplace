@@ -1,7 +1,7 @@
 ---
 name: test-driven-development
 description: Use when implementing any feature or bugfix, before writing implementation
-  code
+  code.
 metadata:
   source-id: test-driven-development
   source-path: codex-marketplace/plugins/superpowers-plus/skills/test-driven-development/SKILL.md
@@ -9,16 +9,14 @@ metadata:
   source-category: first_party
   status: active
   owner: Harley Bartles
-  scope: Use when implementing any feature or bugfix, before writing implementation
-    code
   use_when:
-  - Use when implementing any feature or bugfix before writing implementation code.
-  - Use when starting a red-green-refactor cycle.
-  - Use when behavior needs a failing test to define correctness.
+  - implementing any feature or bugfix before writing implementation code.
+  - starting a red-green-refactor cycle.
+  - behavior needs a failing test to define correctness.
   do_not_use_when:
-  - Do not use for throwaway prototypes unless the partner approves.
-  - Do not use when the codebase or language cannot be tested.
-  - Do not use as a substitute for writing-plans.
+  - throwaway prototypes unless the partner approves.
+  - the codebase or language cannot be tested.
+  - a substitute for writing-plans.
   related_skills:
   - brainstorming
   - writing-plans

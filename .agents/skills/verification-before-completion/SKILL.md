@@ -1,8 +1,7 @@
 ---
 name: verification-before-completion
-description: Use when about to claim work is complete, fixed, or passing, before committing
-  or creating PRs - requires running verification commands and confirming output before
-  making any success claims; evidence before assertions always
+description: Use when a claim that work is complete, fixed, passing, or ready needs
+  current evidence before a commit, pull request, or handoff.
 metadata:
   source-id: verification-before-completion
   source-path: codex-marketplace/plugins/superpowers-plus/skills/verification-before-completion/SKILL.md
@@ -10,18 +9,15 @@ metadata:
   source-category: first_party
   status: active
   owner: Harley Bartles
-  scope: Use when about to claim work is complete, fixed, or passing, before committing
-    or creating PRs - requires running verification commands and confirming output
-    before making any success claims; evidence before assertions always
   use_when:
-  - Use when about to claim work is complete, fixed, or passing, before committing
+  - about to claim work is complete, fixed, or passing, before committing
     or creating PRs.
-  - Use when a verification command can prove the claim.
-  - Use before any completion claim that should be backed by fresh evidence.
+  - a verification command can prove the claim.
+  - a completion claim should be backed by fresh evidence.
   do_not_use_when:
-  - Do not use when no verification command exists for the claim.
-  - Do not use to override fresh evidence with confidence.
-  - Do not use as a substitute for running the actual verification.
+  - no verification command exists for the claim.
+  - to override fresh evidence with confidence.
+  - a substitute for running the actual verification.
   related_skills:
   - executing-plans
   - subagent-driven-development

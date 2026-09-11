@@ -29,6 +29,26 @@ license: "MIT"
 - The frontmatter must be a top-level mapping.
 - `name` is required and must be a nonblank string.
 - `description` is required and must be a nonblank string.
+
+## Language semantics
+
+Each field carries one kind of meaning. Do not copy a complete trigger sentence
+into every field.
+
+| Field | Language contract |
+|---|---|
+| `description` | Standalone discovery sentence beginning `Use when`; trigger conditions only, with workflow kept in the body. |
+| `metadata.scope` | Noun phrase naming the capability or decisions the skill owns. |
+| `metadata.use_when[]` | Conditions that answer “When?” without repeating `Use when`. |
+| `metadata.do_not_use_when[]` | Exclusion conditions without repeating `Do not use when`. |
+| `use_before[]`, `use_after[]`, `use_with[]`, `use_instead[]` | Skill identifiers whose relationship is defined by the field name. |
+| `related_skills[]` | Discovery relationships only; no invocation order. |
+
+Canonical prose uses plain skill identifiers. Client invocation sigils such as
+`/skill-name` and `$skill-name` are not part of this contract.
+
+Reject mechanical constructions such as `Use when use`, `to use when`, copied
+description/scope values, and trigger-list values that repeat their field name.
 - `metadata` is required for all skills bundled via a bundle-manifest entry, and must be a mapping.
 - `metadata` is optional for non-bundled source custody surfaces, but if present it must be a mapping.
 - Duplicate keys are rejected.

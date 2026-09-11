@@ -36,11 +36,11 @@
 - Modify: `codex-marketplace/plugins/superpowers-plus/skills/writing-skills/references/skill-authoring-checklist.md`
 - Test: `tests/test_workflow_contracts.py`
 
-- [ ] **Step 1: Add RED contract tests.** Assert the contracts define distinct semantics for description, scope, trigger lists, relationship fields, short description, and default prompt; reject doctrine that requires `Use when` in wrapper prompts.
-- [ ] **Step 2: Verify RED.** Confirm the focused test fails against the current policy wording.
-- [ ] **Step 3: Write the contract.** Add the approved field table, positive examples, prohibited mechanical constructions, and plain-identifier rule.
-- [ ] **Step 4: Align doctrine and writing-skills.** Remove the blanket wrapper `Use when` requirement and make authoring guidance route to the canonical contracts.
-- [ ] **Step 5: Run focused contract tests.** Confirm the field semantics are explicit and non-duplicative.
+- [x] **Step 1: Add RED contract tests.** Assert the contracts define distinct semantics for description, scope, trigger lists, relationship fields, short description, and default prompt; reject doctrine that requires `Use when` in wrapper prompts.
+- [x] **Step 2: Verify RED.** Confirm the focused test fails against the current policy wording.
+- [x] **Step 3: Write the contract.** Add the approved field table, positive examples, prohibited mechanical constructions, and plain-identifier rule.
+- [x] **Step 4: Align doctrine and writing-skills.** Remove the blanket wrapper `Use when` requirement and make authoring guidance route to the canonical contracts.
+- [x] **Step 5: Run focused contract tests.** Confirm the field semantics are explicit and non-duplicative.
 
 ### Task 2: Make semantic regressions mechanically visible
 
@@ -50,10 +50,10 @@
 - Modify: `tests/test_workflow_contracts.py`
 - Modify: focused validator tests selected after inspecting current coverage
 
-- [ ] **Step 1: Add RED validation cases.** Cover repeated field prefixes, malformed `Use when use`, `to use when`, orphaned `default_prompt: Use when`, copied description/scope values, missing skill identity in default prompts, workflow leakage markers in descriptions, and slash/dollar client sigils.
-- [ ] **Step 2: Separate hard failures from review findings.** Hard-fail deterministic grammar/schema defects; report workflow-like description clauses for adjudication rather than pretending regex can establish semantics.
-- [ ] **Step 3: Implement the smallest shared validator.** Keep parsing and diagnostics deterministic, path-specific, and actionable.
-- [ ] **Step 4: Prove RED/GREEN behavior.** Run focused validator tests and inspect every diagnostic category.
+- [x] **Step 1: Add RED validation cases.** Cover repeated field prefixes, malformed `Use when use`, `to use when`, orphaned `default_prompt: Use when`, copied description/scope values, missing skill identity in default prompts, workflow leakage markers in descriptions, and slash/dollar client sigils.
+- [x] **Step 2: Separate hard failures from review findings.** Hard-fail deterministic grammar/schema defects; report workflow-like description clauses for adjudication rather than pretending regex can establish semantics.
+- [x] **Step 3: Implement the smallest shared validator.** Keep parsing and diagnostics deterministic, path-specific, and actionable.
+- [x] **Step 4: Prove RED/GREEN behavior.** Run focused validator tests and inspect every diagnostic category.
 
 ### Task 3: Repair canonical vendored skill language
 
@@ -62,12 +62,12 @@
 - Regenerate: `.agents/skills/`
 - Test: `tests/test_workflow_contracts.py` and affected validator tests
 
-- [ ] **Step 1: Inventory canonical roots.** Record all 77 roots/74 unique names and classify exact defects separately from semantic-review candidates.
-- [ ] **Step 2: Repair frontmatter field semantics.** Rewrite descriptions, scopes, trigger lists, exclusions, and relationship fields without weakening ownership, authority, or safety conditions.
-- [ ] **Step 3: Repair OpenAI wrappers.** Replace `to use when`, orphaned conditionals, circular prompts, misleading cross-routing, duplicated trigger prose, and client sigils with concise capability descriptions and direct prompts.
-- [ ] **Step 4: Review workflow-heavy descriptions manually.** Retain genuine trigger conditions; move procedural instructions into bodies or structured relationship metadata.
-- [ ] **Step 5: Regenerate installed skills and marketplace surfaces.** Run `py -3 tools/run.py installed-skills --apply` and `py -3 tools/run.py mesh --apply`.
-- [ ] **Step 6: Run focused suites and full inventory scans.** Require zero deterministic defects and adjudicate every semantic-review candidate.
+- [x] **Step 1: Inventory canonical roots.** Record all 77 roots/74 unique names and classify exact defects separately from semantic-review candidates.
+- [x] **Step 2: Repair frontmatter field semantics.** Rewrite descriptions, scopes, trigger lists, exclusions, and relationship fields without weakening ownership, authority, or safety conditions.
+- [x] **Step 3: Repair OpenAI wrappers.** Replace `to use when`, orphaned conditionals, circular prompts, misleading cross-routing, duplicated trigger prose, and client sigils with concise capability descriptions and direct prompts.
+- [x] **Step 4: Review workflow-heavy descriptions manually.** Retain genuine trigger conditions; move procedural instructions into bodies or structured relationship metadata.
+- [x] **Step 5: Regenerate installed skills and marketplace surfaces.** Run `py -3 tools/run.py installed-skills --apply` and `py -3 tools/run.py mesh --apply`.
+- [x] **Step 6: Run focused suites and full inventory scans.** Require zero deterministic defects and adjudicate every semantic-review candidate.
 
 ### Task 4: Close and publish the sub-slice
 
@@ -76,7 +76,7 @@
 - Modify: `.agents/plans/2026-09-06-mark-373-operating-system.checkpoint.md`
 - Modify: PR #311 body
 
-- [ ] **Step 1: Review the complete diff adversarially.** Check semantic accuracy, grammar, trigger discovery, relationship direction, safety preservation, generated-source custody, and absence of client syntax.
+- [x] **Step 1: Review the complete diff adversarially.** Check semantic accuracy, grammar, trigger discovery, relationship direction, safety preservation, generated-source custody, and absence of client syntax.
 - [ ] **Step 2: Mark plan and checkpoint truthfully.** Record the focused evidence and any irreducibly manual boundary without producing a duplicate receipt.
 - [ ] **Step 3: Commit normally.** Let the tracked pre-commit apply/check gate validate the staged state.
 - [ ] **Step 4: Push and update Draft PR #311.** Keep it Draft and describe the language contract and repo-wide migration.

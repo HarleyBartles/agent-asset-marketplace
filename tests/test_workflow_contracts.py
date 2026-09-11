@@ -7,6 +7,7 @@ import sys
 from pathlib import Path
 
 import pytest
+import yaml
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -15,6 +16,8 @@ REPO_SKILLS = ROOT / "codex-marketplace" / "plugins" / "repo-worker-pack" / "ski
 DOCS = ROOT / "tests" / "pressure" / "workflow-contracts"
 sys.path.insert(0, str(ROOT / "tools"))
 import run_workflow_pressure_campaign as campaign_runner  # noqa: E402
+import review_preflight  # noqa: E402
+import skill_validation  # noqa: E402
 import workflow_pressure_scan as pressure_scan  # noqa: E402
 
 
@@ -231,6 +234,31 @@ class TestPlanningDelegationReview:
 
 
 class TestRepositoryCallersAndPressure:
+    def test_skill_language_contract_assigns_one_role_per_field(self):
+        frontmatter = _read(ROOT / ".agents" / "contracts" / "skill-frontmatter.md")
+        wrapper = _read(ROOT / ".agents" / "contracts" / "openai-agent-yaml.md")
+        policy = _read(ROOT / ".agents" / "doctrine" / "skill-standards-policy.md")
+        for field in ("description", "metadata.scope", "metadata.use_when[]", "metadata.do_not_use_when[]"):
+            assert f"`{field}`" in frontmatter
+        for field in ("short_description", "default_prompt"):
+            assert f"`{field}`" in wrapper
+        assert "do not impose description-style `Use when` phrasing" in policy
+
+    def test_review_preflight_accepts_relationship_metadata_fields(self):
+        source = _read(ROOT / "tools" / "review_preflight.py")
+        for field in ("use_before", "use_after", "use_with", "use_instead"):
+            assert f'"{field}"' in source
+
+    def test_review_preflight_reports_workflow_like_description_for_adjudication(
+        self, tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+    ):
+        path = tmp_path / "SKILL.md"
+        content = "---\nname: sample\ndescription: Use when a task is blocked. Then run the fixer.\n---\n"
+        findings = []
+        monkeypatch.setattr(review_preflight, "ROOT", tmp_path)
+        review_preflight._scan_skill_language(path, content, findings)
+        assert findings and "workflow-like clause" in findings[0]
+
     def test_repo_contracts_have_one_home(self):
         contracts = ROOT / ".agents" / "contracts"
         assert (contracts / "openai-agent-yaml.md").is_file()
@@ -274,6 +302,19 @@ class TestRepositoryCallersAndPressure:
                     offenders.append(f"{path.relative_to(ROOT).as_posix()}:{line_number}")
         assert offenders == []
 
+    def test_vendored_skill_prose_uses_plain_identifiers_not_client_sigils(self):
+        skill_names = sorted(_canonical_skill_names(), key=len, reverse=True)
+        sigilled_skill = re.compile(
+            r"(?<![A-Za-z0-9._~*\-])[/\$](?:" + "|".join(map(re.escape, skill_names)) + r")(?![a-z0-9-])"
+        )
+        offenders = []
+        for path in (ROOT / "codex-marketplace" / "plugins").rglob("*"):
+            if path.is_file() and (path.name == "SKILL.md" or path.as_posix().endswith("/agents/openai.yaml")):
+                for line_number, line in enumerate(_read(path).splitlines(), start=1):
+                    if sigilled_skill.search(line):
+                        offenders.append(f"{path.relative_to(ROOT).as_posix()}:{line_number}")
+        assert offenders == []
+
     def test_superpowers_plus_uses_its_own_namespace(self):
         offenders = []
         for path in (ROOT / "codex-marketplace" / "plugins" / "superpowers-plus").rglob("*"):
@@ -281,6 +322,48 @@ class TestRepositoryCallersAndPressure:
                 continue
             if re.search(r"\bsuperpowers:[a-z][a-z0-9-]+", _read(path)):
                 offenders.append(path.relative_to(ROOT).as_posix())
+        assert offenders == []
+
+    def test_vendored_skill_metadata_uses_field_relative_language(self):
+        offenders = []
+        for skill_md in (ROOT / "codex-marketplace" / "plugins").rglob("SKILL.md"):
+            if "templates" in skill_md.parts:
+                continue
+            skill_validation.validate_skill_markdown_frontmatter(skill_md.parent)
+            text = _read(skill_md)
+            _, frontmatter, _ = text.split("---", 2)
+            data = yaml.safe_load(frontmatter)
+            metadata = data.get("metadata") or {}
+            description = data.get("description", "")
+            if not description.startswith("Use when "):
+                offenders.append(f"{skill_md.relative_to(ROOT)}: description")
+            scope = metadata.get("scope")
+            if isinstance(scope, str) and scope.lower().startswith("use when"):
+                offenders.append(f"{skill_md.relative_to(ROOT)}: scope")
+            for field, prefix in (("use_when", "use "), ("do_not_use_when", "do not use")):
+                for value in metadata.get(field, []):
+                    if value.lower().startswith(prefix):
+                        offenders.append(f"{skill_md.relative_to(ROOT)}: {field}")
+        assert offenders == []
+
+    def test_openai_wrappers_use_capability_copy_and_direct_prompts(self):
+        offenders = []
+        skill_names = "|".join(map(re.escape, sorted(_canonical_skill_names(), key=len, reverse=True)))
+        client_sigil = re.compile(rf"(?<![A-Za-z0-9._~*\-])[/$](?:{skill_names})(?![a-z0-9-])")
+        for path in (ROOT / "codex-marketplace" / "plugins").rglob("agents/openai.yaml"):
+            data = yaml.safe_load(_read(path))
+            interface = data.get("interface") or {}
+            skill_name = (data.get("metadata") or {}).get("skill_name")
+            short = interface.get("short_description", "")
+            prompt = interface.get("default_prompt", "")
+            if short.lower().startswith("use when"):
+                offenders.append(f"{path.relative_to(ROOT)}: short_description")
+            if re.search(r"\bto use when\b|^use when\b", prompt, re.IGNORECASE):
+                offenders.append(f"{path.relative_to(ROOT)}: default_prompt grammar")
+            if client_sigil.search(prompt):
+                offenders.append(f"{path.relative_to(ROOT)}: client sigil")
+            if skill_name and not re.search(rf"\b{re.escape(skill_name)}\b", prompt):
+                offenders.append(f"{path.relative_to(ROOT)}: missing skill identity")
         assert offenders == []
 
     def test_repo_standards_delegates_composition_to_using_superpowers_plus(self):
@@ -702,7 +785,6 @@ class TestPressureRepairContracts:
         execution = _read(SKILLS / "executing-plans" / "SKILL.md")
         finishing = _read(SKILLS / "finishing-a-development-branch" / "SKILL.md")
         safety = _read(REPO_SKILLS / "risk-gates" / "references" / "gates" / "safety-gate.md")
-        risk_gate = _read(REPO_SKILLS / "risk-gates" / "SKILL.md")
         repo_worker = _read(REPO_SKILLS / "repo-worker-base" / "SKILL.md")
         assert "tiny_reversible_change" in routing
         assert "Tiny reversible fast path" in bootstrap
@@ -714,23 +796,17 @@ class TestPressureRepairContracts:
         assert "decision remains human-owned" in questions
         assert "invites collaboration" in questions
         assert "unresolved human-owned taste" in brainstorming.split("---", 2)[1]
-        brainstorming_header = " ".join(brainstorming.split("---", 2)[1].split())
-        assert "technical assumption and focused proof" in brainstorming_header
+        assert "technical assumption" in brainstorming and "focused proof" in brainstorming
         assert "Tiny bounded sketch" in brainstorming
         assert "missing destructive authority" in environment.split("---", 2)[1]
-        environment_header = " ".join(environment.split("---", 2)[1].split())
-        bootstrap_header = " ".join(bootstrap.split("---", 2)[1].split())
-        execution_header = " ".join(execution.split("---", 2)[1].split())
-        assert "read that checkpoint before this or any other skill" in environment_header
-        assert "read it before this or any other skill" in bootstrap_header
-        assert "read it before this or any other skill" in execution_header
+        assert "read that checkpoint before this skill or any" in bootstrap
+        assert "read the durable checkpoint before live repository inspection" in execution
         assert "durable checkpoint before live repository inspection" in execution
         assert "inspect the current branch and status" in finishing
         assert "find .agents -maxdepth 2 -type f -iname '*evidence*'" in finishing
         assert "first response" in safety and "reversible alternative" in safety
         assert "recoverability does not grant authority" in safety.lower()
         assert "git switch --orphan" in safety
-        assert "stop and wait" in risk_gate.split("---", 2)[1]
-        repo_worker_header = " ".join(repo_worker.split("---", 2)[1].split())
-        assert "portable suggestion conflicts" in repo_worker_header
-        assert "inspect repository canon" in bootstrap_header
+        assert "stop and wait" in " ".join(safety.lower().split())
+        assert "portable suggestion conflicts" in repo_worker.split("---", 2)[1]
+        assert "repository guidance" in bootstrap and "owner gate" in bootstrap

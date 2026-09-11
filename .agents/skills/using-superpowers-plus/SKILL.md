@@ -1,10 +1,7 @@
 ---
 name: using-superpowers-plus
-description: Use when starting a conversation to find the smallest lawful workflow.
-  On an explicit checkpoint-first resume, read it before this or any other skill;
-  otherwise apply the tiny-change, taste, and safety fast paths here. If a portable
-  command conflicts with repository guidance, inspect repository canon and the owner
-  gate and name required local evidence before ruling.
+description: Use when starting or resuming a conversation that may need workflow,
+  doctrine, safety, or repository-scope routing.
 metadata:
   source-id: using-superpowers-plus
   source-path: codex-marketplace/plugins/superpowers-plus/skills/using-superpowers-plus/SKILL.md
@@ -15,13 +12,13 @@ metadata:
   scope: First-turn workflow routing with explicit proportionality, checkpoint,
     taste-ambiguity, and destructive-authority exceptions
   use_when:
-  - Use when starting any conversation to find and invoke the right skill.
-  - Use when unsure whether a skill applies to the current task.
-  - Use before any response or action when a workflow skill might be relevant.
+  - starting any conversation to find and invoke the right skill.
+  - unsure whether a skill applies to the current task.
+  - a workflow skill might be relevant to the next response or action.
   do_not_use_when:
-  - Do not use when dispatched as a subagent with a specific task.
-  - Do not use when user instructions explicitly override skill selection.
-  - Do not use as a substitute for reading the chosen skill.
+  - dispatched as a subagent with a specific task.
+  - user instructions explicitly override skill selection.
+  - a substitute for reading the chosen skill.
   use_before:
   - brainstorming
   - systematic-debugging
@@ -114,6 +111,11 @@ after that immediate safety response if further work remains. A backup or
 reversible preparation does not grant authority: stop and wait for explicit
 authorization before inspection, `git switch --orphan`, reflog expiry, garbage
 collection, branch replacement, or another history-rewrite step.
+
+### Portable and repository guidance conflict
+
+If a portable suggestion conflicts with repository guidance, inspect repository
+canon and the owner gate, then name the required local evidence before ruling.
 
 ## The Rule
 

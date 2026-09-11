@@ -8,14 +8,13 @@ metadata:
   source-category: first_party
   status: active
   owner: Harley Bartles
-  scope: Use when eliciting, validating, or documenting requirements, user stories, and acceptance criteria.
   use_when:
-  - Use when starting a feature, project, or iteration.
-  - Use when interviewing stakeholders or domain experts.
-  - Use when translating needs into user stories and acceptance criteria.
-  - Use when reviewing requirements for ambiguity or missing acceptance criteria.
+  - starting a feature, project, or iteration.
+  - interviewing stakeholders or domain experts.
+  - translating needs into user stories and acceptance criteria.
+  - reviewing requirements for ambiguity or missing acceptance criteria.
   do_not_use_when:
-  - Do not use when another more specific skill owns the task.
+  - another more specific skill owns the task.
   related_skills:
   - estimation
   - risk-gates

@@ -9,23 +9,21 @@ metadata:
   source-category: first_party
   status: active
   owner: Harley Bartles
-  scope: Use when choosing a child subagent profile, model, reasoning level, or context
-    mode, or when retrying failed work by changing profile, model, reasoning, or context.
   use_when:
-  - Use before calling `spawn_agent` or an equivalent subagent tool.
-  - Use when creating or selecting a named subagent configuration.
-  - Use when recommending a child model, reasoning level, or context mode.
-  - Use when retrying failed work by changing model, reasoning, or context.
-  - Use when choosing a custom subagent profile such as `reviewer`, `reviewer-fixes`,
+  - a `spawn_agent` or equivalent subagent call is about to be made.
+  - creating or selecting a named subagent configuration.
+  - recommending a child model, reasoning level, or context mode.
+  - retrying failed work by changing model, reasoning, or context.
+  - choosing a custom subagent profile such as `reviewer`, `reviewer-fixes`,
     `reviewer-strong`, `reviewer-security`, `reviewer-skills`, `reviewer-plans`,
     `reviewer-mesh`, `reviewer-scripts`, `implementer`, or
     `implementer-strong`.
-  - Use when selecting an implementation, code-review, architecture-review, or adjudication
+  - selecting an implementation, code-review, architecture-review, or adjudication
     agent.
   do_not_use_when:
-  - Do not use to switch the current parent session when the runtime cannot change
+  - to switch the current parent session when the runtime cannot change
     models mid-session.
-  - Do not use when another more specific skill owns the task.
+  - another more specific skill owns the task.
   related_skills:
   - dispatching-parallel-agents
   - risk-gates

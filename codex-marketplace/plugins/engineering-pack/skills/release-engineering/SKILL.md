@@ -8,14 +8,13 @@ metadata:
   source-category: first_party
   status: active
   owner: Harley Bartles
-  scope: Use when building, reviewing, or operating CI/CD pipelines, container images, releases, rollbacks, or deployment patterns.
   use_when:
-  - Use when designing or reviewing CI/CD pipelines.
-  - Use when building, tagging, or promoting container images.
-  - Use when planning blue/green, canary, or rolling deployments.
-  - Use when preparing or rolling back a release.
+  - designing or reviewing CI/CD pipelines.
+  - building, tagging, or promoting container images.
+  - planning blue/green, canary, or rolling deployments.
+  - preparing or rolling back a release.
   do_not_use_when:
-  - Do not use when another more specific skill owns the task.
+  - another more specific skill owns the task.
   related_skills:
   - observability
   - using-github-mcp

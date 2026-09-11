@@ -1,7 +1,7 @@
 [
   {
     "path": "codex-marketplace/plugins/superpowers-plus/skills/dispatching-parallel-agents/SKILL.md",
-    "line": 44,
+    "line": 42,
     "pattern": "must-read",
     "classification": "intended",
     "owner": "owning portable skill",
@@ -9,7 +9,7 @@
   },
   {
     "path": "codex-marketplace/plugins/superpowers-plus/skills/dispatching-parallel-agents/SKILL.md",
-    "line": 116,
+    "line": 114,
     "pattern": "full-test-suite",
     "classification": "intended",
     "owner": "owning portable skill",
@@ -17,7 +17,7 @@
   },
   {
     "path": "codex-marketplace/plugins/superpowers-plus/skills/dispatching-parallel-agents/SKILL.md",
-    "line": 191,
+    "line": 189,
     "pattern": "full-test-suite",
     "classification": "intended",
     "owner": "owning portable skill",
@@ -25,7 +25,7 @@
   },
   {
     "path": "codex-marketplace/plugins/superpowers-plus/skills/dispatching-parallel-agents/SKILL.md",
-    "line": 198,
+    "line": 196,
     "pattern": "full-test-suite",
     "classification": "intended",
     "owner": "owning portable skill",
@@ -33,7 +33,7 @@
   },
   {
     "path": "codex-marketplace/plugins/superpowers-plus/skills/executing-plans/SKILL.md",
-    "line": 56,
+    "line": 53,
     "pattern": "must-read",
     "classification": "intended",
     "owner": "owning portable skill",
@@ -41,7 +41,7 @@
   },
   {
     "path": "codex-marketplace/plugins/superpowers-plus/skills/subagent-driven-development/SKILL.md",
-    "line": 213,
+    "line": 211,
     "pattern": "must-read",
     "classification": "intended",
     "owner": "owning portable skill",
@@ -49,7 +49,7 @@
   },
   {
     "path": "codex-marketplace/plugins/superpowers-plus/skills/using-superpowers-plus/SKILL.md",
-    "line": 70,
+    "line": 67,
     "pattern": "universal-startup-read",
     "classification": "intended",
     "owner": "owning portable skill",
@@ -57,7 +57,7 @@
   },
   {
     "path": "codex-marketplace/plugins/superpowers-plus/skills/writing-plans/SKILL.md",
-    "line": 100,
+    "line": 98,
     "pattern": "must-read",
     "classification": "intended",
     "owner": "owning portable skill",
