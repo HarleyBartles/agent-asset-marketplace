@@ -39,9 +39,7 @@ RUNTIME_DEVIN_DESKTOP = "devin-desktop"
 RUNTIME_CODEX = "codex-cli"
 RUNTIME_OPENAI = "openai-compatible"
 RUNTIME_UNKNOWN = "unknown"
-KNOWN_RUNTIMES = frozenset(
-    {RUNTIME_DEVIN_DESKTOP, RUNTIME_CODEX, RUNTIME_OPENAI, RUNTIME_UNKNOWN}
-)
+KNOWN_RUNTIMES = frozenset({RUNTIME_DEVIN_DESKTOP, RUNTIME_CODEX, RUNTIME_OPENAI, RUNTIME_UNKNOWN})
 
 
 def _devin_surface_dirs(env) -> list[Path]:
@@ -100,16 +98,12 @@ class TrustedActionPayload:
 
 @runtime_checkable
 class AuthorityDiscoverySource(Protocol):
-    def acquire(
-        self, *, action: str, current_snapshot: dict | None
-    ) -> TrustedActionPayload: ...
+    def acquire(self, *, action: str, current_snapshot: dict | None) -> TrustedActionPayload: ...
 
 
 @runtime_checkable
 class ReviewerDispatchSource(Protocol):
-    def resolve_profile(
-        self, *, action: str, recipe: policy.ActionRecipe
-    ) -> TrustedActionPayload: ...
+    def resolve_profile(self, *, action: str, recipe: policy.ActionRecipe) -> TrustedActionPayload: ...
 
     def launch(self, *, dispatch: dict) -> TrustedActionPayload: ...
 
@@ -118,9 +112,7 @@ class ReviewerDispatchSource(Protocol):
 
 @runtime_checkable
 class CommandRunnerSource(Protocol):
-    def run(
-        self, *, action: str, command_intent: dict
-    ) -> TrustedActionPayload: ...
+    def run(self, *, action: str, command_intent: dict) -> TrustedActionPayload: ...
 
 
 @runtime_checkable
@@ -182,9 +174,7 @@ class _FailClosedWitnessVerifier:
         return self._policy
 
     def verify(self, **kwargs):
-        raise policy.WitnessVerificationError(
-            "missing-source", "no live witness sources are wired in Plan 1"
-        )
+        raise policy.WitnessVerificationError("missing-source", "no live witness sources are wired in Plan 1")
 
 
 class _BuiltinLocalChecks:
@@ -225,9 +215,7 @@ class _BuiltinReviewAssignments:
     def sha256(self) -> str:
         return model.sha256_hex(b"review-core-assignments:1")
 
-    def requirement(
-        self, *, state: dict, role: str, assignment_ids: tuple
-    ) -> policy.RoleRequirement:
+    def requirement(self, *, state: dict, role: str, assignment_ids: tuple) -> policy.RoleRequirement:
         floor_t, floor_r = policy._role_floor(role)
         if role == "obligation-reviewer":
             floor_t, floor_r = "fast", "low"
@@ -235,9 +223,7 @@ class _BuiltinReviewAssignments:
                 o = state["obligations"].get(aid)
                 if o is None:
                     continue
-                t, r = policy.obligation_floor(
-                    o["scope_level"], o["risk"], o["consequences"]
-                )
+                t, r = policy.obligation_floor(o["scope_level"], o["risk"], o["consequences"])
                 if model.CAPABILITY_TIERS.index(t) > model.CAPABILITY_TIERS.index(floor_t):
                     floor_t = t
                 if model.REASONING_FLOORS.index(r) > model.REASONING_FLOORS.index(floor_r):
@@ -360,30 +346,20 @@ _SOURCE_FOR_ACTION = {
 }
 
 
-def _blocked(
-    action: str, reason: str, missing: tuple, recipe=None, status: str = "blocked"
-) -> policy.Decision:
-    return policy.Decision(
-        False, action, reason, missing=missing, recipe=recipe, status=status
-    )
+def _blocked(action: str, reason: str, missing: tuple, recipe=None, status: str = "blocked") -> policy.Decision:
+    return policy.Decision(False, action, reason, missing=missing, recipe=recipe, status=status)
 
 
 def _decode_payload(payload: TrustedActionPayload, source: str) -> tuple[dict, list, dict]:
     env = model.strict_json_loads(payload.raw_data, source=source)
     if not isinstance(env, dict):
-        raise model.StateValidationError(
-            "bad-type", "payload", "source payload must be an object"
-        )
+        raise model.StateValidationError("bad-type", "payload", "source payload must be an object")
     data = env.get("data", {})
     witnesses = env.get("witnesses", [])
     if not isinstance(data, dict):
-        raise model.StateValidationError(
-            "bad-type", "payload.data", "payload data must be an object"
-        )
+        raise model.StateValidationError("bad-type", "payload.data", "payload data must be an object")
     if not isinstance(witnesses, list):
-        raise model.StateValidationError(
-            "bad-type", "payload.witnesses", "payload witnesses must be a list"
-        )
+        raise model.StateValidationError("bad-type", "payload.witnesses", "payload witnesses must be a list")
     extra = {k: v for k, v in env.items() if k not in ("data", "witnesses")}
     return data, witnesses, extra
 
@@ -410,11 +386,7 @@ def _register_payload_evidence(
 ) -> dict:
     if not payload.evidence_sources:
         return {}
-    snap = (
-        candidate_snapshot
-        if candidate_snapshot is not None
-        else tx.candidate["snapshot"]
-    )
+    snap = candidate_snapshot if candidate_snapshot is not None else tx.candidate["snapshot"]
     epoch = snap["epoch"] if snap else -1
     fp = snap["fingerprint"] if snap else "0" * 64
     requests = tuple(
@@ -432,9 +404,7 @@ def _register_payload_evidence(
         candidate_snapshot=candidate_snapshot,
         eligible_sources=tuple(Path(s.path) for s in payload.evidence_sources),
     )
-    return store.register_evidence_batch(
-        tx, requests, policy=ingestion, context=context
-    )
+    return store.register_evidence_batch(tx, requests, policy=ingestion, context=context)
 
 
 def _install_witness_records(st: dict, witnesses: list, policies) -> dict:
@@ -444,9 +414,7 @@ def _install_witness_records(st: dict, witnesses: list, policies) -> dict:
     record_* APIs because they also bind a dispatch or ready transition."""
     for rec in witnesses:
         if not isinstance(rec, dict):
-            raise model.StateValidationError(
-                "bad-type", "witnesses", "witness record must be an object"
-            )
+            raise model.StateValidationError("bad-type", "witnesses", "witness record must be an object")
         kind = rec.get("kind")
         if kind in ("review-launch", "review-completion", "remote-transition"):
             raise model.StateValidationError(
@@ -454,9 +422,7 @@ def _install_witness_records(st: dict, witnesses: list, policies) -> dict:
                 "witnesses",
                 f"{kind} witnesses bind through their dedicated flow",
             )
-        st = policy.record_witness(
-            st, witness_bytes=model.canonical_json(rec), kind=kind, policies=policies
-        )
+        st = policy.record_witness(st, witness_bytes=model.canonical_json(rec), kind=kind, policies=policies)
     return st
 
 
@@ -480,9 +446,7 @@ def _pending_dispatch(st: dict, role: str) -> dict | None:
             continue
         found.append(d)
     if len(found) > 1:
-        raise model.StateValidationError(
-            "conflict", "dispatches", f"multiple pending dispatches for {role!r}"
-        )
+        raise model.StateValidationError("conflict", "dispatches", f"multiple pending dispatches for {role!r}")
     return found[0] if found else None
 
 
@@ -499,9 +463,7 @@ def _launched_dispatch(st: dict, role: str) -> dict | None:
             continue
         found.append(d)
     if len(found) > 1:
-        raise model.StateValidationError(
-            "conflict", "dispatches", f"multiple launched dispatches for {role!r}"
-        )
+        raise model.StateValidationError("conflict", "dispatches", f"multiple launched dispatches for {role!r}")
     return found[0] if found else None
 
 
@@ -523,9 +485,7 @@ def _commit_if_changed(tx, before: dict, result: EngineResult) -> EngineResult:
 # Transactions
 
 
-def init_review(
-    state_path: Path, *, review_id: str, scratch_dir: Path, apply: bool
-) -> EngineResult:
+def init_review(state_path: Path, *, review_id: str, scratch_dir: Path, apply: bool) -> EngineResult:
     """Create the validated generation-0 intake state. Without ``apply`` this
     is a check: the would-be state is built and validated but nothing is
     written."""
@@ -534,9 +494,7 @@ def init_review(
     model.validate_state(state)
     if not apply:
         return EngineResult(
-            policy.Decision(
-                True, "init", "would create version-2 intake state", status="check"
-            ),
+            policy.Decision(True, "init", "would create version-2 intake state", status="check"),
             0,
             sp,
         )
@@ -572,18 +530,14 @@ def next_action_for(state_path: Path, *, policies) -> EngineResult:
     return EngineResult(decision, state["generation"], Path(state_path))
 
 
-def register_dispatch_transaction(
-    state_path: Path, *, action: str, sources: WitnessSources
-) -> EngineResult:
+def register_dispatch_transaction(state_path: Path, *, action: str, sources: WitnessSources) -> EngineResult:
     """Phase 1 of a reviewer dispatch: persist the pending dispatch plus its
     resolved profile identity, verified against the profile-resolution
     witness. Idempotent for the same pending intent."""
     sp = Path(state_path)
     recipe = policy.action_recipe(action)
     if recipe.required_role is None:
-        raise model.StateValidationError(
-            "unlawful-transition", "action", f"{action!r} is not a dispatch action"
-        )
+        raise model.StateValidationError("unlawful-transition", "action", f"{action!r} is not a dispatch action")
     with store.locked_state_transaction(sp) as tx:
         before = tx.candidate
         st = before
@@ -609,9 +563,7 @@ def register_dispatch_transaction(
                 tx.prior_generation,
                 sp,
             )
-        payload = sources.reviewer_dispatch.resolve_profile(
-            action=action, recipe=recipe
-        )
+        payload = sources.reviewer_dispatch.resolve_profile(action=action, recipe=recipe)
         data, witnesses, _extra = _decode_payload(payload, f"payload:{action}")
         missing_keys = {"route_selection", "dispatch"} - set(data)
         if missing_keys:
@@ -666,9 +618,7 @@ def register_dispatch_transaction(
         )
 
 
-def launch_transaction(
-    state_path: Path, *, dispatch_id: str, sources: WitnessSources
-) -> EngineResult:
+def launch_transaction(state_path: Path, *, dispatch_id: str, sources: WitnessSources) -> EngineResult:
     """Phase 2 of a reviewer dispatch: verify and persist the witnessed
     launch (tool_use_id, verbatim task bytes, resolved profile name)."""
     sp = Path(state_path)
@@ -676,14 +626,10 @@ def launch_transaction(
         st = tx.candidate
         d = st["dispatches"].get(dispatch_id)
         if d is None or not policy._current(st, d, dispatch_id):
-            raise model.StateValidationError(
-                "dangling-ref", "dispatch_id", f"unknown dispatch {dispatch_id!r}"
-            )
+            raise model.StateValidationError("dangling-ref", "dispatch_id", f"unknown dispatch {dispatch_id!r}")
         if d["launch_witness_id"] is not None:
             return EngineResult(
-                policy.Decision(
-                    True, "launch", f"dispatch {dispatch_id} already launched"
-                ),
+                policy.Decision(True, "launch", f"dispatch {dispatch_id} already launched"),
                 tx.prior_generation,
                 sp,
             )
@@ -699,9 +645,7 @@ def launch_transaction(
             )
         payload = sources.reviewer_dispatch.launch(dispatch=dict(d))
         data, witnesses, _extra = _decode_payload(payload, "payload:launch")
-        launch_records = [
-            r for r in witnesses if isinstance(r, dict) and r.get("kind") == "review-launch"
-        ]
+        launch_records = [r for r in witnesses if isinstance(r, dict) and r.get("kind") == "review-launch"]
         if len(launch_records) != 1:
             raise model.StateValidationError(
                 "missing-field",
@@ -760,9 +704,7 @@ def complete_transaction(
     recipe = policy.action_recipe(action)
     if action == "mark-ready-for-ci":
         if caller_data_bytes not in (b"", b"{}"):
-            raise model.StateValidationError(
-                "caller-provenance", "data", "mark-ready-for-ci takes no caller data"
-            )
+            raise model.StateValidationError("caller-provenance", "data", "mark-ready-for-ci takes no caller data")
         if caller_evidence:
             raise model.StateValidationError(
                 "caller-provenance",
@@ -775,9 +717,7 @@ def complete_transaction(
         state = store.load_state(sp)
         ready = state["ready_transition"]
         if ready is None:
-            raise model.StateValidationError(
-                "state-invalid", "ready_transition", "register left no intent"
-            )
+            raise model.StateValidationError("state-invalid", "ready_transition", "register left no intent")
         return finalize_ready_transition_transaction(
             sp, ready_transition_id=ready["ready_transition_id"], sources=sources
         )
@@ -826,8 +766,7 @@ def complete_transaction(
                 return EngineResult(
                     _blocked(
                         action,
-                        f"no launched dispatch awaits completion for role "
-                        f"{recipe.required_role!r}",
+                        f"no launched dispatch awaits completion for role {recipe.required_role!r}",
                         ("dispatch-launch",),
                         recipe=recipe,
                     ),
@@ -836,11 +775,7 @@ def complete_transaction(
                 )
             payload = sources.reviewer_dispatch.collect(dispatch=dict(d))
             data, witnesses, extra = _decode_payload(payload, f"payload:{action}")
-            completions = [
-                r
-                for r in witnesses
-                if isinstance(r, dict) and r.get("kind") == "review-completion"
-            ]
+            completions = [r for r in witnesses if isinstance(r, dict) and r.get("kind") == "review-completion"]
             if len(completions) != 1:
                 raise model.StateValidationError(
                     "missing-field",
@@ -877,14 +812,10 @@ def complete_transaction(
                 # presentation-time observation is consumed here.
                 payload = TrustedActionPayload(b'{"data": {}, "witnesses": []}')
             elif attr == "authority_discovery":
-                payload = src.acquire(
-                    action=action, current_snapshot=st["snapshot"]
-                )
+                payload = src.acquire(action=action, current_snapshot=st["snapshot"])
             elif attr == "command_runner":
                 intents = [
-                    sources.policies.command_execution.command_intent(
-                        snapshot=st["snapshot"], item=i
-                    )
+                    sources.policies.command_execution.command_intent(snapshot=st["snapshot"], item=i)
                     for i in sources.policies.local_checks.items
                 ]
                 payload = src.run(
@@ -904,9 +835,7 @@ def complete_transaction(
             )
             resolved = store.resolve_evidence_aliases(data, registrations)
             st = _install_witness_records(st, witnesses, sources.policies)
-            witness_ids.extend(
-                set(st["witness_records"]) - set(before["witness_records"])
-            )
+            witness_ids.extend(set(st["witness_records"]) - set(before["witness_records"]))
             st = policy.complete_action(
                 st,
                 action=action,
@@ -915,13 +844,9 @@ def complete_transaction(
             )
         else:
             payload = TrustedActionPayload(caller_data_bytes, tuple(caller_evidence))
-            data = model.strict_json_loads(
-                bytes(caller_data_bytes), source=f"data:{action}"
-            )
+            data = model.strict_json_loads(bytes(caller_data_bytes), source=f"data:{action}")
             if not isinstance(data, dict):
-                raise model.StateValidationError(
-                    "bad-type", "data", "action payload must be an object"
-                )
+                raise model.StateValidationError("bad-type", "data", "action payload must be an object")
             candidate_snapshot = _candidate_snapshot_for(action, data)
             registrations = _register_payload_evidence(
                 tx,
@@ -957,9 +882,7 @@ def complete_transaction(
         )
 
 
-def register_ready_transition_transaction(
-    state_path: Path, *, sources: WitnessSources
-) -> EngineResult:
+def register_ready_transition_transaction(state_path: Path, *, sources: WitnessSources) -> EngineResult:
     """Phase 1 of mark-ready-for-ci: observe the current remote lifecycle,
     then persist the exact pending intent for this snapshot."""
     sp = Path(state_path)
@@ -1009,9 +932,7 @@ def register_ready_transition_transaction(
             "expected_lifecycle_state": "ready",
         }
         observed = sources.remote_transition.observe_lifecycle(intent=intent)
-        data, witnesses, _extra = _decode_payload(
-            observed, "payload:mark-ready-for-ci"
-        )
+        data, witnesses, _extra = _decode_payload(observed, "payload:mark-ready-for-ci")
         prior = data.get("prior_lifecycle_state")
         if not isinstance(prior, str) or not prior:
             raise model.StateValidationError(
@@ -1037,9 +958,7 @@ def register_ready_transition_transaction(
         tx.candidate = st
         committed = tx.commit()
         return EngineResult(
-            policy.Decision(
-                True, action, "ready-transition intent registered", recipe=recipe
-            ),
+            policy.Decision(True, action, "ready-transition intent registered", recipe=recipe),
             committed["generation"],
             sp,
         )
@@ -1088,14 +1007,8 @@ def finalize_ready_transition_transaction(
                 sp,
             )
         payload = sources.remote_transition.apply_or_confirm_ready(intent=dict(ready))
-        data, witnesses, _extra = _decode_payload(
-            payload, "payload:mark-ready-for-ci"
-        )
-        transitions = [
-            r
-            for r in witnesses
-            if isinstance(r, dict) and r.get("kind") == "remote-transition"
-        ]
+        data, witnesses, _extra = _decode_payload(payload, "payload:mark-ready-for-ci")
+        transitions = [r for r in witnesses if isinstance(r, dict) and r.get("kind") == "remote-transition"]
         if len(transitions) != 1:
             raise model.StateValidationError(
                 "missing-field",
@@ -1154,9 +1067,7 @@ def block_transaction(
 ) -> EngineResult:
     sp = Path(state_path)
     if blocker_class not in model.BLOCKER_CLASSES:
-        raise model.StateValidationError(
-            "bad-enum", "class", f"unknown blocker class {blocker_class!r}"
-        )
+        raise model.StateValidationError("bad-enum", "class", f"unknown blocker class {blocker_class!r}")
     with store.locked_state_transaction(sp) as tx:
         st = tx.candidate
         payload = TrustedActionPayload(b"{}", tuple(evidence))

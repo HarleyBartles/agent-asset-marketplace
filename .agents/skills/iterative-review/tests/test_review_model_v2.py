@@ -273,9 +273,7 @@ def test_impact_map_derived_id(tmp_path):
     with pytest.raises(model.StateValidationError):
         model.validate_state(state)
     ev = _evidence(state, evidence_id=None)
-    ev["evidence_id"] = "evidence:" + model.sha256_json(
-        model.evidence_binding_subject({**ev, "kind": "impact-map"})
-    )
+    ev["evidence_id"] = "evidence:" + model.sha256_json(model.evidence_binding_subject({**ev, "kind": "impact-map"}))
     ev["kind"] = "impact-map"
     state["content_objects"]["sha256:" + "a" * 64] = {
         "content_id": "sha256:" + "a" * 64,
@@ -285,9 +283,7 @@ def test_impact_map_derived_id(tmp_path):
     }
     state["evidence"][ev["evidence_id"]] = ev
     rec["evidence_id"] = ev["evidence_id"]
-    rec["impact_map_id"] = model.derived_id(
-        "impact-map", epoch, model.impact_map_subject(rec)
-    )
+    rec["impact_map_id"] = model.derived_id("impact-map", epoch, model.impact_map_subject(rec))
     state["impact_maps"] = {rec["impact_map_id"]: rec}
     # content object file doesn't exist -> verify_content path trips
     with pytest.raises(model.StateValidationError):
@@ -537,9 +533,7 @@ def test_excluded_wrapper_fields_do_not_change_subject():
 # --- schema parity --------------------------------------------------------------
 
 
-SCHEMA_PATH = (
-    TESTS_DIR.parent / "references" / "review-state-v2.schema.json"
-)
+SCHEMA_PATH = TESTS_DIR.parent / "references" / "review-state-v2.schema.json"
 
 
 def _walk_schema_objects(node, path="$"):

@@ -90,9 +90,7 @@ def test_next_action_after_freeze_is_semantic_map(tmp_path):
     fresh["authorities"] = state["authorities"]
     fresh["content_objects"] = state["content_objects"]
     fresh["evidence"] = state["evidence"]
-    fresh["witness_records"] = {
-        k: w for k, w in state["witness_records"].items() if w["kind"] == "authority-discovery"
-    }
+    fresh["witness_records"] = {k: w for k, w in state["witness_records"].items() if w["kind"] == "authority-discovery"}
     d = policy.next_action(fresh, policies=_bundle(state))
     assert d.action == "map-impact-semantic"
 
@@ -145,9 +143,7 @@ def test_evaluate_green_seals_complete_candidate(tmp_path):
     d = _eval(state)
     assert d.allowed, d
     assert d.action == "seal-green"
-    sealed = policy.complete_action(
-        state, action="seal-green", raw_data=b"{}", policies=_bundle(state)
-    )
+    sealed = policy.complete_action(state, action="seal-green", raw_data=b"{}", policies=_bundle(state))
     seal = sealed["green_seal"]
     assert seal is not None
     assert seal["snapshot_fingerprint"] == state["snapshot"]["fingerprint"]
@@ -264,9 +260,17 @@ def test_obligation_floor_table():
     assert policy.obligation_floor("whole-pr", "low", ("none",)) == ("final-strong", "final-strong")
     assert policy.obligation_floor("hunk", "medium", ("none",)) == ("focused", "standard")
     assert policy.obligation_floor("hunk", "high", ("none",)) == ("strong", "high")
-    for consequence in ("security", "authorization", "privacy", "secrets",
-                        "irreversible-data-loss", "concurrency-recovery",
-                        "migration-rollback", "public-compatibility", "source-custody"):
+    for consequence in (
+        "security",
+        "authorization",
+        "privacy",
+        "secrets",
+        "irreversible-data-loss",
+        "concurrency-recovery",
+        "migration-rollback",
+        "public-compatibility",
+        "source-custody",
+    ):
         tier, reasoning = policy.obligation_floor("hunk", "low", (consequence,))
         assert tier == "strong"
         assert reasoning == "high"
@@ -317,15 +321,33 @@ def test_register_dispatch_rejects_unknown_keys(tmp_path):
 def test_action_payload_keys_documented():
     """Every action name in the transition table has a payload key allowlist."""
     for action in (
-        "freeze-review-input", "refresh-review-input", "map-impact-semantic",
-        "map-impact-contract", "plan-coverage", "challenge-coverage",
-        "run-preflight", "run-fast-review", "run-focused-review",
-        "run-strong-review", "run-exemption-challenge", "adjudicate-findings",
-        "close-false-positive", "enter-fixing", "run-fix-verification",
-        "review-fix", "close-fixed", "enter-review-repair",
-        "verify-review-repair", "close-review-repaired", "accept-risk",
-        "resume-review", "run-final-review", "run-closure-audit",
-        "mark-ready-for-ci", "run-remote-ci", "seal-green",
+        "freeze-review-input",
+        "refresh-review-input",
+        "map-impact-semantic",
+        "map-impact-contract",
+        "plan-coverage",
+        "challenge-coverage",
+        "run-preflight",
+        "run-fast-review",
+        "run-focused-review",
+        "run-strong-review",
+        "run-exemption-challenge",
+        "adjudicate-findings",
+        "close-false-positive",
+        "enter-fixing",
+        "run-fix-verification",
+        "review-fix",
+        "close-fixed",
+        "enter-review-repair",
+        "verify-review-repair",
+        "close-review-repaired",
+        "accept-risk",
+        "resume-review",
+        "run-final-review",
+        "run-closure-audit",
+        "mark-ready-for-ci",
+        "run-remote-ci",
+        "seal-green",
     ):
         assert action in policy.ACTION_PAYLOAD_KEYS, action
 
@@ -371,10 +393,15 @@ def test_complete_action_false_positive_path(tmp_path):
     close-false-positive with counter-evidence, then the review seals."""
     state, bundle, registry, steps = walk_false_positive_path(tmp_path)
     actions = [s[0] for s in steps]
-    assert actions == EXPECTED_HAPPY_PATH[:10] + [
-        "adjudicate-findings",
-        "close-false-positive",
-    ] + EXPECTED_HAPPY_PATH[10:]
+    assert (
+        actions
+        == EXPECTED_HAPPY_PATH[:10]
+        + [
+            "adjudicate-findings",
+            "close-false-positive",
+        ]
+        + EXPECTED_HAPPY_PATH[10:]
+    )
     assert state["green_seal"] is not None
     obs, now = make_remote_observation(state)
     assert policy.evaluate_green(state, obs, policies=bundle, now=now).allowed
@@ -427,7 +454,7 @@ def test_complete_action_fix_path(tmp_path):
     assert state["snapshot"]["epoch"] == 2
     fix_at = actions.index("enter-fixing")
     # epoch-2 ascent re-runs in order after the fix begins
-    tail = actions[fix_at + 1:]
+    tail = actions[fix_at + 1 :]
     for re_action in (
         "map-impact-semantic",
         "map-impact-contract",
@@ -455,9 +482,7 @@ def test_adjudication_branches_are_exclusive(tmp_path):
     w.freeze()
     w.ascent(report_finding=True)
     f = w.reported_finding
-    _run_adjudicated(
-        w, f["finding_id"], outcome="confirmed", remediation_class="candidate-change"
-    )
+    _run_adjudicated(w, f["finding_id"], outcome="confirmed", remediation_class="candidate-change")
     # enter-review-repair is not a lawful branch for candidate-change
     with pytest.raises(model.StateValidationError):
         policy.complete_action(
@@ -605,12 +630,8 @@ def test_block_and_resume_review(tmp_path):
     )
     decision = policy.next_action(w.state, policies=w.policies)
     assert decision.action == "resume-review"
-    assert policy._lawful_actions(w.state, w.policies) == frozenset(
-        {"resume-review"}
-    )
-    blocker_id = next(
-        bid for bid, b in w.state["blockers"].items() if b["active"]
-    )
+    assert policy._lawful_actions(w.state, w.policies) == frozenset({"resume-review"})
+    blocker_id = next(bid for bid, b in w.state["blockers"].items() if b["active"])
     ev = _bind(w.state, _put(w.state, {"resolution": blocker_id}), "finding-proof")
     w.state = policy.resume_review(
         w.state,
@@ -733,9 +754,7 @@ def test_complete_action_identical_replay_is_noop(tmp_path):
     w = _Walk(tmp_path)
     w.freeze()
     before = w.state
-    again = policy.complete_action(
-        before, action=w.last_action, raw_data=w.last_raw, policies=w.policies
-    )
+    again = policy.complete_action(before, action=w.last_action, raw_data=w.last_raw, policies=w.policies)
     assert again == before
     assert len(again["history"]) == len(before["history"])
 
@@ -794,8 +813,11 @@ def test_exemption_applicable_returns_to_coverage(tmp_path):
     # high-risk covered obligation: second distinct profile contract
     w.review(
         "run-strong-review",
-        role="obligation-reviewer", profile="reviewer-b",
-        tier="strong", reasoning="high", assignments=[oid],
+        role="obligation-reviewer",
+        profile="reviewer-b",
+        tier="strong",
+        reasoning="high",
+        assignments=[oid],
     )
     w.remote()
     obs, now = make_remote_observation(w.state)
@@ -814,9 +836,7 @@ def test_exemption_incomplete_blocks_then_resumes(tmp_path):
     assert len(actives) == 1
     blocker = actives[0]
     assert blocker["class"] == "incomplete-review"
-    assert policy._lawful_actions(w.state, w.policies) == frozenset(
-        {"resume-review"}
-    )
+    assert policy._lawful_actions(w.state, w.policies) == frozenset({"resume-review"})
     w.run(
         "resume-review",
         {
@@ -955,10 +975,7 @@ def _role_attestation(state, role):
     return next(
         r["attestation_id"]
         for r in state["reviews"].values()
-        if policy._role_of_dispatch(
-            state, state["dispatches"][r["dispatch_id"]]
-        )
-        == role
+        if policy._role_of_dispatch(state, state["dispatches"][r["dispatch_id"]]) == role
     )
 
 
@@ -983,9 +1000,7 @@ def _role_attestation(state, role):
         ),
     ],
 )
-def test_repair_impact_map_row(
-    tmp_path, target_kind, action, role, profile, category, kept_hazard
-):
+def test_repair_impact_map_row(tmp_path, target_kind, action, role, profile, category, kept_hazard):
     """An impact-map repair cuts the named map, inventory, obligations,
     hypotheses, preflight and downstream: the ascent re-proves from that map
     with fresh replacement ids."""
@@ -993,11 +1008,7 @@ def test_repair_impact_map_row(
     w.freeze()
     w.ascent(report_finding=True)
     f = _repair_finding(w)
-    map_id = next(
-        m["impact_map_id"]
-        for m in w.state["impact_maps"].values()
-        if m["role"] == role
-    )
+    map_id = next(m["impact_map_id"] for m in w.state["impact_maps"].values() if m["role"] == role)
     _enter_repair(w, f, target_kind=target_kind, target_ids=[map_id])
     # Only the named map was cut; re-run that gate then re-plan coverage.
     # The replacement map differs in hazards; the replacement obligations
@@ -1027,9 +1038,7 @@ def test_repair_impact_map_row(
     _verify_close_repair(w, f)
     w.remote()
     obs, now = make_remote_observation(w.state)
-    assert policy.evaluate_green(
-        w.state, obs, policies=w.policies, now=now
-    ).allowed
+    assert policy.evaluate_green(w.state, obs, policies=w.policies, now=now).allowed
 
 
 @pytest.mark.parametrize("target_kind", ["coverage-plan", "coverage-challenge"])
@@ -1052,9 +1061,7 @@ def test_repair_coverage_row(tmp_path, target_kind):
     _verify_close_repair(w, f)
     w.remote()
     obs, now = make_remote_observation(w.state)
-    assert policy.evaluate_green(
-        w.state, obs, policies=w.policies, now=now
-    ).allowed
+    assert policy.evaluate_green(w.state, obs, policies=w.policies, now=now).allowed
 
 
 def test_repair_exemption_review_row(tmp_path):
@@ -1079,9 +1086,7 @@ def test_repair_exemption_review_row(tmp_path):
     _verify_close_repair(w, f)
     w.remote()
     obs, now = make_remote_observation(w.state)
-    assert policy.evaluate_green(
-        w.state, obs, policies=w.policies, now=now
-    ).allowed
+    assert policy.evaluate_green(w.state, obs, policies=w.policies, now=now).allowed
 
 
 def test_repair_finding_adjudication_row(tmp_path):
@@ -1092,9 +1097,7 @@ def test_repair_finding_adjudication_row(tmp_path):
     w.ascent(report_finding=True)
     f1 = w.reported_finding
     adj1 = _run_adjudicated(w, f1["finding_id"], outcome="false-positive")
-    counter = _bind(
-        w.state, _put(w.state, {"counter": f1["finding_id"]}), "finding-proof"
-    )
+    counter = _bind(w.state, _put(w.state, {"counter": f1["finding_id"]}), "finding-proof")
     w.run(
         "close-false-positive",
         {
@@ -1110,18 +1113,12 @@ def test_repair_finding_adjudication_row(tmp_path):
     # A second finding reported at blind-final drives the repair.
     w.final(report=True)
     f2 = w.reported_finding
-    _run_adjudicated(
-        w, f2["finding_id"], outcome="confirmed", remediation_class="review-process"
-    )
-    _enter_repair(
-        w, f2, target_kind="finding-adjudication", target_ids=[adj1]
-    )
+    _run_adjudicated(w, f2["finding_id"], outcome="confirmed", remediation_class="review-process")
+    _enter_repair(w, f2, target_kind="finding-adjudication", target_ids=[adj1])
     assert w.state["findings"][f1["finding_id"]]["disposition"] == "open"
     # The reopened finding blocks everything until re-adjudicated + re-closed.
     adj2 = _run_adjudicated(w, f1["finding_id"], outcome="false-positive")
-    counter2 = _bind(
-        w.state, _put(w.state, {"counter2": f1["finding_id"]}), "finding-proof"
-    )
+    counter2 = _bind(w.state, _put(w.state, {"counter2": f1["finding_id"]}), "finding-proof")
     w.run(
         "close-false-positive",
         {
@@ -1144,9 +1141,7 @@ def test_repair_finding_adjudication_row(tmp_path):
     w.remote_ci()
     w.seal()
     obs, now = make_remote_observation(w.state)
-    assert policy.evaluate_green(
-        w.state, obs, policies=w.policies, now=now
-    ).allowed
+    assert policy.evaluate_green(w.state, obs, policies=w.policies, now=now).allowed
 
 
 def test_repair_fix_review_row(tmp_path):
@@ -1156,9 +1151,7 @@ def test_repair_fix_review_row(tmp_path):
     w.freeze()
     w.ascent(report_finding=True)
     f1 = w.reported_finding
-    _run_adjudicated(
-        w, f1["finding_id"], outcome="confirmed", remediation_class="candidate-change"
-    )
+    _run_adjudicated(w, f1["finding_id"], outcome="confirmed", remediation_class="candidate-change")
     intake = w.intake(epoch=2, head_sha="f" * 40)
     pub = _bind(
         w.state,
@@ -1169,9 +1162,7 @@ def test_repair_fix_review_row(tmp_path):
     w.run(
         "enter-fixing",
         {
-            "resolutions": [
-                {"finding_id": f1["finding_id"], "publication_evidence_ids": [pub]}
-            ],
+            "resolutions": [{"finding_id": f1["finding_id"], "publication_evidence_ids": [pub]}],
             "replacement_snapshot": intake["snapshot"],
             "replacement_authority_manifest": intake["authority_manifest"],
             "replacement_authorities": intake["authorities"],
@@ -1181,13 +1172,14 @@ def test_repair_fix_review_row(tmp_path):
     w.local_check("run-fix-verification", kind="targeted", item=w.items[1])
     fix_att = w.review(
         "review-fix",
-        role="fix-reviewer", profile="fix-reviewer",
-        tier="focused", reasoning="standard", assignments=[f1["finding_id"]],
+        role="fix-reviewer",
+        profile="fix-reviewer",
+        tier="focused",
+        reasoning="standard",
+        assignments=[f1["finding_id"]],
     )
     targeted = next(
-        c["check_id"]
-        for c in w.state["checks"].values()
-        if c["kind"] == "targeted" and c["locus"] == "local"
+        c["check_id"] for c in w.state["checks"].values() if c["kind"] == "targeted" and c["locus"] == "local"
     )
     w.run(
         "close-fixed",
@@ -1206,26 +1198,23 @@ def test_repair_fix_review_row(tmp_path):
     # f2 reported at blind-final repairs f1's fix review.
     w.final(report=True)
     f2 = w.reported_finding
-    _run_adjudicated(
-        w, f2["finding_id"], outcome="confirmed", remediation_class="review-process"
-    )
-    _enter_repair(
-        w, f2, target_kind="fix-review", target_ids=[fix_att["attestation_id"]]
-    )
+    _run_adjudicated(w, f2["finding_id"], outcome="confirmed", remediation_class="review-process")
+    _enter_repair(w, f2, target_kind="fix-review", target_ids=[fix_att["attestation_id"]])
     assert w.state["findings"][f1["finding_id"]]["disposition"] == "fixing"
     # f1's fix check/review were cut; the fix lifecycle re-proves.
     w.local_check("run-fix-verification", kind="targeted", item=w.items[1])
     fix_att2 = w.review(
         "review-fix",
-        role="fix-reviewer", profile="fix-reviewer-2",
-        tier="focused", reasoning="standard", assignments=[f1["finding_id"]],
+        role="fix-reviewer",
+        profile="fix-reviewer-2",
+        tier="focused",
+        reasoning="standard",
+        assignments=[f1["finding_id"]],
     )
     targeted2 = next(
         c["check_id"]
         for c in w.state["checks"].values()
-        if c["kind"] == "targeted"
-        and c["locus"] == "local"
-        and policy._current(w.state, c, c["check_id"])
+        if c["kind"] == "targeted" and c["locus"] == "local" and policy._current(w.state, c, c["check_id"])
     )
     w.run(
         "close-fixed",
@@ -1250,9 +1239,7 @@ def test_repair_fix_review_row(tmp_path):
     w.remote_ci()
     w.seal()
     obs, now = make_remote_observation(w.state)
-    assert policy.evaluate_green(
-        w.state, obs, policies=w.policies, now=now
-    ).allowed
+    assert policy.evaluate_green(w.state, obs, policies=w.policies, now=now).allowed
 
 
 def test_repair_blind_final_row(tmp_path):
@@ -1263,9 +1250,7 @@ def test_repair_blind_final_row(tmp_path):
     w.ascent()
     att = w.final(report=True)
     f = _repair_finding(w)
-    _enter_repair(
-        w, f, target_kind="blind-final", target_ids=[att["attestation_id"]]
-    )
+    _enter_repair(w, f, target_kind="blind-final", target_ids=[att["attestation_id"]])
     # The cut reaches final and closure proof: both re-run before verify.
     w.final()
     w.closure()
@@ -1275,9 +1260,7 @@ def test_repair_blind_final_row(tmp_path):
     w.remote_ci()
     w.seal()
     obs, now = make_remote_observation(w.state)
-    assert policy.evaluate_green(
-        w.state, obs, policies=w.policies, now=now
-    ).allowed
+    assert policy.evaluate_green(w.state, obs, policies=w.policies, now=now).allowed
 
 
 def test_repair_closure_audit_row(tmp_path):
@@ -1289,9 +1272,7 @@ def test_repair_closure_audit_row(tmp_path):
     w.final()
     att = w.closure(report=True)
     f = _repair_finding(w)
-    _enter_repair(
-        w, f, target_kind="closure-audit", target_ids=[att["attestation_id"]]
-    )
+    _enter_repair(w, f, target_kind="closure-audit", target_ids=[att["attestation_id"]])
     w.closure()
     _verify_close_repair(w, f)
     w.ready()
@@ -1299,9 +1280,7 @@ def test_repair_closure_audit_row(tmp_path):
     w.remote_ci()
     w.seal()
     obs, now = make_remote_observation(w.state)
-    assert policy.evaluate_green(
-        w.state, obs, policies=w.policies, now=now
-    ).allowed
+    assert policy.evaluate_green(w.state, obs, policies=w.policies, now=now).allowed
 
 
 def test_repair_local_check_row(tmp_path):
@@ -1312,11 +1291,7 @@ def test_repair_local_check_row(tmp_path):
     w.freeze()
     w.ascent(report_finding=True)
     f = _repair_finding(w)
-    pre = next(
-        c["check_id"]
-        for c in w.state["checks"].values()
-        if c["kind"] == "preflight"
-    )
+    pre = next(c["check_id"] for c in w.state["checks"].values() if c["kind"] == "preflight")
     _enter_repair(w, f, target_kind="local-check", target_ids=[pre])
     # The challenger attestation was cut; coverage re-proves first.
     w.challenge(na=True)
@@ -1325,9 +1300,7 @@ def test_repair_local_check_row(tmp_path):
     _verify_close_repair(w, f)
     w.remote()
     obs, now = make_remote_observation(w.state)
-    assert policy.evaluate_green(
-        w.state, obs, policies=w.policies, now=now
-    ).allowed
+    assert policy.evaluate_green(w.state, obs, policies=w.policies, now=now).allowed
 
 
 def test_repair_hosted_check_row(tmp_path):
@@ -1343,11 +1316,7 @@ def test_repair_hosted_check_row(tmp_path):
     w.transition()
     w.remote_ci()
     # A check finding against the remote-CI check surfaces after the fact.
-    rci = next(
-        c["check_id"]
-        for c in w.state["checks"].values()
-        if c["kind"] == "remote-ci"
-    )
+    rci = next(c["check_id"] for c in w.state["checks"].values() if c["kind"] == "remote-ci")
     f = _finding_payload(
         w.state,
         source_kind="check",
@@ -1357,20 +1326,14 @@ def test_repair_hosted_check_row(tmp_path):
         title="hosted-check-regression",
     )
     w.state["findings"][f["finding_id"]] = f
-    _run_adjudicated(
-        w, f["finding_id"], outcome="confirmed", remediation_class="review-process"
-    )
+    _run_adjudicated(w, f["finding_id"], outcome="confirmed", remediation_class="review-process")
     _enter_repair(w, f, target_kind="hosted-check", target_ids=[rci])
-    assert policy.next_action(w.state, policies=w.policies).action == (
-        "run-remote-ci"
-    )
+    assert policy.next_action(w.state, policies=w.policies).action == ("run-remote-ci")
     w.remote_ci(run=2)
     _verify_close_repair(w, f)
     w.seal()
     obs, now = make_remote_observation(w.state)
-    assert policy.evaluate_green(
-        w.state, obs, policies=w.policies, now=now
-    ).allowed
+    assert policy.evaluate_green(w.state, obs, policies=w.policies, now=now).allowed
 
 
 @pytest.mark.parametrize(

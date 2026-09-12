@@ -406,9 +406,7 @@ def _check_field(spec: object, value: object, path: str) -> None:
         if not isinstance(value, int) or isinstance(value, bool) or value < 1:
             _fail("bad-epoch", path, "epoch must be a positive integer")
     elif spec == "epoch?":
-        if value is not None and (
-            not isinstance(value, int) or isinstance(value, bool) or value < 1
-        ):
+        if value is not None and (not isinstance(value, int) or isinstance(value, bool) or value < 1):
             _fail("bad-epoch", path, "epoch must be a positive integer or null")
     elif spec == "abs-path":
         if not isinstance(value, str) or not Path(value).is_absolute():
@@ -989,8 +987,7 @@ def manifest_payload(
         "authority_discovery_policy_version": authority_discovery_policy_version,
         "authority_discovery_policy_sha256": authority_discovery_policy_sha256,
         "authorities": [
-            _project(a, MANIFEST_AUTHORITY_ENTRY_SUBJECT, path=f"authorities[{i}]")
-            for i, a in enumerate(authorities)
+            _project(a, MANIFEST_AUTHORITY_ENTRY_SUBJECT, path=f"authorities[{i}]") for i, a in enumerate(authorities)
         ],
         "feedback_history_policy_id": feedback_history_policy_id,
         "feedback_history_policy_version": feedback_history_policy_version,
@@ -1016,9 +1013,7 @@ def manifest_payload(
     }
     _check_fields(payload, MANIFEST_PAYLOAD_FIELDS, "authority_manifest_payload")
     for i, entry in enumerate(payload["authorities"]):
-        _check_fields(
-            entry, MANIFEST_AUTHORITY_ENTRY_FIELDS, f"authority_manifest_payload.authorities[{i}]"
-        )
+        _check_fields(entry, MANIFEST_AUTHORITY_ENTRY_FIELDS, f"authority_manifest_payload.authorities[{i}]")
         if entry["availability"] == "loaded" and entry["sha256"] is None:
             _fail(
                 "missing-field",
@@ -1432,9 +1427,7 @@ def validate_remote_observation(observation: dict) -> None:
     for i, run in enumerate(observation["check_runs"]):
         _check_fields(run, REMOTE_CHECK_RUN_FIELDS, f"remote_observation.check_runs[{i}]")
     for i, run in enumerate(observation["workflow_runs"]):
-        _check_fields(
-            run, REMOTE_WORKFLOW_RUN_FIELDS, f"remote_observation.workflow_runs[{i}]"
-        )
+        _check_fields(run, REMOTE_WORKFLOW_RUN_FIELDS, f"remote_observation.workflow_runs[{i}]")
         if run["run_attempt"] < 1:
             _fail(
                 "bad-attempt",
@@ -1711,23 +1704,38 @@ def validate_state(state: dict, *, verify_content: bool = True) -> None:
     # Derived IDs ------------------------------------------------------------
     for map_id, record in state["impact_maps"].items():
         _check_derived_id(
-            record, "impact-map", impact_map_subject, record["snapshot_epoch"],
-            "impact_map_id", f"impact_maps.{map_id}",
+            record,
+            "impact-map",
+            impact_map_subject,
+            record["snapshot_epoch"],
+            "impact_map_id",
+            f"impact_maps.{map_id}",
         )
     if inventory is not None:
         _check_derived_id(
-            inventory, "coverage-inventory", coverage_inventory_subject,
-            inventory["snapshot_epoch"], "coverage_inventory_id", "coverage_inventory",
+            inventory,
+            "coverage-inventory",
+            coverage_inventory_subject,
+            inventory["snapshot_epoch"],
+            "coverage_inventory_id",
+            "coverage_inventory",
         )
     for oid, record in state["obligations"].items():
         _check_derived_id(
-            record, "obligation", obligation_subject, record["snapshot_epoch"],
-            "obligation_id", f"obligations.{oid}",
+            record,
+            "obligation",
+            obligation_subject,
+            record["snapshot_epoch"],
+            "obligation_id",
+            f"obligations.{oid}",
         )
     for hid, record in state["hypothesis_assignments"].items():
         _check_derived_id(
-            record, "hypothesis", hypothesis_assignment_subject,
-            record["snapshot_epoch"], "hypothesis_assignment_id",
+            record,
+            "hypothesis",
+            hypothesis_assignment_subject,
+            record["snapshot_epoch"],
+            "hypothesis_assignment_id",
             f"hypothesis_assignments.{hid}",
         )
     for fid, record in state["findings"].items():
@@ -1771,7 +1779,8 @@ def validate_state(state: dict, *, verify_content: bool = True) -> None:
             payload_evidence = state["evidence"].get(manifest["payload_evidence_id"])
             if payload_evidence and payload_evidence["kind"] != "authority-manifest-payload":
                 _fail(
-                    "wrong-kind", "authority_manifest.payload_evidence_id",
+                    "wrong-kind",
+                    "authority_manifest.payload_evidence_id",
                     "evidence kind must be authority-manifest-payload",
                 )
 
@@ -1794,12 +1803,14 @@ def validate_state(state: dict, *, verify_content: bool = True) -> None:
             con = state["impact_maps"].get(inventory["contract_impact_map_id"])
             if sem and sem["role"] != "impact-mapper-semantic":
                 _fail(
-                    "wrong-role", "coverage_inventory.semantic_impact_map_id",
+                    "wrong-role",
+                    "coverage_inventory.semantic_impact_map_id",
                     "map role must be impact-mapper-semantic",
                 )
             if con and con["role"] != "impact-mapper-contract":
                 _fail(
-                    "wrong-role", "coverage_inventory.contract_impact_map_id",
+                    "wrong-role",
+                    "coverage_inventory.contract_impact_map_id",
                     "map role must be impact-mapper-contract",
                 )
             if sem and con:
@@ -1868,7 +1879,8 @@ def validate_state(state: dict, *, verify_content: bool = True) -> None:
         wrec = state["witness_records"].get(record["profile_resolution_witness_id"])
         if wrec and wrec["kind"] != "profile-resolution":
             _fail(
-                "wrong-kind", f"dispatches.{did}.profile_resolution_witness_id",
+                "wrong-kind",
+                f"dispatches.{did}.profile_resolution_witness_id",
                 "witness kind must be profile-resolution",
             )
         for field, kind in (
@@ -1951,7 +1963,8 @@ def validate_state(state: dict, *, verify_content: bool = True) -> None:
     for rid, record in state["review_repairs"].items():
         need(finding_ids, record["finding_id"], f"review_repairs.{rid}.finding_id")
         need(
-            review_ids, record["entry_adjudicator_attestation_id"],
+            review_ids,
+            record["entry_adjudicator_attestation_id"],
             f"review_repairs.{rid}.entry_adjudicator_attestation_id",
         )
         if record["verification_attestation_id"] is not None:
@@ -1969,7 +1982,8 @@ def validate_state(state: dict, *, verify_content: bool = True) -> None:
             w = state["witness_records"].get(record["remote_observation_witness_id"])
             if w and w["kind"] != "remote-observation":
                 _fail(
-                    "wrong-kind", f"checks.{cid}.remote_observation_witness_id",
+                    "wrong-kind",
+                    f"checks.{cid}.remote_observation_witness_id",
                     "witness kind must be remote-observation",
                 )
 
@@ -1981,7 +1995,8 @@ def validate_state(state: dict, *, verify_content: bool = True) -> None:
                 _fail("wrong-kind", "ready_transition.transition_witness_id", "witness kind must be remote-transition")
         if ready["status"] == "completed" and ready["transition_witness_id"] is None:
             _fail(
-                "missing-witness", "ready_transition.transition_witness_id",
+                "missing-witness",
+                "ready_transition.transition_witness_id",
                 "completed transition requires a witness",
             )
 
@@ -2017,26 +2032,27 @@ def validate_state(state: dict, *, verify_content: bool = True) -> None:
         if not record["active"]:
             if record["closed_sequence"] is None:
                 _fail(
-                    "blocker-unclosed", f"blockers.{bid}.closed_sequence",
+                    "blocker-unclosed",
+                    f"blockers.{bid}.closed_sequence",
                     "inactive blocker requires closed_sequence",
                 )
             if not record["resolution_evidence_ids"]:
                 _fail(
-                    "blocker-unresolved", f"blockers.{bid}.resolution_evidence_ids",
+                    "blocker-unresolved",
+                    f"blockers.{bid}.resolution_evidence_ids",
                     "closed blocker requires resolution evidence",
                 )
             if record["resolution_snapshot_epoch"] is None or record["resolution_snapshot_fingerprint"] is None:
                 _fail(
-                    "blocker-unresolved", f"blockers.{bid}",
+                    "blocker-unresolved",
+                    f"blockers.{bid}",
                     "closed blocker requires resolution epoch and fingerprint",
                 )
         for eid in record["evidence_ids"] + record["resolution_evidence_ids"]:
             need(evidence_ids, eid, f"blockers.{bid}.evidence_ids")
 
     if state["status"] == "reviewed-with-exceptions":
-        accepted = [
-            f for f in state["findings"].values() if f["disposition"] == "accepted-risk"
-        ]
+        accepted = [f for f in state["findings"].values() if f["disposition"] == "accepted-risk"]
         if not accepted:
             _fail(
                 "no-accepted-risk",

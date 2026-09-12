@@ -123,9 +123,7 @@ class ReviewAssignmentPolicy(Protocol):
     @property
     def sha256(self) -> str: ...
 
-    def requirement(
-        self, *, state: dict, role: str, assignment_ids: tuple[str, ...]
-    ) -> RoleRequirement: ...
+    def requirement(self, *, state: dict, role: str, assignment_ids: tuple[str, ...]) -> RoleRequirement: ...
 
 
 class CommandExecutionPolicy(Protocol):
@@ -209,15 +207,11 @@ ACTION_ORDER = (
 
 ACTION_PAYLOAD_KEYS = {
     "freeze-review-input": frozenset({"snapshot", "authority_manifest", "authorities"}),
-    "refresh-review-input": frozenset(
-        {"snapshot", "authority_manifest", "authorities", "drift_reasons"}
-    ),
+    "refresh-review-input": frozenset({"snapshot", "authority_manifest", "authorities", "drift_reasons"}),
     "map-impact-semantic": frozenset({"impact_map", "attestation", "findings"}),
     "map-impact-contract": frozenset({"impact_map", "attestation", "findings"}),
     "plan-coverage": frozenset({"obligations"}),
-    "challenge-coverage": frozenset(
-        {"coverage_inventory", "attestation", "findings", "revised_obligations"}
-    ),
+    "challenge-coverage": frozenset({"coverage_inventory", "attestation", "findings", "revised_obligations"}),
     "run-preflight": frozenset({"checks"}),
     "run-fast-review": frozenset({"attestations", "findings"}),
     "run-focused-review": frozenset({"attestations", "findings"}),
@@ -330,10 +324,7 @@ def _current_epoch_only(state: dict, record: dict) -> bool:
     snap = state["snapshot"]
     if snap is None:
         return False
-    return (
-        record["snapshot_epoch"] == snap["epoch"]
-        and record["snapshot_fingerprint"] == snap["fingerprint"]
-    )
+    return record["snapshot_epoch"] == snap["epoch"] and record["snapshot_fingerprint"] == snap["fingerprint"]
 
 
 def _current(state: dict, record: dict, rid: str | None = None) -> bool:
@@ -627,9 +618,7 @@ def authorities_complete(state: dict, policies) -> tuple[bool, tuple[str, ...]]:
         if entry["availability"] == "loaded" and rec["sha256"] != entry["sha256"]:
             return False, ("authority",)
     extra = set(state["authorities"]) - {e["authority_id"] for e in entries}
-    current_extra = {
-        aid for aid in extra if _current(state, state["authorities"][aid], aid)
-    }
+    current_extra = {aid for aid in extra if _current(state, state["authorities"][aid], aid)}
     if current_extra:
         return False, ("authority",)
     return True, ()
@@ -655,14 +644,10 @@ def _map_union(state: dict) -> dict[str, dict]:
         if not _current(state, m, m["impact_map_id"]):
             continue
         for e in m["entries"]:
-            slot = union.setdefault(
-                e["surface"], {"categories": [], "hazards": [], "consequences": []}
-            )
+            slot = union.setdefault(e["surface"], {"categories": [], "hazards": [], "consequences": []})
             slot["categories"] = sorted(set(slot["categories"]) | {e["category"]})
             slot["hazards"] = sorted(set(slot["hazards"]) | set(e["hazards"]))
-            slot["consequences"] = list(
-                model.normalize_consequences(slot["consequences"], e["consequences"])
-            )
+            slot["consequences"] = list(model.normalize_consequences(slot["consequences"], e["consequences"]))
     return union
 
 
@@ -676,9 +661,7 @@ def coverage_plan_covers_map_union(state: dict, policies) -> tuple[bool, tuple[s
             match = [
                 o
                 for o in state["obligations"].values()
-                if _current(state, o, o["obligation_id"])
-                and o["category"] == category
-                and surface in o["surfaces"]
+                if _current(state, o, o["obligation_id"]) and o["category"] == category and surface in o["surfaces"]
             ]
             if not match:
                 return False, ("coverage",)
@@ -696,11 +679,7 @@ def scope_challenge_complete(state: dict, policies) -> tuple[bool, tuple[str, ..
     if d is None or _role_of_dispatch(state, d) != "scope-challenger":
         return False, ("coverage-inventory",)
     # Challenger attestation must be assigned both map evidence ids.
-    map_eids = {
-        m["evidence_id"]
-        for m in state["impact_maps"].values()
-        if _current(state, m, m["impact_map_id"])
-    }
+    map_eids = {m["evidence_id"] for m in state["impact_maps"].values() if _current(state, m, m["impact_map_id"])}
     if not map_eids.issubset(set(d["context_evidence_ids"]) | set(d["assignment_ids"])):
         # The challenger's assignment ids are its dispatch assignment set; map
         # evidence ids must appear in the recorded context.
@@ -725,9 +704,7 @@ def scope_challenge_complete(state: dict, policies) -> tuple[bool, tuple[str, ..
 
 
 def _obligation_tier(obligation: dict) -> str:
-    tier, _ = obligation_floor(
-        obligation["scope_level"], obligation["risk"], obligation["consequences"]
-    )
+    tier, _ = obligation_floor(obligation["scope_level"], obligation["risk"], obligation["consequences"])
     return tier
 
 
@@ -761,9 +738,7 @@ def coverage_complete(state: dict, policies) -> tuple[bool, tuple[str, ...]]:
             return False, ("coverage",)
         if o["status"] not in ("covered", "not-applicable"):
             return False, ("coverage",)
-        tier, reasoning = obligation_floor(
-            o["scope_level"], o["risk"], o["consequences"]
-        )
+        tier, reasoning = obligation_floor(o["scope_level"], o["risk"], o["consequences"])
         if _TIER_ORDER.index(o["minimum_capability_tier"]) < _TIER_ORDER.index(tier):
             return False, ("coverage",)
         if o["risk"] == "high":
@@ -779,9 +754,7 @@ def coverage_complete(state: dict, policies) -> tuple[bool, tuple[str, ...]]:
         if o["status"] == "not-applicable":
             if not o["not_applicable_attestation_ids"]:
                 return False, ("coverage",)
-            atts = [
-                state["reviews"].get(a) for a in o["not_applicable_attestation_ids"]
-            ]
+            atts = [state["reviews"].get(a) for a in o["not_applicable_attestation_ids"]]
             if any(a is None or not _current(state, a, a["attestation_id"]) for a in atts):
                 return False, ("coverage",)
             if o["risk"] == "high":
@@ -789,9 +762,7 @@ def coverage_complete(state: dict, policies) -> tuple[bool, tuple[str, ...]]:
                     a
                     for a in atts
                     if a is not None
-                    and _role_of_dispatch(
-                        state, state["dispatches"].get(a["dispatch_id"], {})
-                    )
+                    and _role_of_dispatch(state, state["dispatches"].get(a["dispatch_id"], {}))
                     == "exemption-challenger"
                 ]
                 if not chall:
@@ -932,11 +903,7 @@ def all_findings_closed(state: dict, policies) -> tuple[bool, tuple[str, ...]]:
                 (r for r in state["review_repairs"].values() if r["finding_id"] == f["finding_id"]),
                 None,
             )
-            if (
-                repair is None
-                or repair["status"] != "closed"
-                or not _current(state, repair, repair["repair_id"])
-            ):
+            if repair is None or repair["status"] != "closed" or not _current(state, repair, repair["repair_id"]):
                 return False, ("finding-resolution",)
             if not repair["verification_attestation_id"]:
                 return False, ("finding-resolution",)
@@ -1007,9 +974,7 @@ def remote_ci_current_and_green(state: dict, policies) -> tuple[bool, tuple[str,
     hosted = [
         c
         for c in state["checks"].values()
-        if c["kind"] == "remote-ci"
-        and c["locus"] == "hosted"
-        and _current(state, c, c["check_id"])
+        if c["kind"] == "remote-ci" and c["locus"] == "hosted" and _current(state, c, c["check_id"])
     ]
     if not hosted:
         return False, ("remote-ci",)
@@ -1045,9 +1010,7 @@ def presentation_observation_matches_candidate(
     hosted = [
         c
         for c in state["checks"].values()
-        if c["kind"] == "remote-ci"
-        and c["locus"] == "hosted"
-        and _current(state, c, c["check_id"])
+        if c["kind"] == "remote-ci" and c["locus"] == "hosted" and _current(state, c, c["check_id"])
     ]
     if not hosted:
         return False, ("presentation-recheck",)
@@ -1099,9 +1062,7 @@ def witnesses_verified(state: dict, policies) -> tuple[bool, tuple[str, ...]]:
     return True, ()
 
 
-def verify_witness(
-    state: dict, policies, record: dict, *, dispatch_id: str | None = None
-) -> VerifiedWitness:
+def verify_witness(state: dict, policies, record: dict, *, dispatch_id: str | None = None) -> VerifiedWitness:
     """Public wrapper: verify one stored witness record against its expected
     kind, review, epoch, subject, and execution identity."""
     return _verify_witness(state, policies, record, dispatch_id=dispatch_id)
@@ -1215,12 +1176,8 @@ def evaluate_green(state: dict, remote_observation, *, policies, now) -> Decisio
 
     if missing:
         status = None
-        accepted = [
-            f for f in state["findings"].values() if f["disposition"] == "accepted-risk"
-        ]
-        if accepted and not [
-            f for f in state["findings"].values() if f["disposition"] in _OPEN_DISPOSITIONS
-        ]:
+        accepted = [f for f in state["findings"].values() if f["disposition"] == "accepted-risk"]
+        if accepted and not [f for f in state["findings"].values() if f["disposition"] in _OPEN_DISPOSITIONS]:
             status = "reviewed-with-exceptions"
         return Decision(False, "blocked", "; ".join(missing), tuple(missing), status=status)
     return Decision(True, "seal-green", "all green predicates satisfied")
@@ -1235,8 +1192,7 @@ def _findings_requiring_adjudication(state: dict) -> list[dict]:
     return [
         f
         for f in state["findings"].values()
-        if f["disposition"] in ("open", "unassessed")
-        and not (f.get("resolution") or {}).get("outcome")
+        if f["disposition"] in ("open", "unassessed") and not (f.get("resolution") or {}).get("outcome")
     ]
 
 
@@ -1245,8 +1201,7 @@ def _findings_awaiting_branch(state: dict) -> list[dict]:
     return [
         f
         for f in state["findings"].values()
-        if f["disposition"] in ("open", "unassessed")
-        and (f.get("resolution") or {}).get("outcome")
+        if f["disposition"] in ("open", "unassessed") and (f.get("resolution") or {}).get("outcome")
     ]
 
 
@@ -1295,14 +1250,11 @@ def _finding_closure_broken(state: dict, finding: dict) -> bool:
             (
                 r
                 for r in state["review_repairs"].values()
-                if r["finding_id"] == finding["finding_id"]
-                and _current(state, r, r["repair_id"])
+                if r["finding_id"] == finding["finding_id"] and _current(state, r, r["repair_id"])
             ),
             None,
         )
-        return repair is None or (
-            repair["status"] == "closed" and not repair["verification_attestation_id"]
-        )
+        return repair is None or (repair["status"] == "closed" and not repair["verification_attestation_id"])
     if finding["disposition"] == "false-positive":
         return not res.get("review_id")
     return False
@@ -1314,11 +1266,7 @@ def _findings_broken_closure(state: dict) -> list[dict]:
 
 def _open_repairs(state: dict) -> list[dict]:
     """Current repairs whose lifecycle is not yet closed."""
-    return [
-        r
-        for rid, r in state["review_repairs"].items()
-        if _current(state, r, rid) and r["status"] != "closed"
-    ]
+    return [r for rid, r in state["review_repairs"].items() if _current(state, r, rid) and r["status"] != "closed"]
 
 
 def _pending_exemptions(state: dict) -> list[dict]:
@@ -1330,8 +1278,7 @@ def _pending_exemptions(state: dict) -> list[dict]:
         has_challenger = any(
             a is not None
             and _current(state, a, a["attestation_id"])
-            and _role_of_dispatch(state, state["dispatches"].get(a["dispatch_id"], {}))
-            == "exemption-challenger"
+            and _role_of_dispatch(state, state["dispatches"].get(a["dispatch_id"], {})) == "exemption-challenger"
             for a in atts
         )
         if not has_challenger:
@@ -1395,18 +1342,12 @@ def _derived_stage(state: dict, policies) -> str:
                 for rid, r in state["reviews"].items()
             )
             reaches_remote = (
-                any(
-                    cid in cut_ids and c["kind"] == "remote-ci"
-                    for cid, c in state["checks"].items()
-                )
+                any(cid in cut_ids and c["kind"] == "remote-ci" for cid, c in state["checks"].items())
                 or (
                     state["ready_transition"] is not None
                     and state["ready_transition"]["ready_transition_id"] in cut_ids
                 )
-                or (
-                    state["ci_candidate"] is not None
-                    and state["ci_candidate"]["ci_candidate_id"] in cut_ids
-                )
+                or (state["ci_candidate"] is not None and state["ci_candidate"]["ci_candidate_id"] in cut_ids)
             )
             if reaches_final:
                 if not blind_final_current_and_clean(state, policies)[0]:
@@ -1444,9 +1385,7 @@ def _stored_remote_observation(state: dict) -> dict | None:
     bound = {
         c["evidence_id"]
         for c in state["checks"].values()
-        if c["kind"] == "remote-ci"
-        and c["locus"] == "hosted"
-        and _current(state, c, c["check_id"])
+        if c["kind"] == "remote-ci" and c["locus"] == "hosted" and _current(state, c, c["check_id"])
     }
     first = None
     for eid, ev in state["evidence"].items():
@@ -1547,10 +1486,7 @@ def _recipe(action: str, state_path: str = "<state>") -> ActionRecipe:
         preferred_profile=None,
         data_keys=tuple(sorted(ACTION_PAYLOAD_KEYS.get(action, ()))),
         evidence_kinds=_ACTION_EVIDENCE_KINDS.get(action, ()),
-        record_command=(
-            f"py -3 scripts/reviewctl.py {verb} --action {action} "
-            f"--state {state_path} --apply"
-        ),
+        record_command=(f"py -3 scripts/reviewctl.py {verb} --action {action} --state {state_path} --apply"),
     )
 
 
@@ -1630,7 +1566,9 @@ def next_action(state: dict, *, policies) -> Decision:
         f = fixing[0]
         if not _fix_check_current(state):
             return Decision(
-                True, "run-fix-verification", "fix requires targeted checks",
+                True,
+                "run-fix-verification",
+                "fix requires targeted checks",
                 recipe=_recipe("run-fix-verification"),
             )
         if not _fix_review_current(state, f["finding_id"]):
@@ -1644,11 +1582,14 @@ def next_action(state: dict, *, policies) -> Decision:
         )
         if repair is not None and repair["status"] == "verified":
             return Decision(
-                True, "close-review-repaired", "repair verified",
+                True,
+                "close-review-repaired",
+                "repair verified",
                 recipe=_recipe("close-review-repaired"),
             )
         return Decision(
-            True, "verify-review-repair",
+            True,
+            "verify-review-repair",
             "repair requires independent verification",
             recipe=_recipe("verify-review-repair"),
         )
@@ -1767,9 +1708,7 @@ def register_dispatch(state: dict, *, route_selection: dict, dispatch: dict, pol
     rs = dict(route_selection)
     d = dict(dispatch)
     _bind_snapshot_defaults(out, rs, "route_selection")
-    rs["route_selection_id"] = model.derived_id(
-        "route", rs["snapshot_epoch"], model.route_selection_subject(rs)
-    )
+    rs["route_selection_id"] = model.derived_id("route", rs["snapshot_epoch"], model.route_selection_subject(rs))
     _bind_snapshot_defaults(out, d, "dispatch")
     d["route_selection_id"] = rs["route_selection_id"]
     d["status"] = "pending"
@@ -1778,9 +1717,7 @@ def register_dispatch(state: dict, *, route_selection: dict, dispatch: dict, pol
     d["agent_id"] = None
     d["tool_use_id"] = None
     d["transcript_sha256"] = None
-    d["dispatch_id"] = model.derived_id(
-        "dispatch", d["snapshot_epoch"], model.pending_dispatch_intent_subject(d)
-    )
+    d["dispatch_id"] = model.derived_id("dispatch", d["snapshot_epoch"], model.pending_dispatch_intent_subject(d))
     out["route_selections"][rs["route_selection_id"]] = rs
     out["dispatches"][d["dispatch_id"]] = d
     _validate_candidate(out)
@@ -1796,9 +1733,7 @@ def record_launch(state: dict, *, dispatch_id: str, launch_witness_bytes: bytes,
     if record.get("kind") != "review-launch":
         _fail("wrong-kind", "launch_witness", "witness kind must be review-launch")
     _bind_snapshot_defaults(out, record, "launch_witness")
-    record["witness_id"] = model.derived_id(
-        "witness", record["snapshot_epoch"], model.witness_record_subject(record)
-    )
+    record["witness_id"] = model.derived_id("witness", record["snapshot_epoch"], model.witness_record_subject(record))
     d["launch_witness_id"] = record["witness_id"]
     d["tool_use_id"] = record["tool_use_id"]
     d["agent_id"] = record.get("agent_id")
@@ -1823,9 +1758,7 @@ def record_completion(
     if record.get("kind") != "review-completion":
         _fail("wrong-kind", "completion_witness", "witness kind must be review-completion")
     _bind_snapshot_defaults(out, record, "completion_witness")
-    record["witness_id"] = model.derived_id(
-        "witness", record["snapshot_epoch"], model.witness_record_subject(record)
-    )
+    record["witness_id"] = model.derived_id("witness", record["snapshot_epoch"], model.witness_record_subject(record))
     d["completion_witness_id"] = record["witness_id"]
     if record.get("agent_id") is not None:
         d["agent_id"] = record["agent_id"]
@@ -1837,9 +1770,7 @@ def record_completion(
     return out
 
 
-def record_witness(
-    state: dict, *, witness_bytes: bytes, kind: str, policies
-) -> dict:
+def record_witness(state: dict, *, witness_bytes: bytes, kind: str, policies) -> dict:
     """Ingest a witness record that binds to state only through its subject
     (remote-observation, human-decision, authority-discovery)."""
     out = copy.deepcopy(state)
@@ -1847,9 +1778,7 @@ def record_witness(
     if record.get("kind") != kind:
         _fail("wrong-kind", "witness", f"witness kind must be {kind}")
     _bind_snapshot_defaults(out, record, "witness")
-    record["witness_id"] = model.derived_id(
-        "witness", record["snapshot_epoch"], model.witness_record_subject(record)
-    )
+    record["witness_id"] = model.derived_id("witness", record["snapshot_epoch"], model.witness_record_subject(record))
     out["witness_records"][record["witness_id"]] = record
     _validate_candidate(out)
     return out
@@ -1870,9 +1799,7 @@ def record_ready_transition(
     if record.get("kind") != "remote-transition":
         _fail("wrong-kind", "transition_witness", "witness kind must be remote-transition")
     _bind_snapshot_defaults(out, record, "transition_witness")
-    record["witness_id"] = model.derived_id(
-        "witness", record["snapshot_epoch"], model.witness_record_subject(record)
-    )
+    record["witness_id"] = model.derived_id("witness", record["snapshot_epoch"], model.witness_record_subject(record))
     ready["prior_lifecycle_state"] = observed_prior_lifecycle
     subject = model.remote_transition_subject(
         ready,
@@ -1899,9 +1826,7 @@ def record_ready_transition(
         "snapshot_epoch": ready["snapshot_epoch"],
         "snapshot_fingerprint": ready["snapshot_fingerprint"],
     }
-    ci["ci_candidate_id"] = model.derived_id(
-        "ci-candidate", ready["snapshot_epoch"], model.ci_candidate_subject(ci)
-    )
+    ci["ci_candidate_id"] = model.derived_id("ci-candidate", ready["snapshot_epoch"], model.ci_candidate_subject(ci))
     out["ci_candidate"] = ci
     _validate_candidate(out)
     return out
@@ -1919,11 +1844,7 @@ def _lawful_actions(state: dict, policies) -> frozenset:
     if state["status"] == "blocked" or _active_blocker(state):
         return frozenset({"resume-review"})
     lawful: set[str] = {"refresh-review-input"}
-    open_findings = [
-        f
-        for f in state["findings"].values()
-        if f["disposition"] in ("open", "unassessed")
-    ]
+    open_findings = [f for f in state["findings"].values() if f["disposition"] in ("open", "unassessed")]
     if _findings_requiring_adjudication(state) or _findings_broken_closure(state):
         lawful.add("adjudicate-findings")
         return frozenset(lawful)
@@ -1945,11 +1866,7 @@ def _lawful_actions(state: dict, policies) -> frozenset:
         # verify/close only once the invalidated gates have replacement records.
         for f in repairing:
             repair = next(
-                (
-                    r
-                    for r in state["review_repairs"].values()
-                    if r["finding_id"] == f["finding_id"]
-                ),
+                (r for r in state["review_repairs"].values() if r["finding_id"] == f["finding_id"]),
                 None,
             )
             if repair is not None and repair["status"] == "verified":
@@ -1967,10 +1884,7 @@ def _lawful_actions(state: dict, policies) -> frozenset:
             ("map-impact-contract", "impact-mapper-contract"),
         ):
             if not [
-                m
-                for m in state["impact_maps"].values()
-                if m["role"] == role
-                and _current(state, m, m["impact_map_id"])
+                m for m in state["impact_maps"].values() if m["role"] == role and _current(state, m, m["impact_map_id"])
             ]:
                 lawful.add(action)
         return frozenset(lawful)
@@ -2097,9 +2011,7 @@ def _install_findings(out: dict, findings: list) -> None:
         rec = dict(f)
         rec.setdefault("discovered_snapshot_epoch", snap["epoch"])
         rec.setdefault("discovered_snapshot_fingerprint", snap["fingerprint"])
-        rec["finding_id"] = "finding:" + model.sha256_json(
-            model.finding_identity_subject(rec)
-        )
+        rec["finding_id"] = "finding:" + model.sha256_json(model.finding_identity_subject(rec))
         out["findings"][rec["finding_id"]] = rec
 
 
@@ -2127,9 +2039,7 @@ def _install_obligations(out: dict, records: list, policies, *, replace_categori
                 del out["hypothesis_assignments"][hid]
     for o in records:
         rec = _bind_now(out, o)
-        rec["obligation_id"] = model.derived_id(
-            "obligation", epoch, model.obligation_subject(rec)
-        )
+        rec["obligation_id"] = model.derived_id("obligation", epoch, model.obligation_subject(rec))
         hids = []
         for h in policies.hypotheses.derive(obligation=rec):
             hrec = dict(h)
@@ -2167,11 +2077,7 @@ def _fix_review_current(state: dict, finding_id: str) -> bool:
     """A current clean fix-reviewer attestation assigned to the finding."""
     for r in _reviews_of_role(state, "fix-reviewer"):
         d = state["dispatches"].get(r["dispatch_id"])
-        if (
-            finding_id in d["assignment_ids"]
-            and _current(state, r, r["attestation_id"])
-            and r["verdict"] == "clean"
-        ):
+        if finding_id in d["assignment_ids"] and _current(state, r, r["attestation_id"]) and r["verdict"] == "clean":
             return True
     return False
 
@@ -2209,11 +2115,7 @@ def _downstream_cut(out: dict) -> set:
 
 
 def _preflight_ids(out: dict) -> set:
-    return {
-        c["check_id"]
-        for c in out["checks"].values()
-        if c["kind"] == "preflight" and c["locus"] == "local"
-    }
+    return {c["check_id"] for c in out["checks"].values() if c["kind"] == "preflight" and c["locus"] == "local"}
 
 
 def _obligation_review_cut(out: dict, target_ids) -> set:
@@ -2317,9 +2219,7 @@ def _repair_cut(out: dict, target_kind: str, target_ids, finding_id: str) -> set
             for cid in downstream
             if not any(
                 r["attestation_id"] == cid
-                and _role_of_dispatch(
-                    out, out["dispatches"].get(r["dispatch_id"], {"route_selection_id": ""})
-                )
+                and _role_of_dispatch(out, out["dispatches"].get(r["dispatch_id"], {"route_selection_id": ""}))
                 == "blind-final"
                 for r in out["reviews"].values()
             )
@@ -2328,11 +2228,7 @@ def _repair_cut(out: dict, target_kind: str, target_ids, finding_id: str) -> set
         cut = set(targets)
         cut.update(out["reviews"])
         cut.update(out["review_repairs"])
-        cut.update(
-            c["check_id"]
-            for c in out["checks"].values()
-            if c["kind"] == "targeted"
-        )
+        cut.update(c["check_id"] for c in out["checks"].values() if c["kind"] == "targeted")
         cut.update(downstream)
         return cut
     if target_kind == "hosted-check":
@@ -2380,9 +2276,7 @@ def _h_refresh(out: dict, data: dict, policies) -> None:
 
 def _h_map_impact(out: dict, data: dict, policies) -> None:
     rec = _bind_now(out, data["impact_map"])
-    rec["impact_map_id"] = model.derived_id(
-        "impact-map", rec["snapshot_epoch"], model.impact_map_subject(rec)
-    )
+    rec["impact_map_id"] = model.derived_id("impact-map", rec["snapshot_epoch"], model.impact_map_subject(rec))
     out["impact_maps"][rec["impact_map_id"]] = rec
     _install_attestations(out, [data["attestation"]])
     _install_findings(out, data["findings"])
@@ -2391,9 +2285,7 @@ def _h_map_impact(out: dict, data: dict, policies) -> None:
 def _h_plan_coverage(out: dict, data: dict, policies) -> None:
     for o in data["obligations"]:
         rec = _bind_now(out, o)
-        rec["obligation_id"] = model.derived_id(
-            "obligation", rec["snapshot_epoch"], model.obligation_subject(rec)
-        )
+        rec["obligation_id"] = model.derived_id("obligation", rec["snapshot_epoch"], model.obligation_subject(rec))
         out["obligations"][rec["obligation_id"]] = rec
 
 
@@ -2474,9 +2366,7 @@ def _h_exemption_challenge(out: dict, data: dict, policies) -> None:
                 continue
             if oc == "not-applicable-confirmed":
                 if aid not in o["not_applicable_attestation_ids"]:
-                    o["not_applicable_attestation_ids"] = sorted(
-                        set(o["not_applicable_attestation_ids"]) | {aid}
-                    )
+                    o["not_applicable_attestation_ids"] = sorted(set(o["not_applicable_attestation_ids"]) | {aid})
             elif oc == "applicable":
                 # The exemption is rejected: the obligation returns to the
                 # earliest incomplete obligation predicate (coverage, then
@@ -2772,10 +2662,7 @@ def _h_mark_ready(out: dict, data: dict, policies) -> None:
     ready = out["ready_transition"]
     if ready is not None and _current(out, ready, ready["ready_transition_id"]):
         ci = out["ci_candidate"]
-        if (
-            ready["status"] == "completed"
-            and (ci is None or not _current(out, ci, ci["ci_candidate_id"]))
-        ):
+        if ready["status"] == "completed" and (ci is None or not _current(out, ci, ci["ci_candidate_id"])):
             # Reconcile: the remote transition committed but the candidate
             # record was invalidated (e.g. a hosted-check repair cut it).
             # The candidate is derived data over the completed transition, so
@@ -2836,11 +2723,7 @@ def _h_run_remote_ci(out: dict, data: dict, policies) -> None:
 
 def _h_seal(out: dict, data: dict, policies) -> None:
     snap = out["snapshot"]
-    witnesses = [
-        w
-        for wid, w in out["witness_records"].items()
-        if _current(out, w, wid)
-    ]
+    witnesses = [w for wid, w in out["witness_records"].items() if _current(out, w, wid)]
     latest = max(
         witnesses,
         key=lambda w: max(w["record_positions"], default=0),
@@ -2855,9 +2738,7 @@ def _h_seal(out: dict, data: dict, policies) -> None:
         "repairs_sha256": model.sha256_json(out["review_repairs"]),
         "reviews_sha256": model.sha256_json(out["reviews"]),
         "checks_sha256": model.sha256_json(out["checks"]),
-        "witness_chain_head_sha256": (
-            latest["chain_head_at_record"] if latest else "0" * 64
-        ),
+        "witness_chain_head_sha256": (latest["chain_head_at_record"] if latest else "0" * 64),
         "evidence_ids": sorted(out["evidence"].keys()),
         "created_at": obs.get("observed_at") or f"epoch:{snap['epoch']}",
     }
@@ -2917,9 +2798,7 @@ _COMPLETE = {
 }
 
 
-def _open_blocker(
-    out: dict, *, blocker_id: str, blocker_class: str, reason: str, evidence_ids
-) -> None:
+def _open_blocker(out: dict, *, blocker_id: str, blocker_class: str, reason: str, evidence_ids) -> None:
     if any(b["active"] for b in out["blockers"].values()):
         _fail("multi-blocker", "blockers", "another blocker is already active")
     snap = out["snapshot"]
@@ -2943,9 +2822,7 @@ def _open_blocker(
     out["stage"] = "blocked"
 
 
-def block_review(
-    state: dict, *, blocker_id: str, blocker_class: str, reason: str, evidence_ids
-) -> dict:
+def block_review(state: dict, *, blocker_id: str, blocker_class: str, reason: str, evidence_ids) -> dict:
     out = copy.deepcopy(state)
     _open_blocker(
         out,
@@ -2970,9 +2847,7 @@ def block_review(
     return out
 
 
-def resume_review(
-    state: dict, *, blocker_id: str, resolution_evidence_ids, policies
-) -> dict:
+def resume_review(state: dict, *, blocker_id: str, resolution_evidence_ids, policies) -> dict:
     out = copy.deepcopy(state)
     _apply_resume(out, blocker_id, resolution_evidence_ids)
     _set_stage(out, policies)

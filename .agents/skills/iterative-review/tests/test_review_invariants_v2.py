@@ -121,9 +121,7 @@ def test_green_rejects_coverage_inventory_that_omits_map_hazard(tmp_path):
 def test_green_rejects_missing_inventory_surface_category_obligation(tmp_path):
     state = make_complete_candidate(tmp_path)
     drop = next(iter(state["obligations"].values()))["category"]
-    state["obligations"] = {
-        k: v for k, v in state["obligations"].items() if v["category"] != drop
-    }
+    state["obligations"] = {k: v for k, v in state["obligations"].items() if v["category"] != drop}
     assert _eval(state).allowed is False
 
 
@@ -234,9 +232,7 @@ def test_provider_resolved_feedback_remains_a_finding_until_lifecycle_closure(tm
 def test_initially_resolved_feedback_materializes_finding(tmp_path):
     state = make_complete_candidate(tmp_path)
     # The fixture's provider-resolved feedback is a closed finding record.
-    assert any(
-        f["source_kind"] == "feedback" for f in state["findings"].values()
-    )
+    assert any(f["source_kind"] == "feedback" for f in state["findings"].values())
     assert _eval(state).allowed is True
 
 
@@ -282,10 +278,7 @@ def test_green_rejects_fast_profile_used_for_strong_obligation(tmp_path):
     # Find the strong-tier reviewer route and downgrade it.
     for d in state["dispatches"].values():
         cand = state["route_selections"][d["route_selection_id"]]
-        if (
-            cand["required_role"] == "obligation-reviewer"
-            and cand["required_capability_tier"] == "strong"
-        ):
+        if cand["required_role"] == "obligation-reviewer" and cand["required_capability_tier"] == "strong":
             cand["required_capability_tier"] = "fast"
     assert _eval(state).allowed is False
 
@@ -309,14 +302,9 @@ def test_green_rejects_adjudicator_below_source_floor_or_self_adjudicating(tmp_p
     adj = next(
         d
         for d in state["dispatches"].values()
-        if state["route_selections"][d["route_selection_id"]]["required_role"]
-        == "finding-adjudicator"
+        if state["route_selections"][d["route_selection_id"]]["required_role"] == "finding-adjudicator"
     )
-    other = next(
-        d
-        for d in state["dispatches"].values()
-        if d["dispatch_id"] != adj["dispatch_id"] and d["agent_id"]
-    )
+    other = next(d for d in state["dispatches"].values() if d["dispatch_id"] != adj["dispatch_id"] and d["agent_id"])
     adj_launch = state["witness_records"][adj["launch_witness_id"]]
     adj_launch["agent_id"] = other["agent_id"]
     assert _eval(state).allowed is False
@@ -340,9 +328,7 @@ def test_green_accepts_role_qualified_profile_for_closure_auditor(tmp_path):
 
 def test_current_vendored_reviewer_strong_profile_cannot_qualify_as_blind_final(tmp_path):
     state = make_complete_candidate(tmp_path)
-    _route_for_role(state, "blind-final")["qualified_roles"] = (
-        "obligation-reviewer",
-    )
+    _route_for_role(state, "blind-final")["qualified_roles"] = ("obligation-reviewer",)
     assert _eval(state).allowed is False
 
 
@@ -492,11 +478,7 @@ def test_green_rejects_contaminated_blind_final_transcript_audit(tmp_path):
     state = make_complete_candidate(tmp_path)
     for r in state["reviews"].values():
         d = state["dispatches"].get(r["dispatch_id"])
-        if (
-            d is not None
-            and state["route_selections"][d["route_selection_id"]]["required_role"]
-            == "blind-final"
-        ):
+        if d is not None and state["route_selections"][d["route_selection_id"]]["required_role"] == "blind-final":
             r["audit_result"] = "contaminated"
     assert _eval(state).allowed is False
 
@@ -519,9 +501,7 @@ def test_green_rejects_cloned_high_risk_not_applicable_attestations(tmp_path):
 
 def test_green_rejects_high_risk_exemption_without_final_strong_exemption_challenger(tmp_path):
     state = make_complete_candidate(tmp_path)
-    _route_for_role(state, "exemption-challenger")[
-        "required_capability_tier"
-    ] = "strong"
+    _route_for_role(state, "exemption-challenger")["required_capability_tier"] = "strong"
     assert _eval(state).allowed is False
 
 
@@ -530,14 +510,12 @@ def test_green_rejects_whitespace_only_hazard_framing_as_independence(tmp_path):
     mapper = next(
         d
         for d in state["dispatches"].values()
-        if state["route_selections"][d["route_selection_id"]]["required_role"]
-        == "impact-mapper-semantic"
+        if state["route_selections"][d["route_selection_id"]]["required_role"] == "impact-mapper-semantic"
     )
     challenger = next(
         d
         for d in state["dispatches"].values()
-        if state["route_selections"][d["route_selection_id"]]["required_role"]
-        == "scope-challenger"
+        if state["route_selections"][d["route_selection_id"]]["required_role"] == "scope-challenger"
     )
     challenger["hazard_framing_sha256"] = mapper["hazard_framing_sha256"]
     assert _eval(state).allowed is False
@@ -555,9 +533,7 @@ def test_green_rejects_challenger_report_paired_with_substituted_inventory(tmp_p
     other_att = next(
         r["attestation_id"]
         for r in state["reviews"].values()
-        if state["route_selections"][
-            state["dispatches"][r["dispatch_id"]]["route_selection_id"]
-        ]["required_role"]
+        if state["route_selections"][state["dispatches"][r["dispatch_id"]]["route_selection_id"]]["required_role"]
         != "scope-challenger"
     )
     state["coverage_inventory"]["challenger_attestation_id"] = other_att
@@ -573,10 +549,7 @@ def test_green_rejects_copied_prior_conclusions_in_new_blind_context_evidence(tm
 def test_blind_final_profile_has_no_exec_write_or_mcp_tools(tmp_path):
     state = make_complete_candidate(tmp_path)
     for d in state["dispatches"].values():
-        if (
-            state["route_selections"][d["route_selection_id"]]["required_role"]
-            == "blind-final"
-        ):
+        if state["route_selections"][d["route_selection_id"]]["required_role"] == "blind-final":
             assert "command-exec" not in d["required_tool_classes"]
             assert "browser-read" not in d["required_tool_classes"]
 
@@ -585,11 +558,7 @@ def test_blind_final_transcript_audit_detects_prior_review_or_feedback_reads(tmp
     state = make_complete_candidate(tmp_path)
     for r in state["reviews"].values():
         d = state["dispatches"].get(r["dispatch_id"])
-        if (
-            d is not None
-            and state["route_selections"][d["route_selection_id"]]["required_role"]
-            == "blind-final"
-        ):
+        if d is not None and state["route_selections"][d["route_selection_id"]]["required_role"] == "blind-final":
             r["audit_result"] = "contaminated"
     assert _eval(state).allowed is False
 
@@ -606,10 +575,7 @@ def test_final_and_closure_re_resolve_profile_at_each_launch(tmp_path):
     # A dispatch whose recorded resolution witness does not exist in the
     # current record set cannot have re-resolved at launch.
     for d in state["dispatches"].values():
-        if (
-            state["route_selections"][d["route_selection_id"]]["required_role"]
-            == "blind-final"
-        ):
+        if state["route_selections"][d["route_selection_id"]]["required_role"] == "blind-final":
             d["profile_resolution_witness_id"] = "witness:nonexistent"
     assert _eval(state).allowed is False
 
@@ -627,9 +593,7 @@ def test_green_rejects_profile_without_allowed_tools_or_model_pin(tmp_path):
     # Removing the profile from the trusted inventory models a profile whose
     # contract (tool list, model pin) cannot be re-resolved.
     drop = _route_for_role(state, "blind-final")["profile"]
-    policies.available_profiles = tuple(
-        p for p in policies.available_profiles if p != drop
-    )
+    policies.available_profiles = tuple(p for p in policies.available_profiles if p != drop)
     assert _eval(state, policies=policies).allowed is False
 
 
@@ -641,18 +605,14 @@ def test_current_profile_qualification_is_reusable_only_for_matching_non_final_d
     mappers = [
         d
         for d in state["dispatches"].values()
-        if state["route_selections"][d["route_selection_id"]]["required_role"]
-        == "impact-mapper-semantic"
+        if state["route_selections"][d["route_selection_id"]]["required_role"] == "impact-mapper-semantic"
     ]
     final = [
         d
         for d in state["dispatches"].values()
-        if state["route_selections"][d["route_selection_id"]]["required_role"]
-        == "blind-final"
+        if state["route_selections"][d["route_selection_id"]]["required_role"] == "blind-final"
     ]
-    final[0]["profile_resolution_witness_id"] = mappers[0][
-        "profile_resolution_witness_id"
-    ]
+    final[0]["profile_resolution_witness_id"] = mappers[0]["profile_resolution_witness_id"]
     assert _eval(state).allowed is False
 
 
@@ -689,11 +649,7 @@ def test_false_positive_resolution_does_not_require_replacement_snapshot(tmp_pat
     state = make_complete_candidate(tmp_path)
     # The fixture's false-positive finding carries no replacement snapshot
     # fields and the candidate still reaches green.
-    fp = [
-        f
-        for f in state["findings"].values()
-        if f["disposition"] == "false-positive"
-    ]
+    fp = [f for f in state["findings"].values() if f["disposition"] == "false-positive"]
     assert fp and "replacement_snapshot_epoch" not in fp[0]["resolution"]
     assert _eval(state).allowed is True
 
@@ -803,9 +759,7 @@ def test_confirmed_adjudication_can_atomically_choose_accept_risk_with_human_pro
     for f in state["findings"].values():
         if f["disposition"] == "fixed":
             f["disposition"] = "accepted-risk"
-            f["resolution"] = {
-                "human_decision_witness_id": next(iter(state["witness_records"]))
-            }
+            f["resolution"] = {"human_decision_witness_id": next(iter(state["witness_records"]))}
     decision = _eval(state)
     assert decision.status == "reviewed-with-exceptions"
 
@@ -880,6 +834,7 @@ def test_preflight_rejects_omitted_or_substituted_local_check_policy_item(tmp_pa
 
 def test_duplicate_json_keys_rejected_at_every_ingestion_boundary(tmp_path):
     from review_core.model import strict_json_loads
+
     with pytest.raises(Exception):
         strict_json_loads(b'{"a": 1, "a": 2}')
 
@@ -887,6 +842,7 @@ def test_duplicate_json_keys_rejected_at_every_ingestion_boundary(tmp_path):
 def test_every_canonical_projection_matches_independent_golden_bytes_and_hash(tmp_path):
     state = make_complete_candidate(tmp_path)
     from review_core.model import canonical_json
+
     blob = canonical_json(state["snapshot"])
     assert isinstance(blob, bytes) and len(blob) > 0
 
@@ -895,6 +851,7 @@ def test_every_included_projection_field_changes_digest(tmp_path):
     state = make_complete_candidate(tmp_path)
     from review_core.model import canonical_json
     import hashlib
+
     snap = dict(state["snapshot"])
     h1 = hashlib.sha256(canonical_json(snap)).hexdigest()
     snap["fingerprint"] = "f" * 64

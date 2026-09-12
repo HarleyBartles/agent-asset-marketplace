@@ -24,9 +24,7 @@ _STATE_FILE = "review-state.json"
 _LOCK_FILE = "review-state.lock"
 _STORE_SUBDIR = ("evidence-store", "sha256")
 
-_SNAPSHOT_ACTIONS = frozenset(
-    {"freeze-review-input", "enter-fixing", "refresh-review-input"}
-)
+_SNAPSHOT_ACTIONS = frozenset({"freeze-review-input", "enter-fixing", "refresh-review-input"})
 
 
 class StoreError(RuntimeError):
@@ -195,14 +193,10 @@ class StateTransaction(AbstractContextManager):
         # must be exactly what we captured at entry.
         current_raw = self._path.read_bytes()
         if hashlib.sha256(current_raw).hexdigest() != self.prior_bytes_sha256:
-            raise ConcurrentStateError(
-                "state-concurrent", "state bytes changed under the transaction"
-            )
+            raise ConcurrentStateError("state-concurrent", "state bytes changed under the transaction")
         current = model.strict_json_loads(current_raw, source=str(self._path))
         if current["generation"] != self.prior_generation:
-            raise ConcurrentStateError(
-                "state-concurrent", "state generation changed under the transaction"
-            )
+            raise ConcurrentStateError("state-concurrent", "state generation changed under the transaction")
         if self.candidate["generation"] != self.prior_generation + 1:
             raise StoreError(
                 "state-invalid",
@@ -219,9 +213,7 @@ class StateTransaction(AbstractContextManager):
             os.replace(tmp, self._path)
             if sys.platform != "win32":
                 try:
-                    dir_fd = os.open(
-                        str(self._path.parent), os.O_RDONLY | os.O_DIRECTORY
-                    )
+                    dir_fd = os.open(str(self._path.parent), os.O_RDONLY | os.O_DIRECTORY)
                 except OSError:
                     dir_fd = None
                 if dir_fd is not None:
@@ -301,9 +293,7 @@ def _reject_unsafe_components(source: Path) -> None:
     for component in reversed(parts):
         if component.exists() or os.path.islink(component):
             if _is_reparse(component):
-                raise UnsafeEvidenceSourceError(
-                    "unsafe-source", f"reparse point or symlink in {component}"
-                )
+                raise UnsafeEvidenceSourceError("unsafe-source", f"reparse point or symlink in {component}")
 
 
 def _verify_handle_identity(fd: int, expected: Path) -> None:
@@ -316,33 +306,21 @@ def _verify_handle_identity(fd: int, expected: Path) -> None:
         kernel32 = ctypes.windll.kernel32
         handle = msvcrt.get_osfhandle(fd)
         buf = ctypes.create_unicode_buffer(4096)
-        kernel32.GetFinalPathNameByHandleW(
-            wintypes.HANDLE(handle), buf, 4096, 0
-        )
+        kernel32.GetFinalPathNameByHandleW(wintypes.HANDLE(handle), buf, 4096, 0)
         final = buf.value
         if final.startswith("\\\\?\\"):
             final = final[4:]
-        if os.path.normcase(os.path.normpath(final)) != os.path.normcase(
-            os.path.normpath(str(expected))
-        ):
-            raise UnsafeEvidenceSourceError(
-                "unsafe-source", f"final handle path {final!r} != {expected}"
-            )
+        if os.path.normcase(os.path.normpath(final)) != os.path.normcase(os.path.normpath(str(expected))):
+            raise UnsafeEvidenceSourceError("unsafe-source", f"final handle path {final!r} != {expected}")
     else:
         final = Path(f"/proc/self/fd/{fd}") if Path("/proc/self/fd").exists() else None
         if final is not None:
             resolved = os.readlink(final)
-            if os.path.normcase(os.path.normpath(resolved)) != os.path.normcase(
-                os.path.normpath(str(expected))
-            ):
-                raise UnsafeEvidenceSourceError(
-                    "unsafe-source", f"final handle path {resolved!r} != {expected}"
-                )
+            if os.path.normcase(os.path.normpath(resolved)) != os.path.normcase(os.path.normpath(str(expected))):
+                raise UnsafeEvidenceSourceError("unsafe-source", f"final handle path {resolved!r} != {expected}")
 
 
-def _register_source_bytes(
-    source: Path, cap: int, path: str
-) -> bytes:
+def _register_source_bytes(source: Path, cap: int, path: str) -> bytes:
     """Open once, verify identity, bound the read, never reopen."""
     st = os.stat(source, follow_symlinks=False)
     if not os.path.isfile(source):
@@ -356,9 +334,7 @@ def _register_source_bytes(
         _verify_handle_identity(fd, source)
         st2 = os.fstat(fd)
         if st2.st_size != st.st_size:
-            raise UnsafeEvidenceSourceError(
-                "content-drift", f"{path} resized between stat and open"
-            )
+            raise UnsafeEvidenceSourceError("content-drift", f"{path} resized between stat and open")
         chunks = []
         remaining = cap
         while remaining > 0:
@@ -369,9 +345,7 @@ def _register_source_bytes(
             remaining -= len(chunk)
         data = b"".join(chunks)
         if len(data) != st.st_size:
-            raise UnsafeEvidenceSourceError(
-                "content-drift", f"{path} length changed while reading"
-            )
+            raise UnsafeEvidenceSourceError("content-drift", f"{path} length changed while reading")
         return data
     finally:
         os.close(fd)
@@ -431,9 +405,7 @@ def register_evidence(
         raise StoreError("policy-mismatch", "transaction/review caps must be positive")
     if sys.platform != "win32":
         if policy.posix_directory_mode & 0o077 or policy.posix_file_mode & 0o077:
-            raise UnsafeEvidenceSourceError(
-                "acl-untrusted", "POSIX modes must not grant group/other access"
-            )
+            raise UnsafeEvidenceSourceError("acl-untrusted", "POSIX modes must not grant group/other access")
     if sys.platform == "win32" and policy.windows_allowed_trustee_sids:
         # Trustee verification requires win32 security APIs; fail closed when
         # the policy demands them and the runtime cannot check.
@@ -445,13 +417,9 @@ def register_evidence(
                 "cannot verify Windows trustees without win32security",
             )
 
-    eligible = {
-        os.path.normcase(os.path.normpath(str(Path(p)))) for p in context.eligible_sources
-    }
+    eligible = {os.path.normcase(os.path.normpath(str(Path(p)))) for p in context.eligible_sources}
     if os.path.normcase(os.path.normpath(str(source))) not in eligible:
-        raise UnsafeEvidenceSourceError(
-            "unsafe-source", f"{source} is outside the action's eligible source set"
-        )
+        raise UnsafeEvidenceSourceError("unsafe-source", f"{source} is outside the action's eligible source set")
 
     _reject_unsafe_components(source)
     if not source.is_file():
@@ -459,9 +427,7 @@ def register_evidence(
 
     state = tx.candidate
     existing_bytes = sum(c["bytes"] for c in state["content_objects"].values())
-    data = _register_source_bytes(
-        source, min(cap, policy.transaction_max_bytes), path
-    )
+    data = _register_source_bytes(source, min(cap, policy.transaction_max_bytes), path)
     if existing_bytes + len(data) > policy.review_max_bytes:
         raise StoreError("size-cap", f"{path} exceeds the per-review cap")
 
@@ -482,20 +448,14 @@ def register_evidence(
                 f"snapshot evidence is not ingestible during action {context.action!r}",
             )
         if context.candidate_snapshot is None:
-            raise StoreError(
-                "policy-mismatch", "no candidate snapshot bound to this transaction"
-            )
+            raise StoreError("policy-mismatch", "no candidate snapshot bound to this transaction")
         snapshot_epoch = context.candidate_snapshot["epoch"]
         snapshot_fingerprint = context.candidate_snapshot["fingerprint"]
     else:
         if epoch is None or snapshot_epoch != epoch:
-            raise StoreError(
-                "stale-epoch", f"{path}: epoch {snapshot_epoch} is not current {epoch}"
-            )
+            raise StoreError("stale-epoch", f"{path}: epoch {snapshot_epoch} is not current {epoch}")
         if fp is not None and snapshot_fingerprint != fp:
-            raise StoreError(
-                "stale-fingerprint", f"{path}: fingerprint does not match the snapshot"
-            )
+            raise StoreError("stale-fingerprint", f"{path}: fingerprint does not match the snapshot")
 
     cid, target = _store_content(state, data)
     if cid not in state["content_objects"]:
@@ -512,9 +472,7 @@ def register_evidence(
         "snapshot_epoch": snapshot_epoch,
         "snapshot_fingerprint": snapshot_fingerprint,
     }
-    binding["evidence_id"] = "evidence:" + model.sha256_json(
-        model.evidence_binding_subject(binding)
-    )
+    binding["evidence_id"] = "evidence:" + model.sha256_json(model.evidence_binding_subject(binding))
     state["evidence"][binding["evidence_id"]] = binding
     return EvidenceRegistration(
         content_id=cid,
@@ -588,9 +546,7 @@ def verify_evidence_files(state: dict, evidence_ids: tuple) -> None:
             raise StoreError("state-invalid", f"unknown evidence id {eid!r}")
         content = state["content_objects"].get(record["content_id"])
         if content is None:
-            raise StoreError(
-                "state-invalid", f"evidence {eid!r} references missing content"
-            )
+            raise StoreError("state-invalid", f"evidence {eid!r} references missing content")
         path = Path(content["path"])
         if not path.is_file():
             raise StoreError("content-drift", f"evidence file vanished: {path}")

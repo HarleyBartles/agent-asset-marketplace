@@ -71,9 +71,12 @@ def _init_state(tmp_path: Path, review_id: str = "review-cli") -> Path:
     state = tmp_path / "review-state.json"
     result = _ctl(
         "init",
-        "--state", str(state),
-        "--review-id", review_id,
-        "--scratch-dir", str(tmp_path),
+        "--state",
+        str(state),
+        "--review-id",
+        review_id,
+        "--scratch-dir",
+        str(tmp_path),
         "--apply",
     )
     assert result.returncode == 0, result.stderr
@@ -141,8 +144,15 @@ class _DoubleBase:
         return path
 
     def _witness(
-        self, st: dict, *, kind, subject, tool_use_id=None, agent_id=None,
-        locator=None, snap=None,
+        self,
+        st: dict,
+        *,
+        kind,
+        subject,
+        tool_use_id=None,
+        agent_id=None,
+        locator=None,
+        snap=None,
     ) -> dict:
         snap = st["snapshot"] if snap is None else snap
         if locator is None:
@@ -161,9 +171,7 @@ class _DoubleBase:
             "snapshot_epoch": snap["epoch"],
             "snapshot_fingerprint": snap["fingerprint"],
         }
-        rec["witness_id"] = model.derived_id(
-            "witness", snap["epoch"], model.witness_record_subject(rec)
-        )
+        rec["witness_id"] = model.derived_id("witness", snap["epoch"], model.witness_record_subject(rec))
         self.registry[locator] = model.canonical_json(rec)
         return rec
 
@@ -352,15 +360,11 @@ class _DispatchDouble(_DoubleBase):
             "snapshot_epoch": snap["epoch"],
             "snapshot_fingerprint": snap["fingerprint"],
         }
-        rsid = model.derived_id(
-            "route", snap["epoch"], model.route_selection_subject(rs_resolved)
-        )
+        rsid = model.derived_id("route", snap["epoch"], model.route_selection_subject(rs_resolved))
         pw = self._witness(
             st,
             kind="profile-resolution",
-            subject=model.profile_resolution_subject(
-                {**rs_resolved, "route_selection_id": rsid}
-            ),
+            subject=model.profile_resolution_subject({**rs_resolved, "route_selection_id": rsid}),
             locator=f"hook-transcript:{st['review_id']}/profile-resolution/{rsid}",
         )
         dispatch = {
@@ -412,18 +416,14 @@ class _DispatchDouble(_DoubleBase):
             tool_use_id=tool_use,
             agent_id=agent,
         )
-        return engine.TrustedActionPayload(
-            model.canonical_json({"data": {}, "witnesses": [rec]})
-        )
+        return engine.TrustedActionPayload(model.canonical_json({"data": {}, "witnesses": [rec]}))
 
     def collect(self, *, dispatch: dict) -> engine.TrustedActionPayload:
         st = self._load()
         snap = st["snapshot"]
         d = dispatch
         serial = self._next()
-        att_bytes = model.canonical_json(
-            {"dispatch_id": d["dispatch_id"], "verdict": "clean", "serial": serial}
-        )
+        att_bytes = model.canonical_json({"dispatch_id": d["dispatch_id"], "verdict": "clean", "serial": serial})
         att_path = self._file(f"att-{serial}.json", att_bytes)
         self._att_paths[d["dispatch_id"]] = att_path
         ts = model.sha256_hex(f"transcript:{serial}".encode())
@@ -515,11 +515,7 @@ class _CommandRunnerDouble(_DoubleBase):
             if intent["policy_item_id"] != item_id:
                 continue
             serial = self._next()
-            item = next(
-                it
-                for it in self.policies.local_checks.items
-                if it.policy_item_id == intent["policy_item_id"]
-            )
+            item = next(it for it in self.policies.local_checks.items if it.policy_item_id == intent["policy_item_id"])
             out_path = self._file(
                 f"check-{serial}.json",
                 {"output": f"{action}:{item.policy_item_id}", "serial": serial},
@@ -550,9 +546,7 @@ class _CommandRunnerDouble(_DoubleBase):
                 "snapshot_epoch": snap["epoch"],
                 "snapshot_fingerprint": snap["fingerprint"],
             }
-            subject = model.command_execution_subject(
-                intent, policy.command_result_subject(rec)
-            )
+            subject = model.command_execution_subject(intent, policy.command_result_subject(rec))
             w = self._witness(
                 st,
                 kind="command-execution",
@@ -564,9 +558,7 @@ class _CommandRunnerDouble(_DoubleBase):
             payload_rec["evidence_id"] = f"@out{i}"
             checks.append(payload_rec)
             witnesses.append(w)
-            sources.append(
-                engine.EvidenceSource(f"out{i}", "check-output", out_path)
-            )
+            sources.append(engine.EvidenceSource(f"out{i}", "check-output", out_path))
         return engine.TrustedActionPayload(
             model.canonical_json({"data": {"checks": checks}, "witnesses": witnesses}),
             tuple(sources),
@@ -578,9 +570,7 @@ class _TransitionDouble(_DoubleBase):
 
     def observe_lifecycle(self, *, intent: dict) -> engine.TrustedActionPayload:
         return engine.TrustedActionPayload(
-            model.canonical_json(
-                {"data": {"prior_lifecycle_state": "draft"}, "witnesses": []}
-            )
+            model.canonical_json({"data": {"prior_lifecycle_state": "draft"}, "witnesses": []})
         )
 
     def apply_or_confirm_ready(self, *, intent: dict) -> engine.TrustedActionPayload:
@@ -601,9 +591,7 @@ class _TransitionDouble(_DoubleBase):
             locator=f"gh:{st['review_id']}/remote-transition/{serial}",
         )
         return engine.TrustedActionPayload(
-            model.canonical_json(
-                {"data": {"observed_prior_lifecycle": "draft"}, "witnesses": [rec]}
-            )
+            model.canonical_json({"data": {"observed_prior_lifecycle": "draft"}, "witnesses": [rec]})
         )
 
 
@@ -729,8 +717,14 @@ class TestCliContract:
         assert r.returncode == 0
         assert "experimental" in r.stdout
         for verb in (
-            "init", "status", "next", "dispatch", "complete",
-            "block", "resume", "validate",
+            "init",
+            "status",
+            "next",
+            "dispatch",
+            "complete",
+            "block",
+            "resume",
+            "validate",
         ):
             assert verb in r.stdout
 
@@ -742,8 +736,15 @@ class TestCliContract:
     def test_check_with_command_never_mutates(self, tmp_path):
         state = tmp_path / "s.json"
         r = _ctl(
-            "--check", "init", "--state", str(state),
-            "--review-id", "x", "--scratch-dir", str(tmp_path), "--apply",
+            "--check",
+            "init",
+            "--state",
+            str(state),
+            "--review-id",
+            "x",
+            "--scratch-dir",
+            str(tmp_path),
+            "--apply",
         )
         assert r.returncode == 0
         assert not state.exists()
@@ -759,8 +760,13 @@ class TestCliContract:
     def test_init_check_mode_writes_nothing(self, tmp_path):
         state = tmp_path / "s.json"
         r = _ctl(
-            "init", "--state", str(state),
-            "--review-id", "r", "--scratch-dir", str(tmp_path),
+            "init",
+            "--state",
+            str(state),
+            "--review-id",
+            "r",
+            "--scratch-dir",
+            str(tmp_path),
         )
         assert r.returncode == 0, r.stderr
         assert not state.exists()
@@ -777,8 +783,14 @@ class TestCliContract:
     def test_init_apply_refuses_existing_state(self, tmp_path):
         state = _init_state(tmp_path)
         again = _ctl(
-            "init", "--state", str(state),
-            "--review-id", "r2", "--scratch-dir", str(tmp_path), "--apply",
+            "init",
+            "--state",
+            str(state),
+            "--review-id",
+            "r2",
+            "--scratch-dir",
+            str(tmp_path),
+            "--apply",
         )
         assert again.returncode == 1
         assert "state-exists" in again.stderr
@@ -805,12 +817,15 @@ class TestCliContract:
         assert r.returncode == 1
         assert "state-missing" in r.stderr
 
-    @pytest.mark.parametrize("verb,extra", [
-        ("dispatch", ["--action", "run-fast-review"]),
-        ("complete", ["--action", "seal-green"]),
-        ("block", ["--class", "tool-blocked", "--reason", "x"]),
-        ("resume", ["--blocker-id", "b"]),
-    ])
+    @pytest.mark.parametrize(
+        "verb,extra",
+        [
+            ("dispatch", ["--action", "run-fast-review"]),
+            ("complete", ["--action", "seal-green"]),
+            ("block", ["--class", "tool-blocked", "--reason", "x"]),
+            ("resume", ["--blocker-id", "b"]),
+        ],
+    )
     def test_mutations_require_apply(self, tmp_path, verb, extra):
         state = _init_state(tmp_path)
         r = _ctl(verb, "--state", str(state), *extra)
@@ -834,8 +849,14 @@ class TestCliContract:
         verdict = tmp_path / "verdict.json"
         verdict.write_text('{"green": true}', encoding="utf-8")
         r = _ctl(
-            "complete", "--state", str(state), "--action", "seal-green",
-            "--data-file", str(verdict), "--apply",
+            "complete",
+            "--state",
+            str(state),
+            "--action",
+            "seal-green",
+            "--data-file",
+            str(verdict),
+            "--apply",
         )
         assert r.returncode == 1
         assert "caller-provenance" in r.stderr
@@ -845,8 +866,14 @@ class TestCliContract:
         obs = tmp_path / "obs.json"
         obs.write_text('{"lifecycle_state": "ready"}', encoding="utf-8")
         r = _ctl(
-            "complete", "--state", str(state), "--action", "run-remote-ci",
-            "--evidence-file", f"obs=remote-observation={obs}", "--apply",
+            "complete",
+            "--state",
+            str(state),
+            "--action",
+            "run-remote-ci",
+            "--evidence-file",
+            f"obs=remote-observation={obs}",
+            "--apply",
         )
         assert r.returncode == 1
         assert "caller-provenance" in r.stderr
@@ -855,8 +882,12 @@ class TestCliContract:
         state = _init_state(tmp_path)
         before = state.read_bytes()
         r = _ctl(
-            "dispatch", "--state", str(state),
-            "--action", "run-fast-review", "--apply",
+            "dispatch",
+            "--state",
+            str(state),
+            "--action",
+            "run-fast-review",
+            "--apply",
         )
         assert r.returncode == 1
         assert "missing-witness-source" in r.stdout + r.stderr
@@ -866,8 +897,12 @@ class TestCliContract:
         state = _init_state(tmp_path)
         before = state.read_bytes()
         r = _ctl(
-            "complete", "--state", str(state),
-            "--action", "run-fast-review", "--apply",
+            "complete",
+            "--state",
+            str(state),
+            "--action",
+            "run-fast-review",
+            "--apply",
         )
         assert r.returncode == 1
         assert "missing-witness-source" in r.stdout + r.stderr
@@ -877,8 +912,12 @@ class TestCliContract:
         state = _init_state(tmp_path)
         before = state.read_bytes()
         r = _ctl(
-            "complete", "--state", str(state),
-            "--action", "run-preflight", "--apply",
+            "complete",
+            "--state",
+            str(state),
+            "--action",
+            "run-preflight",
+            "--apply",
         )
         assert r.returncode == 1
         assert "missing-witness-source" in r.stdout + r.stderr
@@ -888,8 +927,12 @@ class TestCliContract:
         state = _init_state(tmp_path)
         before = state.read_bytes()
         r = _ctl(
-            "complete", "--state", str(state),
-            "--action", "freeze-review-input", "--apply",
+            "complete",
+            "--state",
+            str(state),
+            "--action",
+            "freeze-review-input",
+            "--apply",
         )
         assert r.returncode == 1
         assert "missing-witness-source" in r.stdout + r.stderr
@@ -899,8 +942,12 @@ class TestCliContract:
         state = _init_state(tmp_path)
         before = state.read_bytes()
         r = _ctl(
-            "complete", "--state", str(state),
-            "--action", "mark-ready-for-ci", "--apply",
+            "complete",
+            "--state",
+            str(state),
+            "--action",
+            "mark-ready-for-ci",
+            "--apply",
         )
         assert r.returncode == 1
         # At intake the action is unlawful; either way no mutation occurs.
@@ -911,8 +958,14 @@ class TestCliContract:
         _walk_to(tmp_path, stop="freeze")
         state = tmp_path / "review-state.json"
         r = _ctl(
-            "block", "--state", str(state), "--class", "tool-blocked",
-            "--reason", "sandbox unavailable", "--apply",
+            "block",
+            "--state",
+            str(state),
+            "--class",
+            "tool-blocked",
+            "--reason",
+            "sandbox unavailable",
+            "--apply",
         )
         assert r.returncode == 0, r.stderr
         loaded = store.load_state(state)
@@ -922,8 +975,13 @@ class TestCliContract:
         res = tmp_path / "resolution.txt"
         res.write_text("restored", encoding="utf-8")
         r = _ctl(
-            "resume", "--state", str(state), "--blocker-id", blocker_id,
-            "--evidence-file", f"resolution=check-output={res}",
+            "resume",
+            "--state",
+            str(state),
+            "--blocker-id",
+            blocker_id,
+            "--evidence-file",
+            f"resolution=check-output={res}",
             "--apply",
         )
         assert r.returncode == 0, r.stderr
@@ -935,8 +993,14 @@ class TestCliContract:
         state = _init_state(tmp_path)
         before = state.read_bytes()
         r = _ctl(
-            "block", "--state", str(state), "--class", "tool-blocked",
-            "--reason", "sandbox unavailable", "--apply",
+            "block",
+            "--state",
+            str(state),
+            "--class",
+            "tool-blocked",
+            "--reason",
+            "sandbox unavailable",
+            "--apply",
         )
         assert r.returncode == 1
         assert "missing-snapshot" in r.stderr
@@ -945,8 +1009,14 @@ class TestCliContract:
     def test_unsupported_runtime_is_inert(self, tmp_path):
         state = tmp_path / "s.json"
         r = _ctl(
-            "init", "--state", str(state), "--review-id", "r",
-            "--scratch-dir", str(tmp_path), "--apply",
+            "init",
+            "--state",
+            str(state),
+            "--review-id",
+            "r",
+            "--scratch-dir",
+            str(tmp_path),
+            "--apply",
             runtime="codex-cli",
         )
         assert r.returncode == 1
@@ -960,8 +1030,15 @@ class TestCliContract:
         state = _init_state(tmp_path)
         before = state.read_bytes()
         r = _ctl(
-            "block", "--state", str(state), "--class", "tool-blocked",
-            "--reason", "x", "--apply", runtime="openai-compatible",
+            "block",
+            "--state",
+            str(state),
+            "--class",
+            "tool-blocked",
+            "--reason",
+            "x",
+            "--apply",
+            runtime="openai-compatible",
         )
         assert r.returncode == 1
         assert "unsupported-runtime" in r.stderr
@@ -972,8 +1049,14 @@ class TestCliContract:
         bad = tmp_path / "dup.json"
         bad.write_text('{"obligations": [], "obligations": []}', encoding="utf-8")
         r = _ctl(
-            "complete", "--state", str(state), "--action", "plan-coverage",
-            "--data-file", str(bad), "--apply",
+            "complete",
+            "--state",
+            str(state),
+            "--action",
+            "plan-coverage",
+            "--data-file",
+            str(bad),
+            "--apply",
         )
         assert r.returncode == 1
         assert "invalid-json" in r.stderr or "duplicate" in r.stderr
@@ -984,8 +1067,14 @@ class TestCliContract:
         bad = tmp_path / "bad.json"
         bad.write_text('{"obligations": "not-a-list"}', encoding="utf-8")
         r = _ctl(
-            "complete", "--state", str(state), "--action", "plan-coverage",
-            "--data-file", str(bad), "--apply",
+            "complete",
+            "--state",
+            str(state),
+            "--action",
+            "plan-coverage",
+            "--data-file",
+            str(bad),
+            "--apply",
         )
         assert r.returncode == 1
         assert state.read_bytes() == before
@@ -998,9 +1087,7 @@ class TestCliContract:
 def _engine_state(tmp_path: Path) -> Path:
     path = tmp_path / "review-state.json"
     # review_id must match the helpers' witness verifier scope.
-    engine.init_review(
-        path, review_id="review-test", scratch_dir=tmp_path, apply=True
-    )
+    engine.init_review(path, review_id="review-test", scratch_dir=tmp_path, apply=True)
     return path
 
 
@@ -1037,18 +1124,14 @@ class TestEngineTransactions:
 
     def test_init_review_check_writes_nothing(self, tmp_path):
         path = tmp_path / "s.json"
-        result = engine.init_review(
-            path, review_id="r", scratch_dir=tmp_path, apply=False
-        )
+        result = engine.init_review(path, review_id="r", scratch_dir=tmp_path, apply=False)
         assert result.decision.allowed
         assert not path.exists()
 
     def test_init_review_refuses_existing(self, tmp_path):
         path = _engine_state(tmp_path)
         with pytest.raises(store.StoreError):
-            engine.init_review(
-                path, review_id="r2", scratch_dir=tmp_path, apply=True
-            )
+            engine.init_review(path, review_id="r2", scratch_dir=tmp_path, apply=True)
 
     def test_next_action_for_reports_freeze_first(self, tmp_path):
         path = _engine_state(tmp_path)
@@ -1114,7 +1197,10 @@ class TestEngineTransactions:
         registry = w.registry
         auth = _AuthorityDouble(path, registry, tmp_path, policies)
         dispatch = _DispatchDouble(
-            path, registry, tmp_path, policies,
+            path,
+            registry,
+            tmp_path,
+            policies,
             data_builders={"impact-mapper-semantic": _map_data_builder},
         )
         sources = engine.WitnessSources(
@@ -1124,12 +1210,13 @@ class TestEngineTransactions:
             reviewer_dispatch=dispatch,
         )
         engine.complete_transaction(
-            path, action="freeze-review-input",
-            caller_data_bytes=b"", caller_evidence=(), sources=sources,
+            path,
+            action="freeze-review-input",
+            caller_data_bytes=b"",
+            caller_evidence=(),
+            sources=sources,
         )
-        r1 = engine.register_dispatch_transaction(
-            path, action="map-impact-semantic", sources=sources
-        )
+        r1 = engine.register_dispatch_transaction(path, action="map-impact-semantic", sources=sources)
         assert r1.decision.allowed
         st = store.load_state(path)
         assert st["generation"] == 2
@@ -1143,8 +1230,11 @@ class TestEngineTransactions:
         assert st["generation"] == 3
         assert st["dispatches"][did]["launch_witness_id"] is not None
         r3 = engine.complete_transaction(
-            path, action="map-impact-semantic",
-            caller_data_bytes=b"", caller_evidence=(), sources=sources,
+            path,
+            action="map-impact-semantic",
+            caller_data_bytes=b"",
+            caller_evidence=(),
+            sources=sources,
         )
         assert r3.decision.allowed, r3.decision.reason
         st = store.load_state(path)
@@ -1174,16 +1264,15 @@ class TestEngineTransactions:
             reviewer_dispatch=dispatch,
         )
         engine.complete_transaction(
-            path, action="freeze-review-input",
-            caller_data_bytes=b"", caller_evidence=(), sources=sources,
+            path,
+            action="freeze-review-input",
+            caller_data_bytes=b"",
+            caller_evidence=(),
+            sources=sources,
         )
-        engine.register_dispatch_transaction(
-            path, action="map-impact-semantic", sources=sources
-        )
+        engine.register_dispatch_transaction(path, action="map-impact-semantic", sources=sources)
         before = path.read_bytes()
-        again = engine.register_dispatch_transaction(
-            path, action="map-impact-semantic", sources=sources
-        )
+        again = engine.register_dispatch_transaction(path, action="map-impact-semantic", sources=sources)
         assert again.decision.allowed
         assert "already registered" in again.decision.reason
         assert path.read_bytes() == before  # same bytes, same generation
@@ -1202,16 +1291,20 @@ class TestEngineTransactions:
             reviewer_dispatch=dispatch,
         )
         engine.complete_transaction(
-            path, action="freeze-review-input",
-            caller_data_bytes=b"", caller_evidence=(), sources=sources,
+            path,
+            action="freeze-review-input",
+            caller_data_bytes=b"",
+            caller_evidence=(),
+            sources=sources,
         )
-        engine.register_dispatch_transaction(
-            path, action="map-impact-semantic", sources=sources
-        )
+        engine.register_dispatch_transaction(path, action="map-impact-semantic", sources=sources)
         before = path.read_bytes()
         result = engine.complete_transaction(
-            path, action="map-impact-semantic",
-            caller_data_bytes=b"", caller_evidence=(), sources=sources,
+            path,
+            action="map-impact-semantic",
+            caller_data_bytes=b"",
+            caller_evidence=(),
+            sources=sources,
         )
         # Pending but unlaunched: the completion path refuses to fabricate a
         # launch witness retroactively.
@@ -1223,7 +1316,8 @@ class TestEngineTransactions:
         path = _engine_state(tmp_path)
         with pytest.raises(model.StateValidationError) as exc:
             engine.complete_transaction(
-                path, action="run-fast-review",
+                path,
+                action="run-fast-review",
                 caller_data_bytes=b'{"attestations": [], "findings": []}',
                 caller_evidence=(),
                 sources=engine.WitnessSources(
@@ -1238,7 +1332,8 @@ class TestEngineTransactions:
         before = path.read_bytes()
         with pytest.raises(model.StateValidationError):
             engine.complete_transaction(
-                path, action="plan-coverage",
+                path,
+                action="plan-coverage",
                 caller_data_bytes=b'{"obligations": [{"bad": true}]}',
                 caller_evidence=(),
                 sources=engine.WitnessSources(
@@ -1301,9 +1396,7 @@ class TestEngineTransactions:
         result = engine.resume_transaction(
             path,
             blocker_id=blocker_id,
-            resolution_evidence=(
-                engine.EvidenceSource("res", "check-output", res),
-            ),
+            resolution_evidence=(engine.EvidenceSource("res", "check-output", res),),
             sources=sources,
         )
         assert result.decision.allowed
@@ -1330,7 +1423,9 @@ class TestEngineTransactions:
         before = path.read_bytes()
         with pytest.raises(model.StateValidationError) as exc:
             engine.resume_transaction(
-                path, blocker_id=blocker_id, resolution_evidence=(),
+                path,
+                blocker_id=blocker_id,
+                resolution_evidence=(),
                 sources=sources,
             )
         assert exc.value.code == "missing-field"
@@ -1342,8 +1437,11 @@ class TestEngineTransactions:
         transition = _TransitionDouble(path, w.registry, tmp_path, w.policies)
         sources = _walk_sources(w, path, tmp_path, remote_transition=transition)
         result = engine.complete_transaction(
-            path, action="mark-ready-for-ci",
-            caller_data_bytes=b"", caller_evidence=(), sources=sources,
+            path,
+            action="mark-ready-for-ci",
+            caller_data_bytes=b"",
+            caller_evidence=(),
+            sources=sources,
         )
         assert result.decision.allowed, result.decision.reason
         st = store.load_state(path)
@@ -1360,16 +1458,22 @@ class TestEngineTransactions:
         observer = _ObserverDouble(path, w.registry, tmp_path, w.policies)
         sources = _walk_sources(w, path, tmp_path, remote_observer=observer)
         result = engine.complete_transaction(
-            path, action="run-remote-ci",
-            caller_data_bytes=b"", caller_evidence=(), sources=sources,
+            path,
+            action="run-remote-ci",
+            caller_data_bytes=b"",
+            caller_evidence=(),
+            sources=sources,
         )
         assert result.decision.allowed, result.decision.reason
         st = store.load_state(path)
         hosted = [c for c in st["checks"].values() if c["locus"] == "hosted"]
         assert len(hosted) == 1
         result = engine.complete_transaction(
-            path, action="seal-green",
-            caller_data_bytes=b"", caller_evidence=(), sources=sources,
+            path,
+            action="seal-green",
+            caller_data_bytes=b"",
+            caller_evidence=(),
+            sources=sources,
         )
         assert result.decision.allowed, result.decision.reason
         st = store.load_state(path)
@@ -1382,14 +1486,20 @@ class TestEngineTransactions:
         observer = _ObserverDouble(path, w.registry, tmp_path, w.policies)
         sources = _walk_sources(w, path, tmp_path, remote_observer=observer)
         engine.complete_transaction(
-            path, action="run-remote-ci",
-            caller_data_bytes=b"", caller_evidence=(), sources=sources,
+            path,
+            action="run-remote-ci",
+            caller_data_bytes=b"",
+            caller_evidence=(),
+            sources=sources,
         )
         sealed = _walk_sources(w, path, tmp_path)  # no remote_observer wired
         before = path.read_bytes()
         result = engine.complete_transaction(
-            path, action="seal-green",
-            caller_data_bytes=b"", caller_evidence=(), sources=sealed,
+            path,
+            action="seal-green",
+            caller_data_bytes=b"",
+            caller_evidence=(),
+            sources=sealed,
         )
         assert not result.decision.allowed
         assert "missing-witness-source:remote-observer" in result.decision.missing
@@ -1411,8 +1521,11 @@ class TestEngineTransactions:
             command_runner=runner,
         )
         result = engine.complete_transaction(
-            path2, action="run-preflight",
-            caller_data_bytes=b"", caller_evidence=(), sources=sources,
+            path2,
+            action="run-preflight",
+            caller_data_bytes=b"",
+            caller_evidence=(),
+            sources=sources,
         )
         assert result.decision.allowed, result.decision.reason
         st = store.load_state(path2)
@@ -1444,9 +1557,7 @@ class TestVersionBoundary:
     def test_next_node_metrics_and_propose_rejected(self, tmp_path):
         metrics = tmp_path / "review-metrics.json"
         metrics.write_text("{}", encoding="utf-8")
-        r = _run(
-            NEXT_NODE, "--metrics", str(metrics), "--propose", "ready"
-        )
+        r = _run(NEXT_NODE, "--metrics", str(metrics), "--propose", "ready")
         assert r.returncode == 2
         assert "cannot be combined" in r.stderr
 
@@ -1464,7 +1575,10 @@ class TestVersionBoundary:
         metrics = tmp_path / "review-metrics.json"
         r = _run(
             COMPILE_METRICS,
-            "--state", str(state), "--metrics", str(metrics),
+            "--state",
+            str(state),
+            "--metrics",
+            str(metrics),
         )
         assert r.returncode == 0, r.stderr
         assert metrics.is_file()
@@ -1479,7 +1593,11 @@ class TestVersionBoundary:
         ledger = tmp_path / "ledger.md"
         r = _run(
             RESOLVED_LEDGER,
-            "--metrics", str(metrics), "--ledger", str(ledger), "--apply",
+            "--metrics",
+            str(metrics),
+            "--ledger",
+            str(ledger),
+            "--apply",
         )
         assert r.returncode == 0, r.stderr
         assert state.read_bytes() == before

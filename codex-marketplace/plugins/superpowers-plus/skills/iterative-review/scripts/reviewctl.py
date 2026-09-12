@@ -95,20 +95,14 @@ def _require_v2_state(path: Path) -> int:
         return _fail(f"state-missing: no state file at {path}")
     if version == "unparseable":
         return _fail(f"state-invalid: {path} is not a JSON object")
-    return _fail(
-        f"state-version: {path} is a version-1 review state; "
-        "version-2 control lives only in reviewctl"
-    )
+    return _fail(f"state-version: {path} is a version-1 review state; version-2 control lives only in reviewctl")
 
 
 def _runtime_gate() -> int:
     runtime = engine.detect_runtime()
     if runtime == engine.RUNTIME_DEVIN_DESKTOP:
         return 0
-    return _fail(
-        f"unsupported-runtime: version-2 mutations require devin-desktop "
-        f"(detected {runtime})"
-    )
+    return _fail(f"unsupported-runtime: version-2 mutations require devin-desktop (detected {runtime})")
 
 
 def _sources() -> engine.WitnessSources:
@@ -127,9 +121,7 @@ def _parse_evidence_specs(specs) -> tuple:
             )
         alias, kind, path = parts
         if not path:
-            raise model.StateValidationError(
-                "bad-usage", "evidence-file", f"empty path in {spec!r}"
-            )
+            raise model.StateValidationError("bad-usage", "evidence-file", f"empty path in {spec!r}")
         out.append(engine.EvidenceSource(alias=alias, kind=kind, path=Path(path)))
     return tuple(out)
 
@@ -173,9 +165,7 @@ def _cmd_status(args, json_mode: bool) -> int:
         return bad
     state = store.load_state(Path(args.state))
     findings = state["findings"]
-    open_findings = sum(
-        1 for f in findings.values() if f["disposition"] in ("open", "unassessed")
-    )
+    open_findings = sum(1 for f in findings.values() if f["disposition"] in ("open", "unassessed"))
     obj = {
         "schema_version": state["schema_version"],
         "review_id": state["review_id"],
@@ -186,18 +176,12 @@ def _cmd_status(args, json_mode: bool) -> int:
             "findings": len(findings),
             "open_findings": open_findings,
             "dispatches": len(state["dispatches"]),
-            "active_blockers": sum(
-                1 for b in state["blockers"].values() if b["active"]
-            ),
+            "active_blockers": sum(1 for b in state["blockers"].values() if b["active"]),
             "witness_records": len(state["witness_records"]),
             "checks": len(state["checks"]),
         },
         "green_seal": state["green_seal"] is not None,
-        "ready_transition": (
-            state["ready_transition"]["status"]
-            if state["ready_transition"]
-            else None
-        ),
+        "ready_transition": (state["ready_transition"]["status"] if state["ready_transition"] else None),
         "state": str(Path(args.state)),
     }
     return _emit(obj, json_mode)
@@ -217,17 +201,14 @@ def _cmd_dispatch(args, json_mode: int) -> int:
         return gate
     if not args.apply:
         return _fail(
-            f"BLOCKED: dispatch --action {args.action} requires --apply "
-            "to mutate version-2 state",
+            f"BLOCKED: dispatch --action {args.action} requires --apply to mutate version-2 state",
             USAGE_ERRORS,
         )
     bad = _require_v2_state(Path(args.state))
     if bad:
         return bad
     sources = _sources()
-    registered = engine.register_dispatch_transaction(
-        Path(args.state), action=args.action, sources=sources
-    )
+    registered = engine.register_dispatch_transaction(Path(args.state), action=args.action, sources=sources)
     if not registered.decision.allowed:
         _emit(_decision_obj(registered), json_mode)
         return 1
@@ -237,9 +218,7 @@ def _cmd_dispatch(args, json_mode: int) -> int:
     if dispatch_id is None:
         # A pending dispatch may already be launched; nothing left to do.
         return _emit(_decision_obj(registered), json_mode)
-    launched = engine.launch_transaction(
-        Path(args.state), dispatch_id=dispatch_id, sources=sources
-    )
+    launched = engine.launch_transaction(Path(args.state), dispatch_id=dispatch_id, sources=sources)
     _emit(_decision_obj(launched), json_mode)
     return 0 if launched.decision.allowed else 1
 
@@ -250,8 +229,7 @@ def _cmd_complete(args, json_mode: bool) -> int:
         return gate
     if not args.apply:
         return _fail(
-            f"BLOCKED: complete --action {args.action} requires --apply "
-            "to mutate version-2 state",
+            f"BLOCKED: complete --action {args.action} requires --apply to mutate version-2 state",
             USAGE_ERRORS,
         )
     bad = _require_v2_state(Path(args.state))
@@ -355,9 +333,7 @@ def _build_parser() -> argparse.ArgumentParser:
         action="store_true",
         help="self-check: parse arguments and exit 0 without touching files",
     )
-    parser.add_argument(
-        "--json", action="store_true", help="emit one JSON object per command"
-    )
+    parser.add_argument("--json", action="store_true", help="emit one JSON object per command")
     sub = parser.add_subparsers(dest="command")
 
     sub.add_parser("doctor", help="report runtime detection and surface verdict")

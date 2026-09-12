@@ -158,9 +158,7 @@ class _TestWitnessPolicy:
         prefix = self.PREFIXES.get(kind)
         if prefix is None:
             return False
-        expected_source = (
-            "github-remote" if kind.startswith("remote-") else "hook-transcript"
-        )
+        expected_source = "github-remote" if kind.startswith("remote-") else "hook-transcript"
         return source == expected_source and locator.startswith(prefix)
 
 
@@ -386,8 +384,16 @@ def _bind(state: dict, content_id: str, kind: str, snap=None) -> str:
 
 
 def _witness(
-    state, registry, *, kind, subject, tool_use_id=None, agent_id=None,
-    locator=None, transcript_range=None, snap=None,
+    state,
+    registry,
+    *,
+    kind,
+    subject,
+    tool_use_id=None,
+    agent_id=None,
+    locator=None,
+    transcript_range=None,
+    snap=None,
 ):
     snap = state["snapshot"] if snap is None else snap
     if locator is None:
@@ -406,9 +412,7 @@ def _witness(
         "snapshot_epoch": snap["epoch"],
         "snapshot_fingerprint": snap["fingerprint"],
     }
-    rec["witness_id"] = model.derived_id(
-        "witness", snap["epoch"], model.witness_record_subject(rec)
-    )
+    rec["witness_id"] = model.derived_id("witness", snap["epoch"], model.witness_record_subject(rec))
     state["witness_records"][rec["witness_id"]] = rec
     registry[locator] = model.canonical_json(rec)
     return rec["witness_id"]
@@ -442,16 +446,23 @@ def _route(state, *, role, profile, profile_sha, tier, reasoning, qualified=None
     }
     cid = _put(state, {"route": profile, "role": role, "serial": serial})
     rec["evidence_id"] = _bind(state, cid, "route-selection")
-    rec["route_selection_id"] = model.derived_id(
-        "route", snap["epoch"], model.route_selection_subject(rec)
-    )
+    rec["route_selection_id"] = model.derived_id("route", snap["epoch"], model.route_selection_subject(rec))
     state["route_selections"][rec["route_selection_id"]] = rec
     return rec
 
 
 def _dispatch(
-    state, registry, *, role, profile, tier, reasoning, assignments=(),
-    context_evidence=(), serial=0, qualified=None,
+    state,
+    registry,
+    *,
+    role,
+    profile,
+    tier,
+    reasoning,
+    assignments=(),
+    context_evidence=(),
+    serial=0,
+    qualified=None,
 ):
     snap = state["snapshot"]
     profile_sha = model.sha256_hex(f"profile:{profile}".encode())
@@ -494,9 +505,7 @@ def _dispatch(
         "snapshot_epoch": snap["epoch"],
         "snapshot_fingerprint": snap["fingerprint"],
     }
-    d["dispatch_id"] = model.derived_id(
-        "dispatch", snap["epoch"], model.pending_dispatch_intent_subject(d)
-    )
+    d["dispatch_id"] = model.derived_id("dispatch", snap["epoch"], model.pending_dispatch_intent_subject(d))
     tool_use = f"toolu-launch-{serial}"
     agent = f"agent-{serial}"
     launch_subject = model.review_launch_subject(
@@ -529,9 +538,7 @@ def _attestation_payload(state, registry, d, *, verdict="clean", finding_ids=(),
     attestation record. The record is not installed: callers either install it
     directly (_complete) or pass it to complete_action as a payload."""
     snap = state["snapshot"]
-    att_bytes = model.canonical_json(
-        {"dispatch_id": d["dispatch_id"], "verdict": verdict, "serial": serial}
-    )
+    att_bytes = model.canonical_json({"dispatch_id": d["dispatch_id"], "verdict": verdict, "serial": serial})
     cid = _put(state, json.loads(att_bytes))
     ev = _bind(state, cid, "review-attestation")
     _bind(state, _put(state, {"transcript": serial}), "tool-transcript")
@@ -562,16 +569,12 @@ def _attestation_payload(state, registry, d, *, verdict="clean", finding_ids=(),
         "snapshot_epoch": snap["epoch"],
         "snapshot_fingerprint": snap["fingerprint"],
     }
-    rec["attestation_id"] = model.derived_id(
-        "attestation", snap["epoch"], model.review_wrapper_subject(rec)
-    )
+    rec["attestation_id"] = model.derived_id("attestation", snap["epoch"], model.review_wrapper_subject(rec))
     return rec
 
 
 def _complete(state, registry, d, *, verdict="clean", finding_ids=(), audit="clean", serial=0):
-    rec = _attestation_payload(
-        state, registry, d, verdict=verdict, finding_ids=finding_ids, audit=audit, serial=serial
-    )
+    rec = _attestation_payload(state, registry, d, verdict=verdict, finding_ids=finding_ids, audit=audit, serial=serial)
     state["reviews"][rec["attestation_id"]] = rec
     return rec
 
@@ -588,9 +591,7 @@ def _map_payload(state, *, role, entries):
         "snapshot_epoch": snap["epoch"],
         "snapshot_fingerprint": snap["fingerprint"],
     }
-    rec["impact_map_id"] = model.derived_id(
-        "impact-map", snap["epoch"], model.impact_map_subject(rec)
-    )
+    rec["impact_map_id"] = model.derived_id("impact-map", snap["epoch"], model.impact_map_subject(rec))
     return rec
 
 
@@ -601,8 +602,16 @@ def _map_record(state, *, role, entries):
 
 
 def _obligation(
-    state, *, category, risk, consequences, status, assignees=(),
-    evidence_ids=(), na_att=(), scope_level="surface",
+    state,
+    *,
+    category,
+    risk,
+    consequences,
+    status,
+    assignees=(),
+    evidence_ids=(),
+    na_att=(),
+    scope_level="surface",
 ):
     snap = state["snapshot"]
     tier, reasoning = policy.obligation_floor(scope_level, risk, consequences)
@@ -622,9 +631,7 @@ def _obligation(
         "snapshot_epoch": snap["epoch"],
         "snapshot_fingerprint": snap["fingerprint"],
     }
-    rec["obligation_id"] = model.derived_id(
-        "obligation", snap["epoch"], model.obligation_subject(rec)
-    )
+    rec["obligation_id"] = model.derived_id("obligation", snap["epoch"], model.obligation_subject(rec))
     state["obligations"][rec["obligation_id"]] = rec
     return rec
 
@@ -651,8 +658,16 @@ def _hypothesis(state, *, obligation_id, family, polarity, statement, policy_sha
 
 
 def _finding(
-    state, *, source_kind, source_id, source_assignment_id, obligation_id=None,
-    severity="minor", disposition="open", resolution=None, title="finding",
+    state,
+    *,
+    source_kind,
+    source_id,
+    source_assignment_id,
+    obligation_id=None,
+    severity="minor",
+    disposition="open",
+    resolution=None,
+    title="finding",
 ):
     snap = state["snapshot"]
     rec = {
@@ -888,13 +903,23 @@ def make_complete_candidate(tmp_path: Path) -> dict:
     )
     # mapper dispatches/reviews
     d_sem, _, _, _ = _dispatch(
-        state, registry, role="impact-mapper-semantic", profile="mapper-semantic",
-        tier="strong", reasoning="high", serial=1,
+        state,
+        registry,
+        role="impact-mapper-semantic",
+        profile="mapper-semantic",
+        tier="strong",
+        reasoning="high",
+        serial=1,
     )
     _complete(state, registry, d_sem, serial=1)
     d_con, _, _, _ = _dispatch(
-        state, registry, role="impact-mapper-contract", profile="mapper-contract",
-        tier="strong", reasoning="high", serial=2,
+        state,
+        registry,
+        role="impact-mapper-contract",
+        profile="mapper-contract",
+        tier="strong",
+        reasoning="high",
+        serial=2,
     )
     _complete(state, registry, d_con, serial=2)
 
@@ -947,15 +972,11 @@ def make_complete_candidate(tmp_path: Path) -> dict:
         o["assignees"] = sorted([h["hypothesis_assignment_id"]])
         # re-derive id since assignees is part of the subject
         del state["obligations"][o["obligation_id"]]
-        o["obligation_id"] = model.derived_id(
-            "obligation", epoch, model.obligation_subject(o)
-        )
+        o["obligation_id"] = model.derived_id("obligation", epoch, model.obligation_subject(o))
         state["obligations"][o["obligation_id"]] = o
         h["obligation_id"] = o["obligation_id"]
         del state["hypothesis_assignments"][h["hypothesis_assignment_id"]]
-        h["hypothesis_assignment_id"] = model.derived_id(
-            "hypothesis", epoch, model.hypothesis_assignment_subject(h)
-        )
+        h["hypothesis_assignment_id"] = model.derived_id("hypothesis", epoch, model.hypothesis_assignment_subject(h))
         state["hypothesis_assignments"][h["hypothesis_assignment_id"]] = h
 
     high = obligations["security-privacy"]
@@ -970,19 +991,13 @@ def make_complete_candidate(tmp_path: Path) -> dict:
         reasoning=high["minimum_reasoning_floor"],
     )
     del state["obligations"][high["obligation_id"]]
-    high["assignees"] = sorted(
-        [hyps["security-privacy"]["hypothesis_assignment_id"], h2["hypothesis_assignment_id"]]
-    )
-    high["obligation_id"] = model.derived_id(
-        "obligation", epoch, model.obligation_subject(high)
-    )
+    high["assignees"] = sorted([hyps["security-privacy"]["hypothesis_assignment_id"], h2["hypothesis_assignment_id"]])
+    high["obligation_id"] = model.derived_id("obligation", epoch, model.obligation_subject(high))
     state["obligations"][high["obligation_id"]] = high
     for h in (hyps["security-privacy"], h2):
         del state["hypothesis_assignments"][h["hypothesis_assignment_id"]]
         h["obligation_id"] = high["obligation_id"]
-        h["hypothesis_assignment_id"] = model.derived_id(
-            "hypothesis", epoch, model.hypothesis_assignment_subject(h)
-        )
+        h["hypothesis_assignment_id"] = model.derived_id("hypothesis", epoch, model.hypothesis_assignment_subject(h))
         state["hypothesis_assignments"][h["hypothesis_assignment_id"]] = h
 
     # --- coverage inventory ---------------------------------------------------
@@ -1007,16 +1022,12 @@ def make_complete_candidate(tmp_path: Path) -> dict:
         "snapshot_epoch": epoch,
         "snapshot_fingerprint": fp,
     }
-    inv["coverage_inventory_id"] = model.derived_id(
-        "coverage-inventory", epoch, model.coverage_inventory_subject(inv)
-    )
+    inv["coverage_inventory_id"] = model.derived_id("coverage-inventory", epoch, model.coverage_inventory_subject(inv))
     state["coverage_inventory"] = inv
 
     # --- obligation reviews ----------------------------------------------------
     # Tier gates are separate ordered dispatches: fast, focused, strong.
-    covered_ids = sorted(
-        o["obligation_id"] for c, o in obligations.items() if c != "security-privacy"
-    )
+    covered_ids = sorted(o["obligation_id"] for c, o in obligations.items() if c != "security-privacy")
     fast_ids = sorted(
         o["obligation_id"]
         for o in obligations.values()
@@ -1027,40 +1038,58 @@ def make_complete_candidate(tmp_path: Path) -> dict:
         for o in obligations.values()
         if o["minimum_capability_tier"] == "focused" and o["status"] == "covered"
     )
-    strong_ids = sorted(
-        oid for oid in covered_ids if oid not in fast_ids + focused_ids
-    )
+    strong_ids = sorted(oid for oid in covered_ids if oid not in fast_ids + focused_ids)
     d_fast, _, _, _ = _dispatch(
-        state, registry, role="obligation-reviewer", profile="reviewer-fast",
-        tier="fast", reasoning="low",
+        state,
+        registry,
+        role="obligation-reviewer",
+        profile="reviewer-fast",
+        tier="fast",
+        reasoning="low",
         assignments=fast_ids,
         serial=9,
     )
     _complete(state, registry, d_fast, serial=9)
     d_focused, _, _, _ = _dispatch(
-        state, registry, role="obligation-reviewer", profile="reviewer-focused",
-        tier="focused", reasoning="standard",
+        state,
+        registry,
+        role="obligation-reviewer",
+        profile="reviewer-focused",
+        tier="focused",
+        reasoning="standard",
         assignments=focused_ids,
         serial=19,
     )
     _complete(state, registry, d_focused, serial=19)
     d_rev_a, _, _, _ = _dispatch(
-        state, registry, role="obligation-reviewer", profile="reviewer-a",
-        tier="strong", reasoning="high",
+        state,
+        registry,
+        role="obligation-reviewer",
+        profile="reviewer-a",
+        tier="strong",
+        reasoning="high",
         assignments=strong_ids + [high["obligation_id"]],
         serial=10,
     )
     att_a = _complete(state, registry, d_rev_a, serial=10)
     d_rev_b, _, _, _ = _dispatch(
-        state, registry, role="obligation-reviewer", profile="reviewer-b",
-        tier="strong", reasoning="high",
+        state,
+        registry,
+        role="obligation-reviewer",
+        profile="reviewer-b",
+        tier="strong",
+        reasoning="high",
         assignments=[high["obligation_id"]] + [h["hypothesis_assignment_id"] for h in (hyps["security-privacy"], h2)],
         serial=11,
     )
     att_b = _complete(state, registry, d_rev_b, serial=11)
     d_ex, _, _, _ = _dispatch(
-        state, registry, role="exemption-challenger", profile="exemption-challenger",
-        tier="final-strong", reasoning="final-strong",
+        state,
+        registry,
+        role="exemption-challenger",
+        profile="exemption-challenger",
+        tier="final-strong",
+        reasoning="final-strong",
         assignments=[high["obligation_id"]],
         serial=12,
     )
@@ -1071,24 +1100,16 @@ def make_complete_candidate(tmp_path: Path) -> dict:
     high["not_applicable_attestation_ids"] = sorted(
         [att_a["attestation_id"], att_b["attestation_id"], att_ex["attestation_id"]]
     )
-    high["obligation_id"] = model.derived_id(
-        "obligation", epoch, model.obligation_subject(high)
-    )
+    high["obligation_id"] = model.derived_id("obligation", epoch, model.obligation_subject(high))
     state["obligations"][high["obligation_id"]] = high
     for h in (hyps["security-privacy"], h2):
         del state["hypothesis_assignments"][h["hypothesis_assignment_id"]]
         h["obligation_id"] = high["obligation_id"]
-        h["hypothesis_assignment_id"] = model.derived_id(
-            "hypothesis", epoch, model.hypothesis_assignment_subject(h)
-        )
+        h["hypothesis_assignment_id"] = model.derived_id("hypothesis", epoch, model.hypothesis_assignment_subject(h))
         state["hypothesis_assignments"][h["hypothesis_assignment_id"]] = h
     # inventory obligation_ids must reference the final obligation ids
-    inv["entries"][0]["obligation_ids"] = sorted(
-        o["obligation_id"] for o in obligations.values()
-    )
-    inv["coverage_inventory_id"] = model.derived_id(
-        "coverage-inventory", epoch, model.coverage_inventory_subject(inv)
-    )
+    inv["entries"][0]["obligation_ids"] = sorted(o["obligation_id"] for o in obligations.values())
+    inv["coverage_inventory_id"] = model.derived_id("coverage-inventory", epoch, model.coverage_inventory_subject(inv))
     state["coverage_inventory"] = inv
 
     # --- checks ----------------------------------------------------------------
@@ -1097,8 +1118,13 @@ def make_complete_candidate(tmp_path: Path) -> dict:
 
     # --- adjudicator / fix / repair --------------------------------------------
     d_adj, _, _, _ = _dispatch(
-        state, registry, role="finding-adjudicator", profile="adjudicator",
-        tier="strong", reasoning="high", serial=13,
+        state,
+        registry,
+        role="finding-adjudicator",
+        profile="adjudicator",
+        tier="strong",
+        reasoning="high",
+        serial=13,
     )
     att_adj = _complete(state, registry, d_adj, serial=13)
 
@@ -1124,8 +1150,12 @@ def make_complete_candidate(tmp_path: Path) -> dict:
     )
     # fix-reviewer dispatch assigned the fixed finding
     d_fix, _, _, _ = _dispatch(
-        state, registry, role="fix-reviewer", profile="fix-reviewer",
-        tier="focused", reasoning="standard",
+        state,
+        registry,
+        role="fix-reviewer",
+        profile="fix-reviewer",
+        tier="focused",
+        reasoning="standard",
         assignments=[f_fixed["finding_id"]],
         serial=14,
     )
@@ -1148,16 +1178,24 @@ def make_complete_candidate(tmp_path: Path) -> dict:
     # the repaired review produced a superseded attestation that the closed
     # repair's cut invalidated; the obligation now relies on the replacements.
     d_old, _, _, _ = _dispatch(
-        state, registry, role="obligation-reviewer", profile="reviewer-old",
-        tier="strong", reasoning="high",
+        state,
+        registry,
+        role="obligation-reviewer",
+        profile="reviewer-old",
+        tier="strong",
+        reasoning="high",
         assignments=[high["obligation_id"]],
         serial=18,
     )
     att_old = _complete(state, registry, d_old, serial=18)
 
     d_rv, _, _, _ = _dispatch(
-        state, registry, role="review-repair-verifier", profile="repair-verifier",
-        tier="strong", reasoning="high",
+        state,
+        registry,
+        role="review-repair-verifier",
+        profile="repair-verifier",
+        tier="strong",
+        reasoning="high",
         assignments=[f_repaired["finding_id"]],
         serial=15,
     )
@@ -1177,15 +1215,25 @@ def make_complete_candidate(tmp_path: Path) -> dict:
 
     # --- blind final + closure -------------------------------------------------
     d_fin, _, _, _ = _dispatch(
-        state, registry, role="blind-final", profile="blind-final-profile",
-        tier="final-strong", reasoning="final-strong",
-        qualified=("blind-final",), serial=16,
+        state,
+        registry,
+        role="blind-final",
+        profile="blind-final-profile",
+        tier="final-strong",
+        reasoning="final-strong",
+        qualified=("blind-final",),
+        serial=16,
     )
     _complete(state, registry, d_fin, serial=16)
     d_clo, _, _, _ = _dispatch(
-        state, registry, role="closure-auditor", profile="closure-auditor-profile",
-        tier="final-strong", reasoning="final-strong",
-        qualified=("closure-auditor",), serial=17,
+        state,
+        registry,
+        role="closure-auditor",
+        profile="closure-auditor-profile",
+        tier="final-strong",
+        reasoning="final-strong",
+        qualified=("closure-auditor",),
+        serial=17,
     )
     _complete(state, registry, d_clo, serial=17)
 
@@ -1301,9 +1349,7 @@ def make_complete_candidate(tmp_path: Path) -> dict:
         "snapshot_epoch": epoch,
         "snapshot_fingerprint": fp,
     }
-    ci["ci_candidate_id"] = model.derived_id(
-        "ci-candidate", epoch, model.ci_candidate_subject(ci)
-    )
+    ci["ci_candidate_id"] = model.derived_id("ci-candidate", epoch, model.ci_candidate_subject(ci))
     state["ci_candidate"] = ci
 
     # --- bookkeeping -------------------------------------------------------------
@@ -1313,9 +1359,7 @@ def make_complete_candidate(tmp_path: Path) -> dict:
     _store.append_history(state, event="build", data_sha256=model.sha256_hex(b"build"))
     state["stage"] = policy._derived_stage(state, bundle)
 
-    profile_names = tuple(
-        rs["profile"] for rs in state["route_selections"].values()
-    )
+    profile_names = tuple(rs["profile"] for rs in state["route_selections"].values())
     bundle.available_profiles = profile_names
     _BUNDLES[review_id] = (bundle, registry)
 
@@ -1332,9 +1376,7 @@ def make_remote_observation(state: dict) -> tuple[dict, datetime]:
     bound = {
         c["evidence_id"]
         for c in state["checks"].values()
-        if c["kind"] == "remote-ci"
-        and c["locus"] == "hosted"
-        and policy._current(state, c, c["check_id"])
+        if c["kind"] == "remote-ci" and c["locus"] == "hosted" and policy._current(state, c, c["check_id"])
     }
     first = None
     for eid, ev in state["evidence"].items():
@@ -1373,9 +1415,7 @@ def remove_predicate(state: dict, observation: dict, missing: str) -> None:
     elif missing == "coverage":
         state["obligations"] = {}
     elif missing == "preflight":
-        state["checks"] = {
-            k: c for k, c in state["checks"].items() if c["kind"] != "preflight"
-        }
+        state["checks"] = {k: c for k, c in state["checks"].items() if c["kind"] != "preflight"}
     elif missing in ("fast-review", "focused-review", "strong-review"):
         tier = missing.split("-")[0]
         for o in state["obligations"].values():
@@ -1386,10 +1426,7 @@ def remove_predicate(state: dict, observation: dict, missing: str) -> None:
             if d is None:
                 continue
             rs = state["route_selections"][d["route_selection_id"]]
-            if (
-                rs["required_role"] == "obligation-reviewer"
-                and rs["required_capability_tier"] == tier
-            ):
+            if rs["required_role"] == "obligation-reviewer" and rs["required_capability_tier"] == tier:
                 del state["reviews"][rid]
     elif missing == "finding-resolution":
         for f in state["findings"].values():
@@ -1398,25 +1435,18 @@ def remove_predicate(state: dict, observation: dict, missing: str) -> None:
     elif missing == "blind-final-review":
         for r in list(state["reviews"]):
             d = state["dispatches"].get(state["reviews"][r]["dispatch_id"])
-            if (
-                d is not None
-                and state["route_selections"][d["route_selection_id"]]["required_role"]
-                == "blind-final"
-            ):
+            if d is not None and state["route_selections"][d["route_selection_id"]]["required_role"] == "blind-final":
                 del state["reviews"][r]
     elif missing == "closure-audit":
         for r in list(state["reviews"]):
             d = state["dispatches"].get(state["reviews"][r]["dispatch_id"])
             if (
                 d is not None
-                and state["route_selections"][d["route_selection_id"]]["required_role"]
-                == "closure-auditor"
+                and state["route_selections"][d["route_selection_id"]]["required_role"] == "closure-auditor"
             ):
                 del state["reviews"][r]
     elif missing == "remote-ci":
-        state["checks"] = {
-            k: c for k, c in state["checks"].items() if c["kind"] != "remote-ci"
-        }
+        state["checks"] = {k: c for k, c in state["checks"].items() if c["kind"] != "remote-ci"}
     elif missing == "remote-head-identity":
         observation["head_sha"] = "0" * 40
     elif missing == "presentation-recheck":
@@ -1434,8 +1464,16 @@ def remove_predicate(state: dict, observation: dict, missing: str) -> None:
 
 
 def _witness_bytes(
-    state, registry, *, kind, subject, tool_use_id=None, agent_id=None,
-    locator=None, transcript_range=None, snap=None,
+    state,
+    registry,
+    *,
+    kind,
+    subject,
+    tool_use_id=None,
+    agent_id=None,
+    locator=None,
+    transcript_range=None,
+    snap=None,
 ):
     """Build a witness record and return its canonical bytes without
     installing it; the bytes are both the registry entry and the input to the
@@ -1457,13 +1495,10 @@ def _witness_bytes(
         "snapshot_epoch": snap["epoch"],
         "snapshot_fingerprint": snap["fingerprint"],
     }
-    rec["witness_id"] = model.derived_id(
-        "witness", snap["epoch"], model.witness_record_subject(rec)
-    )
+    rec["witness_id"] = model.derived_id("witness", snap["epoch"], model.witness_record_subject(rec))
     raw = model.canonical_json(rec)
     registry[locator] = raw
     return raw
-
 
 
 # ---------------------------------------------------------------------------
@@ -1507,8 +1542,18 @@ def _route_payload(state, *, role, profile, profile_sha, tier, reasoning, qualif
     return rec
 
 
-def _finding_payload(state, *, source_kind, source_id, source_assignment_id, obligation_id=None,
-                     severity="minor", disposition="open", resolution=None, title="finding"):
+def _finding_payload(
+    state,
+    *,
+    source_kind,
+    source_id,
+    source_assignment_id,
+    obligation_id=None,
+    severity="minor",
+    disposition="open",
+    resolution=None,
+    title="finding",
+):
     """Finding payload for review/adjudication actions; the install path
     re-derives finding_id, so the returned record carries the final id."""
     snap = state["snapshot"]
@@ -1533,8 +1578,19 @@ def _finding_payload(state, *, source_kind, source_id, source_assignment_id, obl
     return rec
 
 
-def _obligation_payload(state, *, category, risk, consequences, status, scope_level="surface",
-                        assignees=(), evidence_ids=(), na_att=(), surfaces=None):
+def _obligation_payload(
+    state,
+    *,
+    category,
+    risk,
+    consequences,
+    status,
+    scope_level="surface",
+    assignees=(),
+    evidence_ids=(),
+    na_att=(),
+    surfaces=None,
+):
     snap = state["snapshot"]
     tier, reasoning = policy.obligation_floor(scope_level, risk, consequences)
     return {
@@ -1571,17 +1627,21 @@ class _Walk:
         self.state = make_empty_v2_state(tmp_path)
         self.registry: dict[str, bytes] = {}
         self.witness_policy = _TestWitnessPolicy(model.sha256_hex(b"witness-policy"))
-        self.verifier = _TestWitnessVerifier(
-            self.witness_policy, self.registry, self.state["review_id"]
-        )
+        self.verifier = _TestWitnessVerifier(self.witness_policy, self.registry, self.state["review_id"])
         self.items = (
             policy.LocalCheckItem(
-                "item-preflight", "preflight",
-                ("py", "-3", "tools/run.py", "ci", "--check"), ".", True,
+                "item-preflight",
+                "preflight",
+                ("py", "-3", "tools/run.py", "ci", "--check"),
+                ".",
+                True,
             ),
             policy.LocalCheckItem(
-                "item-targeted", "targeted",
-                ("py", "-3", "-m", "pytest", "-q"), ".", False,
+                "item-targeted",
+                "targeted",
+                ("py", "-3", "-m", "pytest", "-q"),
+                ".",
+                False,
             ),
         )
         self.local_checks = _TestLocalChecks(model.sha256_hex(b"local-checks"), self.items)
@@ -1607,10 +1667,7 @@ class _Walk:
     def run(self, action: str, data: dict, *, sole: bool = True):
         decision = policy.next_action(self.state, policies=self.policies)
         lawful = policy._lawful_actions(self.state, self.policies)
-        assert action in lawful, (
-            f"{action!r} not lawful here; lawful={sorted(lawful)} "
-            f"(next={decision.action!r})"
-        )
+        assert action in lawful, f"{action!r} not lawful here; lawful={sorted(lawful)} (next={decision.action!r})"
         if sole:
             assert decision.action == action, (
                 f"expected {action!r}, derived {decision.action!r} "
@@ -1753,19 +1810,21 @@ class _Walk:
 
     # -- dispatch plumbing ---------------------------------------------------
 
-    def _register(self, *, role, profile, tier, reasoning, assignments=(),
-                  context_evidence=(), qualified=None):
+    def _register(self, *, role, profile, tier, reasoning, assignments=(), context_evidence=(), qualified=None):
         serial = self._next_serial()
         state = self.state
         snap = state["snapshot"]
         rs = _route_payload(
-            state, role=role, profile=profile,
+            state,
+            role=role,
+            profile=profile,
             profile_sha=model.sha256_hex(f"profile:{profile}".encode()),
-            tier=tier, reasoning=reasoning, qualified=qualified, serial=serial,
+            tier=tier,
+            reasoning=reasoning,
+            qualified=qualified,
+            serial=serial,
         )
-        rsid = model.derived_id(
-            "route", snap["epoch"], model.route_selection_subject(rs)
-        )
+        rsid = model.derived_id("route", snap["epoch"], model.route_selection_subject(rs))
         pwid = _witness(
             state,
             self.registry,
@@ -1786,13 +1845,9 @@ class _Walk:
             "hazard_framing_sha256": model.sha256_hex(f"hazard:{serial}".encode()),
             "required_tool_classes": ["git-read", "github-read", "repo-read"],
         }
-        self.policies.available_profiles = tuple(
-            sorted(set(self.policies.available_profiles) | {profile})
-        )
+        self.policies.available_profiles = tuple(sorted(set(self.policies.available_profiles) | {profile}))
         before = set(state["dispatches"])
-        self.state = policy.register_dispatch(
-            state, route_selection=rs, dispatch=d, policies=self.policies
-        )
+        self.state = policy.register_dispatch(state, route_selection=rs, dispatch=d, policies=self.policies)
         did = (set(self.state["dispatches"]) - before).pop()
         return serial, did
 
@@ -1814,19 +1869,18 @@ class _Walk:
             agent_id=f"agent-{serial}",
         )
         self.state = policy.record_launch(
-            self.state, dispatch_id=did, launch_witness_bytes=launch_bytes,
+            self.state,
+            dispatch_id=did,
+            launch_witness_bytes=launch_bytes,
             policies=self.policies,
         )
 
-    def _attestation(self, did: str, *, serial: int, verdict="clean",
-                     finding_ids=(), audit="clean") -> dict:
+    def _attestation(self, did: str, *, serial: int, verdict="clean", finding_ids=(), audit="clean") -> dict:
         """Register attestation evidence + completion witness, record the
         completion on the dispatch, and return the attestation payload."""
         state = self.state
         d = state["dispatches"][did]
-        att_bytes = model.canonical_json(
-            {"dispatch_id": did, "verdict": verdict, "serial": serial}
-        )
+        att_bytes = model.canonical_json({"dispatch_id": did, "verdict": verdict, "serial": serial})
         ev = _bind(state, _put(state, json.loads(att_bytes)), "review-attestation")
         _bind(state, _put(state, {"transcript": serial}), "tool-transcript")
         ts = model.sha256_hex(f"transcript:{serial}".encode())
@@ -1864,24 +1918,46 @@ class _Walk:
             "snapshot_fingerprint": self.state["snapshot"]["fingerprint"],
         }
 
-    def review(self, action: str, *, role, profile, tier, reasoning, assignments=(),
-               context_evidence=(), qualified=None, verdict="clean", findings=(),
-               finding_ids=(), audit="clean", plural=True, exemption_outcome=None,
-               report=False) -> dict:
+    def review(
+        self,
+        action: str,
+        *,
+        role,
+        profile,
+        tier,
+        reasoning,
+        assignments=(),
+        context_evidence=(),
+        qualified=None,
+        verdict="clean",
+        findings=(),
+        finding_ids=(),
+        audit="clean",
+        plural=True,
+        exemption_outcome=None,
+        report=False,
+    ) -> dict:
         """Dispatch -> launch -> complete -> run the review action.
 
         With report=True the review reports a fresh finding sourced to its own
         attestation (verdict findings); the finding is stashed on
         self.reported_finding."""
         serial, did = self._register(
-            role=role, profile=profile, tier=tier, reasoning=reasoning,
-            assignments=assignments, context_evidence=context_evidence,
+            role=role,
+            profile=profile,
+            tier=tier,
+            reasoning=reasoning,
+            assignments=assignments,
+            context_evidence=context_evidence,
             qualified=qualified,
         )
         self._launch(did, serial=serial)
         att = self._attestation(
-            did, serial=serial, verdict="findings" if report else verdict,
-            finding_ids=finding_ids, audit=audit,
+            did,
+            serial=serial,
+            verdict="findings" if report else verdict,
+            finding_ids=finding_ids,
+            audit=audit,
         )
         findings = list(findings)
         if report:
@@ -1916,9 +1992,7 @@ class _Walk:
 
     def local_check(self, action: str, *, kind: str, item) -> dict:
         serial = self._next_serial()
-        rec = _local_check_payload(
-            self.state, self.registry, self.policies, kind=kind, item=item, serial=serial
-        )
+        rec = _local_check_payload(self.state, self.registry, self.policies, kind=kind, item=item, serial=serial)
         self.run(action, {"checks": [rec]})
         return rec
 
@@ -1927,8 +2001,9 @@ class _Walk:
     def freeze(self, *, epoch=1, head_sha="b" * 40):
         self.run("freeze-review-input", self.intake(epoch=epoch, head_sha=head_sha))
 
-    def ascent(self, *, report_finding=False, exemption_outcome="not-applicable-confirmed",
-               surface="src/foo.py", tag=""):
+    def ascent(
+        self, *, report_finding=False, exemption_outcome="not-applicable-confirmed", surface="src/foo.py", tag=""
+    ):
         """maps -> plan -> challenge -> exemption -> preflight -> tier reviews.
         When report_finding, the covering strong review reports a finding
         (verdict findings); it is stashed on self.reported_finding.
@@ -1996,8 +2071,13 @@ class _Walk:
                 risk, status, scope, cons = "low", "pending", "cross-surface", ["security"]
             plan_recs.append(
                 _obligation_payload(
-                    self.state, category=cat, risk=risk, consequences=cons,
-                    status=status, scope_level=scope, surfaces=surf_list,
+                    self.state,
+                    category=cat,
+                    risk=risk,
+                    consequences=cons,
+                    status=status,
+                    scope_level=scope,
+                    surfaces=surf_list,
                 )
             )
         self.run("plan-coverage", {"obligations": plan_recs})
@@ -2015,11 +2095,11 @@ class _Walk:
         inv_hazards = hazards or ["h-con", "h-sem"]
         categories = categories or list(model.OBLIGATION_CATEGORIES)
         serial, did = self._register(
-            role="scope-challenger", profile="challenger",
-            tier="final-strong", reasoning="final-strong",
-            context_evidence=tuple(
-                m["evidence_id"] for m in self.state["impact_maps"].values()
-            ),
+            role="scope-challenger",
+            profile="challenger",
+            tier="final-strong",
+            reasoning="final-strong",
+            context_evidence=tuple(m["evidence_id"] for m in self.state["impact_maps"].values()),
         )
         self._launch(did, serial=serial)
         chall_att = self._attestation(did, serial=serial)
@@ -2042,8 +2122,13 @@ class _Walk:
                 risk, status, scope, cons = "low", "covered", "cross-surface", ["security"]
             revised.append(
                 _obligation_payload(
-                    self.state, category=cat, risk=risk, consequences=cons,
-                    status=status, scope_level=scope, surfaces=surf_list,
+                    self.state,
+                    category=cat,
+                    risk=risk,
+                    consequences=cons,
+                    status=status,
+                    scope_level=scope,
+                    surfaces=surf_list,
                     na_att=(chall_att_id,) if status == "not-applicable" else (),
                 )
             )
@@ -2054,8 +2139,7 @@ class _Walk:
         surviving = [
             o["obligation_id"]
             for o in self.state["obligations"].values()
-            if o["category"] not in revised_categories
-            and policy._current(self.state, o, o["obligation_id"])
+            if o["category"] not in revised_categories and policy._current(self.state, o, o["obligation_id"])
         ]
         inv_entries = [
             {
@@ -2083,14 +2167,12 @@ class _Walk:
             "semantic_impact_map_id": next(
                 m["impact_map_id"]
                 for m in self.state["impact_maps"].values()
-                if m["role"] == "impact-mapper-semantic"
-                and policy._current(self.state, m, m["impact_map_id"])
+                if m["role"] == "impact-mapper-semantic" and policy._current(self.state, m, m["impact_map_id"])
             ),
             "contract_impact_map_id": next(
                 m["impact_map_id"]
                 for m in self.state["impact_maps"].values()
-                if m["role"] == "impact-mapper-contract"
-                and policy._current(self.state, m, m["impact_map_id"])
+                if m["role"] == "impact-mapper-contract" and policy._current(self.state, m, m["impact_map_id"])
             ),
             "challenger_attestation_id": chall_att_id,
             "entries": inv_entries,
@@ -2123,8 +2205,10 @@ class _Walk:
         )
         self.review(
             "run-exemption-challenge",
-            role="exemption-challenger", profile="exemption-challenger",
-            tier="final-strong", reasoning="final-strong",
+            role="exemption-challenger",
+            profile="exemption-challenger",
+            tier="final-strong",
+            reasoning="final-strong",
             assignments=[high_oid],
             exemption_outcome=outcome,
         )
@@ -2143,28 +2227,26 @@ class _Walk:
             and policy._current(self.state, o, o["obligation_id"])
         ]
         covered = [o for o in obligations if o["status"] == "covered"]
-        fast_ids = sorted(
-            o["obligation_id"] for o in covered if o["minimum_capability_tier"] == "fast"
-        )
-        focused_ids = sorted(
-            o["obligation_id"] for o in covered if o["minimum_capability_tier"] == "focused"
-        )
-        strong_ids = sorted(
-            o["obligation_id"]
-            for o in covered
-            if o["obligation_id"] not in fast_ids + focused_ids
-        )
+        fast_ids = sorted(o["obligation_id"] for o in covered if o["minimum_capability_tier"] == "fast")
+        focused_ids = sorted(o["obligation_id"] for o in covered if o["minimum_capability_tier"] == "focused")
+        strong_ids = sorted(o["obligation_id"] for o in covered if o["obligation_id"] not in fast_ids + focused_ids)
         if fast_ids:
             self.review(
                 "run-fast-review",
-                role="obligation-reviewer", profile="reviewer-fast",
-                tier="fast", reasoning="low", assignments=fast_ids,
+                role="obligation-reviewer",
+                profile="reviewer-fast",
+                tier="fast",
+                reasoning="low",
+                assignments=fast_ids,
             )
         if focused_ids:
             self.review(
                 "run-focused-review",
-                role="obligation-reviewer", profile="reviewer-focused",
-                tier="focused", reasoning="standard", assignments=focused_ids,
+                role="obligation-reviewer",
+                profile="reviewer-focused",
+                tier="focused",
+                reasoning="standard",
+                assignments=focused_ids,
             )
         if report_finding:
             # The finding's source_id must resolve to the reporting
@@ -2172,8 +2254,11 @@ class _Walk:
             # (finding_ids stays empty: listing the finding would make the
             # attestation id and finding id a cyclic derivation.)
             serial, did = self._register(
-                role="obligation-reviewer", profile="reviewer-a",
-                tier="strong", reasoning="high", assignments=strong_ids,
+                role="obligation-reviewer",
+                profile="reviewer-a",
+                tier="strong",
+                reasoning="high",
+                assignments=strong_ids,
             )
             self._launch(did, serial=serial)
             att = self._attestation(did, serial=serial, verdict="findings")
@@ -2189,25 +2274,36 @@ class _Walk:
         else:
             att = self.review(
                 "run-strong-review",
-                role="obligation-reviewer", profile="reviewer-a",
-                tier="strong", reasoning="high", assignments=strong_ids,
+                role="obligation-reviewer",
+                profile="reviewer-a",
+                tier="strong",
+                reasoning="high",
+                assignments=strong_ids,
             )
         return att
 
     def final(self, *, report=False):
         return self.review(
             "run-final-review",
-            role="blind-final", profile="blind-final-profile",
-            tier="final-strong", reasoning="final-strong",
-            qualified=("blind-final",), plural=False, report=report,
+            role="blind-final",
+            profile="blind-final-profile",
+            tier="final-strong",
+            reasoning="final-strong",
+            qualified=("blind-final",),
+            plural=False,
+            report=report,
         )
 
     def closure(self, *, report=False):
         return self.review(
             "run-closure-audit",
-            role="closure-auditor", profile="closure-auditor-profile",
-            tier="final-strong", reasoning="final-strong",
-            qualified=("closure-auditor",), plural=False, report=report,
+            role="closure-auditor",
+            profile="closure-auditor-profile",
+            tier="final-strong",
+            reasoning="final-strong",
+            qualified=("closure-auditor",),
+            plural=False,
+            report=report,
         )
 
     def ready(self):
@@ -2368,8 +2464,10 @@ def _finding_at_strong(w, *, source_id):
 
 def _run_adjudicated(w, fid, *, outcome, remediation_class=None):
     serial, did = w._register(
-        role="finding-adjudicator", profile="adjudicator",
-        tier="strong", reasoning="high",
+        role="finding-adjudicator",
+        profile="adjudicator",
+        tier="strong",
+        reasoning="high",
     )
     w._launch(did, serial=serial)
     adj_att = w._attestation(did, serial=serial)
@@ -2399,9 +2497,7 @@ def walk_false_positive_path(tmp_path):
     w.ascent(report_finding=True)
     f = w.reported_finding
     adj_att_id = _run_adjudicated(w, f["finding_id"], outcome="false-positive")
-    counter = _bind(
-        w.state, _put(w.state, {"counter-evidence": f["finding_id"]}), "finding-proof"
-    )
+    counter = _bind(w.state, _put(w.state, {"counter-evidence": f["finding_id"]}), "finding-proof")
     w.run(
         "close-false-positive",
         {
@@ -2425,9 +2521,7 @@ def walk_accept_risk_path(tmp_path):
     w.freeze()
     w.ascent(report_finding=True)
     f = w.reported_finding
-    _run_adjudicated(
-        w, f["finding_id"], outcome="confirmed", remediation_class="candidate-change"
-    )
+    _run_adjudicated(w, f["finding_id"], outcome="confirmed", remediation_class="candidate-change")
     hd = _witness_bytes(
         w.state,
         w.registry,
@@ -2436,17 +2530,11 @@ def walk_accept_risk_path(tmp_path):
         tool_use_id=f"toolu-human-{w._next_serial()}",
         transcript_range={"stream": "human", "start": 1, "end": 2},
     )
-    w.state = policy.record_witness(
-        w.state, witness_bytes=hd, kind="human-decision", policies=w.policies
-    )
+    w.state = policy.record_witness(w.state, witness_bytes=hd, kind="human-decision", policies=w.policies)
     wid = model.strict_json_loads(hd, source="witness")["witness_id"]
     w.run(
         "accept-risk",
-        {
-            "resolutions": [
-                {"finding_id": f["finding_id"], "human_decision_witness_id": wid}
-            ]
-        },
+        {"resolutions": [{"finding_id": f["finding_id"], "human_decision_witness_id": wid}]},
         sole=False,
     )
     return w.state, w.policies, w.registry, w.steps
@@ -2461,15 +2549,13 @@ def walk_review_repair_path(tmp_path):
     w.freeze()
     w.ascent(report_finding=True)
     f = w.reported_finding
-    _run_adjudicated(
-        w, f["finding_id"], outcome="confirmed", remediation_class="review-process"
-    )
+    _run_adjudicated(w, f["finding_id"], outcome="confirmed", remediation_class="review-process")
     focused_att_id = next(
         rid
         for rid, r in w.state["reviews"].items()
-        if w.state["route_selections"][
-            w.state["dispatches"][r["dispatch_id"]]["route_selection_id"]
-        ]["required_capability_tier"]
+        if w.state["route_selections"][w.state["dispatches"][r["dispatch_id"]]["route_selection_id"]][
+            "required_capability_tier"
+        ]
         == "focused"
     )
     w.run(
@@ -2493,14 +2579,20 @@ def walk_review_repair_path(tmp_path):
     )
     att = w.review(
         "run-focused-review",
-        role="obligation-reviewer", profile="reviewer-focused-2",
-        tier="focused", reasoning="standard", assignments=focused_ids,
+        role="obligation-reviewer",
+        profile="reviewer-focused-2",
+        tier="focused",
+        reasoning="standard",
+        assignments=focused_ids,
     )
     # verify-review-repair: independent verifier dispatched on the finding.
     w.review(
         "verify-review-repair",
-        role="review-repair-verifier", profile="repair-verifier",
-        tier="strong", reasoning="high", assignments=[f["finding_id"]],
+        role="review-repair-verifier",
+        profile="repair-verifier",
+        tier="strong",
+        reasoning="high",
+        assignments=[f["finding_id"]],
     )
     w.run(
         "close-review-repaired",
@@ -2525,9 +2617,7 @@ def walk_fix_path(tmp_path):
     w.freeze()
     w.ascent(report_finding=True)
     f = w.reported_finding
-    _run_adjudicated(
-        w, f["finding_id"], outcome="confirmed", remediation_class="candidate-change"
-    )
+    _run_adjudicated(w, f["finding_id"], outcome="confirmed", remediation_class="candidate-change")
     intake = w.intake(epoch=2, head_sha="f" * 40)
     pub = _bind(
         w.state,
@@ -2538,9 +2628,7 @@ def walk_fix_path(tmp_path):
     w.run(
         "enter-fixing",
         {
-            "resolutions": [
-                {"finding_id": f["finding_id"], "publication_evidence_ids": [pub]}
-            ],
+            "resolutions": [{"finding_id": f["finding_id"], "publication_evidence_ids": [pub]}],
             "replacement_snapshot": intake["snapshot"],
             "replacement_authority_manifest": intake["authority_manifest"],
             "replacement_authorities": intake["authorities"],
@@ -2551,13 +2639,14 @@ def walk_fix_path(tmp_path):
     w.local_check("run-fix-verification", kind="targeted", item=w.items[1])
     fix_att = w.review(
         "review-fix",
-        role="fix-reviewer", profile="fix-reviewer",
-        tier="focused", reasoning="standard", assignments=[f["finding_id"]],
+        role="fix-reviewer",
+        profile="fix-reviewer",
+        tier="focused",
+        reasoning="standard",
+        assignments=[f["finding_id"]],
     )
     targeted = next(
-        c["check_id"]
-        for c in w.state["checks"].values()
-        if c["kind"] == "targeted" and c["locus"] == "local"
+        c["check_id"] for c in w.state["checks"].values() if c["kind"] == "targeted" and c["locus"] == "local"
     )
     w.run(
         "close-fixed",
@@ -2597,8 +2686,11 @@ def _verify_close_repair(w, finding, *, replacement_ids=()):
     """Independent verifier attestation then close-review-repaired."""
     att = w.review(
         "verify-review-repair",
-        role="review-repair-verifier", profile="repair-verifier",
-        tier="strong", reasoning="high", assignments=[finding["finding_id"]],
+        role="review-repair-verifier",
+        profile="repair-verifier",
+        tier="strong",
+        reasoning="high",
+        assignments=[finding["finding_id"]],
     )
     w.run(
         "close-review-repaired",
@@ -2606,9 +2698,7 @@ def _verify_close_repair(w, finding, *, replacement_ids=()):
             "resolutions": [
                 {
                     "finding_id": finding["finding_id"],
-                    "replacement_record_ids": sorted(
-                        {*replacement_ids, att["attestation_id"]}
-                    ),
+                    "replacement_record_ids": sorted({*replacement_ids, att["attestation_id"]}),
                 }
             ]
         },

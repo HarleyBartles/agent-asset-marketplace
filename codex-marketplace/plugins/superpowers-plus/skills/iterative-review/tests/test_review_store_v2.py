@@ -25,9 +25,7 @@ def _policy(**overrides):
         source_id="test-ingestion",
         source_version="1",
         sha256="0" * 64,
-        per_kind_max_bytes={
-            kind: 1 << 20 for kind in model.EVIDENCE_KINDS
-        },
+        per_kind_max_bytes={kind: 1 << 20 for kind in model.EVIDENCE_KINDS},
         transaction_max_bytes=8 << 20,
         review_max_bytes=64 << 20,
         windows_allowed_trustee_sids=(),
@@ -457,14 +455,24 @@ def test_register_evidence_dedupes_content_distinct_bindings(tmp_path):
         tx.candidate["stage"] = "authority"
         ctx = _ctx(src)
         r1 = store.register_evidence(
-            tx, src, alias="a", kind="authority",
-            snapshot_epoch=1, snapshot_fingerprint=_snapshot()["fingerprint"],
-            policy=_policy(), context=ctx,
+            tx,
+            src,
+            alias="a",
+            kind="authority",
+            snapshot_epoch=1,
+            snapshot_fingerprint=_snapshot()["fingerprint"],
+            policy=_policy(),
+            context=ctx,
         )
         r2 = store.register_evidence(
-            tx, src, alias="b", kind="finding-proof",
-            snapshot_epoch=1, snapshot_fingerprint=_snapshot()["fingerprint"],
-            policy=_policy(), context=ctx,
+            tx,
+            src,
+            alias="b",
+            kind="finding-proof",
+            snapshot_epoch=1,
+            snapshot_fingerprint=_snapshot()["fingerprint"],
+            policy=_policy(),
+            context=ctx,
         )
         store.append_history(tx.candidate, event="ev", data_sha256="d" * 64)
         tx.commit()
@@ -544,9 +552,7 @@ def test_resolve_evidence_aliases_rejects_unused(tmp_path):
 
 def test_resolve_evidence_aliases_rewrites(tmp_path):
     reg = store.EvidenceRegistration("sha256:" + "a" * 64, "evidence:x", 3, "a" * 64)
-    out = store.resolve_evidence_aliases(
-        {"evidence_id": "@a", "list": ["@a"]}, {"a": reg}
-    )
+    out = store.resolve_evidence_aliases({"evidence_id": "@a", "list": ["@a"]}, {"a": reg})
     assert out["evidence_id"] == "evidence:x"
     assert out["list"] == ["evidence:x"]
 
@@ -558,9 +564,14 @@ def test_verify_evidence_files_detects_drift(tmp_path):
         tx.candidate["snapshot"] = _snapshot()
         tx.candidate["stage"] = "authority"
         reg = store.register_evidence(
-            tx, src, alias="a", kind="authority",
-            snapshot_epoch=1, snapshot_fingerprint=_snapshot()["fingerprint"],
-            policy=_policy(), context=_ctx(src),
+            tx,
+            src,
+            alias="a",
+            kind="authority",
+            snapshot_epoch=1,
+            snapshot_fingerprint=_snapshot()["fingerprint"],
+            policy=_policy(),
+            context=_ctx(src),
         )
         store.append_history(tx.candidate, event="ev", data_sha256="d" * 64)
         tx.commit()
@@ -580,6 +591,4 @@ def test_append_history_chains(tmp_path):
     h = state["history"]
     assert h[0]["sequence"] == 1 and h[1]["sequence"] == 2
     assert h[1]["previous_record_sha256"] == h[0]["record_sha256"]
-    assert h[1]["record_sha256"] == model.sha256_json(
-        model.history_record_subject(h[1])
-    )
+    assert h[1]["record_sha256"] == model.sha256_json(model.history_record_subject(h[1]))

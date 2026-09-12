@@ -174,13 +174,10 @@ class TestV1DefectsCannotProduceV2Green(unittest.TestCase):
         with tempfile.TemporaryDirectory() as td:
             scratch = Path(td)
             state = _write_v1_state(scratch, current_node="resolved-ledger")
-            (scratch / "findings.jsonl").write_text(
-                '{"finding_id": "f-1"}\n{"finding_id": "f-2"}', encoding="utf-8"
-            )
+            (scratch / "findings.jsonl").write_text('{"finding_id": "f-1"}\n{"finding_id": "f-2"}', encoding="utf-8")
             # f-1 resolved by f-2's fix and vice versa: no independent evidence.
             (scratch / "resolutions.jsonl").write_text(
-                '{"finding_id": "f-1", "resolved_by": "f-2"}\n'
-                '{"finding_id": "f-2", "resolved_by": "f-1"}',
+                '{"finding_id": "f-1", "resolved_by": "f-2"}\n{"finding_id": "f-2", "resolved_by": "f-1"}',
                 encoding="utf-8",
             )
             _assert_v1_cannot_seal(self, state, scratch)

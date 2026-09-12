@@ -64,7 +64,7 @@ For Task 1, rename `task-1-red.xml` to `task-1-tests.xml` after preserving the o
 - Consumes the live Devin harness: its hooks pipeline, subagent profile loader, permission rules, `ask_user_question`, and `gh` connectivity.
 - Produces an evidence-backed capability matrix before any `review_core` implementation exists; the matrix becomes the `reviewctl doctor` contract.
 
-- [ ] **Step 1: Exercise every required live witness surface**
+- [x] **Step 1: Exercise every required live witness surface**
 
 Using harmless disposable subjects outside the reviewed branch, prove on this Devin Desktop install that:
 
@@ -80,18 +80,18 @@ Using harmless disposable subjects outside the reviewed branch, prove on this De
 
 For each surface also record what it does **not** provide: no issuer outside the reviewed head for local records, no OS-level sandbox on Windows, no realized-model attestation, no caller-identity field in hook payloads. These are documented limitations, not failures.
 
-- [ ] **Step 2: Record the capability matrix and decision**
+- [x] **Step 2: Record the capability matrix and decision**
 
 `harness-capability-floor.md` records the harness/runtime identity, every probed surface, the verbatim evidence hash of each probe artifact, the confirmed witness classes (`witnessed-local` transcript, `externally-hosted` GitHub), the confirmed-absent guarantees, and one explicit decision:
 
 - `PASS`: every floor item above is proven and the `reviewctl doctor` contract can name them all; or
 - `INERT`: name every missing floor item. The skill's runtime detection treats this harness as unsupported: it reports the gaps and performs no review actions. This is a designed terminal output, not a fake-pass path.
 
-- [ ] **Step 3: Verify the floor is outside candidate control**
+- [x] **Step 3: Verify the floor is outside candidate control**
 
 Attempt self-qualification from a policy/profile definition in the reviewed head and require rejection. Re-read one earlier transcript segment and verify its chain digests recompute. Store the matrix and probe-artifact hashes in `$irReviewScratch/capability-floor/`; do not store secrets or provider credentials in the repository.
 
-- [ ] **Step 4: Publish the floor decision and generated projection before kernel work**
+- [x] **Step 4: Publish the floor decision and generated projection before kernel work**
 
 Run `py -3 tools/run.py marketplace --apply` and `py -3 tools/run.py mesh --apply`, then stage the canonical capability reference together with every generated installed-skill/index projection those commands changed. Run `git diff --cached --check`, then commit on `codex/iterative-review-evidence-kernel`; the tracked pre-commit hook materializes the staged snapshot, runs `ci --apply`, stages the owned generated surfaces, and runs `ci --check --diagnostics` as the single complete local gate. Do not run `py -3 tools/run.py ci --check` before this commit. Push the branch and open its single draft PR (or update/reuse it if one already exists). Proceed to Task 1 only from that published `PASS` commit and record the draft PR URL/number for Task 6. An `INERT` decision is a publishable terminal output: publish its honest capability report through the same canonical/generated workflow and do not start kernel work until the harness floor changes.
 
@@ -1548,7 +1548,7 @@ Change every Task 5 checkbox to `[x]` in the working tree. Task 6 will stage it 
 - Consumes: the public `reviewctl.py` commands and green predicate from Tasks 2-5.
 - Produces: agent-facing kernel guidance, generated installed copies, an implementation-review record, and publication evidence for the roadmap.
 
-- [ ] **Step 1: Write the invariant reference**
+- [x] **Step 1: Write the invariant reference**
 
 `trustworthy-green-invariants.md` must define:
 
@@ -1562,7 +1562,7 @@ Change every Task 5 checkbox to `[x]` in the working tree. Task 6 will stage it 
 
 Keep implementation flags in `reviewctl.py --help`; do not duplicate the full CLI reference.
 
-- [ ] **Step 2: Add an honest interim boundary to `SKILL.md`**
+- [x] **Step 2: Add an honest interim boundary to `SKILL.md`**
 
 Do not cut users over to the incomplete version-2 workflow. Add a prominent interim boundary that says:
 
@@ -1574,15 +1574,15 @@ The experimental version-2 kernel is not the user entrypoint until the trustwort
 
 Remove claims that `next_node.py` alone makes invalid moves impossible. The under-500-word control-plane rewrite belongs to Plan 7 after every witness source exists.
 
-- [ ] **Step 3: Update the graph reference**
+- [x] **Step 3: Update the graph reference**
 
 Label current node recipes `version 1 - legacy assistance`. Add the version-2 target graph and scope-to-reasoning ladder from the design spec. Mark snapshot, authority, impact maps, scope challenge, tiered reviewer attestations, role-profile final-strong final/closure, exact-SHA CI, and presentation recheck as required evidence gates. Do not delete version-1 recipes until the final cutover plan.
 
-- [ ] **Step 4: Update implementation progress before regeneration**
+- [x] **Step 4: Update implementation progress before regeneration**
 
 Mark completed Plan 1 boxes `[x]`, but leave Task 6 publication boxes open. Do not mark the roadmap item done or invent publication identifiers before they exist. Do not mark Plans 2-7 ready.
 
-- [ ] **Step 5: Check source and overlay health before regeneration**
+- [x] **Step 5: Check source and overlay health before regeneration**
 
 ```powershell
 py -3 tools/run.py installed-skills --check
@@ -1590,7 +1590,7 @@ py -3 tools/run.py installed-skills --check
 
 This resolves the `inventory`, `marketplace`, and `installed-skills` checks and proves the canonical source and generated installed overlay are not already drifted without rewriting them. Expected: PASS.
 
-- [ ] **Step 6: Regenerate marketplace and mesh surfaces**
+- [x] **Step 6: Regenerate marketplace and mesh surfaces**
 
 ```powershell
 py -3 tools/run.py marketplace --apply
@@ -1599,7 +1599,7 @@ py -3 tools/run.py mesh --apply
 
 Expected: installed skill and indexes update from canonical source without manual edits.
 
-- [ ] **Step 7: Stage the full intended tree**
+- [x] **Step 7: Stage the full intended tree**
 
 ```powershell
 git add codex-marketplace/plugins/superpowers-plus/skills/iterative-review .agents/skills/iterative-review .agents/skills/INDEX.md .agents/plans/iterative-review-trustworthy-green .agents/specs/2026-08-21-trustworthy-iterative-review-design.md .agents/specs/2026-09-12-iterative-review-calibrated-green-design.md INDEX.md INDEX.json .agents/INDEX.md .agents/plans/INDEX.md .agents/plans/INDEX.json .agents/specs/INDEX.md .agents/specs/INDEX.json .agents/plugins/INDEX.md .agents/plugins/INDEX.json .agents/plugins/marketplace.json codex-marketplace/INDEX.md codex-marketplace/INDEX.json codex-marketplace/manifest.json codex-marketplace/plugins/INDEX.md codex-marketplace/plugins/INDEX.json codex-marketplace/plugins/superpowers-plus/INDEX.md codex-marketplace/plugins/superpowers-plus/skills/INDEX.md
@@ -1608,7 +1608,7 @@ git diff --cached --check
 
 Expected: the staged tree contains every canonical, generated, and tracking change together. Do not run `py -3 tools/run.py ci --check` here; the commit in Step 8 invokes the tracked pre-commit hook, which materializes the staged snapshot, runs `ci --apply`, stages the owned generated surfaces, and runs `ci --check --diagnostics` as the single complete local gate. Never bypass the hook with `--no-verify`.
 
-- [ ] **Step 8: Commit, push, and update the one draft pull request**
+- [x] **Step 8: Commit, push, and update the one draft pull request**
 
 ```powershell
 git commit -m "feat(iterative-review): add fail-closed evidence kernel"
@@ -1628,7 +1628,7 @@ if ($irPlanPrs.Count -eq 0) {
 }
 ```
 
-- [ ] **Step 9: Record publication evidence and mark Task 6 complete**
+- [x] **Step 9: Record publication evidence and mark Task 6 complete**
 
 Keep roadmap Plan 1 at `executing`. Run the plan-readiness gate and report its rating in the current handoff without persisting it. Mark every Task 6 checkbox, including this one, `[x]`; stage the plan and roadmap; commit and push the tracking update, letting the pre-commit hook run the canonical gate on the staged snapshot. Verify publication from GitHub and keep the pull request draft.
 
