@@ -17,6 +17,7 @@ Desktop.
 from __future__ import annotations
 
 import argparse
+import functools
 import json
 import shutil
 import subprocess
@@ -25,7 +26,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from review_core import engine, model, policy, store, witness_log  # noqa: E402
+from review_core import acquisition, engine, model, policy, store, witness_log  # noqa: E402
 
 
 USAGE_ERRORS = 2
@@ -139,13 +140,22 @@ def _hook_install_dir(scratch_dir: Path) -> Path:
     return Path(scratch_dir) / "hooks"
 
 
-def _run_cmd(argv) -> tuple[int, str, str]:
+def _run_cmd(argv, cwd=None) -> tuple[int, str, str]:
     proc = subprocess.run(
         [str(a) for a in argv],
         capture_output=True,
         text=True,
+        cwd=cwd,
     )
     return proc.returncode, proc.stdout, proc.stderr
+
+
+def _run_git(argv, cwd=None) -> tuple[int, str, str]:
+    return _run_cmd(["git", *argv], cwd=cwd)
+
+
+def _run_gh(argv, cwd=None) -> tuple[int, str, str]:
+    return _run_cmd(["gh", *argv], cwd=cwd)
 
 
 def _doctor_rows(*, runtime, scratch_dir=None, repo=None, run_cmd=None):
@@ -369,6 +379,74 @@ def _cmd_dispatch(args, json_mode: bool) -> int:
     return 0 if launched.decision.allowed else 1
 
 
+def _cmd_enumerate(args, json_mode: bool) -> int:
+    gate = _runtime_gate()
+    if gate:
+        return gate
+    bad = _require_v2_state(Path(args.state))
+    if bad:
+        return bad
+    state = store.load_state(Path(args.state))
+    scratch = Path(state["scratch_dir"])
+    epoch = state["snapshot"]["epoch"] + 1 if state["snapshot"] else 1
+    repo = Path(args.repo).resolve()
+    out_dir = scratch / "acquire" / "latest"
+    summary = acquisition.enumerate_acquisition(
+        run_git=functools.partial(_run_git, cwd=repo),
+        run_gh=functools.partial(_run_gh, cwd=repo),
+        repo_root=repo,
+        pr_number=int(args.pr),
+        out_dir=out_dir,
+        scratch_dir=scratch,
+        epoch=epoch,
+    )
+    if json_mode:
+        _emit(summary, True)
+    return 0
+
+
+def _cmd_freeze(args, json_mode: bool) -> int:
+    return _acquired_alias(args, "freeze-review-input", json_mode)
+
+
+def _cmd_refresh(args, json_mode: bool) -> int:
+    return _acquired_alias(args, "refresh-review-input", json_mode)
+
+
+def _acquired_alias(args, action: str, json_mode: bool) -> int:
+    """freeze/refresh conveniences over the witnessed two-command flow.
+
+    Acquisition is always `reviewctl enumerate` then `reviewctl complete
+    --action <freeze|refresh>-review-input --acquired <dir>`; these aliases
+    refuse unless a prior enumerate exists for the exact current inputs
+    (repo root, PR number, checked-out HEAD).
+    """
+    gate = _runtime_gate()
+    if gate:
+        return gate
+    bad = _require_v2_state(Path(args.state))
+    if bad:
+        return bad
+    state = store.load_state(Path(args.state))
+    acquire_dir = Path(state["scratch_dir"]) / "acquire" / "latest"
+    try:
+        enum_rec = json.loads((acquire_dir / "enumeration.json").read_text(encoding="utf-8"))
+        inputs = enum_rec["inputs"]
+    except (OSError, ValueError, KeyError):
+        return _fail(f"stale-acquisition: no enumeration under {acquire_dir}; run `reviewctl enumerate` first")
+    repo = Path(args.repo).resolve()
+    if inputs.get("pr_number") != int(args.pr) or inputs.get("repo_root") != str(repo):
+        return _fail("stale-acquisition: enumeration was produced for different inputs; re-run `reviewctl enumerate`")
+    rc, out, _err = _run_git(["rev-parse", "HEAD"], cwd=repo)
+    if rc != 0 or out.strip() != inputs.get("head_sha"):
+        return _fail("stale-acquisition: checked-out HEAD moved since enumerate; re-run `reviewctl enumerate`")
+    args.action = action
+    args.acquired = str(acquire_dir)
+    args.data_file = None
+    args.evidence_file = []
+    return _cmd_complete(args, json_mode)
+
+
 def _cmd_complete(args, json_mode: bool) -> int:
     gate = _runtime_gate()
     if gate:
@@ -381,6 +459,30 @@ def _cmd_complete(args, json_mode: bool) -> int:
     bad = _require_v2_state(Path(args.state))
     if bad:
         return bad
+    if args.acquired is not None:
+        if args.action not in ("freeze-review-input", "refresh-review-input"):
+            return _fail(
+                f"bad-usage: --acquired only applies to freeze/refresh, not {args.action!r}",
+                USAGE_ERRORS,
+            )
+        if args.data_file:
+            return _fail(
+                "bad-usage: --acquired and --data-file are mutually exclusive",
+                USAGE_ERRORS,
+            )
+        if args.evidence_file:
+            return _fail(
+                "bad-usage: --acquired and --evidence-file are mutually exclusive",
+                USAGE_ERRORS,
+            )
+        state = store.load_state(Path(args.state))
+        sources = engine.load_witness_sources(
+            scratch_dir=Path(state["scratch_dir"]),
+            review_id=state["review_id"],
+            acquisition_dir=Path(args.acquired),
+        )
+    else:
+        sources = _sources()
     caller_data = b"{}"
     if args.data_file:
         caller_data = Path(args.data_file).read_bytes()
@@ -390,7 +492,7 @@ def _cmd_complete(args, json_mode: bool) -> int:
         action=args.action,
         caller_data_bytes=caller_data,
         caller_evidence=caller_evidence,
-        sources=_sources(),
+        sources=sources,
     )
     _emit(_decision_obj(result), json_mode)
     return 0 if result.decision.allowed else 1
@@ -515,10 +617,33 @@ def _build_parser() -> argparse.ArgumentParser:
     p.add_argument("--action", required=True)
     p.add_argument("--apply", action="store_true")
 
+    p = sub.add_parser(
+        "enumerate",
+        help="run transcript-witnessed authority/feedback acquisition into the scratch store",
+    )
+    p.add_argument("--state", required=True)
+    p.add_argument("--repo", required=True)
+    p.add_argument("--pr", required=True, type=int)
+
+    for name, action in (("freeze", "freeze-review-input"), ("refresh", "refresh-review-input")):
+        p = sub.add_parser(
+            name,
+            help=(
+                f"convenience for complete --action {action} --acquired "
+                "<scratch>/acquire/latest; refuses when no current "
+                "enumeration exists"
+            ),
+        )
+        p.add_argument("--state", required=True)
+        p.add_argument("--repo", required=True)
+        p.add_argument("--pr", required=True, type=int)
+        p.add_argument("--apply", action="store_true")
+
     p = sub.add_parser("complete", help="record completion of a lawful action")
     p.add_argument("--state", required=True)
     p.add_argument("--action", required=True)
     p.add_argument("--data-file")
+    p.add_argument("--acquired")
     p.add_argument("--evidence-file", action="append", default=[])
     p.add_argument("--apply", action="store_true")
 
@@ -548,6 +673,9 @@ _HANDLERS = {
     "status": _cmd_status,
     "next": _cmd_next,
     "dispatch": _cmd_dispatch,
+    "enumerate": _cmd_enumerate,
+    "freeze": _cmd_freeze,
+    "refresh": _cmd_refresh,
     "complete": _cmd_complete,
     "block": _cmd_block,
     "resume": _cmd_resume,
@@ -572,6 +700,8 @@ def main(argv=None) -> int:
         return handler(args, json_mode)
     except model.StateValidationError as exc:
         return _fail(f"{exc.code}: {exc}")
+    except acquisition.AcquisitionError as exc:
+        return _fail(f"{exc.blocker_class}: {exc}")
     except store.StoreError as exc:
         return _fail(str(exc))
     except OSError as exc:

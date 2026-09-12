@@ -96,18 +96,25 @@ def parse_pr_url(pr_url: str) -> tuple[str, str, int]:
 
 def _check_page(info: object, what: str) -> None:
     if not isinstance(info, dict) or info.get("hasNextPage") is not False:
-        raise FeedbackPolicyError(
-            f"{what} pageInfo missing or hasNextPage: refusing truncation")
+        raise FeedbackPolicyError(f"{what} pageInfo missing or hasNextPage: refusing truncation")
 
 
 def enumerate_feedback(*, run_gh, pr_url: str) -> list[FeedbackItem]:
     owner, repo, number = parse_pr_url(pr_url)
-    rc, out, err = run_gh([
-        "api", "graphql",
-        "-f", f"query={_GRAPHQL}",
-        "-F", f"owner={owner}", "-F", f"repo={repo}",
-        "-F", f"number={number}",
-    ])
+    rc, out, err = run_gh(
+        [
+            "api",
+            "graphql",
+            "-f",
+            f"query={_GRAPHQL}",
+            "-F",
+            f"owner={owner}",
+            "-F",
+            f"repo={repo}",
+            "-F",
+            f"number={number}",
+        ]
+    )
     if rc != 0:
         raise FeedbackPolicyError(f"gh api graphql failed: {err.strip()}")
     try:
@@ -130,26 +137,30 @@ def enumerate_feedback(*, run_gh, pr_url: str) -> list[FeedbackItem]:
         comments = node.get("comments") or {}
         _check_page(comments.get("pageInfo"), "thread.comments")
         raw = model.canonical_json({"kind": "thread", "node": node})
-        items.append(FeedbackItem(
-            canonical_id=f"github:thread:{node['id']}",
-            provider="github",
-            thread_id=node["id"],
-            resolution_state="resolved" if node.get("isResolved") else "unresolved",
-            bytes_sha256=model.sha256_hex(raw),
-            raw=raw,
-        ))
+        items.append(
+            FeedbackItem(
+                canonical_id=f"github:thread:{node['id']}",
+                provider="github",
+                thread_id=node["id"],
+                resolution_state="resolved" if node.get("isResolved") else "unresolved",
+                bytes_sha256=model.sha256_hex(raw),
+                raw=raw,
+            )
+        )
     for node in reviews["nodes"]:
         if node.get("state") != "CHANGES_REQUESTED":
             continue
         raw = model.canonical_json({"kind": "review", "node": node})
-        items.append(FeedbackItem(
-            canonical_id=f"github:review:{node['id']}",
-            provider="github",
-            thread_id=node["id"],
-            resolution_state="unresolved",
-            bytes_sha256=model.sha256_hex(raw),
-            raw=raw,
-        ))
+        items.append(
+            FeedbackItem(
+                canonical_id=f"github:review:{node['id']}",
+                provider="github",
+                thread_id=node["id"],
+                resolution_state="unresolved",
+                bytes_sha256=model.sha256_hex(raw),
+                raw=raw,
+            )
+        )
     return items
 
 
@@ -174,9 +185,7 @@ def feedback_history_sha256(items) -> str:
 
 
 def unresolved_feedback_sha256(items) -> str:
-    return model.sha256_json(
-        [r for r in _canonical_items(items)
-         if r["resolution_state"] == "unresolved"])
+    return model.sha256_json([r for r in _canonical_items(items) if r["resolution_state"] == "unresolved"])
 
 
 def _severity(item: FeedbackItem) -> str:
@@ -206,18 +215,20 @@ def _title(item: FeedbackItem) -> str:
 def feedback_findings(items, *, policy: FeedbackHistoryPolicy) -> list[dict]:
     findings = []
     for item in items:
-        findings.append({
-            "source_kind": "feedback",
-            "source_id": item.canonical_id,
-            "source_assignment_id": item.canonical_id,
-            "obligation_id": None,
-            "severity": _severity(item),
-            "title": _title(item),
-            "description": item.raw.decode("utf-8", errors="replace"),
-            "locations": [item.canonical_id],
-            "evidence_ids": [],
-            "regression_of": None,
-            "disposition": "open",
-            "resolution": None,
-        })
+        findings.append(
+            {
+                "source_kind": "feedback",
+                "source_id": item.canonical_id,
+                "source_assignment_id": item.canonical_id,
+                "obligation_id": None,
+                "severity": _severity(item),
+                "title": _title(item),
+                "description": item.raw.decode("utf-8", errors="replace"),
+                "locations": [item.canonical_id],
+                "evidence_ids": [],
+                "regression_of": None,
+                "disposition": "open",
+                "resolution": None,
+            }
+        )
     return findings

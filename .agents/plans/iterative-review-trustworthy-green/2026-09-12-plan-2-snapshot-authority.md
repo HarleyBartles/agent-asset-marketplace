@@ -640,7 +640,7 @@ class TestLoadAcquisition:
 
 **Payload-shape note:** the envelope's `data.findings` may be `[]` when the provider has no actionable history; the key must still be present (`_require_keys` is strict both ways).
 
-- [ ] **Step 1: Write the failing tests**
+- [x] **Step 1: Write the failing tests**
 
 Extend `tests/test_review_policy_v2.py`:
 
@@ -684,13 +684,13 @@ class TestEnumerateCompleteFlow:
     def test_enumerate_inert_off_devin(self, tmp_path, monkeypatch): ...
 ```
 
-- [ ] **Step 2:** Run to confirm failures.
+- [x] **Step 2:** Run to confirm failures.
 
-- [ ] **Step 3:** Implement the policy/engine/reviewctl changes. Keep every existing test green - the live branch is opt-in via new kwargs; the default `load_witness_sources()` path is untouched.
+- [x] **Step 3:** Implement the policy/engine/reviewctl changes. Keep every existing test green - the live branch is opt-in via new kwargs; the default `load_witness_sources()` path is untouched.
 
-- [ ] **Step 4:** Full focused suite green: `py -3 -m pytest tests/test_review_witness_v2.py tests/test_review_discovery_v2.py tests/test_review_acquisition_v2.py tests/test_review_doctor_v2.py tests/test_reviewctl_v2.py tests/test_review_policy_v2.py -x -q` from the canonical skill dir, then the whole `tests/` dir.
+- [x] **Step 4:** Full focused suite green: `py -3 -m pytest tests/test_review_witness_v2.py tests/test_review_discovery_v2.py tests/test_review_acquisition_v2.py tests/test_review_doctor_v2.py tests/test_reviewctl_v2.py tests/test_review_policy_v2.py -x -q` from the canonical skill dir, then the whole `tests/` dir.
 
-- [ ] **Step 5: Commit** - `feat(iterative-review): wire live snapshot acquisition into freeze and refresh`.
+- [x] **Step 5: Commit** - `feat(iterative-review): wire live snapshot acquisition into freeze and refresh`.
 
 ---
 
