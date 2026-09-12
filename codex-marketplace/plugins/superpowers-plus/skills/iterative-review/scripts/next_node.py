@@ -461,7 +461,7 @@ def main(argv: list[str] | None = None) -> int:
         print("--state or --metrics is required when not using --check", file=sys.stderr)
         return 2
 
-    if args.propose == "ready" and state_path is not None:
+    if args.propose == "ready":
         print(
             "BLOCKED: version-1 review state cannot produce a trustworthy-green seal; start a version-2 review",
             file=sys.stderr,

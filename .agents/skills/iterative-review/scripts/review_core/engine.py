@@ -428,9 +428,16 @@ def _install_witness_records(st: dict, witnesses: list, policies) -> dict:
 
 def _verify_records(st: dict, policies, witness_ids, *, dispatch_id=None) -> None:
     for wid in witness_ids:
+        if wid is None:
+            continue
         rec = st["witness_records"].get(wid)
-        if rec is not None:
-            policy.verify_witness(st, policies, rec, dispatch_id=dispatch_id)
+        if rec is None:
+            raise model.StateValidationError(
+                "dangling-ref",
+                "witness_records",
+                f"witness record {wid!r} is not installed",
+            )
+        policy.verify_witness(st, policies, rec, dispatch_id=dispatch_id)
 
 
 def _pending_dispatch(st: dict, role: str) -> dict | None:

@@ -10,7 +10,8 @@ Mutation commands (``init --apply``, ``dispatch``, ``complete``, ``block``,
 ``resume``) run only on the Devin Desktop runtime; on any other harness they
 report ``unsupported-runtime`` and exit 1 without creating or mutating
 state. ``status``, ``next``, ``validate``, and ``doctor`` are read-only and
-work anywhere.
+run on any runtime; ``doctor`` exits 1 with ``verdict: inert`` off Devin
+Desktop.
 """
 
 from __future__ import annotations
@@ -195,7 +196,7 @@ def _cmd_next(args, json_mode: bool) -> int:
     return _emit(_decision_obj(result), json_mode)
 
 
-def _cmd_dispatch(args, json_mode: int) -> int:
+def _cmd_dispatch(args, json_mode: bool) -> int:
     gate = _runtime_gate()
     if gate:
         return gate
@@ -325,13 +326,17 @@ def _build_parser() -> argparse.ArgumentParser:
         prog="reviewctl",
         description=(
             "version-2 review control plane (experimental until cutover). "
-            "The only mutation authority for schema_version-2 review state."
+            "The only mutation authority for schema_version-2 review state. "
+            "(mixed)"
         ),
     )
     parser.add_argument(
         "--check",
         action="store_true",
-        help="self-check: parse arguments and exit 0 without touching files",
+        help=(
+            "self-check: parse arguments and exit 0 without touching files; "
+            "subcommand arguments are still validated first"
+        ),
     )
     parser.add_argument("--json", action="store_true", help="emit one JSON object per command")
     sub = parser.add_subparsers(dest="command")

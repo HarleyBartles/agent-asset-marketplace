@@ -49,9 +49,11 @@ contribute only to `reviewed-with-exceptions`, never to green.
 ## Version-1 versus version-2 authority
 
 `reviewctl.py` is the only mutation authority for `schema_version: 2` state.
-The legacy toolchain (`next_node.py`, `compile_metrics.py`,
-`resolved_ledger.py`, and friends) refuses version-2 state outright and cannot
-create a version-2 green seal. A version-1 `ready` verdict is review
+The legacy tools that read review state directly (`next_node.py`,
+`compile_metrics.py`) refuse version-2 state outright; the remaining legacy
+helpers (`resolved_ledger.py` and friends) operate on compiled metrics and
+logs, never on review state, so no legacy path can create a version-2 green
+seal. A version-1 `ready` verdict is review
 assistance, not proof of reviewed green: version-1 state has no snapshot
 binding, no witness records, and no epoch-scoped evidence, so nothing in it
 can satisfy predicate evaluation.

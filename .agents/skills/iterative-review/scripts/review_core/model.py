@@ -1564,12 +1564,6 @@ def validate_state(state: dict, *, verify_content: bool = True) -> None:
     _mapping(state, "blockers", BLOCKER_FIELDS, None)
 
     # Per-entry strict shapes ------------------------------------------------
-    for key, entry_fields in (
-        ("impact_maps", IMPACT_ENTRY_FIELDS),
-        ("coverage_inventory", None),
-    ):
-        pass
-
     for map_id, record in state["impact_maps"].items():
         if not record["entries"]:
             _fail("empty", f"impact_maps.{map_id}.entries", "entries must be non-empty")
@@ -1637,7 +1631,6 @@ def validate_state(state: dict, *, verify_content: bool = True) -> None:
     ready = state["ready_transition"]
     if ready is not None:
         _check_fields(ready, READY_TRANSITION_FIELDS, "ready_transition")
-        subject = ready_intent_subject(ready)
         expected_id = f"ready:{ready['snapshot_epoch']}:{ready['idempotency_key']}"
         if ready["ready_transition_id"] != expected_id:
             _fail(
@@ -1645,8 +1638,6 @@ def validate_state(state: dict, *, verify_content: bool = True) -> None:
                 "ready_transition.ready_transition_id",
                 f"expected {expected_id!r}",
             )
-        if sha256_json(subject) is None:
-            pass
 
     ci = state["ci_candidate"]
     if ci is not None:

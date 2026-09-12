@@ -1569,7 +1569,7 @@ class TestVersionBoundary:
         assert "version-1 review state cannot produce a trustworthy-green" in r.stderr
         assert v1.read_bytes() == before
 
-    def test_compile_metrics_cannot_mutate_v2_state(self, tmp_path):
+    def test_compile_metrics_refuses_v2_state(self, tmp_path):
         state = _init_state(tmp_path)
         before = state.read_bytes()
         metrics = tmp_path / "review-metrics.json"
@@ -1580,8 +1580,9 @@ class TestVersionBoundary:
             "--metrics",
             str(metrics),
         )
-        assert r.returncode == 0, r.stderr
-        assert metrics.is_file()
+        assert r.returncode == 1
+        assert "version-2 state is controlled only by reviewctl.py" in r.stderr
+        assert not metrics.exists()
         assert state.read_bytes() == before
         assert '"green_seal":null' in state.read_text(encoding="utf-8")
 
@@ -1605,7 +1606,7 @@ class TestVersionBoundary:
     def test_next_node_does_not_write_to_v2_state_dir(self, tmp_path):
         state = _init_state(tmp_path)
         metrics = tmp_path / "review-metrics.json"
-        _run(COMPILE_METRICS, "--state", str(state), "--metrics", str(metrics))
+        metrics.write_text('{"rounds_per_finding": [], "regressions": [], "pr": {}}', encoding="utf-8")
         before = state.read_bytes()
         _run(NEXT_NODE, "--metrics", str(metrics))
         # metrics-mode discovery is read-only; the state file is untouched.
