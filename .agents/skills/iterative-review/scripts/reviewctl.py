@@ -269,7 +269,11 @@ def _cmd_hooks(args, json_mode: bool) -> int:
         }
         (hook_dir / "hook-env.json").write_text(json.dumps(env, indent=2), encoding="utf-8")
         template = (assets / "hooks.v1.json").read_text(encoding="utf-8")
-        rendered = template.replace("{{IR_HOOK_DIR}}", str(hook_dir).replace("\\", "/"))
+        # The placeholder sits inside a JSON string literal, so substitute the
+        # JSON-escaped content (without the surrounding quotes) to keep the
+        # rendered file valid when the path contains a quote or backslash.
+        escaped_dir = json.dumps(str(hook_dir).replace("\\", "/"))[1:-1]
+        rendered = template.replace("{{IR_HOOK_DIR}}", escaped_dir)
         (hook_dir / "hooks.v1.json").write_text(rendered, encoding="utf-8")
         obj = {
             "installed": str(hook_dir),

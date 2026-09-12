@@ -180,6 +180,34 @@ def _canonical_items(items) -> list[dict]:
     )
 
 
+def item_from_raw(raw: bytes) -> FeedbackItem:
+    try:
+        doc = json.loads(raw)
+        kind = doc["kind"]
+        node = doc["node"]
+    except Exception as exc:
+        raise FeedbackPolicyError(f"feedback evidence not a canonical item: {exc}") from exc
+    if kind == "thread":
+        return FeedbackItem(
+            canonical_id=f"github:thread:{node['id']}",
+            provider="github",
+            thread_id=node["id"],
+            resolution_state="resolved" if node.get("isResolved") else "unresolved",
+            bytes_sha256=model.sha256_hex(raw),
+            raw=raw,
+        )
+    if kind == "review":
+        return FeedbackItem(
+            canonical_id=f"github:review:{node['id']}",
+            provider="github",
+            thread_id=node["id"],
+            resolution_state="unresolved",
+            bytes_sha256=model.sha256_hex(raw),
+            raw=raw,
+        )
+    raise FeedbackPolicyError(f"feedback evidence has unknown kind {kind!r}")
+
+
 def feedback_history_sha256(items) -> str:
     return model.sha256_json(_canonical_items(items))
 

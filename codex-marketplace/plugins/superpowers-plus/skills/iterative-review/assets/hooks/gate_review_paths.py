@@ -2,16 +2,21 @@
 """PreToolUse policy gate for the iterative-review hooks pack.
 
 Denies file and exec tool calls that touch a configured deny root (the
-review's state, witness, evidence, and acquire directories). Emits a
+review's witness, transcript, and evidence-store directories). Emits a
 ``{"decision": "block", "reason": ...}`` object on stdout and exits 2 when a
 call crosses a deny root or when the payload cannot be assessed; silent
 exit 0 otherwise. Unlike the recorders, this gate fails closed: an
 unparseable payload is a deny, because the sealed roots stay protected even
 when input is malformed.
 
+The acquire directory and the state file are intentionally not deny roots:
+``reviewctl enumerate``/``complete --acquired`` must write and read them, and
+every CLI invocation names the state path. Their integrity is enforced by the
+witnessed subject digests and evidence-manifest checks instead.
+
 Best-effort defense-in-depth only: path keys are resolved against the call's
-cwd, but env-var expansion and shell indirection inside ``command`` text are
-matched literally only - the state kernel remains the enforcer.
+cwd with environment variables expanded; shell indirection inside ``command``
+text is matched literally only - the state kernel remains the enforcer.
 """
 
 import json
@@ -72,7 +77,7 @@ def _extract_paths(tool_input: dict) -> list[str]:
 
 def _resolve(candidate: str, base: Path) -> str:
     try:
-        path = Path(candidate)
+        path = Path(os.path.expandvars(candidate))
         if not path.is_absolute():
             path = base / path
         return _norm(str(path.resolve()))
@@ -83,7 +88,9 @@ def _resolve(candidate: str, base: Path) -> str:
 def _touches_deny(text: str, deny_roots: list[str]) -> str | None:
     normed = _norm(text)
     for root in deny_roots:
-        if normed == root or normed.startswith(root + "/") or root in normed:
+        if normed == root or normed.startswith(root + "/"):
+            return root
+        if root + "/" in normed or normed.endswith(root):
             return root
     return None
 

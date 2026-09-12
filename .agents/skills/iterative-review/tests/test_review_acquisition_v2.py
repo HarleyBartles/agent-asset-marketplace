@@ -409,3 +409,83 @@ class TestLoadAcquisition:
         # finding still ships open; lifecycle owns closure
         f = [x for x in d2["findings"] if x["source_kind"] == "feedback"]
         assert f and f[0]["disposition"] == "open"
+
+
+class TestAcquireBindings:
+    def test_find_segment_ignores_non_enumerate_exec(self, tmp_path):
+        summary, out_dir, scratch = _enumerate(tmp_path)
+        lines = [
+            {
+                "hook_event_name": "PostToolUse",
+                "tool_name": "exec",
+                "tool_input": {"command": f"cat {out_dir}/enumeration.json"},
+                "tool_use_id": "exec_9",
+                "session_id": "s1",
+                "prompt_id": "p1",
+                "tool_response": {
+                    "success": True,
+                    "output": f"enumeration-id: {summary['enumeration_id']}" + chr(10),
+                    "error": None,
+                },
+            }
+        ]
+        t = Path(scratch) / "transcripts" / "s1.jsonl"
+        t.write_text("".join(json.dumps(x) + chr(10) for x in lines), encoding="utf-8")
+        src = _source(out_dir, scratch)
+        with pytest.raises(acq.AcquisitionError, match="missing-source"):
+            src.acquire(action="freeze-review-input", current_snapshot=None)
+
+    def test_gh_edges_traversed_from_pr_body(self, tmp_path):
+        body = "see <!-- authority:edge governs repo:extra.md --> for detail"
+        gh = FakeGh(pr=_pr_meta(body=body))
+        git = FakeGit({"AGENTS.md": "# law", "extra.md": "# extra"})
+        summary, out_dir, _s = _enumerate(tmp_path, git=git, gh=gh)
+        data = json.loads((out_dir / "data.json").read_text())
+        locators = {e["locator"] for e in data["manifest_payload"]["authorities"]}
+        assert "repo:extra.md" in locators
+        assert summary["authority_count"] >= 3
+
+    def test_enumerate_clears_stale_evidence(self, tmp_path):
+        _s1, out_dir, scratch = _enumerate(tmp_path)
+        stale = out_dir / "evidence" / "stale.bin"
+        stale.write_bytes(b"leftover")
+        (out_dir / "stale.txt").write_text("x")
+        _s2, out_dir2, _ = _enumerate(tmp_path)
+        assert out_dir2 == out_dir
+        assert not stale.exists()
+        assert not (out_dir / "stale.txt").exists()
+
+    def test_acquire_rebinds_findings_from_evidence(self, tmp_path):
+        threads = [
+            {
+                "id": "T1",
+                "isResolved": False,
+                "isOutdated": False,
+                "path": "a.py",
+                "line": 1,
+                "comments": {"pageInfo": {"hasNextPage": False}, "nodes": []},
+            }
+        ]
+        summary, out_dir, scratch = _enumerate(tmp_path, gh=FakeGh(threads=threads))
+        _transcript_with_marker(scratch, summary["enumeration_id"], out_dir=out_dir)
+        data_path = out_dir / "data.json"
+        data = json.loads(data_path.read_text())
+        data["findings"] = [
+            {
+                "source_kind": "feedback",
+                "source_id": "github:thread:fabricated",
+                "disposition": "open",
+            }
+        ]
+        data_path.write_text(json.dumps(data))
+        env = _source(out_dir, scratch).acquire(action="freeze-review-input", current_snapshot=None)
+        envelope = json.loads(env.raw_data)
+        source_ids = {f["source_id"] for f in envelope["data"]["findings"]}
+        assert "github:thread:fabricated" not in source_ids
+        assert "github:thread:T1" in source_ids
+
+    def test_surrogate_bytes_in_git_show_do_not_crash(self, tmp_path):
+        git = FakeGit({"AGENTS.md": "# law caf\udcff"})
+        summary, out_dir, _s = _enumerate(tmp_path, git=git)
+        assert (out_dir / "data.json").exists()
+        assert summary["enumeration_id"]

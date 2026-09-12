@@ -72,6 +72,10 @@ class WitnessLog:
             os.chmod(self._path, posix_file_mode)
         # Open never mutates: a corrupt log stays inspectable so verify_chain
         # can report the tamper; append() refuses on a broken chain.
+        # _tail caches the verified (seq, head) so multi-append ingest is O(1)
+        # per record instead of re-verifying the whole chain each time. The
+        # cache is per-instance; a WitnessLog constructed later re-verifies.
+        self._tail: tuple[int, str] | None = None
 
     def _read_entries(self) -> list[dict]:
         entries: list[dict] = []
@@ -95,18 +99,19 @@ class WitnessLog:
         return entries[-1]["entry_sha256"] if entries else ZERO_SHA
 
     def append(self, *, session_id: str, tool_use_id: str | None, record_kind: str, payload: dict) -> int:
-        ok, err = self.verify_chain()
-        if not ok:
-            raise WitnessLogError("chain-invalid", f"{self._path}: {err}")
+        if self._tail is None:
+            ok, err = self.verify_chain()
+            if not ok:
+                raise WitnessLogError("chain-invalid", f"{self._path}: {err}")
+            entries = self._read_entries()
+            self._tail = (len(entries), entries[-1]["entry_sha256"] if entries else ZERO_SHA)
         if not isinstance(payload, dict):
             raise model.StateValidationError("bad-type", "payload", "witness-log payload must be an object")
         if not session_id or not isinstance(session_id, str):
             raise model.StateValidationError("missing-field", "session_id", "witness-log entry requires session_id")
         if record_kind not in RECORD_KINDS:
             raise model.StateValidationError("bad-value", "record_kind", f"record_kind must be one of {RECORD_KINDS}")
-        entries = self._read_entries()
-        seq = len(entries)
-        prev = entries[-1]["entry_sha256"] if entries else ZERO_SHA
+        seq, prev = self._tail
         entry = {
             "schema_version": WITNESS_LOG_SCHEMA_VERSION,
             "seq": seq,
@@ -125,6 +130,7 @@ class WitnessLog:
             import os
 
             os.fsync(fh.fileno())
+        self._tail = (seq + 1, entry["entry_sha256"])
         return seq
 
     def verify_chain(self) -> tuple[bool, str | None]:

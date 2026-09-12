@@ -2869,8 +2869,8 @@ class FakeGh:
 
 def acq_scratch(tmp_path):
     s = Path(tmp_path) / "scratch"
-    (s / "transcripts").mkdir(parents=True)
-    (s / "witness").mkdir(parents=True)
+    (s / "transcripts").mkdir(parents=True, exist_ok=True)
+    (s / "witness").mkdir(parents=True, exist_ok=True)
     return s
 
 
@@ -2891,7 +2891,9 @@ def acq_transcript_with_marker(scratch, enumeration_id, *, session="s1", tool_us
         {
             "hook_event_name": "PreToolUse",
             "tool_name": "exec",
-            "tool_input": {"command": f"reviewctl enumerate --out {out_dir or 'X'}"},
+            "tool_input": {
+                "command": f"py -3 reviewctl.py enumerate --state {out_dir or 'X'}/state.json --repo . --pr 7"
+            },
             "tool_use_id": tool_use,
             "session_id": session,
             "prompt_id": "p1",
@@ -2901,7 +2903,9 @@ def acq_transcript_with_marker(scratch, enumeration_id, *, session="s1", tool_us
         {
             "hook_event_name": "PostToolUse",
             "tool_name": "exec",
-            "tool_input": {"command": f"reviewctl enumerate --out {out_dir or 'X'}"},
+            "tool_input": {
+                "command": f"py -3 reviewctl.py enumerate --state {out_dir or 'X'}/state.json --repo . --pr 7"
+            },
             "tool_use_id": tool_use,
             "session_id": session,
             "prompt_id": "p1",

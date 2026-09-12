@@ -106,8 +106,8 @@ def ingest_transcript_segment(
     `transcript_range` is::
 
         {"session_id": session_id,
-         "transcript_sha256": sha256 of the verbatim selected record bytes
-                              concatenated in transcript order,
+         "transcript_sha256": sha256 of the selected records' canonical-JSON
+                              serializations concatenated in transcript order,
          "first_record": int, "last_record": int}
 
     Fails closed (raises `WitnessVerificationError("missing-source", ...)`)
@@ -162,7 +162,7 @@ class TranscriptWitnessVerifier:
         # 4. Every failure raises WitnessVerificationError with a specific code.
 ```
 
-- [ ] **Step 1: Write the failing tests**
+- [x] **Step 1: Write the failing tests**
 
 Create `tests/test_review_witness_v2.py` with this coverage (write concrete JSONL fixtures inline via `tmp_path`):
 
@@ -207,19 +207,19 @@ class TestTranscriptWitnessVerifier:
     def test_verify_remote_kind_admitted_without_log(self, tmp_path): ...
 ```
 
-- [ ] **Step 2: Run to confirm failure**
+- [x] **Step 2: Run to confirm failure**
 
 `py -3 -m pytest tests/test_review_witness_v2.py -x -q` from the canonical skill dir. Expected: collection error / `ModuleNotFoundError: review_core.witness_log`.
 
-- [ ] **Step 3: Implement `witness_log.py`**
+- [x] **Step 3: Implement `witness_log.py`**
 
-Pure stdlib. No imports from `engine` (it must stay importable by `policy` consumers). Key correctness rules: `entry_sha256` covers every field except itself; `prev_sha256` of seq 0 is 64 zeros; `verify_chain` tolerates a trailing partial line only when `strict=False` is not a thing - keep it strict, a torn final line is tamper evidence; `ingest_transcript_segment` hashes the selected transcript records' verbatim line bytes.
+Pure stdlib. No imports from `engine` (it must stay importable by `policy` consumers). Key correctness rules: `entry_sha256` covers every field except itself; `prev_sha256` of seq 0 is 64 zeros; `verify_chain` tolerates a trailing partial line only when `strict=False` is not a thing - keep it strict, a torn final line is tamper evidence; `ingest_transcript_segment` hashes the selected transcript records' canonical-JSON bytes.
 
-- [ ] **Step 4: Run tests to green**
+- [x] **Step 4: Run tests to green**
 
 `py -3 -m pytest tests/test_review_witness_v2.py -x -q` - all pass.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 `git add` the new module + test; commit message `feat(iterative-review): add chained witness log and transcript verifier`. Let the pre-commit hook run the canonical gate.
 
@@ -239,13 +239,13 @@ Pure stdlib. No imports from `engine` (it must stay importable by `policy` consu
 **Interfaces:**
 - Consumes: Devin hook contract documented in `references/harness-capability-floor.md` (Pre/PostToolUse record fields: `session_id`, `prompt_id`, `tool_name`, `tool_input`, `tool_use_id`, post `tool_response`); Task 1's `WitnessLog` for the `witness-log-roundtrip` doctor row. Hooks write raw session-keyed JSONL transcripts; witness-log ingestion happens later inside `acquire`.
 - Produces:
-  - `record_pretool.py` / `record_posttool.py`: read one hook JSON object from stdin, append it verbatim as one JSONL line to `<IR_TRANSCRIPT_ROOT>/<session_id>.jsonl` where `IR_TRANSCRIPT_ROOT` comes from env (template renders it) with fallback `<script_parent>/../../../transcripts`. Never exits nonzero on malformed input (hooks must not break the session); writes a `hook-error` line instead.
-  - `gate_review_paths.py`: PreToolUse policy gate; exits 2 (deny) when a `write`/`edit`/`exec` tool_input path resolves under any root listed in `IR_GATE_DENY_ROOTS` (colon-separated, rendered by install); otherwise exits 0. Covers literal paths inside `exec` command text by substring-scanning the rendered command for each deny root's canonical path.
-  - `hooks.v1.json` template: binds the three scripts; `{{IR_TRANSCRIPT_ROOT}}` / `{{IR_GATE_DENY_ROOTS}}` placeholders rendered by `reviewctl hooks install`.
+  - `record_pretool.py` / `record_posttool.py`: read one hook JSON object from stdin (binary, UTF-8/surrogateescape), append it as one compact JSON line to `<transcript_root>/<session_id>.jsonl` where `transcript_root` comes from the `hook-env.json` sidecar (located via `IR_HOOK_ENV` or `<script_parent>/hook-env.json`) with fallback `<script_parent>/transcripts`. POSIX mode 0700 dir / 0600 file; pre-existing group/other access is refused as `acl-untrusted`. Never exits nonzero on malformed input (hooks must not break the session); writes a `hook-error` line instead.
+  - `gate_review_paths.py`: PreToolUse policy gate; exits 2 (deny) when a `write`/`edit`/`exec` tool_input path resolves (cwd-relative, env-var-expanded) under any root in the sidecar's `deny_roots` list, and fails closed (exit 2) on unparseable or missing payloads; otherwise exits 0. Command text is matched boundary-aware so `witness-backup` siblings are not denied.
+  - `hooks.v1.json` template: binds the three scripts; a single `{{IR_HOOK_DIR}}` placeholder is rendered by `reviewctl hooks install` with JSON-escaped path content, and `hook-env.json` carries `transcript_root` + `deny_roots` beside it.
   - `reviewctl hooks install --scratch-dir <dir> [--user]`: renders the template to `<scratch-dir>/hooks/hooks.v1.json` plus copies scripts to `<scratch-dir>/hooks/` (self-contained, review-scoped); prints the absolute path the user installs into `.devin/hooks.v1.json`. `hooks status --scratch-dir <dir>` reports installed/not-installed + transcript dir writability.
   - `doctor` gains rows: `runtime`, `hooks-installed`, `transcript-dir-writable`, `witness-log-roundtrip` (create+append+verify under scratch), `git-present`, `repo-non-shallow`, `gh-authenticated`. Each row `{name, status: pass|fail|skip, detail, remediation}`; any `fail` -> exit 1 with top-level `capability-floor-failed` listing failed rows.
 
-- [ ] **Step 1: Write the failing tests**
+- [x] **Step 1: Write the failing tests**
 
 `tests/test_review_doctor_v2.py`:
 
@@ -276,15 +276,15 @@ class TestDoctorRows:
         # non-Devin runtime -> verdict inert, no row checks run
 ```
 
-- [ ] **Step 2: Confirm failure** - `py -3 -m pytest tests/test_review_doctor_v2.py -x -q`.
+- [x] **Step 2: Confirm failure** - `py -3 -m pytest tests/test_review_doctor_v2.py -x -q`.
 
-- [ ] **Step 3: Implement** hook scripts + template + `hooks` subcommand + doctor rows. Doctor probes take injectable runners (`git_runner`, `gh_runner` params on the doctor function) so tests avoid real subprocess.
+- [x] **Step 3: Implement** hook scripts + template + `hooks` subcommand + doctor rows. Doctor probes take injectable runners (`git_runner`, `gh_runner` params on the doctor function) so tests avoid real subprocess.
 
-- [ ] **Step 4: Green** - same pytest command.
+- [x] **Step 4: Green** - same pytest command.
 
-- [ ] **Step 5: Update `harness-capability-floor.md`** - replace the deferred-recheck note with the live row table; keep the honest limitations list unchanged.
+- [x] **Step 5: Update `harness-capability-floor.md`** - replace the deferred-recheck note with the live row table; keep the honest limitations list unchanged.
 
-- [ ] **Step 6: Commit** - `feat(iterative-review): ship hooks pack and live doctor rechecks`.
+- [x] **Step 6: Commit** - `feat(iterative-review): ship hooks pack and live doctor rechecks`.
 
 ---
 
@@ -381,7 +381,7 @@ Policy document (`authority-discovery-policy.v1.json`) content - ship exactly th
 }
 ```
 
-- [ ] **Step 1: Write the failing tests** in `tests/test_review_discovery_v2.py` - build fixture trees under `tmp_path` with a fake `run_git` dispatching canned `git show`/`ls-tree` output:
+- [x] **Step 1: Write the failing tests** in `tests/test_review_discovery_v2.py` - build fixture trees under `tmp_path` with a fake `run_git` dispatching canned `git show`/`ls-tree` output:
 
 ```python
 class TestPolicyResolution:
@@ -410,9 +410,9 @@ class TestEnumeration:
         # assert the seed set shrinks exactly - proves traversal completeness
 ```
 
-- [ ] **Step 2-4:** Run-fail, implement `discovery_policy.py` + policy JSON, run-green.
+- [x] **Step 2-4:** Run-fail, implement `discovery_policy.py` + policy JSON, run-green.
 
-- [ ] **Step 5: Commit** - `feat(iterative-review): seal authority-discovery policy with base-revision resolution`.
+- [x] **Step 5: Commit** - `feat(iterative-review): seal authority-discovery policy with base-revision resolution`.
 
 ---
 
@@ -471,6 +471,7 @@ class AcquisitionError(Exception):
 
 def enumerate_acquisition(
     *, run_git, run_gh, repo_root: Path, pr_number: int, out_dir: Path,
+    scratch_dir: Path, epoch: int = 1,
 ) -> dict:
     """Runs the witnessed enumeration; writes out_dir and returns a summary.
 
@@ -622,7 +623,7 @@ class TestLoadAcquisition:
 **Interfaces:**
 - Consumes: Tasks 1-4 modules; existing `_install_findings`, `_install_snapshot`, `_h_freeze`, `_h_refresh`, `complete_action`, `WitnessSources`.
 - Produces:
-  - `ACTION_PAYLOAD_KEYS`: freeze gains `"findings"`, refresh gains `"findings"`.
+  - `ACTION_PAYLOAD_KEYS`: freeze gains `"findings"` and `"witnesses"`; refresh gains `"findings"` and `"witnesses"` (envelope witnesses ride inside `data` for authority-discovery actions so they install within `complete_action`'s single validated transition).
   - `_h_freeze`/`_h_refresh`: after `_install_snapshot`, call a new `_install_feedback_findings(out, data["findings"])` helper (do NOT reuse `_install_findings` - it overwrites unconditionally, which would let refresh clobber a closed finding's disposition). The helper:
     1. validates every finding: `source_kind == "feedback"`, `source_id == source_assignment_id` matching `^[a-z-]+:[a-z-]+:.+$`, `locations` non-empty set containing `source_id`, `disposition == "open"`, `resolution is None` - violation -> `_fail("bad-finding", "findings", ...)`;
     2. derives `finding_id` exactly as `_install_findings` does (`finding_identity_subject`), binds `discovered_snapshot_epoch`/`discovered_snapshot_fingerprint` to the installed snapshot;

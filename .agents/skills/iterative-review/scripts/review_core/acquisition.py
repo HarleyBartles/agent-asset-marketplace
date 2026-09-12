@@ -18,6 +18,8 @@ from __future__ import annotations
 
 import base64
 import json
+import shutil
+import types
 import urllib.parse
 from pathlib import Path
 
@@ -91,14 +93,14 @@ def _load_seed_bytes(seed, *, run_git, run_gh, base_sha: str, repo_id: str, pr_m
         rc, out, err = run_git(["show", f"{base_sha}:{loc[5:]}"])
         if rc != 0:
             raise AcquisitionError("authority-missing", f"{loc}: {err.strip() or 'unreadable'}")
-        return out.encode("utf-8")
+        return out.encode("utf-8", errors="surrogateescape")
     if loc.startswith("gh:pr/") and loc.endswith("#body"):
         if loc != f"gh:pr/{pr_meta.get('number')}#body":
             raise AcquisitionError(
                 "authority-missing",
                 f"{loc}: locator does not match the enumerated PR",
             )
-        return (pr_meta.get("body") or "").encode("utf-8")
+        return (pr_meta.get("body") or "").encode("utf-8", errors="surrogateescape")
     if loc.startswith("gh:issue/"):
         n = loc.rsplit("/", 1)[-1]
         rc, out, err = run_gh(["api", f"repos/{repo_id}/issues/{n}"])
@@ -185,7 +187,7 @@ def enumerate_acquisition(
     rc, out, err = run_git(["diff", merge_base, head_sha])
     if rc != 0:
         raise AcquisitionError("snapshot-drift", f"diff failed: {err.strip()}")
-    diff_sha256 = model.sha256_hex(out.encode("utf-8"))
+    diff_sha256 = model.sha256_hex(out.encode("utf-8", errors="surrogateescape"))
     pr_metadata_sha256 = model.sha256_json(_pr_metadata_projection(pr_meta))
 
     witness_pol = witness_log.TranscriptWitnessPolicy(
@@ -194,6 +196,25 @@ def enumerate_acquisition(
     )
 
     # 6. authority discovery at base_sha
+    gh_text_cache: dict[str, str | None] = {}
+
+    def _gh_text(locator: str):
+        if locator in gh_text_cache:
+            return gh_text_cache[locator]
+        try:
+            raw = _load_seed_bytes(
+                types.SimpleNamespace(locator=locator),
+                run_git=run_git,
+                run_gh=run_gh,
+                base_sha=base_sha,
+                repo_id=repo_id,
+                pr_meta=pr_meta,
+            )
+            gh_text_cache[locator] = raw.decode("utf-8", errors="surrogateescape")
+        except (AcquisitionError, ValueError, KeyError):
+            gh_text_cache[locator] = None
+        return gh_text_cache[locator]
+
     try:
         disc = discovery_policy.resolve_policy(run_git=run_git, base_sha=base_sha)
         seeds, disc_failures = discovery_policy.enumerate_authorities(
@@ -205,7 +226,7 @@ def enumerate_acquisition(
                 "body": pr_meta.get("body") or "",
                 "linked_issues": _pr_metadata_projection(pr_meta)["linked_issues"],
             },
-            load_text=lambda loc: None,
+            load_text=_gh_text,
         )
     except discovery_policy.DiscoveryPolicyError as exc:
         raise AcquisitionError("authority-missing", str(exc)) from exc
@@ -213,6 +234,8 @@ def enumerate_acquisition(
         raise AcquisitionError("authority-missing", json.dumps(disc_failures, sort_keys=True))
 
     # 7. materialize every seed's bytes
+    if out_dir.exists():
+        shutil.rmtree(out_dir)
     fb_policy = feedback_policy.default_policy()
     builtins = engine.load_witness_sources()
     ev_dir = out_dir / "evidence"
@@ -495,7 +518,7 @@ class LiveAuthorityDiscovery:
                     continue
                 tool_input = rec.get("tool_input") or {}
                 haystack = " ".join(str(v) for v in _walk_strings(tool_input))
-                if str(self._dir) not in haystack:
+                if "enumerate" not in haystack:
                     continue
                 candidates.append((path.stat().st_mtime, idx, path, rec))
         if not candidates:
@@ -526,6 +549,26 @@ class LiveAuthorityDiscovery:
         else:
             raise AcquisitionError("unsupported-action", action)
         snapshot["fingerprint"] = model.snapshot_fingerprint(snapshot)
+
+        # Re-derive feedback findings from digest-verified evidence rather than
+        # trusting data.json: the snapshot's feedback shas are bound by the
+        # witnessed subject, so divergence here means the acquisition dir was
+        # tampered with after enumerate.
+        fb_policy = feedback_policy.default_policy()
+        if fb_policy.document_sha256 != snapshot.get("feedback_history_policy_sha256"):
+            raise AcquisitionError("tampered-source", "feedback policy drifted from witnessed snapshot")
+        fb_items = []
+        for src in sources:
+            if src.alias.startswith("feedback-"):
+                try:
+                    fb_items.append(feedback_policy.item_from_raw(src.path.read_bytes()))
+                except feedback_policy.FeedbackPolicyError as exc:
+                    raise AcquisitionError("tampered-source", str(exc)) from exc
+        if feedback_policy.feedback_history_sha256(fb_items) != snapshot.get(
+            "feedback_history_sha256"
+        ) or feedback_policy.unresolved_feedback_sha256(fb_items) != snapshot.get("unresolved_feedback_sha256"):
+            raise AcquisitionError("tampered-source", "feedback evidence diverges from witnessed snapshot")
+        findings = feedback_policy.feedback_findings(fb_items, policy=fb_policy)
 
         manifest_payload = data["manifest_payload"]
         subject = model.authority_discovery_subject(snapshot, manifest_payload)
@@ -564,7 +607,7 @@ class LiveAuthorityDiscovery:
             "snapshot": snapshot,
             "authority_manifest": wrapper,
             "authorities": data["authorities"],
-            "findings": data["findings"],
+            "findings": findings,
         }
         if drift_reasons is not None:
             payload_data["drift_reasons"] = drift_reasons

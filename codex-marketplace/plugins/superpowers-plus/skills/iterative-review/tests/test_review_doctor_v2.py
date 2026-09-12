@@ -251,6 +251,74 @@ class TestHookScripts:
         assert json.loads(line)["tool_input"]["command"] == "café 中文"
 
 
+class TestGateBoundaryMatching:
+    def test_gate_allows_sibling_of_deny_root(self, tmp_path):
+        deny = tmp_path / "review-state" / "witness"
+        deny.mkdir(parents=True)
+        sibling = tmp_path / "review-state" / "witness-backup"
+        sibling.mkdir()
+        hooks = _hook_env(tmp_path, deny_roots=(deny,))
+        payload = {
+            "hook_event_name": "PreToolUse",
+            "tool_name": "write",
+            "tool_input": {"file_path": str(sibling / "x.txt")},
+            "tool_use_id": "w_1",
+            "session_id": "sess-1",
+            "prompt_id": "p-1",
+        }
+        r = _run_hook(hooks / "gate_review_paths.py", payload)
+        assert r.returncode == 0
+
+    def test_gate_denies_env_var_path(self, tmp_path):
+        deny = tmp_path / "review-state"
+        deny.mkdir()
+        hooks = _hook_env(tmp_path, deny_roots=(deny,))
+        os.environ["IR_TEST_DENY"] = str(deny)
+        try:
+            payload = {
+                "hook_event_name": "PreToolUse",
+                "tool_name": "write",
+                "tool_input": {"file_path": "%IR_TEST_DENY%/state.json"},
+                "tool_use_id": "w_2",
+                "session_id": "sess-1",
+                "prompt_id": "p-1",
+            }
+            r = _run_hook(hooks / "gate_review_paths.py", payload)
+            assert r.returncode == 2
+        finally:
+            del os.environ["IR_TEST_DENY"]
+
+    def test_gate_denies_command_text_mentioning_root(self, tmp_path):
+        deny = tmp_path / "review-state" / "witness"
+        deny.mkdir(parents=True)
+        hooks = _hook_env(tmp_path, deny_roots=(deny,))
+        payload = {
+            "hook_event_name": "PreToolUse",
+            "tool_name": "exec",
+            "tool_input": {"command": f"cat {deny}/log.jsonl"},
+            "tool_use_id": "e_1",
+            "session_id": "sess-1",
+            "prompt_id": "p-1",
+        }
+        r = _run_hook(hooks / "gate_review_paths.py", payload)
+        assert r.returncode == 2
+
+    def test_gate_allows_command_with_sibling_name(self, tmp_path):
+        deny = tmp_path / "review-state" / "witness"
+        deny.mkdir(parents=True)
+        hooks = _hook_env(tmp_path, deny_roots=(deny,))
+        payload = {
+            "hook_event_name": "PreToolUse",
+            "tool_name": "exec",
+            "tool_input": {"command": f"cat {deny}-backup/log.jsonl"},
+            "tool_use_id": "e_2",
+            "session_id": "sess-1",
+            "prompt_id": "p-1",
+        }
+        r = _run_hook(hooks / "gate_review_paths.py", payload)
+        assert r.returncode == 0
+
+
 class TestHooksInstall:
     def test_install_renders_pack_and_env(self, tmp_path):
         scratch = tmp_path / "scratch"

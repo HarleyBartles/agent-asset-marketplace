@@ -72,10 +72,16 @@ Recorded artifacts (scratch, disposable):
    exits 2 when a tool call touches a deny root, and fails closed (block +
    exit 2) when the hook payload cannot be assessed. Path keys (`file_path`,
    `path`, `notebook_path`, `target_file`, `workdir`, `cwd`) are resolved
-   against the call's working directory before matching, but environment
-   expansion and shell indirection inside `command` text are matched
-   literally only. The state kernel remains the enforcer; the gate exists to
-   stop honest accidents cheaply.
+   against the call's working directory with environment variables expanded
+   before matching; `command` text is matched boundary-aware so a deny root
+   does not over-match sibling names like `witness-backup`. Deny roots cover
+   the witness, transcript, and evidence-store directories only - the
+   `acquire/` directory and the state file are excluded because
+   `reviewctl enumerate` and `complete --acquired` must write and read them;
+   their integrity is enforced by the witnessed subject digests, the
+   evidence-manifest checks, and feedback-findings rebinding instead. The
+   state kernel remains the enforcer; the gate exists to stop honest
+   accidents cheaply.
 6. **Store permission enforcement is POSIX-only.** On POSIX the witness log
    and transcript recorders lock directories to 0700 and files to 0600 and
    refuse `acl-untrusted` pre-existing files that grant group/other access.

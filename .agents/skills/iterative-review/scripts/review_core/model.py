@@ -306,7 +306,7 @@ def canonical_json(value: object) -> bytes:
         separators=(",", ":"),
         ensure_ascii=False,
         allow_nan=False,
-    ).encode("utf-8")
+    ).encode("utf-8", errors="surrogateescape")
 
 
 canonical_bytes = canonical_json
