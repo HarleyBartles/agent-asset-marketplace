@@ -986,6 +986,11 @@ def finalize_ready_transition_transaction(
     No fresh lawful-action check happens here by design: the pending
     intent was registered inside a lawful-action window (phase 1), and
     this phase only executes that bound intent on its recorded head.
+    This is sound only because every state change that should block a
+    ready transition (new findings, invalidated proofs, opened blockers,
+    snapshot drift) advances ``snapshot_epoch``/``snapshot_fingerprint``
+    or invalidates the ``ready_transition`` id through a repair cut, so
+    ``_current`` below rejects any intent minted before such a change.
     """
     sp = Path(state_path)
     action = "mark-ready-for-ci"

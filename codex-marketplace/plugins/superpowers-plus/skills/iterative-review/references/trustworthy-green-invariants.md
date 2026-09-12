@@ -37,7 +37,10 @@ nine predicates map to the kernel's finer-grained checks as follows:
    `audit_result: clean` and a known verdict. Plan 1 accepts the `audit_result`
    the completing attestation carries; independently deriving contamination
    from the ingested `tool-transcript` evidence is deferred to a later plan,
-   so the audit claim today is attested, not transcript-verified.
+   so the audit claim today is attested, not transcript-verified. A reviewer
+   that touched out-of-scope paths could therefore still self-attest clean;
+   transcript-derived verification is tracked in the roadmap's later plans
+   and until it lands this predicate trusts reviewer self-attestation.
 7. **findings_clear** - every finding, all severities including `minor`, sits
    in a closed disposition; nothing remains `open`, `fixing`,
    `review-repairing`, `contested`, `deferred`, or `unassessed`.
