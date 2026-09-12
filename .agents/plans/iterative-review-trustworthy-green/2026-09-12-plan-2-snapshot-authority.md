@@ -240,7 +240,7 @@ Pure stdlib. No imports from `engine` (it must stay importable by `policy` consu
 - Consumes: Devin hook contract documented in `references/harness-capability-floor.md` (Pre/PostToolUse record fields: `session_id`, `prompt_id`, `tool_name`, `tool_input`, `tool_use_id`, post `tool_response`); Task 1's `WitnessLog` for the `witness-log-roundtrip` doctor row. Hooks write raw session-keyed JSONL transcripts; witness-log ingestion happens later inside `acquire`.
 - Produces:
   - `record_pretool.py` / `record_posttool.py`: read one hook JSON object from stdin (binary, UTF-8/surrogateescape), append it as one compact JSON line to `<transcript_root>/<session_id>.jsonl` where `transcript_root` comes from the `hook-env.json` sidecar (located via `IR_HOOK_ENV` or `<script_parent>/hook-env.json`) with fallback `<script_parent>/transcripts`. POSIX mode 0700 dir / 0600 file; pre-existing group/other access is refused as `acl-untrusted`. Never exits nonzero on malformed input (hooks must not break the session); writes a `hook-error` line instead.
-  - `gate_review_paths.py`: PreToolUse policy gate; exits 2 (deny) when a `write`/`edit`/`exec` tool_input path resolves (cwd-relative, env-var-expanded) under any root in the sidecar's `deny_roots` list, and fails closed (exit 2) on unparseable or missing payloads; otherwise exits 0. Command text is matched boundary-aware so `witness-backup` siblings are not denied.
+  - `gate_review_paths.py`: PreToolUse policy gate; exits 2 (deny) when any tool_input path resolves (cwd-relative, env-var-expanded) under a root in the sidecar's `deny_roots` list, and fails closed (exit 2) on unparseable or missing payloads; otherwise exits 0. Command text is matched boundary-aware so `witness-backup` siblings are not denied.
   - `hooks.v1.json` template: binds the three scripts; a single `{{IR_HOOK_DIR}}` placeholder is rendered by `reviewctl hooks install` with JSON-escaped path content, and `hook-env.json` carries `transcript_root` + `deny_roots` beside it.
   - `reviewctl hooks install --scratch-dir <dir> [--user]`: renders the template to `<scratch-dir>/hooks/hooks.v1.json` plus copies scripts to `<scratch-dir>/hooks/` (self-contained, review-scoped); prints the absolute path the user installs into `.devin/hooks.v1.json`. `hooks status --scratch-dir <dir>` reports installed/not-installed + transcript dir writability.
   - `doctor` gains rows: `runtime`, `hooks-installed`, `transcript-dir-writable`, `witness-log-roundtrip` (create+append+verify under scratch), `git-present`, `repo-non-shallow`, `gh-authenticated`. Each row `{name, status: pass|fail|skip, detail, remediation}`; any `fail` -> exit 1 with top-level `capability-floor-failed` listing failed rows.
@@ -527,12 +527,11 @@ class LiveAuthorityDiscovery:
         #   "unresolved_feedback" when those digests moved; epoch is
         #   current_snapshot.epoch + 1 (policy enforces exactly +1).
         # Ingests the transcript segment witnessing the enumerate exec:
-        # scans transcript_root/*.jsonl for Pre/Post pairs whose tool_input
-        # contains the `reviewctl enumerate` command targeting
-        # acquisition_dir AND whose post tool_response contains the
-        # enumeration-id marker; on multiple matches binds the MOST RECENT
-        # (retry-safe); session_id comes from the matched records ->
-        # (positions, chain_head, transcript_range).
+        # scans transcript_root/*.jsonl for PostToolUse records whose
+        # tool_response contains the enumeration-id marker AND whose
+        # tool_input strings contain "enumerate"; on multiple matches binds
+        # the MOST RECENT (retry-safe); session_id comes from the matched
+        # records -> (positions, chain_head, transcript_range).
         #
         # Record-binding mechanics (all computable by the source):
         #   - fingerprint = model.snapshot_fingerprint(snapshot)
@@ -543,6 +542,16 @@ class LiveAuthorityDiscovery:
         #     "@manifest-payload" (alias resolved by resolve_evidence_aliases;
         #     the same @alias scheme fills each authority's evidence_id /
         #     failure_evidence_id)
+        #
+        # Integrity rebinding (data.json is advisory, not trusted):
+        #   - each authority record's sha256 reconciles against the
+        #     subject-bound manifest_payload entry AND its @alias evidence
+        #     digest; divergence -> AcquisitionError("tampered-source")
+        #   - feedback findings are re-derived from digest-verified
+        #     feedback-* evidence via feedback_policy.item_from_raw +
+        #     feedback_findings, cross-checked against the witnessed
+        #     snapshot's feedback_history_sha256/unresolved_feedback_sha256;
+        #     data["findings"] is never trusted
         #   - witness record built with epoch+fingerprint of the candidate
         #     snapshot, then data["authority_manifest"]["discovery_witness_id"]
         #     = model.derived_id("witness", epoch,

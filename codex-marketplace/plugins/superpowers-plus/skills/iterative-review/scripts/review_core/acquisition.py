@@ -18,7 +18,9 @@ from __future__ import annotations
 
 import base64
 import json
+import os
 import shutil
+import stat
 import types
 import urllib.parse
 from pathlib import Path
@@ -107,6 +109,8 @@ def _load_seed_bytes(seed, *, run_git, run_gh, base_sha: str, repo_id: str, pr_m
         if rc != 0:
             raise AcquisitionError("authority-missing", f"{loc}: {err.strip() or 'unreadable'}")
         doc = json.loads(out)
+        if not isinstance(doc, dict):
+            raise AcquisitionError("authority-missing", f"{loc}: unexpected API response shape")
         return model.canonical_json({"title": doc.get("title"), "body": doc.get("body"), "number": doc.get("number")})
     if loc.startswith("gh:doc/"):
         path = urllib.parse.quote(loc[7:], safe="/")
@@ -114,6 +118,8 @@ def _load_seed_bytes(seed, *, run_git, run_gh, base_sha: str, repo_id: str, pr_m
         if rc != 0:
             raise AcquisitionError("authority-missing", f"{loc}: {err.strip() or 'unreadable'}")
         doc = json.loads(out)
+        if not isinstance(doc, dict) or not isinstance(doc.get("content"), str):
+            raise AcquisitionError("authority-missing", f"{loc}: unexpected API response shape")
         return base64.b64decode(doc["content"])
     raise AcquisitionError("authority-missing", f"{loc}: unsupported locator")
 
@@ -211,7 +217,7 @@ def enumerate_acquisition(
                 pr_meta=pr_meta,
             )
             gh_text_cache[locator] = raw.decode("utf-8", errors="surrogateescape")
-        except (AcquisitionError, ValueError, KeyError):
+        except (AcquisitionError, ValueError, KeyError, TypeError, AttributeError):
             gh_text_cache[locator] = None
         return gh_text_cache[locator]
 
@@ -235,7 +241,10 @@ def enumerate_acquisition(
 
     # 7. materialize every seed's bytes
     if out_dir.exists():
-        shutil.rmtree(out_dir)
+        resolved = out_dir.resolve()
+        if resolved.name != "latest" or resolved.parent.name != "acquire":
+            raise AcquisitionError("tool-blocked", f"refusing to clear unexpected path {resolved}")
+        shutil.rmtree(resolved, onerror=_remove_readonly)
     fb_policy = feedback_policy.default_policy()
     builtins = engine.load_witness_sources()
     ev_dir = out_dir / "evidence"
@@ -260,7 +269,7 @@ def enumerate_acquisition(
         except AcquisitionError as exc:
             if seed.kind in REQUIRED_AUTHORITY_KINDS:
                 raise
-            err_bytes = str(exc).encode("utf-8")
+            err_bytes = str(exc).encode("utf-8", errors="surrogateescape")
             fail_sha = write_evidence(f"failure-{i}", "authority", err_bytes)
             entry = {
                 "authority_id": aid,
@@ -455,6 +464,11 @@ def enumerate_acquisition(
     }
 
 
+def _remove_readonly(func, path, _exc):
+    os.chmod(path, stat.S_IWRITE)
+    func(path)
+
+
 def _walk_strings(value):
     if isinstance(value, str):
         yield value
@@ -493,6 +507,25 @@ class LiveAuthorityDiscovery:
             if not path.is_file() or model.sha256_hex(path.read_bytes()) != rec["sha256"]:
                 raise AcquisitionError("tampered-source", f"evidence {alias} digest mismatch")
             sources.append(engine.EvidenceSource(alias=alias, kind=rec["kind"], path=path))
+        # Bind evidence bytes to the witnessed manifest: authority records and
+        # the evidence manifest are both unbound, so reconcile each record's
+        # sha256 against the subject-bound manifest entry and its evidence
+        # file digest. Anything inconsistent is tamper evidence.
+        bound = {e.get("locator"): e.get("sha256") for e in data.get("manifest_payload", {}).get("authorities", [])}
+        for rec in data.get("authorities", []):
+            if bound.get(rec.get("locator")) != rec.get("sha256"):
+                raise AcquisitionError(
+                    "tampered-source",
+                    f"authority {rec.get('locator')}: record sha diverges from witnessed manifest",
+                )
+            ev = rec.get("evidence_id") or ""
+            if ev.startswith("@"):
+                alias = ev[1:]
+                if ev_manifest.get(alias, {}).get("sha256") != rec.get("sha256"):
+                    raise AcquisitionError(
+                        "tampered-source",
+                        f"authority {rec.get('locator')}: evidence digest diverges from witnessed manifest",
+                    )
         return data, sources
 
     def _find_segment(self, subject_sha: str):

@@ -12,6 +12,7 @@ re-proves those bindings at verification time.
 
 from __future__ import annotations
 
+import json
 import re
 import sys
 from datetime import datetime, timezone
@@ -124,8 +125,12 @@ class WitnessLog:
         entry["payload_sha256"] = model.sha256_hex(model.canonical_json(payload))
         entry["prev_sha256"] = prev
         entry["entry_sha256"] = _entry_digest(entry)
-        with self._path.open("a", encoding="utf-8") as fh:
-            fh.write(model.canonical_json(entry).decode("utf-8") + "\n")
+        # ensure_ascii keeps stored lines valid UTF-8 even when the payload
+        # carries surrogateescape'd bytes; digests cover canonical_json
+        # fields, not the line serialization.
+        line = json.dumps(entry, sort_keys=True, separators=(",", ":"), ensure_ascii=True)
+        with self._path.open("ab") as fh:
+            fh.write(line.encode("ascii") + b"\n")
             fh.flush()
             import os
 
@@ -204,7 +209,7 @@ def ingest_transcript_segment(
         else (
             response.get("output", "")
             if isinstance(response, dict)
-            else model.canonical_json(response or {}).decode("utf-8")
+            else model.canonical_json(response or {}).decode("utf-8", errors="surrogateescape")
         )
     )
     if marker not in response_text:
@@ -378,7 +383,7 @@ class TranscriptWitnessVerifier:
                 else (
                     response.get("output", "")
                     if isinstance(response, dict)
-                    else model.canonical_json(response or {}).decode("utf-8")
+                    else model.canonical_json(response or {}).decode("utf-8", errors="surrogateescape")
                 )
             )
             if subject_sha not in response_text:

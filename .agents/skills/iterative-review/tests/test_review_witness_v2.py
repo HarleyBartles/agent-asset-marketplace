@@ -84,6 +84,16 @@ class TestWitnessLog:
         assert len(log.entries()) == 2
         assert log.chain_head() == log.entries()[-1]["entry_sha256"]
 
+    def test_append_surrogate_payload_roundtrips(self, tmp_path):
+        # Hook recorders preserve non-UTF-8 bytes via surrogateescape; the log
+        # must store and re-verify them without crashing.
+        log = witness_log.WitnessLog(tmp_path / "w" / "log.jsonl")
+        payload = {"tool_response": {"output": "caf" + chr(0xDCFF) + " raw"}}
+        log.append(session_id="s1", tool_use_id="tu-1", record_kind="PostToolUse", payload=payload)
+        ok, err = log.verify_chain()
+        assert ok and err is None
+        assert log.entries()[0]["payload"]["tool_response"]["output"] == "caf" + chr(0xDCFF) + " raw"
+
     @pytest.mark.skipif(sys.platform == "win32", reason="POSIX mode bits do not apply on Windows")
     def test_creates_with_private_permissions(self, tmp_path):
         p = tmp_path / "w" / "log.jsonl"

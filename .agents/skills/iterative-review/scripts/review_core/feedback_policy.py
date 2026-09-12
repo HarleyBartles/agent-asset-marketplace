@@ -185,22 +185,23 @@ def item_from_raw(raw: bytes) -> FeedbackItem:
         doc = json.loads(raw)
         kind = doc["kind"]
         node = doc["node"]
+        node_id = node["id"]
     except Exception as exc:
         raise FeedbackPolicyError(f"feedback evidence not a canonical item: {exc}") from exc
     if kind == "thread":
         return FeedbackItem(
-            canonical_id=f"github:thread:{node['id']}",
+            canonical_id=f"github:thread:{node_id}",
             provider="github",
-            thread_id=node["id"],
+            thread_id=node_id,
             resolution_state="resolved" if node.get("isResolved") else "unresolved",
             bytes_sha256=model.sha256_hex(raw),
             raw=raw,
         )
     if kind == "review":
         return FeedbackItem(
-            canonical_id=f"github:review:{node['id']}",
+            canonical_id=f"github:review:{node_id}",
             provider="github",
-            thread_id=node["id"],
+            thread_id=node_id,
             resolution_state="unresolved",
             bytes_sha256=model.sha256_hex(raw),
             raw=raw,

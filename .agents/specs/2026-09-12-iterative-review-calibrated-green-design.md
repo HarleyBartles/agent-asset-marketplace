@@ -205,3 +205,14 @@ Identical topology to the prior spec's mermaid graph with these substitutions: "
   which `authority_manifest_complete` never holds; the live Devin composition
   root resolves the discovery policy at the base revision and declares
   `base-revision`.
+- The produced acquisition dir is advisory, not trusted: `acquire` reconciles
+  every authority record's sha256 against the subject-bound manifest entries
+  and its `@alias` evidence digest, and re-derives feedback findings from the
+  digest-verified `feedback-*` evidence (cross-checked against the witnessed
+  snapshot's `feedback_history_sha256`/`unresolved_feedback_sha256`).
+  `data["findings"]` is never installed verbatim; divergence fails closed
+  with `AcquisitionError("tampered-source")`.
+- Transcript binding matches PostToolUse records carrying the enumeration-id
+  marker whose tool_input contains "enumerate"; the acquire directory path is
+  not required in argv because real `reviewctl enumerate` invocations derive
+  it internally.

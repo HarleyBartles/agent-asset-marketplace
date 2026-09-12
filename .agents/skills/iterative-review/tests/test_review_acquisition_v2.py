@@ -484,6 +484,42 @@ class TestAcquireBindings:
         assert "github:thread:fabricated" not in source_ids
         assert "github:thread:T1" in source_ids
 
+    def test_item_from_raw_missing_id_fails_closed(self):
+        raw = model.canonical_json({"kind": "thread", "node": {"no_id": True}})
+        with pytest.raises(fbp.FeedbackPolicyError):
+            fbp.item_from_raw(raw)
+        raw = model.canonical_json({"kind": "mystery", "node": {"id": "X"}})
+        with pytest.raises(fbp.FeedbackPolicyError):
+            fbp.item_from_raw(raw)
+
+    def test_evidence_diverging_from_bound_manifest_fails(self, tmp_path):
+        # Tamper an evidence file AND update evidence/manifest.json so the
+        # internal digest check passes - the record must still reconcile
+        # against the witnessed manifest_payload entry.
+        summary, out_dir, scratch = _enumerate(tmp_path)
+        _transcript_with_marker(scratch, summary["enumeration_id"], out_dir=out_dir)
+        ev_dir = out_dir / "evidence"
+        ev_manifest = json.loads((ev_dir / "manifest.json").read_text())
+        alias = next(a for a in ev_manifest if a.startswith("authority-"))
+        victim = ev_dir / ev_manifest[alias]["file"]
+        victim.write_bytes(b"tampered law")
+        ev_manifest[alias]["sha256"] = model.sha256_hex(b"tampered law")
+        (ev_dir / "manifest.json").write_text(json.dumps(ev_manifest))
+        src = _source(out_dir, scratch)
+        with pytest.raises(acq.AcquisitionError, match="tampered-source"):
+            src.acquire(action="freeze-review-input", current_snapshot=None)
+
+    def test_gh_list_response_fails_cleanly(self):
+        def gh_list(_args):
+            return 0, "[]", ""
+
+        seed = SimpleNamespace(locator="gh:issue/12")
+        with pytest.raises(acq.AcquisitionError):
+            acq._load_seed_bytes(seed, run_git=None, run_gh=gh_list, base_sha=BASE, repo_id=REPO_ID, pr_meta=_pr_meta())
+        seed = SimpleNamespace(locator="gh:doc/docs/x.md")
+        with pytest.raises(acq.AcquisitionError):
+            acq._load_seed_bytes(seed, run_git=None, run_gh=gh_list, base_sha=BASE, repo_id=REPO_ID, pr_meta=_pr_meta())
+
     def test_surrogate_bytes_in_git_show_do_not_crash(self, tmp_path):
         git = FakeGit({"AGENTS.md": "# law caf\udcff"})
         summary, out_dir, _s = _enumerate(tmp_path, git=git)
