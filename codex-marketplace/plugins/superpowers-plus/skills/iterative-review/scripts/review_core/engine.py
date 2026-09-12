@@ -986,11 +986,14 @@ def finalize_ready_transition_transaction(
     No fresh lawful-action check happens here by design: the pending
     intent was registered inside a lawful-action window (phase 1), and
     this phase only executes that bound intent on its recorded head.
-    This is sound only because every state change that should block a
-    ready transition (new findings, invalidated proofs, opened blockers,
-    snapshot drift) advances ``snapshot_epoch``/``snapshot_fingerprint``
-    or invalidates the ``ready_transition`` id through a repair cut, so
-    ``_current`` below rejects any intent minted before such a change.
+    This is sound because state changes that should block a pending
+    intent are all caught before execution: new findings, invalidated
+    proofs, and snapshot drift advance ``snapshot_epoch``/
+    ``snapshot_fingerprint`` or invalidate the ``ready_transition`` id
+    through a repair cut, so ``_current`` below rejects any intent
+    minted before such a change; an opened blocker does not advance
+    the epoch, so the explicit ``status == "blocked"`` guard below
+    refuses finalization while a blocker is active.
     """
     sp = Path(state_path)
     action = "mark-ready-for-ci"
@@ -1013,6 +1016,16 @@ def finalize_ready_transition_transaction(
                     True,
                     action,
                     f"ready transition {ready_transition_id} already completed",
+                ),
+                tx.prior_generation,
+                sp,
+            )
+        if st["status"] == "blocked":
+            return EngineResult(
+                _blocked(
+                    action,
+                    "review is blocked; resume requires blocker-resolution evidence",
+                    ("active-blocker",),
                 ),
                 tx.prior_generation,
                 sp,

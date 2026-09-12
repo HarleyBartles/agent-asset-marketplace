@@ -1452,6 +1452,31 @@ class TestEngineTransactions:
         events = [h["event"] for h in st["history"]]
         assert events[-2:] == ["mark-ready-for-ci", "finalize-ready-transition"]
 
+    def test_finalize_ready_refused_while_blocked(self, tmp_path):
+        """A blocker opened between intent registration and finalization
+        must stop phase 2: _current does not catch blockers (no epoch
+        advance), so the explicit blocked-status guard has to."""
+        w = _walk_to(tmp_path, stop="ready")
+        path = tmp_path / "review-state.json"
+        transition = _TransitionDouble(path, w.registry, tmp_path, w.policies)
+        sources = _walk_sources(w, path, tmp_path, remote_transition=transition)
+        registered = engine.register_ready_transition_transaction(path, sources=sources)
+        assert registered.decision.allowed, registered.decision.reason
+        rid = store.load_state(path)["ready_transition"]["ready_transition_id"]
+        engine.block_transaction(
+            path,
+            blocker_class="tool-blocked",
+            reason="blocked",
+            evidence=(),
+            sources=sources,
+        )
+        result = engine.finalize_ready_transition_transaction(path, ready_transition_id=rid, sources=sources)
+        assert not result.decision.allowed
+        assert result.decision.status == "blocked"
+        st = store.load_state(path)
+        assert st["ready_transition"]["status"] == "pending"
+        assert st["ci_candidate"] is None
+
     def test_remote_ci_and_seal_via_engine(self, tmp_path):
         w = _walk_to(tmp_path, stop="remote-ci")
         path = tmp_path / "review-state.json"
