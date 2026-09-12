@@ -381,7 +381,7 @@ Policy document (`authority-discovery-policy.v1.json`) content - ship exactly th
 }
 ```
 
-- [ ] **Step 1: Write the failing tests** in `tests/test_review_discovery_v2.py` - build fixture trees under `tmp_path` with a fake `run_git` dispatching canned `git show`/`ls-tree` output:
+- [x] **Step 1: Write the failing tests** in `tests/test_review_discovery_v2.py` - build fixture trees under `tmp_path` with a fake `run_git` dispatching canned `git show`/`ls-tree` output:
 
 ```python
 class TestPolicyResolution:
@@ -410,9 +410,9 @@ class TestEnumeration:
         # assert the seed set shrinks exactly - proves traversal completeness
 ```
 
-- [ ] **Step 2-4:** Run-fail, implement `discovery_policy.py` + policy JSON, run-green.
+- [x] **Step 2-4:** Run-fail, implement `discovery_policy.py` + policy JSON, run-green.
 
-- [ ] **Step 5: Commit** - `feat(iterative-review): seal authority-discovery policy with base-revision resolution`.
+- [x] **Step 5: Commit** - `feat(iterative-review): seal authority-discovery policy with base-revision resolution`.
 
 ---
 

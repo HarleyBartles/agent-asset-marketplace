@@ -171,8 +171,11 @@ class TestHooksInstall:
         assert r.returncode == 0, r.stderr
         hook_dir = scratch / "hooks"
         for name in (
-            "record_pretool.py", "record_posttool.py",
-            "gate_review_paths.py", "hooks.v1.json", "hook-env.json",
+            "record_pretool.py",
+            "record_posttool.py",
+            "gate_review_paths.py",
+            "hooks.v1.json",
+            "hook-env.json",
         ):
             assert (hook_dir / name).is_file(), name
         cfg = json.loads((hook_dir / "hooks.v1.json").read_text(encoding="utf-8"))
@@ -212,9 +215,14 @@ class TestDoctorRows:
         assert verdict == "pass"
         assert all(r["status"] in ("pass", "skip") for r in rows), rows
         names = {r["name"] for r in rows}
-        assert {"hooks-installed", "transcript-dir-writable",
-                "witness-log-roundtrip", "git-present",
-                "repo-non-shallow", "gh-authenticated"} <= names
+        assert {
+            "hooks-installed",
+            "transcript-dir-writable",
+            "witness-log-roundtrip",
+            "git-present",
+            "repo-non-shallow",
+            "gh-authenticated",
+        } <= names
 
     def test_doctor_fails_when_gh_unauthenticated(self, tmp_path):
         def bad(argv, **_kw):

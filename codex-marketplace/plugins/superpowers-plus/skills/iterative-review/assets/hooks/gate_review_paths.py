@@ -83,10 +83,15 @@ def main() -> int:
         if isinstance(command, str):
             hit = _touches_deny(command, deny_roots)
     if hit is not None:
-        print(json.dumps({
-            "decision": "block",
-            "reason": f"iterative-review: path under sealed review root {hit}",
-        }, separators=(",", ":")))
+        print(
+            json.dumps(
+                {
+                    "decision": "block",
+                    "reason": f"iterative-review: path under sealed review root {hit}",
+                },
+                separators=(",", ":"),
+            )
+        )
     return 0
 
 

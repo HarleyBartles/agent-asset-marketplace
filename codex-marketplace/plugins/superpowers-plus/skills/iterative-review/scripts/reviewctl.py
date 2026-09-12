@@ -159,15 +159,12 @@ def _doctor_rows(*, runtime, scratch_dir=None, repo=None, run_cmd=None):
 
     scratch = Path(scratch_dir) if scratch_dir else None
     if scratch is None:
-        add("hooks-installed", "skip", "no --scratch-dir given",
-            "run `reviewctl hooks install --scratch-dir <dir>`")
+        add("hooks-installed", "skip", "no --scratch-dir given", "run `reviewctl hooks install --scratch-dir <dir>`")
         add("transcript-dir-writable", "skip", "no --scratch-dir given")
         add("witness-log-roundtrip", "skip", "no --scratch-dir given")
     else:
         hook_dir = _hook_install_dir(scratch)
-        present = (hook_dir / "hooks.v1.json").is_file() and all(
-            (hook_dir / n).is_file() for n in _HOOK_SCRIPT_NAMES
-        )
+        present = (hook_dir / "hooks.v1.json").is_file() and all((hook_dir / n).is_file() for n in _HOOK_SCRIPT_NAMES)
         add(
             "hooks-installed",
             "pass" if present else "fail",
@@ -182,36 +179,42 @@ def _doctor_rows(*, runtime, scratch_dir=None, repo=None, run_cmd=None):
             probe.unlink()
             add("transcript-dir-writable", "pass", str(tdir))
         except OSError as exc:
-            add("transcript-dir-writable", "fail", str(exc),
-                "create the transcript directory with write access")
+            add("transcript-dir-writable", "fail", str(exc), "create the transcript directory with write access")
         try:
             log = witness_log.WitnessLog(scratch / "witness" / "doctor-probe.jsonl")
-            log.append(session_id="doctor", tool_use_id=None,
-                       record_kind="marker", payload={"probe": True})
+            log.append(session_id="doctor", tool_use_id=None, record_kind="marker", payload={"probe": True})
             ok, err = log.verify_chain()
             add("witness-log-roundtrip", "pass" if ok else "fail", err or "chain verified")
         except Exception as exc:  # noqa: BLE001 - row reports, not crashes
-            add("witness-log-roundtrip", "fail", str(exc),
-                "check scratch-store permissions")
+            add("witness-log-roundtrip", "fail", str(exc), "check scratch-store permissions")
 
     rc, out, _err = run_cmd(["git", "--version"])
-    add("git-present", "pass" if rc == 0 else "fail",
+    add(
+        "git-present",
+        "pass" if rc == 0 else "fail",
         out.strip()[:80] if rc == 0 else "git not found",
-        "install git on PATH")
+        "install git on PATH",
+    )
 
     if repo is None:
         add("repo-non-shallow", "skip", "no --repo given")
     else:
         rc, out, err = run_cmd(["git", "-C", str(repo), "rev-parse", "--is-shallow-repository"])
         shallow = out.strip() == "true"
-        add("repo-non-shallow", "pass" if rc == 0 and not shallow else "fail",
+        add(
+            "repo-non-shallow",
+            "pass" if rc == 0 and not shallow else "fail",
             out.strip() or err.strip()[:80],
-            "fetch full history (git fetch --unshallow)")
+            "fetch full history (git fetch --unshallow)",
+        )
 
     rc, out, err = run_cmd(["gh", "auth", "status"])
-    add("gh-authenticated", "pass" if rc == 0 else "fail",
+    add(
+        "gh-authenticated",
+        "pass" if rc == 0 else "fail",
         (out or err).strip().splitlines()[0][:80] if (out or err) else "",
-        "run `gh auth login`")
+        "run `gh auth login`",
+    )
 
     verdict = "capability-floor-failed" if any(r["status"] == "fail" for r in rows) else "pass"
     return rows, verdict
@@ -268,9 +271,7 @@ def _cmd_hooks(args, json_mode: bool) -> int:
         return 0
     if args.hooks_command == "status":
         hook_dir = _hook_install_dir(scratch)
-        installed = (hook_dir / "hooks.v1.json").is_file() and all(
-            (hook_dir / n).is_file() for n in _HOOK_SCRIPT_NAMES
-        )
+        installed = (hook_dir / "hooks.v1.json").is_file() and all((hook_dir / n).is_file() for n in _HOOK_SCRIPT_NAMES)
         transcripts = scratch / "transcripts"
         obj = {
             "installed": installed,

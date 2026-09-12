@@ -32,10 +32,16 @@ def _log_error(root: Path, message: str) -> None:
     try:
         root.mkdir(parents=True, exist_ok=True)
         with (root / "hook-errors.jsonl").open("a", encoding="utf-8") as fh:
-            fh.write(json.dumps({
-                "hook-error": message,
-                "recorded_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
-            }, separators=(",", ":")) + "\n")
+            fh.write(
+                json.dumps(
+                    {
+                        "hook-error": message,
+                        "recorded_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+                    },
+                    separators=(",", ":"),
+                )
+                + "\n"
+            )
     except Exception:
         pass
 
