@@ -9,6 +9,7 @@ import subprocess
 import sys
 from pathlib import Path
 
+import pytest
 
 TESTS_DIR = Path(__file__).resolve().parent
 SCRIPTS = TESTS_DIR.parent / "scripts"
@@ -42,11 +43,13 @@ def _ctl(*args, runtime="devin-desktop", env_extra=None):
 def _run_hook(script: Path, stdin_payload) -> subprocess.CompletedProcess:
     env = dict(os.environ)
     env["IR_HOOK_ENV"] = str(script.parent / "hook-env.json")
+    data = stdin_payload if isinstance(stdin_payload, str) else json.dumps(stdin_payload)
     return subprocess.run(
         ["py", "-3", str(script)],
-        input=json.dumps(stdin_payload) if not isinstance(stdin_payload, str) else stdin_payload,
+        input=data,
         capture_output=True,
         text=True,
+        encoding="utf-8",
         env=env,
     )
 
@@ -119,7 +122,7 @@ class TestHookScripts:
             "prompt_id": "p-1",
         }
         r = _run_hook(hooks / "gate_review_paths.py", payload)
-        assert r.returncode == 0
+        assert r.returncode == 2
         assert '"decision": "block"' in r.stdout or '"decision":"block"' in r.stdout
 
     def test_gate_allows_unrelated_exec(self, tmp_path):
@@ -147,6 +150,7 @@ class TestHookScripts:
             "prompt_id": "p-1",
         }
         r = _run_hook(hooks / "gate_review_paths.py", payload)
+        assert r.returncode == 2
         assert "block" in r.stdout
 
     def test_gate_denies_read_of_witness_log(self, tmp_path):
@@ -161,7 +165,90 @@ class TestHookScripts:
             "prompt_id": "p-1",
         }
         r = _run_hook(hooks / "gate_review_paths.py", payload)
+        assert r.returncode == 2
         assert "block" in r.stdout
+
+    def test_gate_fails_closed_on_malformed_payload(self, tmp_path):
+        hooks = _hook_env(tmp_path, deny_roots=(tmp_path / "review-state",))
+        r = _run_hook(hooks / "gate_review_paths.py", "not json {")
+        assert r.returncode == 2
+        assert "block" in r.stdout
+
+    def test_gate_unconfigured_env_stays_open(self, tmp_path):
+        hooks = _hook_env(tmp_path)
+        r = _run_hook(hooks / "gate_review_paths.py", "not json {")
+        assert r.returncode == 0
+
+    def test_gate_denies_relative_path_via_cwd(self, tmp_path):
+        deny = tmp_path / "review-state"
+        deny.mkdir()
+        hooks = _hook_env(tmp_path, deny_roots=(deny,))
+        payload = {
+            "hook_event_name": "PreToolUse",
+            "tool_name": "write",
+            "tool_input": {"file_path": "state.json", "cwd": str(deny)},
+            "tool_use_id": "w_2",
+            "session_id": "sess-1",
+            "prompt_id": "p-1",
+        }
+        r = _run_hook(hooks / "gate_review_paths.py", payload)
+        assert r.returncode == 2
+
+    @pytest.mark.skipif(sys.platform == "win32", reason="posix mode bits")
+    def test_recorder_locks_down_transcript_permissions(self, tmp_path):
+        import stat
+
+        hooks = _hook_env(tmp_path)
+        payload = {
+            "hook_event_name": "PreToolUse",
+            "tool_name": "exec",
+            "tool_input": {"command": "git status"},
+            "tool_use_id": "exec_1",
+            "session_id": "sess-1",
+            "prompt_id": "p-1",
+        }
+        r = _run_hook(hooks / "record_pretool.py", payload)
+        assert r.returncode == 0, r.stderr
+        tdir = tmp_path / "transcripts"
+        assert stat.S_IMODE(tdir.stat().st_mode) & 0o077 == 0
+        assert stat.S_IMODE((tdir / "sess-1.jsonl").stat().st_mode) & 0o077 == 0
+
+    @pytest.mark.skipif(sys.platform == "win32", reason="posix mode bits")
+    def test_recorder_refuses_world_writable_transcript(self, tmp_path):
+        hooks = _hook_env(tmp_path)
+        tdir = tmp_path / "transcripts"
+        tdir.mkdir(parents=True)
+        target = tdir / "sess-1.jsonl"
+        target.write_text('{"existing": true}' + chr(10), encoding="utf-8")
+        os.chmod(target, 0o666)
+        payload = {
+            "hook_event_name": "PreToolUse",
+            "tool_name": "exec",
+            "tool_input": {"command": "git status"},
+            "tool_use_id": "exec_1",
+            "session_id": "sess-1",
+            "prompt_id": "p-1",
+        }
+        r = _run_hook(hooks / "record_pretool.py", payload)
+        assert r.returncode == 0
+        assert target.read_text(encoding="utf-8").count(chr(10)) == 1
+        errs = (tdir / "hook-errors.jsonl").read_text(encoding="utf-8")
+        assert "acl-untrusted" in errs
+
+    def test_recorder_decodes_utf8_stdin(self, tmp_path):
+        hooks = _hook_env(tmp_path)
+        payload = {
+            "hook_event_name": "PreToolUse",
+            "tool_name": "exec",
+            "tool_input": {"command": "café 中文"},
+            "tool_use_id": "exec_1",
+            "session_id": "sess-1",
+            "prompt_id": "p-1",
+        }
+        r = _run_hook(hooks / "record_pretool.py", json.dumps(payload, ensure_ascii=False))
+        assert r.returncode == 0, r.stderr
+        line = (tmp_path / "transcripts" / "sess-1.jsonl").read_text(encoding="utf-8").splitlines()[0]
+        assert json.loads(line)["tool_input"]["command"] == "café 中文"
 
 
 class TestHooksInstall:
@@ -263,6 +350,34 @@ class TestDoctorRows:
         )
         row = next(r for r in rows if r["name"] == "witness-log-roundtrip")
         assert row["status"] == "skip"
+
+    def test_doctor_gh_whitespace_output_reports_fail_not_crash(self, tmp_path):
+        def run_cmd(argv, **_kw):
+            if argv[:2] == ["gh", "auth"]:
+                return 1, "", "   " + chr(10)
+            return 0, "ok", ""
+
+        rows, verdict = reviewctl._doctor_rows(
+            runtime=engine.RUNTIME_DEVIN_DESKTOP,
+            scratch_dir=None,
+            repo=None,
+            run_cmd=run_cmd,
+        )
+        gh = next(r for r in rows if r["name"] == "gh-authenticated")
+        assert gh["status"] == "fail" and gh["detail"] == ""
+        assert verdict == "capability-floor-failed"
+
+    def test_run_cmd_decodes_utf8_output(self):
+        rc, out, _err = reviewctl._run_cmd(
+            [
+                "py",
+                "-3",
+                "-c",
+                "import sys; sys.stdout.buffer.write('café'.encode('utf-8'))",
+            ]
+        )
+        assert rc == 0
+        assert out == "café"
 
     def test_doctor_inert_runtime_still_verdict_inert(self, tmp_path):
         r = _ctl("doctor", runtime="unknown")

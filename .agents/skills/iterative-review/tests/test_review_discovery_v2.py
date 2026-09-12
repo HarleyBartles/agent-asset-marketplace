@@ -355,3 +355,41 @@ class TestLocatorCanonicalization:
     def test_gh_issue_spellings(self):
         assert dp.canonicalize_locator("GH #12") == "gh:issue/12"
         assert dp.canonicalize_locator("gh:issue/12") == "gh:issue/12"
+
+    def test_rejects_traversal_escape_and_control_chars(self):
+        for bad in (
+            "repo:../evil.md",
+            "repo:a/../../evil.md",
+            "repo:/abs/x.md",
+            "repo:C:/win/x.md",
+            "repo:a" + chr(0) + "b.md",
+            "gh:doc/../escape",
+            "gh:doc/evil" + chr(10) + "name.md",
+            "gh:issue/notanum",
+            "gh:pr/x#body",
+        ):
+            with pytest.raises(dp.DiscoveryPolicyError, match="invalid-locator"):
+                dp.canonicalize_locator(bad)
+        assert dp.canonicalize_locator("gh:issue/12") == "gh:issue/12"
+        assert dp.canonicalize_locator("gh:pr/7#body") == "gh:pr/7#body"
+        assert dp.canonicalize_locator("gh:doc/a/b.md") == "gh:doc/a/b.md"
+        assert dp.canonicalize_locator("repo:a/b.md") == "repo:a/b.md"
+
+    def test_invalid_edge_locator_is_failure_not_omission(self):
+        git = FakeGit(
+            {
+                "AGENTS.md": (
+                    "<!-- authority:edge governs repo:../outside.md -->" + chr(92) + "n"
+                    "<!-- authority:edge governs gh:issue/abc -->"
+                ),
+            }
+        )
+        _seeds, failures = dp.enumerate_authorities(
+            policy=dp.default_policy(),
+            run_git=git,
+            base_sha=BASE,
+            pr_metadata=_pr(),
+            load_text=_load_text({}),
+        )
+        reasons = [f["reason"] for f in failures]
+        assert sum("invalid-locator" in r for r in reasons) == 2

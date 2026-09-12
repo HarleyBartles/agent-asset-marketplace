@@ -67,6 +67,26 @@ Recorded artifacts (scratch, disposable):
    carried no model name; reviewer-model pinning must come from the profile
    frontmatter at the user-global root, verified by the planned doctor
    recheck, not from agent self-report.
+5. **The path gate is best-effort, not authoritative.**
+   `gate_review_paths.py` emits `{"decision": "block", ...}` on stdout and
+   exits 2 when a tool call touches a deny root, and fails closed (block +
+   exit 2) when the hook payload cannot be assessed. Path keys (`file_path`,
+   `path`, `notebook_path`, `target_file`, `workdir`, `cwd`) are resolved
+   against the call's working directory before matching, but environment
+   expansion and shell indirection inside `command` text are matched
+   literally only. The state kernel remains the enforcer; the gate exists to
+   stop honest accidents cheaply.
+6. **Store permission enforcement is POSIX-only.** On POSIX the witness log
+   and transcript recorders lock directories to 0700 and files to 0600 and
+   refuse `acl-untrusted` pre-existing files that grant group/other access.
+   On Windows - the current Devin Desktop target - those POSIX mode checks
+   are no-ops; tamper-evidence relies on the review scratch living under the
+   user's own profile directory (default NTFS ACLs grant only that user).
+   Treat the scratch root as per-user private by placement, not by ACL audit.
+7. **Hook commands assume the Windows launcher.** The rendered
+   `hooks.v1.json` invokes scripts via `py -3`, which exists on Windows
+   Devin Desktop only. If a non-Windows Devin host ever becomes a target,
+   the renderer must emit `python3`/`python` fallbacks.
 
 ## Live doctor rows
 
@@ -76,12 +96,12 @@ rechecks the floor per row. Each row reports `pass`, `fail`, or `skip` with a
 
 | Row | What it verifies | Fail remediation |
 | --- | --- | --- |
-| `hooks-installed` | Rendered hooks pack exists under `<scratch>/hooks/` | `reviewctl hooks install --scratch-dir <dir>`, then install the rendered `hooks.v1.json` before session start |
-| `transcript-dir-writable` | `<scratch>/transcripts/` accepts create/write/delete | Fix scratch-root permissions |
-| `witness-log-roundtrip` | `witness_log.WitnessLog` append + chain verify on the witness dir | Fix scratch-store permissions |
-| `git-present` | `git --version` exits 0 | Install git on PATH |
-| `repo-non-shallow` | `git rev-parse --is-shallow-repository` is `false` (skipped without `--repo`) | `git fetch --unshallow` |
-| `gh-authenticated` | `gh auth status` exits 0 | `gh auth login` |
+| `hooks-installed` | Rendered hooks pack exists under `<scratch>/hooks/` | `run \`reviewctl hooks install --scratch-dir <dir>\` then install the rendered hooks.v1.json` |
+| `transcript-dir-writable` | `<scratch>/transcripts/` accepts create/write/delete | `create the transcript directory with write access` |
+| `witness-log-roundtrip` | `witness_log.WitnessLog` append + chain verify on the witness dir | `check scratch-store permissions` |
+| `git-present` | `git --version` exits 0 | `install git on PATH` |
+| `repo-non-shallow` | `git rev-parse --is-shallow-repository` is `false` (skipped without `--repo`) | `fetch full history (git fetch --unshallow)` |
+| `gh-authenticated` | `gh auth status` exits 0 | `run \`gh auth login\`` |
 
 Verdicts: `inert` off Devin Desktop, `capability-floor-failed` when any row
 fails, `pass` otherwise. Rows that cannot run without inputs report `skip`.

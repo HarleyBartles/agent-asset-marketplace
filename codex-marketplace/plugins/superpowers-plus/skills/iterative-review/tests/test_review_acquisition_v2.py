@@ -6,6 +6,7 @@ from __future__ import annotations
 import json
 import sys
 from pathlib import Path
+from types import SimpleNamespace
 
 import pytest
 
@@ -151,6 +152,46 @@ class TestEnumerateAcquisition:
         payload = data["manifest_payload"]
         assert set(payload) == set(model.MANIFEST_PAYLOAD_FIELDS)
         assert "authority_manifest_id" not in payload
+
+    def test_gh_doc_locator_path_is_url_encoded(self):
+        gh = FakeGh(contents={"dir%20a/file.md": "remote doc"})
+        seed = SimpleNamespace(locator="gh:doc/dir a/file.md")
+        raw = acq._load_seed_bytes(
+            seed,
+            run_git=lambda a: (1, "", "unused"),
+            run_gh=gh,
+            base_sha=BASE,
+            repo_id=REPO_ID,
+            pr_meta=_pr_meta(),
+        )
+        assert raw == b"remote doc"
+        api = [c for c in gh.calls if c[:1] == ["api"] and "/contents/" in c[1]]
+        assert api and "dir%20a/file.md" in api[0][1]
+
+    def test_gh_pr_locator_must_match_enumerated_pr(self):
+        foreign = SimpleNamespace(locator="gh:pr/999#body")
+        with pytest.raises(acq.AcquisitionError) as ei:
+            acq._load_seed_bytes(
+                foreign,
+                run_git=lambda a: (1, "", "unused"),
+                run_gh=FakeGh(),
+                base_sha=BASE,
+                repo_id=REPO_ID,
+                pr_meta=_pr_meta(),
+            )
+        assert ei.value.blocker_class == "authority-missing"
+        own = SimpleNamespace(locator="gh:pr/7#body")
+        assert (
+            acq._load_seed_bytes(
+                own,
+                run_git=lambda a: (1, "", "unused"),
+                run_gh=FakeGh(),
+                base_sha=BASE,
+                repo_id=REPO_ID,
+                pr_meta=_pr_meta(body="pr body text"),
+            )
+            == b"pr body text"
+        )
 
 
 class TestEnumerateFeedback:

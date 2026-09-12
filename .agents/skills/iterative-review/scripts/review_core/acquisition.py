@@ -18,6 +18,7 @@ from __future__ import annotations
 
 import base64
 import json
+import urllib.parse
 from pathlib import Path
 
 from . import discovery_policy, engine, feedback_policy, model, witness_log
@@ -92,6 +93,11 @@ def _load_seed_bytes(seed, *, run_git, run_gh, base_sha: str, repo_id: str, pr_m
             raise AcquisitionError("authority-missing", f"{loc}: {err.strip() or 'unreadable'}")
         return out.encode("utf-8")
     if loc.startswith("gh:pr/") and loc.endswith("#body"):
+        if loc != f"gh:pr/{pr_meta.get('number')}#body":
+            raise AcquisitionError(
+                "authority-missing",
+                f"{loc}: locator does not match the enumerated PR",
+            )
         return (pr_meta.get("body") or "").encode("utf-8")
     if loc.startswith("gh:issue/"):
         n = loc.rsplit("/", 1)[-1]
@@ -101,7 +107,7 @@ def _load_seed_bytes(seed, *, run_git, run_gh, base_sha: str, repo_id: str, pr_m
         doc = json.loads(out)
         return model.canonical_json({"title": doc.get("title"), "body": doc.get("body"), "number": doc.get("number")})
     if loc.startswith("gh:doc/"):
-        path = loc[7:]
+        path = urllib.parse.quote(loc[7:], safe="/")
         rc, out, err = run_gh(["api", f"repos/{repo_id}/contents/{path}?ref={base_sha}"])
         if rc != 0:
             raise AcquisitionError("authority-missing", f"{loc}: {err.strip() or 'unreadable'}")
@@ -416,7 +422,6 @@ def enumerate_acquisition(
         ),
         encoding="utf-8",
     )
-    print(f"enumeration-id: {enumeration_id}")
     return {
         "enumeration_id": enumeration_id,
         "out_dir": str(out_dir),

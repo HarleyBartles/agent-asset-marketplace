@@ -33,6 +33,7 @@ _MARKER_RE = re.compile(r"<!--\s*authority:edge\s+(\S+)\s+(\S+)\s*-->", re.IGNOR
 _SPEC_HEADER_RE = re.compile(r"^\*\*Spec:\*\*\s+(\S+)", re.MULTILINE)
 _GH_ISSUE_RE = re.compile(r"^[Gg][Hh]\s*#(\d+)$")
 _GLOB_CHARS = re.compile(r"[*?\[\]]")
+_CONTROL_CHARS = re.compile(r"[\x00-\x1f\x7f]")
 
 
 class DiscoveryPolicyError(Exception):
@@ -116,22 +117,43 @@ def _norm_repo_path(path: str) -> str:
     return p
 
 
+def _checked_repo_path(path: str) -> str:
+    """Normalize a reviewed-repo-sourced path, refusing control characters and
+    any form that escapes the repository root after normalization."""
+    if _CONTROL_CHARS.search(path):
+        raise DiscoveryPolicyError(f"invalid-locator: path contains control characters: {path!r}")
+    p = _norm_repo_path(path)
+    if p == ".." or p.startswith("../") or posixpath.isabs(p) or re.match(r"^[A-Za-z]:", p):
+        raise DiscoveryPolicyError(f"invalid-locator: path escapes the repository root: {path!r}")
+    return p
+
+
 def canonicalize_locator(raw: str) -> str:
     raw = raw.strip()
+    if _CONTROL_CHARS.search(raw):
+        raise DiscoveryPolicyError(f"invalid-locator: control characters in {raw!r}")
     m = _GH_ISSUE_RE.match(raw)
     if m:
         return f"gh:issue/{m.group(1)}"
     for prefix in ("repo:", "gh:"):
         if raw.startswith(prefix):
             if prefix == "repo:":
-                return "repo:" + _norm_repo_path(raw[5:])
+                return "repo:" + _checked_repo_path(raw[5:])
             head, _, rest = raw[3:].partition("/")
             if head == "doc":
-                return "gh:doc/" + _norm_repo_path(rest)
+                return "gh:doc/" + _checked_repo_path(rest)
+            if head == "issue":
+                if not rest.isdigit():
+                    raise DiscoveryPolicyError(f"invalid-locator: gh:issue requires digits: {raw!r}")
+                return f"gh:issue/{rest}"
+            if head == "pr":
+                if not re.fullmatch(r"\d+#body", rest):
+                    raise DiscoveryPolicyError(f"invalid-locator: gh:pr requires <n>#body: {raw!r}")
+                return raw
             return raw
     if raw.startswith("/") or re.match(r"^[A-Za-z]:", raw):
         return raw
-    return "repo:" + _norm_repo_path(raw)
+    return "repo:" + _checked_repo_path(raw)
 
 
 def _classify(locator: str, *, doc: dict) -> str:
@@ -284,7 +306,16 @@ def enumerate_authorities(
                     }
                 )
                 continue
-            locator = canonicalize_locator(target)
+            try:
+                locator = canonicalize_locator(target)
+            except DiscoveryPolicyError as exc:
+                failures.append(
+                    {
+                        "locator": f"{seed.locator} -> {target}",
+                        "reason": str(exc),
+                    }
+                )
+                continue
             if locator.startswith("repo:"):
                 tpath = locator[5:]
                 if _GLOB_CHARS.search(tpath):

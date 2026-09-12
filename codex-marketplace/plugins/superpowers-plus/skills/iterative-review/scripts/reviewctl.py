@@ -19,6 +19,7 @@ from __future__ import annotations
 import argparse
 import functools
 import json
+import os
 import shutil
 import subprocess
 import sys
@@ -145,6 +146,8 @@ def _run_cmd(argv, cwd=None) -> tuple[int, str, str]:
         [str(a) for a in argv],
         capture_output=True,
         text=True,
+        encoding="utf-8",
+        errors="surrogateescape",
         cwd=cwd,
     )
     return proc.returncode, proc.stdout, proc.stderr
@@ -222,7 +225,7 @@ def _doctor_rows(*, runtime, scratch_dir=None, repo=None, run_cmd=None):
     add(
         "gh-authenticated",
         "pass" if rc == 0 else "fail",
-        (out or err).strip().splitlines()[0][:80] if (out or err) else "",
+        ((out or err).strip().splitlines() or [""])[0][:80],
         "run `gh auth login`",
     )
 
@@ -402,6 +405,8 @@ def _cmd_enumerate(args, json_mode: bool) -> int:
     )
     if json_mode:
         _emit(summary, True)
+    else:
+        print(f"enumeration-id: {summary['enumeration_id']}")
     return 0
 
 
@@ -419,7 +424,10 @@ def _acquired_alias(args, action: str, json_mode: bool) -> int:
     Acquisition is always `reviewctl enumerate` then `reviewctl complete
     --action <freeze|refresh>-review-input --acquired <dir>`; these aliases
     refuse unless a prior enumerate exists for the exact current inputs
-    (repo root, PR number, checked-out HEAD).
+    (repo root, PR number, checked-out HEAD). The input/HEAD pre-check is a
+    friendlier early refusal only: the enumeration-id witness binding at
+    complete time is the authoritative staleness check, so a stale or swapped
+    acquisition directory still fails closed inside `complete`.
     """
     gate = _runtime_gate()
     if gate:
@@ -435,7 +443,14 @@ def _acquired_alias(args, action: str, json_mode: bool) -> int:
     except (OSError, ValueError, KeyError):
         return _fail(f"stale-acquisition: no enumeration under {acquire_dir}; run `reviewctl enumerate` first")
     repo = Path(args.repo).resolve()
-    if inputs.get("pr_number") != int(args.pr) or inputs.get("repo_root") != str(repo):
+    stored_root = inputs.get("repo_root")
+    try:
+        same_repo = stored_root is not None and os.path.normcase(
+            str(Path(str(stored_root)).resolve())
+        ) == os.path.normcase(str(repo))
+    except OSError:
+        same_repo = False
+    if inputs.get("pr_number") != int(args.pr) or not same_repo:
         return _fail("stale-acquisition: enumeration was produced for different inputs; re-run `reviewctl enumerate`")
     rc, out, _err = _run_git(["rev-parse", "HEAD"], cwd=repo)
     if rc != 0 or out.strip() != inputs.get("head_sha"):
@@ -619,7 +634,11 @@ def _build_parser() -> argparse.ArgumentParser:
 
     p = sub.add_parser(
         "enumerate",
-        help="run transcript-witnessed authority/feedback acquisition into the scratch store",
+        help=(
+            "run transcript-witnessed authority/feedback acquisition into the "
+            "scratch store (writes <scratch>/acquire/latest; review state is "
+            "unchanged)"
+        ),
     )
     p.add_argument("--state", required=True)
     p.add_argument("--repo", required=True)
@@ -710,3 +729,5 @@ def main(argv=None) -> int:
 
 if __name__ == "__main__":
     sys.exit(main())
+
+# marker-7f3a9b

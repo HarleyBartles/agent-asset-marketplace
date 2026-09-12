@@ -2023,3 +2023,68 @@ class TestEnumerateCompleteFlow:
         )
         assert rc == 1
         assert "stale-acquisition" in capsys.readouterr().err
+
+    def test_enumerate_json_stdout_is_pure_json(self, tmp_path, monkeypatch, capsys):
+        reviewctl = self._live(
+            monkeypatch,
+            git=helpers.FakeGit({"AGENTS.md": "# law"}),
+            gh=helpers.FakeGh(),
+        )
+        state, scratch = self._init(reviewctl, tmp_path)
+        capsys.readouterr()
+        rc = reviewctl.main(
+            [
+                "enumerate",
+                "--state",
+                str(state),
+                "--repo",
+                str(tmp_path),
+                "--pr",
+                "7",
+                "--json",
+            ]
+        )
+        assert rc == 0
+        summary = json.loads(capsys.readouterr().out)
+        enum_id = json.loads((scratch / "acquire" / "latest" / "enumeration.json").read_text())["enumeration_id"]
+        assert summary["enumeration_id"] == enum_id
+
+    def test_alias_tolerates_repo_path_normalization(self, tmp_path, monkeypatch, capsys):
+        reviewctl = self._live(
+            monkeypatch,
+            git=helpers.FakeGit({"AGENTS.md": "# law"}),
+            gh=helpers.FakeGh(),
+        )
+        state, scratch = self._init(reviewctl, tmp_path)
+        rc = reviewctl.main(
+            [
+                "enumerate",
+                "--state",
+                str(state),
+                "--repo",
+                str(tmp_path),
+                "--pr",
+                "7",
+            ]
+        )
+        assert rc == 0
+        capsys.readouterr()
+        acquire_dir = scratch / "acquire" / "latest"
+        enum_file = acquire_dir / "enumeration.json"
+        enum_rec = json.loads(enum_file.read_text())
+        enum_rec["inputs"]["repo_root"] = enum_rec["inputs"]["repo_root"].replace(os.sep, "/")
+        enum_file.write_text(json.dumps(enum_rec))
+        helpers.acq_transcript_with_marker(scratch, enum_rec["enumeration_id"], out_dir=acquire_dir)
+        rc = reviewctl.main(
+            [
+                "freeze",
+                "--state",
+                str(state),
+                "--repo",
+                str(tmp_path),
+                "--pr",
+                "7",
+                "--apply",
+            ]
+        )
+        assert rc == 0

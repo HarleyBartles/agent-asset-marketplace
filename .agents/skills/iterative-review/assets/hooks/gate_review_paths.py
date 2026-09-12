@@ -3,9 +3,15 @@
 
 Denies file and exec tool calls that touch a configured deny root (the
 review's state, witness, evidence, and acquire directories). Emits a
-``{"decision": "block", "reason": ...}`` object on stdout when a call crosses
-a deny root; silent success otherwise. Always exits 0 - hook failure must not
-abort the session; the state kernel remains the enforcer.
+``{"decision": "block", "reason": ...}`` object on stdout and exits 2 when a
+call crosses a deny root or when the payload cannot be assessed; silent
+exit 0 otherwise. Unlike the recorders, this gate fails closed: an
+unparseable payload is a deny, because the sealed roots stay protected even
+when input is malformed.
+
+Best-effort defense-in-depth only: path keys are resolved against the call's
+cwd, but env-var expansion and shell indirection inside ``command`` text are
+matched literally only - the state kernel remains the enforcer.
 """
 
 import json
@@ -13,7 +19,7 @@ import os
 import sys
 from pathlib import Path
 
-_PATH_KEYS = ("file_path", "path", "notebook_path", "target_file", "workdir")
+_PATH_KEYS = ("file_path", "path", "notebook_path", "target_file", "workdir", "cwd")
 
 
 def _env() -> dict:
@@ -29,11 +35,21 @@ def _norm(text: str) -> str:
 
 
 def _deny_roots(env: dict) -> list[str]:
-    return [_norm(str(r)) for r in env.get("deny_roots") or [] if str(r).strip()]
+    roots = []
+    for raw in env.get("deny_roots") or []:
+        text = str(raw).strip()
+        if not text:
+            continue
+        try:
+            roots.append(_norm(str(Path(text).resolve())))
+        except OSError:
+            roots.append(_norm(text))
+    return roots
 
 
 def _payload() -> dict | None:
-    raw = sys.stdin.read()
+    stream = getattr(sys.stdin, "buffer", None)
+    raw = stream.read().decode("utf-8", errors="surrogateescape") if stream is not None else sys.stdin.read()
     if not raw.strip() and len(sys.argv) > 1:
         raw = sys.argv[1]
     if not raw.strip():
@@ -54,12 +70,27 @@ def _extract_paths(tool_input: dict) -> list[str]:
     return out
 
 
+def _resolve(candidate: str, base: Path) -> str:
+    try:
+        path = Path(candidate)
+        if not path.is_absolute():
+            path = base / path
+        return _norm(str(path.resolve()))
+    except (OSError, ValueError):
+        return _norm(candidate)
+
+
 def _touches_deny(text: str, deny_roots: list[str]) -> str | None:
     normed = _norm(text)
     for root in deny_roots:
         if normed == root or normed.startswith(root + "/") or root in normed:
             return root
     return None
+
+
+def _block(reason: str) -> int:
+    print(json.dumps({"decision": "block", "reason": reason}, separators=(",", ":")))
+    return 2
 
 
 def main() -> int:
@@ -69,13 +100,14 @@ def main() -> int:
         return 0
     payload = _payload()
     if payload is None:
-        return 0
+        return _block("iterative-review: unparseable hook payload")
     tool_input = payload.get("tool_input")
     if not isinstance(tool_input, dict):
-        return 0
+        return _block("iterative-review: hook payload lacks tool_input")
+    base = Path(str(tool_input.get("cwd") or tool_input.get("workdir") or os.getcwd()))
     hit = None
     for candidate in _extract_paths(tool_input):
-        hit = _touches_deny(candidate, deny_roots)
+        hit = _touches_deny(_resolve(candidate, base), deny_roots)
         if hit:
             break
     if hit is None:
@@ -83,15 +115,7 @@ def main() -> int:
         if isinstance(command, str):
             hit = _touches_deny(command, deny_roots)
     if hit is not None:
-        print(
-            json.dumps(
-                {
-                    "decision": "block",
-                    "reason": f"iterative-review: path under sealed review root {hit}",
-                },
-                separators=(",", ":"),
-            )
-        )
+        return _block(f"iterative-review: path under sealed review root {hit}")
     return 0
 
 

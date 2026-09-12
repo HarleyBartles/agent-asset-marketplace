@@ -1,10 +1,13 @@
 #!/usr/bin/env python3
 """PreToolUse transcript recorder for the iterative-review hooks pack.
 
-Reads the hook payload as JSON on stdin (or argv[1] fallback) and appends it
-verbatim as one JSONL line to ``<transcript_root>/<session_id>.jsonl``. Never
-exits nonzero: a recorder failure must not break the session; malformed input
-is logged to ``hook-errors.jsonl`` instead.
+Reads the hook payload as UTF-8 JSON on stdin (or argv[1] fallback) and
+appends the parsed record as one compact JSONL line to
+``<transcript_root>/<session_id>.jsonl``. On POSIX the transcript root is
+locked to 0700 and each transcript file to 0600; a pre-existing transcript
+that grants group/other access is refused (``acl-untrusted``) rather than
+appended to. Never exits nonzero: a recorder failure must not break the
+session; malformed input is logged to ``hook-errors.jsonl`` instead.
 """
 
 import json
@@ -28,10 +31,34 @@ def _transcript_root(env: dict) -> Path:
     return Path(configured) if configured else Path(__file__).parent / "transcripts"
 
 
+def _lockdown(path: Path, *, directory: bool) -> None:
+    if sys.platform == "win32":
+        return
+    import os as _os
+
+    _os.chmod(path, 0o700 if directory else 0o600)
+
+
+def _untrusted(path: Path) -> str | None:
+    if sys.platform == "win32" or not path.exists():
+        return None
+    import os as _os
+    import stat
+
+    mode = stat.S_IMODE(_os.stat(path).st_mode)
+    if mode & 0o077:
+        return f"acl-untrusted: {path} grants group/other access (mode {mode:o})"
+    return None
+
+
 def _log_error(root: Path, message: str) -> None:
     try:
         root.mkdir(parents=True, exist_ok=True)
-        with (root / "hook-errors.jsonl").open("a", encoding="utf-8") as fh:
+        _lockdown(root, directory=True)
+        target = root / "hook-errors.jsonl"
+        if _untrusted(target) is not None:
+            return
+        with target.open("a", encoding="utf-8") as fh:
             fh.write(
                 json.dumps(
                     {
@@ -42,12 +69,14 @@ def _log_error(root: Path, message: str) -> None:
                 )
                 + "\n"
             )
+        _lockdown(target, directory=False)
     except Exception:
         pass
 
 
 def _payload() -> dict:
-    raw = sys.stdin.read()
+    stream = getattr(sys.stdin, "buffer", None)
+    raw = stream.read().decode("utf-8", errors="surrogateescape") if stream is not None else sys.stdin.read()
     if not raw.strip() and len(sys.argv) > 1:
         raw = sys.argv[1]
     parsed = json.loads(raw)
@@ -68,8 +97,14 @@ def main() -> int:
     safe = re.sub(r"[^A-Za-z0-9_.-]", "_", str(session)) if session else "unknown-session"
     try:
         root.mkdir(parents=True, exist_ok=True)
-        with (root / f"{safe}.jsonl").open("a", encoding="utf-8") as fh:
+        _lockdown(root, directory=True)
+        target = root / f"{safe}.jsonl"
+        untrusted = _untrusted(target)
+        if untrusted is not None:
+            raise OSError(untrusted)
+        with target.open("a", encoding="utf-8") as fh:
             fh.write(json.dumps(rec, separators=(",", ":")) + "\n")
+        _lockdown(target, directory=False)
     except Exception as exc:
         _log_error(root, f"transcript write failed: {exc}")
     return 0
