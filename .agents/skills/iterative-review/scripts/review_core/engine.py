@@ -359,11 +359,7 @@ def load_witness_sources(
         witness_root=scratch / "witness",
         review_id=review_id,
     )
-    acq_dir = (
-        Path(acquisition_dir)
-        if acquisition_dir is not None
-        else scratch / "acquire" / "latest"
-    )
+    acq_dir = Path(acquisition_dir) if acquisition_dir is not None else scratch / "acquire" / "latest"
     discovery = None
     if (acq_dir / "data.json").is_file() and (acq_dir / "enumeration.json").is_file():
         discovery = acquisition.LiveAuthorityDiscovery(

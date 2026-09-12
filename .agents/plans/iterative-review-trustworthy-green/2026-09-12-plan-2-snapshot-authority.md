@@ -709,9 +709,9 @@ class TestEnumerateCompleteFlow:
 - `SKILL.md` interim boundary: v2 now supports freeze/refresh acquisition on Devin with installed hooks; coverage/dispatch/frontier lanes remain unbuilt; v1 stays legacy assistance; green remains unavailable until Plans 3-7.
 - Roadmap: Plan 2 status `executing` (it moves to `done` only when this PR lands).
 
-- [ ] **Step 1:** Apply doc edits per content requirements.
-- [ ] **Step 2:** `py -3 tools/run.py installed-skills --apply` from worktree root; verify `git status` shows canonical + installed pairs in sync (`git diff --no-index` spot-check on `scripts/review_core/acquisition.py` canonical vs installed).
-- [ ] **Step 3:** Full focused suite one more time from worktree root; `ruff check` the canonical skill tree.
+- [x] **Step 1:** Apply doc edits per content requirements.
+- [x] **Step 2:** `py -3 tools/run.py installed-skills --apply` from worktree root; verify `git status` shows canonical + installed pairs in sync (`git diff --no-index` spot-check on `scripts/review_core/acquisition.py` canonical vs installed).
+- [x] **Step 3:** Full focused suite one more time from worktree root; `ruff check` the canonical skill tree.
 - [ ] **Step 4:** Stage the complete intended tree (canonical skill, installed mirror, plan docs, fixtures); commit through the pre-commit hook gate.
 - [ ] **Step 5:** `git push -u origin codex/iterative-review-snapshot-authority`; `gh pr create --draft --base main` with summary + test-plan body; record the PR URL.
 - [ ] **Step 6:** Report back: PR URL, head SHA, focused-suite counts, hook-gate result. Publication proof = the draft PR, not local state.

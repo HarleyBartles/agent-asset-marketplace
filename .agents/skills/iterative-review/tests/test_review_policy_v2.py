@@ -1442,10 +1442,7 @@ class TestFreezeFindings:
         assert f["source_id"] == "github:thread:PRRT_1"
         assert f["disposition"] == "open"
         assert f["discovered_snapshot_epoch"] == w.state["snapshot"]["epoch"]
-        assert (
-            f["discovered_snapshot_fingerprint"]
-            == w.state["snapshot"]["fingerprint"]
-        )
+        assert f["discovered_snapshot_fingerprint"] == w.state["snapshot"]["fingerprint"]
 
     def test_freeze_rejects_non_feedback_finding(self, tmp_path):
         w = _Walk(tmp_path)
@@ -1527,16 +1524,10 @@ class TestFreezeFindings:
             sole=False,
         )
         assert w.state["findings"][first_id]["disposition"] == "open"
-        new = [
-            f for f in w.state["findings"].values()
-            if f["source_id"] == "github:thread:PRRT_2"
-        ]
+        new = [f for f in w.state["findings"].values() if f["source_id"] == "github:thread:PRRT_2"]
         assert len(new) == 1
         assert new[0]["discovered_snapshot_epoch"] == 2
-        assert (
-            new[0]["discovered_snapshot_fingerprint"]
-            == w.state["snapshot"]["fingerprint"]
-        )
+        assert new[0]["discovered_snapshot_fingerprint"] == w.state["snapshot"]["fingerprint"]
 
     def test_refresh_does_not_reopen_closed_finding(self, tmp_path):
         w = _Walk(tmp_path)
@@ -1544,8 +1535,7 @@ class TestFreezeFindings:
         data["findings"] = [_feedback_finding()]
         w.run("freeze-review-input", data)
         fid = next(iter(w.state["findings"]))
-        adj_att_id = _run_adjudicated(
-            w, fid, outcome="false-positive")
+        adj_att_id = _run_adjudicated(w, fid, outcome="false-positive")
         counter = _bind(
             w.state,
             _put(w.state, {"counter-evidence": fid}),
@@ -1593,11 +1583,7 @@ class TestFreezeFindings:
                 w.state,
                 action="refresh-review-input",
                 raw_data=model.canonical_json(
-                    {
-                        k: v
-                        for k, v in dict(intake, drift_reasons=["head_sha"]).items()
-                        if k != "findings"
-                    }
+                    {k: v for k, v in dict(intake, drift_reasons=["head_sha"]).items() if k != "findings"}
                 ),
                 policies=w.policies,
             )

@@ -184,3 +184,24 @@ Identical topology to the prior spec's mermaid graph with these substitutions: "
 - The realized subagent model is self-reported; the `model:` pin is a declared contract, not an attested one.
 - Local checks are witnessed, not isolated.
 - Calibration measures the local loop against frontier output; if frontier review is weak or absent, green's confidence claim degrades accordingly - say so in presentation.
+
+## Implementation deltas (recorded as they ship)
+
+### Plan 2 (snapshot authority)
+
+- Freeze/refresh payloads carry a `witnesses` key: the `authority-discovery`
+  witness records bind the candidate snapshot being installed, so the handler
+  installs them inside `complete_action`'s single validated transition rather
+  than before it. Other source actions keep witness-first ordering because
+  their payload records reference witness ids.
+- `SNAPSHOT_SUBJECT_FIELDS` includes `epoch`; the `no-drift` refusal compares
+  the subject projection with `epoch` excluded, otherwise a byte-identical
+  refresh could never be detected.
+- `enumeration.json` carries an `inputs` record (repo root, PR number,
+  base/head SHAs, epoch). The `reviewctl freeze`/`refresh` convenience aliases
+  refuse unless a prior `enumerate` exists for the exact current inputs and
+  re-check `git rev-parse HEAD` before completing.
+- `PolicyBundle.discovery_policy_origin` defaults to `reviewed-head`, under
+  which `authority_manifest_complete` never holds; the live Devin composition
+  root resolves the discovery policy at the base revision and declares
+  `base-revision`.

@@ -76,6 +76,40 @@ predicate. `freeze-review-input`, `enter-fixing`, and `refresh-review-input`
 are the only snapshot-installing transitions; drift is never repaired in
 place.
 
+## Snapshot acquisition and the witness chain
+
+A snapshot is installed only from a transcript-witnessed enumeration.
+`reviewctl enumerate` runs the acquisition under the hooks pack so the exec
+is recorded in the harness transcript; `reviewctl complete --action
+<freeze|refresh>-review-input --acquired <dir>` then binds the produced
+acquisition directory. The `authority-discovery` witness record carries
+`transcript_range` plus `record_positions` and `chain_head_at_record`
+against the chained witness log; `TranscriptWitnessVerifier` re-verifies
+chain integrity and the subject digest at evaluation time, so a snapshot
+claim that lacks the witnessed enumeration segment cannot satisfy the
+authority predicates.
+
+Refresh advances exactly one epoch and requires non-empty drift reasons
+drawn from the snapshot subject fields; a byte-identical subject (epoch
+excluded) is refused as `no-drift`. Refresh invalidates downstream proof -
+coverage inventory, ready transition, CI candidate, and green seal reset -
+while findings and witness history stay durable.
+
+Two digests keep provider feedback honest: `feedback_history_sha256` covers
+the complete actionable thread and change-request history, including items
+resolved before freeze, and `unresolved_feedback_sha256` covers the subset
+still open at enumeration time. Each actionable item also enters through
+the freeze/refresh payload as a feedback-sourced finding bound to the
+installed snapshot; finding identity is content-derived, so a re-enumerated
+item never overwrites an existing record and a provider-side Resolve cannot
+reopen or reset its lifecycle.
+
+Honest residual: the witness chain proves the enumeration ran under the
+hooks pack, but hook-stream integrity depends on the harness emitting a
+record for every exec. A harness that drops a tool record produces a gap
+the verifier cannot distinguish from omission. That limitation is documented
+rather than claimed away.
+
 ## All-severity finding closure
 
 Green requires every finding closed, not every finding fixed. The lawful

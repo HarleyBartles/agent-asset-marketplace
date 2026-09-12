@@ -2723,21 +2723,40 @@ ACQ_PR_URL = "https://github.com/o/r/pull/7"
 
 def acq_pr_meta(**over):
     meta = {
-        "number": 7, "url": ACQ_PR_URL, "title": "T", "body": "B",
-        "isDraft": True, "state": "OPEN",
-        "baseRefOid": ACQ_BASE, "headRefOid": ACQ_HEAD, "baseRefName": "main",
+        "number": 7,
+        "url": ACQ_PR_URL,
+        "title": "T",
+        "body": "B",
+        "isDraft": True,
+        "state": "OPEN",
+        "baseRefOid": ACQ_BASE,
+        "headRefOid": ACQ_HEAD,
+        "baseRefName": "main",
         "closingIssuesReferences": [{"number": 12}],
-        "labels": [{"name": "bug"}], "assignees": [{"login": "me"}],
-        "milestone": None, "author": {"login": "a"},
+        "labels": [{"name": "bug"}],
+        "assignees": [{"login": "me"}],
+        "milestone": None,
+        "author": {"login": "a"},
     }
     meta.update(over)
     return meta
 
 
 class FakeGit:
-    def __init__(self, files, *, head=ACQ_HEAD, base=ACQ_BASE, merge_base=ACQ_MB,
-                 tree=ACQ_TREE, obj_format="sha1", porcelain="",
-                 merge_bases=None, diff="diff-bytes", override=None):
+    def __init__(
+        self,
+        files,
+        *,
+        head=ACQ_HEAD,
+        base=ACQ_BASE,
+        merge_base=ACQ_MB,
+        tree=ACQ_TREE,
+        obj_format="sha1",
+        porcelain="",
+        merge_bases=None,
+        diff="diff-bytes",
+        override=None,
+    ):
         self.files = dict(files)
         self.head = head
         self.base = base
@@ -2778,10 +2797,20 @@ class FakeGit:
 
 
 class FakeGh:
-    def __init__(self, *, authed=True, repo=ACQ_REPO_ID, pr=None,
-                 head_remote=True, threads=(), reviews=(),
-                 issues=None, contents=None, protection=None,
-                 graphql_error=False):
+    def __init__(
+        self,
+        *,
+        authed=True,
+        repo=ACQ_REPO_ID,
+        pr=None,
+        head_remote=True,
+        threads=(),
+        reviews=(),
+        issues=None,
+        contents=None,
+        protection=None,
+        graphql_error=False,
+    ):
         self.authed = authed
         self.repo = repo
         self.pr = pr if pr is not None else acq_pr_meta()
@@ -2815,8 +2844,7 @@ class FakeGh:
                     "nodes": list(self.reviews),
                 },
             }
-            return 0, json.dumps(
-                {"data": {"repository": {"pullRequest": pr}}}), ""
+            return 0, json.dumps({"data": {"repository": {"pullRequest": pr}}}), ""
         if args[0] == "api":
             path = args[1]
             if "/commits/" in path:
@@ -2852,27 +2880,34 @@ def acq_enumerate(tmp_path, git=None, gh=None, epoch=1):
     git = git or FakeGit({"AGENTS.md": "# law"})
     gh = gh or FakeGh()
     summary = acq.enumerate_acquisition(
-        run_git=git, run_gh=gh, repo_root=Path(tmp_path), pr_number=7,
-        out_dir=out_dir, scratch_dir=scratch, epoch=epoch)
+        run_git=git, run_gh=gh, repo_root=Path(tmp_path), pr_number=7, out_dir=out_dir, scratch_dir=scratch, epoch=epoch
+    )
     return summary, out_dir, scratch
 
 
-def acq_transcript_with_marker(scratch, enumeration_id, *, session="s1",
-                               tool_use="exec_1", out_dir=None, extra_pre=()):
+def acq_transcript_with_marker(scratch, enumeration_id, *, session="s1", tool_use="exec_1", out_dir=None, extra_pre=()):
     lines = list(extra_pre)
-    lines.append({
-        "hook_event_name": "PreToolUse", "tool_name": "exec",
-        "tool_input": {"command": f"reviewctl enumerate --out {out_dir or 'X'}"},
-        "tool_use_id": tool_use, "session_id": session, "prompt_id": "p1",
-    })
-    lines.append({
-        "hook_event_name": "PostToolUse", "tool_name": "exec",
-        "tool_input": {"command": f"reviewctl enumerate --out {out_dir or 'X'}"},
-        "tool_use_id": tool_use, "session_id": session, "prompt_id": "p1",
-        "tool_response": {"success": True,
-                          "output": f"enumeration-id: {enumeration_id}\n",
-                          "error": None},
-    })
+    lines.append(
+        {
+            "hook_event_name": "PreToolUse",
+            "tool_name": "exec",
+            "tool_input": {"command": f"reviewctl enumerate --out {out_dir or 'X'}"},
+            "tool_use_id": tool_use,
+            "session_id": session,
+            "prompt_id": "p1",
+        }
+    )
+    lines.append(
+        {
+            "hook_event_name": "PostToolUse",
+            "tool_name": "exec",
+            "tool_input": {"command": f"reviewctl enumerate --out {out_dir or 'X'}"},
+            "tool_use_id": tool_use,
+            "session_id": session,
+            "prompt_id": "p1",
+            "tool_response": {"success": True, "output": f"enumeration-id: {enumeration_id}\n", "error": None},
+        }
+    )
     f = Path(scratch) / "transcripts" / f"{session}.jsonl"
     f.parent.mkdir(parents=True, exist_ok=True)
     f.write_text("".join(json.dumps(x) + "\n" for x in lines), encoding="utf-8")

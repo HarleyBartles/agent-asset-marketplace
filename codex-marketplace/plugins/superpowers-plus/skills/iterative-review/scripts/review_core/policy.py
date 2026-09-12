@@ -211,9 +211,7 @@ ACTION_ORDER = (
 )
 
 ACTION_PAYLOAD_KEYS = {
-    "freeze-review-input": frozenset(
-        {"snapshot", "authority_manifest", "authorities", "findings", "witnesses"}
-    ),
+    "freeze-review-input": frozenset({"snapshot", "authority_manifest", "authorities", "findings", "witnesses"}),
     "refresh-review-input": frozenset(
         {"snapshot", "authority_manifest", "authorities", "drift_reasons", "findings", "witnesses"}
     ),
