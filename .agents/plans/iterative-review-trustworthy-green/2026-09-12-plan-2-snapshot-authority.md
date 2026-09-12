@@ -245,7 +245,7 @@ Pure stdlib. No imports from `engine` (it must stay importable by `policy` consu
   - `reviewctl hooks install --scratch-dir <dir> [--user]`: renders the template to `<scratch-dir>/hooks/hooks.v1.json` plus copies scripts to `<scratch-dir>/hooks/` (self-contained, review-scoped); prints the absolute path the user installs into `.devin/hooks.v1.json`. `hooks status --scratch-dir <dir>` reports installed/not-installed + transcript dir writability.
   - `doctor` gains rows: `runtime`, `hooks-installed`, `transcript-dir-writable`, `witness-log-roundtrip` (create+append+verify under scratch), `git-present`, `repo-non-shallow`, `gh-authenticated`. Each row `{name, status: pass|fail|skip, detail, remediation}`; any `fail` -> exit 1 with top-level `capability-floor-failed` listing failed rows.
 
-- [x] **Step 1: Write the failing tests**
+- [ ] **Step 1: Write the failing tests**
 
 `tests/test_review_doctor_v2.py`:
 
@@ -276,15 +276,15 @@ class TestDoctorRows:
         # non-Devin runtime -> verdict inert, no row checks run
 ```
 
-- [x] **Step 2: Confirm failure** - `py -3 -m pytest tests/test_review_doctor_v2.py -x -q`.
+- [ ] **Step 2: Confirm failure** - `py -3 -m pytest tests/test_review_doctor_v2.py -x -q`.
 
-- [x] **Step 3: Implement** hook scripts + template + `hooks` subcommand + doctor rows. Doctor probes take injectable runners (`git_runner`, `gh_runner` params on the doctor function) so tests avoid real subprocess.
+- [ ] **Step 3: Implement** hook scripts + template + `hooks` subcommand + doctor rows. Doctor probes take injectable runners (`git_runner`, `gh_runner` params on the doctor function) so tests avoid real subprocess.
 
-- [x] **Step 4: Green** - same pytest command.
+- [ ] **Step 4: Green** - same pytest command.
 
-- [x] **Step 5: Update `harness-capability-floor.md`** - replace the deferred-recheck note with the live row table; keep the honest limitations list unchanged.
+- [ ] **Step 5: Update `harness-capability-floor.md`** - replace the deferred-recheck note with the live row table; keep the honest limitations list unchanged.
 
-- [x] **Step 6: Commit** - `feat(iterative-review): ship hooks pack and live doctor rechecks`.
+- [ ] **Step 6: Commit** - `feat(iterative-review): ship hooks pack and live doctor rechecks`.
 
 ---
 
@@ -381,7 +381,7 @@ Policy document (`authority-discovery-policy.v1.json`) content - ship exactly th
 }
 ```
 
-- [x] **Step 1: Write the failing tests** in `tests/test_review_discovery_v2.py` - build fixture trees under `tmp_path` with a fake `run_git` dispatching canned `git show`/`ls-tree` output:
+- [ ] **Step 1: Write the failing tests** in `tests/test_review_discovery_v2.py` - build fixture trees under `tmp_path` with a fake `run_git` dispatching canned `git show`/`ls-tree` output:
 
 ```python
 class TestPolicyResolution:
@@ -410,9 +410,9 @@ class TestEnumeration:
         # assert the seed set shrinks exactly - proves traversal completeness
 ```
 
-- [x] **Step 2-4:** Run-fail, implement `discovery_policy.py` + policy JSON, run-green.
+- [ ] **Step 2-4:** Run-fail, implement `discovery_policy.py` + policy JSON, run-green.
 
-- [x] **Step 5: Commit** - `feat(iterative-review): seal authority-discovery policy with base-revision resolution`.
+- [ ] **Step 5: Commit** - `feat(iterative-review): seal authority-discovery policy with base-revision resolution`.
 
 ---
 
@@ -558,7 +558,7 @@ class LiveAuthorityDiscovery:
         #   per evidence file - alias, kind, path are all required))
 ```
 
-- [ ] **Step 1: Write the failing tests** in `tests/test_review_acquisition_v2.py` with fake runners (a `FakeGit`/`FakeGh` dispatch table mapping argv -> canned stdout; fixtures under `tests/fixtures/acquisition/`):
+- [x] **Step 1: Write the failing tests** in `tests/test_review_acquisition_v2.py` with fake runners (a `FakeGit`/`FakeGh` dispatch table mapping argv -> canned stdout; fixtures under `tests/fixtures/acquisition/`):
 
 ```python
 class TestEnumerateAcquisition:
@@ -605,9 +605,9 @@ class TestLoadAcquisition:
         #  still ships so _install_findings dedups by identity)
 ```
 
-- [ ] **Step 2-4:** Run-fail, implement `feedback_policy.py` + `acquisition.py`, run-green.
+- [x] **Step 2-4:** Run-fail, implement `feedback_policy.py` + `acquisition.py`, run-green.
 
-- [ ] **Step 5: Commit** - `feat(iterative-review): add live acquisition adapter and feedback-history policy`.
+- [x] **Step 5: Commit** - `feat(iterative-review): add live acquisition adapter and feedback-history policy`.
 
 ---
 

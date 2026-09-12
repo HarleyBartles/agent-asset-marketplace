@@ -20,17 +20,16 @@ from pathlib import Path
 from . import model
 
 AUTHORITY_EDGE_KINDS = (
-    "governs", "implements", "depends-on",
-    "supersedes", "references-as-authority",
+    "governs",
+    "implements",
+    "depends-on",
+    "supersedes",
+    "references-as-authority",
 )
 
-_POLICY_DOC = (
-    Path(__file__).resolve().parent.parent.parent
-    / "references" / "authority-discovery-policy.v1.json"
-)
+_POLICY_DOC = Path(__file__).resolve().parent.parent.parent / "references" / "authority-discovery-policy.v1.json"
 
-_MARKER_RE = re.compile(
-    r"<!--\s*authority:edge\s+(\S+)\s+(\S+)\s*-->", re.IGNORECASE)
+_MARKER_RE = re.compile(r"<!--\s*authority:edge\s+(\S+)\s+(\S+)\s*-->", re.IGNORECASE)
 _SPEC_HEADER_RE = re.compile(r"^\*\*Spec:\*\*\s+(\S+)", re.MULTILINE)
 _GH_ISSUE_RE = re.compile(r"^[Gg][Hh]\s*#(\d+)$")
 _GLOB_CHARS = re.compile(r"[*?\[\]]")
@@ -62,8 +61,7 @@ def _validate_document(doc: object, *, source: str) -> dict:
         raise DiscoveryPolicyError(f"{source}: unsupported schema_version")
     if doc.get("policy_id") != "authority-discovery":
         raise DiscoveryPolicyError(f"{source}: wrong policy_id")
-    for key in ("repo_law_roots", "pr_roots", "edge_kinds",
-                "edge_grammars", "structural_edges"):
+    for key in ("repo_law_roots", "pr_roots", "edge_kinds", "edge_grammars", "structural_edges"):
         if not isinstance(doc.get(key), list):
             raise DiscoveryPolicyError(f"{source}: {key} must be a list")
     if not isinstance(doc.get("override_path"), str):
@@ -178,14 +176,9 @@ def _front_matter_edges(text: str) -> list[tuple[str, str]]:
             if item.startswith("kind:"):
                 pending_kind = item[5:].strip().strip("\"'")
             elif ":" in item:
-                kv = dict(
-                    p.split(":", 1) for p in
-                    item.strip("{} ").split(",") if ":" in p
-                )
+                kv = dict(p.split(":", 1) for p in item.strip("{} ").split(",") if ":" in p)
                 if "kind" in kv and "target" in kv:
-                    edges.append(
-                        (kv["kind"].strip().strip("\"'"),
-                         kv["target"].strip().strip("\"'")))
+                    edges.append((kv["kind"].strip().strip("\"'"), kv["target"].strip().strip("\"'")))
                 pending_kind = None
             else:
                 parts = item.split(None, 1)
@@ -209,8 +202,7 @@ def _extract_edges(text: str, *, doc: dict) -> list[tuple[str, str]]:
     return edges
 
 
-def _seed_text(seed: AuthoritySeed, *, run_git, base_sha: str,
-               load_text, show_cache: dict) -> str | None:
+def _seed_text(seed: AuthoritySeed, *, run_git, base_sha: str, load_text, show_cache: dict) -> str | None:
     if seed.locator.startswith("repo:"):
         path = seed.locator[5:]
         if path not in show_cache:
@@ -254,8 +246,7 @@ def enumerate_authorities(
     for pattern in doc["repo_law_roots"]:
         for path in sorted(files):
             if fnmatch.fnmatch(path, pattern):
-                add("repo-law", "repo:" + _norm_repo_path(path),
-                    f"policy:{pattern}")
+                add("repo-law", "repo:" + _norm_repo_path(path), f"policy:{pattern}")
     if "description" in doc["pr_roots"]:
         number = pr_metadata.get("number", 0)
         add("pr-description", f"gh:pr/{number}#body", "policy:pr_roots")
@@ -277,50 +268,53 @@ def enumerate_authorities(
                         for match in sorted(files):
                             if fnmatch.fnmatch(match, glob):
                                 edges.append((rule["edge"], "repo:" + match))
-        text = _seed_text(
-            seed, run_git=run_git, base_sha=base_sha,
-            load_text=load_text, show_cache=show_cache)
+        text = _seed_text(seed, run_git=run_git, base_sha=base_sha, load_text=load_text, show_cache=show_cache)
         if text is None:
             if not seed.declared_by.startswith("policy:"):
-                failures.append({
-                    "locator": seed.locator, "reason": "inaccessible"})
+                failures.append({"locator": seed.locator, "reason": "inaccessible"})
             continue
         edges.extend(_extract_edges(text, doc=doc))
 
         for kind, target in edges:
             if kind not in doc["edge_kinds"]:
-                failures.append({
-                    "locator": f"{seed.locator} -> {target}",
-                    "reason": f"unsupported-edge-kind {kind}",
-                })
+                failures.append(
+                    {
+                        "locator": f"{seed.locator} -> {target}",
+                        "reason": f"unsupported-edge-kind {kind}",
+                    }
+                )
                 continue
             locator = canonicalize_locator(target)
             if locator.startswith("repo:"):
                 tpath = locator[5:]
                 if _GLOB_CHARS.search(tpath):
-                    matches = [f for f in sorted(files)
-                               if fnmatch.fnmatch(f, tpath)]
+                    matches = [f for f in sorted(files) if fnmatch.fnmatch(f, tpath)]
                     if len(matches) != 1:
-                        failures.append({
-                            "locator": f"{seed.locator} -> {target}",
-                            "reason": (
-                                "ambiguous" if matches else "inaccessible"),
-                        })
+                        failures.append(
+                            {
+                                "locator": f"{seed.locator} -> {target}",
+                                "reason": ("ambiguous" if matches else "inaccessible"),
+                            }
+                        )
                         continue
                     locator = "repo:" + matches[0]
                 elif tpath not in files:
-                    failures.append({
-                        "locator": f"{seed.locator} -> {target}",
-                        "reason": "inaccessible",
-                    })
+                    failures.append(
+                        {
+                            "locator": f"{seed.locator} -> {target}",
+                            "reason": "inaccessible",
+                        }
+                    )
                     continue
             elif locator.startswith("gh:"):
                 pass
             else:
-                failures.append({
-                    "locator": f"{seed.locator} -> {target}",
-                    "reason": "unsupported-locator",
-                })
+                failures.append(
+                    {
+                        "locator": f"{seed.locator} -> {target}",
+                        "reason": "unsupported-locator",
+                    }
+                )
                 continue
             add(_classify(locator, doc=doc), locator, seed.locator)
 

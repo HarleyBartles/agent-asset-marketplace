@@ -52,6 +52,7 @@ def _load_text(mapping):
     def load(locator: str):
         v = mapping.get(locator)
         return v.encode("utf-8") if isinstance(v, str) else v
+
     return load
 
 
@@ -64,23 +65,28 @@ class TestPolicyResolution:
         assert pol.document_sha256 == default.document_sha256
 
     def test_base_revision_override_applies(self):
-        override = json.dumps({
-            "schema_version": 1,
-            "policy_id": "authority-discovery",
-            "version": "1",
-            "repo_law_roots": ["AGENTS.md"],
-            "pr_roots": ["description"],
-            "edge_kinds": list(dp.AUTHORITY_EDGE_KINDS),
-            "edge_grammars": [],
-            "structural_edges": [],
-            "override_path": OVERRIDE_PATH,
-        })
+        override = json.dumps(
+            {
+                "schema_version": 1,
+                "policy_id": "authority-discovery",
+                "version": "1",
+                "repo_law_roots": ["AGENTS.md"],
+                "pr_roots": ["description"],
+                "edge_kinds": list(dp.AUTHORITY_EDGE_KINDS),
+                "edge_grammars": [],
+                "structural_edges": [],
+                "override_path": OVERRIDE_PATH,
+            }
+        )
         git = FakeGit({"AGENTS.md": "# repo"}, override=override)
         pol = dp.resolve_policy(run_git=git, base_sha=BASE)
         assert pol.document_sha256 != dp.default_policy().document_sha256
         seeds, failures = dp.enumerate_authorities(
-            policy=pol, run_git=git, base_sha=BASE,
-            pr_metadata=_pr(issues=[12]), load_text=_load_text({}),
+            policy=pol,
+            run_git=git,
+            base_sha=BASE,
+            pr_metadata=_pr(issues=[12]),
+            load_text=_load_text({}),
         )
         assert not failures
         kinds = {(s.kind, s.locator) for s in seeds}
@@ -106,20 +112,26 @@ class TestPolicyResolution:
 
 class TestEnumeration:
     def test_repo_law_roots_enumerated_at_base(self):
-        git = FakeGit({
-            "AGENTS.md": "# law",
-            ".devin/rules/pr.md": "rule",
-            ".agents/doctrine/mesh.md": "doc",
-            "src/code.py": "print()",
-        })
+        git = FakeGit(
+            {
+                "AGENTS.md": "# law",
+                ".devin/rules/pr.md": "rule",
+                ".agents/doctrine/mesh.md": "doc",
+                "src/code.py": "print()",
+            }
+        )
         seeds, failures = dp.enumerate_authorities(
-            policy=dp.default_policy(), run_git=git, base_sha=BASE,
-            pr_metadata=_pr(), load_text=_load_text({}),
+            policy=dp.default_policy(),
+            run_git=git,
+            base_sha=BASE,
+            pr_metadata=_pr(),
+            load_text=_load_text({}),
         )
         assert not failures
         repo_law = {s.locator for s in seeds if s.kind == "repo-law"}
         assert repo_law == {
-            "repo:AGENTS.md", "repo:.devin/rules/pr.md",
+            "repo:AGENTS.md",
+            "repo:.devin/rules/pr.md",
             "repo:.agents/doctrine/mesh.md",
         }
         assert "repo:src/code.py" not in {s.locator for s in seeds}
@@ -127,7 +139,9 @@ class TestEnumeration:
     def test_pr_description_and_linked_issues_are_roots(self):
         git = FakeGit({"AGENTS.md": "# law"})
         seeds, failures = dp.enumerate_authorities(
-            policy=dp.default_policy(), run_git=git, base_sha=BASE,
+            policy=dp.default_policy(),
+            run_git=git,
+            base_sha=BASE,
             pr_metadata=_pr(issues=[12, 34]),
             load_text=_load_text({"gh:issue/12": "body", "gh:issue/34": "body"}),
         )
@@ -138,93 +152,127 @@ class TestEnumeration:
         assert not failures
 
     def test_marker_edge_traversed_to_fixed_point(self):
-        git = FakeGit({
-            "AGENTS.md": "<!-- authority:edge governs repo:doc/b.md -->",
-            "doc/b.md": "<!-- authority:edge references-as-authority repo:doc/c.md -->",
-            "doc/c.md": "leaf",
-        })
+        git = FakeGit(
+            {
+                "AGENTS.md": "<!-- authority:edge governs repo:doc/b.md -->",
+                "doc/b.md": "<!-- authority:edge references-as-authority repo:doc/c.md -->",
+                "doc/c.md": "leaf",
+            }
+        )
         seeds, failures = dp.enumerate_authorities(
-            policy=dp.default_policy(), run_git=git, base_sha=BASE,
-            pr_metadata=_pr(), load_text=_load_text({}),
+            policy=dp.default_policy(),
+            run_git=git,
+            base_sha=BASE,
+            pr_metadata=_pr(),
+            load_text=_load_text({}),
         )
         assert not failures
         locators = {s.locator for s in seeds}
         assert {"repo:doc/b.md", "repo:doc/c.md"} <= locators
 
     def test_cycle_terminates_without_dup(self):
-        git = FakeGit({
-            "AGENTS.md": "<!-- authority:edge governs repo:a.md -->",
-            "a.md": "<!-- authority:edge depends-on repo:b.md -->",
-            "b.md": "<!-- authority:edge depends-on repo:a.md -->",
-        })
+        git = FakeGit(
+            {
+                "AGENTS.md": "<!-- authority:edge governs repo:a.md -->",
+                "a.md": "<!-- authority:edge depends-on repo:b.md -->",
+                "b.md": "<!-- authority:edge depends-on repo:a.md -->",
+            }
+        )
         seeds, failures = dp.enumerate_authorities(
-            policy=dp.default_policy(), run_git=git, base_sha=BASE,
-            pr_metadata=_pr(), load_text=_load_text({}),
+            policy=dp.default_policy(),
+            run_git=git,
+            base_sha=BASE,
+            pr_metadata=_pr(),
+            load_text=_load_text({}),
         )
         assert not failures
         locs = [s.locator for s in seeds]
         assert locs.count("repo:a.md") == 1 and locs.count("repo:b.md") == 1
 
     def test_structural_agents_edge(self):
-        git = FakeGit({
-            "AGENTS.md": "# law, no markers",
-            ".devin/rules/x.md": "r",
-            ".agents/doctrine/y.md": "d",
-        })
+        git = FakeGit(
+            {
+                "AGENTS.md": "# law, no markers",
+                ".devin/rules/x.md": "r",
+                ".agents/doctrine/y.md": "d",
+            }
+        )
         seeds, _ = dp.enumerate_authorities(
-            policy=dp.default_policy(), run_git=git, base_sha=BASE,
-            pr_metadata=_pr(), load_text=_load_text({}),
+            policy=dp.default_policy(),
+            run_git=git,
+            base_sha=BASE,
+            pr_metadata=_pr(),
+            load_text=_load_text({}),
         )
         locs = {s.locator for s in seeds}
         assert {"repo:.devin/rules/x.md", "repo:.agents/doctrine/y.md"} <= locs
 
     def test_plan_spec_header_implements_edge(self):
-        git = FakeGit({
-            "AGENTS.md": "<!-- authority:edge implements repo:.agents/plans/p1.md -->",
-            ".agents/plans/p1.md": "**Spec:** .agents/specs/s1.md\nbody",
-            ".agents/specs/s1.md": "spec text",
-        })
+        git = FakeGit(
+            {
+                "AGENTS.md": "<!-- authority:edge implements repo:.agents/plans/p1.md -->",
+                ".agents/plans/p1.md": "**Spec:** .agents/specs/s1.md\nbody",
+                ".agents/specs/s1.md": "spec text",
+            }
+        )
         seeds, failures = dp.enumerate_authorities(
-            policy=dp.default_policy(), run_git=git, base_sha=BASE,
-            pr_metadata=_pr(), load_text=_load_text({}),
+            policy=dp.default_policy(),
+            run_git=git,
+            base_sha=BASE,
+            pr_metadata=_pr(),
+            load_text=_load_text({}),
         )
         assert not failures
         assert "repo:.agents/specs/s1.md" in {s.locator for s in seeds}
 
     def test_ambiguous_target_is_failure_not_omission(self):
-        git = FakeGit({
-            "AGENTS.md": "<!-- authority:edge governs repo:doc/*.md -->",
-            "doc/one.md": "1",
-            "doc/two.md": "2",
-        })
+        git = FakeGit(
+            {
+                "AGENTS.md": "<!-- authority:edge governs repo:doc/*.md -->",
+                "doc/one.md": "1",
+                "doc/two.md": "2",
+            }
+        )
         seeds, failures = dp.enumerate_authorities(
-            policy=dp.default_policy(), run_git=git, base_sha=BASE,
-            pr_metadata=_pr(), load_text=_load_text({}),
+            policy=dp.default_policy(),
+            run_git=git,
+            base_sha=BASE,
+            pr_metadata=_pr(),
+            load_text=_load_text({}),
         )
         assert failures
         assert not any(s.locator.startswith("repo:doc/") for s in seeds)
 
     def test_inaccessible_target_is_failure(self):
-        git = FakeGit({
-            "AGENTS.md": "<!-- authority:edge governs repo:missing.md -->",
-        })
+        git = FakeGit(
+            {
+                "AGENTS.md": "<!-- authority:edge governs repo:missing.md -->",
+            }
+        )
         _seeds, failures = dp.enumerate_authorities(
-            policy=dp.default_policy(), run_git=git, base_sha=BASE,
-            pr_metadata=_pr(), load_text=_load_text({}),
+            policy=dp.default_policy(),
+            run_git=git,
+            base_sha=BASE,
+            pr_metadata=_pr(),
+            load_text=_load_text({}),
         )
         assert any("missing.md" in f["locator"] for f in failures)
 
     def test_canonicalization_dedups_equivalent_locators(self):
-        git = FakeGit({
-            "AGENTS.md": (
-                "<!-- authority:edge governs repo:a/../x.md -->\n"
-                "<!-- authority:edge governs repo:./x.md -->\n"
-                "<!-- authority:edge governs GH #12 -->"
-            ),
-            "x.md": "x",
-        })
+        git = FakeGit(
+            {
+                "AGENTS.md": (
+                    "<!-- authority:edge governs repo:a/../x.md -->\n"
+                    "<!-- authority:edge governs repo:./x.md -->\n"
+                    "<!-- authority:edge governs GH #12 -->"
+                ),
+                "x.md": "x",
+            }
+        )
         seeds, failures = dp.enumerate_authorities(
-            policy=dp.default_policy(), run_git=git, base_sha=BASE,
+            policy=dp.default_policy(),
+            run_git=git,
+            base_sha=BASE,
             pr_metadata=_pr(issues=[12]),
             load_text=_load_text({"gh:issue/12": "b"}),
         )
@@ -233,17 +281,23 @@ class TestEnumeration:
         assert locs.count("repo:x.md") == 1
         assert locs.count("gh:issue/12") == 1
 
-    @pytest.mark.parametrize("drop", [
-        "agents", "rules", "doctrine", "issues", "marker", "spec_header",
-    ])
+    @pytest.mark.parametrize(
+        "drop",
+        [
+            "agents",
+            "rules",
+            "doctrine",
+            "issues",
+            "marker",
+            "spec_header",
+        ],
+    )
     def test_omission_fixture_every_root_and_edge_kind(self, drop):
         # each edge carrier is an independent root so losses are explicit
         files = {
             "AGENTS.md": "",
-            ".devin/rules/r.md":
-                "<!-- authority:edge implements repo:.agents/plans/p.md -->",
-            ".agents/doctrine/d.md":
-                "<!-- authority:edge governs repo:doc/m.md -->",
+            ".devin/rules/r.md": "<!-- authority:edge implements repo:.agents/plans/p.md -->",
+            ".agents/doctrine/d.md": "<!-- authority:edge governs repo:doc/m.md -->",
             ".agents/plans/p.md": "**Spec:** .agents/specs/s.md",
             ".agents/specs/s.md": "s",
             "doc/m.md": "m",
@@ -263,21 +317,26 @@ class TestEnumeration:
             files[".agents/plans/p.md"] = "no header"
         git = FakeGit(files)
         seeds, failures = dp.enumerate_authorities(
-            policy=dp.default_policy(), run_git=git, base_sha=BASE,
+            policy=dp.default_policy(),
+            run_git=git,
+            base_sha=BASE,
             pr_metadata=_pr(issues=issues),
             load_text=_load_text({"gh:issue/12": "b"}),
         )
         assert not failures
         locs = {s.locator for s in seeds}
         expected = {
-            "repo:AGENTS.md", "repo:.devin/rules/r.md",
-            "repo:.agents/doctrine/d.md", "repo:.agents/plans/p.md",
-            "gh:issue/12", "repo:doc/m.md", "repo:.agents/specs/s.md",
+            "repo:AGENTS.md",
+            "repo:.devin/rules/r.md",
+            "repo:.agents/doctrine/d.md",
+            "repo:.agents/plans/p.md",
+            "gh:issue/12",
+            "repo:doc/m.md",
+            "repo:.agents/specs/s.md",
         }
         lost = {
             "agents": {"repo:AGENTS.md"},
-            "rules": {"repo:.devin/rules/r.md", "repo:.agents/plans/p.md",
-                      "repo:.agents/specs/s.md"},
+            "rules": {"repo:.devin/rules/r.md", "repo:.agents/plans/p.md", "repo:.agents/specs/s.md"},
             "doctrine": {"repo:.agents/doctrine/d.md", "repo:doc/m.md"},
             "issues": {"gh:issue/12"},
             "marker": {"repo:doc/m.md"},
