@@ -109,7 +109,7 @@ Run `py -3 tools/run.py marketplace --apply` and `py -3 tools/run.py mesh --appl
 - Declares but does not hand-build: `make_complete_candidate`, `make_remote_observation`, `make_policy_bundle`, and `remove_predicate`; Task 4 implements them by composing the canonical constructors delivered by Tasks 2-3.
 - Consumes: current version-1 `next_node.py`, `compile_metrics.py`, and `resolved_ledger.py` behavior as the RED baseline.
 
-- [ ] **Step 1: Add the minimal intake-state builder and invariant catalog**
+- [x] **Step 1: Add the minimal intake-state builder and invariant catalog**
 
 Create `review_v2_helpers.py` with these public helpers and exact default shape:
 
@@ -164,7 +164,7 @@ def write_v2_state(tmp_path: Path, state: dict) -> Path:
 
 Add named invariant-case constants and minimal malformed dictionaries only. The complete green candidate is intentionally impossible to assemble correctly until canonical payload projection, snapshot, content/evidence, route, witness-record, and transition constructors exist. Define the four later helpers as stubs that raise `NotImplementedError("implemented in Task 4 from production constructors")`; do not copy future schemas or precompute mutually dependent hashes in Task 1.
 
-- [ ] **Step 2: Add RED tests for the proven version-1 defects**
+- [x] **Step 2: Add RED tests for the proven version-1 defects**
 
 Extend `test_next_node.py` with legacy-fixture tests that prove version-1 state cannot be promoted to a version-2 green seal for:
 
@@ -180,7 +180,7 @@ test_v1_unrepresentable_blocker_cannot_produce_v2_green
 
 Each test must exercise a public CLI rather than private helper functions. The `test_lens_triage_resolution_skips_fix` routing correction already landed on main and the focused suite is green at baseline; preserve that contract unchanged and do not spend this plan rehabilitating the legacy graph.
 
-- [ ] **Step 3: Add version-2 green-predicate negative tests**
+- [x] **Step 3: Add version-2 green-predicate negative tests**
 
 In `test_review_invariants_v2.py`, define one parameterized test that starts from a valid green-candidate fixture and removes exactly one predicate per case:
 
@@ -324,7 +324,7 @@ test_initially_ready_pr_uses_verified_idempotent_noop_transition
 
 The imports from `review_core` should fail during RED because Tasks 2-4 have not created them.
 
-- [ ] **Step 4: Run RED and capture the expected failures**
+- [x] **Step 4: Run RED and capture the expected failures**
 
 Run:
 
@@ -334,11 +334,11 @@ py -3 -m pytest -q --junitxml="$irReviewScratch/task-1-red.xml" codex-marketplac
 
 Expected: version-2 imports and legacy-to-version-2 boundary assertions fail because `review_core` and `reviewctl.py` do not exist. The lens-triage contract is already green at baseline, so every other failure is a defect to investigate, not an expected baseline. Record the exact failure summary in the task report.
 
-- [ ] **Step 5: Preserve RED evidence without committing it**
+- [x] **Step 5: Preserve RED evidence without committing it**
 
 Save the exact command, exit code, and failure names in the task's off-repo scratch report, rename the XML as directed, then execute the global recovery recipe with label `task-1`; verify the zip contains the new untracked tests/helpers. Leave RED tests in the working tree and proceed directly to Task 2. Do not stage, commit, publish, or bypass hooks while the suite is intentionally red.
 
-- [ ] **Step 6: Mark Task 1 complete in this plan**
+- [x] **Step 6: Mark Task 1 complete in this plan**
 
 Change every Task 1 checkbox to `[x]` in the working tree. Task 6 will stage the completed plan after the implementation is green.
 
@@ -456,7 +456,7 @@ def remote_observation_subject(observation_without_witness: dict) -> dict: ...
 
 The bodies represented by `...` are implementation work, but their allowlists are not: every constructor implements the exact projection row in the normative spec and rejects missing/extra keys before projection. Argument ownership and return types are fixed here; no constructor accepts caller-selected projection keys or performs generic "drop wrapper keys" subtraction. Each error sets a stable `code` and JSON-style `path`. `strict_json_loads()` is the only JSON decoder used by state, CLI, witness acquisition, reports, witness records, observations, evidence re-reads, or golden-vector input; it rejects BOMs, non-finite numbers, and duplicate object keys before canonicalization. Completion subjects bind the digest of the exact accepted raw bytes as well as the validated structured content, the harness-assigned `agent_id`, and the tool transcript.
 
-- [ ] **Step 1: Write focused model validation tests**
+- [x] **Step 1: Write focused model validation tests**
 
 Add tests that assert `StateValidationError` for:
 
@@ -544,7 +544,7 @@ Add a round-trip test proving `new_state()` validates and serializes determinist
 Add `test_construct_epoch_one_from_raw_witness_payloads_without_fixed_point`: starting only from raw authority/failure bytes, typed discovery outputs, and sealed discovery/witness-policy digests, use production constructors in the required order to compute the manifest payload digest, snapshot fingerprint, payload evidence, witness record, and final manifest wrapper. Assert no hashed projection contains its own digest or any later binding field and no partial wrapper validates.
 Add one table-driven golden-vector test for every normative projection and witness target. The literal fixture contains strict input, expected canonical UTF-8 bytes, expected digest/derived ID, and expected witness subject digest where applicable; production code may read but never generate or update it. A per-field mutation test proves every included semantic/security field changes the subject digest and every explicitly excluded wrapper field leaves subject bytes unchanged while strict wrapper/state validation still protects it.
 
-- [ ] **Step 2: Implement canonical enums and required keys**
+- [x] **Step 2: Implement canonical enums and required keys**
 
 In `model.py`, define these exact tuples:
 
@@ -717,7 +717,7 @@ Implement every named constructor in the API from the normative projection table
 
 Validate every first-class route-selection record as the strict design-spec object. `route_selection_subject()` includes its externally assigned globally unique epoch-namespaced ID and the resolved profile identity (profile name plus profile-file bytes hash) and excludes local evidence/epoch/fingerprint fields; evidence binds those subject bytes and the wrapper is attached afterward. The dispatch references that record and does not duplicate profile, tier, model, reasoning, context, parent, or selection fields; CLI output derives them from the route. A `profile` route requires the named profile file to exist in a harness profile root outside the reviewed head - the user-global agents directory; a profile file inside the reviewed tree is reviewed-head content and cannot qualify, carry a `model:` pin at or above the assignment floor and an `allowed-tools` list appropriate to the role, and be dispatched by name with no model/reasoning override; its declared model/reasoning are read from the profile and recorded, never injected. There is no fallback route: when no qualifying profile exists, the dispatch blocks. Launch verification compares the witnessed launch record's profile name and exact task bytes against the route selection and pending dispatch intent; drift between resolution and launch blocks. Mappers, scope challenger, adjudicator, and review-repair verifier require fresh, dispatch-distinct launches at their portable role floors and the exact role-contract separation defined by the spec. Exemption challenger, repair verifier, final, and closure require newly verified profile resolution for each launch; exemption/final/closure and any repair reaching whole-PR proof are role-specific `final-strong`. They never reuse cached qualification. Blind-final context uses the strict constructor-owned allowlist manifest and requires `hazard_framing_sha256: null`.
 
-- [ ] **Step 3: Implement snapshot fingerprinting**
+- [x] **Step 3: Implement snapshot fingerprinting**
 
 Use canonical JSON with sorted keys and compact separators:
 
@@ -745,7 +745,7 @@ Implement and test the construction order rather than accepting a preassembled m
 
 This order must be the only production constructor path. No digest projection contains its own digest, evidence ID, witness ID, epoch binding, or later wrapper.
 
-- [ ] **Step 4: Implement recursive state validation**
+- [x] **Step 4: Implement recursive state validation**
 
 `validate_state()` must implement the exact top-level and record contracts in the source design and:
 
@@ -771,11 +771,11 @@ This order must be the only production constructor path. No digest projection co
 
 Return `None` on success and raise `StateValidationError` with a stable path-prefixed message on failure, for example `findings.F-1.disposition: unknown value 'ignored'`.
 
-- [ ] **Step 5: Document the same contract in JSON Schema**
+- [x] **Step 5: Document the same contract in JSON Schema**
 
 Write `review-state-v2.schema.json` as Draft 7 with `additionalProperties: false` at every object level and enum values identical to `model.py`. The Python validator remains runtime authority; the schema is interoperability documentation and a test fixture. Add a standard-library test that walks the schema and asserts every documented object closes additional properties and every named enum equals its Python tuple, so the two representations cannot drift silently.
 
-- [ ] **Step 6: Run model tests**
+- [x] **Step 6: Run model tests**
 
 ```powershell
 py -3 -m pytest -q --junitxml="$irReviewScratch/task-2-tests.xml" codex-marketplace/plugins/superpowers-plus/skills/iterative-review/tests/test_review_model_v2.py
@@ -783,11 +783,11 @@ py -3 -m pytest -q --junitxml="$irReviewScratch/task-2-tests.xml" codex-marketpl
 
 Expected: PASS.
 
-- [ ] **Step 7: Verify and persist the Task 2 recovery checkpoint**
+- [x] **Step 7: Verify and persist the Task 2 recovery checkpoint**
 
 Run `git diff --check`, confirm only intended canonical source/tests/references/plan tracking changed, then execute the global task-boundary recovery recipe with label `task-2` and hash `task-2-tests.xml`. Verify the zip contains untracked model/schema/test files. Do not commit while later invariant tests remain RED.
 
-- [ ] **Step 8: Mark Task 2 complete in this plan**
+- [x] **Step 8: Mark Task 2 complete in this plan**
 
 Change every Task 2 checkbox to `[x]` in the working tree. Task 6 will stage the completed plan after the implementation is green.
 
@@ -867,7 +867,7 @@ def append_history(candidate: dict, *, event: str, data_sha256: str) -> dict: ..
 
 `StateTransaction` captures prior generation and exact persisted-byte SHA-256, increments generation exactly once, rechecks both immediately before replacement, and rejects stale/lost updates. The composition root supplies the sealed ingestion policy whose digest must equal the candidate/current snapshot; every cap is positive, every evidence kind has an explicit cap, Windows trustees are exact SID strings, and POSIX modes may not grant group/other access. The engine alone derives the context's action, candidate snapshot, and exact file allowlist from trusted manifest paths and dedicated witness-source staging files; callers cannot broaden it to a root. Registration stores immutable content under `<scratch_dir>/evidence-store/sha256/<digest>` and a separate epoch-bound evidence binding, never a live source path. Errors have stable codes such as `state-concurrent`, `unsafe-source`, `content-drift`, `policy-mismatch`, `size-cap`, `acl-untrusted`, and `state-invalid`.
 
-- [ ] **Step 1: Write failing atomicity and evidence tests**
+- [x] **Step 1: Write failing atomicity and evidence tests**
 
 Add tests for:
 
@@ -893,7 +893,7 @@ verify_evidence_files detects disappearance or byte drift after registration
 append_history assigns a monotonic sequence, chains record hashes, and never rewrites prior records
 ```
 
-- [ ] **Step 2: Implement locked compare-and-swap state transactions**
+- [x] **Step 2: Implement locked compare-and-swap state transactions**
 
 Use a sibling lock file with an OS-level exclusive lock. Acquire it before reading the state and retain it until the replacement and directory flush are complete. `StateTransaction` captures the exact prior bytes, their SHA-256, and `generation`; immediately before commit it re-reads through the held lock and compares both, validates the candidate, requires `candidate["generation"] == prior + 1`, then writes a sibling temporary file with UTF-8/no BOM/final newline, flushes and `os.fsync()`s, closes it, and calls `os.replace`. Delete only the explicit temporary file on failure. Never delete or rewrite the parent directory. Add a deterministic two-process barrier test in which one transaction records a finding and the stale transaction attempts to seal; exactly one commits and the finding remains.
 
@@ -901,7 +901,7 @@ Create and verify the scratch/evidence-store root with private current-user perm
 
 On POSIX, start from verified directory descriptors and traverse each component with `openat`/`O_NOFOLLOW`; use `fstat` to reject symlinks/non-regular files, perform the bounded read from that same descriptor, create roots/files with private modes, and fsync both files and owning directories. Add Linux tests that swap a parent symlink between validation and open and assert rejection. If the platform lacks the required safe-open/locking primitives, initialization returns typed `unsupported-safe-store` and blocks; do not implement a `resolve()`-then-`open()` fallback.
 
-- [ ] **Step 3: Implement content-addressed evidence registration**
+- [x] **Step 3: Implement content-addressed evidence registration**
 
 Content IDs use `sha256:` followed by the file's lowercase digest. Evidence IDs use `evidence:` followed by the SHA-256 of the canonical binding projection. A representative content object and binding are:
 
@@ -929,7 +929,7 @@ Content IDs use `sha256:` followed by the file's lowercase digest. Evidence IDs 
 
 CLI data files refer to command-local evidence as `@alias` only in allowlisted evidence-reference fields. Repeated CLI arguments use `--evidence-file alias=kind=C:/absolute/path`. The current action recipe declares every alias/kind, and the engine resolves its exact eligible source: a trusted-manifest repo file or a dedicated per-transaction staging file materialized by a connector/harness action. It constructs `EvidenceIngestionContext` itself and passes the composition-root `EvidenceIngestionPolicy`; the user cannot select an action context, candidate snapshot, policy, trustee, cap, or allowed root. Registration streams bounded bytes from the one verified handle into the owned store, fsyncs, and constructs the content object followed by the epoch binding. The in-memory transaction resolves aliases to evidence IDs, rejects unused/unresolved aliases, validates final state, and commits once. `candidate_snapshot` is legal only for initial freeze, published `enter-fixing`, or trusted `refresh-review-input`; each atomically ingests the replacement snapshot, canonical manifest payload, authority/failure records, discovery witness record, and finally the complete manifest wrapper with no intermediate current state. Add an epoch-advance test where an unchanged authority document reuses its content object while retaining two distinct evidence bindings and historical wrappers, plus a test rejecting a manifest wrapper created before its discovery witness exists.
 
-- [ ] **Step 4: Implement append-only history records**
+- [x] **Step 4: Implement append-only history records**
 
 Each accepted mutation appends:
 
@@ -948,7 +948,7 @@ Each accepted mutation appends:
 
 History is diagnostic. Current state remains decision authority. For non-empty state, the final history `generation` equals top-level `generation`; each accepted mutation increments both exactly once.
 
-- [ ] **Step 5: Run store and model tests**
+- [x] **Step 5: Run store and model tests**
 
 ```powershell
 py -3 -m pytest -q --junitxml="$irReviewScratch/task-3-tests.xml" codex-marketplace/plugins/superpowers-plus/skills/iterative-review/tests/test_review_model_v2.py codex-marketplace/plugins/superpowers-plus/skills/iterative-review/tests/test_review_store_v2.py
@@ -956,11 +956,11 @@ py -3 -m pytest -q --junitxml="$irReviewScratch/task-3-tests.xml" codex-marketpl
 
 Expected: PASS.
 
-- [ ] **Step 6: Verify and persist the Task 3 recovery checkpoint**
+- [x] **Step 6: Verify and persist the Task 3 recovery checkpoint**
 
 Run `git diff --check`, confirm store/model tests are green, then execute the global task-boundary recovery recipe with label `task-3` and hash `task-3-tests.xml`. Verify the zip contains the untracked store/tests. Do not commit while policy and CLI invariant tests remain RED.
 
-- [ ] **Step 7: Mark Task 3 complete in this plan**
+- [x] **Step 7: Mark Task 3 complete in this plan**
 
 Change every Task 3 checkbox to `[x]` in the working tree. Task 6 will stage the completed plan after the implementation is green.
 
@@ -978,7 +978,7 @@ Change every Task 3 checkbox to `[x]` in the working tree. Task 6 will stage the
 - Consumes: validated state from Task 2 and evidence records from Task 3.
 - Produces: sealed `WitnessPolicy`, `ReviewAssignmentPolicy`, `CommandExecutionPolicy`, `LocalCheckPolicy`, and `HypothesisDerivationPolicy` protocols; `Decision`, `next_action`, `register_dispatch`, `record_launch`, `evaluate_green`, `complete_action`, `block_review`, and `resume_review` with the exact signatures below. The composition-root verifier owns the sealed per-kind source registry (hook-transcript store or `gh` remote state), verifies transcript-chain integrity or re-fetches remote records, enforces harness-identity uniqueness, and returns verified witness identities; no generic local-file or caller-selected verifier exists.
 
-- [ ] **Step 1: Write the complete transition table as tests**
+- [x] **Step 1: Write the complete transition table as tests**
 
 Parameterize `test_review_policy_v2.py` over this clean happy-path action sequence (no findings):
 
@@ -1063,7 +1063,7 @@ Now extend `review_v2_helpers.py` using only production constructors from Tasks 
 
 Add conditional transition tests for every finding-producing gate (`map-impact-*`, `challenge-coverage`, feedback intake, preflight, fast, focused, strong, exemption challenge, fix review, repair verification, final, closure, and remote CI): any new finding interrupts immediately and makes `adjudicate-findings` the only action until a current witnessed typed outcome exists. Mapper findings use the snapshot assignment and nullable obligation; failed checks cause the engine to materialize typed check findings atomically rather than trusting a caller-supplied findings list. On both initial freeze and refresh, the sealed feedback-history source enumerates every actionable provider thread/change request, including already-resolved items, and the engine creates a durable finding keyed by provider/thread identity unless a lawful lifecycle closure already exists. Provider-side resolution changes the current feedback subset but cannot close that finding. A proposed high-risk N/A result makes `run-exemption-challenge` the next action before final; `applicable` rejects the exemption and returns to the earliest incomplete obligation predicate, while `not-applicable-confirmed` completes it. A `false-positive` adjudication outcome permits only `close-false-positive`. A `confirmed/candidate-change` outcome permits exactly `enter-fixing` or `accept-risk`; a `confirmed/review-process` outcome permits exactly `enter-review-repair` or `accept-risk`; `contested` blocks. No outcome can authorize a different or second branch. `enter-fixing` accepts published replacement snapshot/manifest/authorities in one atomic transition, advances exactly one epoch with `head_sha == fix_sha`, invalidates current derived evidence, and returns to semantic impact mapping. While a finding is `fixing`, policy permits impact/check/fast/focused/strong re-ascent but blocks final review. It then requires already-recorded `run-fix-verification` and witness-bound `review-fix: verified` proof before `close-fixed` may consume those IDs without advancing the epoch. `enter-review-repair` preserves the exact snapshot, marks the finding `review-repairing`, derives and atomically invalidates the target/downstream record cut, and returns the earliest missing gate. After replacement proof exists, `verify-review-repair` must run under the computed independent floor; only its already-recorded `verified` result allows `close-review-repaired`, after which blind final and closure run fresh. Add an end-to-end case where closure finds an omitted coverage/security review on unchanged bytes; no no-op commit, byte-identical refresh, false-positive, or self-closing repair may escape the lawful repair route. Separately, any trusted non-fix drift requires `refresh-review-input`, advances one epoch, invalidates the same derived evidence, and re-ascends. Test all resolution branches, refresh causes, and finding origins, including feedback, final, and closure.
 
-- [ ] **Step 2: Implement `Decision` and explicit missing predicates**
+- [x] **Step 2: Implement `Decision` and explicit missing predicates**
 
 Use:
 
@@ -1268,7 +1268,7 @@ For reviewer-backed actions, the recipe exposes the non-null maximum of the port
 
 Before returning `seal-green`, policy re-runs `verify_evidence_files()` for every green evidence ID and re-verifies every authority-discovery, command-execution, profile-resolution, launch, completion, ready-transition, and stored remote-observation witness used by a predicate with its full review/dispatch/epoch/fingerprint scope, plus transcript-chain integrity end to end. It requires the exact complete sealed local-check policy item set and matching sealed command-execution policy. Each command witness binds the policy item, argv/command bytes, clean-tree working directory, snapshot head/tree, executable/interpreter/script/module/toolchain and allowlisted environment digest, equal pre/post source digests, complete process-tree termination, exit/timing identity, and output digest. A dirty or mutable checkout or a surviving descendant blocks. A hosted check binds the full repository/PR/snapshot/policy/empty-feedback identity and exact policy-item/app/workflow ID/path/definition ref/SHA/event/trigger subject/policy inputs/configuration/check-run/workflow-run/attempt/head identity through a remote-observation witness, never a command witness. Plan 1 proves generic structural/verifier failure only; Task 0 must first prove the hook-transcript and `gh` witness surfaces, Plan 2 owns live per-root/per-edge omission fixtures, Plan 4 owns hostile-command runner fixtures and live dispatch/command witnesses, and Plan 6 owns live multi-attempt/unauthorized-trigger selection fixtures. `seal-green` binds all verified witness-record digests and separate canonical coverage/findings/repairs/reviews/checks digests plus the witness-chain head; `repairs_sha256` covers every repair intent, invalidation cut, replacement set, status, and verifier attestation. It writes a candidate seal and advances to `green-candidate`. `evaluate_green(..., policies=..., now=...)` rechecks owned bytes and witnesses plus separately fresh strict remote-observation bytes and 60-second age without mutating state. Plan 1 tests use a fixed clock and test-only policy bundle only after Task 0 proves the witness floor; until live witness sources exist, the experimental CLI blocks witness-dependent completion/sealing rather than accepting local JSON.
 
-- [ ] **Step 3: Implement stage predicates**
+- [x] **Step 3: Implement stage predicates**
 
 Implement named pure predicates:
 
@@ -1305,7 +1305,7 @@ Every predicate returns `(bool, tuple[str, ...])`. `evaluate_green()` concatenat
 
 Implement the design-spec floor table as a pure function over the obligation's closed `scope_level`, `risk`, and non-empty `consequences` tuple. Test every scope/risk pair plus every consequence vocabulary value; hazard prose is never parsed as policy. The result is the maximum applicable tier, with normalized reasoning `low`, `standard`, `high`, or `final-strong` respectively. Repository policy may raise the result but any attempted lowering is a validation error.
 
-- [ ] **Step 4: Implement finding closure rules**
+- [x] **Step 4: Implement finding closure rules**
 
 `all_findings_closed()` rejects every `open`, `fixing`, `review-repairing`, `deferred`, `contested`, `unassessed`, or `accepted-risk` finding regardless of severity. It validates disposition proof:
 
@@ -1321,11 +1321,11 @@ An open finding first requires `adjudicate-findings`. A confirmed candidate chan
 
 There is no round cap that permits green or discards work. A configured resource cap may return `blocked` with the remaining obligations/findings and required escalation evidence.
 
-- [ ] **Step 5: Implement blocking and lawful resume**
+- [x] **Step 5: Implement blocking and lawful resume**
 
 `block_review()` rejects creation when another blocker is active and records the exact blocker ID, class, reason, evidence IDs, epoch, fingerprint, and opened sequence. `resume_review()` requires that exact sole active ID plus non-empty current `resolution_evidence_ids`; it atomically records those IDs, resolution epoch/fingerprint, and closed sequence before restoring `status: active`. Missing/wrong/stale evidence, toggling `active` directly, or multiple active blockers fails validation. `next_action()` then recomputes predicates; recovered authority/drift routes to `refresh-review-input`. Add exhaustive zero/one/two-blocker and wrong-ID resume tests. There is no hard-coded `blocked -> blocked` terminal transition.
 
-- [ ] **Step 6: Run policy and invariant tests**
+- [x] **Step 6: Run policy and invariant tests**
 
 ```powershell
 py -3 -m pytest -q --junitxml="$irReviewScratch/task-4-tests.xml" codex-marketplace/plugins/superpowers-plus/skills/iterative-review/tests/test_review_policy_v2.py codex-marketplace/plugins/superpowers-plus/skills/iterative-review/tests/test_review_invariants_v2.py
@@ -1333,11 +1333,11 @@ py -3 -m pytest -q --junitxml="$irReviewScratch/task-4-tests.xml" codex-marketpl
 
 Expected: PASS, including every remove-one-predicate green test.
 
-- [ ] **Step 7: Verify and persist the Task 4 recovery checkpoint**
+- [x] **Step 7: Verify and persist the Task 4 recovery checkpoint**
 
 Run `git diff --check`, confirm policy/invariant tests are green, then execute the global task-boundary recovery recipe with label `task-4` and hash `task-4-tests.xml`. Verify the zip contains the untracked policy/tests. Do not commit while the public CLI and full focused suite remain incomplete.
 
-- [ ] **Step 8: Mark Task 4 complete in this plan**
+- [x] **Step 8: Mark Task 4 complete in this plan**
 
 Change every Task 4 checkbox to `[x]` in the working tree. Task 6 will stage the completed plan after the implementation is green.
 
@@ -1437,7 +1437,7 @@ Each live witness-source method returns exact `raw_data` bytes plus evidence sou
 
 The `dispatch` CLI handler sequences two durable phases: `register_dispatch_transaction` persists the pending dispatch and resolved profile identity; then the source launch plus `launch_transaction` verifies and stores the witnessed `run_subagent` call (transcript `tool_use_id`, verbatim task bytes, profile name). Completion later verifies the launch/completion transcript pair and ordered tool-call digest. The `complete --action mark-ready-for-ci` handler mirrors that pattern with `register_ready_transition_transaction` and `finalize_ready_transition_transaction`. It observes prior lifecycle before registering the exact intent, and finalization accepts either a witnessed performed transition or a verified already-ready no-op for the same idempotency key and head. A crash leaves a visible pending record at the last durable phase; retry is idempotent for the same intent and rejects an unrelated remote state or replay.
 
-- [ ] **Step 1: Write CLI contract tests before implementation**
+- [x] **Step 1: Write CLI contract tests before implementation**
 
 Test exact behavior:
 
@@ -1464,7 +1464,7 @@ concurrent stale completion cannot erase a finding or overwrite a newer generati
 evidence aliases are resolved before record validation and never survive in persisted state
 ```
 
-- [ ] **Step 2: Implement thin command handlers**
+- [x] **Step 2: Implement thin command handlers**
 
 Every handler should read exact bytes/paths, pass JSON bytes through `strict_json_loads()`, call one `review_core.engine` transaction or pure policy function, and render the result. Do not duplicate transaction order or policy in the CLI. Mutation commands accept `--data-file` and repeated `--evidence-file alias=kind=absolute-path`; they never accept shell-embedded JSON. Evidence files are untrusted sources to ingest, not provenance. Plan 1 exposes no flag for local witness/manifest/policy trust; its witness sources are fail-closed until later plans inject the live hook-transcript and `gh` sources through the internal engine composition root.
 
@@ -1492,7 +1492,7 @@ Normal next-action JSON is:
 
 For subagent-backed actions, `next` returns the dispatch command first. `dispatch` records the exact role, assignments, tool requirements, context-package/hazard-framing evidence, and canonical resolved profile identity before launch. It commits the pending dispatch first; only then may the witnessed `run_subagent` call launch the agent. Completion requires transcript-verified launch and completion witnesses bound to that prior dispatch, context, and exact raw output. There is no completion path that creates its dispatch or witnesses retroactively, and no local JSON fallback when the hook transcript cannot supply them.
 
-- [ ] **Step 3: Make legacy boundaries explicit**
+- [x] **Step 3: Make legacy boundaries explicit**
 
 Update `next_node.py` so it detects `schema_version`:
 
@@ -1503,11 +1503,11 @@ Update `next_node.py` so it detects `schema_version`:
 
 The legacy `lens-triage` route correction already landed on main, so no version-1 routing change is needed; keep the existing `test_lens_triage_resolution_skips_fix` contract green. Preserve all other version-1 defects as migration fixtures and document that the legacy graph is review assistance only.
 
-- [ ] **Step 4: Prove there is only one version-2 authority**
+- [x] **Step 4: Prove there is only one version-2 authority**
 
 Add cross-CLI tests proving `next_node.py`, `compile_metrics.py`, and `resolved_ledger.py` cannot mutate a version-2 state file or create a green seal. Version-2 metrics and Markdown rendering are deferred until cutover; Plan 1 does not add parallel report surfaces.
 
-- [ ] **Step 5: Run all focused tests**
+- [x] **Step 5: Run all focused tests**
 
 ```powershell
 py -3 -m pytest -q --junitxml="$irReviewScratch/task-5-tests.xml" codex-marketplace/plugins/superpowers-plus/skills/iterative-review/tests
@@ -1515,7 +1515,7 @@ py -3 -m pytest -q --junitxml="$irReviewScratch/task-5-tests.xml" codex-marketpl
 
 Expected: PASS, including the already-green `test_lens_triage_resolution_skips_fix` contract and every new false-green regression.
 
-- [ ] **Step 6: Run all bundled-script CLI self-checks**
+- [x] **Step 6: Run all bundled-script CLI self-checks**
 
 ```powershell
 $scripts = Get-ChildItem codex-marketplace/plugins/superpowers-plus/skills/iterative-review/scripts -File -Filter '*.py'
@@ -1524,11 +1524,11 @@ foreach ($script in $scripts) { py -3 $script.FullName --help | Out-Null; if ($L
 
 Expected: every executable script exits `0` for both commands.
 
-- [ ] **Step 7: Verify and persist the complete focused implementation checkpoint**
+- [x] **Step 7: Verify and persist the complete focused implementation checkpoint**
 
 Run `git diff --check`, confirm the complete focused suite and CLI self-checks are green, then execute the global task-boundary recovery recipe with label `task-5` and hash `task-5-tests.xml`. Verify the zip contains every untracked kernel/CLI/test file. Proceed to Task 6 without committing; the generated installed copy is still stale.
 
-- [ ] **Step 8: Mark Task 5 complete in this plan**
+- [x] **Step 8: Mark Task 5 complete in this plan**
 
 Change every Task 5 checkbox to `[x]` in the working tree. Task 6 will stage it with regenerated surfaces and pass it through the pre-commit hook's canonical gate.
 
