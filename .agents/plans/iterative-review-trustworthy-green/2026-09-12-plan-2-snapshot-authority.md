@@ -245,7 +245,7 @@ Pure stdlib. No imports from `engine` (it must stay importable by `policy` consu
   - `reviewctl hooks install --scratch-dir <dir> [--user]`: renders the template to `<scratch-dir>/hooks/hooks.v1.json` plus copies scripts to `<scratch-dir>/hooks/` (self-contained, review-scoped); prints the absolute path the user installs into `.devin/hooks.v1.json`. `hooks status --scratch-dir <dir>` reports installed/not-installed + transcript dir writability.
   - `doctor` gains rows: `runtime`, `hooks-installed`, `transcript-dir-writable`, `witness-log-roundtrip` (create+append+verify under scratch), `git-present`, `repo-non-shallow`, `gh-authenticated`. Each row `{name, status: pass|fail|skip, detail, remediation}`; any `fail` -> exit 1 with top-level `capability-floor-failed` listing failed rows.
 
-- [ ] **Step 1: Write the failing tests**
+- [x] **Step 1: Write the failing tests**
 
 `tests/test_review_doctor_v2.py`:
 
@@ -276,15 +276,15 @@ class TestDoctorRows:
         # non-Devin runtime -> verdict inert, no row checks run
 ```
 
-- [ ] **Step 2: Confirm failure** - `py -3 -m pytest tests/test_review_doctor_v2.py -x -q`.
+- [x] **Step 2: Confirm failure** - `py -3 -m pytest tests/test_review_doctor_v2.py -x -q`.
 
-- [ ] **Step 3: Implement** hook scripts + template + `hooks` subcommand + doctor rows. Doctor probes take injectable runners (`git_runner`, `gh_runner` params on the doctor function) so tests avoid real subprocess.
+- [x] **Step 3: Implement** hook scripts + template + `hooks` subcommand + doctor rows. Doctor probes take injectable runners (`git_runner`, `gh_runner` params on the doctor function) so tests avoid real subprocess.
 
-- [ ] **Step 4: Green** - same pytest command.
+- [x] **Step 4: Green** - same pytest command.
 
-- [ ] **Step 5: Update `harness-capability-floor.md`** - replace the deferred-recheck note with the live row table; keep the honest limitations list unchanged.
+- [x] **Step 5: Update `harness-capability-floor.md`** - replace the deferred-recheck note with the live row table; keep the honest limitations list unchanged.
 
-- [ ] **Step 6: Commit** - `feat(iterative-review): ship hooks pack and live doctor rechecks`.
+- [x] **Step 6: Commit** - `feat(iterative-review): ship hooks pack and live doctor rechecks`.
 
 ---
 

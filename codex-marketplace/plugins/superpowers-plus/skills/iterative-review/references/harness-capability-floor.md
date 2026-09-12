@@ -1,12 +1,12 @@
 # Devin harness capability floor
 
 The version-2 evidence kernel depends on a small set of harness capabilities.
-`reviewctl doctor` currently detects the runtime only: it reports `pass` on
-Devin Desktop and `inert` (exit 1) on any other runtime, and mutation commands
-refuse off-Devin runtimes with `unsupported-runtime` rather than silently
-degrading to assertion-based evidence. Re-checking each capability row below
-at review intake is planned for a later plan; until then the rows record the
-empirical floor the kernel was designed against, not a live gate.
+`reviewctl doctor` detects the runtime first: it reports `inert` (exit 1) on
+any non-Devin runtime, and mutation commands refuse off-Devin runtimes with
+`unsupported-runtime` rather than silently degrading to assertion-based
+evidence. On Devin Desktop it additionally runs the live row table below when
+`--scratch-dir` (and optionally `--repo`) are given, and reports
+`capability-floor-failed` (exit 1) when any row fails.
 
 This document records the empirical basis for each requirement. Two evidence
 classes are cited:
@@ -57,15 +57,36 @@ Recorded artifacts (scratch, disposable):
 3. **Hook config loads at session start.** Installing or removing hooks
    mid-session has no effect until restart. Live verification of hook
    emission therefore requires the hooks pack to have been installed before
-   the session began; the per-row `doctor` recheck that will report
-   `capability-floor-failed` with a remediation pointer is deferred to a
-   later plan (today `doctor` reports runtime support only).
+   the session began; `reviewctl hooks install --scratch-dir <dir>` renders
+   the pack (`record_pretool.py`, `record_posttool.py`, `gate_review_paths.py`,
+   a rendered `hooks.v1.json`, and `hook-env.json`) under the review scratch
+   root, and the `hooks-installed` doctor row checks that the pack exists. The
+   rendered config still must be installed as `.devin/hooks.v1.json` in the
+   reviewed project (or user-global) before the session starts.
 4. **Model identity is not self-declared.** `subagent_explore`'s prompt
    carried no model name; reviewer-model pinning must come from the profile
    frontmatter at the user-global root, verified by the planned doctor
    recheck, not from agent self-report.
 
+## Live doctor rows
+
+On Devin Desktop, `reviewctl doctor --scratch-dir <dir> [--repo <dir>]`
+rechecks the floor per row. Each row reports `pass`, `fail`, or `skip` with a
+`detail` and a `remediation` pointer:
+
+| Row | What it verifies | Fail remediation |
+| --- | --- | --- |
+| `hooks-installed` | Rendered hooks pack exists under `<scratch>/hooks/` | `reviewctl hooks install --scratch-dir <dir>`, then install the rendered `hooks.v1.json` before session start |
+| `transcript-dir-writable` | `<scratch>/transcripts/` accepts create/write/delete | Fix scratch-root permissions |
+| `witness-log-roundtrip` | `witness_log.WitnessLog` append + chain verify on the witness dir | Fix scratch-store permissions |
+| `git-present` | `git --version` exits 0 | Install git on PATH |
+| `repo-non-shallow` | `git rev-parse --is-shallow-repository` is `false` (skipped without `--repo`) | `git fetch --unshallow` |
+| `gh-authenticated` | `gh auth status` exits 0 | `gh auth login` |
+
+Verdicts: `inert` off Devin Desktop, `capability-floor-failed` when any row
+fails, `pass` otherwise. Rows that cannot run without inputs report `skip`.
+
 ## doctor verdict for this session
 
-`PASS` on Devin Desktop with the recorded floor above. `INERT` on
-Codex/OpenAI-compatible runtimes by contract.
+`PASS` on Devin Desktop with the recorded floor above and live rows green.
+`INERT` on Codex/OpenAI-compatible runtimes by contract.
