@@ -26,6 +26,12 @@ metadata:
 license: MIT
 ---
 
+## Interim boundary
+
+The current version-1 workflow is review assistance, not proof of reviewed green.
+Version-1 workspaces cannot produce a trustworthy-green seal.
+The experimental version-2 kernel is not the user entrypoint until the trustworthy-green roadmap reaches cutover.
+
 ## Provenance
 
 This skill is a first-party skill authored for this repository. It is not derived from an upstream snapshot.
