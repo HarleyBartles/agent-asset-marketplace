@@ -2650,7 +2650,8 @@ def _h_accept_risk(out: dict, data: dict, policies) -> None:
             "resolved_snapshot_fingerprint": snap["fingerprint"],
         }
         f["disposition"] = "accepted-risk"
-    out["status"] = "reviewed-with-exceptions"
+    if not [f for f in out["findings"].values() if f["disposition"] in _OPEN_DISPOSITIONS]:
+        out["status"] = "reviewed-with-exceptions"
 
 
 def _h_resume(out: dict, data: dict, policies) -> None:

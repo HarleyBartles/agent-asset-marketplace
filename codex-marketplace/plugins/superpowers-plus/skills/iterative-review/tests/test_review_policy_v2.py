@@ -25,6 +25,7 @@ from review_v2_helpers import (  # noqa: E402
     _put,
     _run_adjudicated,
     _verify_close_repair,
+    _witness_bytes,
     make_complete_candidate,
     make_empty_v2_state,
     make_policy_bundle,
@@ -424,6 +425,46 @@ def test_complete_action_accept_risk_path(tmp_path):
         now=datetime.now(timezone.utc),
     )
     assert not verdict.allowed
+
+
+def test_complete_action_accept_risk_partial_keeps_status_active(tmp_path):
+    """accept-risk on one finding while another stays open must not claim
+    reviewed-with-exceptions: the status only advances once every finding
+    sits in a closed disposition."""
+    w = _Walk(tmp_path)
+    w.freeze()
+    w.ascent(report_finding=True)
+    f = w.reported_finding
+    _run_adjudicated(w, f["finding_id"], outcome="confirmed", remediation_class="candidate-change")
+    second = _finding_payload(
+        w.state,
+        source_kind="review",
+        source_id=f["source_id"],
+        source_assignment_id=f["source_assignment_id"],
+        obligation_id=f["obligation_id"],
+        severity="minor",
+        title="walk-finding-2",
+    )
+    w.state["findings"][second["finding_id"]] = second
+    _run_adjudicated(w, second["finding_id"], outcome="confirmed", remediation_class="candidate-change")
+    hd = _witness_bytes(
+        w.state,
+        w.registry,
+        kind="human-decision",
+        subject={"transcript_range": {"stream": "human", "start": 1, "end": 2}},
+        tool_use_id=f"toolu-human-{w._next_serial()}",
+        transcript_range={"stream": "human", "start": 1, "end": 2},
+    )
+    w.state = policy.record_witness(w.state, witness_bytes=hd, kind="human-decision", policies=w.policies)
+    wid = model.strict_json_loads(hd, source="witness")["witness_id"]
+    w.run(
+        "accept-risk",
+        {"resolutions": [{"finding_id": f["finding_id"], "human_decision_witness_id": wid}]},
+        sole=False,
+    )
+    assert w.state["findings"][f["finding_id"]]["disposition"] == "accepted-risk"
+    assert w.state["findings"][second["finding_id"]]["disposition"] == "open"
+    assert w.state["status"] == "active"
 
 
 def test_complete_action_review_repair_path(tmp_path):

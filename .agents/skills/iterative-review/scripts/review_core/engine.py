@@ -705,7 +705,11 @@ def complete_transaction(
     caller-supplied data/evidence for them must be empty (caller bytes are
     never provenance). Caller-data actions ingest ``caller_data_bytes`` plus
     declared evidence files. ``mark-ready-for-ci`` delegates to the
-    two-phase ready-transition flow.
+    two-phase ready-transition flow, which commits once per phase: one
+    CLI call advances generation by two and appends two history records
+    (``complete`` for the intent, ``finalize-ready-transition`` for the
+    witnessed transition). Each phase is independently durable and
+    idempotent, so the double increment is deliberate.
     """
     sp = Path(state_path)
     recipe = policy.action_recipe(action)
@@ -977,7 +981,12 @@ def finalize_ready_transition_transaction(
     """Phase 2 of mark-ready-for-ci: perform or confirm the remote
     transition and persist its witnessed outcome, materializing the CI
     candidate. Accepts a verified already-ready no-op for the same
-    idempotency key and head."""
+    idempotency key and head.
+
+    No fresh lawful-action check happens here by design: the pending
+    intent was registered inside a lawful-action window (phase 1), and
+    this phase only executes that bound intent on its recorded head.
+    """
     sp = Path(state_path)
     action = "mark-ready-for-ci"
     with store.locked_state_transaction(sp) as tx:

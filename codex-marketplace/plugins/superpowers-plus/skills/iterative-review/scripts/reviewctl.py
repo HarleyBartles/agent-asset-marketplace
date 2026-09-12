@@ -335,7 +335,8 @@ def _build_parser() -> argparse.ArgumentParser:
         action="store_true",
         help=(
             "self-check: parse arguments and exit 0 without touching files; "
-            "subcommand arguments are still validated first"
+            "subcommand arguments are validated at the parser level only, "
+            "handlers are not run"
         ),
     )
     parser.add_argument("--json", action="store_true", help="emit one JSON object per command")

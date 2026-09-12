@@ -27,10 +27,11 @@ The harness emits a per-tool-call transcript via lifecycle hooks. PreToolUse cap
 
 A **witness record** in review state is a typed reference into that log plus the digests that make it checkable: `witness_id`, `kind`, `tool_use_id` or `agent_id`, `subject_sha256`, `transcript_range`/`record_positions`, `chain_head_at_record`, `snapshot_epoch`, `snapshot_fingerprint`. The verifier confirms the referenced entries exist at those positions, hash-match, chain correctly, and carry harness-assigned (never caller-chosen) IDs.
 
-The closed `kind` vocabulary: `dispatch-launch`, `dispatch-completion`, `tool-transcript`, `command-execution`, `remote-transition`, `remote-observation`, `authority-discovery`, `human-decision`.
+The closed `kind` vocabulary: `authority-discovery`, `profile-resolution`, `review-launch`, `review-completion`, `command-execution`, `remote-transition`, `remote-observation`, `human-decision`. (Plan 1 implements this vocabulary; the earlier draft's `dispatch-launch`/`dispatch-completion` names are realized as `review-launch`/`review-completion`, `profile-resolution` was added for route-selection proof, and `tool-transcript` exists as an evidence kind rather than a witness kind.)
 
-- `dispatch-launch`/`dispatch-completion`: the PreToolUse/PostToolUse pair for one `run_subagent` call. The launch record binds exact task bytes and profile; the completion record binds the verbatim returned output and `agent_id`.
-- `tool-transcript`: ordered digest over every tool call a dispatch made between its launch and completion records. Proves what a reviewer actually touched.
+- `review-launch`/`review-completion`: the PreToolUse/PostToolUse pair for one `run_subagent` call. The launch record binds exact task bytes and profile; the completion record binds the verbatim returned output and `agent_id`.
+- `profile-resolution`: the route-selection record binding required role, tier, and reasoning floor to the selected user-global profile.
+- `tool-transcript` (evidence kind, not a witness kind): ordered digest over every tool call a dispatch made between its launch and completion records. Proves what a reviewer actually touched; Plan 1 ingests it as immutable evidence and relies on the attested `audit_result`, while independent transcript-derived contamination enforcement is deferred to a later plan.
 - `command-execution`: an `exec` record plus exit code, output digest, working directory, and pre/post source digests. Engine-witnessed, not sandbox-attested.
 - `remote-transition`/`remote-observation`: `gh` call records plus independently re-fetched GitHub state (check-run ids, workflow run/attempt, head_sha, draft flag).
 - `authority-discovery`: the transcript digest of the enumeration session plus per-authority content digests.
@@ -122,7 +123,7 @@ Declared + audited, not enforced isolation:
 - Reviewer profiles carry `allowed-tools` in frontmatter. Blind and independent roles get read/search tools only - never `exec`, `write`, `edit`, `webfetch`, MCP, or subagent tools. The harness strips unlisted tools at the function surface; unknown names grant nothing.
 - Project/user permission `deny` rules and a policy PreToolUse hook forbid reads of review-internal paths (state, ledgers, prior reports, feedback artifacts) for review-internal path patterns. A deny that fires aborts the dispatch - treated as `incomplete`, never green.
 - The blind role contract says exactly what it may see; the dispatch task must not smuggle prior findings (the launch record's task bytes are auditable for this).
-- Post-completion audit reads the `tool-transcript` witness: any touched path outside the role's allowlisted namespaces marks the review `contaminated`, which invalidates it (fail-closed) and opens a `review-process` finding against the environment, not the agent.
+- Post-completion audit reads the `tool-transcript` evidence: any touched path outside the role's allowlisted namespaces marks the review `contaminated`, which invalidates it (fail-closed) and opens a `review-process` finding against the environment, not the agent. Plan 1 records the audit result the completing attestation carries; deriving contamination independently from the transcript is deferred to a later plan.
 - Fresh-context and role-contract-distinctness rules from the prior spec stand: exemption, blind-final, closure, and repair-verifier dispatches are resolved fresh per launch; a review-sourced finding's adjudicator differs in execution and realized role contract.
 
 ## Checks

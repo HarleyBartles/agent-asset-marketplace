@@ -34,7 +34,10 @@ nine predicates map to the kernel's finer-grained checks as follows:
    epoch; hosted checks are remotely verified on the exact reviewed SHA.
 6. **reviews_current** - every required review carries launch and completion
    witnesses matching the dispatch's `agent_id` and scope, with
-   `audit_result: clean` and a known verdict.
+   `audit_result: clean` and a known verdict. Plan 1 accepts the `audit_result`
+   the completing attestation carries; independently deriving contamination
+   from the ingested `tool-transcript` evidence is deferred to a later plan,
+   so the audit claim today is attested, not transcript-verified.
 7. **findings_clear** - every finding, all severities including `minor`, sits
    in a closed disposition; nothing remains `open`, `fixing`,
    `review-repairing`, `contested`, `deferred`, or `unassessed`.
