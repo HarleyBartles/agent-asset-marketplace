@@ -105,16 +105,9 @@ class TestParseDiffSurfaces:
         assert entry["hunks"] == [{"old_start": 1, "old_lines": 1, "new_start": 1, "new_lines": 1}]
 
     def test_pure_rename_no_hunks(self):
-        diff = (
-            "diff --git a/a.py b/b.py\n"
-            "similarity index 100%\n"
-            "rename from a/a.py\n"
-            "rename to b/b.py\n"
-        )
+        diff = "diff --git a/a.py b/b.py\nsimilarity index 100%\nrename from a/a.py\nrename to b/b.py\n"
         result = surfaces.parse_diff_surfaces(diff)
-        assert result == (
-            {"path": "b.py", "change_kind": "renamed", "renamed_from": "a/a.py", "hunks": []},
-        )
+        assert result == ({"path": "b.py", "change_kind": "renamed", "renamed_from": "a/a.py", "hunks": []},)
 
     def test_binary_file_empty_hunks(self):
         result = surfaces.parse_diff_surfaces(BINARY)
@@ -134,15 +127,11 @@ class TestParseDiffSurfaces:
             surfaces.parse_diff_surfaces("diff --git x b/y\nindex 1..2\n")
         # '---' without '+++' is a malformed header triple
         with pytest.raises(surfaces.SurfaceParseError):
-            surfaces.parse_diff_surfaces(
-                "diff --git a/x b/x\nindex 1..2 100644\n--- a/x\n"
-            )
+            surfaces.parse_diff_surfaces("diff --git a/x b/x\nindex 1..2 100644\n--- a/x\n")
 
     def test_malformed_hunk_header_fails_closed(self):
         with pytest.raises(surfaces.SurfaceParseError):
-            surfaces.parse_diff_surfaces(
-                "diff --git a/x b/x\nindex 1..2 100644\n--- a/x\n+++ b/x\n@@ -a +b @@\n"
-            )
+            surfaces.parse_diff_surfaces("diff --git a/x b/x\nindex 1..2 100644\n--- a/x\n+++ b/x\n@@ -a +b @@\n")
         # truncated hunk body also fails closed
         with pytest.raises(surfaces.SurfaceParseError):
             surfaces.parse_diff_surfaces(
