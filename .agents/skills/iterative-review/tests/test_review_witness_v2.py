@@ -176,6 +176,27 @@ class TestTranscriptIngest:
         assert trange["transcript_sha256"] == model.sha256_hex(seg)
         assert len(log.entries()) == 2
 
+    def test_ingest_transcript_unreadable_is_tampered(self, tmp_path, monkeypatch):
+        tp = tmp_path / "t" / "s.jsonl"
+        _write_transcript(tp, _transcript_records("sess-1", "tu-1", "enumeration-id: abc"))
+        log = witness_log.WitnessLog(tmp_path / "w" / "log.jsonl")
+        real_read = Path.read_bytes
+
+        def blocked(self, *a, **k):
+            if self == tp:
+                raise PermissionError("locked")
+            return real_read(self, *a, **k)
+
+        monkeypatch.setattr(Path, "read_bytes", blocked)
+        with pytest.raises(policy.WitnessVerificationError, match="tampered-source"):
+            witness_log.ingest_transcript_segment(
+                log,
+                transcript_path=tp,
+                session_id="sess-1",
+                tool_use_id="tu-1",
+                marker="enumeration-id: abc",
+            )
+
     def test_ingest_missing_post_record_fails(self, tmp_path):
         tp = tmp_path / "t" / "s.jsonl"
         _write_transcript(tp, _transcript_records("sess-1", "tu-1", "x")[:1])

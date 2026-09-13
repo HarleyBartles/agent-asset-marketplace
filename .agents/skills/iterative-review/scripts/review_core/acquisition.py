@@ -550,7 +550,10 @@ class LiveAuthorityDiscovery:
                 or not isinstance(rec.get("kind"), str)
             ):
                 raise AcquisitionError("tampered-source", f"evidence {alias} manifest entry malformed")
-            path = self._dir / "evidence" / rec["file"]
+            fname = rec["file"]
+            if not fname or fname in (".", "..") or "/" in fname or "\\" in fname:
+                raise AcquisitionError("tampered-source", f"evidence {alias} file field escapes evidence dir")
+            path = self._dir / "evidence" / fname
             try:
                 digest = model.sha256_hex(path.read_bytes()) if path.is_file() else None
             except (OSError, ValueError) as exc:
@@ -591,7 +594,8 @@ class LiveAuthorityDiscovery:
                     f"authority {aid}: {want_field} missing or malformed",
                 )
             expected = rec.get("sha256") if want_field == "evidence_id" else rec.get("failure_sha256")
-            if ev_manifest.get(ev[1:], {}).get("sha256") != expected:
+            manifest_ev = ev_manifest.get(ev[1:])
+            if expected is None or not isinstance(manifest_ev, dict) or manifest_ev.get("sha256") != expected:
                 raise AcquisitionError(
                     "tampered-source",
                     f"authority {aid}: {want_field} digest diverges from witnessed manifest",

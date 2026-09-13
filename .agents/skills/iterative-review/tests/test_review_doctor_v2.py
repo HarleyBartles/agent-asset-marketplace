@@ -140,6 +140,38 @@ class TestHookScripts:
         assert r.returncode == 2
         assert '"decision": "block"' in r.stdout or '"decision":"block"' in r.stdout
 
+    def test_gate_deny_roots_unresolvable_falls_back_to_text(self, tmp_path, monkeypatch):
+        # A deny_roots entry that fails Path.resolve (e.g. ValueError on a
+        # NUL byte) falls back to literal-text matching instead of crashing
+        # through the generic internal-error path.
+        import importlib.util
+
+        hooks = _hook_env(tmp_path)
+        spec = importlib.util.spec_from_file_location("gate_review_paths", hooks / "gate_review_paths.py")
+        gate = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(gate)
+
+        def bad_resolve(self, *a, **k):
+            raise ValueError("embedded null byte")
+
+        monkeypatch.setattr(Path, "resolve", bad_resolve)
+        roots = gate._deny_roots({"deny_roots": ["sealed-root"]})
+        assert roots == [gate._norm("sealed-root")]
+
+    def test_recorder_malformed_transcript_root_never_nonzero(self, tmp_path):
+        # A NUL-byte transcript_root in hook-env.json must never produce a
+        # nonzero exit; the recorder swallows it per contract.
+        hooks = _hook_env(tmp_path)
+        env_path = hooks / "hook-env.json"
+        env = json.loads(env_path.read_text(encoding="utf-8"))
+        env["transcript_root"] = "evil\x00root"
+        env_path.write_text(json.dumps(env), encoding="utf-8")
+        r = _run_hook(
+            hooks / "record_pretool.py",
+            {"tool_input": {"command": "x"}, "session_id": "s", "hook_event_name": "PreToolUse"},
+        )
+        assert r.returncode == 0
+
     def test_gate_allows_unrelated_exec(self, tmp_path):
         hooks = _hook_env(tmp_path, deny_roots=(tmp_path / "review-state",))
         payload = {

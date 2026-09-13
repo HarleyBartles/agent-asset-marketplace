@@ -31,7 +31,10 @@ def _transcript_root(env: dict) -> Path:
     configured = env.get("transcript_root")
     if not isinstance(configured, (str, bytes, os.PathLike)):
         configured = None
-    return Path(configured) if configured else Path(__file__).parent / "transcripts"
+    try:
+        return Path(configured) if configured else Path(__file__).parent / "transcripts"
+    except Exception:
+        return Path(__file__).parent / "transcripts"
 
 
 def _lockdown(path: Path, *, directory: bool) -> None:

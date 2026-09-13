@@ -919,6 +919,34 @@ class TestAcquireBindings:
         with pytest.raises(acq.AcquisitionError, match="tampered-source"):
             src.acquire(action="freeze-review-input", current_snapshot=None)
 
+    def test_evidence_manifest_traversal_file_field_is_tampered(self, tmp_path):
+        # A manifest "file" pointing outside evidence/ must be refused before
+        # any read - even when the recomputed digest would match.
+        _s, out_dir, scratch = _enumerate(tmp_path)
+        manifest_path = out_dir / "evidence" / "manifest.json"
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        first_alias = next(iter(manifest))
+        manifest[first_alias]["file"] = "../data.json"
+        manifest[first_alias]["sha256"] = model.sha256_hex((out_dir / "data.json").read_bytes())
+        manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+        src = _source(out_dir, scratch)
+        with pytest.raises(acq.AcquisitionError, match="tampered-source"):
+            src._load_dir()
+
+    def test_unavailable_record_null_failure_alias_is_tampered(self, tmp_path):
+        # A record whose failure_evidence_id aliases nothing in the evidence
+        # manifest must not pass on expected=None agreement.
+        _s, out_dir, scratch = _enumerate(tmp_path)
+        data = json.loads((out_dir / "data.json").read_text(encoding="utf-8"))
+        rec = next(r for r in data["authorities"] if r["availability"] == "unavailable")
+        witnessed = next(e for e in data["manifest_payload"]["authorities"] if e["authority_id"] == rec["authority_id"])
+        rec["failure_evidence_id"] = "@ghost"
+        rec["failure_sha256"] = witnessed["failure_sha256"] = None
+        (out_dir / "data.json").write_text(json.dumps(data), encoding="utf-8")
+        src = _source(out_dir, scratch)
+        with pytest.raises(acq.AcquisitionError, match="tampered-source"):
+            src._load_dir()
+
     def test_evidence_manifest_nul_file_field_is_tampered(self, tmp_path):
         # A tampered manifest "file" field carrying a NUL byte must hit
         # tampered-source: Path.is_file raises ValueError, not OSError.

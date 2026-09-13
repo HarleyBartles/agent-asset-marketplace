@@ -65,8 +65,8 @@ class WitnessLog:
       {"schema_version": 1, "seq": int, "recorded_at": iso8601,
        "session_id": str, "tool_use_id": str|None,
        "record_kind": str,            # "PreToolUse"|"PostToolUse"|"marker"
-       "payload_sha256": sha256,      # hash of the verbatim hook record bytes
-       "payload": dict,               # verbatim hook record
+       "payload_sha256": sha256,      # hash of the canonicalized hook record
+       "payload": dict,               # parsed hook record (recorder canonicalizes)
        "prev_sha256": sha256,         # entry_sha256 of seq-1, or 64 zeros
        "entry_sha256": sha256}        # hash of this entry minus entry_sha256
     """

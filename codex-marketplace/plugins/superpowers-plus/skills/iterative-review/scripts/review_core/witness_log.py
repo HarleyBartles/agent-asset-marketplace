@@ -197,9 +197,12 @@ def ingest_transcript_segment(
     and returns ``(record_positions, chain_head_at_record, transcript_range)``.
     """
     transcript_path = Path(transcript_path)
-    if not transcript_path.is_file():
-        raise policy.WitnessVerificationError("missing-source", f"no transcript at {transcript_path}")
-    raw_lines = transcript_path.read_bytes().decode("utf-8", errors="surrogateescape").splitlines()
+    try:
+        raw_lines = transcript_path.read_bytes().decode("utf-8", errors="surrogateescape").splitlines()
+    except FileNotFoundError:
+        raise policy.WitnessVerificationError("missing-source", f"no transcript at {transcript_path}") from None
+    except (OSError, ValueError) as exc:
+        raise policy.WitnessVerificationError("tampered-source", f"transcript unreadable: {exc}") from exc
     matched: list[tuple[int, dict]] = []
     for i, line in enumerate(raw_lines):
         if not line.strip():

@@ -48,7 +48,7 @@ def _deny_roots(env: dict) -> list[str]:
             continue
         try:
             roots.append(_norm(str(Path(text).resolve())))
-        except OSError:
+        except (OSError, ValueError):
             roots.append(_norm(text))
     return roots
 
