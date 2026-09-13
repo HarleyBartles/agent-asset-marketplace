@@ -5,8 +5,8 @@
       {
         "matcher": "",
         "hooks": [
-          {"type": "command", "command": "py -3 \"{{IR_HOOK_DIR}}/gate_review_paths.py\""},
-          {"type": "command", "command": "py -3 \"{{IR_HOOK_DIR}}/record_pretool.py\""}
+          {"type": "command", "command": "{{IR_PY}} \"{{IR_HOOK_DIR}}/gate_review_paths.py\""},
+          {"type": "command", "command": "{{IR_PY}} \"{{IR_HOOK_DIR}}/record_pretool.py\""}
         ]
       }
     ],
@@ -14,7 +14,7 @@
       {
         "matcher": "",
         "hooks": [
-          {"type": "command", "command": "py -3 \"{{IR_HOOK_DIR}}/record_posttool.py\""}
+          {"type": "command", "command": "{{IR_PY}} \"{{IR_HOOK_DIR}}/record_posttool.py\""}
         ]
       }
     ]

@@ -3,11 +3,13 @@
 
 This CLI is the only mutation authority for version-2 (schema_version 2)
 review state. It is experimental until the cutover plan; version-1 reviews
-continue through next_node.py. All commands except ``doctor`` take
-``--state`` pointing at a review-state.json file.
+continue through next_node.py. All commands except ``doctor`` and ``hooks`` take
+``--state`` pointing at a review-state.json file; ``doctor`` and ``hooks``
+take ``--scratch-dir`` instead.
 
-Mutation commands (``init --apply``, ``dispatch``, ``complete``, ``block``,
-``resume``) run only on the Devin Desktop runtime; on any other harness they
+Mutation commands (``init --apply``, ``dispatch``, ``enumerate``,
+``complete``, ``block``, ``resume``, and the ``freeze``/``refresh``
+aliases) run only on the Devin Desktop runtime; on any other harness they
 report ``unsupported-runtime`` and exit 1 without creating or mutating
 state. ``status``, ``next``, ``validate``, and ``doctor`` are read-only and
 run on any runtime; ``doctor`` exits 1 with ``verdict: inert`` off Devin
@@ -273,7 +275,9 @@ def _cmd_hooks(args, json_mode: bool) -> int:
         # JSON-escaped content (without the surrounding quotes) to keep the
         # rendered file valid when the path contains a quote or backslash.
         escaped_dir = json.dumps(str(hook_dir).replace("\\", "/"))[1:-1]
-        rendered = template.replace("{{IR_HOOK_DIR}}", escaped_dir)
+        rendered = template.replace("{{IR_HOOK_DIR}}", escaped_dir).replace(
+            "{{IR_PY}}", "py -3" if sys.platform == "win32" else "python3"
+        )
         (hook_dir / "hooks.v1.json").write_text(rendered, encoding="utf-8")
         obj = {
             "installed": str(hook_dir),
@@ -686,6 +690,14 @@ def _build_parser() -> argparse.ArgumentParser:
     p = sub.add_parser("validate", help="validate a version-2 state file")
     p.add_argument("--state", required=True)
 
+    for parser_obj in (*sub.choices.values(), hi, hs):
+        parser_obj.add_argument(
+            "--json",
+            action="store_true",
+            default=argparse.SUPPRESS,
+            help="emit one JSON object",
+        )
+
     return parser
 
 
@@ -708,11 +720,9 @@ _HANDLERS = {
 
 def main(argv=None) -> int:
     argv = list(sys.argv[1:] if argv is None else argv)
-    json_mode = "--json" in argv
-    if json_mode:
-        argv = [a for a in argv if a != "--json"]
     parser = _build_parser()
     args = parser.parse_args(argv)
+    json_mode = bool(getattr(args, "json", False))
     if args.check:
         return 0
     if args.command is None:

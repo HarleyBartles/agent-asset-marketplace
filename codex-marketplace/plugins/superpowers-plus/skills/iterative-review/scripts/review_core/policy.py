@@ -624,6 +624,11 @@ def authorities_complete(state: dict, policies) -> tuple[bool, tuple[str, ...]]:
             return False, ("authority",)
         if entry["availability"] == "loaded" and rec["sha256"] != entry["sha256"]:
             return False, ("authority",)
+        if entry["availability"] == "unavailable" and (
+            rec.get("failure_class") != entry.get("failure_class")
+            or rec.get("failure_sha256") != entry.get("failure_sha256")
+        ):
+            return False, ("authority",)
     extra = set(state["authorities"]) - {e["authority_id"] for e in entries}
     current_extra = {aid for aid in extra if _current(state, state["authorities"][aid], aid)}
     if current_extra:

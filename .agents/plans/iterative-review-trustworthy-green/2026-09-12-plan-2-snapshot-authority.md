@@ -240,10 +240,10 @@ Pure stdlib. No imports from `engine` (it must stay importable by `policy` consu
 - Consumes: Devin hook contract documented in `references/harness-capability-floor.md` (Pre/PostToolUse record fields: `session_id`, `prompt_id`, `tool_name`, `tool_input`, `tool_use_id`, post `tool_response`); Task 1's `WitnessLog` for the `witness-log-roundtrip` doctor row. Hooks write raw session-keyed JSONL transcripts; witness-log ingestion happens later inside `acquire`.
 - Produces:
   - `record_pretool.py` / `record_posttool.py`: read one hook JSON object from stdin (binary, UTF-8/surrogateescape), append it as one compact JSON line to `<transcript_root>/<session_id>.jsonl` where `transcript_root` comes from the `hook-env.json` sidecar (located via `IR_HOOK_ENV` or `<script_parent>/hook-env.json`) with fallback `<script_parent>/transcripts`. POSIX mode 0700 dir / 0600 file; pre-existing group/other access is refused as `acl-untrusted`. Never exits nonzero on malformed input (hooks must not break the session); writes a `hook-error` line instead.
-  - `gate_review_paths.py`: PreToolUse policy gate; exits 2 (deny) when any tool_input path resolves (cwd-relative, env-var-expanded) under a root in the sidecar's `deny_roots` list, and fails closed (exit 2) on unparseable or missing payloads; otherwise exits 0. Command text is matched boundary-aware so `witness-backup` siblings are not denied.
-  - `hooks.v1.json` template: binds the three scripts; a single `{{IR_HOOK_DIR}}` placeholder is rendered by `reviewctl hooks install` with JSON-escaped path content, and `hook-env.json` carries `transcript_root` + `deny_roots` beside it.
-  - `reviewctl hooks install --scratch-dir <dir> [--user]`: renders the template to `<scratch-dir>/hooks/hooks.v1.json` plus copies scripts to `<scratch-dir>/hooks/` (self-contained, review-scoped); prints the absolute path the user installs into `.devin/hooks.v1.json`. `hooks status --scratch-dir <dir>` reports installed/not-installed + transcript dir writability.
-  - `doctor` gains rows: `runtime`, `hooks-installed`, `transcript-dir-writable`, `witness-log-roundtrip` (create+append+verify under scratch), `git-present`, `repo-non-shallow`, `gh-authenticated`. Each row `{name, status: pass|fail|skip, detail, remediation}`; any `fail` -> exit 1 with top-level `capability-floor-failed` listing failed rows.
+  - `gate_review_paths.py`: PreToolUse policy gate; exits 2 (deny) when any tool_input path resolves (cwd-relative, env-var-expanded) under a root in the sidecar's `deny_roots` list, and fails closed (exit 2) on unparseable or missing payloads AND on a missing/corrupt `hook-env.json` (an env that loads with an empty `deny_roots` stays open); otherwise exits 0. Command text is matched boundary-aware so `witness-backup` siblings are not denied.
+  - `hooks.v1.json` template: binds the three scripts; `{{IR_HOOK_DIR}}` is rendered by `reviewctl hooks install` with JSON-escaped path content, `{{IR_PY}}` renders the interpreter (`py -3` on Windows, `python3` elsewhere), and `hook-env.json` carries `transcript_root` + `deny_roots` beside it.
+  - `reviewctl hooks install --scratch-dir <dir> [--user]`: renders the template to `<scratch-dir>/hooks/hooks.v1.json` plus copies scripts to `<scratch-dir>/hooks/` (self-contained, review-scoped); prints the absolute path the user installs into `.devin/hooks.v1.json`. `hooks status --scratch-dir <dir>` reports installed/not-installed + transcript dir existence (writability is probed by the `transcript-dir-writable` doctor row, not `hooks status`).
+  - `doctor` gains rows: `hooks-installed`, `transcript-dir-writable`, `witness-log-roundtrip` (create+append+verify under scratch), `git-present`, `repo-non-shallow`, `gh-authenticated`. Each row `{name, status: pass|fail|skip, detail, remediation}`; any `fail` -> exit 1 with top-level `capability-floor-failed` listing failed rows. `runtime` is a top-level field of the doctor JSON object, not a row.
 
 - [x] **Step 1: Write the failing tests**
 
@@ -261,15 +261,15 @@ class TestHookScripts:
     def test_gate_denies_write_under_deny_root(self, tmp_path): ...
 
 class TestHooksInstall:
-    def test_install_renders_template_and_copies_scripts(self, tmp_path): ...
+    def test_install_renders_pack_and_env(self, tmp_path): ...
         # hooks.v1.json exists, placeholders gone, script paths exist
-    def test_status_reports_transcript_dir_writable(self, tmp_path): ...
+    def test_status_reports_transcript_dir(self, tmp_path): ...
 
 class TestDoctorRows:
-    def test_doctor_rows_all_pass_on_healthy_fixture(self, tmp_path): ...
+    def test_doctor_rows_all_pass_on_healthy(self, tmp_path): ...
         # fake scratch with installed hooks + writable transcripts +
         # monkeypatched git/gh probes -> exit 0
-    def test_doctor_fails_closed_when_gh_unauthenticated(self, tmp_path): ...
+    def test_doctor_fails_when_gh_unauthenticated(self, tmp_path): ...
         # -> exit 1, capability-floor-failed names gh-authenticated
     def test_doctor_witness_log_roundtrip_row(self, tmp_path): ...
     def test_doctor_inert_runtime_still_verdict_inert(self, tmp_path): ...
@@ -440,8 +440,8 @@ class FeedbackItem:
 
 @dataclass(frozen=True)
 class FeedbackHistoryPolicy:
-    policy_id: str = "feedback-history"
-    version: str = "1"
+    policy_id: str           # "feedback-history" via default_policy()
+    version: str             # "1" via default_policy()
     # actionable set: all reviewThreads (isResolved either way) plus reviews
     # with state CHANGES_REQUESTED. severity: CHANGES_REQUESTED -> "blocking",
     # unresolved thread -> "important", resolved -> "minor".
@@ -504,11 +504,19 @@ def enumerate_acquisition(
          to unavailable records).
       8. enumerate_feedback -> review-feedback seeds + feedback bytes.
       9. Emit: out_dir/data.json {"snapshot": {...all SNAPSHOT fields sans
-         fingerprint...}, "authority_manifest": <manifest payload>,
+         fingerprint...}, "manifest_payload": <manifest payload>,
          "authorities": [...], "findings": <feedback findings>,
          "drift_reasons": [...]|null}; out_dir/evidence/<name> per byte blob
          (manifest payload, each authority, feedback history);
-         out_dir/enumeration.json {"enumeration_id": sha256 marker}.
+         out_dir/enumeration.json {"enumeration_id": sha256 marker,
+         "inputs": {repo_root, pr_number, base_sha, head_sha, epoch}}.
+         Note the on-disk key is `manifest_payload` - the
+         `authority_manifest` wrapper (with authority_manifest_id /
+         payload_evidence_id / discovery_witness_id) is built by
+         acquire() at envelope time, not stored in data.json.
+    A pre-existing out_dir is cleared before emission, guarded to the
+    <scratch>/acquire/latest path shape; any other resolution refuses with
+    "tool-blocked" before shutil.rmtree runs.
     Prints `enumeration-id: <digest>` as final stdout line - the marker the
     transcript witness binds.
     """
@@ -538,22 +546,25 @@ class LiveAuthorityDiscovery:
         #   - authority_manifest_id = model.authority_manifest_id(payload);
         #     data["snapshot"]["authority_manifest_sha256"] equals it and
         #     data["authority_manifest"]["authority_manifest_id"] carries it
-        #   - data["authority_manifest"]["payload_evidence_id"] =
-        #     "@manifest-payload" (alias resolved by resolve_evidence_aliases;
-        #     the same @alias scheme fills each authority's evidence_id /
-        #     failure_evidence_id)
+        #   - the envelope's authority_manifest wrapper gains
+        #     "payload_evidence_id" = "@manifest-payload" (alias resolved by
+        #     resolve_evidence_aliases; the same @alias scheme fills each
+        #     authority's evidence_id / failure_evidence_id)
         #
         # Integrity rebinding (data.json is advisory, not trusted):
-        #   - each authority record's sha256 reconciles against the
-        #     subject-bound manifest_payload entry AND its @alias evidence
-        #     digest; divergence -> AcquisitionError("tampered-source")
+        #   - each authority record reconciles against the subject-bound
+        #     manifest_payload entry keyed by authority_id (locators can
+        #     collide): sha256 AND failure_class/failure_sha256 must match,
+        #     each @alias evidence/failure_evidence_id digest must match,
+        #     and the record set must equal the manifest entry set;
+        #     divergence -> AcquisitionError("tampered-source")
         #   - feedback findings are re-derived from digest-verified
         #     feedback-* evidence via feedback_policy.item_from_raw +
         #     feedback_findings, cross-checked against the witnessed
         #     snapshot's feedback_history_sha256/unresolved_feedback_sha256;
         #     data["findings"] is never trusted
         #   - witness record built with epoch+fingerprint of the candidate
-        #     snapshot, then data["authority_manifest"]["discovery_witness_id"]
+        #     snapshot, then authority_manifest["discovery_witness_id"]
         #     = model.derived_id("witness", epoch,
         #       model.witness_record_subject(witness_record)) - the derived id
         #     must match what policy.record_witness computes at install time
@@ -638,7 +649,7 @@ class TestLoadAcquisition:
     2. derives `finding_id` exactly as `_install_findings` does (`finding_identity_subject`), binds `discovered_snapshot_epoch`/`discovered_snapshot_fingerprint` to the installed snapshot;
     3. installs ONLY when the derived `finding_id` is absent from `out["findings"]` - an existing record (open or closed) is durable identity and stays untouched, which is what makes provider Resolve incapable of resurrecting or resetting lifecycle.
 
-  - `engine.load_witness_sources(*, scratch_dir: Path | None = None, review_id: str | None = None, runtime: str | None = None)`:
+  - `engine.load_witness_sources(*, scratch_dir: Path | None = None, review_id: str | None = None, runtime: str | None = None, acquisition_dir: Path | None = None)`: `acquisition_dir` points the live branch at a produced acquisition dir when `complete --acquired` supplies one.
     - non-Devin runtime or missing config -> today's fail-closed return (unchanged behavior, tests keep passing).
     - Devin + args -> `WitnessSources(policies=PolicyBundle(witness_verifier=TranscriptWitnessVerifier(...), <existing builtins>), authority_discovery=LiveAuthorityDiscovery(...))`. `authority_discovery` is wired only when a produced acquisition dir exists under `scratch_dir/acquire/`; otherwise None (freeze stays source-required -> missing acquisition is a clean source-absence failure, not a crash).
   - `reviewctl` additions:

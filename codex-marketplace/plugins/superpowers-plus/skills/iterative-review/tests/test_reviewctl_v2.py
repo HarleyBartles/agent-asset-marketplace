@@ -2088,3 +2088,50 @@ class TestEnumerateCompleteFlow:
             ]
         )
         assert rc == 0
+
+
+class TestHooksRenderAndJsonFlag:
+    """hooks.v1.json rendering is platform-aware; --json is argparse-native."""
+
+    def test_hooks_install_renders_platform_interpreter(self, tmp_path, monkeypatch, capsys):
+        import reviewctl
+
+        monkeypatch.setenv(engine.RUNTIME_ENV_VAR, "devin-desktop")
+        scratch = tmp_path / "scratch"
+        monkeypatch.setattr(sys, "platform", "linux")
+        rc = reviewctl.main(["hooks", "install", "--scratch-dir", str(scratch)])
+        assert rc == 0
+        capsys.readouterr()
+        cfg = json.loads((scratch / "hooks" / "hooks.v1.json").read_text(encoding="utf-8"))
+        commands = [h["command"] for group in cfg["hooks"].values() for m in group for h in m["hooks"]]
+        assert commands and all(c.startswith("python3 ") for c in commands)
+
+        scratch2 = tmp_path / "scratch2"
+        monkeypatch.setattr(sys, "platform", "win32")
+        rc = reviewctl.main(["hooks", "install", "--scratch-dir", str(scratch2)])
+        assert rc == 0
+        capsys.readouterr()
+        cfg = json.loads((scratch2 / "hooks" / "hooks.v1.json").read_text(encoding="utf-8"))
+        commands = [h["command"] for group in cfg["hooks"].values() for m in group for h in m["hooks"]]
+        assert commands and all(c.startswith("py -3 ") for c in commands)
+
+    def test_json_flag_in_both_positions(self, tmp_path, monkeypatch, capsys):
+        import reviewctl
+
+        scratch = tmp_path / "scratch"
+        rc = reviewctl.main(["doctor", "--scratch-dir", str(scratch), "--json"])
+        assert rc in (0, 1)
+        out = capsys.readouterr().out.strip()
+        assert out.startswith("{")
+        rc = reviewctl.main(["--json", "doctor", "--scratch-dir", str(scratch)])
+        assert rc in (0, 1)
+        out = capsys.readouterr().out.strip()
+        assert out.startswith("{")
+
+    def test_json_token_as_flag_value_is_argparse_error(self, capsys):
+        import reviewctl
+
+        # `--reason --json` must not silently strip the token: argparse sees
+        # it as an option and reports the missing --reason value.
+        with pytest.raises(SystemExit):
+            reviewctl.main(["block", "--state", "x", "--class", "c", "--reason", "--json"])

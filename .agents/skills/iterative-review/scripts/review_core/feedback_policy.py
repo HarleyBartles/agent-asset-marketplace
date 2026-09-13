@@ -121,6 +121,8 @@ def enumerate_feedback(*, run_gh, pr_url: str) -> list[FeedbackItem]:
         doc = json.loads(out)
     except Exception as exc:
         raise FeedbackPolicyError(f"graphql response not JSON: {exc}") from exc
+    if not isinstance(doc, dict):
+        raise FeedbackPolicyError("graphql response is not an object")
     if doc.get("errors"):
         raise FeedbackPolicyError(f"graphql errors: {doc['errors']}")
     try:

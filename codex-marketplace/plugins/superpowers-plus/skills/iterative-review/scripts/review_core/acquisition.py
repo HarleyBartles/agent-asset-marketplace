@@ -120,7 +120,10 @@ def _load_seed_bytes(seed, *, run_git, run_gh, base_sha: str, repo_id: str, pr_m
         doc = json.loads(out)
         if not isinstance(doc, dict) or not isinstance(doc.get("content"), str):
             raise AcquisitionError("authority-missing", f"{loc}: unexpected API response shape")
-        return base64.b64decode(doc["content"])
+        try:
+            return base64.b64decode(doc["content"])
+        except ValueError as exc:
+            raise AcquisitionError("authority-missing", f"{loc}: undecodable content") from exc
     raise AcquisitionError("authority-missing", f"{loc}: unsupported locator")
 
 
@@ -157,6 +160,8 @@ def enumerate_acquisition(
         pr_meta = json.loads(out)
     except Exception as exc:
         raise AcquisitionError("tool-blocked", f"gh pr view malformed: {exc}") from exc
+    if not isinstance(pr_meta, dict):
+        raise AcquisitionError("tool-blocked", "gh pr view response is not an object")
     base_sha = pr_meta["baseRefOid"]
     head_sha = pr_meta["headRefOid"]
     rc, _o, err = run_gh(["api", f"repos/{repo_id}/commits/{head_sha}"])
@@ -486,7 +491,7 @@ def _response_text(rec: dict) -> str:
         return response
     if isinstance(response, dict):
         return response.get("output", "") or ""
-    return model.canonical_json(response or {}).decode("utf-8")
+    return model.canonical_json(response or {}).decode("utf-8", errors="surrogateescape")
 
 
 class LiveAuthorityDiscovery:
@@ -499,7 +504,7 @@ class LiveAuthorityDiscovery:
         self._review_id = review_id
 
     def _load_dir(self):
-        data = json.loads((self._dir / "data.json").read_bytes())
+        data = json.loads((self._dir / "data.json").read_bytes().decode("utf-8", errors="surrogateescape"))
         ev_manifest = json.loads((self._dir / "evidence" / "manifest.json").read_bytes())
         sources = []
         for alias, rec in sorted(ev_manifest.items()):
@@ -508,24 +513,41 @@ class LiveAuthorityDiscovery:
                 raise AcquisitionError("tampered-source", f"evidence {alias} digest mismatch")
             sources.append(engine.EvidenceSource(alias=alias, kind=rec["kind"], path=path))
         # Bind evidence bytes to the witnessed manifest: authority records and
-        # the evidence manifest are both unbound, so reconcile each record's
-        # sha256 against the subject-bound manifest entry and its evidence
-        # file digest. Anything inconsistent is tamper evidence.
-        bound = {e.get("locator"): e.get("sha256") for e in data.get("manifest_payload", {}).get("authorities", [])}
+        # the evidence manifest are both unbound, so reconcile each record
+        # against the subject-bound manifest entry (keyed by authority_id -
+        # locators can collide across kinds) and its evidence file digest,
+        # including the failure fields on unavailable records. Anything
+        # inconsistent is tamper evidence.
+        bound = {e.get("authority_id"): e for e in data.get("manifest_payload", {}).get("authorities", [])}
+        seen = set()
         for rec in data.get("authorities", []):
-            if bound.get(rec.get("locator")) != rec.get("sha256"):
+            aid = rec.get("authority_id")
+            entry = bound.get(aid)
+            if entry is None or aid in seen:
                 raise AcquisitionError(
                     "tampered-source",
-                    f"authority {rec.get('locator')}: record sha diverges from witnessed manifest",
+                    f"authority {aid}: record missing from or duplicated vs witnessed manifest",
                 )
-            ev = rec.get("evidence_id") or ""
-            if ev.startswith("@"):
-                alias = ev[1:]
-                if ev_manifest.get(alias, {}).get("sha256") != rec.get("sha256"):
+            seen.add(aid)
+            for field in ("sha256", "failure_class", "failure_sha256"):
+                if entry.get(field) != rec.get(field):
                     raise AcquisitionError(
                         "tampered-source",
-                        f"authority {rec.get('locator')}: evidence digest diverges from witnessed manifest",
+                        f"authority {aid}: record {field} diverges from witnessed manifest",
                     )
+            for id_field, expected in (
+                ("evidence_id", rec.get("sha256")),
+                ("failure_evidence_id", rec.get("failure_sha256")),
+            ):
+                ev = rec.get(id_field) or ""
+                if ev.startswith("@"):
+                    if ev_manifest.get(ev[1:], {}).get("sha256") != expected:
+                        raise AcquisitionError(
+                            "tampered-source",
+                            f"authority {aid}: {id_field} digest diverges from witnessed manifest",
+                        )
+        if len(seen) != len(bound):
+            raise AcquisitionError("tampered-source", "authority records diverge from witnessed manifest")
         return data, sources
 
     def _find_segment(self, subject_sha: str):
@@ -533,7 +555,7 @@ class LiveAuthorityDiscovery:
         root = self._transcript_root
         for path in sorted(root.glob("*.jsonl"), key=lambda p: p.stat().st_mtime):
             try:
-                lines = path.read_bytes().decode("utf-8").splitlines()
+                lines = path.read_bytes().decode("utf-8", errors="surrogateescape").splitlines()
             except OSError:
                 continue
             for idx, line in enumerate(lines):

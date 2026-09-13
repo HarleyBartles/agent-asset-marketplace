@@ -174,6 +174,20 @@ class TestHookScripts:
         assert r.returncode == 2
         assert "block" in r.stdout
 
+    def test_gate_denies_when_env_missing(self, tmp_path):
+        hooks = _hook_env(tmp_path, deny_roots=(tmp_path / "sealed",))
+        (hooks / "hook-env.json").unlink()
+        r = _run_hook(hooks / "gate_review_paths.py", {"tool_input": {"cwd": str(tmp_path)}})
+        assert r.returncode == 2
+        assert "block" in r.stdout
+
+    def test_gate_denies_when_env_corrupt(self, tmp_path):
+        hooks = _hook_env(tmp_path, deny_roots=(tmp_path / "sealed",))
+        (hooks / "hook-env.json").write_text("{ not json", encoding="utf-8")
+        r = _run_hook(hooks / "gate_review_paths.py", {"tool_input": {"cwd": str(tmp_path)}})
+        assert r.returncode == 2
+        assert "block" in r.stdout
+
     def test_gate_unconfigured_env_stays_open(self, tmp_path):
         hooks = _hook_env(tmp_path)
         r = _run_hook(hooks / "gate_review_paths.py", "not json {")

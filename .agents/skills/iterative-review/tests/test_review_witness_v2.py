@@ -84,6 +84,22 @@ class TestWitnessLog:
         assert len(log.entries()) == 2
         assert log.chain_head() == log.entries()[-1]["entry_sha256"]
 
+    def test_append_detects_external_append_between_calls(self, tmp_path):
+        # A second writer appending between two appends on the same instance
+        # must not silently produce a broken chain: the cached tail is
+        # invalidated by a file-stamp check and the append re-verifies.
+        path = tmp_path / "w" / "log.jsonl"
+        log1 = witness_log.WitnessLog(path)
+        log1.append(session_id="s", tool_use_id="t1", record_kind="marker", payload={"a": 1})
+        log2 = witness_log.WitnessLog(path)
+        log2.append(session_id="s", tool_use_id="t2", record_kind="marker", payload={"b": 2})
+        seq = log1.append(session_id="s", tool_use_id="t3", record_kind="marker", payload={"c": 3})
+        assert seq == 2
+        ok, err = log1.verify_chain()
+        assert ok, err
+        entries = log1.entries()
+        assert [e["seq"] for e in entries] == [0, 1, 2]
+
     def test_append_surrogate_payload_roundtrips(self, tmp_path):
         # Hook recorders preserve non-UTF-8 bytes via surrogateescape; the log
         # must store and re-verify them without crashing.

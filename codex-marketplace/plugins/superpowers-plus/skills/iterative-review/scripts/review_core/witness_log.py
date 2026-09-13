@@ -77,13 +77,35 @@ class WitnessLog:
         # per record instead of re-verifying the whole chain each time. The
         # cache is per-instance; a WitnessLog constructed later re-verifies.
         self._tail: tuple[int, str] | None = None
+        self._stamp: tuple[int, int] | None = None
+
+    def _file_stamp(self) -> tuple[int, int] | None:
+        try:
+            st = self._path.stat()
+            return (st.st_mtime_ns, st.st_size)
+        except OSError:
+            return None
+
+    def _refresh_tail(self) -> None:
+        # Bracket the verify with file stamps: a concurrent append during
+        # verification must invalidate the result rather than chain a stale
+        # tail onto entries verify never saw.
+        stamp0 = self._file_stamp()
+        ok, err = self.verify_chain()
+        if not ok:
+            raise WitnessLogError("chain-invalid", f"{self._path}: {err}")
+        entries = self._read_entries()
+        if stamp0 is None or self._file_stamp() != stamp0:
+            raise WitnessLogError("chain-invalid", f"{self._path}: log mutated during verification")
+        self._tail = (len(entries), entries[-1]["entry_sha256"] if entries else ZERO_SHA)
+        self._stamp = stamp0
 
     def _read_entries(self) -> list[dict]:
         entries: list[dict] = []
         raw = self._path.read_bytes()
         if not raw:
             return entries
-        for i, line in enumerate(raw.decode("utf-8").splitlines()):
+        for i, line in enumerate(raw.decode("utf-8", errors="surrogateescape").splitlines()):
             if not line.strip():
                 continue
             rec = model.strict_json_loads(line.encode("utf-8"), source=f"{self._path}:{i + 1}")
@@ -100,12 +122,8 @@ class WitnessLog:
         return entries[-1]["entry_sha256"] if entries else ZERO_SHA
 
     def append(self, *, session_id: str, tool_use_id: str | None, record_kind: str, payload: dict) -> int:
-        if self._tail is None:
-            ok, err = self.verify_chain()
-            if not ok:
-                raise WitnessLogError("chain-invalid", f"{self._path}: {err}")
-            entries = self._read_entries()
-            self._tail = (len(entries), entries[-1]["entry_sha256"] if entries else ZERO_SHA)
+        if self._tail is None or self._file_stamp() != self._stamp:
+            self._refresh_tail()
         if not isinstance(payload, dict):
             raise model.StateValidationError("bad-type", "payload", "witness-log payload must be an object")
         if not session_id or not isinstance(session_id, str):
@@ -136,6 +154,7 @@ class WitnessLog:
 
             os.fsync(fh.fileno())
         self._tail = (seq + 1, entry["entry_sha256"])
+        self._stamp = self._file_stamp()
         return seq
 
     def verify_chain(self) -> tuple[bool, str | None]:
@@ -180,7 +199,7 @@ def ingest_transcript_segment(
     transcript_path = Path(transcript_path)
     if not transcript_path.is_file():
         raise policy.WitnessVerificationError("missing-source", f"no transcript at {transcript_path}")
-    raw_lines = transcript_path.read_bytes().decode("utf-8").splitlines()
+    raw_lines = transcript_path.read_bytes().decode("utf-8", errors="surrogateescape").splitlines()
     matched: list[tuple[int, dict]] = []
     for i, line in enumerate(raw_lines):
         if not line.strip():

@@ -75,7 +75,7 @@ Recorded artifacts (scratch, disposable):
    against the call's working directory with environment variables expanded
    before matching; `command` text is matched boundary-aware so a deny root
    does not over-match sibling names like `witness-backup`. Deny roots cover
-   the witness, transcript, and evidence-store directories only - the
+   the witness, transcripts, and evidence-store directories only - the
    `acquire/` directory and the state file are excluded because
    `reviewctl enumerate` and `complete --acquired` must write and read them;
    their integrity is enforced by the witnessed subject digests, the

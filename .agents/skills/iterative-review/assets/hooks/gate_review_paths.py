@@ -27,12 +27,13 @@ from pathlib import Path
 _PATH_KEYS = ("file_path", "path", "notebook_path", "target_file", "workdir", "cwd")
 
 
-def _env() -> dict:
+def _env() -> dict | None:
     env_path = os.environ.get("IR_HOOK_ENV") or str(Path(__file__).parent / "hook-env.json")
     try:
-        return json.loads(Path(env_path).read_text(encoding="utf-8"))
+        env = json.loads(Path(env_path).read_text(encoding="utf-8"))
+        return env if isinstance(env, dict) else None
     except Exception:
-        return {}
+        return None
 
 
 def _norm(text: str) -> str:
@@ -102,6 +103,8 @@ def _block(reason: str) -> int:
 
 def main() -> int:
     env = _env()
+    if env is None:
+        return _block("iterative-review: hook env missing or unparseable")
     deny_roots = _deny_roots(env)
     if not deny_roots:
         return 0

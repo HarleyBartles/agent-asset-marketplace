@@ -520,6 +520,148 @@ class TestAcquireBindings:
         with pytest.raises(acq.AcquisitionError):
             acq._load_seed_bytes(seed, run_git=None, run_gh=gh_list, base_sha=BASE, repo_id=REPO_ID, pr_meta=_pr_meta())
 
+    def test_load_dir_reads_surrogate_locator(self, tmp_path):
+        # data.json is written via canonical_json (surrogateescape), so a
+        # non-UTF-8 file path leaves raw bytes in locator fields; the read
+        # path must decode surrogateescape rather than crash.
+        out = tmp_path / "acquire" / "latest"
+        ev = out / "evidence"
+        ev.mkdir(parents=True)
+        loc = "repo:law\udcff.md"
+        blob = b"authority bytes"
+        sha = model.sha256_hex(blob)
+        aid = "authority:" + model.sha256_json({"kind": "repo-law", "locator": loc})
+        payload = {
+            "authorities": [
+                {
+                    "authority_id": aid,
+                    "kind": "repo-law",
+                    "locator": loc,
+                    "availability": "loaded",
+                    "sha256": sha,
+                    "failure_class": None,
+                    "failure_sha256": None,
+                }
+            ]
+        }
+        payload_bytes = model.canonical_json(payload)
+        (ev / "manifest-payload.bin").write_bytes(payload_bytes)
+        (ev / "authority-0.bin").write_bytes(blob)
+        (ev / "manifest.json").write_text(
+            json.dumps(
+                {
+                    "manifest-payload": {
+                        "file": "manifest-payload.bin",
+                        "kind": "authority-manifest-payload",
+                        "sha256": model.sha256_hex(payload_bytes),
+                    },
+                    "authority-0": {"file": "authority-0.bin", "kind": "authority", "sha256": sha},
+                }
+            )
+        )
+        data = {
+            "snapshot": {"authority_manifest_sha256": "x"},
+            "manifest_payload": payload,
+            "authorities": [
+                {
+                    "authority_id": aid,
+                    "kind": "repo-law",
+                    "locator": loc,
+                    "availability": "loaded",
+                    "sha256": sha,
+                    "evidence_id": "@authority-0",
+                }
+            ],
+            "findings": [],
+            "drift_reasons": None,
+        }
+        (out / "data.json").write_bytes(model.canonical_json(data))
+        src = acq.LiveAuthorityDiscovery(
+            acquisition_dir=out,
+            witness_log_path=tmp_path / "w" / "log.jsonl",
+            transcript_root=tmp_path / "t",
+            review_id="r",
+        )
+        loaded, sources = src._load_dir()
+        assert loaded["authorities"][0]["locator"] == loc
+        assert any(s.alias == "authority-0" for s in sources)
+
+    def test_failure_evidence_tamper_detected(self, tmp_path):
+        # Default fixture leaves gh:issue/12 unavailable (FakeGh 404), so a
+        # failure-* evidence file exists. Tamper it + the unbound sidecar +
+        # the data record; the witnessed manifest entry still disagrees.
+        summary, out_dir, scratch = _enumerate(tmp_path)
+        data = json.loads((out_dir / "data.json").read_bytes().decode("utf-8", "surrogateescape"))
+        rec = next(r for r in data["authorities"] if r["availability"] == "unavailable")
+        ev_manifest = json.loads((out_dir / "evidence" / "manifest.json").read_text())
+        alias = rec["failure_evidence_id"][1:]
+        (out_dir / "evidence" / ev_manifest[alias]["file"]).write_bytes(b"fabricated failure")
+        ev_manifest[alias]["sha256"] = model.sha256_hex(b"fabricated failure")
+        rec["failure_sha256"] = model.sha256_hex(b"fabricated failure")
+        rec["failure_class"] = "tool-blocked"
+        (out_dir / "evidence" / "manifest.json").write_text(json.dumps(ev_manifest))
+        (out_dir / "data.json").write_bytes(model.canonical_json(data))
+        src = _source(out_dir, scratch)
+        with pytest.raises(acq.AcquisitionError, match="tampered-source"):
+            src._load_dir()
+
+    def test_dropped_authority_record_detected(self, tmp_path):
+        summary, out_dir, scratch = _enumerate(tmp_path)
+        data = json.loads((out_dir / "data.json").read_bytes().decode("utf-8", "surrogateescape"))
+        data["authorities"] = data["authorities"][:-1]
+        (out_dir / "data.json").write_bytes(model.canonical_json(data))
+        src = _source(out_dir, scratch)
+        with pytest.raises(acq.AcquisitionError, match="tampered-source"):
+            src._load_dir()
+
+    def test_authority_id_keyed_reconciliation(self, tmp_path):
+        summary, out_dir, scratch = _enumerate(tmp_path)
+        data = json.loads((out_dir / "data.json").read_bytes().decode("utf-8", "surrogateescape"))
+        data["authorities"][0]["authority_id"] = "authority:" + "0" * 64
+        (out_dir / "data.json").write_bytes(model.canonical_json(data))
+        src = _source(out_dir, scratch)
+        with pytest.raises(acq.AcquisitionError, match="tampered-source"):
+            src._load_dir()
+
+    def test_gh_doc_invalid_base64_is_authority_missing(self):
+        def gh_bad_b64(args):
+            return 0, json.dumps({"content": "abc"}), ""
+
+        seed = SimpleNamespace(locator="gh:doc/docs/x.md")
+        with pytest.raises(acq.AcquisitionError, match="authority-missing"):
+            acq._load_seed_bytes(
+                seed, run_git=None, run_gh=gh_bad_b64, base_sha=BASE, repo_id=REPO_ID, pr_meta=_pr_meta()
+            )
+
+    def test_gh_pr_view_list_response_is_tool_blocked(self, tmp_path):
+        scratch = _scratch(tmp_path)
+        gh = FakeGh(pr=[1, 2, 3])
+        with pytest.raises(acq.AcquisitionError, match="tool-blocked"):
+            acq.enumerate_acquisition(
+                run_git=FakeGit({"AGENTS.md": "# law"}),
+                run_gh=gh,
+                repo_root=Path(tmp_path),
+                pr_number=7,
+                out_dir=scratch / "acquire" / "latest",
+                scratch_dir=scratch,
+                epoch=1,
+            )
+
+    def test_graphql_list_response_is_policy_error(self):
+        def gh_list(_args):
+            return 0, "[1, 2, 3]", ""
+
+        with pytest.raises(fbp.FeedbackPolicyError):
+            fbp.enumerate_feedback(run_gh=gh_list, pr_url=PR_URL)
+
+    def test_non_utf8_transcript_is_missing_source_not_traceback(self, tmp_path):
+        summary, out_dir, scratch = _enumerate(tmp_path)
+        bad = scratch / "transcripts" / "corrupt.jsonl"
+        bad.write_bytes(bytes([0xFF, 0xFE]) + b" not utf-8")
+        src = _source(out_dir, scratch)
+        with pytest.raises((acq.AcquisitionError, policy.WitnessVerificationError)):
+            src.acquire(action="freeze-review-input", current_snapshot=None)
+
     def test_surrogate_bytes_in_git_show_do_not_crash(self, tmp_path):
         git = FakeGit({"AGENTS.md": "# law caf\udcff"})
         summary, out_dir, _s = _enumerate(tmp_path, git=git)
