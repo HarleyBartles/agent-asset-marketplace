@@ -581,7 +581,7 @@ class TestBuildContextPackage:
 
 - Docs: `trustworthy-green-invariants.md` gains the recall-engine section (impact maps -> union -> obligations -> challenge -> outcomes); `SKILL.md` workflow section names the new verbs under its 500-word budget; the v2 spec deltas section gains entries for: diff/surfaces materialization, sealed assignment/hypothesis policies replacing builtin stubs, report contract + `structured_output` subject binding, obligation outcome derivation, install-time floor check, and the explicit interim boundary that live dispatch remains Plan 4.
 
-- [ ] **Step 1: Write the failing tests**
+- [x] **Step 1: Write the failing tests**
 
 ```python
 class TestPlanCoverageProducer:
@@ -592,7 +592,7 @@ class TestPlanCoverageProducer:
     def test_emitted_payload_passes_install(self): ...  # round-trip through complete
 ```
 
-- [ ] **Step 2-5:** standard TDD cycle; commit `feat(iterative-review): add deterministic coverage-plan producer and recall-engine docs`.
+- [x] **Step 2-5:** standard TDD cycle; commit `feat(iterative-review): add deterministic coverage-plan producer and recall-engine docs`.
 
 ---
 

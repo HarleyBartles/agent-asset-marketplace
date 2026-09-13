@@ -561,9 +561,7 @@ def _cmd_package(args, json_mode: bool) -> int:
             package_dir=dest,
             acquire_dir=acquire_dir,
             run_git=functools.partial(_run_git, cwd=repo),
-            evidence_resolver=functools.partial(
-                context_package.evidence_bytes_for_state, state
-            ),
+            evidence_resolver=functools.partial(context_package.evidence_bytes_for_state, state),
             policies=_sources().policies,
         )
 
@@ -571,10 +569,19 @@ def _cmd_package(args, json_mode: bool) -> int:
         target = Path(args.out)
         fragment = build(target)
     else:
-        fragment, target = context_package.materialize_under(
-            scratch_dir=scratch, action=args.action, build=build
-        )
+        fragment, target = context_package.materialize_under(scratch_dir=scratch, action=args.action, build=build)
     return _emit({**fragment, "package_dir": str(target)}, json_mode)
+
+
+def _cmd_plan_coverage(args, json_mode: bool) -> int:
+    bad = _require_v2_state(Path(args.state))
+    if bad:
+        return bad
+    state = store.load_state(Path(args.state))
+    payload = policy.plan_coverage_payload(state)
+    if args.out:
+        Path(args.out).write_bytes(model.canonical_json(payload) + b"\n")
+    return _emit(payload, json_mode)
 
 
 def _cmd_block(args, json_mode: bool) -> int:
@@ -745,6 +752,16 @@ def _build_parser() -> argparse.ArgumentParser:
     p.add_argument("--assignment-id", action="append", default=[])
     p.add_argument("--out")
 
+    p = sub.add_parser(
+        "plan-coverage",
+        help=(
+            "emit the deterministic plan-coverage obligations payload from "
+            "the current impact-map union (read-only on state)"
+        ),
+    )
+    p.add_argument("--state", required=True)
+    p.add_argument("--out")
+
     p = sub.add_parser("block", help="open a blocker on the review")
     p.add_argument("--state", required=True)
     p.add_argument("--class", dest="blocker_class", required=True)
@@ -784,6 +801,7 @@ _HANDLERS = {
     "refresh": _cmd_refresh,
     "complete": _cmd_complete,
     "package": _cmd_package,
+    "plan-coverage": _cmd_plan_coverage,
     "block": _cmd_block,
     "resume": _cmd_resume,
     "validate": _cmd_validate,

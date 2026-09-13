@@ -688,6 +688,56 @@ def coverage_plan_covers_map_union(state: dict, policies) -> tuple[bool, tuple[s
     return True, ()
 
 
+_HIGH_RISK_CONSEQUENCES = frozenset({"security", "authorization", "privacy", "secrets", "irreversible-data-loss"})
+
+
+def plan_coverage_payload(state: dict, policies=None) -> dict:
+    """Deterministic ``plan-coverage`` payload from the current map union.
+
+    One obligation per union surface per OBLIGATION_CATEGORIES member, ordered
+    by surface then category order; floors via ``obligation_floor`` so the
+    install-time check re-verifies them. Refuses when either impact map is not
+    current - the same refusal the ``coverage`` predicate reports."""
+    ok, _ = impact_maps_complete(state, policies)
+    if not ok:
+        _fail(
+            "coverage",
+            "impact_maps",
+            "plan-coverage requires one current impact map per mapper role",
+        )
+    union = _map_union(state)
+    obligations = []
+    for surface in sorted(union):
+        slot = union[surface]
+        consequences = list(slot["consequences"])
+        substantive = [c for c in consequences if c in model.SUBSTANTIVE_CONSEQUENCES]
+        if any(c in _HIGH_RISK_CONSEQUENCES for c in consequences):
+            risk = "high"
+        elif substantive:
+            risk = "medium"
+        else:
+            risk = "low"
+        scope_level = "cross-surface" if substantive else "surface"
+        tier, reasoning = obligation_floor(scope_level, risk, consequences)
+        for category in model.OBLIGATION_CATEGORIES:
+            obligations.append(
+                {
+                    "category": category,
+                    "surfaces": [surface],
+                    "scope_level": scope_level,
+                    "risk": risk,
+                    "consequences": consequences,
+                    "minimum_capability_tier": tier,
+                    "minimum_reasoning_floor": reasoning,
+                    "assignees": [],
+                    "status": "pending",
+                    "evidence_ids": [],
+                    "not_applicable_attestation_ids": [],
+                }
+            )
+    return {"obligations": obligations}
+
+
 def scope_challenge_complete(state: dict, policies) -> tuple[bool, tuple[str, ...]]:
     inv = state["coverage_inventory"]
     if inv is None or not _current(state, inv, inv["coverage_inventory_id"]):

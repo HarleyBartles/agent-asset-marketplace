@@ -45,10 +45,7 @@ def _current(state: dict, record: dict, rid: str | None = None) -> bool:
     snap = state["snapshot"]
     if snap is None:
         return False
-    if (
-        record.get("snapshot_epoch") != snap["epoch"]
-        or record.get("snapshot_fingerprint") != snap["fingerprint"]
-    ):
+    if record.get("snapshot_epoch") != snap["epoch"] or record.get("snapshot_fingerprint") != snap["fingerprint"]:
         return False
     if rid is not None:
         for repair in state.get("review_repairs", {}).values():
@@ -139,9 +136,7 @@ def build_context_package(
     if model.sha256_hex(patch_bytes) != snap["diff_sha256"]:
         _fail("digest-mismatch", "diff.patch digest diverges from snapshot.diff_sha256")
     try:
-        surface_list = model.strict_json_loads(
-            (acquire_dir / "surfaces.json").read_bytes(), source="surfaces.json"
-        )
+        surface_list = model.strict_json_loads((acquire_dir / "surfaces.json").read_bytes(), source="surfaces.json")
     except (OSError, ValueError) as exc:
         _fail("missing-source", f"surfaces.json missing or invalid: {exc}")
     if not isinstance(surface_list, list):
@@ -183,9 +178,7 @@ def build_context_package(
         obl = _obligation_for(state, aid)
         bound = (
             sorted(
-                hid
-                for hid, h in hyps.items()
-                if h["obligation_id"] == obl["obligation_id"] and _current(state, h, hid)
+                hid for hid, h in hyps.items() if h["obligation_id"] == obl["obligation_id"] and _current(state, h, hid)
             )
             if obl is not None
             else []

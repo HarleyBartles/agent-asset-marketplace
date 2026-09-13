@@ -2371,6 +2371,129 @@ class TestPackageVerb:
         assert "Traceback" not in err
 
 
+class TestPlanCoverageProducer:
+    """``reviewctl plan-coverage`` emits the deterministic obligations payload
+    from the current impact-map union (Plan 3 Task 7)."""
+
+    _FP = "f" * 64
+
+    def _union_state(self, entries_by_role):
+        state = {
+            "snapshot": {"epoch": 1, "fingerprint": self._FP},
+            "impact_maps": {},
+            "review_repairs": {},
+        }
+        for role, entries in entries_by_role.items():
+            mid = f"map:{role}"
+            state["impact_maps"][mid] = {
+                "impact_map_id": mid,
+                "role": role,
+                "entries": entries,
+                "evidence_id": f"ev:{role}",
+                "snapshot_epoch": 1,
+                "snapshot_fingerprint": self._FP,
+            }
+        return state
+
+    def _entry(self, surface, *, category="file", consequences=("none",), hazards=()):
+        return {
+            "surface": surface,
+            "category": category,
+            "hazards": list(hazards),
+            "consequences": list(consequences),
+        }
+
+    def test_emits_obligation_per_surface_category(self, tmp_path):
+        state = self._union_state(
+            {
+                "impact-mapper-semantic": [self._entry("src/foo.py")],
+                "impact-mapper-contract": [self._entry("src/foo.py")],
+            }
+        )
+        payload = policy.plan_coverage_payload(state)
+        obs = payload["obligations"]
+        assert [o["category"] for o in obs] == list(model.OBLIGATION_CATEGORIES)
+        assert all(o["surfaces"] == ["src/foo.py"] for o in obs)
+        assert all(
+            o["status"] == "pending"
+            and o["assignees"] == []
+            and o["evidence_ids"] == []
+            and o["not_applicable_attestation_ids"] == []
+            for o in obs
+        )
+
+    def test_substantive_consequence_gives_cross_surface(self, tmp_path):
+        state = self._union_state(
+            {
+                "impact-mapper-semantic": [self._entry("src/a.py", consequences=("none",))],
+                "impact-mapper-contract": [self._entry("src/b.py", consequences=("migration-rollback",))],
+            }
+        )
+        payload = policy.plan_coverage_payload(state)
+        by_surface = {}
+        for o in payload["obligations"]:
+            by_surface.setdefault(o["surfaces"][0], o)
+        assert by_surface["src/a.py"]["scope_level"] == "surface"
+        assert by_surface["src/b.py"]["scope_level"] == "cross-surface"
+
+    def test_risk_classification_rules(self, tmp_path):
+        state = self._union_state(
+            {
+                "impact-mapper-semantic": [
+                    self._entry("src/sec.py", consequences=("security",)),
+                    self._entry("src/med.py", consequences=("concurrency-recovery",)),
+                    self._entry("src/low.py", consequences=("none",)),
+                ],
+                "impact-mapper-contract": [self._entry("src/low.py")],
+            }
+        )
+        payload = policy.plan_coverage_payload(state)
+        by_surface = {}
+        for o in payload["obligations"]:
+            by_surface.setdefault(o["surfaces"][0], o)
+        assert by_surface["src/sec.py"]["risk"] == "high"
+        assert by_surface["src/med.py"]["risk"] == "medium"
+        assert by_surface["src/low.py"]["risk"] == "low"
+        # floors track policy.obligation_floor exactly
+        for o in payload["obligations"]:
+            tier, reasoning = policy.obligation_floor(o["scope_level"], o["risk"], o["consequences"])
+            assert o["minimum_capability_tier"] == tier
+            assert o["minimum_reasoning_floor"] == reasoning
+
+    def test_refuses_without_current_maps(self, tmp_path):
+        state = self._union_state({"impact-mapper-semantic": [self._entry("src/foo.py")]})
+        with pytest.raises(model.StateValidationError, match="coverage"):
+            policy.plan_coverage_payload(state)
+
+    def test_emitted_payload_passes_install(self, tmp_path):
+        w = helpers._Walk(tmp_path)
+        w.freeze()
+        w.maps()
+        payload = policy.plan_coverage_payload(w.state, policies=w.policies)
+        w.run("plan-coverage", payload)
+        # The install satisfied the coverage predicate: challenge is lawful.
+        w.challenge()
+
+    def test_cli_emits_payload_to_out_and_stdout(self, tmp_path, capsys):
+        import reviewctl
+
+        w = helpers._Walk(tmp_path)
+        w.freeze()
+        w.maps()
+        state = _persist_state(tmp_path, w.state)
+        out_file = tmp_path / "payload.json"
+        rc = reviewctl.main(["plan-coverage", "--state", str(state), "--out", str(out_file)])
+        assert rc == 0
+        payload = json.loads(out_file.read_bytes())
+        assert [o["category"] for o in payload["obligations"]] == list(model.OBLIGATION_CATEGORIES)
+        capsys.readouterr()
+        rc = reviewctl.main(["plan-coverage", "--state", str(state), "--json"])
+        assert rc == 0
+        assert json.loads(capsys.readouterr().out) == payload
+        # round-trip: the emitted payload installs through complete_action
+        w.run("plan-coverage", payload)
+
+
 class TestHooksRenderAndJsonFlag:
     """hooks.v1.json rendering is platform-aware; --json is argparse-native."""
 

@@ -40,9 +40,7 @@ FILES = {"src/foo.py": "def f():\n    return 1\n", "src/bar.py": "b\n"}
 
 
 def _policies():
-    return types.SimpleNamespace(
-        review_assignments=assignment_policy.SealedReviewAssignmentPolicy()
-    )
+    return types.SimpleNamespace(review_assignments=assignment_policy.SealedReviewAssignmentPolicy())
 
 
 def _record(rid, **over):
@@ -125,8 +123,17 @@ def _obligation(oid, *, risk="low", consequences=("none",), scope="surface"):
     )
 
 
-def _build(state, package_dir, acquire, *, action="run-strong-review", role="obligation-reviewer",
-           assignment_ids=(), files=None, blobs=None):
+def _build(
+    state,
+    package_dir,
+    acquire,
+    *,
+    action="run-strong-review",
+    role="obligation-reviewer",
+    assignment_ids=(),
+    files=None,
+    blobs=None,
+):
     return context_package.build_context_package(
         state=state,
         action=action,
@@ -148,9 +155,7 @@ class TestBuildContextPackage:
         assert frag["instruction_manifest_sha256"] == model.sha256_hex(
             (tmp_path / "pkg" / "manifest.json").read_bytes()
         )
-        assert frag["hazard_framing_sha256"] == model.sha256_hex(
-            (tmp_path / "pkg" / "hazards.json").read_bytes()
-        )
+        assert frag["hazard_framing_sha256"] == model.sha256_hex((tmp_path / "pkg" / "hazards.json").read_bytes())
 
     def test_patch_digest_mismatch_refused(self, tmp_path):
         acquire = _acquire(tmp_path)
@@ -164,17 +169,22 @@ class TestBuildContextPackage:
         inv = _record(
             "inventory:1",
             coverage_inventory_id="inventory:1",
-            entries=[{"surface": "src/foo.py", "categories": ["file"],
-                      "hazards": [], "consequences": ["none"], "obligation_ids": []}],
+            entries=[
+                {
+                    "surface": "src/foo.py",
+                    "categories": ["file"],
+                    "hazards": [],
+                    "consequences": ["none"],
+                    "obligation_ids": [],
+                }
+            ],
         )
         state = _state(inventory=inv)
         frag = _build(state, tmp_path / "pkg", acquire)
         written = tmp_path / "pkg" / "data" / "files" / "src" / "foo.py"
         assert written.read_bytes() == FILES["src/foo.py"].encode("utf-8")
         manifest = json.loads((tmp_path / "pkg" / "data" / "manifest.json").read_bytes())
-        assert manifest["files"] == [
-            {"path": "src/foo.py", "sha256": model.sha256_hex(FILES["src/foo.py"].encode())}
-        ]
+        assert manifest["files"] == [{"path": "src/foo.py", "sha256": model.sha256_hex(FILES["src/foo.py"].encode())}]
         assert frag["data_manifest_sha256"] == model.sha256_hex(
             (tmp_path / "pkg" / "data" / "manifest.json").read_bytes()
         )
@@ -185,8 +195,7 @@ class TestBuildContextPackage:
             "map:1",
             impact_map_id="map:1",
             role="impact-mapper-semantic",
-            entries=[{"surface": "src/bar.py", "category": "file", "hazards": [],
-                      "consequences": ["none"]}],
+            entries=[{"surface": "src/bar.py", "category": "file", "hazards": [], "consequences": ["none"]}],
         )
         state = _state(maps=[m])
         _build(state, tmp_path / "pkg", acquire)
