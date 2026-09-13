@@ -139,9 +139,7 @@ class TestParseReport:
 
     def test_adjudication_confirmed_requires_remediation_class(self):
         with pytest.raises(report.ReportError):
-            report.parse_report(
-                _raw(_adjudication_report("confirmed")), role="finding-adjudicator"
-            )
+            report.parse_report(_raw(_adjudication_report("confirmed")), role="finding-adjudicator")
         ok = _adjudication_report("confirmed", remediation_class="candidate-change")
         report.parse_report(_raw(ok), role="finding-adjudicator")
 
@@ -312,9 +310,7 @@ class TestReportToActionData:
             },
         )
         parsed = report.parse_report(_raw(r), role="impact-mapper-semantic")
-        data = report.report_to_action_data(
-            "map-impact-semantic", parsed, attestation=self._attestation(), findings=[]
-        )
+        data = report.report_to_action_data("map-impact-semantic", parsed, attestation=self._attestation(), findings=[])
         assert set(data) == {"impact_map", "attestation", "findings"}
         assert data["impact_map"] == record
         assert data["attestation"]["structured_output"]["kind"] == "impact-map"
@@ -340,18 +336,14 @@ class TestReportToActionData:
             },
         )
         parsed = report.parse_report(_raw(r), role="scope-challenger")
-        data = report.report_to_action_data(
-            "challenge-coverage", parsed, attestation=self._attestation(), findings=[]
-        )
+        data = report.report_to_action_data("challenge-coverage", parsed, attestation=self._attestation(), findings=[])
         assert set(data) == {"coverage_inventory", "revised_obligations", "attestation", "findings"}
         assert data["coverage_inventory"] == record
         assert data["revised_obligations"] == revised
 
     def test_review_payload_carries_typed_outcomes(self):
         parsed = report.parse_report(_raw(_report()), role="obligation-reviewer")
-        data = report.report_to_action_data(
-            "run-strong-review", parsed, attestation=self._attestation(), findings=[]
-        )
+        data = report.report_to_action_data("run-strong-review", parsed, attestation=self._attestation(), findings=[])
         assert set(data) == {"attestations", "findings"}
         att = data["attestations"][0]
         assert att["structured_output"] == {"kind": "assignment-results"}
@@ -373,9 +365,7 @@ class TestReportToActionData:
             "evidence_ids": ["evidence:e1"],
         }
         parsed = report.parse_report(_raw(r), role="blind-final")
-        data = report.report_to_action_data(
-            "run-final-review", parsed, attestation=self._attestation(), findings=[]
-        )
+        data = report.report_to_action_data("run-final-review", parsed, attestation=self._attestation(), findings=[])
         assert set(data) == {"attestation", "findings"}
 
     def test_exemption_outcome_attached(self):

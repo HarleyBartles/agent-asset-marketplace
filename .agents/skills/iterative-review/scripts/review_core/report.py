@@ -52,9 +52,7 @@ _RESULT_KEYS = {
     "obligation": frozenset({"kind", "outcome", "evidence_ids"}),
     "blind-final": frozenset({"kind", "outcome", "evidence_ids"}),
     "closure-audit": frozenset({"kind", "outcome", "evidence_ids"}),
-    "exemption-challenge": frozenset(
-        {"kind", "outcome", "hypothesis_assignment_ids", "evidence_ids"}
-    ),
+    "exemption-challenge": frozenset({"kind", "outcome", "hypothesis_assignment_ids", "evidence_ids"}),
     "finding-adjudication": frozenset(
         {
             "kind",
@@ -66,9 +64,7 @@ _RESULT_KEYS = {
         }
     ),
     "fix-review": frozenset({"kind", "outcome", "verified_obligation_ids", "evidence_ids"}),
-    "review-repair": frozenset(
-        {"kind", "outcome", "repair_id", "replacement_record_ids", "evidence_ids"}
-    ),
+    "review-repair": frozenset({"kind", "outcome", "repair_id", "replacement_record_ids", "evidence_ids"}),
 }
 
 _RESULT_OUTCOMES = {
@@ -111,9 +107,7 @@ _REVIEWER_KEYS = frozenset(
     }
 )
 _ASSIGNMENT_KEYS = frozenset({"assignment_id", "result", "notes"})
-_FINDING_KEYS = frozenset(
-    {"title", "description", "locations", "severity", "evidence_ids", "source_assignment_id"}
-)
+_FINDING_KEYS = frozenset({"title", "description", "locations", "severity", "evidence_ids", "source_assignment_id"})
 
 _MAPPER_ACTIONS = frozenset({"map-impact-semantic", "map-impact-contract"})
 _PLURAL_ACTIONS = frozenset(
@@ -143,11 +137,7 @@ _NON_FINDING_OUTCOMES = frozenset(
 
 
 def _is_sha256_str(value) -> bool:
-    return (
-        isinstance(value, str)
-        and len(value) == 64
-        and all(c in "0123456789abcdef" for c in value)
-    )
+    return isinstance(value, str) and len(value) == 64 and all(c in "0123456789abcdef" for c in value)
 
 
 def _check_str_list(value, path: str, *, non_empty: bool) -> None:
@@ -159,9 +149,7 @@ def _check_str_list(value, path: str, *, non_empty: bool) -> None:
 
 def _check_reviewer(rev) -> None:
     if not isinstance(rev, dict) or set(rev) != _REVIEWER_KEYS:
-        raise ReportError(
-            "bad-fields", f"reviewer block keys must be {sorted(_REVIEWER_KEYS)}"
-        )
+        raise ReportError("bad-fields", f"reviewer block keys must be {sorted(_REVIEWER_KEYS)}")
     for f in ("profile", "profile_sha256", "model", "reasoning"):
         if not isinstance(rev[f], str):
             raise ReportError("bad-type", f"reviewer.{f} must be a string")
@@ -178,9 +166,7 @@ def _check_adjudication(result: dict, path: str) -> None:
     rc = result["remediation_class"]
     rtk = result["repair_target_kind"]
     rtids = result["repair_target_ids"]
-    if rtids is not None and not (
-        isinstance(rtids, list) and all(isinstance(x, str) for x in rtids)
-    ):
+    if rtids is not None and not (isinstance(rtids, list) and all(isinstance(x, str) for x in rtids)):
         raise ReportError("bad-type", f"{path}.result.repair_target_ids must be a list of ids")
     if rtk is not None and rtk not in model.REVIEW_REPAIR_TARGET_KINDS:
         raise ReportError("bad-value", f"{path}.result.repair_target_kind is not a closed target kind")
@@ -214,14 +200,10 @@ def _check_result(result, path: str, allowed_kinds) -> None:
         raise ReportError("bad-type", f"{path}.result must be an object")
     kind = result.get("kind")
     if kind not in allowed_kinds:
-        raise ReportError(
-            "bad-kind", f"{path}.result.kind {kind!r} is not lawful for this role"
-        )
+        raise ReportError("bad-kind", f"{path}.result.kind {kind!r} is not lawful for this role")
     required = _RESULT_KEYS[kind]
     if set(result) != required:
-        raise ReportError(
-            "bad-fields", f"{path}.result keys must be {sorted(required)}"
-        )
+        raise ReportError("bad-fields", f"{path}.result keys must be {sorted(required)}")
     outcome = result["outcome"]
     if outcome not in _RESULT_OUTCOMES[kind]:
         raise ReportError(
@@ -232,15 +214,11 @@ def _check_result(result, path: str, allowed_kinds) -> None:
     if kind == "finding-adjudication":
         _check_adjudication(result, path)
     elif kind == "fix-review":
-        _check_str_list(
-            result["verified_obligation_ids"], f"{path}.result.verified_obligation_ids", non_empty=False
-        )
+        _check_str_list(result["verified_obligation_ids"], f"{path}.result.verified_obligation_ids", non_empty=False)
     elif kind == "review-repair":
         if not isinstance(result["repair_id"], str) or not result["repair_id"]:
             raise ReportError("bad-type", f"{path}.result.repair_id must be a non-empty string")
-        _check_str_list(
-            result["replacement_record_ids"], f"{path}.result.replacement_record_ids", non_empty=False
-        )
+        _check_str_list(result["replacement_record_ids"], f"{path}.result.replacement_record_ids", non_empty=False)
     elif kind == "exemption-challenge":
         _check_str_list(
             result["hypothesis_assignment_ids"],
@@ -256,9 +234,7 @@ def _check_assignments(assignments, role: str) -> None:
     for i, a in enumerate(assignments):
         path = f"assignments[{i}]"
         if not isinstance(a, dict) or set(a) != _ASSIGNMENT_KEYS:
-            raise ReportError(
-                "bad-fields", f"{path} keys must be {sorted(_ASSIGNMENT_KEYS)}"
-            )
+            raise ReportError("bad-fields", f"{path} keys must be {sorted(_ASSIGNMENT_KEYS)}")
         if not isinstance(a["assignment_id"], str) or not a["assignment_id"]:
             raise ReportError("bad-type", f"{path}.assignment_id must be a non-empty string")
         if not isinstance(a["notes"], str):
@@ -305,9 +281,7 @@ def _check_structured_output(so, role: str) -> None:
             f"structured_output for role {role} must have keys {sorted(required)}",
         )
     if so["kind"] != kind:
-        raise ReportError(
-            "bad-value", f"structured_output.kind must be {kind!r} for role {role}"
-        )
+        raise ReportError("bad-value", f"structured_output.kind must be {kind!r} for role {role}")
     if kind == "assignment-results":
         return
     if not _is_sha256_str(so["subject_sha256"]):
@@ -316,9 +290,7 @@ def _check_structured_output(so, role: str) -> None:
         raise ReportError("bad-type", "structured_output.record must be an object")
     if kind == "coverage-inventory":
         if not _is_sha256_str(so["revised_obligations_sha256"]):
-            raise ReportError(
-                "bad-type", "structured_output.revised_obligations_sha256 must be a sha256 hex string"
-            )
+            raise ReportError("bad-type", "structured_output.revised_obligations_sha256 must be a sha256 hex string")
         if not isinstance(so["revised_obligations"], list) or not all(
             isinstance(o, dict) for o in so["revised_obligations"]
         ):
@@ -338,9 +310,7 @@ def parse_report(raw: bytes, *, role: str) -> dict:
     if set(doc) != _TOP_KEYS:
         missing = set(_TOP_KEYS) - set(doc)
         extra = set(doc) - set(_TOP_KEYS)
-        raise ReportError(
-            "bad-fields", f"report key set diverges: missing={sorted(missing)} extra={sorted(extra)}"
-        )
+        raise ReportError("bad-fields", f"report key set diverges: missing={sorted(missing)} extra={sorted(extra)}")
     if doc["schema_version"] != 1:
         raise ReportError("bad-version", "schema_version must be 1")
     for f in ("review_session_id", "attestation_id", "snapshot_fingerprint", "dispatch_id"):
@@ -351,9 +321,7 @@ def parse_report(raw: bytes, *, role: str) -> dict:
     _check_reviewer(doc["reviewer"])
     _check_assignments(doc["assignments"], role)
     _check_findings(doc["findings"])
-    if not isinstance(doc["uncertainties"], list) or not all(
-        isinstance(u, str) for u in doc["uncertainties"]
-    ):
+    if not isinstance(doc["uncertainties"], list) or not all(isinstance(u, str) for u in doc["uncertainties"]):
         raise ReportError("bad-type", "uncertainties must be a list of strings")
     if doc["verdict"] not in model.REVIEW_VERDICTS:
         raise ReportError("bad-value", "verdict is not a lawful review verdict")
@@ -412,9 +380,7 @@ def report_to_action_data(action: str, report: dict, *, attestation: dict, findi
     """
     att = dict(attestation)
     att["structured_output"] = report["structured_output"]
-    att["assignment_results"] = [
-        {"assignment_id": a["assignment_id"], **a["result"]} for a in report["assignments"]
-    ]
+    att["assignment_results"] = [{"assignment_id": a["assignment_id"], **a["result"]} for a in report["assignments"]]
     att["verdict"] = derive_verdict(report)
     if action in _MAPPER_ACTIONS:
         so = structured_subject(report)
@@ -432,9 +398,7 @@ def report_to_action_data(action: str, report: dict, *, attestation: dict, findi
             "findings": list(findings),
         }
     if action == "run-exemption-challenge":
-        outcomes = {
-            r["outcome"] for r in att["assignment_results"] if r["kind"] == "exemption-challenge"
-        }
+        outcomes = {r["outcome"] for r in att["assignment_results"] if r["kind"] == "exemption-challenge"}
         if len(outcomes) != 1:
             raise ReportError(
                 "mixed-outcomes",
