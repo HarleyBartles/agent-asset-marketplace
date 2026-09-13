@@ -249,7 +249,7 @@ def _title(item: FeedbackItem) -> str:
         author = (node.get("author") or {}).get("login", "reviewer")
         return f"Review feedback from {author}: {head}"
     comments = (node.get("comments") or {}).get("nodes") or []
-    first = comments[0] if comments and isinstance(comments[0], dict) else {}
+    first = comments[0] if isinstance(comments, list) and comments and isinstance(comments[0], dict) else {}
     body = first.get("body") if isinstance(first.get("body"), str) else ""
     lines = body.strip().splitlines() or ["review thread"]
     path = node.get("path") or ""

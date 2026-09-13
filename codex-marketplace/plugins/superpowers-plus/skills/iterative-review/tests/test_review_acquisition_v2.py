@@ -526,7 +526,7 @@ class TestAcquireBindings:
         # permission-filtered comments) and a blank first body; the title
         # fallback must not crash finding materialization.
         pol = fbp.default_policy()
-        for comments in ([None], [{"body": "   \n  "}], []):
+        for comments in ([None], [{"body": "   \n  "}], [], {"unexpected": 1}, "str"):
             node = {
                 "id": "T-blank",
                 "isResolved": False,
