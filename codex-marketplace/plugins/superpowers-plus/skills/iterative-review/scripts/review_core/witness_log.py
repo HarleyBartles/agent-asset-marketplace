@@ -102,7 +102,10 @@ class WitnessLog:
 
     def _read_entries(self) -> list[dict]:
         entries: list[dict] = []
-        raw = self._path.read_bytes()
+        try:
+            raw = self._path.read_bytes()
+        except (OSError, ValueError) as exc:
+            raise WitnessLogError("tampered-source", f"{self._path}: unreadable: {exc}") from exc
         if not raw:
             return entries
         for i, line in enumerate(raw.decode("utf-8", errors="surrogateescape").splitlines()):
@@ -196,12 +199,12 @@ def ingest_transcript_segment(
     marker string inside the Post ``tool_response``, appends them to ``log``,
     and returns ``(record_positions, chain_head_at_record, transcript_range)``.
     """
-    transcript_path = Path(transcript_path)
     try:
+        transcript_path = Path(transcript_path)
         raw_lines = transcript_path.read_bytes().decode("utf-8", errors="surrogateescape").splitlines()
     except FileNotFoundError:
         raise policy.WitnessVerificationError("missing-source", f"no transcript at {transcript_path}") from None
-    except (OSError, ValueError) as exc:
+    except (OSError, ValueError, TypeError) as exc:
         raise policy.WitnessVerificationError("tampered-source", f"transcript unreadable: {exc}") from exc
     matched: list[tuple[int, dict]] = []
     for i, line in enumerate(raw_lines):

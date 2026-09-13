@@ -197,6 +197,25 @@ class TestTranscriptIngest:
                 marker="enumeration-id: abc",
             )
 
+    def test_ingest_transcript_invalid_path_type_is_tampered(self, tmp_path):
+        log = witness_log.WitnessLog(tmp_path / "w" / "log.jsonl")
+        with pytest.raises(policy.WitnessVerificationError, match="tampered-source"):
+            witness_log.ingest_transcript_segment(
+                log,
+                transcript_path=12345,
+                session_id="sess-1",
+                tool_use_id="tu-1",
+                marker="enumeration-id: abc",
+            )
+
+    def test_chain_head_missing_log_is_witness_error(self, tmp_path):
+        # A witness log deleted after construction is tamper evidence, not
+        # a raw io-error.
+        log = witness_log.WitnessLog(tmp_path / "w" / "log.jsonl")
+        (tmp_path / "w" / "log.jsonl").unlink()
+        with pytest.raises(witness_log.WitnessLogError, match="tampered-source"):
+            log.chain_head()
+
     def test_ingest_missing_post_record_fails(self, tmp_path):
         tp = tmp_path / "t" / "s.jsonl"
         _write_transcript(tp, _transcript_records("sess-1", "tu-1", "x")[:1])

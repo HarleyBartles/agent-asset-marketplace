@@ -47,6 +47,16 @@ class AcquisitionError(Exception):
         self.detail = detail
 
 
+def _tool_guard(name: str, runner):
+    def wrapped(argv):
+        try:
+            return runner(argv)
+        except OSError as exc:
+            raise AcquisitionError("tool-blocked", f"{name} invocation failed: {exc}") from exc
+
+    return wrapped
+
+
 def _need(args, rc_out_err, what):
     rc, out, err = rc_out_err
     if rc != 0:
@@ -145,6 +155,8 @@ def enumerate_acquisition(
 ) -> dict:
     out_dir = Path(out_dir)
     scratch_dir = Path(scratch_dir)
+    run_git = _tool_guard("git", run_git)
+    run_gh = _tool_guard("gh", run_gh)
 
     # 1. gh connector
     try:
@@ -259,11 +271,24 @@ def enumerate_acquisition(
         raise AcquisitionError("authority-missing", json.dumps(disc_failures, sort_keys=True))
 
     # 7. materialize every seed's bytes
+    if out_dir.is_symlink():
+        raise AcquisitionError("tool-blocked", f"refusing symlinked acquisition dir {out_dir}")
     if out_dir.exists():
-        resolved = out_dir.resolve()
+        try:
+            resolved = out_dir.resolve()
+            scratch_resolved = scratch_dir.resolve()
+        except (OSError, ValueError) as exc:
+            raise AcquisitionError("tool-blocked", f"could not resolve acquisition dir {out_dir}: {exc}") from exc
+        if not resolved.is_relative_to(scratch_resolved):
+            raise AcquisitionError("tool-blocked", f"refusing to clear path outside scratch: {resolved}")
+        if not resolved.is_dir():
+            raise AcquisitionError("tampered-source", f"acquisition dir is not a directory: {resolved}")
         if resolved.name != "latest" or resolved.parent.name != "acquire":
             raise AcquisitionError("tool-blocked", f"refusing to clear unexpected path {resolved}")
-        shutil.rmtree(resolved, onerror=_remove_readonly)
+        try:
+            shutil.rmtree(resolved, onerror=_remove_readonly)
+        except OSError as exc:
+            raise AcquisitionError("tampered-source", f"could not clear acquisition dir {resolved}: {exc}") from exc
     fb_policy = feedback_policy.default_policy()
     builtins = engine.load_witness_sources()
     ev_dir = out_dir / "evidence"

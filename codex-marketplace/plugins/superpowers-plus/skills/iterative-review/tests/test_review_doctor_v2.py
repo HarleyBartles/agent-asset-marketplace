@@ -467,6 +467,10 @@ class TestHooksInstall:
         obj = json.loads(r.stdout)
         assert obj["installed"] is True
 
+    def test_hooks_bare_subcommand_is_usage_error(self):
+        r = _ctl("hooks")
+        assert r.returncode == 2
+
 
 class TestDoctorRows:
     def _run_cmd_ok(self, argv, **_kw):

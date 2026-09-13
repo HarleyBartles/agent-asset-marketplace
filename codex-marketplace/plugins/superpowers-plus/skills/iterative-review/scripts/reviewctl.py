@@ -639,7 +639,7 @@ def _build_parser() -> argparse.ArgumentParser:
     d.add_argument("--repo")
 
     h = sub.add_parser("hooks", help="install or inspect the hooks pack")
-    hsub = h.add_subparsers(dest="hooks_command")
+    hsub = h.add_subparsers(dest="hooks_command", required=True)
     hi = hsub.add_parser("install", help="render the hooks pack under the scratch store")
     hi.add_argument("--scratch-dir", required=True)
     hs = hsub.add_parser("status", help="report hooks pack install state")

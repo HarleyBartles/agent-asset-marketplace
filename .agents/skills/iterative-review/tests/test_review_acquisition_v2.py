@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import json
+import shutil
 import sys
 from pathlib import Path
 from types import SimpleNamespace
@@ -858,6 +859,95 @@ class TestAcquireBindings:
                 scratch_dir=scratch,
                 epoch=1,
             )
+
+    def test_enumerate_mid_run_gh_oserror_is_tool_blocked(self, tmp_path):
+        # A runner that dies after the first call must still classify as
+        # tool-blocked, not escape as io-error.
+        scratch = _scratch(tmp_path)
+        gh = FakeGh()
+        calls = {"n": 0}
+
+        def flaky(argv):
+            calls["n"] += 1
+            if calls["n"] > 1:
+                raise PermissionError("binary gone")
+            return gh(argv)
+
+        with pytest.raises(acq.AcquisitionError, match="tool-blocked"):
+            acq.enumerate_acquisition(
+                run_git=FakeGit({"AGENTS.md": "# law"}),
+                run_gh=flaky,
+                repo_root=Path(tmp_path),
+                pr_number=7,
+                out_dir=scratch / "acquire" / "latest",
+                scratch_dir=scratch,
+                epoch=1,
+            )
+
+    def test_enumerate_symlinked_out_dir_refused(self, tmp_path, monkeypatch):
+        # A symlinked acquisition dir must be refused before rmtree can
+        # follow it to a victim path.
+        _s, out_dir, scratch = _enumerate(tmp_path)
+        real_is_symlink = Path.is_symlink
+        monkeypatch.setattr(
+            Path,
+            "is_symlink",
+            lambda self: True if self == out_dir else real_is_symlink(self),
+        )
+        with pytest.raises(acq.AcquisitionError, match="tool-blocked"):
+            acq.enumerate_acquisition(
+                run_git=FakeGit({"AGENTS.md": "# law"}),
+                run_gh=FakeGh(),
+                repo_root=Path(tmp_path),
+                pr_number=7,
+                out_dir=out_dir,
+                scratch_dir=scratch,
+                epoch=2,
+            )
+        assert (out_dir / "data.json").is_file()
+
+    def test_enumerate_out_dir_outside_scratch_refused(self, tmp_path, monkeypatch):
+        # A resolved path outside the scratch root (e.g. via a symlinked
+        # ancestor) must be refused even when the name shape passes.
+        _s, out_dir, scratch = _enumerate(tmp_path)
+        victim = tmp_path / "victim" / "acquire" / "latest"
+        victim.mkdir(parents=True)
+        (victim / "keep.txt").write_text("x", encoding="utf-8")
+        real_resolve = Path.resolve
+
+        def bad_resolve(self, *a, **k):
+            if self == out_dir:
+                return victim
+            return real_resolve(self, *a, **k)
+
+        monkeypatch.setattr(Path, "resolve", bad_resolve)
+        with pytest.raises(acq.AcquisitionError, match="tool-blocked"):
+            acq.enumerate_acquisition(
+                run_git=FakeGit({"AGENTS.md": "# law"}),
+                run_gh=FakeGh(),
+                repo_root=Path(tmp_path),
+                pr_number=7,
+                out_dir=out_dir,
+                scratch_dir=scratch,
+                epoch=2,
+            )
+        assert (victim / "keep.txt").is_file()
+
+    def test_enumerate_out_dir_replaced_by_file_is_tampered(self, tmp_path):
+        _s, out_dir, scratch = _enumerate(tmp_path)
+        shutil.rmtree(out_dir)
+        out_dir.write_bytes(b"tampered")
+        with pytest.raises(acq.AcquisitionError, match="tampered-source"):
+            acq.enumerate_acquisition(
+                run_git=FakeGit({"AGENTS.md": "# law"}),
+                run_gh=FakeGh(),
+                repo_root=Path(tmp_path),
+                pr_number=7,
+                out_dir=out_dir,
+                scratch_dir=scratch,
+                epoch=2,
+            )
+        assert out_dir.is_file()
 
     def test_data_json_missing_fails_closed(self, tmp_path):
         _s, out_dir, scratch = _enumerate(tmp_path)
