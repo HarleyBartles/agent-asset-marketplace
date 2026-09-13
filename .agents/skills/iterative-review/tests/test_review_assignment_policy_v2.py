@@ -137,9 +137,7 @@ class TestRequirement:
         )
         assert req.capability_tier == "strong"
         assert req.reasoning_floor == "high"
-        low_only = pol.requirement(
-            state=state, role="obligation-reviewer", assignment_ids=("obligation:low",)
-        )
+        low_only = pol.requirement(state=state, role="obligation-reviewer", assignment_ids=("obligation:low",))
         assert low_only.capability_tier == "focused"
         assert low_only.reasoning_floor == "standard"
 
@@ -163,9 +161,7 @@ class TestRequirement:
                 )
             }
         )
-        req = raised.requirement(
-            state=state, role="obligation-reviewer", assignment_ids=("obligation:high",)
-        )
+        req = raised.requirement(state=state, role="obligation-reviewer", assignment_ids=("obligation:high",))
         assert req.capability_tier == "strong"
         assert req.reasoning_floor == "high"
 
@@ -212,9 +208,7 @@ class TestRequirement:
             "entry_adjudicator_attestation_id": "review:adj",
         }
         pol = assignment_policy.SealedReviewAssignmentPolicy()
-        req = pol.requirement(
-            state=state, role="review-repair-verifier", assignment_ids=("repair:1",)
-        )
+        req = pol.requirement(state=state, role="review-repair-verifier", assignment_ids=("repair:1",))
         assert req.capability_tier == "final-strong"
         assert req.reasoning_floor == "final-strong"
         assert "finding-adjudicator" in req.distinct_role_contract_from
@@ -223,9 +217,7 @@ class TestRequirement:
 class TestEngineWiring:
     def test_fail_closed_branch_uses_sealed_policy(self):
         sources = engine.load_witness_sources(runtime="unknown")
-        assert isinstance(
-            sources.policies.review_assignments, assignment_policy.SealedReviewAssignmentPolicy
-        )
+        assert isinstance(sources.policies.review_assignments, assignment_policy.SealedReviewAssignmentPolicy)
 
     def test_builtin_stub_deleted(self):
         assert not hasattr(engine, "_BuiltinReviewAssignments")

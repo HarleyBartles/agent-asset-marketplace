@@ -23,7 +23,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Protocol, runtime_checkable
 
-from . import assignment_policy, model, policy, store
+from . import assignment_policy, hypothesis_policy, model, policy, store
 
 
 # ---------------------------------------------------------------------------
@@ -223,41 +223,6 @@ class _BuiltinCommandExecution:
         }
 
 
-class _BuiltinHypotheses:
-    """Minimal derivation: each obligation yields one claim/counterexample
-    pair. Later plans may inject a richer manifest-driven derivation."""
-
-    @property
-    def source_id(self) -> str:
-        return "review-core-hypotheses"
-
-    @property
-    def source_version(self) -> str:
-        return "1"
-
-    @property
-    def sha256(self) -> str:
-        return model.sha256_hex(b"review-core-hypotheses:1")
-
-    def derive(self, *, obligation: dict) -> tuple:
-        oid = obligation["obligation_id"]
-        sha = self.sha256
-        return (
-            {
-                "hypothesis_id": f"{oid}:claim",
-                "polarity": "claim",
-                "statement": f"{obligation['category']} holds for {oid}",
-                "derivation_policy_sha256": sha,
-            },
-            {
-                "hypothesis_id": f"{oid}:counterexample",
-                "polarity": "counterexample",
-                "statement": f"{obligation['category']} fails for {oid}",
-                "derivation_policy_sha256": sha,
-            },
-        )
-
-
 def _default_ingestion_policy() -> store.EvidenceIngestionPolicy:
     mib = 1024 * 1024
     per_kind = {kind: mib for kind in model.EVIDENCE_KINDS}
@@ -305,7 +270,7 @@ def load_witness_sources(
                 local_checks=_BuiltinLocalChecks(),
                 review_assignments=assignment_policy.SealedReviewAssignmentPolicy(),
                 command_execution=_BuiltinCommandExecution(),
-                hypotheses=_BuiltinHypotheses(),
+                hypotheses=hypothesis_policy.SealedHypothesisDerivationPolicy(),
             ),
             evidence_ingestion_policy=_default_ingestion_policy(),
         )
@@ -337,7 +302,7 @@ def load_witness_sources(
             local_checks=_BuiltinLocalChecks(),
             review_assignments=assignment_policy.SealedReviewAssignmentPolicy(),
             command_execution=_BuiltinCommandExecution(),
-            hypotheses=_BuiltinHypotheses(),
+            hypotheses=hypothesis_policy.SealedHypothesisDerivationPolicy(),
             discovery_policy_origin="base-revision",
         ),
         evidence_ingestion_policy=_default_ingestion_policy(),

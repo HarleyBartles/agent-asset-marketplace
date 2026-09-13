@@ -17,11 +17,7 @@ from pathlib import Path
 
 from . import model, policy
 
-_POLICY_DOC = (
-    Path(__file__).resolve().parent.parent.parent
-    / "references"
-    / "review-assignment-policy.v1.json"
-)
+_POLICY_DOC = Path(__file__).resolve().parent.parent.parent / "references" / "review-assignment-policy.v1.json"
 
 _POLICY_ID = "review-core-review-assignment"
 
@@ -47,9 +43,7 @@ _TOP_KEYS = frozenset(
     }
 )
 
-_INDEPENDENCE_KEYS = frozenset(
-    {"context_mode", "distinct_execution_from", "distinct_role_contract_from"}
-)
+_INDEPENDENCE_KEYS = frozenset({"context_mode", "distinct_execution_from", "distinct_role_contract_from"})
 
 
 class AssignmentPolicyError(Exception):
@@ -260,9 +254,7 @@ class SealedReviewAssignmentPolicy:
         d = _dispatch_for(state, record_id)
         return _role_of_dispatch(state, d) if d is not None else ""
 
-    def requirement(
-        self, *, state: dict, role: str, assignment_ids: tuple[str, ...]
-    ) -> policy.RoleRequirement:
+    def requirement(self, *, state: dict, role: str, assignment_ids: tuple[str, ...]) -> policy.RoleRequirement:
         if role not in self._doc["role_floors"]:
             raise AssignmentPolicyError(f"unknown role {role!r}")
         floor = list(self._floor(role))

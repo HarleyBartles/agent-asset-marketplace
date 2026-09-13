@@ -610,3 +610,8 @@ class TestPlanCoverageProducer:
 - No `mark-ready-for-ci`/`run-remote-ci`/`seal-green` changes (Plan 6).
 - No consumer base-revision override for the two new sealed policies.
 - No legacy script retirement (`select_lenses.py`, `diff_slicer.py`, `next_node.py` remain, non-load-bearing; Plan 7 owns removal).
+
+## Plan deltas applied during execution
+
+- Task 3/4 sealed documents carry `schema_version: 1` (matching the `authority-discovery-policy.v1.json` convention) plus closed composition fields the plan sketched only as `"..."`: `finding_adjudicator_composition`, `repair_verifier_composition`, `deep_cut_target_kinds`, `deep_cut_roles` (assignment doc). Independence entries declare `context_mode` and use the dynamic tokens `self` and `source-role`, resolved per dispatch against `state`.
+- Task 4 `derive` emits `family`, `polarity`, `statement`, `derivation_policy_sha256`, `minimum_capability_tier`, `minimum_reasoning_floor`. The plan sketch's `hypothesis_id` key is not a record-schema field; `hypothesis_assignment_id` is derived by `_install_obligations` over `model.hypothesis_assignment_subject`, and `family`/minimum floors are required by `HYPOTHESIS_ASSIGNMENT_FIELDS`.
