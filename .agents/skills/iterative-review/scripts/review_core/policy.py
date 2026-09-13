@@ -11,6 +11,7 @@ frontier confirmation, not a cryptographic guarantee.
 from __future__ import annotations
 
 import copy
+import re
 from dataclasses import dataclass
 from datetime import datetime, timedelta, timezone
 from typing import Protocol
@@ -159,6 +160,10 @@ class PolicyBundle:
     review_assignments: ReviewAssignmentPolicy
     command_execution: CommandExecutionPolicy
     hypotheses: HypothesisDerivationPolicy
+    # Where the authority-discovery policy was resolved from. The default is
+    # fail-closed: only a composition root that resolves policy against the
+    # reviewed base revision may claim otherwise.
+    discovery_policy_origin: str = "reviewed-head"
 
 
 @dataclass(frozen=True)
@@ -206,8 +211,10 @@ ACTION_ORDER = (
 )
 
 ACTION_PAYLOAD_KEYS = {
-    "freeze-review-input": frozenset({"snapshot", "authority_manifest", "authorities"}),
-    "refresh-review-input": frozenset({"snapshot", "authority_manifest", "authorities", "drift_reasons"}),
+    "freeze-review-input": frozenset({"snapshot", "authority_manifest", "authorities", "findings", "witnesses"}),
+    "refresh-review-input": frozenset(
+        {"snapshot", "authority_manifest", "authorities", "drift_reasons", "findings", "witnesses"}
+    ),
     "map-impact-semantic": frozenset({"impact_map", "attestation", "findings"}),
     "map-impact-contract": frozenset({"impact_map", "attestation", "findings"}),
     "plan-coverage": frozenset({"obligations"}),
@@ -616,6 +623,18 @@ def authorities_complete(state: dict, policies) -> tuple[bool, tuple[str, ...]]:
         if rec["availability"] != entry["availability"]:
             return False, ("authority",)
         if entry["availability"] == "loaded" and rec["sha256"] != entry["sha256"]:
+            return False, ("authority",)
+        if entry["availability"] == "unavailable" and (
+            rec.get("failure_class") != entry.get("failure_class")
+            or rec.get("failure_sha256") != entry.get("failure_sha256")
+        ):
+            return False, ("authority",)
+        eid = rec.get("evidence_id" if entry["availability"] == "loaded" else "failure_evidence_id")
+        want = rec["sha256"] if entry["availability"] == "loaded" else rec.get("failure_sha256")
+        ev = state["evidence"].get(eid) if isinstance(eid, str) else None
+        cid = ev.get("content_id") if isinstance(ev, dict) else None
+        have = cid[len("sha256:") :] if isinstance(cid, str) and cid.startswith("sha256:") else None
+        if want is None or have != want:
             return False, ("authority",)
     extra = set(state["authorities"]) - {e["authority_id"] for e in entries}
     current_extra = {aid for aid in extra if _current(state, state["authorities"][aid], aid)}
@@ -2015,6 +2034,61 @@ def _install_findings(out: dict, findings: list) -> None:
         out["findings"][rec["finding_id"]] = rec
 
 
+def _install_discovery_witnesses(out: dict, witnesses: list) -> None:
+    """Install the authority-discovery witness records carried inside a
+    freeze/refresh payload. They run after ``_install_snapshot`` because the
+    records bind the candidate snapshot's epoch and fingerprint, and they run
+    inside ``complete_action`` so ``validate_state`` sees the manifest's
+    ``discovery_witness_id`` resolve in the same atomic transition.
+    """
+    for i, rec in enumerate(witnesses):
+        path = f"witnesses[{i}]"
+        if not isinstance(rec, dict):
+            _fail("bad-type", path, "witness record must be an object")
+        if rec.get("kind") != "authority-discovery":
+            _fail("wrong-kind", path, "freeze/refresh witnesses must be authority-discovery records")
+        r = dict(rec)
+        _bind_snapshot_defaults(out, r, path)
+        r["witness_id"] = model.derived_id("witness", r["snapshot_epoch"], model.witness_record_subject(r))
+        out["witness_records"][r["witness_id"]] = r
+
+
+_FEEDBACK_SOURCE_ID_RE = re.compile(r"^[a-z-]+:[a-z-]+:.+$")
+
+
+def _install_feedback_findings(out: dict, findings: list) -> None:
+    """Install provider feedback from a freeze/refresh payload.
+
+    Unlike _install_findings, a re-enumerated item never overwrites: finding
+    identity is content-derived, so an existing record (open or closed) is
+    durable and stays untouched - provider Resolve cannot reset lifecycle.
+    """
+    snap = out["snapshot"]
+    for i, f in enumerate(findings):
+        path = f"findings[{i}]"
+        if not isinstance(f, dict):
+            _fail("bad-finding", path, "feedback finding must be an object")
+        if f.get("source_kind") != "feedback":
+            _fail("bad-finding", path, "freeze/refresh findings must be provider feedback")
+        sid = f.get("source_id")
+        if not isinstance(sid, str) or not _FEEDBACK_SOURCE_ID_RE.match(sid):
+            _fail("bad-finding", path, "source_id must be a provider canonical id")
+        if f.get("source_assignment_id") != sid:
+            _fail("bad-finding", path, "source_assignment_id must equal source_id")
+        locations = f.get("locations")
+        if not isinstance(locations, list) or not locations or sid not in locations:
+            _fail("bad-finding", path, "locations must be a non-empty list containing source_id")
+        if f.get("disposition") != "open" or f.get("resolution") is not None:
+            _fail("bad-finding", path, "feedback findings must enter open and unresolved")
+        rec = dict(f)
+        rec.setdefault("discovered_snapshot_epoch", snap["epoch"])
+        rec.setdefault("discovered_snapshot_fingerprint", snap["fingerprint"])
+        rec["finding_id"] = "finding:" + model.sha256_json(model.finding_identity_subject(rec))
+        if rec["finding_id"] in out["findings"]:
+            continue
+        out["findings"][rec["finding_id"]] = rec
+
+
 def _install_checks(out: dict, checks: list) -> None:
     for c in checks:
         rec = _bind_now(out, c)
@@ -2246,6 +2320,8 @@ def _h_freeze(out: dict, data: dict, policies) -> None:
         data["authority_manifest"],
         data["authorities"],
     )
+    _install_discovery_witnesses(out, data["witnesses"])
+    _install_feedback_findings(out, data["findings"])
 
 
 def _h_refresh(out: dict, data: dict, policies) -> None:
@@ -2255,8 +2331,9 @@ def _h_refresh(out: dict, data: dict, policies) -> None:
     new_snap = dict(data["snapshot"])
     if new_snap.get("epoch") != old["epoch"] + 1:
         _fail("bad-epoch", "snapshot", "refresh must advance exactly one epoch")
-    old_subject = model._project(old, model.SNAPSHOT_SUBJECT_FIELDS, path="snapshot")
-    new_subject = model._project(new_snap, model.SNAPSHOT_SUBJECT_FIELDS, path="snapshot")
+    content_fields = tuple(f for f in model.SNAPSHOT_SUBJECT_FIELDS if f != "epoch")
+    old_subject = model._project(old, content_fields, path="snapshot")
+    new_subject = model._project(new_snap, content_fields, path="snapshot")
     if old_subject == new_subject:
         _fail("no-drift", "snapshot", "byte-identical refresh is not lawful")
     if not data["drift_reasons"]:
@@ -2268,6 +2345,8 @@ def _h_refresh(out: dict, data: dict, policies) -> None:
         data["authority_manifest"],
         data["authorities"],
     )
+    _install_discovery_witnesses(out, data["witnesses"])
+    _install_feedback_findings(out, data["findings"])
     out["coverage_inventory"] = None
     out["ready_transition"] = None
     out["ci_candidate"] = None

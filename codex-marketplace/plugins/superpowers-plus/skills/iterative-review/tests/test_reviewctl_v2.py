@@ -298,6 +298,7 @@ class _AuthorityDouble(_DoubleBase):
             "snapshot": snap,
             "authority_manifest": wrapper,
             "authorities": [auth_rec],
+            "findings": [],
         }
         envelope = {"data": data, "witnesses": [discovery]}
         return engine.TrustedActionPayload(
@@ -1636,3 +1637,658 @@ class TestVersionBoundary:
         _run(NEXT_NODE, "--metrics", str(metrics))
         # metrics-mode discovery is read-only; the state file is untouched.
         assert state.read_bytes() == before
+
+
+# ---------------------------------------------------------------------------
+# Live acquisition verbs: enumerate -> complete --acquired
+
+
+class TestEnumerateCompleteFlow:
+    """Drives reviewctl.main() in-process with fake git/gh runners so the
+    two-command witnessed acquisition flow is exercised end to end."""
+
+    def _live(self, monkeypatch, git=None, gh=None, runtime="devin-desktop"):
+        import reviewctl
+
+        monkeypatch.setenv(engine.RUNTIME_ENV_VAR, runtime)
+        if git is not None:
+            monkeypatch.setattr(reviewctl, "_run_git", lambda a, cwd=None: git(a))
+        if gh is not None:
+            monkeypatch.setattr(reviewctl, "_run_gh", lambda a, cwd=None: gh(a))
+        return reviewctl
+
+    def _init(self, reviewctl, tmp_path, review_id="rev-1"):
+        state = tmp_path / "review-state.json"
+        scratch = tmp_path / "scratch"
+        rc = reviewctl.main(
+            [
+                "init",
+                "--state",
+                str(state),
+                "--review-id",
+                review_id,
+                "--scratch-dir",
+                str(scratch),
+                "--apply",
+            ]
+        )
+        assert rc == 0
+        return state, scratch
+
+    def test_enumerate_then_complete_freeze_end_to_end(self, tmp_path, monkeypatch, capsys):
+        reviewctl = self._live(
+            monkeypatch,
+            git=helpers.FakeGit({"AGENTS.md": "# law"}),
+            gh=helpers.FakeGh(),
+        )
+        state, scratch = self._init(reviewctl, tmp_path)
+        rc = reviewctl.main(
+            [
+                "enumerate",
+                "--state",
+                str(state),
+                "--repo",
+                str(tmp_path),
+                "--pr",
+                "7",
+            ]
+        )
+        assert rc == 0
+        out = capsys.readouterr().out
+        assert "enumeration-id:" in out
+        acquire_dir = scratch / "acquire" / "latest"
+        enum_id = json.loads((acquire_dir / "enumeration.json").read_text())["enumeration_id"]
+        helpers.acq_transcript_with_marker(scratch, enum_id, out_dir=acquire_dir)
+        rc = reviewctl.main(
+            [
+                "complete",
+                "--state",
+                str(state),
+                "--action",
+                "freeze-review-input",
+                "--acquired",
+                str(acquire_dir),
+                "--apply",
+            ]
+        )
+        assert rc == 0
+        loaded = store.load_state(state)
+        assert loaded["snapshot"]["epoch"] == 1
+        assert loaded["authority_manifest"] is not None
+        assert loaded["authorities"]
+        assert len(loaded["witness_records"]) == 1
+        wrec = next(iter(loaded["witness_records"].values()))
+        assert wrec["kind"] == "authority-discovery"
+        rc = reviewctl.main(["validate", "--state", str(state)])
+        assert rc == 0
+        capsys.readouterr()
+        rc = reviewctl.main(["status", "--state", str(state), "--json"])
+        assert rc == 0
+        status = json.loads(capsys.readouterr().out)
+        assert status["stage"] != "intake"
+
+    def test_complete_acquired_witness_error_is_clean_failure(self, tmp_path, monkeypatch, capsys):
+        reviewctl = self._live(
+            monkeypatch,
+            git=helpers.FakeGit({"AGENTS.md": "# law"}),
+            gh=helpers.FakeGh(),
+        )
+        state, scratch = self._init(reviewctl, tmp_path)
+        capsys.readouterr()
+        rc = reviewctl.main(["enumerate", "--state", str(state), "--repo", str(tmp_path), "--pr", "7"])
+        assert rc == 0
+        capsys.readouterr()
+        acquire_dir = scratch / "acquire" / "latest"
+        enum_id = json.loads((acquire_dir / "enumeration.json").read_text())["enumeration_id"]
+        helpers.acq_transcript_with_marker(scratch, enum_id, out_dir=acquire_dir)
+        # Corrupt the witness log before complete: the chain-invalid failure
+        # must surface as a clean witness-error line, not a traceback.
+        log_path = scratch / "witness" / "witness-log.jsonl"
+        log_path.parent.mkdir(parents=True, exist_ok=True)
+        log_path.write_text('{"bogus": true}' + chr(10), encoding="utf-8")
+        rc = reviewctl.main(
+            [
+                "complete",
+                "--state",
+                str(state),
+                "--action",
+                "freeze-review-input",
+                "--acquired",
+                str(acquire_dir),
+                "--apply",
+            ]
+        )
+        assert rc == 1
+        err = capsys.readouterr().err
+        assert "witness-error" in err
+        assert "Traceback" not in err
+
+    def test_complete_acquired_refuses_with_data_file(self, tmp_path, monkeypatch, capsys):
+        reviewctl = self._live(monkeypatch)
+        state, scratch = self._init(reviewctl, tmp_path)
+        data_file = tmp_path / "d.json"
+        data_file.write_text("{}")
+        rc = reviewctl.main(
+            [
+                "complete",
+                "--state",
+                str(state),
+                "--action",
+                "freeze-review-input",
+                "--acquired",
+                str(scratch / "acquire" / "latest"),
+                "--data-file",
+                str(data_file),
+                "--apply",
+            ]
+        )
+        assert rc == 2
+        assert "mutually exclusive" in capsys.readouterr().err
+
+    def test_freeze_without_acquisition_fails_source_absent(self, tmp_path, monkeypatch, capsys):
+        reviewctl = self._live(monkeypatch)
+        state, scratch = self._init(reviewctl, tmp_path)
+        rc = reviewctl.main(
+            [
+                "complete",
+                "--state",
+                str(state),
+                "--action",
+                "freeze-review-input",
+                "--acquired",
+                str(scratch / "acquire" / "latest"),
+                "--apply",
+            ]
+        )
+        assert rc == 1
+        out = capsys.readouterr().out
+        assert "missing-witness-source" in out
+
+    def test_refresh_flow_advances_epoch_and_invalidates(self, tmp_path, monkeypatch, capsys):
+        git1 = helpers.FakeGit({"AGENTS.md": "# law"})
+        gh1 = helpers.FakeGh()
+        reviewctl = self._live(monkeypatch, git=git1, gh=gh1)
+        state, scratch = self._init(reviewctl, tmp_path)
+        reviewctl.main(
+            [
+                "enumerate",
+                "--state",
+                str(state),
+                "--repo",
+                str(tmp_path),
+                "--pr",
+                "7",
+            ]
+        )
+        capsys.readouterr()
+        acquire_dir = scratch / "acquire" / "latest"
+        enum1 = json.loads((acquire_dir / "enumeration.json").read_text())["enumeration_id"]
+        helpers.acq_transcript_with_marker(scratch, enum1, out_dir=acquire_dir)
+        rc = reviewctl.main(
+            [
+                "complete",
+                "--state",
+                str(state),
+                "--action",
+                "freeze-review-input",
+                "--acquired",
+                str(acquire_dir),
+                "--apply",
+            ]
+        )
+        assert rc == 0
+        # New head + tree on the next enumeration.
+        git2 = helpers.FakeGit({"AGENTS.md": "# law"}, head="9" * 40, tree="8" * 40, diff="new-diff")
+        gh2 = helpers.FakeGh(pr=helpers.acq_pr_meta(headRefOid="9" * 40))
+        monkeypatch.setattr(reviewctl, "_run_git", lambda a, cwd=None: git2(a))
+        monkeypatch.setattr(reviewctl, "_run_gh", lambda a, cwd=None: gh2(a))
+        rc = reviewctl.main(
+            [
+                "enumerate",
+                "--state",
+                str(state),
+                "--repo",
+                str(tmp_path),
+                "--pr",
+                "7",
+            ]
+        )
+        assert rc == 0
+        enum2 = json.loads((acquire_dir / "enumeration.json").read_text())["enumeration_id"]
+        helpers.acq_transcript_with_marker(scratch, enum2, session="s2", tool_use="exec_2", out_dir=acquire_dir)
+        rc = reviewctl.main(
+            [
+                "complete",
+                "--state",
+                str(state),
+                "--action",
+                "refresh-review-input",
+                "--acquired",
+                str(acquire_dir),
+                "--apply",
+            ]
+        )
+        assert rc == 0
+        loaded = store.load_state(state)
+        assert loaded["snapshot"]["epoch"] == 2
+        assert loaded["snapshot"]["head_sha"] == "9" * 40
+        assert loaded["coverage_inventory"] is None
+        assert loaded["ready_transition"] is None
+        assert loaded["ci_candidate"] is None
+        assert loaded["green_seal"] is None
+
+    def test_refresh_identical_inputs_refused_no_drift(self, tmp_path, monkeypatch, capsys):
+        git = helpers.FakeGit({"AGENTS.md": "# law"})
+        gh = helpers.FakeGh()
+        reviewctl = self._live(monkeypatch, git=git, gh=gh)
+        state, scratch = self._init(reviewctl, tmp_path)
+        reviewctl.main(
+            [
+                "enumerate",
+                "--state",
+                str(state),
+                "--repo",
+                str(tmp_path),
+                "--pr",
+                "7",
+            ]
+        )
+        capsys.readouterr()
+        acquire_dir = scratch / "acquire" / "latest"
+        enum1 = json.loads((acquire_dir / "enumeration.json").read_text())["enumeration_id"]
+        helpers.acq_transcript_with_marker(scratch, enum1, out_dir=acquire_dir)
+        rc = reviewctl.main(
+            [
+                "complete",
+                "--state",
+                str(state),
+                "--action",
+                "freeze-review-input",
+                "--acquired",
+                str(acquire_dir),
+                "--apply",
+            ]
+        )
+        assert rc == 0
+        # Same inputs: re-enumerate epoch 2 (identical bytes) then refresh.
+        rc = reviewctl.main(
+            [
+                "enumerate",
+                "--state",
+                str(state),
+                "--repo",
+                str(tmp_path),
+                "--pr",
+                "7",
+            ]
+        )
+        assert rc == 0
+        enum2 = json.loads((acquire_dir / "enumeration.json").read_text())["enumeration_id"]
+        assert enum2 != enum1  # epoch differs, so the subject differs
+        helpers.acq_transcript_with_marker(scratch, enum2, session="s2", tool_use="exec_2", out_dir=acquire_dir)
+        rc = reviewctl.main(
+            [
+                "complete",
+                "--state",
+                str(state),
+                "--action",
+                "refresh-review-input",
+                "--acquired",
+                str(acquire_dir),
+                "--apply",
+            ]
+        )
+        assert rc == 1
+        assert "no-drift" in capsys.readouterr().err
+
+    def test_enumerate_inert_off_devin(self, tmp_path, monkeypatch, capsys):
+        reviewctl = self._live(monkeypatch)
+        state, scratch = self._init(reviewctl, tmp_path)
+        # init is runtime-gated too; flip to a non-Devin runtime after the
+        # v2 state exists, then prove enumerate stays inert.
+        monkeypatch.setenv(engine.RUNTIME_ENV_VAR, "generic-openai")
+        rc = reviewctl.main(
+            [
+                "enumerate",
+                "--state",
+                str(state),
+                "--repo",
+                str(tmp_path),
+                "--pr",
+                "7",
+            ]
+        )
+        assert rc == 1
+        assert "unsupported-runtime" in capsys.readouterr().err
+
+    def test_freeze_alias_runs_witnessed_flow(self, tmp_path, monkeypatch, capsys):
+        reviewctl = self._live(
+            monkeypatch,
+            git=helpers.FakeGit({"AGENTS.md": "# law"}),
+            gh=helpers.FakeGh(),
+        )
+        state, scratch = self._init(reviewctl, tmp_path)
+        rc = reviewctl.main(
+            [
+                "enumerate",
+                "--state",
+                str(state),
+                "--repo",
+                str(tmp_path),
+                "--pr",
+                "7",
+            ]
+        )
+        assert rc == 0
+        capsys.readouterr()
+        acquire_dir = scratch / "acquire" / "latest"
+        enum_id = json.loads((acquire_dir / "enumeration.json").read_text())["enumeration_id"]
+        helpers.acq_transcript_with_marker(scratch, enum_id, out_dir=acquire_dir)
+        rc = reviewctl.main(
+            [
+                "freeze",
+                "--state",
+                str(state),
+                "--repo",
+                str(tmp_path),
+                "--pr",
+                "7",
+                "--apply",
+            ]
+        )
+        assert rc == 0
+        loaded = store.load_state(state)
+        assert loaded["snapshot"]["epoch"] == 1
+        assert loaded["authority_manifest"] is not None
+
+    def test_freeze_alias_refuses_without_enumeration(self, tmp_path, monkeypatch, capsys):
+        reviewctl = self._live(monkeypatch)
+        state, scratch = self._init(reviewctl, tmp_path)
+        rc = reviewctl.main(
+            [
+                "freeze",
+                "--state",
+                str(state),
+                "--repo",
+                str(tmp_path),
+                "--pr",
+                "7",
+                "--apply",
+            ]
+        )
+        assert rc == 1
+        assert "stale-acquisition" in capsys.readouterr().err
+
+    def test_freeze_alias_refuses_on_head_mismatch(self, tmp_path, monkeypatch, capsys):
+        reviewctl = self._live(
+            monkeypatch,
+            git=helpers.FakeGit({"AGENTS.md": "# law"}),
+            gh=helpers.FakeGh(),
+        )
+        state, scratch = self._init(reviewctl, tmp_path)
+        rc = reviewctl.main(
+            [
+                "enumerate",
+                "--state",
+                str(state),
+                "--repo",
+                str(tmp_path),
+                "--pr",
+                "7",
+            ]
+        )
+        assert rc == 0
+        capsys.readouterr()
+        acquire_dir = scratch / "acquire" / "latest"
+        enum_id = json.loads((acquire_dir / "enumeration.json").read_text())["enumeration_id"]
+        helpers.acq_transcript_with_marker(scratch, enum_id, out_dir=acquire_dir)
+        # checked-out HEAD moved after enumerate: the enumeration is stale.
+        moved = helpers.FakeGit({"AGENTS.md": "# law"}, head="f" * 40)
+        monkeypatch.setattr(reviewctl, "_run_git", lambda a, cwd=None: moved(a))
+        rc = reviewctl.main(
+            [
+                "freeze",
+                "--state",
+                str(state),
+                "--repo",
+                str(tmp_path),
+                "--pr",
+                "7",
+                "--apply",
+            ]
+        )
+        assert rc == 1
+        assert "stale-acquisition" in capsys.readouterr().err
+
+    def test_enumerate_json_stdout_is_pure_json(self, tmp_path, monkeypatch, capsys):
+        reviewctl = self._live(
+            monkeypatch,
+            git=helpers.FakeGit({"AGENTS.md": "# law"}),
+            gh=helpers.FakeGh(),
+        )
+        state, scratch = self._init(reviewctl, tmp_path)
+        capsys.readouterr()
+        rc = reviewctl.main(
+            [
+                "enumerate",
+                "--state",
+                str(state),
+                "--repo",
+                str(tmp_path),
+                "--pr",
+                "7",
+                "--json",
+            ]
+        )
+        assert rc == 0
+        summary = json.loads(capsys.readouterr().out)
+        enum_id = json.loads((scratch / "acquire" / "latest" / "enumeration.json").read_text())["enumeration_id"]
+        assert summary["enumeration_id"] == enum_id
+
+    def test_alias_tolerates_repo_path_normalization(self, tmp_path, monkeypatch, capsys):
+        reviewctl = self._live(
+            monkeypatch,
+            git=helpers.FakeGit({"AGENTS.md": "# law"}),
+            gh=helpers.FakeGh(),
+        )
+        state, scratch = self._init(reviewctl, tmp_path)
+        rc = reviewctl.main(
+            [
+                "enumerate",
+                "--state",
+                str(state),
+                "--repo",
+                str(tmp_path),
+                "--pr",
+                "7",
+            ]
+        )
+        assert rc == 0
+        capsys.readouterr()
+        acquire_dir = scratch / "acquire" / "latest"
+        enum_file = acquire_dir / "enumeration.json"
+        enum_rec = json.loads(enum_file.read_text())
+        enum_rec["inputs"]["repo_root"] = enum_rec["inputs"]["repo_root"].replace(os.sep, "/")
+        enum_file.write_text(json.dumps(enum_rec))
+        helpers.acq_transcript_with_marker(scratch, enum_rec["enumeration_id"], out_dir=acquire_dir)
+        rc = reviewctl.main(
+            [
+                "freeze",
+                "--state",
+                str(state),
+                "--repo",
+                str(tmp_path),
+                "--pr",
+                "7",
+                "--apply",
+            ]
+        )
+        assert rc == 0
+
+    def test_freeze_alias_malformed_enumeration_fails_stale(self, tmp_path, monkeypatch, capsys):
+        reviewctl = self._live(monkeypatch)
+        state, scratch = self._init(reviewctl, tmp_path)
+        acquire_dir = scratch / "acquire" / "latest"
+        acquire_dir.mkdir(parents=True)
+        (acquire_dir / "enumeration.json").write_text("[]", encoding="utf-8")
+        rc = reviewctl.main(
+            [
+                "freeze",
+                "--state",
+                str(state),
+                "--repo",
+                str(tmp_path),
+                "--pr",
+                "7",
+                "--apply",
+            ]
+        )
+        assert rc == 1
+        err = capsys.readouterr().err
+        assert "stale-acquisition" in err
+        assert "Traceback" not in err
+
+    def test_freeze_alias_nul_repo_root_fails_stale(self, tmp_path, monkeypatch, capsys):
+        # A tampered enumeration.json carrying a NUL-byte repo_root must hit
+        # the typed stale-acquisition refusal, not an unexpected ValueError.
+        reviewctl = self._live(monkeypatch)
+        state, scratch = self._init(reviewctl, tmp_path)
+        acquire_dir = scratch / "acquire" / "latest"
+        acquire_dir.mkdir(parents=True)
+        (acquire_dir / "enumeration.json").write_text(
+            json.dumps({"inputs": {"repo_root": "foo\x00bar", "pr_number": 7}}),
+            encoding="utf-8",
+        )
+        rc = reviewctl.main(
+            [
+                "freeze",
+                "--state",
+                str(state),
+                "--repo",
+                str(tmp_path),
+                "--pr",
+                "7",
+                "--apply",
+            ]
+        )
+        assert rc == 1
+        err = capsys.readouterr().err
+        assert "stale-acquisition" in err
+        assert "Traceback" not in err
+
+    def test_complete_missing_data_file_is_typed_failure(self, tmp_path, monkeypatch, capsys):
+        reviewctl = self._live(monkeypatch)
+        state, _scratch = self._init(reviewctl, tmp_path)
+        capsys.readouterr()
+        rc = reviewctl.main(
+            [
+                "complete",
+                "--state",
+                str(state),
+                "--action",
+                "freeze-review-input",
+                "--data-file",
+                str(tmp_path / "absent.json"),
+                "--apply",
+            ]
+        )
+        assert rc == 1
+        err = capsys.readouterr().err
+        assert "missing-source" in err
+        assert "io-error" not in err
+        assert "Traceback" not in err
+
+    def test_freeze_alias_git_missing_is_tool_blocked(self, tmp_path, monkeypatch, capsys):
+        reviewctl = self._live(
+            monkeypatch,
+            git=helpers.FakeGit({"AGENTS.md": "# law"}),
+            gh=helpers.FakeGh(),
+        )
+        state, scratch = self._init(reviewctl, tmp_path)
+        rc = reviewctl.main(["enumerate", "--state", str(state), "--repo", str(tmp_path), "--pr", "7"])
+        assert rc == 0
+        capsys.readouterr()
+
+        def no_git(_a, cwd=None):
+            raise FileNotFoundError("git")
+
+        monkeypatch.setattr(reviewctl, "_run_git", no_git)
+        rc = reviewctl.main(["freeze", "--state", str(state), "--repo", str(tmp_path), "--pr", "7", "--apply"])
+        assert rc == 1
+        err = capsys.readouterr().err
+        assert "tool-blocked" in err
+        assert "Traceback" not in err
+
+
+class TestHooksRenderAndJsonFlag:
+    """hooks.v1.json rendering is platform-aware; --json is argparse-native."""
+
+    def test_hooks_install_renders_platform_interpreter(self, tmp_path, monkeypatch, capsys):
+        import reviewctl
+
+        monkeypatch.setenv(engine.RUNTIME_ENV_VAR, "devin-desktop")
+        scratch = tmp_path / "scratch"
+        monkeypatch.setattr(sys, "platform", "linux")
+        rc = reviewctl.main(["hooks", "install", "--scratch-dir", str(scratch)])
+        assert rc == 0
+        capsys.readouterr()
+        cfg = json.loads((scratch / "hooks" / "hooks.v1.json").read_text(encoding="utf-8"))
+        commands = [h["command"] for group in cfg["hooks"].values() for m in group for h in m["hooks"]]
+        assert commands and all(c.startswith("python3 ") for c in commands)
+
+        scratch2 = tmp_path / "scratch2"
+        monkeypatch.setattr(sys, "platform", "win32")
+        rc = reviewctl.main(["hooks", "install", "--scratch-dir", str(scratch2)])
+        assert rc == 0
+        capsys.readouterr()
+        cfg = json.loads((scratch2 / "hooks" / "hooks.v1.json").read_text(encoding="utf-8"))
+        commands = [h["command"] for group in cfg["hooks"].values() for m in group for h in m["hooks"]]
+        assert commands and all(c.startswith("py -3 ") for c in commands)
+
+    def test_json_flag_in_both_positions(self, tmp_path, monkeypatch, capsys):
+        import reviewctl
+
+        scratch = tmp_path / "scratch"
+        rc = reviewctl.main(["doctor", "--scratch-dir", str(scratch), "--json"])
+        assert rc in (0, 1)
+        out = capsys.readouterr().out.strip()
+        assert out.startswith("{")
+        rc = reviewctl.main(["--json", "doctor", "--scratch-dir", str(scratch)])
+        assert rc in (0, 1)
+        out = capsys.readouterr().out.strip()
+        assert out.startswith("{")
+
+    def test_hooks_parent_json_flag(self, tmp_path, monkeypatch, capsys):
+        import reviewctl
+
+        monkeypatch.setenv(engine.RUNTIME_ENV_VAR, "devin-desktop")
+        scratch = tmp_path / "scratch"
+        rc = reviewctl.main(["hooks", "--json", "install", "--scratch-dir", str(scratch)])
+        assert rc == 0
+        out = capsys.readouterr().out.strip()
+        assert out.startswith("{")
+
+    def test_json_token_as_flag_value_is_argparse_error(self, capsys):
+        import reviewctl
+
+        # `--reason --json` must not silently strip the token: argparse sees
+        # it as an option and reports the missing --reason value.
+        with pytest.raises(SystemExit):
+            reviewctl.main(["block", "--state", "x", "--class", "c", "--reason", "--json"])
+
+    def test_doctor_missing_tools_report_failed_rows(self, tmp_path):
+        import reviewctl
+
+        def missing(_argv, cwd=None):
+            raise FileNotFoundError("no such file: git")
+
+        rows, verdict = reviewctl._doctor_rows(
+            runtime=engine.RUNTIME_DEVIN_DESKTOP,
+            repo=tmp_path,
+            run_cmd=missing,
+        )
+        by_name = {r["name"]: r for r in rows}
+        for name in ("git-present", "repo-non-shallow", "gh-authenticated"):
+            assert by_name[name]["status"] == "fail", by_name
+            assert "no such file" in by_name[name]["detail"]
+        assert verdict == "capability-floor-failed"

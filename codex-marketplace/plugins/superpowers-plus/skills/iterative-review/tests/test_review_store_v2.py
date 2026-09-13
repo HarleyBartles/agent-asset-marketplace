@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
 import sys
 import threading
 from pathlib import Path
@@ -592,3 +593,31 @@ def test_append_history_chains(tmp_path):
     assert h[0]["sequence"] == 1 and h[1]["sequence"] == 2
     assert h[1]["previous_record_sha256"] == h[0]["record_sha256"]
     assert h[1]["record_sha256"] == model.sha256_json(model.history_record_subject(h[1]))
+
+
+@pytest.mark.skipif(sys.platform != "win32", reason="Windows handle API")
+def test_verify_handle_identity_api_failure_is_unsafe_source(tmp_path, monkeypatch):
+    import ctypes
+
+    source = tmp_path / "ev.bin"
+    source.write_bytes(b"x")
+    fd = os.open(str(source), os.O_RDONLY | getattr(os, "O_BINARY", 0))
+    try:
+        monkeypatch.setattr(ctypes.windll.kernel32, "GetFinalPathNameByHandleW", lambda *a: 0)
+        with pytest.raises(store.UnsafeEvidenceSourceError, match="GetFinalPathNameByHandleW"):
+            store._verify_handle_identity(fd, source)
+    finally:
+        os.close(fd)
+
+
+@pytest.mark.skipif(sys.platform != "win32", reason="needs a host without /proc/self/fd")
+def test_verify_handle_identity_unavailable_platform_fails_closed(tmp_path, monkeypatch):
+    source = tmp_path / "ev.bin"
+    source.write_bytes(b"x")
+    fd = os.open(str(source), os.O_RDONLY | getattr(os, "O_BINARY", 0))
+    try:
+        monkeypatch.setattr(sys, "platform", "freebsd")
+        with pytest.raises(store.UnsafeEvidenceSourceError, match="unavailable on this platform"):
+            store._verify_handle_identity(fd, source)
+    finally:
+        os.close(fd)

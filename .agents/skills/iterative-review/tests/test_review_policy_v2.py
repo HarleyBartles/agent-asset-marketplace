@@ -96,6 +96,28 @@ def test_next_action_after_freeze_is_semantic_map(tmp_path):
     assert d.action == "map-impact-semantic"
 
 
+def test_authorities_complete_detects_swapped_evidence_content(tmp_path):
+    # A file swapped between _load_dir verification and store registration
+    # leaves the recorded sha256 honest but the registered content tampered;
+    # the cross-check must fail closed.
+    state = _complete_state(tmp_path)
+    rec = state["authorities"]["auth-agents"]
+    bad_cid = _put(state, {"path": "AGENTS.md", "note": "tampered"})
+    rec["evidence_id"] = _bind(state, bad_cid, "authority")
+    ok, missing = policy.authorities_complete(state, _bundle(state))
+    assert not ok
+
+
+def test_authorities_complete_detects_dangling_evidence(tmp_path):
+    # An evidence_id that resolves to nothing must fail, not silently pass
+    # on record-vs-manifest agreement alone.
+    state = _complete_state(tmp_path)
+    rec = state["authorities"]["auth-agents"]
+    rec["evidence_id"] = "evidence:nonexistent"
+    ok, missing = policy.authorities_complete(state, _bundle(state))
+    assert not ok
+
+
 def _add_blocker(state, blocker_id="b-1", active=True):
     snap = state["snapshot"]
     state["blockers"][blocker_id] = {
@@ -618,12 +640,7 @@ def test_refresh_review_input_advances_one_epoch(tmp_path):
     intake = w.intake(epoch=2, head_sha="9" * 40)
     w.run(
         "refresh-review-input",
-        {
-            "snapshot": intake["snapshot"],
-            "authority_manifest": intake["authority_manifest"],
-            "authorities": intake["authorities"],
-            "drift_reasons": ["remote head moved"],
-        },
+        dict(intake, drift_reasons=["remote head moved"]),
         sole=False,
     )
     assert w.state["snapshot"]["epoch"] == 2
@@ -644,12 +661,11 @@ def test_refresh_rejects_identical_snapshot(tmp_path):
             w.state,
             action="refresh-review-input",
             raw_data=model.canonical_json(
-                {
-                    "snapshot": {**intake["snapshot"], "epoch": 1},
-                    "authority_manifest": intake["authority_manifest"],
-                    "authorities": intake["authorities"],
-                    "drift_reasons": ["no real drift"],
-                }
+                dict(
+                    intake,
+                    snapshot={**intake["snapshot"], "epoch": 1},
+                    drift_reasons=["no real drift"],
+                )
             ),
             policies=w.policies,
         )
@@ -1413,3 +1429,184 @@ def test_repair_rejects_unsupported_target_kind(tmp_path, bad_kind):
             ),
             policies=w.policies,
         )
+
+
+# ---------------------------------------------------------------------------
+# Freeze/refresh findings: provider feedback enters through the payload and is
+# durable identity - re-enumeration can never reset or resurrect a lifecycle.
+
+
+def _feedback_finding(source_id="github:thread:PRRT_1", *, title="feedback finding"):
+    return {
+        "source_kind": "feedback",
+        "source_id": source_id,
+        "source_assignment_id": source_id,
+        "obligation_id": None,
+        "severity": "minor",
+        "title": title,
+        "description": "desc",
+        "locations": [source_id],
+        "evidence_ids": [],
+        "regression_of": None,
+        "disposition": "open",
+        "resolution": None,
+    }
+
+
+class TestFreezeFindings:
+    def test_freeze_installs_feedback_finding(self, tmp_path):
+        w = _Walk(tmp_path)
+        data = w.intake(epoch=1, head_sha="b" * 40)
+        data["findings"] = [_feedback_finding()]
+        w.run("freeze-review-input", data)
+        f = next(iter(w.state["findings"].values()))
+        assert f["source_kind"] == "feedback"
+        assert f["source_id"] == "github:thread:PRRT_1"
+        assert f["disposition"] == "open"
+        assert f["discovered_snapshot_epoch"] == w.state["snapshot"]["epoch"]
+        assert f["discovered_snapshot_fingerprint"] == w.state["snapshot"]["fingerprint"]
+
+    def test_freeze_rejects_non_feedback_finding(self, tmp_path):
+        w = _Walk(tmp_path)
+        data = w.intake(epoch=1, head_sha="b" * 40)
+        bad = _feedback_finding()
+        bad["source_kind"] = "review"
+        data["findings"] = [bad]
+        with pytest.raises(model.StateValidationError) as ei:
+            policy.complete_action(
+                w.state,
+                action="freeze-review-input",
+                raw_data=model.canonical_json(data),
+                policies=w.policies,
+            )
+        assert ei.value.code == "bad-finding"
+
+    def test_freeze_rejects_finding_with_resolution(self, tmp_path):
+        w = _Walk(tmp_path)
+        data = w.intake(epoch=1, head_sha="b" * 40)
+        bad = _feedback_finding()
+        bad["resolution"] = {"note": "pre-resolved"}
+        data["findings"] = [bad]
+        with pytest.raises(model.StateValidationError) as ei:
+            policy.complete_action(
+                w.state,
+                action="freeze-review-input",
+                raw_data=model.canonical_json(data),
+                policies=w.policies,
+            )
+        assert ei.value.code == "bad-finding"
+
+    def test_freeze_rejects_mismatched_source_ids(self, tmp_path):
+        w = _Walk(tmp_path)
+        data = w.intake(epoch=1, head_sha="b" * 40)
+        bad = _feedback_finding()
+        bad["source_assignment_id"] = "github:review:OTHER"
+        data["findings"] = [bad]
+        with pytest.raises(model.StateValidationError) as ei:
+            policy.complete_action(
+                w.state,
+                action="freeze-review-input",
+                raw_data=model.canonical_json(data),
+                policies=w.policies,
+            )
+        assert ei.value.code == "bad-finding"
+
+    def test_freeze_rejects_locations_without_source_id(self, tmp_path):
+        w = _Walk(tmp_path)
+        data = w.intake(epoch=1, head_sha="b" * 40)
+        bad = _feedback_finding()
+        bad["locations"] = ["src/foo.py"]
+        data["findings"] = [bad]
+        with pytest.raises(model.StateValidationError) as ei:
+            policy.complete_action(
+                w.state,
+                action="freeze-review-input",
+                raw_data=model.canonical_json(data),
+                policies=w.policies,
+            )
+        assert ei.value.code == "bad-finding"
+
+    def test_refresh_keeps_prior_findings_and_adds_new(self, tmp_path):
+        w = _Walk(tmp_path)
+        data = w.intake(epoch=1, head_sha="b" * 40)
+        data["findings"] = [_feedback_finding()]
+        w.run("freeze-review-input", data)
+        first_id = next(iter(w.state["findings"]))
+        intake = w.intake(epoch=2, head_sha="9" * 40)
+        w.run(
+            "refresh-review-input",
+            dict(
+                intake,
+                drift_reasons=["head_sha"],
+                findings=[
+                    _feedback_finding(),
+                    _feedback_finding("github:thread:PRRT_2", title="new thread"),
+                ],
+            ),
+            sole=False,
+        )
+        assert w.state["findings"][first_id]["disposition"] == "open"
+        new = [f for f in w.state["findings"].values() if f["source_id"] == "github:thread:PRRT_2"]
+        assert len(new) == 1
+        assert new[0]["discovered_snapshot_epoch"] == 2
+        assert new[0]["discovered_snapshot_fingerprint"] == w.state["snapshot"]["fingerprint"]
+
+    def test_refresh_does_not_reopen_closed_finding(self, tmp_path):
+        w = _Walk(tmp_path)
+        data = w.intake(epoch=1, head_sha="b" * 40)
+        data["findings"] = [_feedback_finding()]
+        w.run("freeze-review-input", data)
+        fid = next(iter(w.state["findings"]))
+        adj_att_id = _run_adjudicated(w, fid, outcome="false-positive")
+        counter = _bind(
+            w.state,
+            _put(w.state, {"counter-evidence": fid}),
+            "finding-proof",
+        )
+        w.run(
+            "close-false-positive",
+            {
+                "resolutions": [
+                    {
+                        "finding_id": fid,
+                        "counter_evidence_ids": [counter],
+                        "review_id": adj_att_id,
+                    }
+                ]
+            },
+            sole=False,
+        )
+        closed_disposition = w.state["findings"][fid]["disposition"]
+        assert closed_disposition != "open"
+        intake = w.intake(epoch=2, head_sha="9" * 40)
+        # The provider still reports the same thread; refresh re-presents it.
+        w.run(
+            "refresh-review-input",
+            dict(
+                intake,
+                drift_reasons=["head_sha"],
+                findings=[_feedback_finding()],
+            ),
+            sole=False,
+        )
+        f = w.state["findings"][fid]
+        assert f["disposition"] == closed_disposition
+        assert f["resolution"] is not None
+        # discovered_* still records epoch 1: identity is durable.
+        assert f["discovered_snapshot_epoch"] == 1
+
+    def test_refresh_payload_missing_findings_fails(self, tmp_path):
+        w = _Walk(tmp_path)
+        w.freeze()
+        w.ascent()
+        intake = w.intake(epoch=2, head_sha="9" * 40)
+        with pytest.raises(model.StateValidationError) as ei:
+            policy.complete_action(
+                w.state,
+                action="refresh-review-input",
+                raw_data=model.canonical_json(
+                    {k: v for k, v in dict(intake, drift_reasons=["head_sha"]).items() if k != "findings"}
+                ),
+                policies=w.policies,
+            )
+        assert ei.value.code == "missing-field"

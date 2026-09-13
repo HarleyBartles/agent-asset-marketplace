@@ -318,17 +318,67 @@ def _default_ingestion_policy() -> store.EvidenceIngestionPolicy:
     )
 
 
-def load_witness_sources() -> WitnessSources:
-    """Plan-1 composition root: builtin fail-closed policies, no live sources."""
+def load_witness_sources(
+    *,
+    scratch_dir: Path | None = None,
+    review_id: str | None = None,
+    runtime: str | None = None,
+    acquisition_dir: Path | None = None,
+) -> WitnessSources:
+    """Composition root.
+
+    Without live kwargs, or off Devin Desktop, returns the fail-closed
+    builtin bundle (unchanged Plan-1 behavior). On Devin with ``scratch_dir``
+    and ``review_id``, wires the transcript witness verifier; when a produced
+    acquisition dir exists (``acquisition_dir`` or the default
+    ``<scratch>/acquire/latest``), also wires the live authority-discovery
+    source.
+    """
+    rt = runtime if runtime is not None else detect_runtime()
+    if rt != RUNTIME_DEVIN_DESKTOP or scratch_dir is None or review_id is None:
+        return WitnessSources(
+            policies=policy.PolicyBundle(
+                witness_verifier=_FailClosedWitnessVerifier(),
+                local_checks=_BuiltinLocalChecks(),
+                review_assignments=_BuiltinReviewAssignments(),
+                command_execution=_BuiltinCommandExecution(),
+                hypotheses=_BuiltinHypotheses(),
+            ),
+            evidence_ingestion_policy=_default_ingestion_policy(),
+        )
+    # Lazy import: acquisition depends on this module (EvidenceSource).
+    from . import acquisition, witness_log
+
+    scratch = Path(scratch_dir)
+    witness_pol = witness_log.TranscriptWitnessPolicy(
+        transcript_root=scratch / "transcripts",
+        witness_root=scratch / "witness",
+    )
+    verifier = witness_log.TranscriptWitnessVerifier(
+        witness_pol,
+        witness_root=scratch / "witness",
+        review_id=review_id,
+    )
+    acq_dir = Path(acquisition_dir) if acquisition_dir is not None else scratch / "acquire" / "latest"
+    discovery = None
+    if (acq_dir / "data.json").is_file() and (acq_dir / "enumeration.json").is_file():
+        discovery = acquisition.LiveAuthorityDiscovery(
+            acquisition_dir=acq_dir,
+            witness_log_path=scratch / "witness" / "witness-log.jsonl",
+            transcript_root=scratch / "transcripts",
+            review_id=review_id,
+        )
     return WitnessSources(
         policies=policy.PolicyBundle(
-            witness_verifier=_FailClosedWitnessVerifier(),
+            witness_verifier=verifier,
             local_checks=_BuiltinLocalChecks(),
             review_assignments=_BuiltinReviewAssignments(),
             command_execution=_BuiltinCommandExecution(),
             hypotheses=_BuiltinHypotheses(),
+            discovery_policy_origin="base-revision",
         ),
         evidence_ingestion_policy=_default_ingestion_policy(),
+        authority_discovery=discovery,
     )
 
 
@@ -845,14 +895,22 @@ def complete_transaction(
                 candidate_snapshot=candidate_snapshot,
             )
             resolved = store.resolve_evidence_aliases(data, registrations)
-            st = _install_witness_records(st, witnesses, sources.policies)
-            witness_ids.extend(set(st["witness_records"]) - set(before["witness_records"]))
+            if attr == "authority_discovery":
+                # Freeze/refresh witnesses bind the snapshot the payload
+                # installs, so the handler installs them inside the same
+                # validated transition rather than before it.
+                resolved = {**resolved, "witnesses": witnesses}
+            else:
+                # Other source payloads reference their witness ids, so the
+                # witnesses must land first.
+                st = _install_witness_records(st, witnesses, sources.policies)
             st = policy.complete_action(
                 st,
                 action=action,
                 raw_data=model.canonical_json(resolved),
                 policies=sources.policies,
             )
+            witness_ids.extend(set(st["witness_records"]) - set(before["witness_records"]))
         else:
             payload = TrustedActionPayload(caller_data_bytes, tuple(caller_evidence))
             data = model.strict_json_loads(bytes(caller_data_bytes), source=f"data:{action}")

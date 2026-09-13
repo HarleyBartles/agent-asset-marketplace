@@ -306,18 +306,23 @@ def _verify_handle_identity(fd: int, expected: Path) -> None:
         kernel32 = ctypes.windll.kernel32
         handle = msvcrt.get_osfhandle(fd)
         buf = ctypes.create_unicode_buffer(4096)
-        kernel32.GetFinalPathNameByHandleW(wintypes.HANDLE(handle), buf, 4096, 0)
+        if kernel32.GetFinalPathNameByHandleW(wintypes.HANDLE(handle), buf, 4096, 0) == 0:
+            raise UnsafeEvidenceSourceError("unsafe-source", f"GetFinalPathNameByHandleW failed for {expected}")
         final = buf.value
         if final.startswith("\\\\?\\"):
             final = final[4:]
         if os.path.normcase(os.path.normpath(final)) != os.path.normcase(os.path.normpath(str(expected))):
             raise UnsafeEvidenceSourceError("unsafe-source", f"final handle path {final!r} != {expected}")
     else:
-        final = Path(f"/proc/self/fd/{fd}") if Path("/proc/self/fd").exists() else None
-        if final is not None:
-            resolved = os.readlink(final)
-            if os.path.normcase(os.path.normpath(resolved)) != os.path.normcase(os.path.normpath(str(expected))):
-                raise UnsafeEvidenceSourceError("unsafe-source", f"final handle path {resolved!r} != {expected}")
+        proc_fd = Path("/proc/self/fd")
+        if not proc_fd.exists():
+            raise UnsafeEvidenceSourceError(
+                "unsafe-source",
+                "handle identity verification unavailable on this platform",
+            )
+        resolved = os.readlink(proc_fd / str(fd))
+        if os.path.normcase(os.path.normpath(resolved)) != os.path.normcase(os.path.normpath(str(expected))):
+            raise UnsafeEvidenceSourceError("unsafe-source", f"final handle path {resolved!r} != {expected}")
 
 
 def _register_source_bytes(source: Path, cap: int, path: str) -> bytes:

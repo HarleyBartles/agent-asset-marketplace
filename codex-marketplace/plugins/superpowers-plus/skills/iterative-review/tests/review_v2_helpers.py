@@ -8,6 +8,7 @@ materialize real content-addressed evidence files under ``scratch_dir``.
 
 from __future__ import annotations
 
+import base64
 import copy
 import json
 import sys
@@ -18,6 +19,7 @@ from pathlib import Path
 TESTS_DIR = Path(__file__).resolve().parent
 sys.path.insert(0, str(TESTS_DIR.parent / "scripts"))
 
+from review_core import acquisition as acq  # noqa: E402
 from review_core import model  # noqa: E402
 from review_core import policy  # noqa: E402
 
@@ -1806,6 +1808,8 @@ class _Walk:
             "snapshot": snap,
             "authority_manifest": manifest_wrapper,
             "authorities": [auth_rec],
+            "findings": [],
+            "witnesses": [],
         }
 
     # -- dispatch plumbing ---------------------------------------------------
@@ -2702,4 +2706,222 @@ def _verify_close_repair(w, finding, *, replacement_ids=()):
                 }
             ]
         },
+    )
+
+
+# ---------------------------------------------------------------------------
+# Live-acquisition doubles (Plan 2): fake git/gh runners plus scratch +
+# transcript fixtures shared by the acquisition and reviewctl suites.
+
+ACQ_BASE = "b" * 40
+ACQ_HEAD = "c" * 40
+ACQ_TREE = "d" * 40
+ACQ_MB = "e" * 40
+ACQ_REPO_ID = "o/r"
+ACQ_PR_URL = "https://github.com/o/r/pull/7"
+
+
+def acq_pr_meta(**over):
+    meta = {
+        "number": 7,
+        "url": ACQ_PR_URL,
+        "title": "T",
+        "body": "B",
+        "isDraft": True,
+        "state": "OPEN",
+        "baseRefOid": ACQ_BASE,
+        "headRefOid": ACQ_HEAD,
+        "baseRefName": "main",
+        "closingIssuesReferences": [{"number": 12}],
+        "labels": [{"name": "bug"}],
+        "assignees": [{"login": "me"}],
+        "milestone": None,
+        "author": {"login": "a"},
+    }
+    meta.update(over)
+    return meta
+
+
+class FakeGit:
+    def __init__(
+        self,
+        files,
+        *,
+        head=ACQ_HEAD,
+        base=ACQ_BASE,
+        merge_base=ACQ_MB,
+        tree=ACQ_TREE,
+        obj_format="sha1",
+        porcelain="",
+        merge_bases=None,
+        diff="diff-bytes",
+        override=None,
+    ):
+        self.files = dict(files)
+        self.head = head
+        self.base = base
+        self.merge_bases = [merge_base] if merge_bases is None else merge_bases
+        self.tree = tree
+        self.obj_format = obj_format
+        self.porcelain = porcelain
+        self.diff = diff
+        self.override = override
+        self.calls = []
+
+    def __call__(self, args):
+        self.calls.append(list(args))
+        if args[:2] == ["rev-parse", "--is-shallow-repository"]:
+            return 0, "false\n", ""
+        if args[:2] == ["merge-base", "--all"]:
+            return 0, "".join(f"{m}\n" for m in self.merge_bases), ""
+        if args[:2] == ["status", "--porcelain"]:
+            return 0, self.porcelain, ""
+        if args[:2] == ["rev-parse", "HEAD"]:
+            return 0, self.head + "\n", ""
+        if args[:2] == ["rev-parse", "--show-object-format"]:
+            return 0, self.obj_format + "\n", ""
+        if args[:2] == ["rev-parse", f"{self.head}^{{tree}}"]:
+            return 0, self.tree + "\n", ""
+        if args[0] == "diff":
+            return 0, self.diff, ""
+        if args[:2] == ["ls-tree", "-r"]:
+            return 0, "\n".join(sorted(self.files)) + "\n", ""
+        if args[0] == "show" and ":" in args[1]:
+            _sha, path = args[1].split(":", 1)
+            if path == ".agents/iterative-review/authority-policy.json":
+                return (0, self.override, "") if self.override else (1, "", "nf")
+            if path in self.files:
+                return 0, self.files[path], ""
+            return 1, "", f"missing {path}"
+        return 1, "", f"unsupported {args}"
+
+
+class FakeGh:
+    def __init__(
+        self,
+        *,
+        authed=True,
+        repo=ACQ_REPO_ID,
+        pr=None,
+        head_remote=True,
+        threads=(),
+        reviews=(),
+        issues=None,
+        contents=None,
+        protection=None,
+        graphql_error=False,
+    ):
+        self.authed = authed
+        self.repo = repo
+        self.pr = pr if pr is not None else acq_pr_meta()
+        self.head_remote = head_remote
+        self.threads = list(threads)
+        self.reviews = list(reviews)
+        self.issues = issues or {}
+        self.contents = contents or {}
+        self.protection = protection
+        self.graphql_error = graphql_error
+        self.calls = []
+
+    def __call__(self, args):
+        self.calls.append(list(args))
+        if args[:2] == ["auth", "status"]:
+            return (0, "ok", "") if self.authed else (1, "", "not logged in")
+        if args[:2] == ["repo", "view"]:
+            return 0, json.dumps({"nameWithOwner": self.repo}), ""
+        if args[0] == "pr" and args[1] == "view":
+            return 0, json.dumps(self.pr), ""
+        if args[0] == "api" and args[1] == "graphql":
+            if self.graphql_error:
+                return 0, json.dumps({"errors": [{"message": "boom"}]}), ""
+            pr = {
+                "reviewThreads": {
+                    "pageInfo": {"hasNextPage": False},
+                    "nodes": list(self.threads),
+                },
+                "reviews": {
+                    "pageInfo": {"hasNextPage": False},
+                    "nodes": list(self.reviews),
+                },
+            }
+            return 0, json.dumps({"data": {"repository": {"pullRequest": pr}}}), ""
+        if args[0] == "api":
+            path = args[1]
+            if "/commits/" in path:
+                return (0, "{}") + ("",) if self.head_remote else (1, "", "404")
+            if "/issues/" in path:
+                n = path.rsplit("/", 1)[-1]
+                if n in self.issues:
+                    return 0, json.dumps(self.issues[n]), ""
+                return 1, "", "404"
+            if "/contents/" in path:
+                key = path.split("/contents/", 1)[1].split("?")[0]
+                if key in self.contents:
+                    body = base64.b64encode(self.contents[key].encode()).decode()
+                    return 0, json.dumps({"content": body}), ""
+                return 1, "", "404"
+            if "/protection" in path:
+                if self.protection is None:
+                    return 1, "", "404"
+                return 0, json.dumps(self.protection), ""
+        return 1, "", f"unsupported {args}"
+
+
+def acq_scratch(tmp_path):
+    s = Path(tmp_path) / "scratch"
+    (s / "transcripts").mkdir(parents=True, exist_ok=True)
+    (s / "witness").mkdir(parents=True, exist_ok=True)
+    return s
+
+
+def acq_enumerate(tmp_path, git=None, gh=None, epoch=1):
+    scratch = acq_scratch(tmp_path)
+    out_dir = scratch / "acquire" / "latest"
+    git = git or FakeGit({"AGENTS.md": "# law"})
+    gh = gh or FakeGh()
+    summary = acq.enumerate_acquisition(
+        run_git=git, run_gh=gh, repo_root=Path(tmp_path), pr_number=7, out_dir=out_dir, scratch_dir=scratch, epoch=epoch
+    )
+    return summary, out_dir, scratch
+
+
+def acq_transcript_with_marker(scratch, enumeration_id, *, session="s1", tool_use="exec_1", out_dir=None, extra_pre=()):
+    lines = list(extra_pre)
+    lines.append(
+        {
+            "hook_event_name": "PreToolUse",
+            "tool_name": "exec",
+            "tool_input": {
+                "command": f"py -3 reviewctl.py enumerate --state {out_dir or 'X'}/state.json --repo . --pr 7"
+            },
+            "tool_use_id": tool_use,
+            "session_id": session,
+            "prompt_id": "p1",
+        }
+    )
+    lines.append(
+        {
+            "hook_event_name": "PostToolUse",
+            "tool_name": "exec",
+            "tool_input": {
+                "command": f"py -3 reviewctl.py enumerate --state {out_dir or 'X'}/state.json --repo . --pr 7"
+            },
+            "tool_use_id": tool_use,
+            "session_id": session,
+            "prompt_id": "p1",
+            "tool_response": {"success": True, "output": f"enumeration-id: {enumeration_id}\n", "error": None},
+        }
+    )
+    f = Path(scratch) / "transcripts" / f"{session}.jsonl"
+    f.parent.mkdir(parents=True, exist_ok=True)
+    f.write_text("".join(json.dumps(x) + "\n" for x in lines), encoding="utf-8")
+    return f
+
+
+def acq_source(out_dir, scratch):
+    return acq.LiveAuthorityDiscovery(
+        acquisition_dir=Path(out_dir),
+        witness_log_path=Path(scratch) / "witness" / "witness-log.jsonl",
+        transcript_root=Path(scratch) / "transcripts",
+        review_id="rev-1",
     )

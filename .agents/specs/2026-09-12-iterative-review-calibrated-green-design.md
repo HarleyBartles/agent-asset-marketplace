@@ -21,6 +21,8 @@ Agents are assumed honest-but-fallible, not malicious. The failure modes defende
 
 The defense is **witnessed evidence**: every load-bearing action must leave a record emitted by the harness outside the model's control (the lifecycle-hook transcript), plus genuinely external records where they exist (GitHub check-runs, workflow runs, PR lifecycle). Forgery is possible only by editing a hash-chained log whose head is anchored into the pushed commit; it is **tamper-evident, not tamper-proof**. The honest claim: "complete, witnessed, independently checkable."
 
+The same boundary scopes review findings. Adversarial review means adversarial *code* review - skeptical, hostile-reading inspection for real defects - not hardening against adversarial threat vectors. A finding is actionable when it describes a scenario reachable under this model (agent error, corrupt or interrupted I/O, API drift, missing tools, platform differences) with observable divergence from contract. A finding that requires an active adversary controlling the scratch store, transcript, or filesystem mid-run is out of scope: a reviewer proposing one is applying the wrong threat model, and "no findings" is a successful round, not a missed one. Consistency invariants that also happen to defeat adversary scenarios (a bound evidence record resolving to a mismatched digest) remain ordinary state-kernel soundness, not threat-model claims.
+
 ## Witness model
 
 The harness emits a per-tool-call transcript via lifecycle hooks. PreToolUse captures `tool_name`, full `tool_input`, `tool_use_id`, `session_id`, `prompt_id`; PostToolUse adds the full `tool_response`. Subagent calls fire the same hooks. A review session appends every relevant event to an append-only JSONL **witness log** under the review-owned scratch store; each entry carries `record_sha256 = sha256(previous_record_sha256 + canonical entry bytes)`, forming a hash chain. The green seal binds the chain head, and the seal lands in the pushed commit - the external anchor.
@@ -54,13 +56,15 @@ For the seal to actually be anchored, `seal-green` writes the seal record to a p
 
 ## Capability floor (entry gate)
 
-`reviewctl doctor` (the harness capability check, replacing the old capability gate) must pass before a review may start. It verifies live:
+`reviewctl doctor` (the harness capability check, replacing the old capability gate) must pass before a review may start. The shipped doctor verifies live rows for hooks-installed, transcript-dir-writable, witness-log-roundtrip, git-present, repo-non-shallow, and gh-authenticated. The full capability floor this converges toward:
 
 1. The review session's hooks pack (`.devin/hooks.v1.json` project-level or user-level) is installed and emitting records for orchestrator **and** subagent calls, and subagent records are discoverable for ingestion - either sharing the parent `session_id` or correlating through the dispatch's `agent_id`/`prompt_id`.
 2. A smoke dispatch proves `allowed-tools` confinement: a probe profile must be denied a canary read by the policy hook and/or permission deny, and its tool list must match its frontmatter.
 3. `gh` auth and remote-observation endpoints are reachable.
 4. Required subagent profiles exist with pinned `model:` and correct `allowed-tools`.
 5. The review-owned store and witness log can be created with private permissions.
+
+Items 2 and 4 (smoke dispatch and subagent-profile pinning), the record-emission part of item 1, the remote-observation reachability part of item 3, and the permission-mode part of item 5 are roadmap checks not yet shipped as live doctor rows.
 
 `doctor` failing any check makes the skill inert for that session - it reports the missing capability and stops rather than degrading silently.
 
@@ -184,3 +188,83 @@ Identical topology to the prior spec's mermaid graph with these substitutions: "
 - The realized subagent model is self-reported; the `model:` pin is a declared contract, not an attested one.
 - Local checks are witnessed, not isolated.
 - Calibration measures the local loop against frontier output; if frontier review is weak or absent, green's confidence claim degrades accordingly - say so in presentation.
+
+## Implementation deltas (recorded as they ship)
+
+### Plan 2 (snapshot authority)
+
+- Freeze/refresh payloads carry a `witnesses` key: the `authority-discovery`
+  witness records bind the candidate snapshot being installed, so the handler
+  installs them inside `complete_action`'s single validated transition rather
+  than before it. Other source actions keep witness-first ordering because
+  their payload records reference witness ids.
+- `SNAPSHOT_SUBJECT_FIELDS` includes `epoch`; the `no-drift` refusal compares
+  the subject projection with `epoch` excluded, otherwise a byte-identical
+  refresh could never be detected.
+- `enumeration.json` carries an `inputs` record (repo root, PR number,
+  base/head SHAs, epoch). The `reviewctl freeze`/`refresh` convenience aliases
+  refuse unless a prior `enumerate` exists for the exact current inputs and
+  re-check `git rev-parse HEAD` before completing.
+- `PolicyBundle.discovery_policy_origin` defaults to `reviewed-head`, under
+  which `authority_manifest_complete` never holds; the live Devin composition
+  root resolves the discovery policy at the base revision and declares
+  `base-revision`.
+- The produced acquisition dir is advisory, not trusted: `acquire` reconciles
+  every authority record's sha256 against the subject-bound manifest entries
+  and its `@alias` evidence digest, and re-derives feedback findings from the
+  digest-verified `feedback-*` evidence (cross-checked against the witnessed
+  snapshot's `feedback_history_sha256`/`unresolved_feedback_sha256`).
+  `data["findings"]` is never installed verbatim; divergence fails closed
+  with `AcquisitionError("tampered-source")`.
+- Transcript binding matches PostToolUse records carrying the enumeration-id
+  marker whose tool_input contains "enumerate"; the acquire directory path is
+  not required in argv because real `reviewctl enumerate` invocations derive
+  it internally. Transcript I/O failure is tamper evidence, not absence: an
+  unreadable transcript root or a `*.jsonl` segment that fails stat/read
+  classifies as `tampered-source` (`AcquisitionError` at the scan layer,
+  `WitnessVerificationError` at ingest); only a genuinely absent enumerate
+  segment remains `missing-source`.
+- Authority-record reconciliation keys by `authority_id` (locators can
+  collide across kinds), covers `availability` + `sha256` (loaded) +
+  `failure_class`/`failure_sha256` (unavailable), requires the `evidence_id`
+  (loaded) or `failure_evidence_id` (unavailable) field to be an `@alias`
+  whose digest matches, and requires surjectivity between the record set and
+  the witnessed manifest entries. `authorities_complete` mirrors the
+  availability + sha256/failure-field check at the kernel layer.
+- `WitnessLog` caches the verified tail but re-verifies whenever the file
+  stamp changed since the last append, so a concurrent append mid-process
+  invalidates the cache instead of silently forking the chain.
+- The path gate fails closed on a missing or corrupt `hook-env.json`; an env
+  that loads with an empty `deny_roots` stays open. `hooks.v1.json` renders
+  `{{IR_PY}}` as `py -3` on Windows and `python3` elsewhere.
+- `reviewctl main` maps `WitnessLogError` and `WitnessVerificationError` to a
+  clean `witness-error:` failure line rather than a traceback; the state lock
+  already prevents partial writes.
+- Enumerate clears a pre-existing `acquire/latest` before emission under a
+  strict guard: a symlinked directory, a resolved path outside the scratch
+  root, or a wrong name shape refuses with `tool-blocked`; a non-directory or
+  an `shutil.rmtree` `OSError` classifies as `tampered-source` (tamper
+  evidence), never `io-error`.
+- The discovery-traversal `load_text` callback (`_gh_text`) re-raises any
+  `AcquisitionError` whose blocker class is not `authority-missing`: a
+  systemic tool failure blocks the whole acquisition instead of degrading
+  to an inaccessible record. Only `authority-missing` degrades; this is
+  stricter than the seed-materialization loop, which degrades non-required
+  authorities regardless of failure class.
+- `authorities_complete` additionally cross-checks that each authority
+  record's bound evidence resolves to a content object whose digest equals
+  the recorded `sha256` (loaded) or `failure_sha256` (unavailable); content
+  registered from a file swapped after `_load_dir` verification fails
+  closed even though the manifest records still agree.
+- Review-scope clarification shipped after the PR's adversarial review
+  loop: the finding bar is bounded by the declared threat model (see the
+  closing paragraph of "Threat model"). Reviewer-proposed hardening that
+  presumes an active adversary is out of scope; "no findings" is a valid
+  converged round.
+- Discovery-policy overrides are structurally validated at resolution:
+  `repo_law_roots`/`pr_roots`/`edge_kinds` must be string lists, `pr_roots`
+  is checked against the known root vocabulary (an unrecognized root would
+  otherwise silently narrow the enumerated authority set), and each
+  `structural_edges` rule must carry string `from`/`edge` and a string-list
+  `to`. Malformed overrides refuse with `DiscoveryPolicyError` rather than
+  crashing during traversal.
