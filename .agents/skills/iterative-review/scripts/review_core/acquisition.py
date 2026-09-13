@@ -551,7 +551,11 @@ class LiveAuthorityDiscovery:
             ):
                 raise AcquisitionError("tampered-source", f"evidence {alias} manifest entry malformed")
             path = self._dir / "evidence" / rec["file"]
-            if not path.is_file() or model.sha256_hex(path.read_bytes()) != rec.get("sha256"):
+            try:
+                digest = model.sha256_hex(path.read_bytes()) if path.is_file() else None
+            except OSError as exc:
+                raise AcquisitionError("tampered-source", f"evidence {alias} unreadable: {exc}") from exc
+            if digest != rec.get("sha256"):
                 raise AcquisitionError("tampered-source", f"evidence {alias} digest mismatch")
             sources.append(engine.EvidenceSource(alias=alias, kind=rec["kind"], path=path))
         # Bind evidence bytes to the witnessed manifest: authority records and
@@ -676,7 +680,7 @@ class LiveAuthorityDiscovery:
             if src.alias.startswith("feedback-"):
                 try:
                     fb_items.append(feedback_policy.item_from_raw(src.path.read_bytes()))
-                except feedback_policy.FeedbackPolicyError as exc:
+                except (feedback_policy.FeedbackPolicyError, OSError) as exc:
                     raise AcquisitionError("tampered-source", str(exc)) from exc
         if feedback_policy.feedback_history_sha256(fb_items) != snapshot.get(
             "feedback_history_sha256"

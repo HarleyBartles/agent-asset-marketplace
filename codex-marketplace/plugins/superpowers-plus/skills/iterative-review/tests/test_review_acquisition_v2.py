@@ -877,3 +877,55 @@ class TestAcquireBindings:
         src = _source(out_dir, scratch)
         with pytest.raises(acq.AcquisitionError, match="missing-source"):
             src.acquire(action="freeze-review-input", current_snapshot=None)
+
+    def test_evidence_file_unreadable_fails_closed(self, tmp_path, monkeypatch):
+        _s, out_dir, scratch = _enumerate(tmp_path)
+        ev_dir = out_dir / "evidence"
+        victim = next(p for p in ev_dir.iterdir() if p.name != "manifest.json")
+        real_read = Path.read_bytes
+
+        def blocked(self, *a, **k):
+            if self == victim:
+                raise PermissionError("locked evidence")
+            return real_read(self, *a, **k)
+
+        monkeypatch.setattr(Path, "read_bytes", blocked)
+        src = _source(out_dir, scratch)
+        with pytest.raises(acq.AcquisitionError, match="tampered-source"):
+            src._load_dir()
+
+    def test_feedback_evidence_unreadable_after_digest_check_fails_closed(self, tmp_path, monkeypatch):
+        # The manifest digest check reads the blob once; the feedback loop
+        # re-reads it in acquire. Fail on the second read only so the
+        # OSError path in the feedback loop is what fires.
+        threads = [
+            {
+                "id": "T1",
+                "isResolved": False,
+                "isOutdated": False,
+                "path": "a.py",
+                "line": 1,
+                "comments": {"pageInfo": {"hasNextPage": False}, "nodes": []},
+            }
+        ]
+        summary, out_dir, scratch = _enumerate(tmp_path, gh=FakeGh(threads=threads))
+        _transcript_with_marker(scratch, summary["enumeration_id"], out_dir=out_dir)
+        ev_dir = out_dir / "evidence"
+        manifest = json.loads((ev_dir / "manifest.json").read_text())
+        fb_aliases = [a for a in manifest if a.startswith("feedback-")]
+        assert fb_aliases
+        victim = ev_dir / manifest[fb_aliases[0]]["file"]
+        real_read = Path.read_bytes
+        reads = {"n": 0}
+
+        def flaky(self, *a, **k):
+            if self == victim:
+                reads["n"] += 1
+                if reads["n"] > 1:
+                    raise PermissionError("locked after digest check")
+            return real_read(self, *a, **k)
+
+        monkeypatch.setattr(Path, "read_bytes", flaky)
+        src = _source(out_dir, scratch)
+        with pytest.raises(acq.AcquisitionError, match="tampered-source"):
+            src.acquire(action="freeze-review-input", current_snapshot=None)
