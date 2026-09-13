@@ -474,7 +474,10 @@ def _acquired_alias(args, action: str, json_mode: bool) -> int:
         same_repo = False
     if inputs.get("pr_number") != int(args.pr) or not same_repo:
         return _fail("stale-acquisition: enumeration was produced for different inputs; re-run `reviewctl enumerate`")
-    rc, out, _err = _run_git(["rev-parse", "HEAD"], cwd=repo)
+    try:
+        rc, out, _err = _run_git(["rev-parse", "HEAD"], cwd=repo)
+    except OSError as exc:
+        return _fail(f"tool-blocked: git unavailable: {exc}")
     if rc != 0 or out.strip() != inputs.get("head_sha"):
         return _fail("stale-acquisition: checked-out HEAD moved since enumerate; re-run `reviewctl enumerate`")
     args.action = action
@@ -522,7 +525,12 @@ def _cmd_complete(args, json_mode: bool) -> int:
         sources = _sources()
     caller_data = b"{}"
     if args.data_file:
-        caller_data = Path(args.data_file).read_bytes()
+        try:
+            caller_data = Path(args.data_file).read_bytes()
+        except OSError as exc:
+            raise acquisition.AcquisitionError(
+                "missing-source", f"--data-file {args.data_file} unreadable: {exc}"
+            ) from exc
     caller_evidence = _parse_evidence_specs(args.evidence_file)
     result = engine.complete_transaction(
         Path(args.state),

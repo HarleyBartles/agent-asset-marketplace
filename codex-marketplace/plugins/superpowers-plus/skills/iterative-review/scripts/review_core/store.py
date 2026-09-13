@@ -306,7 +306,10 @@ def _verify_handle_identity(fd: int, expected: Path) -> None:
         kernel32 = ctypes.windll.kernel32
         handle = msvcrt.get_osfhandle(fd)
         buf = ctypes.create_unicode_buffer(4096)
-        kernel32.GetFinalPathNameByHandleW(wintypes.HANDLE(handle), buf, 4096, 0)
+        if kernel32.GetFinalPathNameByHandleW(wintypes.HANDLE(handle), buf, 4096, 0) == 0:
+            raise UnsafeEvidenceSourceError(
+                "unsafe-source", f"GetFinalPathNameByHandleW failed for {expected}"
+            )
         final = buf.value
         if final.startswith("\\\\?\\"):
             final = final[4:]

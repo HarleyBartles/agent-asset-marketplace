@@ -378,9 +378,9 @@ class TranscriptWitnessVerifier:
                 "missing-source", "record_positions do not resolve inside the witness log"
             )
         bound = [entries[p] for p in positions]
-        if any(e["session_id"] != trange.get("session_id") for e in bound):
+        if any(e.get("session_id") != trange.get("session_id") for e in bound):
             raise policy.WitnessVerificationError("witness-mismatch", "session binding mismatch")
-        if record.get("tool_use_id") is not None and any(e["tool_use_id"] != record["tool_use_id"] for e in bound):
+        if record.get("tool_use_id") is not None and any(e.get("tool_use_id") != record["tool_use_id"] for e in bound):
             raise policy.WitnessVerificationError("witness-mismatch", "tool_use binding mismatch")
         segment = b"".join(model.canonical_json(e["payload"]) for e in bound)
         if model.sha256_hex(segment) != trange.get("transcript_sha256"):

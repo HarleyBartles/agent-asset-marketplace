@@ -530,3 +530,25 @@ class TestDoctorRows:
         r = _ctl("doctor", "--scratch-dir", str(scratch), "--repo", str(tmp_path), "--json")
         obj = json.loads(r.stdout)
         assert "rows" in obj and obj["verdict"] in ("pass", "capability-floor-failed")
+
+    def test_gate_blocks_stable_reason_when_cwd_unavailable(self, tmp_path, monkeypatch, capsys):
+        import importlib.util
+        import io
+        from types import SimpleNamespace
+
+        hooks = _hook_env(tmp_path, deny_roots=[tmp_path / "sealed"])
+        spec = importlib.util.spec_from_file_location("gate_review_paths", hooks / "gate_review_paths.py")
+        gate = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(gate)
+        payload = {"tool_input": {"command": "echo hi"}}
+        monkeypatch.setattr(sys, "stdin", SimpleNamespace(buffer=io.BytesIO(json.dumps(payload).encode())))
+
+        def no_cwd():
+            raise OSError("cwd deleted")
+
+        monkeypatch.setattr(os, "getcwd", no_cwd)
+        rc = gate.main()
+        out = json.loads(capsys.readouterr().out)
+        assert rc == 2
+        assert out["decision"] == "block"
+        assert "cwd-unavailable" in out["reason"]

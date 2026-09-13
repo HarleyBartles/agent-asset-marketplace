@@ -407,3 +407,28 @@ class TestTranscriptWitnessVerifier:
             expected_agent_id=None,
         )
         assert vw.kind == "remote-observation"
+
+    def test_verify_rejects_bound_entry_missing_session_id(self, tmp_path):
+        # A chain-valid entry crafted without session_id must fail as a
+        # witness-mismatch, not escape as KeyError.
+        verifier, record, subject = self._setup(tmp_path)
+        log_path = Path(record["source_locator"])
+        log = witness_log.WitnessLog(log_path)
+        entries = log.entries()
+        prev = witness_log.ZERO_SHA
+        rewritten = []
+        for e in entries:
+            e2 = {k: v for k, v in e.items() if k not in ("prev_sha256", "entry_sha256", "session_id")}
+            e2["prev_sha256"] = prev
+            e2["entry_sha256"] = witness_log._entry_digest(e2)
+            rewritten.append(e2)
+            prev = e2["entry_sha256"]
+        log_path.write_text(
+            "".join(
+                json.dumps(e, sort_keys=True, separators=(",", ":"), ensure_ascii=True) + chr(10) for e in rewritten
+            ),
+            encoding="utf-8",
+        )
+        record["chain_head_at_record"] = rewritten[record["record_positions"][-1]]["entry_sha256"]
+        with pytest.raises(policy.WitnessVerificationError, match="session binding"):
+            self._verify(verifier, record, subject)

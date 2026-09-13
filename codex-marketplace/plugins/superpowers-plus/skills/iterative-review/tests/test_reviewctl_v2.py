@@ -2148,6 +2148,49 @@ class TestEnumerateCompleteFlow:
         assert "stale-acquisition" in err
         assert "Traceback" not in err
 
+    def test_complete_missing_data_file_is_typed_failure(self, tmp_path, monkeypatch, capsys):
+        reviewctl = self._live(monkeypatch)
+        state, _scratch = self._init(reviewctl, tmp_path)
+        capsys.readouterr()
+        rc = reviewctl.main(
+            [
+                "complete",
+                "--state",
+                str(state),
+                "--action",
+                "freeze-review-input",
+                "--data-file",
+                str(tmp_path / "absent.json"),
+                "--apply",
+            ]
+        )
+        assert rc == 1
+        err = capsys.readouterr().err
+        assert "missing-source" in err
+        assert "io-error" not in err
+        assert "Traceback" not in err
+
+    def test_freeze_alias_git_missing_is_tool_blocked(self, tmp_path, monkeypatch, capsys):
+        reviewctl = self._live(
+            monkeypatch,
+            git=helpers.FakeGit({"AGENTS.md": "# law"}),
+            gh=helpers.FakeGh(),
+        )
+        state, scratch = self._init(reviewctl, tmp_path)
+        rc = reviewctl.main(["enumerate", "--state", str(state), "--repo", str(tmp_path), "--pr", "7"])
+        assert rc == 0
+        capsys.readouterr()
+
+        def no_git(_a, cwd=None):
+            raise FileNotFoundError("git")
+
+        monkeypatch.setattr(reviewctl, "_run_git", no_git)
+        rc = reviewctl.main(["freeze", "--state", str(state), "--repo", str(tmp_path), "--pr", "7", "--apply"])
+        assert rc == 1
+        err = capsys.readouterr().err
+        assert "tool-blocked" in err
+        assert "Traceback" not in err
+
 
 class TestHooksRenderAndJsonFlag:
     """hooks.v1.json rendering is platform-aware; --json is argparse-native."""

@@ -522,10 +522,14 @@ class LiveAuthorityDiscovery:
             data = json.loads((self._dir / "data.json").read_bytes().decode("utf-8", errors="surrogateescape"))
         except ValueError as exc:
             raise AcquisitionError("tampered-source", f"data.json is not valid JSON: {exc}") from exc
+        except OSError as exc:
+            raise AcquisitionError("tampered-source", f"data.json missing or unreadable: {exc}") from exc
         try:
             ev_manifest = json.loads((self._dir / "evidence" / "manifest.json").read_bytes())
         except ValueError as exc:
             raise AcquisitionError("tampered-source", f"evidence manifest is not valid JSON: {exc}") from exc
+        except OSError as exc:
+            raise AcquisitionError("tampered-source", f"evidence manifest missing or unreadable: {exc}") from exc
         if not isinstance(data, dict):
             raise AcquisitionError("tampered-source", "data.json is not an object")
         if not isinstance(ev_manifest, dict):
@@ -595,7 +599,17 @@ class LiveAuthorityDiscovery:
     def _find_segment(self, subject_sha: str):
         candidates = []
         root = self._transcript_root
-        for path in sorted(root.glob("*.jsonl"), key=lambda p: p.stat().st_mtime):
+        try:
+            globbed = list(root.glob("*.jsonl"))
+        except OSError:
+            globbed = []
+        paths = []
+        for cand in globbed:
+            try:
+                paths.append((cand.stat().st_mtime, cand))
+            except OSError:
+                continue
+        for mtime, path in sorted(paths):
             try:
                 lines = path.read_bytes().decode("utf-8", errors="surrogateescape").splitlines()
             except OSError:
@@ -617,7 +631,7 @@ class LiveAuthorityDiscovery:
                 haystack = " ".join(str(v) for v in _walk_strings(tool_input))
                 if "enumerate" not in haystack:
                     continue
-                candidates.append((path.stat().st_mtime, idx, path, rec))
+                candidates.append((mtime, idx, path, rec))
         if not candidates:
             raise AcquisitionError("missing-source", "no witnessed enumerate transcript segment for this acquisition")
         _m, _i, path, post = max(candidates, key=lambda c: (c[0], c[1]))

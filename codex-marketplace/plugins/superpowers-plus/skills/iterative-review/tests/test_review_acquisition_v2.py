@@ -830,3 +830,50 @@ class TestAcquireBindings:
                 scratch_dir=scratch,
                 epoch=1,
             )
+
+    def test_data_json_missing_fails_closed(self, tmp_path):
+        _s, out_dir, scratch = _enumerate(tmp_path)
+        (out_dir / "data.json").unlink()
+        src = _source(out_dir, scratch)
+        with pytest.raises(acq.AcquisitionError, match="tampered-source"):
+            src._load_dir()
+
+    def test_evidence_manifest_missing_fails_closed(self, tmp_path):
+        _s, out_dir, scratch = _enumerate(tmp_path)
+        (out_dir / "evidence" / "manifest.json").unlink()
+        src = _source(out_dir, scratch)
+        with pytest.raises(acq.AcquisitionError, match="tampered-source"):
+            src._load_dir()
+
+    def test_find_segment_skips_transcript_vanished_before_stat(self, tmp_path, monkeypatch):
+        # A transcript deleted or locked between glob and stat must not
+        # abort the scan: the surviving candidate still witnesses the run.
+        summary, out_dir, scratch = _enumerate(tmp_path)
+        _transcript_with_marker(scratch, summary["enumeration_id"], out_dir=out_dir)
+        gone = Path(scratch) / "transcripts" / "gone.jsonl"
+        gone.write_text("{}" + chr(10), encoding="utf-8")
+        real_stat = Path.stat
+
+        def flaky(self, *a, **k):
+            if self.name == "gone.jsonl":
+                raise FileNotFoundError("vanished between glob and stat")
+            return real_stat(self, *a, **k)
+
+        monkeypatch.setattr(Path, "stat", flaky)
+        env = _source(out_dir, scratch).acquire(action="freeze-review-input", current_snapshot=None)
+        assert env is not None
+
+    def test_find_segment_all_transcripts_unstattable_is_missing_source(self, tmp_path, monkeypatch):
+        summary, out_dir, scratch = _enumerate(tmp_path)
+        _transcript_with_marker(scratch, summary["enumeration_id"], out_dir=out_dir)
+        real_stat = Path.stat
+
+        def flaky(self, *a, **k):
+            if self.suffix == ".jsonl" and self.parent.name == "transcripts":
+                raise PermissionError("locked")
+            return real_stat(self, *a, **k)
+
+        monkeypatch.setattr(Path, "stat", flaky)
+        src = _source(out_dir, scratch)
+        with pytest.raises(acq.AcquisitionError, match="missing-source"):
+            src.acquire(action="freeze-review-input", current_snapshot=None)

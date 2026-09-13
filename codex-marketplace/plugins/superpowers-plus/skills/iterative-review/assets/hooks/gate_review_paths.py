@@ -126,7 +126,13 @@ def _main() -> int:
     tool_input = payload.get("tool_input")
     if not isinstance(tool_input, dict):
         return _block("iterative-review: hook payload lacks tool_input")
-    base = Path(str(tool_input.get("cwd") or tool_input.get("workdir") or os.getcwd()))
+    base_arg = tool_input.get("cwd") or tool_input.get("workdir")
+    if not base_arg:
+        try:
+            base_arg = os.getcwd()
+        except OSError:
+            return _block("iterative-review: gate internal error: cwd-unavailable")
+    base = Path(str(base_arg))
     hit = None
     for candidate in _extract_paths(tool_input):
         hit = _path_under_deny(_resolve(candidate, base), deny_roots)
