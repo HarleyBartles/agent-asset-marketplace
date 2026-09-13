@@ -162,8 +162,10 @@ def enumerate_acquisition(
         raise AcquisitionError("tool-blocked", f"gh pr view malformed: {exc}") from exc
     if not isinstance(pr_meta, dict):
         raise AcquisitionError("tool-blocked", "gh pr view response is not an object")
-    base_sha = pr_meta["baseRefOid"]
-    head_sha = pr_meta["headRefOid"]
+    base_sha = pr_meta.get("baseRefOid")
+    head_sha = pr_meta.get("headRefOid")
+    if not base_sha or not head_sha or not pr_meta.get("url"):
+        raise AcquisitionError("tool-blocked", "gh pr view response lacks required fields")
     rc, _o, err = run_gh(["api", f"repos/{repo_id}/commits/{head_sha}"])
     if rc != 0:
         raise AcquisitionError("snapshot-drift", f"head {head_sha} is not remote-reachable: {err.strip()}")
@@ -508,8 +510,10 @@ class LiveAuthorityDiscovery:
         ev_manifest = json.loads((self._dir / "evidence" / "manifest.json").read_bytes())
         sources = []
         for alias, rec in sorted(ev_manifest.items()):
+            if not isinstance(rec, dict) or not isinstance(rec.get("file"), str):
+                raise AcquisitionError("tampered-source", f"evidence {alias} manifest entry malformed")
             path = self._dir / "evidence" / rec["file"]
-            if not path.is_file() or model.sha256_hex(path.read_bytes()) != rec["sha256"]:
+            if not path.is_file() or model.sha256_hex(path.read_bytes()) != rec.get("sha256"):
                 raise AcquisitionError("tampered-source", f"evidence {alias} digest mismatch")
             sources.append(engine.EvidenceSource(alias=alias, kind=rec["kind"], path=path))
         # Bind evidence bytes to the witnessed manifest: authority records and
@@ -529,23 +533,25 @@ class LiveAuthorityDiscovery:
                     f"authority {aid}: record missing from or duplicated vs witnessed manifest",
                 )
             seen.add(aid)
-            for field in ("sha256", "failure_class", "failure_sha256"):
+            for field in ("availability", "sha256", "failure_class", "failure_sha256"):
                 if entry.get(field) != rec.get(field):
                     raise AcquisitionError(
                         "tampered-source",
                         f"authority {aid}: record {field} diverges from witnessed manifest",
                     )
-            for id_field, expected in (
-                ("evidence_id", rec.get("sha256")),
-                ("failure_evidence_id", rec.get("failure_sha256")),
-            ):
-                ev = rec.get(id_field) or ""
-                if ev.startswith("@"):
-                    if ev_manifest.get(ev[1:], {}).get("sha256") != expected:
-                        raise AcquisitionError(
-                            "tampered-source",
-                            f"authority {aid}: {id_field} digest diverges from witnessed manifest",
-                        )
+            want_field = "evidence_id" if rec.get("availability") == "loaded" else "failure_evidence_id"
+            ev = rec.get(want_field)
+            if not isinstance(ev, str) or not ev.startswith("@"):
+                raise AcquisitionError(
+                    "tampered-source",
+                    f"authority {aid}: {want_field} missing or malformed",
+                )
+            expected = rec.get("sha256") if want_field == "evidence_id" else rec.get("failure_sha256")
+            if ev_manifest.get(ev[1:], {}).get("sha256") != expected:
+                raise AcquisitionError(
+                    "tampered-source",
+                    f"authority {aid}: {want_field} digest diverges from witnessed manifest",
+                )
         if len(seen) != len(bound):
             raise AcquisitionError("tampered-source", "authority records diverge from witnessed manifest")
         return data, sources

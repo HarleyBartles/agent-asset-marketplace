@@ -662,6 +662,40 @@ class TestAcquireBindings:
         with pytest.raises((acq.AcquisitionError, policy.WitnessVerificationError)):
             src.acquire(action="freeze-review-input", current_snapshot=None)
 
+    def test_availability_flip_detected(self, tmp_path):
+        summary, out_dir, scratch = _enumerate(tmp_path)
+        data = json.loads((out_dir / "data.json").read_bytes().decode("utf-8", "surrogateescape"))
+        rec = next(r for r in data["authorities"] if r["availability"] == "loaded")
+        rec["availability"] = "unavailable"
+        rec.pop("evidence_id", None)
+        (out_dir / "data.json").write_bytes(model.canonical_json(data))
+        src = _source(out_dir, scratch)
+        with pytest.raises(acq.AcquisitionError, match="tampered-source"):
+            src._load_dir()
+
+    def test_non_string_evidence_id_fails_closed(self, tmp_path):
+        summary, out_dir, scratch = _enumerate(tmp_path)
+        data = json.loads((out_dir / "data.json").read_bytes().decode("utf-8", "surrogateescape"))
+        data["authorities"][0]["evidence_id"] = 123
+        (out_dir / "data.json").write_bytes(model.canonical_json(data))
+        src = _source(out_dir, scratch)
+        with pytest.raises(acq.AcquisitionError, match="tampered-source"):
+            src._load_dir()
+
+    def test_pr_meta_missing_field_is_tool_blocked(self, tmp_path):
+        scratch = _scratch(tmp_path)
+        gh = FakeGh(pr={"number": 7, "url": PR_URL})
+        with pytest.raises(acq.AcquisitionError, match="tool-blocked"):
+            acq.enumerate_acquisition(
+                run_git=FakeGit({"AGENTS.md": "# law"}),
+                run_gh=gh,
+                repo_root=Path(tmp_path),
+                pr_number=7,
+                out_dir=scratch / "acquire" / "latest",
+                scratch_dir=scratch,
+                epoch=1,
+            )
+
     def test_surrogate_bytes_in_git_show_do_not_crash(self, tmp_path):
         git = FakeGit({"AGENTS.md": "# law caf\udcff"})
         summary, out_dir, _s = _enumerate(tmp_path, git=git)

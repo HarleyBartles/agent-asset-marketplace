@@ -227,3 +227,6 @@ Identical topology to the prior spec's mermaid graph with these substitutions: "
 - The path gate fails closed on a missing or corrupt `hook-env.json`; an env
   that loads with an empty `deny_roots` stays open. `hooks.v1.json` renders
   `{{IR_PY}}` as `py -3` on Windows and `python3` elsewhere.
+- `reviewctl main` maps `WitnessLogError` and `WitnessVerificationError` to a
+  clean `witness-error:` failure line rather than a traceback; the state lock
+  already prevents partial writes.

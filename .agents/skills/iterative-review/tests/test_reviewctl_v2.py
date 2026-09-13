@@ -1727,6 +1727,42 @@ class TestEnumerateCompleteFlow:
         status = json.loads(capsys.readouterr().out)
         assert status["stage"] != "intake"
 
+    def test_complete_acquired_witness_error_is_clean_failure(self, tmp_path, monkeypatch, capsys):
+        reviewctl = self._live(
+            monkeypatch,
+            git=helpers.FakeGit({"AGENTS.md": "# law"}),
+            gh=helpers.FakeGh(),
+        )
+        state, scratch = self._init(reviewctl, tmp_path)
+        capsys.readouterr()
+        rc = reviewctl.main(["enumerate", "--state", str(state), "--repo", str(tmp_path), "--pr", "7"])
+        assert rc == 0
+        capsys.readouterr()
+        acquire_dir = scratch / "acquire" / "latest"
+        enum_id = json.loads((acquire_dir / "enumeration.json").read_text())["enumeration_id"]
+        helpers.acq_transcript_with_marker(scratch, enum_id, out_dir=acquire_dir)
+        # Corrupt the witness log before complete: the chain-invalid failure
+        # must surface as a clean witness-error line, not a traceback.
+        log_path = scratch / "witness" / "witness-log.jsonl"
+        log_path.parent.mkdir(parents=True, exist_ok=True)
+        log_path.write_text('{"bogus": true}' + chr(10), encoding="utf-8")
+        rc = reviewctl.main(
+            [
+                "complete",
+                "--state",
+                str(state),
+                "--action",
+                "freeze-review-input",
+                "--acquired",
+                str(acquire_dir),
+                "--apply",
+            ]
+        )
+        assert rc == 1
+        err = capsys.readouterr().err
+        assert "witness-error" in err
+        assert "Traceback" not in err
+
     def test_complete_acquired_refuses_with_data_file(self, tmp_path, monkeypatch, capsys):
         reviewctl = self._live(monkeypatch)
         state, scratch = self._init(reviewctl, tmp_path)
@@ -2125,6 +2161,16 @@ class TestHooksRenderAndJsonFlag:
         assert out.startswith("{")
         rc = reviewctl.main(["--json", "doctor", "--scratch-dir", str(scratch)])
         assert rc in (0, 1)
+        out = capsys.readouterr().out.strip()
+        assert out.startswith("{")
+
+    def test_hooks_parent_json_flag(self, tmp_path, monkeypatch, capsys):
+        import reviewctl
+
+        monkeypatch.setenv(engine.RUNTIME_ENV_VAR, "devin-desktop")
+        scratch = tmp_path / "scratch"
+        rc = reviewctl.main(["hooks", "--json", "install", "--scratch-dir", str(scratch)])
+        assert rc == 0
         out = capsys.readouterr().out.strip()
         assert out.startswith("{")
 

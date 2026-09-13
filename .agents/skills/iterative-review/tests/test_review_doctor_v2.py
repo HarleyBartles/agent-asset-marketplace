@@ -266,6 +266,27 @@ class TestHookScripts:
 
 
 class TestGateBoundaryMatching:
+    def test_gate_allows_path_with_root_as_inner_segment(self, tmp_path):
+        # Resolved paths only deny on prefix match; a deny root appearing as
+        # a mid-path segment (e.g. a backup tree) is not a denial.
+        deny = tmp_path / "s" / "witness"
+        deny.mkdir(parents=True)
+        candidate = tmp_path / "a" / "b" / "s" / "witness"
+        candidate.mkdir(parents=True)
+        target = candidate / "file.txt"
+        target.write_text("x")
+        hooks = _hook_env(tmp_path, deny_roots=(deny,))
+        payload = {
+            "hook_event_name": "PreToolUse",
+            "tool_name": "read",
+            "tool_input": {"file_path": str(target), "cwd": str(tmp_path)},
+            "tool_use_id": "e_9",
+            "session_id": "sess-1",
+            "prompt_id": "p-1",
+        }
+        r = _run_hook(hooks / "gate_review_paths.py", payload)
+        assert r.returncode == 0
+
     def test_gate_allows_sibling_of_deny_root(self, tmp_path):
         deny = tmp_path / "review-state" / "witness"
         deny.mkdir(parents=True)

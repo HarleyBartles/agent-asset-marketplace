@@ -86,7 +86,17 @@ def _resolve(candidate: str, base: Path) -> str:
         return _norm(candidate)
 
 
+def _path_under_deny(resolved: str, deny_roots: list[str]) -> str | None:
+    """Resolved paths: the deny root must be the path itself or a prefix."""
+    normed = _norm(resolved)
+    for root in deny_roots:
+        if normed == root or normed.startswith(root + "/"):
+            return root
+    return None
+
+
 def _touches_deny(text: str, deny_roots: list[str]) -> str | None:
+    """Command text: the deny root may appear anywhere in the string."""
     normed = _norm(text)
     for root in deny_roots:
         if normed == root or normed.startswith(root + "/"):
@@ -117,7 +127,7 @@ def main() -> int:
     base = Path(str(tool_input.get("cwd") or tool_input.get("workdir") or os.getcwd()))
     hit = None
     for candidate in _extract_paths(tool_input):
-        hit = _touches_deny(_resolve(candidate, base), deny_roots)
+        hit = _path_under_deny(_resolve(candidate, base), deny_roots)
         if hit:
             break
     if hit is None:

@@ -554,8 +554,9 @@ class LiveAuthorityDiscovery:
         # Integrity rebinding (data.json is advisory, not trusted):
         #   - each authority record reconciles against the subject-bound
         #     manifest_payload entry keyed by authority_id (locators can
-        #     collide): sha256 AND failure_class/failure_sha256 must match,
-        #     each @alias evidence/failure_evidence_id digest must match,
+        #     collide): availability + sha256 + failure_class/failure_sha256
+        #     must match, the evidence_id (loaded) or failure_evidence_id
+        #     (unavailable) field must be an @-alias whose digest matches,
         #     and the record set must equal the manifest entry set;
         #     divergence -> AcquisitionError("tampered-source")
         #   - feedback findings are re-derived from digest-verified

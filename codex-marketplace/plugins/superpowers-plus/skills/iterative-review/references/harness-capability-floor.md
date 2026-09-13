@@ -89,10 +89,9 @@ Recorded artifacts (scratch, disposable):
    are no-ops; tamper-evidence relies on the review scratch living under the
    user's own profile directory (default NTFS ACLs grant only that user).
    Treat the scratch root as per-user private by placement, not by ACL audit.
-7. **Hook commands assume the Windows launcher.** The rendered
-   `hooks.v1.json` invokes scripts via `py -3`, which exists on Windows
-   Devin Desktop only. If a non-Windows Devin host ever becomes a target,
-   the renderer must emit `python3`/`python` fallbacks.
+7. **Hook commands are platform-aware.** `reviewctl hooks install`
+   renders `{{IR_PY}}` as `py -3` on Windows and `python3` elsewhere; a
+   host lacking both interpreters is unsupported.
 
 ## Live doctor rows
 

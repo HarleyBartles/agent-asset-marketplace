@@ -735,6 +735,10 @@ def main(argv=None) -> int:
         return _fail(f"{exc.code}: {exc}")
     except acquisition.AcquisitionError as exc:
         return _fail(f"{exc.blocker_class}: {exc}")
+    except witness_log.WitnessLogError as exc:
+        return _fail(f"witness-error: {exc}")
+    except policy.WitnessVerificationError as exc:
+        return _fail(f"witness-error: {exc}")
     except store.StoreError as exc:
         return _fail(str(exc))
     except OSError as exc:
@@ -743,5 +747,3 @@ def main(argv=None) -> int:
 
 if __name__ == "__main__":
     sys.exit(main())
-
-# marker-7f3a9b
