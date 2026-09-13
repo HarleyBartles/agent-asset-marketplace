@@ -602,21 +602,23 @@ class LiveAuthorityDiscovery:
 
     def _find_segment(self, subject_sha: str):
         candidates = []
+        unreadable = []
         root = self._transcript_root
         try:
             globbed = list(root.glob("*.jsonl"))
-        except OSError:
-            globbed = []
+        except OSError as exc:
+            raise AcquisitionError("tampered-source", f"transcript root unreadable: {exc}") from exc
         paths = []
         for cand in globbed:
             try:
                 paths.append((cand.stat().st_mtime, cand))
             except OSError:
-                continue
+                unreadable.append(cand)
         for mtime, path in sorted(paths):
             try:
                 lines = path.read_bytes().decode("utf-8", errors="surrogateescape").splitlines()
             except OSError:
+                unreadable.append(path)
                 continue
             for idx, line in enumerate(lines):
                 if not line.strip():
@@ -637,6 +639,11 @@ class LiveAuthorityDiscovery:
                     continue
                 candidates.append((mtime, idx, path, rec))
         if not candidates:
+            if unreadable:
+                raise AcquisitionError(
+                    "tampered-source",
+                    f"witnessed transcript unreadable: {unreadable[0]}",
+                )
             raise AcquisitionError("missing-source", "no witnessed enumerate transcript segment for this acquisition")
         _m, _i, path, post = max(candidates, key=lambda c: (c[0], c[1]))
         session_id, tool_use_id = post.get("session_id"), post.get("tool_use_id")

@@ -2148,6 +2148,34 @@ class TestEnumerateCompleteFlow:
         assert "stale-acquisition" in err
         assert "Traceback" not in err
 
+    def test_freeze_alias_nul_repo_root_fails_stale(self, tmp_path, monkeypatch, capsys):
+        # A tampered enumeration.json carrying a NUL-byte repo_root must hit
+        # the typed stale-acquisition refusal, not an unexpected ValueError.
+        reviewctl = self._live(monkeypatch)
+        state, scratch = self._init(reviewctl, tmp_path)
+        acquire_dir = scratch / "acquire" / "latest"
+        acquire_dir.mkdir(parents=True)
+        (acquire_dir / "enumeration.json").write_text(
+            json.dumps({"inputs": {"repo_root": "foo\x00bar", "pr_number": 7}}),
+            encoding="utf-8",
+        )
+        rc = reviewctl.main(
+            [
+                "freeze",
+                "--state",
+                str(state),
+                "--repo",
+                str(tmp_path),
+                "--pr",
+                "7",
+                "--apply",
+            ]
+        )
+        assert rc == 1
+        err = capsys.readouterr().err
+        assert "stale-acquisition" in err
+        assert "Traceback" not in err
+
     def test_complete_missing_data_file_is_typed_failure(self, tmp_path, monkeypatch, capsys):
         reviewctl = self._live(monkeypatch)
         state, _scratch = self._init(reviewctl, tmp_path)

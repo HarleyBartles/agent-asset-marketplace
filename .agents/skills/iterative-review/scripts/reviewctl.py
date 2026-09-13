@@ -470,7 +470,7 @@ def _acquired_alias(args, action: str, json_mode: bool) -> int:
         same_repo = stored_root is not None and os.path.normcase(
             str(Path(str(stored_root)).resolve())
         ) == os.path.normcase(str(repo))
-    except OSError:
+    except (OSError, ValueError):
         same_repo = False
     if inputs.get("pr_number") != int(args.pr) or not same_repo:
         return _fail("stale-acquisition: enumeration was produced for different inputs; re-run `reviewctl enumerate`")

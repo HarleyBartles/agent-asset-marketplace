@@ -131,12 +131,21 @@ def enumerate_feedback(*, run_gh, pr_url: str) -> list[FeedbackItem]:
         reviews = pr["reviews"]
     except (TypeError, KeyError) as exc:
         raise FeedbackPolicyError(f"graphql projection missing: {exc}") from exc
+    if not isinstance(threads, dict) or not isinstance(reviews, dict):
+        raise FeedbackPolicyError("graphql projection malformed: reviewThreads/reviews not objects")
     _check_page(threads.get("pageInfo"), "reviewThreads")
     _check_page(reviews.get("pageInfo"), "reviews")
+    for coll, what in ((threads, "reviewThreads"), (reviews, "reviews")):
+        if not isinstance(coll.get("nodes"), list):
+            raise FeedbackPolicyError(f"graphql projection malformed: {what}.nodes not a list")
 
     items: list[FeedbackItem] = []
     for node in threads["nodes"]:
-        comments = node.get("comments") or {}
+        if not isinstance(node, dict) or not isinstance(node.get("id"), str):
+            raise FeedbackPolicyError("graphql projection malformed: reviewThreads node")
+        comments = node.get("comments")
+        if not isinstance(comments, dict):
+            raise FeedbackPolicyError("graphql projection malformed: thread.comments")
         _check_page(comments.get("pageInfo"), "thread.comments")
         raw = model.canonical_json({"kind": "thread", "node": node})
         items.append(
@@ -150,8 +159,12 @@ def enumerate_feedback(*, run_gh, pr_url: str) -> list[FeedbackItem]:
             )
         )
     for node in reviews["nodes"]:
+        if not isinstance(node, dict):
+            raise FeedbackPolicyError("graphql projection malformed: reviews node")
         if node.get("state") != "CHANGES_REQUESTED":
             continue
+        if not isinstance(node.get("id"), str):
+            raise FeedbackPolicyError("graphql projection malformed: review node id")
         raw = model.canonical_json({"kind": "review", "node": node})
         items.append(
             FeedbackItem(

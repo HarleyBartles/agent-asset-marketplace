@@ -232,6 +232,34 @@ class TestEnumerateFeedback:
         with pytest.raises(fbp.FeedbackPolicyError):
             fbp.enumerate_feedback(run_gh=FakeGh(graphql_error=True), pr_url=PR_URL)
 
+    def test_malformed_projection_shapes_fail_closed(self):
+        # Parseable-but-wrong graphql shapes must raise FeedbackPolicyError
+        # (-> authority-missing), never AttributeError -> unexpected.
+        mutations = [
+            lambda pr: pr.update(reviewThreads=None),
+            lambda pr: pr.update(reviewThreads=[]),
+            lambda pr: pr.update(reviewThreads={"pageInfo": {"hasNextPage": False}}),
+            lambda pr: pr.update(reviewThreads={"pageInfo": {"hasNextPage": False}, "nodes": [None]}),
+            lambda pr: pr.update(reviewThreads={"pageInfo": {"hasNextPage": False}, "nodes": [{"comments": {}}]}),
+            lambda pr: pr.update(
+                reviews={"pageInfo": {"hasNextPage": False}, "nodes": [{"state": "CHANGES_REQUESTED"}]}
+            ),
+        ]
+        for mutate in mutations:
+            gh = FakeGh()
+            orig = gh.__call__
+
+            def wrapped(args, orig=orig, mutate=mutate):
+                rc, out, err = orig(args)
+                if args[:2] == ["api", "graphql"]:
+                    obj = json.loads(out)
+                    mutate(obj["data"]["repository"]["pullRequest"])
+                    return rc, json.dumps(obj), err
+                return rc, out, err
+
+            with pytest.raises(fbp.FeedbackPolicyError):
+                fbp.enumerate_feedback(run_gh=wrapped, pr_url=PR_URL)
+
     def test_severity_table(self):
         items = [
             fbp.FeedbackItem("github:review:R1", "github", "R1", "unresolved", "x" * 64, b"r"),
@@ -863,7 +891,9 @@ class TestAcquireBindings:
         env = _source(out_dir, scratch).acquire(action="freeze-review-input", current_snapshot=None)
         assert env is not None
 
-    def test_find_segment_all_transcripts_unstattable_is_missing_source(self, tmp_path, monkeypatch):
+    def test_find_segment_all_transcripts_unstattable_is_tampered_source(self, tmp_path, monkeypatch):
+        # stat failures on witnessed transcripts are tamper evidence, not
+        # benign absence: an unreadable transcript cannot be audited.
         summary, out_dir, scratch = _enumerate(tmp_path)
         _transcript_with_marker(scratch, summary["enumeration_id"], out_dir=out_dir)
         real_stat = Path.stat
@@ -875,7 +905,18 @@ class TestAcquireBindings:
 
         monkeypatch.setattr(Path, "stat", flaky)
         src = _source(out_dir, scratch)
-        with pytest.raises(acq.AcquisitionError, match="missing-source"):
+        with pytest.raises(acq.AcquisitionError, match="tampered-source"):
+            src.acquire(action="freeze-review-input", current_snapshot=None)
+
+    def test_find_segment_unreadable_transcript_is_tampered_source(self, tmp_path):
+        # A *.jsonl entry that stats fine but cannot be read (replaced by a
+        # directory, or ACL'd between stat and read) is tamper evidence when
+        # no surviving candidate witnesses the enumeration.
+        _s, out_dir, scratch = _enumerate(tmp_path)
+        bad = Path(scratch) / "transcripts" / "bad.jsonl"
+        bad.mkdir(parents=True, exist_ok=True)
+        src = _source(out_dir, scratch)
+        with pytest.raises(acq.AcquisitionError, match="tampered-source"):
             src.acquire(action="freeze-review-input", current_snapshot=None)
 
     def test_evidence_file_unreadable_fails_closed(self, tmp_path, monkeypatch):
