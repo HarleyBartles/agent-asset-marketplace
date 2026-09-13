@@ -11,9 +11,9 @@ Mutation commands (``init --apply``, ``dispatch``, ``enumerate``,
 ``complete``, ``block``, ``resume``, and the ``freeze``/``refresh``
 aliases) run only on the Devin Desktop runtime; on any other harness they
 report ``unsupported-runtime`` and exit 1 without creating or mutating
-state. ``status``, ``next``, ``validate``, and ``doctor`` are read-only and
-run on any runtime; ``doctor`` exits 1 with ``verdict: inert`` off Devin
-Desktop.
+state. ``status``, ``next``, ``validate``, ``package``, ``plan-coverage``,
+and ``doctor`` are read-only and run on any runtime; ``doctor`` exits 1 with
+``verdict: inert`` off Devin Desktop.
 """
 
 from __future__ import annotations

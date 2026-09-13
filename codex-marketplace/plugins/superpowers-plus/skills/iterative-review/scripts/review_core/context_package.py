@@ -106,7 +106,10 @@ def _surface_paths(state: dict) -> tuple[str, ...]:
 
 
 def _read_head_blob(run_git, head_sha: str, path: str) -> bytes:
-    rc, out, err = run_git(["show", f"{head_sha}:{path}"])
+    try:
+        rc, out, err = run_git(["show", f"{head_sha}:{path}"])
+    except OSError as exc:
+        _fail("tool-blocked", f"git unavailable: {exc}")
     if rc != 0:
         _fail("surface-read", f"git show {head_sha}:{path} failed: {err.strip()[:120]}")
     return out.encode("utf-8", errors="surrogateescape")
@@ -230,9 +233,13 @@ def build_context_package(
     surfaces_bytes = model.canonical_json(surface_list)
     (data_dir / "surfaces.json").write_bytes(surfaces_bytes)
     authority_refs = {eid: model.sha256_hex(raw) for eid, raw in authority_blobs.items()}
-    for eid, raw in authority_blobs.items():
+    names: dict[str, str] = {}
+    for eid in authority_blobs:
         name = _safe_filename(eid)
-        (auth_dir / f"{name}.bin").write_bytes(raw)
+        if name in names:
+            _fail("unsafe-path", f"evidence ids {names[name]!r} and {eid!r} collide as {name!r}")
+        names[name] = eid
+        (auth_dir / f"{name}.bin").write_bytes(authority_blobs[eid])
     authorities_bytes = model.canonical_json(authority_refs)
     (data_dir / "authorities.json").write_bytes(authorities_bytes)
 
@@ -283,6 +290,16 @@ def package_dir_for(scratch_dir: Path, action: str, fragment: dict) -> Path:
     return Path(scratch_dir) / "packages" / f"{action}-{prefix}"
 
 
+def _package_digest(package_dir: Path) -> str:
+    return model.sha256_json(
+        {
+            str(p.relative_to(package_dir).as_posix()): model.sha256_hex(p.read_bytes())
+            for p in sorted(package_dir.rglob("*"))
+            if p.is_file()
+        }
+    )
+
+
 def materialize_under(*, scratch_dir: Path, action: str, build) -> tuple[dict, Path]:
     """Build via a staging dir, then move to the canonical package path."""
     packages = Path(scratch_dir) / "packages"
@@ -290,9 +307,18 @@ def materialize_under(*, scratch_dir: Path, action: str, build) -> tuple[dict, P
     if staging.exists():
         shutil.rmtree(staging)
     staging.mkdir(parents=True)
-    fragment = build(staging)
+    try:
+        fragment = build(staging)
+    except Exception:
+        shutil.rmtree(staging, ignore_errors=True)
+        raise
     target = package_dir_for(scratch_dir, action, fragment)
     if target.exists():
+        if _package_digest(target) != fragment["context_package_sha256"]:
+            _fail(
+                "package-diverged",
+                f"existing package {target} diverges from the rebuilt digest",
+            )
         shutil.rmtree(staging)
     else:
         shutil.move(str(staging), str(target))
