@@ -508,9 +508,25 @@ class LiveAuthorityDiscovery:
     def _load_dir(self):
         data = json.loads((self._dir / "data.json").read_bytes().decode("utf-8", errors="surrogateescape"))
         ev_manifest = json.loads((self._dir / "evidence" / "manifest.json").read_bytes())
+        if not isinstance(data, dict):
+            raise AcquisitionError("tampered-source", "data.json is not an object")
+        if not isinstance(ev_manifest, dict):
+            raise AcquisitionError("tampered-source", "evidence manifest is not an object")
+        if not isinstance(data.get("snapshot"), dict) or not isinstance(data.get("manifest_payload"), dict):
+            raise AcquisitionError("tampered-source", "data.json missing snapshot or manifest_payload")
+        manifest_auths = data["manifest_payload"].get("authorities")
+        records = data.get("authorities")
+        if not isinstance(manifest_auths, list) or not all(isinstance(e, dict) for e in manifest_auths):
+            raise AcquisitionError("tampered-source", "witnessed manifest authorities malformed")
+        if not isinstance(records, list) or not all(isinstance(r, dict) for r in records):
+            raise AcquisitionError("tampered-source", "authority records malformed")
         sources = []
         for alias, rec in sorted(ev_manifest.items()):
-            if not isinstance(rec, dict) or not isinstance(rec.get("file"), str):
+            if (
+                not isinstance(rec, dict)
+                or not isinstance(rec.get("file"), str)
+                or not isinstance(rec.get("kind"), str)
+            ):
                 raise AcquisitionError("tampered-source", f"evidence {alias} manifest entry malformed")
             path = self._dir / "evidence" / rec["file"]
             if not path.is_file() or model.sha256_hex(path.read_bytes()) != rec.get("sha256"):
@@ -522,9 +538,9 @@ class LiveAuthorityDiscovery:
         # locators can collide across kinds) and its evidence file digest,
         # including the failure fields on unavailable records. Anything
         # inconsistent is tamper evidence.
-        bound = {e.get("authority_id"): e for e in data.get("manifest_payload", {}).get("authorities", [])}
+        bound = {e.get("authority_id"): e for e in manifest_auths}
         seen = set()
-        for rec in data.get("authorities", []):
+        for rec in records:
             aid = rec.get("authority_id")
             entry = bound.get(aid)
             if entry is None or aid in seen:

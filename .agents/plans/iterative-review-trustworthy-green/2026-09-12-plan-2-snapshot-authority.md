@@ -33,7 +33,7 @@ Canonical source (under `codex-marketplace/plugins/superpowers-plus/skills/itera
 - **Create** `scripts/review_core/witness_log.py` - chained witness store, transcript segment ingestion, `TranscriptWitnessPolicy`, `TranscriptWitnessVerifier`.
 - **Create** `scripts/review_core/discovery_policy.py` - sealed `AuthorityDiscoveryPolicy`, edge grammar, root enumeration, fixed-point traversal, canonicalization.
 - **Create** `scripts/review_core/feedback_policy.py` - sealed `FeedbackHistoryPolicy`, provider enumeration contract, canonical thread identity, digest computation.
-- **Create** `scripts/review_core/acquisition.py` - `LiveAuthorityDiscovery` implementing `AuthorityDiscoverySource`; `enumerate_acquisition()` writing an acquisition directory; `load_acquisition()` producing the `TrustedActionPayload` for `complete`.
+- **Create** `scripts/review_core/acquisition.py` - `LiveAuthorityDiscovery` implementing `AuthorityDiscoverySource`; `enumerate_acquisition()` writing an acquisition directory; `LiveAuthorityDiscovery.acquire()` producing the `TrustedActionPayload` for `complete`.
 - **Create** `assets/hooks/record_pretool.py`, `assets/hooks/record_posttool.py`, `assets/hooks/gate_review_paths.py`, `assets/hooks/hooks.v1.json` - the shipped hooks pack.
 - **Modify** `scripts/review_core/policy.py` - `ACTION_PAYLOAD_KEYS` gains `findings` on freeze/refresh; `_h_freeze`/`_h_refresh` install and validate feedback findings.
 - **Modify** `scripts/review_core/engine.py` - `load_witness_sources()` gains a live branch (runtime-gated) wiring `TranscriptWitnessVerifier` + `LiveAuthorityDiscovery`; `verify_witness` call sites unchanged.
@@ -316,6 +316,7 @@ class AuthorityDiscoveryPolicy:
     policy_id: str           # "authority-discovery"
     version: str             # "1"
     document_sha256: str     # sha256 of the canonical policy document
+    document: dict           # parsed policy document; enumerate_authorities reads it
 
 def default_policy() -> AuthorityDiscoveryPolicy: ...
     # Loads references/authority-discovery-policy.v1.json relative to the

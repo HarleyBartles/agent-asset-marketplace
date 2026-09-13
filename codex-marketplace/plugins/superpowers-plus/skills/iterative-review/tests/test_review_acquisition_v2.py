@@ -701,3 +701,55 @@ class TestAcquireBindings:
         summary, out_dir, _s = _enumerate(tmp_path, git=git)
         assert (out_dir / "data.json").exists()
         assert summary["enumeration_id"]
+
+    def test_data_json_non_object_fails_closed(self, tmp_path):
+        summary, out_dir, scratch = _enumerate(tmp_path)
+        (out_dir / "data.json").write_text("[]", encoding="utf-8")
+        src = _source(out_dir, scratch)
+        with pytest.raises(acq.AcquisitionError, match="tampered-source"):
+            src._load_dir()
+
+    def test_evidence_manifest_non_object_fails_closed(self, tmp_path):
+        summary, out_dir, scratch = _enumerate(tmp_path)
+        (out_dir / "evidence" / "manifest.json").write_text("null", encoding="utf-8")
+        src = _source(out_dir, scratch)
+        with pytest.raises(acq.AcquisitionError, match="tampered-source"):
+            src._load_dir()
+
+    def test_evidence_entry_missing_kind_fails_closed(self, tmp_path):
+        summary, out_dir, scratch = _enumerate(tmp_path)
+        manifest_path = out_dir / "evidence" / "manifest.json"
+        ev_manifest = json.loads(manifest_path.read_bytes())
+        entry = next(iter(ev_manifest.values()))
+        del entry["kind"]
+        manifest_path.write_bytes(model.canonical_json(ev_manifest))
+        src = _source(out_dir, scratch)
+        with pytest.raises(acq.AcquisitionError, match="tampered-source"):
+            src._load_dir()
+
+    def test_data_json_missing_snapshot_fails_closed(self, tmp_path):
+        summary, out_dir, scratch = _enumerate(tmp_path)
+        data = json.loads((out_dir / "data.json").read_bytes().decode("utf-8", "surrogateescape"))
+        del data["snapshot"]
+        (out_dir / "data.json").write_bytes(model.canonical_json(data))
+        src = _source(out_dir, scratch)
+        with pytest.raises(acq.AcquisitionError, match="tampered-source"):
+            src._load_dir()
+
+    def test_data_json_missing_manifest_payload_fails_closed(self, tmp_path):
+        summary, out_dir, scratch = _enumerate(tmp_path)
+        data = json.loads((out_dir / "data.json").read_bytes().decode("utf-8", "surrogateescape"))
+        del data["manifest_payload"]
+        (out_dir / "data.json").write_bytes(model.canonical_json(data))
+        src = _source(out_dir, scratch)
+        with pytest.raises(acq.AcquisitionError, match="tampered-source"):
+            src._load_dir()
+
+    def test_authorities_non_list_fails_closed(self, tmp_path):
+        summary, out_dir, scratch = _enumerate(tmp_path)
+        data = json.loads((out_dir / "data.json").read_bytes().decode("utf-8", "surrogateescape"))
+        data["authorities"] = {"a": 1}
+        (out_dir / "data.json").write_bytes(model.canonical_json(data))
+        src = _source(out_dir, scratch)
+        with pytest.raises(acq.AcquisitionError, match="tampered-source"):
+            src._load_dir()

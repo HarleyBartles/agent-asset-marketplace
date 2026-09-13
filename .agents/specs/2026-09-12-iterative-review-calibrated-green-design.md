@@ -217,10 +217,12 @@ Identical topology to the prior spec's mermaid graph with these substitutions: "
   not required in argv because real `reviewctl enumerate` invocations derive
   it internally.
 - Authority-record reconciliation keys by `authority_id` (locators can
-  collide across kinds), covers `failure_class`/`failure_sha256` and the
-  `failure_evidence_id` alias digest on unavailable entries, and requires
-  surjectivity between the record set and the witnessed manifest entries.
-  `authorities_complete` mirrors the failure-field check at the kernel layer.
+  collide across kinds), covers `availability` + `sha256` (loaded) +
+  `failure_class`/`failure_sha256` (unavailable), requires the `evidence_id`
+  (loaded) or `failure_evidence_id` (unavailable) field to be an `@alias`
+  whose digest matches, and requires surjectivity between the record set and
+  the witnessed manifest entries. `authorities_complete` mirrors the
+  availability + sha256/failure-field check at the kernel layer.
 - `WitnessLog` caches the verified tail but re-verifies whenever the file
   stamp changed since the last append, so a concurrent append mid-process
   invalidates the cache instead of silently forking the chain.
