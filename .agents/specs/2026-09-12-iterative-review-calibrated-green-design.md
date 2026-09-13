@@ -21,6 +21,8 @@ Agents are assumed honest-but-fallible, not malicious. The failure modes defende
 
 The defense is **witnessed evidence**: every load-bearing action must leave a record emitted by the harness outside the model's control (the lifecycle-hook transcript), plus genuinely external records where they exist (GitHub check-runs, workflow runs, PR lifecycle). Forgery is possible only by editing a hash-chained log whose head is anchored into the pushed commit; it is **tamper-evident, not tamper-proof**. The honest claim: "complete, witnessed, independently checkable."
 
+The same boundary scopes review findings. Adversarial review means adversarial *code* review - skeptical, hostile-reading inspection for real defects - not hardening against adversarial threat vectors. A finding is actionable when it describes a scenario reachable under this model (agent error, corrupt or interrupted I/O, API drift, missing tools, platform differences) with observable divergence from contract. A finding that requires an active adversary controlling the scratch store, transcript, or filesystem mid-run is out of scope: a reviewer proposing one is applying the wrong threat model, and "no findings" is a successful round, not a missed one. Consistency invariants that also happen to defeat adversary scenarios (a bound evidence record resolving to a mismatched digest) remain ordinary state-kernel soundness, not threat-model claims.
+
 ## Witness model
 
 The harness emits a per-tool-call transcript via lifecycle hooks. PreToolUse captures `tool_name`, full `tool_input`, `tool_use_id`, `session_id`, `prompt_id`; PostToolUse adds the full `tool_response`. Subagent calls fire the same hooks. A review session appends every relevant event to an append-only JSONL **witness log** under the review-owned scratch store; each entry carries `record_sha256 = sha256(previous_record_sha256 + canonical entry bytes)`, forming a hash chain. The green seal binds the chain head, and the seal lands in the pushed commit - the external anchor.
@@ -254,3 +256,8 @@ Identical topology to the prior spec's mermaid graph with these substitutions: "
   the recorded `sha256` (loaded) or `failure_sha256` (unavailable); content
   registered from a file swapped after `_load_dir` verification fails
   closed even though the manifest records still agree.
+- Review-scope clarification shipped after the PR's adversarial review
+  loop: the finding bar is bounded by the declared threat model (see the
+  closing paragraph of "Threat model"). Reviewer-proposed hardening that
+  presumes an active adversary is out of scope; "no findings" is a valid
+  converged round.
