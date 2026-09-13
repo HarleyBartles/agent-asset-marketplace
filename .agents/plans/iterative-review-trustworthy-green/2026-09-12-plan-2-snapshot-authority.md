@@ -516,8 +516,10 @@ def enumerate_acquisition(
          payload_evidence_id / discovery_witness_id) is built by
          acquire() at envelope time, not stored in data.json.
     A pre-existing out_dir is cleared before emission, guarded to the
-    <scratch>/acquire/latest path shape; any other resolution refuses with
-    "tool-blocked" before shutil.rmtree runs.
+    <scratch>/acquire/latest path shape; symlinked, out-of-scratch, or
+    wrong-shape resolutions refuse with "tool-blocked" before shutil.rmtree
+    runs, while a non-directory or a failed rmtree classifies
+    "tampered-source".
     Prints `enumeration-id: <digest>` as final stdout line - the marker the
     transcript witness binds.
     """

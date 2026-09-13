@@ -96,6 +96,28 @@ def test_next_action_after_freeze_is_semantic_map(tmp_path):
     assert d.action == "map-impact-semantic"
 
 
+def test_authorities_complete_detects_swapped_evidence_content(tmp_path):
+    # A file swapped between _load_dir verification and store registration
+    # leaves the recorded sha256 honest but the registered content tampered;
+    # the cross-check must fail closed.
+    state = _complete_state(tmp_path)
+    rec = state["authorities"]["auth-agents"]
+    bad_cid = _put(state, {"path": "AGENTS.md", "note": "tampered"})
+    rec["evidence_id"] = _bind(state, bad_cid, "authority")
+    ok, missing = policy.authorities_complete(state, _bundle(state))
+    assert not ok
+
+
+def test_authorities_complete_detects_dangling_evidence(tmp_path):
+    # An evidence_id that resolves to nothing must fail, not silently pass
+    # on record-vs-manifest agreement alone.
+    state = _complete_state(tmp_path)
+    rec = state["authorities"]["auth-agents"]
+    rec["evidence_id"] = "evidence:nonexistent"
+    ok, missing = policy.authorities_complete(state, _bundle(state))
+    assert not ok
+
+
 def _add_blocker(state, blocker_id="b-1", active=True):
     snap = state["snapshot"]
     state["blockers"][blocker_id] = {

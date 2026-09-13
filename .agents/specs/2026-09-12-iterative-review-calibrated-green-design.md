@@ -238,3 +238,19 @@ Identical topology to the prior spec's mermaid graph with these substitutions: "
 - `reviewctl main` maps `WitnessLogError` and `WitnessVerificationError` to a
   clean `witness-error:` failure line rather than a traceback; the state lock
   already prevents partial writes.
+- Enumerate clears a pre-existing `acquire/latest` before emission under a
+  strict guard: a symlinked directory, a resolved path outside the scratch
+  root, or a wrong name shape refuses with `tool-blocked`; a non-directory or
+  an `shutil.rmtree` `OSError` classifies as `tampered-source` (tamper
+  evidence), never `io-error`.
+- The discovery-traversal `load_text` callback (`_gh_text`) re-raises any
+  `AcquisitionError` whose blocker class is not `authority-missing`: a
+  systemic tool failure blocks the whole acquisition instead of degrading
+  to an inaccessible record. Only `authority-missing` degrades; this is
+  stricter than the seed-materialization loop, which degrades non-required
+  authorities regardless of failure class.
+- `authorities_complete` additionally cross-checks that each authority
+  record's bound evidence resolves to a content object whose digest equals
+  the recorded `sha256` (loaded) or `failure_sha256` (unavailable); content
+  registered from a file swapped after `_load_dir` verification fails
+  closed even though the manifest records still agree.

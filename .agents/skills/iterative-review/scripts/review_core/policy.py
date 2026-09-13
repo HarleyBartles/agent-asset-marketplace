@@ -629,6 +629,13 @@ def authorities_complete(state: dict, policies) -> tuple[bool, tuple[str, ...]]:
             or rec.get("failure_sha256") != entry.get("failure_sha256")
         ):
             return False, ("authority",)
+        eid = rec.get("evidence_id" if entry["availability"] == "loaded" else "failure_evidence_id")
+        want = rec["sha256"] if entry["availability"] == "loaded" else rec.get("failure_sha256")
+        ev = state["evidence"].get(eid) if isinstance(eid, str) else None
+        cid = ev.get("content_id") if isinstance(ev, dict) else None
+        have = cid[len("sha256:") :] if isinstance(cid, str) and cid.startswith("sha256:") else None
+        if want is None or have != want:
+            return False, ("authority",)
     extra = set(state["authorities"]) - {e["authority_id"] for e in entries}
     current_extra = {aid for aid in extra if _current(state, state["authorities"][aid], aid)}
     if current_extra:
