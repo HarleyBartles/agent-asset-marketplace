@@ -2390,11 +2390,7 @@ class _Walk:
                     o = self.state["obligations"][oid]
                     outcomes[oid] = "not-applicable" if (na and o["risk"] == "high") else "covered"
                 report_oid = next(
-                    (
-                        oid
-                        for oid in strong_ids + final_ids
-                        if self.state["obligations"][oid]["risk"] != "high"
-                    ),
+                    (oid for oid in strong_ids + final_ids if self.state["obligations"][oid]["risk"] != "high"),
                     (strong_ids + final_ids)[0],
                 )
                 return self.review(
@@ -2413,11 +2409,7 @@ class _Walk:
             # cut then leaves unrelated obligations' reviews intact. The n/a
             # mark runs last: it pre-empts the strong gate via the pending
             # exemption once it lands.
-            na_ids = [
-                oid
-                for oid in strong_ids + final_ids
-                if na and self.state["obligations"][oid]["risk"] == "high"
-            ]
+            na_ids = [oid for oid in strong_ids + final_ids if na and self.state["obligations"][oid]["risk"] == "high"]
             covered_ids = [oid for oid in strong_ids + final_ids if oid not in na_ids]
             if covered_ids:
                 att = self.review(
@@ -2758,8 +2750,7 @@ def walk_review_repair_path(tmp_path):
     focused_ids = sorted(
         o["obligation_id"]
         for o in w.state["obligations"].values()
-        if policy._current(w.state, o, o["obligation_id"])
-        and policy._scheduled_gate_tier(o) == "focused"
+        if policy._current(w.state, o, o["obligation_id"]) and policy._scheduled_gate_tier(o) == "focused"
     )
     att = w.review(
         "run-focused-review",

@@ -541,7 +541,7 @@ def build_context_package(
 
 - `reviewctl package --action <a> --role <r> --assignment-id <id>... [--out <dir>]` - builds under `<scratch>/packages/<action>-<digest-prefix>/`, prints/emits the fragment JSON. Read-only on state; keeps the `package` verb usable before Plan 4 wires live dispatch.
 
-- [ ] **Step 1: Write the failing tests**
+- [x] **Step 1: Write the failing tests**
 
 ```python
 class TestBuildContextPackage:
@@ -555,7 +555,7 @@ class TestBuildContextPackage:
     def test_deterministic_package_digest(self, tmp_path): ...
 ```
 
-- [ ] **Step 2-5:** standard TDD cycle; commit `feat(iterative-review): add exact-snapshot context package builder`.
+- [x] **Step 2-5:** standard TDD cycle; commit `feat(iterative-review): add exact-snapshot context package builder`.
 
 ---
 

@@ -2225,6 +2225,152 @@ class TestEnumerateCompleteFlow:
         assert "Traceback" not in err
 
 
+class TestPackageVerb:
+    """``reviewctl package`` materializes the exact-snapshot reviewer context
+    package under <scratch>/packages/ and emits the dispatch fragment. It is
+    read-only on state and works before Plan-4 live dispatch wiring."""
+
+    _DIFF = (
+        "diff --git a/src/foo.py b/src/foo.py\n"
+        "index 1111111..2222222 100644\n"
+        "--- a/src/foo.py\n"
+        "+++ b/src/foo.py\n"
+        "@@ -10,2 +10,2 @@ def f():\n"
+        " context line\n"
+        "-old line\n"
+        "+new line\n"
+    )
+
+    def _live(self, monkeypatch, git=None, gh=None, runtime="devin-desktop"):
+        import reviewctl
+
+        monkeypatch.setenv(engine.RUNTIME_ENV_VAR, runtime)
+        if git is not None:
+            monkeypatch.setattr(reviewctl, "_run_git", lambda a, cwd=None: git(a))
+        if gh is not None:
+            monkeypatch.setattr(reviewctl, "_run_gh", lambda a, cwd=None: gh(a))
+        return reviewctl
+
+    def _frozen(self, reviewctl, tmp_path):
+        state = tmp_path / "review-state.json"
+        scratch = tmp_path / "scratch"
+        rc = reviewctl.main(
+            [
+                "init",
+                "--state",
+                str(state),
+                "--review-id",
+                "rev-1",
+                "--scratch-dir",
+                str(scratch),
+                "--apply",
+            ]
+        )
+        assert rc == 0
+        rc = reviewctl.main(["enumerate", "--state", str(state), "--repo", str(tmp_path), "--pr", "7"])
+        assert rc == 0
+        acquire_dir = scratch / "acquire" / "latest"
+        enum_id = json.loads((acquire_dir / "enumeration.json").read_text())["enumeration_id"]
+        helpers.acq_transcript_with_marker(scratch, enum_id, out_dir=acquire_dir)
+        rc = reviewctl.main(
+            [
+                "complete",
+                "--state",
+                str(state),
+                "--action",
+                "freeze-review-input",
+                "--acquired",
+                str(acquire_dir),
+                "--apply",
+            ]
+        )
+        assert rc == 0
+        return state, scratch
+
+    def test_package_emits_fragment_and_default_dir(self, tmp_path, monkeypatch, capsys):
+        reviewctl = self._live(
+            monkeypatch,
+            git=helpers.FakeGit({"src/foo.py": "head content\n"}, diff=self._DIFF),
+            gh=helpers.FakeGh(),
+        )
+        state, scratch = self._frozen(reviewctl, tmp_path)
+        capsys.readouterr()
+        generation = store.load_state(state)["generation"]
+        rc = reviewctl.main(
+            [
+                "package",
+                "--state",
+                str(state),
+                "--repo",
+                str(tmp_path),
+                "--action",
+                "map-impact",
+                "--role",
+                "impact-mapper-semantic",
+                "--json",
+            ]
+        )
+        assert rc == 0
+        frag = json.loads(capsys.readouterr().out)
+        assert set(frag) >= {
+            "assignment_ids",
+            "context_evidence_ids",
+            "instruction_manifest_sha256",
+            "data_manifest_sha256",
+            "context_package_sha256",
+            "hazard_framing_sha256",
+            "required_tool_classes",
+            "package_dir",
+        }
+        pkg = Path(frag["package_dir"])
+        assert pkg.parent == scratch / "packages"
+        assert pkg.name.startswith("map-impact-")
+        assert (pkg / "patch.diff").read_bytes() == self._DIFF.encode("utf-8")
+        assert (pkg / "data" / "files" / "src" / "foo.py").read_text() == "head content\n"
+        # read-only on state: freeze generation unchanged
+        assert store.load_state(state)["generation"] == generation
+
+    def test_package_refuses_before_snapshot(self, tmp_path, monkeypatch, capsys):
+        reviewctl = self._live(
+            monkeypatch,
+            git=helpers.FakeGit({"src/foo.py": "x"}, diff=self._DIFF),
+            gh=helpers.FakeGh(),
+        )
+        state = tmp_path / "review-state.json"
+        scratch = tmp_path / "scratch"
+        rc = reviewctl.main(
+            [
+                "init",
+                "--state",
+                str(state),
+                "--review-id",
+                "rev-1",
+                "--scratch-dir",
+                str(scratch),
+                "--apply",
+            ]
+        )
+        assert rc == 0
+        capsys.readouterr()
+        rc = reviewctl.main(
+            [
+                "package",
+                "--state",
+                str(state),
+                "--repo",
+                str(tmp_path),
+                "--action",
+                "map-impact",
+                "--role",
+                "impact-mapper-semantic",
+            ]
+        )
+        assert rc == 1
+        err = capsys.readouterr().err
+        assert "no-snapshot" in err
+        assert "Traceback" not in err
+
+
 class TestHooksRenderAndJsonFlag:
     """hooks.v1.json rendering is platform-aware; --json is argparse-native."""
 

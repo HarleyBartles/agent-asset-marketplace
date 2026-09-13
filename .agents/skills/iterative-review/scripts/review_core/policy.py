@@ -1319,15 +1319,13 @@ def _pending_exemptions(state: dict) -> list[dict]:
         # the exemption gate to be pending; if the mark itself was cut, the
         # obligation is unproven and routes back through coverage instead.
         has_reviewer = any(
-            _role_of_dispatch(state, state["dispatches"].get(a["dispatch_id"], {}))
-            == "obligation-reviewer"
+            _role_of_dispatch(state, state["dispatches"].get(a["dispatch_id"], {})) == "obligation-reviewer"
             for a in current_atts
         )
         if not has_reviewer:
             continue
         has_challenger = any(
-            _role_of_dispatch(state, state["dispatches"].get(a["dispatch_id"], {}))
-            == "exemption-challenger"
+            _role_of_dispatch(state, state["dispatches"].get(a["dispatch_id"], {})) == "exemption-challenger"
             for a in current_atts
         )
         if not has_challenger:
@@ -2094,11 +2092,7 @@ def _report_derived_verdict(rec: dict, claims: dict, payload_findings) -> str:
     payload's own findings sourced to this attestation id are the report's
     findings proper (a same-action finding cannot sit in finding_ids without
     a cyclic derivation)."""
-    matched = [
-        f
-        for f in payload_findings
-        if isinstance(f, dict) and f.get("source_id") == rec.get("attestation_id")
-    ]
+    matched = [f for f in payload_findings if isinstance(f, dict) and f.get("source_id") == rec.get("attestation_id")]
     pseudo = {
         "assignments": [
             {"result": {k: v for k, v in c.items() if k != "assignment_id"}}
@@ -2154,9 +2148,9 @@ def _apply_obligation_outcomes(out: dict, att: dict, claims: dict | None) -> Non
             if o is None or not _current(out, o, o["obligation_id"]):
                 continue
             outcome = entry["outcome"]
-            qualified = rs is not None and _TIER_ORDER.index(
-                rs["required_capability_tier"]
-            ) >= _TIER_ORDER.index(_tier_max(_obligation_tier(o), o["minimum_capability_tier"]))
+            qualified = rs is not None and _TIER_ORDER.index(rs["required_capability_tier"]) >= _TIER_ORDER.index(
+                _tier_max(_obligation_tier(o), o["minimum_capability_tier"])
+            )
             if outcome == "covered":
                 if qualified:
                     o["status"] = "covered"
@@ -2354,9 +2348,7 @@ def _check_obligation_install(rec: dict, path: str) -> None:
     floor_t, floor_r = obligation_floor(rec["scope_level"], rec["risk"], rec["consequences"])
     if _TIER_ORDER.index(rec["minimum_capability_tier"]) < _TIER_ORDER.index(floor_t):
         _fail("floor-below-policy", path, "obligation capability tier below the computed policy floor")
-    if model.REASONING_FLOORS.index(rec["minimum_reasoning_floor"]) < model.REASONING_FLOORS.index(
-        floor_r
-    ):
+    if model.REASONING_FLOORS.index(rec["minimum_reasoning_floor"]) < model.REASONING_FLOORS.index(floor_r):
         _fail("floor-below-policy", path, "obligation reasoning floor below the computed policy floor")
 
 

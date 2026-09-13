@@ -52,12 +52,8 @@ def _to_strong(w):
         for o in w.state["obligations"].values()
         if o["status"] == "pending" and policy._current(w.state, o, o["obligation_id"])
     ]
-    fast = sorted(
-        o["obligation_id"] for o in pending if policy._scheduled_gate_tier(o) == "fast"
-    )
-    focused = sorted(
-        o["obligation_id"] for o in pending if policy._scheduled_gate_tier(o) == "focused"
-    )
+    fast = sorted(o["obligation_id"] for o in pending if policy._scheduled_gate_tier(o) == "fast")
+    focused = sorted(o["obligation_id"] for o in pending if policy._scheduled_gate_tier(o) == "focused")
     if fast:
         w.review(
             "run-fast-review",
@@ -135,8 +131,7 @@ def _built_challenge(w, *, categories=None, surfaces=None, hazards=None):
     surviving = [
         o["obligation_id"]
         for o in w.state["obligations"].values()
-        if o["category"] not in revised_categories
-        and policy._current(w.state, o, o["obligation_id"])
+        if o["category"] not in revised_categories and policy._current(w.state, o, o["obligation_id"])
     ]
     inv_entries = [
         {
@@ -164,14 +159,12 @@ def _built_challenge(w, *, categories=None, surfaces=None, hazards=None):
         "semantic_impact_map_id": next(
             m["impact_map_id"]
             for m in w.state["impact_maps"].values()
-            if m["role"] == "impact-mapper-semantic"
-            and policy._current(w.state, m, m["impact_map_id"])
+            if m["role"] == "impact-mapper-semantic" and policy._current(w.state, m, m["impact_map_id"])
         ),
         "contract_impact_map_id": next(
             m["impact_map_id"]
             for m in w.state["impact_maps"].values()
-            if m["role"] == "impact-mapper-contract"
-            and policy._current(w.state, m, m["impact_map_id"])
+            if m["role"] == "impact-mapper-contract" and policy._current(w.state, m, m["impact_map_id"])
         ),
         "challenger_attestation_id": _attestation_id(w.state, chall_att),
         "entries": inv_entries,
@@ -395,10 +388,7 @@ class TestStructuredOutputBinding:
                 }
             ],
         )
-        assert any(
-            m["role"] == "impact-mapper-semantic"
-            for m in w.state["impact_maps"].values()
-        )
+        assert any(m["role"] == "impact-mapper-semantic" for m in w.state["impact_maps"].values())
 
     def test_inventory_subject_and_revised_digest_checked(self, tmp_path):
         w = _Walk(tmp_path)
@@ -602,8 +592,7 @@ class TestInstallFloors:
         installed = next(
             o
             for o in w.state["obligations"].values()
-            if o["category"] == "security-privacy"
-            and policy._current(w.state, o, o["obligation_id"])
+            if o["category"] == "security-privacy" and policy._current(w.state, o, o["obligation_id"])
         )
         assert installed["minimum_capability_tier"] == "final-strong"
         assert installed["status"] == "pending"
