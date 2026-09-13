@@ -753,3 +753,49 @@ class TestAcquireBindings:
         src = _source(out_dir, scratch)
         with pytest.raises(acq.AcquisitionError, match="tampered-source"):
             src._load_dir()
+
+    def test_manifest_duplicate_authority_id_fails_closed(self, tmp_path):
+        summary, out_dir, scratch = _enumerate(tmp_path)
+        data = json.loads((out_dir / "data.json").read_bytes().decode("utf-8", "surrogateescape"))
+        manifest_auths = data["manifest_payload"]["authorities"]
+        assert len(manifest_auths) >= 2
+        # A duplicated manifest entry with all unique records retained used to
+        # slip past surjectivity: bound collapses the duplicate and len(seen)
+        # still equals len(bound), so the duplicate's fields went unreconciled.
+        manifest_auths.append(dict(manifest_auths[0]))
+        (out_dir / "data.json").write_bytes(model.canonical_json(data))
+        src = _source(out_dir, scratch)
+        with pytest.raises(acq.AcquisitionError, match="tampered-source"):
+            src._load_dir()
+
+    def test_gh_non_json_response_fails_cleanly(self):
+        def gh_bad(_args):
+            return 0, "<html>rate limited</html>", ""
+
+        seed = SimpleNamespace(locator="gh:issue/12")
+        with pytest.raises(acq.AcquisitionError, match="authority-missing"):
+            acq._load_seed_bytes(seed, run_git=None, run_gh=gh_bad, base_sha=BASE, repo_id=REPO_ID, pr_meta=_pr_meta())
+        seed = SimpleNamespace(locator="gh:doc/docs/x.md")
+        with pytest.raises(acq.AcquisitionError, match="authority-missing"):
+            acq._load_seed_bytes(seed, run_git=None, run_gh=gh_bad, base_sha=BASE, repo_id=REPO_ID, pr_meta=_pr_meta())
+
+    def test_find_segment_record_missing_ids_fails_cleanly(self, tmp_path):
+        summary, out_dir, scratch = _enumerate(tmp_path)
+        lines = [
+            {
+                "hook_event_name": "PostToolUse",
+                "tool_name": "exec",
+                "tool_input": {"command": "py -3 reviewctl.py enumerate --state X/state.json --repo . --pr 7"},
+                "prompt_id": "p1",
+                "tool_response": {
+                    "success": True,
+                    "output": f"enumeration-id: {summary['enumeration_id']}" + chr(10),
+                    "error": None,
+                },
+            }
+        ]
+        t = Path(scratch) / "transcripts" / "s1.jsonl"
+        t.write_text("".join(json.dumps(x) + chr(10) for x in lines), encoding="utf-8")
+        src = _source(out_dir, scratch)
+        with pytest.raises(acq.AcquisitionError, match="missing-source"):
+            src.acquire(action="freeze-review-input", current_snapshot=None)

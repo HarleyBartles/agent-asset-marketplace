@@ -203,33 +203,45 @@ def _doctor_rows(*, runtime, scratch_dir=None, repo=None, run_cmd=None):
         except Exception as exc:  # noqa: BLE001 - row reports, not crashes
             add("witness-log-roundtrip", "fail", str(exc), "check scratch-store permissions")
 
-    rc, out, _err = run_cmd(["git", "--version"])
-    add(
-        "git-present",
-        "pass" if rc == 0 else "fail",
-        out.strip()[:80] if rc == 0 else "git not found",
-        "install git on PATH",
-    )
+    try:
+        rc, out, _err = run_cmd(["git", "--version"])
+    except OSError as exc:
+        add("git-present", "fail", str(exc), "install git on PATH")
+    else:
+        add(
+            "git-present",
+            "pass" if rc == 0 else "fail",
+            out.strip()[:80] if rc == 0 else "git not found",
+            "install git on PATH",
+        )
 
     if repo is None:
         add("repo-non-shallow", "skip", "no --repo given")
     else:
-        rc, out, err = run_cmd(["git", "-C", str(repo), "rev-parse", "--is-shallow-repository"])
-        shallow = out.strip() == "true"
-        add(
-            "repo-non-shallow",
-            "pass" if rc == 0 and not shallow else "fail",
-            out.strip() or err.strip()[:80],
-            "fetch full history (git fetch --unshallow)",
-        )
+        try:
+            rc, out, err = run_cmd(["git", "-C", str(repo), "rev-parse", "--is-shallow-repository"])
+        except OSError as exc:
+            add("repo-non-shallow", "fail", str(exc), "install git on PATH")
+        else:
+            shallow = out.strip() == "true"
+            add(
+                "repo-non-shallow",
+                "pass" if rc == 0 and not shallow else "fail",
+                out.strip() or err.strip()[:80],
+                "fetch full history (git fetch --unshallow)",
+            )
 
-    rc, out, err = run_cmd(["gh", "auth", "status"])
-    add(
-        "gh-authenticated",
-        "pass" if rc == 0 else "fail",
-        ((out or err).strip().splitlines() or [""])[0][:80],
-        "run `gh auth login`",
-    )
+    try:
+        rc, out, err = run_cmd(["gh", "auth", "status"])
+    except OSError as exc:
+        add("gh-authenticated", "fail", str(exc), "run `gh auth login`")
+    else:
+        add(
+            "gh-authenticated",
+            "pass" if rc == 0 else "fail",
+            ((out or err).strip().splitlines() or [""])[0][:80],
+            "run `gh auth login`",
+        )
 
     verdict = "capability-floor-failed" if any(r["status"] == "fail" for r in rows) else "pass"
     return rows, verdict
@@ -447,9 +459,11 @@ def _acquired_alias(args, action: str, json_mode: bool) -> int:
     acquire_dir = Path(state["scratch_dir"]) / "acquire" / "latest"
     try:
         enum_rec = json.loads((acquire_dir / "enumeration.json").read_text(encoding="utf-8"))
-        inputs = enum_rec["inputs"]
-    except (OSError, ValueError, KeyError):
+    except (OSError, ValueError):
         return _fail(f"stale-acquisition: no enumeration under {acquire_dir}; run `reviewctl enumerate` first")
+    if not isinstance(enum_rec, dict) or not isinstance(enum_rec.get("inputs"), dict):
+        return _fail(f"stale-acquisition: enumeration under {acquire_dir} is malformed; re-run `reviewctl enumerate`")
+    inputs = enum_rec["inputs"]
     repo = Path(args.repo).resolve()
     stored_root = inputs.get("repo_root")
     try:
@@ -743,6 +757,8 @@ def main(argv=None) -> int:
         return _fail(str(exc))
     except OSError as exc:
         return _fail(f"io-error: {exc}")
+    except Exception as exc:  # noqa: BLE001 - last line of defense, never a traceback
+        return _fail(f"unexpected: {exc}")
 
 
 if __name__ == "__main__":

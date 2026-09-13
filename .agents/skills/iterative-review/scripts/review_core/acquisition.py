@@ -108,7 +108,10 @@ def _load_seed_bytes(seed, *, run_git, run_gh, base_sha: str, repo_id: str, pr_m
         rc, out, err = run_gh(["api", f"repos/{repo_id}/issues/{n}"])
         if rc != 0:
             raise AcquisitionError("authority-missing", f"{loc}: {err.strip() or 'unreadable'}")
-        doc = json.loads(out)
+        try:
+            doc = json.loads(out)
+        except ValueError as exc:
+            raise AcquisitionError("authority-missing", f"{loc}: unexpected API response shape") from exc
         if not isinstance(doc, dict):
             raise AcquisitionError("authority-missing", f"{loc}: unexpected API response shape")
         return model.canonical_json({"title": doc.get("title"), "body": doc.get("body"), "number": doc.get("number")})
@@ -117,7 +120,10 @@ def _load_seed_bytes(seed, *, run_git, run_gh, base_sha: str, repo_id: str, pr_m
         rc, out, err = run_gh(["api", f"repos/{repo_id}/contents/{path}?ref={base_sha}"])
         if rc != 0:
             raise AcquisitionError("authority-missing", f"{loc}: {err.strip() or 'unreadable'}")
-        doc = json.loads(out)
+        try:
+            doc = json.loads(out)
+        except ValueError as exc:
+            raise AcquisitionError("authority-missing", f"{loc}: unexpected API response shape") from exc
         if not isinstance(doc, dict) or not isinstance(doc.get("content"), str):
             raise AcquisitionError("authority-missing", f"{loc}: unexpected API response shape")
         try:
@@ -538,6 +544,8 @@ class LiveAuthorityDiscovery:
         # locators can collide across kinds) and its evidence file digest,
         # including the failure fields on unavailable records. Anything
         # inconsistent is tamper evidence.
+        if len({e.get("authority_id") for e in manifest_auths}) != len(manifest_auths):
+            raise AcquisitionError("tampered-source", "witnessed manifest has duplicate authority_id")
         bound = {e.get("authority_id"): e for e in manifest_auths}
         seen = set()
         for rec in records:
@@ -601,7 +609,10 @@ class LiveAuthorityDiscovery:
         if not candidates:
             raise AcquisitionError("missing-source", "no witnessed enumerate transcript segment for this acquisition")
         _m, _i, path, post = max(candidates, key=lambda c: (c[0], c[1]))
-        return path, post["session_id"], post["tool_use_id"]
+        session_id, tool_use_id = post.get("session_id"), post.get("tool_use_id")
+        if session_id is None or tool_use_id is None:
+            raise AcquisitionError("missing-source", "witnessed Post record lacks session_id/tool_use_id")
+        return path, session_id, tool_use_id
 
     def acquire(self, *, action: str, current_snapshot: dict | None):
         data, sources = self._load_dir()

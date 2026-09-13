@@ -2125,6 +2125,29 @@ class TestEnumerateCompleteFlow:
         )
         assert rc == 0
 
+    def test_freeze_alias_malformed_enumeration_fails_stale(self, tmp_path, monkeypatch, capsys):
+        reviewctl = self._live(monkeypatch)
+        state, scratch = self._init(reviewctl, tmp_path)
+        acquire_dir = scratch / "acquire" / "latest"
+        acquire_dir.mkdir(parents=True)
+        (acquire_dir / "enumeration.json").write_text("[]", encoding="utf-8")
+        rc = reviewctl.main(
+            [
+                "freeze",
+                "--state",
+                str(state),
+                "--repo",
+                str(tmp_path),
+                "--pr",
+                "7",
+                "--apply",
+            ]
+        )
+        assert rc == 1
+        err = capsys.readouterr().err
+        assert "stale-acquisition" in err
+        assert "Traceback" not in err
+
 
 class TestHooksRenderAndJsonFlag:
     """hooks.v1.json rendering is platform-aware; --json is argparse-native."""
@@ -2181,3 +2204,20 @@ class TestHooksRenderAndJsonFlag:
         # it as an option and reports the missing --reason value.
         with pytest.raises(SystemExit):
             reviewctl.main(["block", "--state", "x", "--class", "c", "--reason", "--json"])
+
+    def test_doctor_missing_tools_report_failed_rows(self, tmp_path):
+        import reviewctl
+
+        def missing(_argv, cwd=None):
+            raise FileNotFoundError("no such file: git")
+
+        rows, verdict = reviewctl._doctor_rows(
+            runtime=engine.RUNTIME_DEVIN_DESKTOP,
+            repo=tmp_path,
+            run_cmd=missing,
+        )
+        by_name = {r["name"]: r for r in rows}
+        for name in ("git-present", "repo-non-shallow", "gh-authenticated"):
+            assert by_name[name]["status"] == "fail", by_name
+            assert "no such file" in by_name[name]["detail"]
+        assert verdict == "capability-floor-failed"
