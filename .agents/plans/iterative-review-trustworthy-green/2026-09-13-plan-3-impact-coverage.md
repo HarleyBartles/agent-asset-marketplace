@@ -110,7 +110,7 @@ class TestAcquisitionArtifacts:
     def test_acquire_rejects_surfaces_inconsistent_with_patch(self, ...): ...
 ```
 
-- [ ] **Step 2: Run to confirm failure**
+- [x] **Step 2: Run to confirm failure**
 
 `py -3 -m pytest tests/test_review_surfaces_v2.py -x -q` from the worktree root. Expected: `ModuleNotFoundError: review_core.surfaces`.
 
@@ -118,7 +118,7 @@ class TestAcquisitionArtifacts:
 
 Pure stdlib. The parser accepts git's standard output only (`diff --git a/x b/y`, `new file mode`, `deleted file mode`, `rename from/to`, `Binary files ... differ`, `---`/`+++`/`@@`). `/dev/null` marks add/delete sides. The acquisition change is small: keep `diff_text = out` (it is already decoded), write `ev_dir`-sibling `out_dir / "diff.patch"` + `out_dir / "surfaces.json"` before `data.json` is written, and add the two verification branches inside `acquire` before the payload is produced.
 
-- [ ] **Step 4: Run tests to green**
+- [x] **Step 4: Run tests to green**
 
 `py -3 -m pytest tests/test_review_surfaces_v2.py tests/test_review_acquisition_v2.py -x -q` - all pass.
 
@@ -446,7 +446,7 @@ This is the missing engine. Nothing in the shipped kernel ever sets obligation `
 
 - `review_v2_helpers.py` gains a report fixture builder (`_report(role=..., assignments=..., ...)`) so the walk drivers produce payload claims the new checks accept; existing direct-install fixtures that bypass attestations are unaffected.
 
-- [ ] **Step 1: Write the failing tests**
+- [x] **Step 1: Write the failing tests**
 
 ```python
 class TestAttestationBinding:
@@ -476,11 +476,11 @@ class TestInstallFloors:
 
 - [ ] **Step 2: Run to confirm failure** - the outcome tests fail because status never transitions.
 
-- [ ] **Step 3: Implement the policy.py changes**
+- [x] **Step 3: Implement the policy.py changes**
 
 - [ ] **Step 4: Run tests to green** - outcomes + the full `test_review_policy_v2.py` regression set.
 
-- [ ] **Step 5: Commit** `feat(iterative-review): derive obligation status from report-bound outcomes`.
+- [x] **Step 5: Commit** `feat(iterative-review): derive obligation status from report-bound outcomes`.
 
 ---
 

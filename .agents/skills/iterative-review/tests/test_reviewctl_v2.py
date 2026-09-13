@@ -478,16 +478,22 @@ def _map_data_builder(dd: _DispatchDouble, st: dict, dispatch: dict, att: dict):
         }
     ]
     map_path = dd._file(f"map-{dd.serial}.json", {"role": role, "entries": entries})
+    impact_map = {
+        "impact_map_id": "",
+        "role": role,
+        "entries": entries,
+        "evidence_id": "@map",
+        "snapshot_epoch": snap["epoch"],
+        "snapshot_fingerprint": snap["fingerprint"],
+    }
+    att["structured_output"] = {
+        "kind": "impact-map",
+        "subject_sha256": model.sha256_json(model.impact_map_subject(impact_map)),
+        "record": impact_map,
+    }
     return (
         {
-            "impact_map": {
-                "impact_map_id": "",
-                "role": role,
-                "entries": entries,
-                "evidence_id": "@map",
-                "snapshot_epoch": snap["epoch"],
-                "snapshot_fingerprint": snap["fingerprint"],
-            },
+            "impact_map": impact_map,
             "attestation": att,
             "findings": [],
         },
@@ -1538,7 +1544,6 @@ class TestEngineTransactions:
         w2 = helpers._Walk(tmp_path / "pre")
         w2.freeze()
         w2.ascent_to_exemption()
-        w2.exemption()
         path2 = _persist_state(tmp_path / "pre", w2.state)
         runner = _CommandRunnerDouble(path2, w2.registry, tmp_path / "pre", w2.policies)
         sources = engine.WitnessSources(

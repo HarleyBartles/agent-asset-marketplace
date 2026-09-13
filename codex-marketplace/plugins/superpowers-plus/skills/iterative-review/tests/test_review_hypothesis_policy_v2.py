@@ -50,23 +50,17 @@ class TestSealedDocument:
         bad = json.loads(DOC_PATH.read_bytes())
         del bad["families"]
         with pytest.raises(hypothesis_policy.HypothesisPolicyError):
-            hypothesis_policy.SealedHypothesisDerivationPolicy(
-                document_bytes=model.canonical_json(bad)
-            )
+            hypothesis_policy.SealedHypothesisDerivationPolicy(document_bytes=model.canonical_json(bad))
         bad = json.loads(DOC_PATH.read_bytes())
         bad["families"]["not-a-category"] = []
         with pytest.raises(hypothesis_policy.HypothesisPolicyError):
-            hypothesis_policy.SealedHypothesisDerivationPolicy(
-                document_bytes=model.canonical_json(bad)
-            )
+            hypothesis_policy.SealedHypothesisDerivationPolicy(document_bytes=model.canonical_json(bad))
 
     def test_rejects_unknown_template_placeholder(self):
         bad = json.loads(DOC_PATH.read_bytes())
         bad["families"]["behavioral-correctness"][0]["claim"] = "uses {bogus}"
         with pytest.raises(hypothesis_policy.HypothesisPolicyError):
-            hypothesis_policy.SealedHypothesisDerivationPolicy(
-                document_bytes=model.canonical_json(bad)
-            )
+            hypothesis_policy.SealedHypothesisDerivationPolicy(document_bytes=model.canonical_json(bad))
 
     def test_sha256_stable_over_canonical_bytes(self):
         doc = json.loads(DOC_PATH.read_bytes())
@@ -139,9 +133,7 @@ class TestDerive:
         policies = SimpleNamespace(hypotheses=pol)
         policy._install_obligations(state, [rec], policies)
         for h in state["hypothesis_assignments"].values():
-            expected = model.derived_id(
-                "hypothesis", 3, model.hypothesis_assignment_subject(h)
-            )
+            expected = model.derived_id("hypothesis", 3, model.hypothesis_assignment_subject(h))
             assert h["hypothesis_assignment_id"] == expected
             assert h["obligation_id"] in state["obligations"]
             assert h["snapshot_epoch"] == 3
@@ -151,9 +143,7 @@ class TestDerive:
 class TestEngineWiring:
     def test_fail_closed_branch_uses_sealed_policy(self):
         sources = engine.load_witness_sources(runtime="unknown")
-        assert isinstance(
-            sources.policies.hypotheses, hypothesis_policy.SealedHypothesisDerivationPolicy
-        )
+        assert isinstance(sources.policies.hypotheses, hypothesis_policy.SealedHypothesisDerivationPolicy)
 
     def test_builtin_stub_deleted(self):
         assert not hasattr(engine, "_BuiltinHypotheses")

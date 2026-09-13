@@ -195,6 +195,16 @@ def _check_adjudication(result: dict, path: str) -> None:
             )
 
 
+def lawful_result_kinds(role: str) -> frozenset:
+    """The result kinds a report for `role` may carry (empty for unknown roles)."""
+    return RESULT_KINDS.get(role, frozenset())
+
+
+def lawful_result_outcomes(kind: str) -> tuple:
+    """The lawful outcomes for a result kind (empty for unknown kinds)."""
+    return _RESULT_OUTCOMES.get(kind, ())
+
+
 def _check_result(result, path: str, allowed_kinds) -> None:
     if not isinstance(result, dict):
         raise ReportError("bad-type", f"{path}.result must be an object")

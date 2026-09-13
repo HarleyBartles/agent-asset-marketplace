@@ -19,17 +19,11 @@ from pathlib import Path
 
 from . import model, policy
 
-_POLICY_DOC = (
-    Path(__file__).resolve().parent.parent.parent
-    / "references"
-    / "hypothesis-derivation-policy.v1.json"
-)
+_POLICY_DOC = Path(__file__).resolve().parent.parent.parent / "references" / "hypothesis-derivation-policy.v1.json"
 
 _POLICY_ID = "review-core-hypothesis-derivation"
 
-_TOP_KEYS = frozenset(
-    {"schema_version", "policy_id", "version", "families", "high_risk_extra_families"}
-)
+_TOP_KEYS = frozenset({"schema_version", "policy_id", "version", "families", "high_risk_extra_families"})
 _FAMILY_KEYS = frozenset({"name", "claim", "counterexample"})
 _PLACEHOLDER_RE = re.compile(r"\{([^{}]*)\}")
 _ALLOWED_PLACEHOLDERS = frozenset({"surface", "category", "obligation_id"})
@@ -140,13 +134,9 @@ class SealedHypothesisDerivationPolicy:
         floor_t, floor_r = policy.obligation_floor(
             obligation["scope_level"], obligation["risk"], obligation["consequences"]
         )
-        if model.CAPABILITY_TIERS.index(obligation["minimum_capability_tier"]) > model.CAPABILITY_TIERS.index(
-            floor_t
-        ):
+        if model.CAPABILITY_TIERS.index(obligation["minimum_capability_tier"]) > model.CAPABILITY_TIERS.index(floor_t):
             floor_t = obligation["minimum_capability_tier"]
-        if model.REASONING_FLOORS.index(obligation["minimum_reasoning_floor"]) > model.REASONING_FLOORS.index(
-            floor_r
-        ):
+        if model.REASONING_FLOORS.index(obligation["minimum_reasoning_floor"]) > model.REASONING_FLOORS.index(floor_r):
             floor_r = obligation["minimum_reasoning_floor"]
 
         surface = ", ".join(sorted(obligation["surfaces"]))
