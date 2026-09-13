@@ -37,9 +37,12 @@ The experimental version-2 kernel is not the user entrypoint until the trustwort
 Version-2 status: on Devin Desktop with the hooks pack installed, `reviewctl`
 can freeze and refresh an immutable snapshot through the witnessed two-command
 acquisition flow (`enumerate` then `complete --acquired`, or the `freeze` /
-`refresh` aliases that refuse a stale enumeration). Coverage, dispatch,
-frontier, and seal lanes remain unbuilt, and green stays unavailable until the
-later roadmap plans land.
+`refresh` aliases that refuse a stale enumeration). The recall engine is
+landed: `plan-coverage` emits the deterministic obligations payload from the
+impact-map union and `package` materializes the digest-bound reviewer context
+package under the scratch store. Live dispatch, frontier, and seal lanes
+remain unbuilt, and green stays unavailable until the later roadmap plans
+land.
 
 ## Provenance
 

@@ -268,3 +268,37 @@ Identical topology to the prior spec's mermaid graph with these substitutions: "
   `structural_edges` rule must carry string `from`/`edge` and a string-list
   `to`. Malformed overrides refuse with `DiscoveryPolicyError` rather than
   crashing during traversal.
+
+### Plan 3 (impact coverage)
+
+- Enumeration materializes `diff.patch` (the exact bytes hashed into
+  `snapshot.diff_sha256`) and `surfaces.json` (the canonical changed-surface
+  list) as named acquisition artifacts; `acquire` re-verifies the patch
+  digest and re-parses the diff against the recorded surface list before the
+  snapshot installs.
+- The review-assignment and hypothesis-derivation policies ship as sealed,
+  digest-bound reference documents
+  (`references/review-assignment-policy.v1.json`,
+  `references/hypothesis-derivation-policy.v1.json`) loaded by
+  `engine.load_witness_sources`; the `_Builtin*` stubs are deleted and both
+  fail-closed and witnessed branches resolve the same sealed documents whose
+  digests the snapshot subject already binds.
+- The structured reviewer report contract (`review_core/report.py`) is
+  role-discriminated with lawful verdict derivation; mapper and challenger
+  `structured_output` claims must carry `kind`, `subject_sha256` matching the
+  installed record's subject digest, and the record itself, so a product
+  claim cannot bind bytes the kernel did not install.
+- Obligation status is derived, never payload-asserted: obligations install
+  `pending`, and typed report outcomes (`covered`, `not-applicable`,
+  `findings`) transition them; the coverage predicate splits into an
+  install-time half (inventory spans the union, floors satisfied, assignees
+  present) and a status half evaluated after the review tiers.
+- `plan-coverage` payloads pass an install-time floor check: each
+  obligation's declared `minimum_capability_tier`/`minimum_reasoning_floor`
+  must sit at or above `obligation_floor` for its scope, risk, and
+  consequences; a producer may raise, never lower.
+- `reviewctl package` and `reviewctl plan-coverage` are deterministic,
+  read-only-on-state producers. Live dispatch binding of the returned
+  fragment (witnessed launch, profile resolution) is deferred to Plan 4;
+  the verbs exist now so the exact-snapshot contract is testable before the
+  dispatch lane exists.
