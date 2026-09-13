@@ -261,3 +261,10 @@ Identical topology to the prior spec's mermaid graph with these substitutions: "
   closing paragraph of "Threat model"). Reviewer-proposed hardening that
   presumes an active adversary is out of scope; "no findings" is a valid
   converged round.
+- Discovery-policy overrides are structurally validated at resolution:
+  `repo_law_roots`/`pr_roots`/`edge_kinds` must be string lists, `pr_roots`
+  is checked against the known root vocabulary (an unrecognized root would
+  otherwise silently narrow the enumerated authority set), and each
+  `structural_edges` rule must carry string `from`/`edge` and a string-list
+  `to`. Malformed overrides refuse with `DiscoveryPolicyError` rather than
+  crashing during traversal.

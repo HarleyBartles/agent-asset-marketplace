@@ -109,6 +109,46 @@ class TestPolicyResolution:
         with pytest.raises(dp.DiscoveryPolicyError):
             dp.resolve_policy(run_git=git, base_sha=BASE)
 
+    def test_unknown_pr_root_fails_closed(self):
+        # A typo'd pr_root ("linked-issue") would silently narrow the
+        # enumerated authority set - refuse it at resolution instead.
+        override = json.dumps(
+            {
+                "schema_version": 1,
+                "policy_id": "authority-discovery",
+                "version": "1",
+                "repo_law_roots": ["AGENTS.md"],
+                "pr_roots": ["description", "linked-issue"],
+                "edge_kinds": list(dp.AUTHORITY_EDGE_KINDS),
+                "edge_grammars": [],
+                "structural_edges": [],
+                "override_path": OVERRIDE_PATH,
+            }
+        )
+        git = FakeGit({"AGENTS.md": "# repo"}, override=override)
+        with pytest.raises(dp.DiscoveryPolicyError, match="pr_roots"):
+            dp.resolve_policy(run_git=git, base_sha=BASE)
+
+    def test_malformed_structural_edge_rule_fails_closed(self):
+        # A rule missing "to"/"edge" must fail as a policy error, not crash
+        # with a KeyError during traversal.
+        override = json.dumps(
+            {
+                "schema_version": 1,
+                "policy_id": "authority-discovery",
+                "version": "1",
+                "repo_law_roots": ["AGENTS.md"],
+                "pr_roots": ["description"],
+                "edge_kinds": list(dp.AUTHORITY_EDGE_KINDS),
+                "edge_grammars": [],
+                "structural_edges": [{"from": "AGENTS.md"}],
+                "override_path": OVERRIDE_PATH,
+            }
+        )
+        git = FakeGit({"AGENTS.md": "# repo"}, override=override)
+        with pytest.raises(dp.DiscoveryPolicyError, match="structural_edges"):
+            dp.resolve_policy(run_git=git, base_sha=BASE)
+
 
 class TestEnumeration:
     def test_repo_law_roots_enumerated_at_base(self):

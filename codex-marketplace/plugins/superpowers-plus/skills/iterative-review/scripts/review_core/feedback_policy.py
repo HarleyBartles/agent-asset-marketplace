@@ -249,11 +249,13 @@ def _title(item: FeedbackItem) -> str:
         author = (node.get("author") or {}).get("login", "reviewer")
         return f"Review feedback from {author}: {head}"
     comments = (node.get("comments") or {}).get("nodes") or []
-    body = (comments[0].get("body") if comments else "") or "review thread"
+    first = comments[0] if comments and isinstance(comments[0], dict) else {}
+    body = first.get("body") if isinstance(first.get("body"), str) else ""
+    lines = body.strip().splitlines() or ["review thread"]
     path = node.get("path") or ""
     line = node.get("line")
     locus = f"{path}:{line}" if path else "thread"
-    return f"Review thread on {locus}: {body.strip().splitlines()[0][:64]}"
+    return f"Review thread on {locus}: {lines[0][:64]}"
 
 
 def feedback_findings(items, *, policy: FeedbackHistoryPolicy) -> list[dict]:

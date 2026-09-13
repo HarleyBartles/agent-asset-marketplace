@@ -521,6 +521,21 @@ class TestAcquireBindings:
         with pytest.raises(fbp.FeedbackPolicyError):
             fbp.item_from_raw(raw)
 
+    def test_thread_title_survives_null_and_blank_comments(self):
+        # GitHub connections can carry null comment nodes (deleted or
+        # permission-filtered comments) and a blank first body; the title
+        # fallback must not crash finding materialization.
+        pol = fbp.default_policy()
+        for comments in ([None], [{"body": "   \n  "}], []):
+            node = {
+                "id": "T-blank",
+                "isResolved": False,
+                "comments": {"pageInfo": {"hasNextPage": False}, "nodes": comments},
+            }
+            item = fbp.item_from_raw(model.canonical_json({"kind": "thread", "node": node}))
+            finding = fbp.feedback_findings([item], policy=pol)[0]
+            assert "review thread" in finding["title"]
+
     def test_evidence_diverging_from_bound_manifest_fails(self, tmp_path):
         # Tamper an evidence file AND update evidence/manifest.json so the
         # internal digest check passes - the record must still reconcile

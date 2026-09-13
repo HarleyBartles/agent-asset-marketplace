@@ -67,9 +67,27 @@ def _validate_document(doc: object, *, source: str) -> dict:
             raise DiscoveryPolicyError(f"{source}: {key} must be a list")
     if not isinstance(doc.get("override_path"), str):
         raise DiscoveryPolicyError(f"{source}: override_path must be a string")
+    for key in ("repo_law_roots", "pr_roots", "edge_kinds"):
+        if not all(isinstance(v, str) for v in doc[key]):
+            raise DiscoveryPolicyError(f"{source}: {key} entries must be strings")
     unknown = set(doc.get("edge_kinds", [])) - set(AUTHORITY_EDGE_KINDS)
     if unknown:
         raise DiscoveryPolicyError(f"{source}: unknown edge kinds {sorted(unknown)}")
+    # An unrecognized pr_root would silently narrow the enumerated authority
+    # set - a recall failure - so refuse it at resolution instead.
+    unknown_roots = set(doc["pr_roots"]) - {"description", "linked_issues"}
+    if unknown_roots:
+        raise DiscoveryPolicyError(f"{source}: unknown pr_roots {sorted(unknown_roots)}")
+    for i, rule in enumerate(doc["structural_edges"]):
+        if (
+            not isinstance(rule, dict)
+            or not isinstance(rule.get("from"), str)
+            or not isinstance(rule.get("to"), list)
+            or not all(isinstance(g, str) for g in rule["to"])
+            or not isinstance(rule.get("edge"), str)
+            or rule["edge"] not in doc["edge_kinds"]
+        ):
+            raise DiscoveryPolicyError(f"{source}: structural_edges[{i}] malformed")
     return doc
 
 
