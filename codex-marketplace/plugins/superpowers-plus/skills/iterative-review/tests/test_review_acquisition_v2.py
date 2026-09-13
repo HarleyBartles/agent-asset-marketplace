@@ -919,6 +919,19 @@ class TestAcquireBindings:
         with pytest.raises(acq.AcquisitionError, match="tampered-source"):
             src.acquire(action="freeze-review-input", current_snapshot=None)
 
+    def test_evidence_manifest_nul_file_field_is_tampered(self, tmp_path):
+        # A tampered manifest "file" field carrying a NUL byte must hit
+        # tampered-source: Path.is_file raises ValueError, not OSError.
+        _s, out_dir, scratch = _enumerate(tmp_path)
+        manifest_path = out_dir / "evidence" / "manifest.json"
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        first_alias = next(iter(manifest))
+        manifest[first_alias]["file"] = "evil\x00.bin"
+        manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+        src = _source(out_dir, scratch)
+        with pytest.raises(acq.AcquisitionError, match="tampered-source"):
+            src._load_dir()
+
     def test_evidence_file_unreadable_fails_closed(self, tmp_path, monkeypatch):
         _s, out_dir, scratch = _enumerate(tmp_path)
         ev_dir = out_dir / "evidence"

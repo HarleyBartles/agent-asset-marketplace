@@ -125,6 +125,21 @@ class TestHookScripts:
         assert r.returncode == 2
         assert '"decision": "block"' in r.stdout or '"decision":"block"' in r.stdout
 
+    def test_gate_denies_list_form_command(self, tmp_path):
+        deny = tmp_path / "review-state"
+        hooks = _hook_env(tmp_path, deny_roots=(deny,))
+        payload = {
+            "hook_event_name": "PreToolUse",
+            "tool_name": "exec",
+            "tool_input": {"command": ["type", str(deny / "state.json")]},
+            "tool_use_id": "exec_9",
+            "session_id": "sess-1",
+            "prompt_id": "p-1",
+        }
+        r = _run_hook(hooks / "gate_review_paths.py", payload)
+        assert r.returncode == 2
+        assert '"decision": "block"' in r.stdout or '"decision":"block"' in r.stdout
+
     def test_gate_allows_unrelated_exec(self, tmp_path):
         hooks = _hook_env(tmp_path, deny_roots=(tmp_path / "review-state",))
         payload = {

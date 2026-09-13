@@ -140,6 +140,8 @@ def _main() -> int:
             break
     if hit is None:
         command = tool_input.get("command")
+        if isinstance(command, list):
+            command = " ".join(str(c) for c in command)
         if isinstance(command, str):
             hit = _touches_deny(command, deny_roots)
     if hit is not None:

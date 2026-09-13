@@ -553,7 +553,7 @@ class LiveAuthorityDiscovery:
             path = self._dir / "evidence" / rec["file"]
             try:
                 digest = model.sha256_hex(path.read_bytes()) if path.is_file() else None
-            except OSError as exc:
+            except (OSError, ValueError) as exc:
                 raise AcquisitionError("tampered-source", f"evidence {alias} unreadable: {exc}") from exc
             if digest != rec.get("sha256"):
                 raise AcquisitionError("tampered-source", f"evidence {alias} digest mismatch")

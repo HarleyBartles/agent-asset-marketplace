@@ -217,7 +217,10 @@ Identical topology to the prior spec's mermaid graph with these substitutions: "
 - Transcript binding matches PostToolUse records carrying the enumeration-id
   marker whose tool_input contains "enumerate"; the acquire directory path is
   not required in argv because real `reviewctl enumerate` invocations derive
-  it internally.
+  it internally. Transcript I/O failure is tamper evidence, not absence: an
+  unreadable transcript root or a `*.jsonl` segment that fails stat/read
+  classifies as `AcquisitionError("tampered-source")`; only a genuinely
+  absent enumerate segment remains `AcquisitionError("missing-source")`.
 - Authority-record reconciliation keys by `authority_id` (locators can
   collide across kinds), covers `availability` + `sha256` (loaded) +
   `failure_class`/`failure_sha256` (unavailable), requires the `evidence_id`
