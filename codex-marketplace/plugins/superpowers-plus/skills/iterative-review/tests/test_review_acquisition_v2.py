@@ -860,6 +860,29 @@ class TestAcquireBindings:
                 epoch=1,
             )
 
+    def test_gh_text_tool_blocked_not_reclassified(self, tmp_path):
+        # A tool outage fetching an edge-discovered gh locator must surface
+        # tool-blocked, not degrade to authority-missing via _gh_text.
+        scratch = _scratch(tmp_path)
+        gh = FakeGh()
+
+        def flaky(argv):
+            if any("issues/34" in a for a in argv):
+                raise PermissionError("binary gone")
+            return gh(argv)
+
+        git = FakeGit({"AGENTS.md": "<!-- authority:edge governs gh:issue/34 -->\n# law"})
+        with pytest.raises(acq.AcquisitionError, match="tool-blocked"):
+            acq.enumerate_acquisition(
+                run_git=git,
+                run_gh=flaky,
+                repo_root=Path(tmp_path),
+                pr_number=7,
+                out_dir=scratch / "acquire" / "latest",
+                scratch_dir=scratch,
+                epoch=1,
+            )
+
     def test_enumerate_mid_run_gh_oserror_is_tool_blocked(self, tmp_path):
         # A runner that dies after the first call must still classify as
         # tool-blocked, not escape as io-error.

@@ -248,7 +248,11 @@ def enumerate_acquisition(
                 pr_meta=pr_meta,
             )
             gh_text_cache[locator] = raw.decode("utf-8", errors="surrogateescape")
-        except (AcquisitionError, ValueError, KeyError, TypeError, AttributeError):
+        except AcquisitionError as exc:
+            if exc.blocker_class != "authority-missing":
+                raise
+            gh_text_cache[locator] = None
+        except (ValueError, KeyError, TypeError, AttributeError):
             gh_text_cache[locator] = None
         return gh_text_cache[locator]
 
