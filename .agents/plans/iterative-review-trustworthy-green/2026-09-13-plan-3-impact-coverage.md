@@ -598,10 +598,10 @@ class TestPlanCoverageProducer:
 
 ## Self-review loop and publication
 
-- [ ] Full-suite run from the worktree root: `py -3 -m pytest codex-marketplace/plugins/superpowers-plus/skills/iterative-review/tests -x -q` plus repo suite.
-- [ ] `py -3 tools/run.py installed-skills --apply` regenerates the mirror; confirm `.agents/skills/iterative-review/` tracks canonical.
-- [ ] Commit through the tracked pre-commit hook; push; open draft PR to `main`; record PR URL + verified remote head SHA in handoff.
-- [ ] Direct adversarial-code self-review of the merged-shaped diff (no lens subagents), findings fixed and re-reviewed until one clean pass; the bar is reachable honest-but-fallible divergences, not contract-perfection nits.
+- [x] Full-suite run from the worktree root: `py -3 -m pytest codex-marketplace/plugins/superpowers-plus/skills/iterative-review/tests -x -q` plus repo suite.
+- [x] `py -3 tools/run.py installed-skills --apply` regenerates the mirror; confirm `.agents/skills/iterative-review/` tracks canonical.
+- [x] Commit through the tracked pre-commit hook; push; open draft PR to `main`; record PR URL + verified remote head SHA in handoff.
+- [x] Direct adversarial-code self-review of the merged-shaped diff (no lens subagents), findings fixed and re-reviewed until one clean pass; the bar is reachable honest-but-fallible divergences, not contract-perfection nits.
 
 ## Explicit exclusions
 
