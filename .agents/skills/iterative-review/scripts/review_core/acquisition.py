@@ -147,7 +147,10 @@ def enumerate_acquisition(
     scratch_dir = Path(scratch_dir)
 
     # 1. gh connector
-    rc, _o, err = run_gh(["auth", "status"])
+    try:
+        rc, _o, err = run_gh(["auth", "status"])
+    except OSError as exc:
+        raise AcquisitionError("tool-blocked", f"gh not runnable: {exc}") from exc
     if rc != 0:
         raise AcquisitionError("tool-blocked", f"gh auth status: {err.strip() or 'unauthenticated'}")
 
@@ -177,7 +180,10 @@ def enumerate_acquisition(
         raise AcquisitionError("snapshot-drift", f"head {head_sha} is not remote-reachable: {err.strip()}")
 
     # 3. base resolution + shallow check
-    rc, out, err = run_git(["rev-parse", "--is-shallow-repository"])
+    try:
+        rc, out, err = run_git(["rev-parse", "--is-shallow-repository"])
+    except OSError as exc:
+        raise AcquisitionError("tool-blocked", f"git not runnable: {exc}") from exc
     if rc != 0 or out.strip() != "false":
         raise AcquisitionError("snapshot-drift", "repository is shallow or unreadable")
     rc, out, err = run_git(["merge-base", "--all", base_sha, head_sha])
@@ -512,8 +518,14 @@ class LiveAuthorityDiscovery:
         self._review_id = review_id
 
     def _load_dir(self):
-        data = json.loads((self._dir / "data.json").read_bytes().decode("utf-8", errors="surrogateescape"))
-        ev_manifest = json.loads((self._dir / "evidence" / "manifest.json").read_bytes())
+        try:
+            data = json.loads((self._dir / "data.json").read_bytes().decode("utf-8", errors="surrogateescape"))
+        except ValueError as exc:
+            raise AcquisitionError("tampered-source", f"data.json is not valid JSON: {exc}") from exc
+        try:
+            ev_manifest = json.loads((self._dir / "evidence" / "manifest.json").read_bytes())
+        except ValueError as exc:
+            raise AcquisitionError("tampered-source", f"evidence manifest is not valid JSON: {exc}") from exc
         if not isinstance(data, dict):
             raise AcquisitionError("tampered-source", "data.json is not an object")
         if not isinstance(ev_manifest, dict):

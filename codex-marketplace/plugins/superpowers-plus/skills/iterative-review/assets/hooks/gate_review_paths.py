@@ -111,10 +111,12 @@ def _block(reason: str) -> int:
     return 2
 
 
-def main() -> int:
+def _main() -> int:
     env = _env()
     if env is None:
         return _block("iterative-review: hook env missing or unparseable")
+    if env.get("deny_roots") is not None and not isinstance(env["deny_roots"], list):
+        return _block("iterative-review: hook env deny_roots is malformed")
     deny_roots = _deny_roots(env)
     if not deny_roots:
         return 0
@@ -137,6 +139,13 @@ def main() -> int:
     if hit is not None:
         return _block(f"iterative-review: path under sealed review root {hit}")
     return 0
+
+
+def main() -> int:
+    try:
+        return _main()
+    except Exception as exc:
+        return _block(f"iterative-review: gate internal error: {exc}")
 
 
 if __name__ == "__main__":

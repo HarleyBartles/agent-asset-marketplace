@@ -54,13 +54,15 @@ For the seal to actually be anchored, `seal-green` writes the seal record to a p
 
 ## Capability floor (entry gate)
 
-`reviewctl doctor` (the harness capability check, replacing the old capability gate) must pass before a review may start. It verifies live:
+`reviewctl doctor` (the harness capability check, replacing the old capability gate) must pass before a review may start. The shipped doctor verifies live rows for hooks-installed, transcript-dir-writable, witness-log-roundtrip, git-present, repo-non-shallow, and gh-authenticated. The full capability floor this converges toward:
 
 1. The review session's hooks pack (`.devin/hooks.v1.json` project-level or user-level) is installed and emitting records for orchestrator **and** subagent calls, and subagent records are discoverable for ingestion - either sharing the parent `session_id` or correlating through the dispatch's `agent_id`/`prompt_id`.
 2. A smoke dispatch proves `allowed-tools` confinement: a probe profile must be denied a canary read by the policy hook and/or permission deny, and its tool list must match its frontmatter.
 3. `gh` auth and remote-observation endpoints are reachable.
 4. Required subagent profiles exist with pinned `model:` and correct `allowed-tools`.
 5. The review-owned store and witness log can be created with private permissions.
+
+Items 2 and 4 (smoke dispatch and subagent-profile pinning), the record-emission part of item 1, the remote-observation reachability part of item 3, and the permission-mode part of item 5 are roadmap checks not yet shipped as live doctor rows.
 
 `doctor` failing any check makes the skill inert for that session - it reports the missing capability and stops rather than degrading silently.
 

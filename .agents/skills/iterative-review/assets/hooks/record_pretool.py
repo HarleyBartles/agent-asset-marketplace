@@ -21,13 +21,16 @@ from pathlib import Path
 def _env() -> dict:
     env_path = os.environ.get("IR_HOOK_ENV") or str(Path(__file__).parent / "hook-env.json")
     try:
-        return json.loads(Path(env_path).read_text(encoding="utf-8"))
+        env = json.loads(Path(env_path).read_text(encoding="utf-8"))
+        return env if isinstance(env, dict) else {}
     except Exception:
         return {}
 
 
 def _transcript_root(env: dict) -> Path:
     configured = env.get("transcript_root")
+    if not isinstance(configured, (str, bytes, os.PathLike)):
+        configured = None
     return Path(configured) if configured else Path(__file__).parent / "transcripts"
 
 

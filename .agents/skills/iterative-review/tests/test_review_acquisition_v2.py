@@ -799,3 +799,34 @@ class TestAcquireBindings:
         src = _source(out_dir, scratch)
         with pytest.raises(acq.AcquisitionError, match="missing-source"):
             src.acquire(action="freeze-review-input", current_snapshot=None)
+
+    def test_data_json_non_json_fails_closed(self, tmp_path):
+        summary, out_dir, scratch = _enumerate(tmp_path)
+        (out_dir / "data.json").write_text("not json {", encoding="utf-8")
+        src = _source(out_dir, scratch)
+        with pytest.raises(acq.AcquisitionError, match="tampered-source"):
+            src._load_dir()
+
+    def test_evidence_manifest_non_json_fails_closed(self, tmp_path):
+        summary, out_dir, scratch = _enumerate(tmp_path)
+        (out_dir / "evidence" / "manifest.json").write_text("<html></html>", encoding="utf-8")
+        src = _source(out_dir, scratch)
+        with pytest.raises(acq.AcquisitionError, match="tampered-source"):
+            src._load_dir()
+
+    def test_enumerate_missing_gh_binary_tool_blocked(self, tmp_path):
+        scratch = _scratch(tmp_path)
+
+        def no_gh(_args):
+            raise FileNotFoundError("gh")
+
+        with pytest.raises(acq.AcquisitionError, match="tool-blocked"):
+            acq.enumerate_acquisition(
+                run_git=FakeGit({"AGENTS.md": "# law"}),
+                run_gh=no_gh,
+                repo_root=Path(tmp_path),
+                pr_number=7,
+                out_dir=scratch / "acquire" / "latest",
+                scratch_dir=scratch,
+                epoch=1,
+            )

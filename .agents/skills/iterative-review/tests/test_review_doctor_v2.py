@@ -193,6 +193,43 @@ class TestHookScripts:
         r = _run_hook(hooks / "gate_review_paths.py", "not json {")
         assert r.returncode == 0
 
+    def test_gate_blocks_on_non_list_deny_roots(self, tmp_path):
+        hooks = _hook_env(tmp_path, deny_roots=(tmp_path / "sealed",))
+        (hooks / "hook-env.json").write_text(json.dumps({"deny_roots": 123}), encoding="utf-8")
+        r = _run_hook(hooks / "gate_review_paths.py", {"tool_input": {"cwd": str(tmp_path)}})
+        assert r.returncode == 2
+        assert "block" in r.stdout
+
+    def test_gate_blocks_on_string_deny_roots(self, tmp_path):
+        hooks = _hook_env(tmp_path, deny_roots=(tmp_path / "sealed",))
+        (hooks / "hook-env.json").write_text(json.dumps({"deny_roots": str(tmp_path / "sealed")}), encoding="utf-8")
+        r = _run_hook(hooks / "gate_review_paths.py", {"tool_input": {"cwd": str(tmp_path)}})
+        assert r.returncode == 2
+        assert "block" in r.stdout
+
+    def test_recorder_survives_malformed_transcript_root(self, tmp_path):
+        hooks = _hook_env(tmp_path)
+        (hooks / "hook-env.json").write_text(json.dumps({"transcript_root": 123}), encoding="utf-8")
+        payload = {
+            "hook_event_name": "PreToolUse",
+            "tool_name": "exec",
+            "tool_input": {"command": "git status"},
+            "tool_use_id": "exec_1",
+            "session_id": "sess-1",
+            "prompt_id": "p-1",
+        }
+        r = _run_hook(hooks / "record_pretool.py", payload)
+        assert r.returncode == 0, r.stderr
+        out = hooks / "transcripts" / "sess-1.jsonl"
+        assert json.loads(out.read_text(encoding="utf-8").splitlines()[0]) == payload
+
+    def test_recorder_survives_non_object_env(self, tmp_path):
+        hooks = _hook_env(tmp_path)
+        (hooks / "hook-env.json").write_text("123", encoding="utf-8")
+        payload = {"session_id": "sess-9", "tool_input": {"command": "git status"}}
+        r = _run_hook(hooks / "record_posttool.py", payload)
+        assert r.returncode == 0, r.stderr
+
     def test_gate_denies_relative_path_via_cwd(self, tmp_path):
         deny = tmp_path / "review-state"
         deny.mkdir()
