@@ -128,15 +128,17 @@ Partial regeneration is a fallback-only repair path and should not be used as a 
 
 ## Validation Standards
 
-Evidence contract: regeneration plus `tools/run ci --check` green on the
-committed tree is the completion proof.
-
 After regeneration, verify:
 
 1. **All validation checks pass** — `tools/run marketplace --apply` runs validation automatically
 2. **No git diff errors** — whitespace and formatting checks pass
 3. **Installed skills are current** — `tools/run installed-skills --check` passes
 4. **Index mesh is current** — `tools/run mesh --check` passes
+
+## Evidence contract
+
+Regeneration plus `tools/run ci --check` green on the committed tree is the
+completion proof.
 
 ## Deterministic Pack Rule
 

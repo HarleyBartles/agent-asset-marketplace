@@ -77,6 +77,7 @@ def _runbook_content(name: str) -> str:
     title = RUNBOOK_TITLES.get(name, name.replace("-", " ").title())
     return (
         f"# {title}\n\n"
+        "<!-- One-sentence purpose: who uses this runbook and what it governs. -->\n\n"
         "## When\n\n"
         "<!-- The class of change or trigger this runbook covers. -->\n\n"
         "## Required skills\n\n"

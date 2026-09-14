@@ -1,5 +1,9 @@
 # Completing planning artifacts
 
+How this repository retires completed plans, specifications, roadmaps, and
+checkpoints: durable content is promoted, tracked files are removed, and
+indexes are regenerated.
+
 ## When
 
 An implementation PR completes an in-flight plan, specification, roadmap,

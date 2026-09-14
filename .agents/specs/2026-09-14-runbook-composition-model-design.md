@@ -119,8 +119,8 @@ and sequence owners rather than restating them.
    the freeform stub.
 6. `repo_standards.py --check` gains a WARN-level check: every
    `.agents/runbooks/*.md` (excluding `AGENTS.md`) must contain a
-   `## Required skills` section. Warnings print as `WARN:` lines and never
-   fail the gate.
+   `## Required skills` section. Warnings print as `WARN:` lines in `--check`
+   or default (no-flag) mode and never fail the gate.
 7. Local instances align in the same change: `.agents/runbooks/*.md` gain
    `## Required skills` sections (`completing-plans.md` recast as a full
    composition manifest; `marketplace-generation.md` gains Required skills and

@@ -75,7 +75,7 @@ publication handoff belong to `publishing-source` and `repo-worker-base`.
 
 ## Allowed additional runbooks
 
-Additional `<topic>.md` files may live in `.agents/runbooks/`. They must be thin repo-specific overlays, not repeats of portable doctrine. Common additional runbooks include:
+Additional `<topic>.md` files may live in `.agents/runbooks/`. They are composition manifests for additional change classes, not repeats of portable doctrine. Common additional runbooks include:
 
 - `security.md`
 - `testing.md`
