@@ -324,6 +324,22 @@ def _has_shell_guard(non_comment: list[str]) -> bool:
     return {"errexit", "nounset", "pipefail"}.issubset(enabled)
 
 
+def _check_runbook_composition(repo_root: Path) -> list[str]:
+    warnings: list[str] = []
+    runbooks_dir = repo_root / ".agents" / "runbooks"
+    if not runbooks_dir.is_dir():
+        return warnings
+    for path in sorted(runbooks_dir.glob("*.md")):
+        if path.name in ("AGENTS.md", "INDEX.md"):
+            continue
+        text = path.read_text(encoding="utf-8")
+        if "## Required skills" not in text:
+            warnings.append(
+                f"{path.relative_to(repo_root).as_posix()}: missing '## Required skills' composition section"
+            )
+    return warnings
+
+
 def _check_surface(
     repo_root: Path,
     surface: dict[str, object],
@@ -542,6 +558,8 @@ under the ## Exceptions heading are skipped."""
             unique_findings.append(f)
 
     if args.check or not args.apply:
+        for warning in _check_runbook_composition(repo_root):
+            print(f"WARN: {warning}")
         if unique_findings:
             for f in unique_findings:
                 print(f"DRIFT: {f}")
