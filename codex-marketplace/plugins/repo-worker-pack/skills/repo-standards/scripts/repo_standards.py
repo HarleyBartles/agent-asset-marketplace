@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -324,7 +325,32 @@ def _has_shell_guard(non_comment: list[str]) -> bool:
     return {"errexit", "nounset", "pipefail"}.issubset(enabled)
 
 
+def _live_markdown_lines(text: str) -> list[str]:
+    """Return lines outside fenced code blocks and HTML comments."""
+    out: list[str] = []
+    fence: str | None = None
+    for line in text.splitlines():
+        stripped = line.lstrip()
+        if fence is None and (stripped.startswith("```") or stripped.startswith("~~~")):
+            fence = stripped[:3]
+            continue
+        if fence is not None:
+            if stripped.startswith(fence):
+                fence = None
+            continue
+        out.append(line)
+    prose = "\n".join(out)
+    prose = re.sub(r"<!--.*?-->|<!--.*", "", prose, flags=re.DOTALL)
+    return prose.splitlines()
+
+
 def _check_runbook_composition(repo_root: Path) -> list[str]:
+    """Warn on runbooks missing the minimum composition declaration.
+
+    Only the `## Required skills` heading is checked; warning-free output
+    does not certify the full seven-section contract in the runbook
+    standard.
+    """
     warnings: list[str] = []
     runbooks_dir = repo_root / ".agents" / "runbooks"
     if not runbooks_dir.is_dir():
@@ -333,7 +359,7 @@ def _check_runbook_composition(repo_root: Path) -> list[str]:
         if path.name in ("AGENTS.md", "INDEX.md"):
             continue
         text = path.read_text(encoding="utf-8")
-        if "## Required skills" not in text:
+        if not any(line.strip() == "## Required skills" for line in _live_markdown_lines(text)):
             warnings.append(
                 f"{path.relative_to(repo_root).as_posix()}: missing '## Required skills' composition section"
             )

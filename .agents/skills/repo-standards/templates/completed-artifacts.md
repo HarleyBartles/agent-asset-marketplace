@@ -17,8 +17,9 @@ convenience copy may live at
 with no manifest, retention promise, or evidentiary role.
 
 Durable content promotes before removal: enduring architecture decisions
-belong in `adr/`; operating rules belong in `.agents/doctrine/` or
-`.agents/runbooks/`.
+belong in the repository's declared ADR home; operating rules belong in
+`.agents/doctrine/` or `.agents/runbooks/`. The completion runbook names the
+concrete destinations.
 
 ## Ownership
 

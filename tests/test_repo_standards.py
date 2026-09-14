@@ -1385,3 +1385,45 @@ def test_runbook_composition_ignores_generated_index(tmp_path: Path) -> None:
     runbooks.mkdir(parents=True)
     (runbooks / "INDEX.md").write_text("# Index\n", encoding="utf-8")
     assert repo_standards._check_runbook_composition(tmp_path) == []
+
+
+def test_runbook_composition_warns_on_fenced_heading(tmp_path: Path) -> None:
+    runbooks = tmp_path / ".agents" / "runbooks"
+    runbooks.mkdir(parents=True)
+    (runbooks / "testing.md").write_text("# Testing\n\n```markdown\n## Required skills\n```\n", encoding="utf-8")
+    warnings = repo_standards._check_runbook_composition(tmp_path)
+    assert any("testing.md" in w for w in warnings)
+
+
+def test_runbook_composition_warns_on_commented_heading(tmp_path: Path) -> None:
+    runbooks = tmp_path / ".agents" / "runbooks"
+    runbooks.mkdir(parents=True)
+    (runbooks / "testing.md").write_text("# Testing\n\n<!-- ## Required skills -->\n", encoding="utf-8")
+    warnings = repo_standards._check_runbook_composition(tmp_path)
+    assert any("testing.md" in w for w in warnings)
+
+
+def test_runbook_composition_warns_on_extended_heading(tmp_path: Path) -> None:
+    runbooks = tmp_path / ".agents" / "runbooks"
+    runbooks.mkdir(parents=True)
+    (runbooks / "testing.md").write_text("# Testing\n\n## Required skills for maintainers\n", encoding="utf-8")
+    warnings = repo_standards._check_runbook_composition(tmp_path)
+    assert any("testing.md" in w for w in warnings)
+
+
+def test_scaffold_pr_template_carries_composition_sections() -> None:
+    spec = importlib.util.spec_from_file_location("scaffold_runbooks_pr_test", SKILL_ROOT / "scaffold_runbooks.py")
+    mod = importlib.util.module_from_spec(spec)
+    assert spec.loader is not None
+    spec.loader.exec_module(mod)
+    content = mod._runbook_content("pr.md")
+    for heading in (
+        "## When",
+        "## Required skills",
+        "## Composition",
+        "## Doctrine and contracts",
+        "## Local commands and paths",
+        "## Evidence contract",
+        "## Prohibited combinations",
+    ):
+        assert heading in content

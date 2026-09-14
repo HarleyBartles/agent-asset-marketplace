@@ -100,6 +100,11 @@ Each runbook carries these sections:
 Runbooks name and sequence owners; they must not repeat portable doctrine or
 skill internals.
 
+New runbooks carry all seven sections. Existing runbooks must declare
+`Required skills` and adopt the remaining sections as they are touched; the
+validator warns on a missing `Required skills` heading as the enforced
+minimum, so warning-free output does not certify the full contract.
+
 ## Local overlay policy
 
 Each repo keeps `.agents/doctrine/repo-runbook-policy.md`. It must:
