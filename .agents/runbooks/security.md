@@ -2,6 +2,11 @@
 
 Use this runbook for repo-specific security posture when working in `agent-asset-marketplace`.
 
+## Required skills
+
+- `unslop-profiles` - the security review profile owns general security method.
+- `risk-gates` - sensitive or authority-bearing action checks.
+
 ## Before you begin
 
 - Read [`REVIEW.md`](../../REVIEW.md) and [`.agents/runbooks/code-review.md`](./code-review.md) for review expectations.

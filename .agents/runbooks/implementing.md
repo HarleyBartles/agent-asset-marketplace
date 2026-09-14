@@ -3,6 +3,12 @@
 Use this reference for repository-specific implementation commands,
 marketplace custody, and completion checks in agent-asset-marketplace.
 
+## Required skills
+
+- `executing-plans` or `subagent-driven-development` - execution lane for plan work.
+- `test-driven-development` - implementation method.
+- `verification-before-completion` - completion evidence.
+
 ## Before You Begin: Read the Standards
 
 Read these standards documents before writing any code:

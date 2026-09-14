@@ -3,6 +3,11 @@
 Use this runbook for repository paths, commands, and generated-surface rules
 when authoring skills in the agent-asset-marketplace repo.
 
+## Required skills
+
+- `writing-skills` - owning authoring method and lane selection.
+- `repo-standards` - skill-bundled script CLI contract validation.
+
 ## Authoring route
 
 1. Invoke `using-superpowers-plus` once and follow its skill-authoring handoff.

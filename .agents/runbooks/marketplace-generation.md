@@ -2,6 +2,12 @@
 
 Use this reference when working with marketplace generation, validation, and regeneration in the agent-asset-marketplace repo. This runbook covers the canonical tooling, when to regenerate, and what validation to run.
 
+## Required skills
+
+- `generating-agent-mesh` - index mesh regeneration.
+- `refreshing-installed-skills` - installed-skill refresh.
+- `verification-before-completion` - regeneration and validation evidence.
+
 ## Before You Begin: Read the Standards
 
 - **[`.agents/doctrine/custody-and-marketplace-doctrine.md`](../../.agents/doctrine/custody-and-marketplace-doctrine.md)** — source custody rules, provenance modes, plugin curation rules
@@ -121,6 +127,9 @@ You must run the full marketplace regeneration (`tools/run marketplace --apply`)
 Partial regeneration is a fallback-only repair path and should not be used as a normal completion route.
 
 ## Validation Standards
+
+Evidence contract: regeneration plus `tools/run ci --check` green on the
+committed tree is the completion proof.
 
 After regeneration, verify:
 

@@ -2,6 +2,11 @@
 
 Use this reference when turning an idea into a repo-ready design spec for the agent-asset-marketplace repo. This guide only adds repo-specific design and handoff rules. The general brainstorming workflow comes from `brainstorming`.
 
+## Required skills
+
+- `brainstorming` - owning stage skill (design method, spec custody, handoff).
+- `handoff-gates` - spec-readiness gate.
+
 ## Before You Begin: Read the Standards
 
 A design that ignores the repo's standards will produce specs that do not hand off cleanly. Read these before you start:
