@@ -1334,3 +1334,24 @@ def test_repo_standards_refuses_asymmetric_command_declaration_exception(tmp_pat
     assert result.returncode != 0, combined
     assert "pre-commit-hook requires repo-standards-commands" in combined
     assert not (repo / ".git" / "hooks" / "pre-commit").exists()
+
+
+def test_scaffold_runbooks_stub_is_composition_manifest(tmp_path: Path) -> None:
+    spec = importlib.util.spec_from_file_location(
+        "scaffold_runbooks_under_test", SKILL_ROOT / "scaffold_runbooks.py"
+    )
+    mod = importlib.util.module_from_spec(spec)
+    assert spec.loader is not None
+    spec.loader.exec_module(mod)
+    content = mod._runbook_content("security.md")
+    for heading in (
+        "## When",
+        "## Required skills",
+        "## Composition",
+        "## Doctrine and contracts",
+        "## Local commands and paths",
+        "## Evidence contract",
+        "## Prohibited combinations",
+    ):
+        assert heading in content
+    assert "completing-plans.md" in mod.RUNBOOK_TITLES
