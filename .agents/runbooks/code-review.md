@@ -3,6 +3,12 @@
 Use this reference for marketplace-specific review concerns. The routed review
 skill owns general review method, sequencing, and reporting.
 
+## Required skills
+
+- `requesting-code-review` - review dispatch method.
+- `receiving-code-review` - review-response handling.
+- `unslop-profiles` - domain review lenses.
+
 ### Cross-repo consumer lens
 
 When the diff touches vendored skills, prompts, or scripts that install into other repos, verify it does not hardcode this repo's paths, command names, or layouts; uses consumer-canonical commands; and is safe without this repo's context.

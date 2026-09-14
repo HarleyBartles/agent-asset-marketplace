@@ -1334,3 +1334,96 @@ def test_repo_standards_refuses_asymmetric_command_declaration_exception(tmp_pat
     assert result.returncode != 0, combined
     assert "pre-commit-hook requires repo-standards-commands" in combined
     assert not (repo / ".git" / "hooks" / "pre-commit").exists()
+
+
+def test_scaffold_runbooks_stub_is_composition_manifest(tmp_path: Path) -> None:
+    spec = importlib.util.spec_from_file_location("scaffold_runbooks_under_test", SKILL_ROOT / "scaffold_runbooks.py")
+    mod = importlib.util.module_from_spec(spec)
+    assert spec.loader is not None
+    spec.loader.exec_module(mod)
+    content = mod._runbook_content("security.md")
+    for heading in (
+        "## When",
+        "## Required skills",
+        "## Composition",
+        "## Doctrine and contracts",
+        "## Local commands and paths",
+        "## Evidence contract",
+        "## Prohibited combinations",
+    ):
+        assert heading in content
+    assert "completing-plans.md" in mod.RUNBOOK_TITLES
+
+
+def test_runbook_composition_warns_on_missing_required_skills(tmp_path: Path) -> None:
+    runbooks = tmp_path / ".agents" / "runbooks"
+    runbooks.mkdir(parents=True)
+    (runbooks / "testing.md").write_text("# Testing\n\nLocal commands only.\n", encoding="utf-8")
+    warnings = repo_standards._check_runbook_composition(tmp_path)
+    assert any("testing.md" in w for w in warnings)
+
+
+def test_runbook_composition_quiet_when_section_present(tmp_path: Path) -> None:
+    runbooks = tmp_path / ".agents" / "runbooks"
+    runbooks.mkdir(parents=True)
+    (runbooks / "testing.md").write_text(
+        "# Testing\n\n## Required skills\n\n- `test-driven-development`\n", encoding="utf-8"
+    )
+    assert repo_standards._check_runbook_composition(tmp_path) == []
+
+
+def test_runbook_composition_ignores_agents_md_and_absent_dir(tmp_path: Path) -> None:
+    assert repo_standards._check_runbook_composition(tmp_path) == []
+    runbooks = tmp_path / ".agents" / "runbooks"
+    runbooks.mkdir(parents=True)
+    (runbooks / "AGENTS.md").write_text("# Router\n", encoding="utf-8")
+    assert repo_standards._check_runbook_composition(tmp_path) == []
+
+
+def test_runbook_composition_ignores_generated_index(tmp_path: Path) -> None:
+    runbooks = tmp_path / ".agents" / "runbooks"
+    runbooks.mkdir(parents=True)
+    (runbooks / "INDEX.md").write_text("# Index\n", encoding="utf-8")
+    assert repo_standards._check_runbook_composition(tmp_path) == []
+
+
+def test_runbook_composition_warns_on_fenced_heading(tmp_path: Path) -> None:
+    runbooks = tmp_path / ".agents" / "runbooks"
+    runbooks.mkdir(parents=True)
+    (runbooks / "testing.md").write_text("# Testing\n\n```markdown\n## Required skills\n```\n", encoding="utf-8")
+    warnings = repo_standards._check_runbook_composition(tmp_path)
+    assert any("testing.md" in w for w in warnings)
+
+
+def test_runbook_composition_warns_on_commented_heading(tmp_path: Path) -> None:
+    runbooks = tmp_path / ".agents" / "runbooks"
+    runbooks.mkdir(parents=True)
+    (runbooks / "testing.md").write_text("# Testing\n\n<!-- ## Required skills -->\n", encoding="utf-8")
+    warnings = repo_standards._check_runbook_composition(tmp_path)
+    assert any("testing.md" in w for w in warnings)
+
+
+def test_runbook_composition_warns_on_extended_heading(tmp_path: Path) -> None:
+    runbooks = tmp_path / ".agents" / "runbooks"
+    runbooks.mkdir(parents=True)
+    (runbooks / "testing.md").write_text("# Testing\n\n## Required skills for maintainers\n", encoding="utf-8")
+    warnings = repo_standards._check_runbook_composition(tmp_path)
+    assert any("testing.md" in w for w in warnings)
+
+
+def test_scaffold_pr_template_carries_composition_sections() -> None:
+    spec = importlib.util.spec_from_file_location("scaffold_runbooks_pr_test", SKILL_ROOT / "scaffold_runbooks.py")
+    mod = importlib.util.module_from_spec(spec)
+    assert spec.loader is not None
+    spec.loader.exec_module(mod)
+    content = mod._runbook_content("pr.md")
+    for heading in (
+        "## When",
+        "## Required skills",
+        "## Composition",
+        "## Doctrine and contracts",
+        "## Local commands and paths",
+        "## Evidence contract",
+        "## Prohibited combinations",
+    ):
+        assert heading in content

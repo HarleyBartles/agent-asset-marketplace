@@ -22,15 +22,14 @@ The canonical vendored marketplace assets live under `codex-marketplace/plugins/
 Do not treat `.agents/skills/` as additional or duplicate vendored assets. Those are installed copies from the plugins this repo consumes for its own operation (currently `repo-worker-pack`, `superpowers-plus`, and `mcp-usage-pack`). They are downstream of the canonical plugin source. To see what this repo actually offers, inspect the bundle manifests or read the marketplace inventory in `codex-marketplace/README.md`.
 ## Publication proof for repo work
 
-Local file changes are not repo completion. A worker must not return GREEN, claim repo work is done, or ask for issue closure from local paths, local commit hashes, local validation output, or an unpublished branch alone.
-
-If repo files changed, the worker must publish the changes to GitHub before claiming completion. A valid repo-work return must include one of:
+If repo files changed, a valid repo-work return must include one of:
 
 1. an open PR URL (GitHub supplies its branch and head identity);
 2. a verified direct-main commit SHA when direct-main work was explicitly authorized;
 3. a concrete publication blocker explaining why the local changes could not be pushed or turned into a PR.
 
-For ordinary worker execution, prefer a PR into `main`.
+For ordinary worker execution, prefer a PR into `main`. The portable
+publication method belongs to `publishing-source` and `repo-worker-base`.
 ## Draft PR policy
 Open pull requests as **draft**; keep them in draft while iterating and validating. Flip to ready for review only after self-review is complete and the latest committed tree has passed the pre-commit hook. Use `py -3 tools/run.py ci --check` only for an uncommitted verification, pipeline diagnosis, or explicit CI-parity work. See `.agents/runbooks/pr.md` and `.devin/rules/pr.md`.
 ## Build and test commands

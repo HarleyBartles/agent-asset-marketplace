@@ -1,28 +1,52 @@
 # Completing planning artifacts
 
-Use this runbook when an implementation PR completes an in-flight plan,
-specification, roadmap, checkpoint, or similar planning artifact.
-It defines this repository's custody steps; portable workflow method belongs to
-the routed completion skill.
+How this repository retires completed plans, specifications, roadmaps, and
+checkpoints: durable content is promoted, tracked files are removed, and
+indexes are regenerated.
 
-## Completion boundary
+## When
 
-Keep in-flight artifacts committed while they govern implementation and review.
-Before removing them, promote any decision
-that still constrains repository architecture to `adr/`, and any operating rule
-to current doctrine or a runbook. Do not use a completed artifact as a durable
-record of either.
+An implementation PR completes an in-flight plan, specification, roadmap,
+checkpoint, or similar planning artifact.
 
-## Removal
+## Required skills
 
-Remove the exact tracked artifacts with Git-aware deletion, regenerate the
-mesh, and commit the resulting tree in the completing PR. If a convenience
-copy is useful during closeout, place it under the central
-`_agent-scratch/<repo-name>/completed/<artifact-type>/` store. This centralized,
-disposable location is the only scratch custody for finished paperwork; making
-a copy is optional and proves nothing.
+- `cleanup-custody` - custody classification and the promotion-before-removal
+  step.
+- `generating-agent-mesh` - regenerate the index mesh after removal.
+- `verification-before-completion` - completion evidence.
 
-## Evidence
+## Composition
+
+1. Invoke `cleanup-custody` and classify each artifact. In-flight artifacts
+   stay `keep_live` while they govern implementation and review.
+2. Apply promotion-before-removal: enduring architecture decisions to `adr/`,
+   operating rules to `.agents/doctrine/` or `.agents/runbooks/`.
+3. Remove the exact tracked artifacts with Git-aware deletion.
+4. Optionally place a disposable convenience copy under
+   `_agent-scratch/<repo-name>/completed/<artifact-type>/`. This centralized
+   disposable store is the only scratch custody for finished paperwork; a copy
+   is optional and proves nothing.
+5. Regenerate the mesh and commit the resulting tree in the completing PR.
+
+## Doctrine and contracts
+
+- `.agents/doctrine/completed-artifacts.md` - completed artifacts are not
+  retained, are not authority, and git history is the immutable record.
+
+## Local commands and paths
+
+- `py -3 tools/run.py mesh --apply` regenerates the index mesh.
+- `adr/` holds durable architecture decisions.
+
+## Evidence contract
 
 Git history is the immutable record. Completion creates no manifest, count,
 archive index, or recurring PR-reporting duty.
+
+## Prohibited combinations
+
+- Do not treat a completed artifact as a source of canonical commands, an
+  implementation template, or an example of current conventions.
+- Do not retain completed artifacts under a `completed/` directory inside
+  `.agents/plans/`, `.agents/specs/`, or `.agents/roadmaps/`.

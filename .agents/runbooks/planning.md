@@ -4,6 +4,11 @@ Use this reference for marketplace constraints and validation in
 `agent-asset-marketplace`. General planning semantics and plan custody belong
 to the `writing-plans` skill.
 
+## Required skills
+
+- `writing-plans` - owning stage skill (planning semantics, plan custody).
+- `handoff-gates` - plan-readiness gate.
+
 ## Required repository context
 
 - Read [`.agents/doctrine/custody-and-marketplace-doctrine.md`](../doctrine/custody-and-marketplace-doctrine.md) for source custody, provenance, and plugin curation.

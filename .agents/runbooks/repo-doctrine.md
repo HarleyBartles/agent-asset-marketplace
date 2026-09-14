@@ -4,6 +4,11 @@ This runbook contains repo-specific worker procedures and reference pointers.
 It is not operative law; the root `AGENTS.md` and
 `.agents/doctrine/mesh-policy.md` remain the rule surfaces.
 
+## Required skills
+
+- `base-doctrine` - cross-runtime invariants.
+- `repo-worker-base` - portable repo-worker hygiene and policy routing.
+
 ## Testing instructions
 
 This repo uses test-driven development. See `.agents/runbooks/testing.md` for

@@ -1,39 +1,21 @@
 # Non-repo locations policy
 
-This policy covers canonical locations outside the repo tree that agents use
-for isolated work and scratch artifacts.
+This policy binds this repo's canonical off-repo locations. Canonical layout,
+sanitization, and cleanup rules live in `repo-standards`
+`references/scratch-workspace-policy.md` and `repo-worker-base`
+`references/worktree-and-branch-policy.md`; `subagent-workspace` resolves
+paths inside the layout.
 
-## Worktrees
+## Locations
 
-Isolated branch worktrees live in `../_agent-worktrees/<repo-name>/<date>-<branch-name>/`,
-a sibling of the repo folder. Worktree payloads live entirely outside the repo
-tree.
+- Isolated branch worktrees: `../_agent-worktrees/<repo-name>/<branch-name>/`
+- Scratch (temporary scripts, commit-message files, inspection scripts, debug
+  output): `../_agent-scratch/<repo-name>/<branch>/<plan-basename>/`
+- Completed-artifact convenience copies:
+  `../_agent-scratch/<repo-name>/completed/<artifact-type>/`
 
-Rules:
-
-- Use worktrees only for isolated branch checkouts and temporary local issue
-  lanes.
-- Do not store canonical source, generated outputs, or long-lived repo assets
-  in worktrees.
-
-## Scratch files
-
-Scratch files (temporary scripts, commit message temp files, inspection
-scripts, debug output) go in `../_agent-scratch/<repo-name>/<branch>/<plan-basename>/`,
-not in the repo tree. The scratch directory is a sibling of the repo folder.
-
-Rules:
-
-- The top level of `_agent-scratch` must contain only folders named after
-  repositories (`<repo-name>`).
-- Inside each repo folder, create subfolders named after the worktree branch
-  the scratch belongs to.
-- Plan- or task-scoped scratch lives inside the branch folder.
-- Scratch contents are not durable. Do not put anything in scratch that needs
-  to survive beyond the work it supports.
-- Do not commit scratch files into the repo.
-- Do not leave scratch files in the repo working tree. If a scratch file ends
-  up in the repo tree, remove it before committing.
+Do not store canonical source, generated outputs, or long-lived repo assets in
+either location.
 
 ## Subagent profile runtime staging
 

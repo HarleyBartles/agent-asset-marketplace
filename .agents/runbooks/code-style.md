@@ -2,6 +2,11 @@
 
 Use this runbook for Python and Markdown conventions in `agent-asset-marketplace`.
 
+## Required skills
+
+- `writing-with-clarity` - prose conventions for human-facing text.
+- `writing-skills` - document and skill authoring method.
+
 ## Before you begin
 
 - Read [`.agents/doctrine/skill-standards-policy.md`](../../.agents/doctrine/skill-standards-policy.md) for skill shape standards.

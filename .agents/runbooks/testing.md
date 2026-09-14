@@ -2,6 +2,11 @@
 
 Use this runbook for the test commands and conventions in `agent-asset-marketplace`.
 
+## Required skills
+
+- `test-driven-development` - test method.
+- `verification-before-completion` - completion evidence.
+
 ## Before you begin
 
 - Read [`.devin/rules/tools.md`](../../.devin/rules/tools.md) for the canonical validation commands.
