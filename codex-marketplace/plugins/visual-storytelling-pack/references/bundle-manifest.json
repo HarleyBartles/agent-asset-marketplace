@@ -1,0 +1,40 @@
+{
+  "bundle_name": "visual-storytelling-pack",
+  "bundle_version": "1.0.0",
+  "bundle_type": "plugin-pack",
+  "marketplace_root": ".agents/plugins/marketplace.json",
+  "plugin_root": "codex-marketplace/plugins/visual-storytelling-pack",
+  "source_families": [
+    "first_party"
+  ],
+  "notes": [
+    "visual-storytelling-pack combines first-party synthesis with one Apache-2.0 adapted derivative."
+  ],
+  "provenance_refs": [],
+  "plugin_author": "Harley Bartles",
+  "plugin_license": "MIT",
+  "entries": [
+    {
+      "canonical_name": "directing-visual-stories",
+      "source_category": "skills-with-citation",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "canonical_source_path": "codex-marketplace/plugins/visual-storytelling-pack/skills/directing-visual-stories",
+      "local_path": "skills/directing-visual-stories",
+      "source_path": "codex-marketplace/plugins/visual-storytelling-pack/skills/directing-visual-stories/SKILL.md",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Canonical first-party directing-visual-stories skill. (Visual story direction first-party synthesis)"
+    },
+    {
+      "canonical_name": "generating-images",
+      "source_category": "skills-with-source",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "canonical_source_path": "codex-marketplace/plugins/visual-storytelling-pack/skills/generating-images",
+      "local_path": "skills/generating-images",
+      "source_path": "codex-marketplace/plugins/visual-storytelling-pack/skills/generating-images/SKILL.md",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Canonical adapted generating-images derivative. (Generating Images adapted derivative)"
+    }
+  ]
+}

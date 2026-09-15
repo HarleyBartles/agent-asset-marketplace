@@ -1,0 +1,10 @@
+version: 1
+metadata:
+  skill_name: directing-visual-stories
+  source_category: first_party
+interface:
+  display_name: Directing Visual Stories
+  short_description: Make authored composition and visual storytelling decisions before downstream generation or implementation.
+  default_prompt: Use directing-visual-stories to turn a visual brief into an authored frame, page, sequence, or interactive-world direction.
+policy:
+  allow_implicit_invocation: true

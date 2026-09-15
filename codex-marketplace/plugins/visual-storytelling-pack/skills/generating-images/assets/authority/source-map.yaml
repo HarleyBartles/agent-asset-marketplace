@@ -1,0 +1,44 @@
+schema_version: 1
+reconciled_against: 706d4d96e1d5c9e6023fe3ccabba1bb34b364024d344fd25b8515ec7d28fe3c4
+references:
+  - path: references/capability-routing.md
+    source_sections:
+      - 'imagegen/SKILL.md: Top-level modes and rules'
+      - 'imagegen/SKILL.md: Decision tree'
+    content_mode: licensed_adaptation
+    load_when:
+      - Use when selecting an authorised image capability by behaviour.
+  - path: references/prompt-contract.md
+    source_sections:
+      - 'imagegen/SKILL.md: Shared prompt schema'
+      - 'imagegen/SKILL.md: Prompt augmentation'
+    content_mode: licensed_adaptation
+    load_when:
+      - Use when translating an approved direction into a generation brief.
+  - path: references/generation-and-editing.md
+    source_sections:
+      - 'imagegen/SKILL.md: Intent'
+      - 'imagegen/SKILL.md: Execution strategy'
+    content_mode: licensed_adaptation
+    load_when:
+      - Use when choosing generate, edit, variation, compositing, or conversion.
+  - path: references/preserving-frame-invariants.md
+    source_sections:
+      - 'imagegen/SKILL.md: Built-in edit semantics'
+      - 'imagegen/SKILL.md: Prompting best practices'
+    content_mode: licensed_adaptation
+    load_when:
+      - Use when an edit must preserve explicit visual decisions.
+  - path: references/validation-and-iteration.md
+    source_sections:
+      - 'imagegen/SKILL.md: Workflow steps 12-13'
+      - 'imagegen/SKILL.md: Transparent image requests'
+    content_mode: licensed_adaptation
+    load_when:
+      - Use when inspecting or iterating a generated result.
+  - path: references/asset-handoff-and-custody.md
+    source_sections:
+      - 'imagegen/SKILL.md: Workflow steps 14-18'
+    content_mode: licensed_adaptation
+    load_when:
+      - Use when handing an asset to a repository or downstream consumer.

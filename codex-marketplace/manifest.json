@@ -219,6 +219,18 @@
         "authentication": "ON_INSTALL"
       },
       "category": "Productivity"
+    },
+    {
+      "name": "visual-storytelling-pack",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/visual-storytelling-pack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
     }
   ],
   "repo": {
