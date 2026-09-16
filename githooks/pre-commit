@@ -16,6 +16,10 @@ unset $(git rev-parse --local-env-vars)
 HOSTED_COMMIT="${REPO_STANDARDS_HOSTED_COMMIT:-}"
 HOSTED_TREE=""
 if [ -n "$HOSTED_COMMIT" ]; then
+  if git symbolic-ref -q HEAD >/dev/null; then
+    echo "pre-commit: hosted parity mode requires a detached checkout" >&2
+    exit 1
+  fi
   if ! git diff --quiet || ! git diff --cached --quiet || [ -n "$(git ls-files --others --exclude-standard)" ]; then
     echo "pre-commit: hosted parity mode requires a clean checkout" >&2
     exit 1

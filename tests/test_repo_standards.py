@@ -1012,6 +1012,7 @@ raise SystemExit(2)
     published_tree = subprocess.run(
         ["git", "rev-parse", "HEAD^{tree}"], cwd=repo, capture_output=True, text=True, check=True
     ).stdout.strip()
+    subprocess.run(["git", "checkout", "--detach", "HEAD"], cwd=repo, check=True, capture_output=True)
     result = subprocess.run(
         ["bash", "-c", "REPO_STANDARDS_HOSTED_COMMIT=HEAD githooks/pre-commit"],
         cwd=repo,
@@ -1025,6 +1026,26 @@ raise SystemExit(2)
         subprocess.run(["git", "write-tree"], cwd=repo, capture_output=True, text=True, check=True).stdout.strip()
         == published_tree
     )
+
+
+def test_hosted_hook_refuses_to_rewrite_a_branch_checkout(tmp_path: Path) -> None:
+    repo = tmp_path / "hosted-branch"
+    repo.mkdir()
+    _init_git_repo_with_commit(repo)
+    _install_repo_standards(repo)
+    subprocess.run(["git", "add", "-A"], cwd=repo, check=True)
+    subprocess.run(["git", "commit", "--no-verify", "-m", "install standards"], cwd=repo, check=True)
+
+    result = subprocess.run(
+        ["bash", "-c", "REPO_STANDARDS_HOSTED_COMMIT=HEAD githooks/pre-commit"],
+        cwd=repo,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+    )
+
+    assert result.returncode != 0
+    assert "requires a detached checkout" in result.stderr
 
 
 def test_hook_validator_rejects_unbound_apply_and_check_switches(tmp_path: Path) -> None:
