@@ -871,8 +871,7 @@ def test_tracked_hook_check_rejects_drift_and_wrong_hooks_path(tmp_path: Path) -
     command_dir = repo / ".agents" / "contracts"
     command_dir.mkdir(parents=True)
     (command_dir / "repo-standards-commands.json").write_text(
-        '{"apply":["@python","consumer.py","--apply"],'
-        '"check":["@python","consumer.py","--check"]}\n',
+        '{"apply":["@python","consumer.py","--apply"],"check":["@python","consumer.py","--check"]}\n',
         encoding="utf-8",
     )
     hook = repo / "githooks" / "pre-commit"
@@ -903,13 +902,16 @@ def test_apply_migrates_legacy_private_hook_to_tracked_custody(tmp_path: Path) -
     tracked_hook = repo / "githooks" / "pre-commit"
     assert tracked_hook.is_file()
     assert "run_declared apply" in tracked_hook.read_text(encoding="utf-8")
-    assert subprocess.run(
-        ["git", "config", "--get", "core.hooksPath"],
-        cwd=repo,
-        capture_output=True,
-        text=True,
-        check=True,
-    ).stdout.strip() == "githooks"
+    assert (
+        subprocess.run(
+            ["git", "config", "--get", "core.hooksPath"],
+            cwd=repo,
+            capture_output=True,
+            text=True,
+            check=True,
+        ).stdout.strip()
+        == "githooks"
+    )
     assert legacy_hook.read_text(encoding="utf-8") == "#!/usr/bin/env bash\nexit 0\n"
 
 
@@ -951,8 +953,7 @@ def test_tracked_hook_platform_execution_contract(tmp_path: Path) -> None:
     command_dir = repo / ".agents" / "contracts"
     command_dir.mkdir(parents=True)
     (command_dir / "repo-standards-commands.json").write_text(
-        '{"apply":["@python","consumer.py","--apply"],'
-        '"check":["@python","consumer.py","--check"]}\n',
+        '{"apply":["@python","consumer.py","--apply"],"check":["@python","consumer.py","--check"]}\n',
         encoding="utf-8",
     )
     template = Path(repo_standards.__file__).parent.parent / "templates" / "pre-commit"
@@ -973,7 +974,57 @@ def test_tracked_hook_platform_execution_contract(tmp_path: Path) -> None:
 def test_hosted_ci_executes_tracked_hook_without_private_copy() -> None:
     workflow = (REPO_ROOT / ".github" / "workflows" / "marketplace-validation.yml").read_text(encoding="utf-8")
     assert "githooks/pre-commit" in workflow
+    assert "REPO_STANDARDS_HOSTED_COMMIT: HEAD" in workflow
     assert ".git/hooks" not in workflow
+
+
+def test_hosted_hook_reconstructs_commit_as_staged_snapshot(tmp_path: Path) -> None:
+    repo = tmp_path / "hosted-parity"
+    repo.mkdir()
+    _init_git_repo_with_commit(repo)
+    _install_repo_standards(repo)
+    tools = repo / "tools"
+    tools.mkdir(exist_ok=True)
+    (tools / "run.py").write_text(
+        """import os
+import subprocess
+import sys
+
+if os.environ.get("REPO_STANDARDS_STAGED_SNAPSHOT") != "1":
+    raise SystemExit("missing staged-snapshot marker")
+changed = subprocess.run(
+    ["git", "diff", "--cached", "--name-only"], capture_output=True, text=True, check=True
+).stdout.splitlines()
+if "change.txt" not in changed:
+    head = subprocess.run(["git", "rev-parse", "HEAD"], capture_output=True, text=True, check=True).stdout.strip()
+    status = subprocess.run(["git", "status", "--short"], capture_output=True, text=True, check=True).stdout
+    raise SystemExit(f"published change is not staged: {changed}; head={head}; status={status!r}")
+if "--apply" in sys.argv or "--check" in sys.argv:
+    raise SystemExit(0)
+raise SystemExit(2)
+""",
+        encoding="utf-8",
+        newline="\n",
+    )
+    (repo / "change.txt").write_text("published\n", encoding="utf-8", newline="\n")
+    subprocess.run(["git", "add", "-A"], cwd=repo, check=True)
+    subprocess.run(["git", "commit", "--no-verify", "-m", "published change"], cwd=repo, check=True)
+    published_tree = subprocess.run(
+        ["git", "rev-parse", "HEAD^{tree}"], cwd=repo, capture_output=True, text=True, check=True
+    ).stdout.strip()
+    result = subprocess.run(
+        ["bash", "-c", "REPO_STANDARDS_HOSTED_COMMIT=HEAD githooks/pre-commit"],
+        cwd=repo,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+    )
+
+    assert result.returncode == 0, result.stdout + result.stderr
+    assert (
+        subprocess.run(["git", "write-tree"], cwd=repo, capture_output=True, text=True, check=True).stdout.strip()
+        == published_tree
+    )
 
 
 def test_hook_validator_rejects_unbound_apply_and_check_switches(tmp_path: Path) -> None:

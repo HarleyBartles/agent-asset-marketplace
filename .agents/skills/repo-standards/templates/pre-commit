@@ -9,6 +9,27 @@ cd "$REPO_ROOT"
 # this worktree so nested Git commands can honour their own working directory.
 unset $(git rev-parse --local-env-vars)
 
+# Local Git invokes this hook with the candidate tree in the index and HEAD
+# still at its parent. Hosted CI opts into the same state by naming the checked
+# out commit. This keeps consumer command selection independent of whether the
+# hook was entered by Git or by CI.
+HOSTED_COMMIT="${REPO_STANDARDS_HOSTED_COMMIT:-}"
+HOSTED_TREE=""
+if [ -n "$HOSTED_COMMIT" ]; then
+  if ! git diff --quiet || ! git diff --cached --quiet || [ -n "$(git ls-files --others --exclude-standard)" ]; then
+    echo "pre-commit: hosted parity mode requires a clean checkout" >&2
+    exit 1
+  fi
+  HOSTED_TREE=$(git rev-parse "$HOSTED_COMMIT^{tree}")
+  HOSTED_PARENT=$(git rev-parse "$HOSTED_COMMIT^")
+  git reset --soft "$HOSTED_PARENT"
+  if [ "$(git write-tree)" != "$HOSTED_TREE" ]; then
+    echo "pre-commit: could not reconstruct the hosted commit as a staged snapshot" >&2
+    exit 1
+  fi
+fi
+export REPO_STANDARDS_STAGED_SNAPSHOT=1
+
 AFTER_STATUS=""
 UNSTAGED_PATCH=$(mktemp)
 UNTRACKED_STASHED=0
@@ -136,3 +157,8 @@ fi
 # The safety checks above must fail immediately. The validation runner can then
 # collect every independent product failure from this exact staged snapshot.
 run_declared check
+
+if [ -n "$HOSTED_TREE" ] && [ "$(git write-tree)" != "$HOSTED_TREE" ]; then
+  echo "pre-commit: hosted validation changed the committed staged snapshot" >&2
+  exit 1
+fi
