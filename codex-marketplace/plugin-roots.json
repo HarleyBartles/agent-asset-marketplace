@@ -163,6 +163,15 @@
       "plugin_root": "codex-marketplace/plugins/writing-pack",
       "manifest_path": "codex-marketplace/plugins/writing-pack/.codex-plugin/plugin.json",
       "enabled": true
+    },
+    {
+      "order": 18,
+      "name": "visual-storytelling-pack",
+      "category": "Productivity",
+      "registry_path": "./codex-marketplace/plugins/visual-storytelling-pack",
+      "plugin_root": "codex-marketplace/plugins/visual-storytelling-pack",
+      "manifest_path": "codex-marketplace/plugins/visual-storytelling-pack/.codex-plugin/plugin.json",
+      "enabled": true
     }
   ]
 }

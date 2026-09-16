@@ -1,0 +1,15 @@
+version: 1
+metadata:
+  skill_name: generating-images
+  source_category: skills-with-source
+interface:
+  display_name: Generating Images
+  short_description: Generate and edit raster assets from an approved visual brief.
+  default_prompt: Use generating-images when an authorised image capability must generate, edit, vary, or inspect a raster asset while preserving explicit creative decisions and reporting truthful custody.
+policy:
+  products:
+  - codex
+  - chatgpt
+  - api
+  - atlas
+  allow_implicit_invocation: true

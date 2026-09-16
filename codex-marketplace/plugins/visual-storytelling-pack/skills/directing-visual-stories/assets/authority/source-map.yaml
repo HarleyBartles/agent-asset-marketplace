@@ -1,0 +1,27 @@
+schema_version: 1
+reconciled_against: c1b46726b4207a93be4dee9236cbb4cc0f146cac95b80897bd1005361ddf9cc7
+references:
+  - path: references/canonical-composition-index.md
+    source_sections:
+      - 'Research spike: canonical composition routing'
+    load_when:
+      - Use when selecting a function-led practice anchor.
+    content_mode: first_party_synthesis
+  - path: references/evaluating-visual-stories.md
+    source_sections:
+      - 'Research spike: evaluation obligations and translation integrity'
+    load_when:
+      - Use when checking whether the story survived its medium.
+    content_mode: first_party_synthesis
+  - path: references/translating-to-image-generation.md
+    source_sections:
+      - 'Research spike: medium translation and image brief boundary'
+    load_when:
+      - Use when handing a frame direction to image generation.
+    content_mode: first_party_synthesis
+  - path: references/translating-to-composed-interfaces.md
+    source_sections:
+      - 'Research spike: page composition translated to interfaces'
+    load_when:
+      - Use when handing a field direction to web implementation.
+    content_mode: first_party_synthesis

@@ -18,7 +18,7 @@ surfaces.
 
 ## Inventory
 
-The marketplace currently offers **18 plugins** with **76 bundled skills**. The
+The marketplace currently offers **19 plugins** with **78 bundled skills**. The
 following table is the source-of-truth inventory for what this repo vends.
 Skills listed under each plugin come from that plugin's bundle manifest. The
 `.agents/skills/` tree in this repo contains installed copies from the plugins
@@ -45,4 +45,5 @@ mistaken for duplicate marketplace inventory.
 | security-pack | Productivity | 4 | owasp-top-ten, risk-gates, secure-development, web-identity |
 | superpowers-plus | Coding | 22 | brainstorming, asking-clarifying-questions, dispatching-parallel-agents, executing-plans, finishing-a-development-branch, handoff-gates, inspecting-the-environment, iterative-review, publishing-source, receiving-code-review, requesting-code-review, selecting-a-subagent, subagent-driven-development, subagent-workspace, systematic-debugging, test-driven-development, using-git-worktrees, using-superpowers-plus, verification-before-completion, writing-roadmaps, writing-plans, writing-skills |
 | unslop-plus | Productivity | 2 | unslop-engine, unslop-profiles |
+| visual-storytelling-pack | Productivity | 2 | directing-visual-stories, generating-images |
 | writing-pack | Productivity | 4 | writing, writing-profile-engine, writing-style, writing-with-clarity |

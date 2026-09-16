@@ -1,0 +1,39 @@
+{
+  "name": "@harleybartles/visual-storytelling-pack",
+  "version": "1.0.0",
+  "description": "Portable visual direction and image generation skills for authored visual storytelling.",
+  "author": {
+    "name": "Harley Bartles"
+  },
+  "homepage": "https://github.com/HarleyBartles/agent-asset-marketplace",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HarleyBartles/agent-asset-marketplace.git",
+    "directory": "codex-marketplace/plugins/visual-storytelling-pack"
+  },
+  "license": "MIT",
+  "rights": "First-party Harley-authored marketplace plugin.",
+  "keywords": [
+    "codex",
+    "marketplace",
+    "visual-storytelling",
+    "composition",
+    "image-generation",
+    "directing-visual-stories",
+    "generating-images"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "type": "cli",
+    "displayName": "Visual Storytelling Pack",
+    "shortDescription": "Author visual composition and generate raster assets with truthful custody.",
+    "longDescription": "A focused visual-storytelling bundle: directing-visual-stories makes authored composition and medium-translation decisions; generating-images executes approved raster-image briefs as a substantial Apache-2.0 derivative of OpenAI's bundled imagegen.",
+    "developerName": "Harley Bartles",
+    "category": "Productivity",
+    "capabilities": [],
+    "defaultPrompt": "Use directing-visual-stories to author the composition and story job first; use generating-images only to execute an approved raster-image direction.",
+    "brandColor": "#111827",
+    "composerIcon": "./assets/icon.svg",
+    "logo": "./assets/icon.svg"
+  }
+}
