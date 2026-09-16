@@ -3,11 +3,38 @@ from __future__ import annotations
 import shutil
 import subprocess
 import sys
+import importlib.util
 from pathlib import Path
 
 import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
+
+
+def test_changed_python_files_use_staged_snapshot_when_hook_marks_it(tmp_path: Path, monkeypatch) -> None:
+    repo = tmp_path / "staged-python"
+    repo.mkdir()
+    subprocess.run(["git", "init"], cwd=repo, check=True, capture_output=True)
+    subprocess.run(["git", "config", "user.email", "test@test"], cwd=repo, check=True)
+    subprocess.run(["git", "config", "user.name", "Test"], cwd=repo, check=True)
+    source = repo / "sample.py"
+    source.write_text("value = 1\n", encoding="utf-8")
+    subprocess.run(["git", "add", "sample.py"], cwd=repo, check=True)
+    subprocess.run(["git", "commit", "-m", "base"], cwd=repo, check=True, capture_output=True)
+    source.write_text("value = 2\n", encoding="utf-8")
+    subprocess.run(["git", "add", "sample.py"], cwd=repo, check=True)
+
+    spec = importlib.util.spec_from_file_location("run_under_test", ROOT / "tools" / "run.py")
+    module = importlib.util.module_from_spec(spec)
+    assert spec.loader is not None
+    sys.modules[spec.name] = module
+    spec.loader.exec_module(module)
+    monkeypatch.setattr(module, "ROOT", repo)
+    monkeypatch.setenv("REPO_STANDARDS_STAGED_SNAPSHOT", "1")
+
+    assert module._changed_python_files("HEAD") == [Path("sample.py")]
+
+
 sys.path.insert(0, str(ROOT / "tools"))
 import run  # noqa: E402
 

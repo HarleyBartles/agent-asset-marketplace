@@ -15,8 +15,9 @@ checkpoint.
 There is one tracked executable workflow YAML: `.github/workflows/marketplace-validation.yml`.
 It has no `workflow_call`, `workflow_run`, `pull_request_target`, or `schedule`
 trigger. It has one job, `marketplace-validation`, and its validation command is
-`tools/run ci --check` after checkout, `origin/main` fetch, Python 3.12 setup,
-and dependency installation. The automatic PR job guard is:
+the tracked `githooks/pre-commit` with `REPO_STANDARDS_HOSTED_COMMIT=HEAD`
+after checkout, `origin/main` fetch, Python 3.12 setup, and dependency
+installation. The automatic PR job guard is:
 
 ```text
 github.event_name != 'pull_request' || github.event.pull_request.draft == false
@@ -33,7 +34,7 @@ follows:
 |---|---|
 | executable workflow caller | none beyond the canonical workflow above |
 | manual-only caller | `workflow_dispatch` in the canonical workflow |
-| documentation or test fixture | references to `tools/run ci --check` in runbooks, plans, specs, and pressure fixtures |
+| documentation or test fixture | references to the tracked hook and `tools/run ci --check` in runbooks, plans, specs, and pressure fixtures |
 | irrelevant | historical/completed plan prose and generated/downstream copies |
 
 No tracked workflow or automation caller automatically runs the equivalent

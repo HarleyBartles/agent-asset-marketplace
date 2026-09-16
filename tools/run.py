@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import shlex
 import shutil
 import subprocess
@@ -79,6 +80,15 @@ def _resolve_base_ref(args: argparse.Namespace) -> str | None:
 
 
 def _changed_python_files(base_ref: str | None) -> list[Path]:
+    if os.environ.get("REPO_STANDARDS_STAGED_SNAPSHOT") == "1":
+        diff = subprocess.run(
+            ["git", "diff", "--cached", "--name-only", "--diff-filter=ACMR"],
+            cwd=ROOT,
+            capture_output=True,
+            text=True,
+            check=True,
+        )
+        return [Path(p) for p in diff.stdout.splitlines() if p.endswith(".py") and (ROOT / p).is_file()]
     if base_ref is None:
         return _all_tracked_python_files()
     diff = subprocess.run(
@@ -324,6 +334,10 @@ def _run_lint(ctx: Ctx) -> None:
     if ctx.mode == "check":
         if ctx.base_ref:
             _run([sys.executable, "tools/ruff_diff.py", "--changed-from", ctx.base_ref], ctx)
+            if os.environ.get("REPO_STANDARDS_STAGED_SNAPSHOT") == "1":
+                files = _changed_python_files(ctx.base_ref)
+                if files:
+                    _run([sys.executable, "-m", "ruff", "format", "--check", *map(str, files)], ctx)
         else:
             print(
                 "warning: no base ref available for lint; linting all tracked .py files",

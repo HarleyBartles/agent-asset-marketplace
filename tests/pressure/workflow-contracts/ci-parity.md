@@ -5,25 +5,28 @@
 The hosted workflow `.github/workflows/marketplace-validation.yml` runs:
 
 ```text
-tools/run ci --check
+REPO_STANDARDS_HOSTED_COMMIT=HEAD githooks/pre-commit
 ```
 
-The shared registry is `_TASKS["ci"]` in `tools/run.py`. Its dependency list
-is exactly `lint`, `repo-standards`, and `validate`; normal DAG
-resolution adds the transitive `mesh` dependency of `validate`.
+The hook reads `.agents/contracts/repo-standards-commands.json`, whose apply and
+check vectors both use the shared `_TASKS["ci"]` registry in `tools/run.py`.
+Its dependency list is exactly `lint`, `repo-standards`, and `validate`; normal
+DAG resolution adds the transitive `mesh` dependency of `validate`.
 
 ## Local and hosted sequences
 
 | path | sequence | parity result |
 |---|---|---|
-| hosted Ready PR or `main` push | checkout -> fetch `origin/main` -> Python 3.12 -> install requirements -> `tools/run ci --check` | uses the canonical CI registry in check mode |
-| normal local commit | materialize the staged snapshot -> `tools/run ci --apply` -> stage only owned generated surfaces -> `tools/run ci --check --diagnostics` | uses the same canonical registry after mechanical apply; diagnostics collect independent failures |
+| hosted Ready PR or `main` push | clean checkout -> reconstruct `HEAD` as a staged snapshot over its first parent -> tracked hook -> declared apply -> declared check | uses the same tracked hook, staged-snapshot marker, and consumer command declaration as local Git |
+| normal local commit | tracked hook -> materialize the staged snapshot -> declared apply -> stage only owned generated surfaces -> declared check | uses the same staged-snapshot marker and consumer command declaration as hosted validation |
 | local uncommitted check | `tools/run ci --check` or `--check --diagnostics` when explicitly needed | same registry and check targets; no apply step |
 
-The pre-commit hook is the local tracked-gate authority. Its apply step may
-materialize generated outputs, but it does not replace or narrow the hosted
-check. Hosted CI does not omit the local target sequence; its environment and
-fail-fast/diagnostics behavior are the only material differences.
+The tracked pre-commit hook is the local and hosted gate authority. Hosted CI
+names its checked-out commit with `REPO_STANDARDS_HOSTED_COMMIT=HEAD`; the hook
+reconstructs that tree in the index, exports
+`REPO_STANDARDS_STAGED_SNAPSHOT=1`, and verifies validation did not change the
+published tree. Consumer commands use the staged index or complete materialized
+tree rather than committed `HEAD` when that marker is present.
 
 ## Anti-bypass proof
 

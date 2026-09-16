@@ -814,13 +814,238 @@ def test_pre_commit_hook_wired_to_ci_apply_and_diagnostics(tmp_path: Path) -> No
     )
     combined = result.stdout + result.stderr
     assert result.returncode == 0, combined
-    hook = repo / ".git" / "hooks" / "pre-commit"
+    hook = repo / "githooks" / "pre-commit"
     assert hook.is_file(), "pre-commit hook was not installed"
     text = hook.read_text(encoding="utf-8")
     assert "repo-standards-commands.json" in text, text
     assert "run_declared apply" in text, text
     assert "run_declared check" in text, text
     assert "tools/run.py" not in text, text
+    hooks_path = subprocess.run(
+        ["git", "config", "--get", "core.hooksPath"],
+        cwd=repo,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+        check=True,
+    ).stdout.strip()
+    assert hooks_path == "githooks"
+
+
+def test_tracked_hook_check_reports_missing_hook_and_hooks_path(tmp_path: Path) -> None:
+    repo = tmp_path / "missing-tracked-hook"
+    repo.mkdir()
+    _init_git_repo_with_commit(repo)
+    surface = {
+        "id": "pre-commit-hook",
+        "path": "githooks/pre-commit",
+        "kind": "hook",
+        "source": "templates/pre-commit",
+    }
+
+    findings = repo_standards._check_surface(repo, surface, set())
+
+    assert "missing hook: githooks/pre-commit" in findings
+    assert any("core.hooksPath" in finding for finding in findings)
+
+
+def test_tracked_hook_check_accepts_clean_repo(tmp_path: Path) -> None:
+    repo = tmp_path / "clean-tracked-hook"
+    repo.mkdir()
+    _init_git_repo_with_commit(repo)
+    _install_repo_standards(repo)
+    surface = {
+        "id": "pre-commit-hook",
+        "path": "githooks/pre-commit",
+        "kind": "hook",
+        "source": "templates/pre-commit",
+    }
+
+    assert repo_standards._check_surface(repo, surface, set()) == []
+
+
+def test_tracked_hook_check_rejects_drift_and_wrong_hooks_path(tmp_path: Path) -> None:
+    repo = tmp_path / "drifted-tracked-hook"
+    repo.mkdir()
+    _init_git_repo_with_commit(repo)
+    command_dir = repo / ".agents" / "contracts"
+    command_dir.mkdir(parents=True)
+    (command_dir / "repo-standards-commands.json").write_text(
+        '{"apply":["@python","consumer.py","--apply"],"check":["@python","consumer.py","--check"]}\n',
+        encoding="utf-8",
+    )
+    hook = repo / "githooks" / "pre-commit"
+    hook.parent.mkdir()
+    hook.write_text("#!/usr/bin/env bash\nset -euo pipefail\nexit 0\n", encoding="utf-8")
+    subprocess.run(["git", "config", "core.hooksPath", ".git/hooks"], cwd=repo, check=True)
+    surface = {
+        "id": "pre-commit-hook",
+        "path": "githooks/pre-commit",
+        "kind": "hook",
+        "source": "templates/pre-commit",
+    }
+
+    findings = repo_standards._check_surface(repo, surface, set())
+
+    assert any("canonical staged-snapshot contract" in finding for finding in findings)
+    assert any("core.hooksPath" in finding for finding in findings)
+
+
+def test_apply_migrates_legacy_private_hook_to_tracked_custody(tmp_path: Path) -> None:
+    repo = tmp_path / "legacy-hook"
+    repo.mkdir()
+    _init_git_repo_with_commit(repo)
+    legacy_hook = repo / ".git" / "hooks" / "pre-commit"
+    legacy_hook.write_text("#!/usr/bin/env bash\nexit 0\n", encoding="utf-8")
+    _install_repo_standards(repo)
+
+    tracked_hook = repo / "githooks" / "pre-commit"
+    assert tracked_hook.is_file()
+    assert "run_declared apply" in tracked_hook.read_text(encoding="utf-8")
+    assert (
+        subprocess.run(
+            ["git", "config", "--get", "core.hooksPath"],
+            cwd=repo,
+            capture_output=True,
+            text=True,
+            check=True,
+        ).stdout.strip()
+        == "githooks"
+    )
+    assert legacy_hook.read_text(encoding="utf-8") == "#!/usr/bin/env bash\nexit 0\n"
+
+
+def test_hooks_path_resolves_to_each_linked_worktree_tracked_directory(tmp_path: Path) -> None:
+    repo = tmp_path / "worktree-hooks"
+    repo.mkdir()
+    _init_git_repo_with_commit(repo)
+    _install_repo_standards(repo)
+    subprocess.run(["git", "add", "githooks/pre-commit"], cwd=repo, check=True)
+    subprocess.run(["git", "commit", "--no-verify", "-m", "track hook"], cwd=repo, check=True)
+    worktree = _create_worktree(repo, "hook-worktree")
+
+    main_resolved = Path(
+        subprocess.run(
+            ["git", "rev-parse", "--path-format=absolute", "--git-path", "hooks"],
+            cwd=repo,
+            capture_output=True,
+            text=True,
+            check=True,
+        ).stdout.strip()
+    )
+    worktree_resolved = Path(
+        subprocess.run(
+            ["git", "rev-parse", "--path-format=absolute", "--git-path", "hooks"],
+            cwd=worktree,
+            capture_output=True,
+            text=True,
+            check=True,
+        ).stdout.strip()
+    )
+
+    assert main_resolved.resolve() == (repo / "githooks").resolve()
+    assert worktree_resolved.resolve() == (worktree / "githooks").resolve()
+
+
+def test_tracked_hook_platform_execution_contract(tmp_path: Path) -> None:
+    repo = tmp_path / "platform-hook"
+    repo.mkdir()
+    command_dir = repo / ".agents" / "contracts"
+    command_dir.mkdir(parents=True)
+    (command_dir / "repo-standards-commands.json").write_text(
+        '{"apply":["@python","consumer.py","--apply"],"check":["@python","consumer.py","--check"]}\n',
+        encoding="utf-8",
+    )
+    template = Path(repo_standards.__file__).parent.parent / "templates" / "pre-commit"
+    hook = repo / "pre-commit"
+    hook.write_bytes(template.read_bytes())
+
+    assert "pre-commit hook is not executable" in repo_standards._check_hook_contract(
+        hook, repo, platform_name="posix", executable=False
+    )
+    assert "pre-commit hook is not executable" not in repo_standards._check_hook_contract(
+        hook, repo, platform_name="posix", executable=True
+    )
+
+    hook.write_text(hook.read_text(encoding="utf-8").removeprefix("#!/usr/bin/env bash\n"), encoding="utf-8")
+    assert "pre-commit hook has no shebang" in repo_standards._check_hook_contract(hook, repo, platform_name="nt")
+
+
+def test_hosted_ci_executes_tracked_hook_without_private_copy() -> None:
+    workflow = (REPO_ROOT / ".github" / "workflows" / "marketplace-validation.yml").read_text(encoding="utf-8")
+    assert "githooks/pre-commit" in workflow
+    assert "REPO_STANDARDS_HOSTED_COMMIT: HEAD" in workflow
+    assert ".git/hooks" not in workflow
+
+
+def test_hosted_hook_reconstructs_commit_as_staged_snapshot(tmp_path: Path) -> None:
+    repo = tmp_path / "hosted-parity"
+    repo.mkdir()
+    _init_git_repo_with_commit(repo)
+    _install_repo_standards(repo)
+    tools = repo / "tools"
+    tools.mkdir(exist_ok=True)
+    (tools / "run.py").write_text(
+        """import os
+import subprocess
+import sys
+
+if os.environ.get("REPO_STANDARDS_STAGED_SNAPSHOT") != "1":
+    raise SystemExit("missing staged-snapshot marker")
+changed = subprocess.run(
+    ["git", "diff", "--cached", "--name-only"], capture_output=True, text=True, check=True
+).stdout.splitlines()
+if "change.txt" not in changed:
+    head = subprocess.run(["git", "rev-parse", "HEAD"], capture_output=True, text=True, check=True).stdout.strip()
+    status = subprocess.run(["git", "status", "--short"], capture_output=True, text=True, check=True).stdout
+    raise SystemExit(f"published change is not staged: {changed}; head={head}; status={status!r}")
+if "--apply" in sys.argv or "--check" in sys.argv:
+    raise SystemExit(0)
+raise SystemExit(2)
+""",
+        encoding="utf-8",
+        newline="\n",
+    )
+    (repo / "change.txt").write_text("published\n", encoding="utf-8", newline="\n")
+    subprocess.run(["git", "add", "-A"], cwd=repo, check=True)
+    subprocess.run(["git", "commit", "--no-verify", "-m", "published change"], cwd=repo, check=True)
+    published_tree = subprocess.run(
+        ["git", "rev-parse", "HEAD^{tree}"], cwd=repo, capture_output=True, text=True, check=True
+    ).stdout.strip()
+    subprocess.run(["git", "checkout", "--detach", "HEAD"], cwd=repo, check=True, capture_output=True)
+    result = subprocess.run(
+        ["bash", "-c", "REPO_STANDARDS_HOSTED_COMMIT=HEAD githooks/pre-commit"],
+        cwd=repo,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+    )
+
+    assert result.returncode == 0, result.stdout + result.stderr
+    assert (
+        subprocess.run(["git", "write-tree"], cwd=repo, capture_output=True, text=True, check=True).stdout.strip()
+        == published_tree
+    )
+
+
+def test_hosted_hook_refuses_to_rewrite_a_branch_checkout(tmp_path: Path) -> None:
+    repo = tmp_path / "hosted-branch"
+    repo.mkdir()
+    _init_git_repo_with_commit(repo)
+    _install_repo_standards(repo)
+    subprocess.run(["git", "add", "-A"], cwd=repo, check=True)
+    subprocess.run(["git", "commit", "--no-verify", "-m", "install standards"], cwd=repo, check=True)
+
+    result = subprocess.run(
+        ["bash", "-c", "REPO_STANDARDS_HOSTED_COMMIT=HEAD githooks/pre-commit"],
+        cwd=repo,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+    )
+
+    assert result.returncode != 0
+    assert "requires a detached checkout" in result.stderr
 
 
 def test_hook_validator_rejects_unbound_apply_and_check_switches(tmp_path: Path) -> None:
@@ -1291,7 +1516,7 @@ def test_repo_standards_apply_refuses_missing_consumer_command_declaration(tmp_p
     combined = result.stdout + result.stderr
     assert result.returncode != 0, combined
     assert "missing consumer command declaration" in combined
-    assert not (repo / ".git" / "hooks" / "pre-commit").exists()
+    assert not (repo / "githooks" / "pre-commit").exists()
 
 
 def test_repo_standards_refuses_asymmetric_command_declaration_exception(tmp_path: Path) -> None:
@@ -1333,7 +1558,7 @@ def test_repo_standards_refuses_asymmetric_command_declaration_exception(tmp_pat
     combined = result.stdout + result.stderr
     assert result.returncode != 0, combined
     assert "pre-commit-hook requires repo-standards-commands" in combined
-    assert not (repo / ".git" / "hooks" / "pre-commit").exists()
+    assert not (repo / "githooks" / "pre-commit").exists()
 
 
 def test_scaffold_runbooks_stub_is_composition_manifest(tmp_path: Path) -> None:
