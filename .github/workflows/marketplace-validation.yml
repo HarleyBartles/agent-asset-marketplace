@@ -43,8 +43,8 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: CI gate
+      - name: Validate tracked commit gate
         shell: bash
         run: |
           set -euo pipefail
-          tools/run ci --check
+          githooks/pre-commit

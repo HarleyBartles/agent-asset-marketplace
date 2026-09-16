@@ -363,7 +363,7 @@ def test_prunes_index_only_directory(tmp_path: Path) -> None:
 
 def test_githooks_directory_is_excluded_pre_traversal(tmp_path: Path) -> None:
     repo = _make_repo(tmp_path, "githooks-repo")
-    _commit_file(repo, ".githooks/pre-commit")
+    _commit_file(repo, "githooks/pre-commit")
     _commit_file(repo, "docs/guide.md")
     result = subprocess.run(
         [sys.executable, str(CORE), "--apply", "--allow-shared-checkout"],
@@ -373,7 +373,7 @@ def test_githooks_directory_is_excluded_pre_traversal(tmp_path: Path) -> None:
         text=True,
     )
     assert result.returncode == 0, result.stderr
-    assert not (repo / ".githooks" / "INDEX.md").exists()
+    assert not (repo / "githooks" / "INDEX.md").exists()
     assert (repo / "INDEX.md").is_file()
 
 

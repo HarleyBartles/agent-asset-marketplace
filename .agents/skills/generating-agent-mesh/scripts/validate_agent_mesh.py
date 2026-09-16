@@ -23,6 +23,8 @@ FRONTMATTER_PATTERN = re.compile(r"^---\s*\n(.*?)\n---\s*\n", re.DOTALL)
 
 EXCLUDED_DIR_NAMES = {
     ".git",
+    ".githooks",
+    "githooks",
     ".worktrees",
     "__pycache__",
     ".pytest_cache",

@@ -7,7 +7,8 @@ that repo. This reference describes the contract, not a command name.
 - The consumer's apply capability may materialize mechanical surfaces only.
 - The consumer's check capability is the fail-fast CI/PR gate; its diagnostic
   mode may report independent failures before exiting.
-- The tracked pre-commit hook is the single complete local gate for a normal
+- The tracked `githooks/pre-commit` hook, activated with
+  `core.hooksPath=githooks`, is the single complete local gate for a normal
   commit. It materializes the staged snapshot, applies mechanical surfaces,
   stages only owned generated surfaces, then checks that snapshot before
   allowing the commit.
@@ -39,10 +40,11 @@ If any step fails, the commit is blocked. Do not bypass the hook with
 
 ## CI workflow
 
-CI composes the same checks as separate workflow steps. Each step has its own
-label so failures are easy to attribute. CI does not call a generic preflight
-script; it runs the consumer's declared checks directly or through its
-documented runner.
+Hosted CI executes the tracked `githooks/pre-commit` directly from the checked
+out tree. It does not copy the hook into `.git/hooks` or depend on local Git
+configuration. The hook reads the consumer command declaration, so the same
+repository-specific apply and check capabilities remain authoritative locally
+and in hosted validation.
 
 ## What to do when a check fails
 
