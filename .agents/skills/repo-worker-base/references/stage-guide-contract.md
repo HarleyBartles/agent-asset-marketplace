@@ -10,9 +10,9 @@ guide for design, planning, implementation, or code review.
 The canonical lifecycle-stage root home is `.agents/runbooks/`. The retired
 .agents/docs/guides/ home is forbidden for new authored guides. The canonical
 home contains the stage runbooks `design.md`, `planning.md`,
-`implementing.md`, `code-review.md`, and `pr.md`. Conditional topical
-composition belongs under `.agents/playbooks/` and is selected explicitly by
-the applicable stage runbooks.
+`implementing.md`, `code-review.md`, and `pr.md`. Topical workflows belong
+under `.agents/playbooks/`; agents may use them directly, and stage runbooks
+may route to them when applicable.
 
 Each runbook supplies repository-specific composition, paths, commands,
 exclusions, CI, and exceptions. It does not replace, override, reorder, or bypass the matching

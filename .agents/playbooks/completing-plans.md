@@ -29,6 +29,6 @@ No active guidance depends on the removed artifact, generated indexes are curren
 
 Do not remove an in-flight plan or delete the only copy of a durable decision.
 
-## Invoked by
+## Runbook routing
 
 - [Pull request](../runbooks/pr.md)

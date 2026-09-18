@@ -1,6 +1,6 @@
 # Repository Runbook and Playbook Standard
 
-This is the portable standard for repository lifecycle routing and conditional topical composition.
+This is the portable standard for repository lifecycle routing and available topical workflows.
 
 ## Artifact taxonomy
 
@@ -34,28 +34,30 @@ Every runbook contains these exact second-level sections:
 
 ## Playbooks
 
-A playbook owns a conditional class of work or concern selected by one or more runbooks. Common playbooks include `code-style.md`, `testing.md`, `security.md`, `skill-authoring.md`, `marketplace-generation.md`, and `completing-plans.md`.
+A playbook owns a topical workflow available to an agent whenever that concern applies. A runbook may route to a playbook, but runbook selection is not a prerequisite for using one. Common playbooks include `code-style.md`, `testing.md`, `security.md`, `skill-authoring.md`, `marketplace-generation.md`, and `completing-plans.md`.
 
-Every playbook contains the same seven common composition sections as a runbook, followed by `Invoked by`. `Invoked by` links every stage runbook that may select it.
+Every playbook contains the same seven common composition sections as a runbook, followed by `Runbook routing`. That section optionally links stage runbooks that commonly route to it; `None.` is valid for a standalone playbook.
 
 Playbooks name and sequence capability skills, doctrine, contracts, commands, and evidence. Durable architecture and policy belong in doctrine; reusable language or framework technique belongs in capability skills. A playbook binds those owners to repository-specific triggers and proof.
 
 ## Dependency direction
 
-The only orchestration direction is:
+The lifecycle and topical composition relationships are:
 
 ```text
-using-superpowers-plus -> stage skill -> runbook -> playbook -> doctrine/contracts/capability skills
+using-superpowers-plus -> stage skill -> runbook
+runbook -> playbook
+playbook -> playbook or doctrine/contracts/capability skills
 ```
 
-- Runbooks may select playbooks.
-- Playbooks must declare reciprocal runbook parents but must not orchestrate a lifecycle stage.
-- Playbooks must not invoke runbooks or other playbooks.
+- Agents may invoke playbooks directly, and runbooks may route to playbooks.
+- Playbooks may record reciprocal runbook routes but must not take ownership of a lifecycle stage.
+- Playbooks may compose, invoke, or hand off to other playbooks when the topical workflow requires it.
 - Doctrine and contracts never orchestrate.
 - Capability skills must not sequence a repository lifecycle.
 - Cycles are invalid.
 
-Every declared playbook must be reachable from at least one runbook. References must resolve and reciprocal runbook/playbook declarations must agree.
+Declared runbook/playbook references must resolve, and reciprocal declarations must agree when a routing edge exists. A playbook does not need a runbook edge to be valid or available.
 
 ## Local policy
 
@@ -63,8 +65,8 @@ Each consumer keeps `.agents/doctrine/repo-runbook-policy.md` with separate `Sta
 
 ## Workflow order
 
-The canonical lifecycle is `design -> planning -> implementing -> review -> pull request`. `using-superpowers-plus` selects the hygiene and stage owner. The stage owner reads its baseline and matching runbook. The runbook selects every applicable playbook before work proceeds.
+The canonical lifecycle is `design -> planning -> implementing -> review -> pull request`. `using-superpowers-plus` selects the hygiene and stage owner. The stage owner reads its baseline and matching runbook. The agent uses any applicable playbook, whether discovered directly or through runbook routing.
 
 ## Migration
 
-Repositories adopting this version move lifecycle roots to `.agents/runbooks/` and conditional topical compositions to `.agents/playbooks/`. A topical file left in the runbook mapping is structural drift; a playbook present but unreachable from a runbook is also drift.
+Repositories adopting this version move lifecycle roots to `.agents/runbooks/` and topical workflow compositions to `.agents/playbooks/`. A topical file left in the runbook mapping is structural drift; a standalone playbook with no runbook edge is valid.

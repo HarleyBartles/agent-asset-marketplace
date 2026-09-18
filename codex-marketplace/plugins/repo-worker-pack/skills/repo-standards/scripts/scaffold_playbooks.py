@@ -71,7 +71,11 @@ def _playbook_content(name: str) -> str:
         ("Local commands and paths", "Repository commands, paths, and exceptions."),
         ("Evidence contract", "What the combined workflow must prove before it is complete."),
         ("Prohibited combinations", "Combinations explicitly not legitimate here, or `none`."),
-        ("Invoked by", "Link every `.agents/runbooks/*.md` stage root that can select this playbook."),
+        (
+            "Runbook routing",
+            "Optionally link `.agents/runbooks/*.md` stage roots that commonly route here; "
+            "use `None.` when standalone.",
+        ),
     )
     body = f"# {title}\n\n<!-- One-sentence purpose: which concern this playbook composes. -->\n"
     for heading, prompt in sections:

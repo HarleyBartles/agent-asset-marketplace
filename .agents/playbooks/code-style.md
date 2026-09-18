@@ -31,7 +31,7 @@ Changed prose and code follow repository conventions without duplicating portabl
 
 Do not use this playbook as a bucket for durable architecture law or framework tutorials.
 
-## Invoked by
+## Runbook routing
 
 - [Implementation](../runbooks/implementing.md)
 - [Code review](../runbooks/code-review.md)

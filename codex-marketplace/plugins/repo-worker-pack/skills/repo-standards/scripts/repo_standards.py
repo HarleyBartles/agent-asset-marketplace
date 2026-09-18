@@ -399,15 +399,6 @@ def _section_links(path: Path, heading: str) -> list[Path]:
     return links
 
 
-def _all_local_links(path: Path) -> list[Path]:
-    links: list[Path] = []
-    for line in _live_markdown_lines(path.read_text(encoding="utf-8")):
-        for target in _MARKDOWN_LINK.findall(line):
-            if "://" not in target:
-                links.append((path.parent / target).resolve())
-    return links
-
-
 def _check_composition_graph(repo_root: Path) -> list[str]:
     """Validate runbook roots, topical playbooks, and their explicit edges."""
     runbooks = _composition_files(repo_root / ".agents" / "runbooks")
@@ -416,7 +407,7 @@ def _check_composition_graph(repo_root: Path) -> list[str]:
         return []
 
     findings: list[str] = []
-    required_by_kind = ((runbooks, "Playbook routing"), (playbooks, "Invoked by"))
+    required_by_kind = ((runbooks, "Playbook routing"), (playbooks, "Runbook routing"))
     for paths, kind_heading in required_by_kind:
         for path in paths:
             live = {line.strip() for line in _live_markdown_lines(path.read_text(encoding="utf-8"))}
@@ -429,7 +420,9 @@ def _check_composition_graph(repo_root: Path) -> list[str]:
     runbook_set = {path.resolve() for path in runbooks}
     playbook_set = {path.resolve() for path in playbooks}
     edges: dict[Path, set[Path]] = {path.resolve(): set(_section_links(path, "Playbook routing")) for path in runbooks}
-    parents: dict[Path, set[Path]] = {path.resolve(): set(_section_links(path, "Invoked by")) for path in playbooks}
+    parents: dict[Path, set[Path]] = {
+        path.resolve(): set(_section_links(path, "Runbook routing")) for path in playbooks
+    }
 
     for runbook, targets in edges.items():
         for target in targets:
@@ -439,16 +432,10 @@ def _check_composition_graph(repo_root: Path) -> list[str]:
                 )
             elif runbook not in parents.get(target, set()):
                 findings.append(
-                    f"{target.relative_to(repo_root).as_posix()}: missing reciprocal Invoked by link to "
+                    f"{target.relative_to(repo_root).as_posix()}: missing reciprocal Runbook routing link to "
                     f"{runbook.relative_to(repo_root).as_posix()}"
                 )
     for playbook, sources in parents.items():
-        for target in _all_local_links(playbook):
-            if target in playbook_set:
-                findings.append(
-                    f"{playbook.relative_to(repo_root).as_posix()}: playbook must not link to playbook "
-                    f"{target.relative_to(repo_root).as_posix()}"
-                )
         for source in sources:
             if source not in runbook_set:
                 findings.append(
@@ -459,8 +446,6 @@ def _check_composition_graph(repo_root: Path) -> list[str]:
                     f"{source.relative_to(repo_root).as_posix()}: missing reciprocal Playbook routing link to "
                     f"{playbook.relative_to(repo_root).as_posix()}"
                 )
-        if not any(playbook in targets for targets in edges.values()):
-            findings.append(f"{playbook.relative_to(repo_root).as_posix()}: playbook is not reachable from a runbook")
     return findings
 
 

@@ -1,6 +1,6 @@
 # Repository Runbook and Playbook Policy
 
-This repository follows `repo-standards`. Lifecycle stages are runbooks; conditional concerns are playbooks.
+This repository follows `repo-standards`. Lifecycle stages are runbooks; available topical workflows are playbooks.
 
 ## Standard runbooks
 
@@ -26,7 +26,7 @@ This repository follows `repo-standards`. Lifecycle stages are runbooks; conditi
 
 ## Additional repository-specific playbooks
 
-- `repo-doctrine.md` exists because this repository authors portable doctrine and workflow standards.
+None.
 
 ## Root contributor and review surfaces
 

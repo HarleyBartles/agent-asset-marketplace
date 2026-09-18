@@ -1,6 +1,6 @@
 # Code Style Playbook
 
-This topical composition is selected by stage runbooks when code or human-facing technical prose changes.
+This topical workflow is available whenever code or human-facing technical prose changes.
 
 ## When
 
@@ -30,7 +30,7 @@ Apply capability skills under repository doctrine, then enforce local convention
 
 Do not place durable architecture law or reusable framework tutorials in this playbook.
 
-## Invoked by
+## Runbook routing
 
 - [Implementation](../runbooks/implementing.md)
 - [Code review](../runbooks/code-review.md)

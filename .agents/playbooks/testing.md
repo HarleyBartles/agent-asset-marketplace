@@ -29,7 +29,7 @@ New behavior has a witnessed red-green cycle and the relevant focused or complet
 
 Do not substitute a green unrelated test for the changed behavior.
 
-## Invoked by
+## Runbook routing
 
 - [Implementation](../runbooks/implementing.md)
 - [Code review](../runbooks/code-review.md)

@@ -1,6 +1,6 @@
 # Repository Runbook and Playbook Policy
 
-This repository follows `repo-standards`. Lifecycle stages are runbooks; conditional concerns are playbooks.
+This repository follows `repo-standards`. Lifecycle stages are runbooks; available topical workflows are playbooks.
 
 ## Standard runbooks
 

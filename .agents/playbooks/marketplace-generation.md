@@ -32,7 +32,7 @@ Marketplace manifests and installed projections contain the intended current sou
 
 Do not hand-edit generated manifests, indexes, bundle manifests, or installed skills. Do not treat a generator change as proof until its output changes as intended.
 
-## Invoked by
+## Runbook routing
 
 - [Implementation](../runbooks/implementing.md)
 - [Code review](../runbooks/code-review.md)

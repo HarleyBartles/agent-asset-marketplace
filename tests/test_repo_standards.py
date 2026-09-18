@@ -777,6 +777,44 @@ def test_scaffold_repo_runbook_policy_check_customized_passes(tmp_path: Path) ->
     assert "OK" in result.stdout
 
 
+def test_scaffold_repo_runbook_policy_check_duplicate_playbook_classification_fails(
+    tmp_path: Path,
+) -> None:
+    """A standard playbook cannot also be listed as repository-specific."""
+    repo = tmp_path / "duplicate-playbook-policy"
+    repo.mkdir()
+    _init_git_repo(repo)
+
+    policy_path = repo / ".agents" / "doctrine" / "repo-runbook-policy.md"
+    policy_path.parent.mkdir(parents=True)
+    policy_path.write_text(
+        "# Repository Runbook and Playbook Policy\n\n"
+        "## Standard runbooks\n\n"
+        "| Standard runbook | Local path | Status |\n|---|---|---|\n"
+        "| implementing.md | `.agents/runbooks/implementing.md` | required |\n\n"
+        "## Standard playbooks\n\n"
+        "| Standard playbook | Local path | Status |\n|---|---|---|\n"
+        "| repo-doctrine.md | `.agents/playbooks/repo-doctrine.md` | optional |\n\n"
+        "## Additional repository-specific playbooks\n\n"
+        "- `repo-doctrine.md` exists because this repository authors doctrine.\n\n"
+        "## Exceptions\n\nNone.\n",
+        encoding="utf-8",
+        newline="\n",
+    )
+
+    result = subprocess.run(
+        [sys.executable, str(SCAFFOLD_REPO_RUNBOOK_POLICY), "--check"],
+        cwd=repo,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+    )
+
+    assert result.returncode != 0
+    assert "repo-doctrine.md" in result.stdout
+    assert "both standard and repository-specific" in result.stdout
+
+
 def test_pre_commit_hook_wired_to_ci_apply_and_diagnostics(tmp_path: Path) -> None:
     """repo-standards installs a pre-commit hook that runs ci --apply then ci --check --diagnostics."""
     repo = tmp_path / "precommit-check"
@@ -1605,7 +1643,7 @@ def test_scaffold_playbooks_stub_is_topical_composition(tmp_path: Path) -> None:
         "## Local commands and paths",
         "## Evidence contract",
         "## Prohibited combinations",
-        "## Invoked by",
+        "## Runbook routing",
     ):
         assert heading in content
     assert "testing.md" in mod.PLAYBOOK_TITLES
@@ -1616,7 +1654,7 @@ def test_code_style_playbook_template_teaches_ownership_boundaries() -> None:
     text = template.read_text(encoding="utf-8")
     assert "Durable coding and architecture invariants belong in doctrine" in text
     assert "Reusable language and framework technique belongs in capability skills" in text
-    assert "## Invoked by" in text
+    assert "## Runbook routing" in text
 
 
 def _composition_document(extra_heading: str, links: str = "") -> str:
@@ -1641,7 +1679,7 @@ def test_runbook_composition_reports_missing_required_sections(tmp_path: Path) -
     assert any("testing.md" in finding and "Required skills" in finding for finding in findings)
 
 
-def test_composition_graph_accepts_reciprocal_reachable_playbook(tmp_path: Path) -> None:
+def test_composition_graph_accepts_reciprocal_playbook_route(tmp_path: Path) -> None:
     runbooks = tmp_path / ".agents" / "runbooks"
     playbooks = tmp_path / ".agents" / "playbooks"
     runbooks.mkdir(parents=True)
@@ -1651,21 +1689,20 @@ def test_composition_graph_accepts_reciprocal_reachable_playbook(tmp_path: Path)
         encoding="utf-8",
     )
     (playbooks / "testing.md").write_text(
-        _composition_document("Invoked by", "- [Implementation](../runbooks/implementing.md)"),
+        _composition_document("Runbook routing", "- [Implementation](../runbooks/implementing.md)"),
         encoding="utf-8",
     )
     assert repo_standards._check_composition_graph(tmp_path) == []
 
 
-def test_composition_graph_rejects_unreachable_playbook(tmp_path: Path) -> None:
+def test_composition_graph_accepts_standalone_playbook(tmp_path: Path) -> None:
     runbooks = tmp_path / ".agents" / "runbooks"
     playbooks = tmp_path / ".agents" / "playbooks"
     runbooks.mkdir(parents=True)
     playbooks.mkdir(parents=True)
     (runbooks / "implementing.md").write_text(_composition_document("Playbook routing", "None."), encoding="utf-8")
-    (playbooks / "testing.md").write_text(_composition_document("Invoked by", "None."), encoding="utf-8")
-    findings = repo_standards._check_composition_graph(tmp_path)
-    assert any("testing.md" in finding and "not reachable" in finding for finding in findings)
+    (playbooks / "testing.md").write_text(_composition_document("Runbook routing", "None."), encoding="utf-8")
+    assert repo_standards._check_composition_graph(tmp_path) == []
 
 
 def test_composition_graph_rejects_nonreciprocal_edge(tmp_path: Path) -> None:
@@ -1677,13 +1714,13 @@ def test_composition_graph_rejects_nonreciprocal_edge(tmp_path: Path) -> None:
         _composition_document("Playbook routing", "- [Testing](../playbooks/testing.md)"), encoding="utf-8"
     )
     (playbooks / "testing.md").write_text(
-        _composition_document("Invoked by", "- [Review](../runbooks/code-review.md)"), encoding="utf-8"
+        _composition_document("Runbook routing", "- [Review](../runbooks/code-review.md)"), encoding="utf-8"
     )
     findings = repo_standards._check_composition_graph(tmp_path)
     assert any("reciprocal" in finding for finding in findings)
 
 
-def test_composition_graph_rejects_playbook_to_playbook_links(tmp_path: Path) -> None:
+def test_composition_graph_accepts_playbook_to_playbook_composition(tmp_path: Path) -> None:
     runbooks = tmp_path / ".agents" / "runbooks"
     playbooks = tmp_path / ".agents" / "playbooks"
     runbooks.mkdir(parents=True)
@@ -1691,18 +1728,17 @@ def test_composition_graph_rejects_playbook_to_playbook_links(tmp_path: Path) ->
     routing = "- [Testing](../playbooks/testing.md)\n- [Security](../playbooks/security.md)"
     (runbooks / "implementing.md").write_text(_composition_document("Playbook routing", routing), encoding="utf-8")
     (playbooks / "testing.md").write_text(
-        _composition_document("Invoked by", "- [Implementation](../runbooks/implementing.md)").replace(
+        _composition_document("Runbook routing", "- [Implementation](../runbooks/implementing.md)").replace(
             "## Composition\n\n- defined",
             "## Composition\n\n- [Security](security.md)",
         ),
         encoding="utf-8",
     )
     (playbooks / "security.md").write_text(
-        _composition_document("Invoked by", "- [Implementation](../runbooks/implementing.md)"),
+        _composition_document("Runbook routing", "- [Implementation](../runbooks/implementing.md)"),
         encoding="utf-8",
     )
-    findings = repo_standards._check_composition_graph(tmp_path)
-    assert any("testing.md" in finding and "must not link to playbook" in finding for finding in findings)
+    assert repo_standards._check_composition_graph(tmp_path) == []
 
 
 def test_apply_fails_when_composition_graph_remains_invalid(

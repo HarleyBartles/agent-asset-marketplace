@@ -30,6 +30,6 @@ Review identifies trust boundaries, authority, secret handling, and consumer imp
 
 Do not infer mutation authority or disclose secrets.
 
-## Invoked by
+## Runbook routing
 
 - [Code review](../runbooks/code-review.md)

@@ -33,7 +33,7 @@ The owning surface is explicit, links resolve, consumer projections are current,
 
 Do not place procedure in doctrine or durable truth in a workflow artifact.
 
-## Invoked by
+## Runbook routing
 
 - [Planning](../runbooks/planning.md)
 - [Implementation](../runbooks/implementing.md)

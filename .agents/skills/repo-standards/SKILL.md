@@ -22,7 +22,7 @@ license: MIT
 
 This skill is the portable baseline for repo-local stage runbooks, topical playbooks, and agent-facing routing surfaces. It defines the cross-repo layout of root `AGENTS.md`, pointer files, both composition sets, and the workflow order for each stage.
 
-Each repo supplies a thin overlay at `.agents/doctrine/repo-runbook-policy.md` that maps stage runbooks and topical playbooks to local files and records exceptions. Runbooks own lifecycle-stage composition; playbooks bind conditional concerns to capability skills, doctrine, contracts, commands, and evidence.
+Each repo supplies a thin overlay at `.agents/doctrine/repo-runbook-policy.md` that maps stage runbooks and topical playbooks to local files and records exceptions. Runbooks own lifecycle-stage composition; playbooks provide topical workflows that bind capability skills, doctrine, contracts, commands, and evidence.
 
 ## Read when
 

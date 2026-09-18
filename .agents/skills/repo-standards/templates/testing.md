@@ -31,7 +31,7 @@ Changed behavior has focused proof and the repository's required completion vali
 
 Do not substitute an unrelated green test for proof of the changed behavior.
 
-## Invoked by
+## Runbook routing
 
 - [Implementation](../runbooks/implementing.md)
 - [Code review](../runbooks/code-review.md)

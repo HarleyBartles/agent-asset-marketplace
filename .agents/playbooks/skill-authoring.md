@@ -33,7 +33,7 @@ Frontmatter, references, scripts, provenance, bundle manifests, installed projec
 
 Do not edit generated installed skills as source.
 
-## Invoked by
+## Runbook routing
 
 - [Implementation](../runbooks/implementing.md)
 - [Code review](../runbooks/code-review.md)

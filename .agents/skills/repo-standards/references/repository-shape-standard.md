@@ -18,7 +18,7 @@ This file describes the surfaces `repo-standards` checks and can apply. It is th
 - `CONTRIBUTING.md` at the repo root as the contributor entry point.
 - `.gitignore` at the repo root, free of stale `.agents/superpowers/sdd/**` or `!.agents/superpowers/sdd/.gitignore` rules.
 - `.agents/runbooks/<stage>.md` for lifecycle-stage composition roots.
-- `.agents/playbooks/<topic>.md` for declared conditional topical compositions.
+- `.agents/playbooks/<topic>.md` for declared topical workflows available to agents.
 - Root `AGENTS.md` as a router with five core sections and a routing table.
 - `.agents/runbooks/AGENTS.md` as an optional router for the runbook set (may be scaffolded by `scaffold-runbooks`).
 - `.agents/playbooks/AGENTS.md` as an optional scoped contract for topical playbooks.
@@ -59,7 +59,7 @@ Use these idempotent scripts to create missing user-content surfaces. The agent 
 
 - **Private hook → tracked hook:** `repo-standards --apply --yes` creates or repairs `githooks/pre-commit` from the canonical template and sets `core.hooksPath=githooks`. A legacy `.git/hooks/pre-commit` may remain as inert local residue, but it is neither checked nor copied and has no continuing compatibility authority. `--check` reports the missing or drifted tracked hook and missing or incorrect hooks-path configuration without mutating either surface.
 - **Guides → runbooks:** Repos implementing this standard must use `.agents/runbooks/` and the `repo-runbook-policy.md` mapping. The `.agents/guides/` directory and the `repo-guide-policy.md` name are retired. `repo-standards --check` treats a missing `.agents/runbooks/` or a stale `repo-guide-policy.md` as drift.
-- **Flat runbooks -> runbooks and playbooks:** Keep lifecycle roots under `.agents/runbooks/`; move conditional topical compositions to `.agents/playbooks/`. Update policy mappings and reciprocal routing links together.
+- **Flat runbooks -> runbooks and playbooks:** Keep lifecycle roots under `.agents/runbooks/`; move topical workflows to `.agents/playbooks/`. Update policy mappings and any declared reciprocal routing links together.
 
 ## Exceptions
 
