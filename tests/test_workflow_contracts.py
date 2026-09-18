@@ -43,6 +43,7 @@ def _active_instruction_surfaces() -> list[Path]:
         ROOT / ".agents" / "contracts",
         ROOT / ".agents" / "plans",
         ROOT / ".agents" / "runbooks",
+        ROOT / ".agents" / "playbooks",
         ROOT / ".agents" / "skills",
         ROOT / ".devin" / "rules",
     ]
@@ -335,8 +336,8 @@ class TestRepositoryCallersAndPressure:
         design = _read(ROOT / ".agents" / "runbooks" / "design.md")
         review = _read(ROOT / ".agents" / "runbooks" / "code-review.md")
         implementing = _read(ROOT / ".agents" / "runbooks" / "implementing.md")
-        security = _read(ROOT / ".agents" / "runbooks" / "security.md")
-        skill_authoring = _read(ROOT / ".agents" / "runbooks" / "skill-authoring.md")
+        security = _read(ROOT / ".agents" / "playbooks" / "security.md")
+        skill_authoring = _read(ROOT / ".agents" / "playbooks" / "skill-authoring.md")
         assert "## Spec Self-Review" not in design
         assert "Apply three core lenses to every review" not in review
         assert "## Repo Improvement Check" not in review
@@ -352,6 +353,7 @@ class TestRepositoryCallersAndPressure:
             ROOT / "REVIEW.md",
             *sorted((ROOT / ".agents" / "doctrine").glob("*.md")),
             *sorted((ROOT / ".agents" / "runbooks").glob("*.md")),
+            *sorted((ROOT / ".agents" / "playbooks").glob("*.md")),
         ]
         skill_names = "|".join(map(re.escape, sorted(_canonical_skill_names(), key=len, reverse=True)))
         imperative_skill = re.compile(
@@ -473,7 +475,7 @@ class TestRepositoryCallersAndPressure:
         assert "feature branch" in text
 
     def test_scanner_defects_are_classified(self):
-        roots = [SKILLS, REPO_SKILLS, ROOT / ".agents" / "runbooks"]
+        roots = [SKILLS, REPO_SKILLS, ROOT / ".agents" / "runbooks", ROOT / ".agents" / "playbooks"]
         files = [path for root in roots for path in root.rglob("*")]
         findings = pressure_scan.scan_paths(files, ROOT)
         classified = json.loads(_read(DOCS / "pressure-scan-decisions.json"))
@@ -483,7 +485,7 @@ class TestRepositoryCallersAndPressure:
         assert all(item["classification"] != "defect" for item in classified)
 
     def test_pressure_scan_has_one_owned_disposition_per_candidate(self):
-        roots = [SKILLS, REPO_SKILLS, ROOT / ".agents" / "runbooks"]
+        roots = [SKILLS, REPO_SKILLS, ROOT / ".agents" / "runbooks", ROOT / ".agents" / "playbooks"]
         files = [path for root in roots for path in root.rglob("*")]
         findings = pressure_scan.scan_paths(files, ROOT)
         dispositions = json.loads(_read(DOCS / "pressure-scan-decisions.json"))

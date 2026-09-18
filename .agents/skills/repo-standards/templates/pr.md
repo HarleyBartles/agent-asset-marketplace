@@ -44,3 +44,7 @@ proof for repo work`.
 ## Prohibited combinations
 
 none
+
+## Playbook routing
+
+None by default. Repositories with a completion playbook route it here.

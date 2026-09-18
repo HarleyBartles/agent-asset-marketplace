@@ -1,41 +1,40 @@
 # Code Review Runbook
 
-Use this reference for marketplace-specific review concerns. The routed review
-skill owns general review method, sequencing, and reporting.
+## When
+
+Use for final whole-branch review and focused review of repository changes.
 
 ## Required skills
 
-- `requesting-code-review` - review dispatch method.
-- `receiving-code-review` - review-response handling.
-- `unslop-profiles` - domain review lenses.
+- `requesting-code-review`
+- `receiving-code-review`
+- `unslop-profiles`
 
-### Cross-repo consumer lens
+## Composition
 
-When the diff touches vendored skills, prompts, or scripts that install into other repos, verify it does not hardcode this repo's paths, command names, or layouts; uses consumer-canonical commands; and is safe without this repo's context.
+Review the actual diff against the plan, applicable playbooks, doctrine, and consumer safety.
 
-## Architecture and Doctrine
+## Doctrine and contracts
 
-Reviewers must check the repo's architectural choices in `.agents/doctrine/custody-and-marketplace-doctrine.md`. Invoke `using-superpowers-plus` once and follow its review handoff; this runbook adds marketplace-specific review concerns.
+- [Custody and marketplace doctrine](../doctrine/custody-and-marketplace-doctrine.md)
 
-If marketplace configuration or source custody changed, regenerate with `tools/run marketplace --apply` and validate with `tools/run ci --check`.
+## Local commands and paths
 
-## Marketplace and Validation
+Use `py -3 tools/run.py ci --check` only for uncommitted verification or diagnosis; the normal commit hook proves the staged tree.
 
-- Marketplace standards live in `.devin/rules/tools.md`.
-- Domain-specific review profiles live in `unslop-profiles`; the routed review owner selects the applicable profile.
-- Durable guidance belongs in `AGENTS.md` or doctrine documents. Deferred work belongs in Linear issues, not durable guidance.
-- Regenerate `INDEX.md` files via `tools/run mesh --apply` when files are added or removed.
+## Evidence contract
 
-## Marketplace validation coverage
+Findings cite current source, all applicable topical constraints are checked, and generated outputs reflect canonical changes.
 
-Verify the work is validated. Key checks:
+## Prohibited combinations
 
-- Marketplace regeneration: `tools/run marketplace --apply` when source custody changes.
-- CI validation: `tools/run ci --check`.
-- Skill installation: `tools/run installed-skills --apply` when skills change.
-- Index mesh: `tools/run mesh --apply` when files are added or removed.
-- Vendored output: generated or installed vendored assets must reflect the change.
+Do not treat installed projections, worker reports, or stale summaries as source truth.
 
-Publication proof is defined by root `AGENTS.md`; completed-artifact removal is
-defined by [`completing-plans.md`](completing-plans.md). Do not duplicate either
-contract here.
+## Playbook routing
+
+- [Code style](../playbooks/code-style.md) - when reviewing Python or Markdown.
+- [Testing](../playbooks/testing.md) - when reviewing behavior or validation.
+- [Security](../playbooks/security.md) - when the diff has a security surface.
+- [Skill authoring](../playbooks/skill-authoring.md) - when a skill changes.
+- [Marketplace generation](../playbooks/marketplace-generation.md) - when vendored outputs change.
+- [Repository doctrine](../playbooks/repo-doctrine.md) - when standards or routing change.

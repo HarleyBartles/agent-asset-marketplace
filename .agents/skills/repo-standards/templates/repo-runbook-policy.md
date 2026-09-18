@@ -1,9 +1,8 @@
-# Repo Runbook Policy
+# Repository Runbook and Playbook Policy
 
-This repo follows the `repo-standards` layout. Invoke `using-superpowers-plus`
-once and follow its handoff; local runbooks supply repository-specific deltas.
+This repository follows `repo-standards`. Lifecycle stages are runbooks; available topical workflows are playbooks.
 
-## Standard-to-local mapping
+## Standard runbooks
 
 | Standard runbook | Local path | Status |
 |---|---|---|
@@ -11,22 +10,28 @@ once and follow its handoff; local runbooks supply repository-specific deltas.
 | planning.md | `.agents/runbooks/planning.md` | required |
 | implementing.md | `.agents/runbooks/implementing.md` | required |
 | code-review.md | `.agents/runbooks/code-review.md` | required |
-| marketplace-generation.md | `.agents/runbooks/marketplace-generation.md` |  |
-| skill-authoring.md | `.agents/runbooks/skill-authoring.md` |  |
-| security.md | `.agents/runbooks/security.md` |  |
-| testing.md | `.agents/runbooks/testing.md` |  |
 | pr.md | `.agents/runbooks/pr.md` | required |
-| code-style.md | `.agents/runbooks/code-style.md` |  |
-| completing-plans.md | `.agents/runbooks/completing-plans.md` |  |
 
-## Additional repo-specific runbooks
+## Standard playbooks
 
-- <!-- list repo-specific runbooks here -->
+| Standard playbook | Local path | Status |
+|---|---|---|
+| code-style.md | `.agents/playbooks/code-style.md` | required |
+| testing.md | `.agents/playbooks/testing.md` | required |
+| security.md | `.agents/playbooks/security.md` | optional |
+| skill-authoring.md | `.agents/playbooks/skill-authoring.md` | optional |
+| marketplace-generation.md | `.agents/playbooks/marketplace-generation.md` | optional |
+| completing-plans.md | `.agents/playbooks/completing-plans.md` | optional |
+| repo-doctrine.md | `.agents/playbooks/repo-doctrine.md` | optional |
+
+## Additional repository-specific playbooks
+
+- <!-- list repository-specific playbooks here -->
 
 ## Root contributor and review surfaces
 
-- `REVIEW.md` is the review entry point.
-- `CONTRIBUTING.md` is the substantive contributor entry point.
+- `REVIEW.md` enters through the code-review runbook.
+- `CONTRIBUTING.md` enters through the applicable lifecycle runbook.
 
 ## Exceptions
 

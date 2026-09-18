@@ -17,9 +17,11 @@ This file describes the surfaces `repo-standards` checks and can apply. It is th
 - `REVIEW.md` at the repo root pointing to the review runbook and required skill invocations.
 - `CONTRIBUTING.md` at the repo root as the contributor entry point.
 - `.gitignore` at the repo root, free of stale `.agents/superpowers/sdd/**` or `!.agents/superpowers/sdd/.gitignore` rules.
-- `.agents/runbooks/<standard-runbook>.md` for the core and declared runbook set.
+- `.agents/runbooks/<stage>.md` for lifecycle-stage composition roots.
+- `.agents/playbooks/<topic>.md` for declared topical workflows available to agents.
 - Root `AGENTS.md` as a router with five core sections and a routing table.
 - `.agents/runbooks/AGENTS.md` as an optional router for the runbook set (may be scaffolded by `scaffold-runbooks`).
+- `.agents/playbooks/AGENTS.md` as an optional scoped contract for topical playbooks.
 - `.agents/doctrine/completed-artifacts.md` stating that completed planning artifacts leave the tracked tree and durable decisions belong in ADRs or current doctrine.
 - No tracked `completed/` archive under `.agents/plans/`, `.agents/specs/`, or `.agents/roadmaps/`.
 
@@ -42,7 +44,8 @@ The `## Routing pointers` section must list resolvable links to the scoped surfa
 Use these idempotent scripts to create missing user-content surfaces. The agent remains responsible for repo-specific content.
 
 - `scaffold-repo-runbook-policy` generates `.agents/doctrine/repo-runbook-policy.md` from the standard template.
-- `scaffold-runbooks` generates missing `.agents/runbooks/*.md` files from `repo-runbook-policy.md` and the optional `.agents/runbooks/AGENTS.md` router.
+- `scaffold-runbooks` generates missing lifecycle roots under `.agents/runbooks/`.
+- `scaffold-playbooks` generates missing topical compositions under `.agents/playbooks/`.
 - `scaffold-review` generates `REVIEW.md`.
 - `scaffold-contributing` generates `CONTRIBUTING.md`.
 - `scaffold-gitignore` removes any stale `.agents/superpowers/sdd/**` root `.gitignore` rule and any obsolete `.agents/superpowers/sdd/.gitignore` directory.
@@ -56,7 +59,7 @@ Use these idempotent scripts to create missing user-content surfaces. The agent 
 
 - **Private hook → tracked hook:** `repo-standards --apply --yes` creates or repairs `githooks/pre-commit` from the canonical template and sets `core.hooksPath=githooks`. A legacy `.git/hooks/pre-commit` may remain as inert local residue, but it is neither checked nor copied and has no continuing compatibility authority. `--check` reports the missing or drifted tracked hook and missing or incorrect hooks-path configuration without mutating either surface.
 - **Guides → runbooks:** Repos implementing this standard must use `.agents/runbooks/` and the `repo-runbook-policy.md` mapping. The `.agents/guides/` directory and the `repo-guide-policy.md` name are retired. `repo-standards --check` treats a missing `.agents/runbooks/` or a stale `repo-guide-policy.md` as drift.
-- **Playbooks → runbooks:** If a repo still maintains playbooks under any path, it should migrate them to `.agents/runbooks/`. `.agents/runbooks/` is the one supported home for runbooks. `repo-standards` may emit a warning for a legacy `playbooks/` surface but does not fail the check.
+- **Flat runbooks -> runbooks and playbooks:** Keep lifecycle roots under `.agents/runbooks/`; move topical workflows to `.agents/playbooks/`. Update policy mappings and any declared reciprocal routing links together.
 
 ## Exceptions
 
@@ -87,5 +90,5 @@ The root `.gitignore` must not contain a stale in-repo rule such as:
 
 The `completed-artifacts-doctrine` surface carries this repo's custody truth
 for finished planning artifacts. `cleanup-custody` owns the custody method and
-promotion-before-removal step; the mapped completion runbook owns the removal
+promotion-before-removal step; the mapped completion playbook owns the removal
 composition.
