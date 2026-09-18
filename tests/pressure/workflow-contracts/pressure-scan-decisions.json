@@ -147,7 +147,16 @@
     "path": ".agents/runbooks/implementing.md",
     "line": 24,
     "pattern": "portable-repo-command",
-    "context": "Canonical plugin source lives under `codex-marketplace/plugins/<plugin>/skills/`. Use `py -3 tools/run.py marketplace --apply` after source changes.",
+    "context": "Canonical plugin source lives under `codex-marketplace/plugins/<plugin>/skills/`. Use `py -3 tools/run.py marketplace --apply` after source changes, then `py -3 tools/run.py installed-skills --apply` to refresh installed projections.",
+    "classification": "repo-local",
+    "owner": "runbook-playbook contract",
+    "reason": "Repository-local composition guidance required by the approved runbook and playbook contract."
+  },
+  {
+    "path": ".agents/runbooks/implementing.md",
+    "line": 26,
+    "pattern": "portable-repo-command",
+    "context": "When repo-local runtime subagent profiles under `.agents/agents/` change, run `py -3 tools/run.py runtime-agents --apply --allow-shared-checkout` from the worktree and restart the IDE before dispatching a changed profile.",
     "classification": "repo-local",
     "owner": "runbook-playbook contract",
     "reason": "Repository-local composition guidance required by the approved runbook and playbook contract."
@@ -174,7 +183,7 @@
     "path": ".agents/playbooks/marketplace-generation.md",
     "line": 23,
     "pattern": "portable-repo-command",
-    "context": "Run `py -3 tools/run.py marketplace --apply` after changes to canonical plugin skills, per-pack provenance, bundle manifests, or plugin manifests. The target refreshes inventory, installed skills, repo indexes, the index mesh, and marketplace validation.",
+    "context": "Run `py -3 tools/run.py marketplace --apply` after changes to canonical plugin skills, per-pack provenance, bundle manifests, or plugin manifests. Then run `py -3 tools/run.py installed-skills --apply` for installed projections and the repository-owned index/mesh apply targets when files move.",
     "classification": "repo-local",
     "owner": "runbook-playbook contract",
     "reason": "Repository-local composition guidance required by the approved runbook and playbook contract."
@@ -183,7 +192,7 @@
     "path": ".agents/playbooks/marketplace-generation.md",
     "line": 25,
     "pattern": "portable-repo-command",
-    "context": "Editable inputs are canonical trees under `codex-marketplace/plugins/<plugin>/skills/`, per-pack `SOURCE.md`, and plugin metadata. Derived manifests, indexes, bundle manifests, and `.agents/skills/` stay generator-owned. Use `py -3 tools/run.py installed-skills --apply` or `py -3 tools/run.py mesh --apply` only for focused repair; full marketplace regeneration is the normal completion route.",
+    "context": "Editable inputs are canonical trees under `codex-marketplace/plugins/<plugin>/skills/`, per-pack `SOURCE.md`, and plugin metadata. Derived manifests, indexes, bundle manifests, and `.agents/skills/` stay generator-owned. `py -3 tools/run.py ci --apply` is the full reconciliation route used by the commit hook; focused apply targets remain explicit rather than being attributed to `marketplace --apply` alone.",
     "classification": "repo-local",
     "owner": "runbook-playbook contract",
     "reason": "Repository-local composition guidance required by the approved runbook and playbook contract."

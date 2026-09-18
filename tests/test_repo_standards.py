@@ -4,6 +4,8 @@ import subprocess
 import sys
 from pathlib import Path
 
+import pytest
+
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 SKILL_ROOT = REPO_ROOT / "codex-marketplace" / "plugins" / "repo-worker-pack" / "skills" / "repo-standards" / "scripts"
@@ -1679,6 +1681,46 @@ def test_composition_graph_rejects_nonreciprocal_edge(tmp_path: Path) -> None:
     )
     findings = repo_standards._check_composition_graph(tmp_path)
     assert any("reciprocal" in finding for finding in findings)
+
+
+def test_composition_graph_rejects_playbook_to_playbook_links(tmp_path: Path) -> None:
+    runbooks = tmp_path / ".agents" / "runbooks"
+    playbooks = tmp_path / ".agents" / "playbooks"
+    runbooks.mkdir(parents=True)
+    playbooks.mkdir(parents=True)
+    routing = "- [Testing](../playbooks/testing.md)\n- [Security](../playbooks/security.md)"
+    (runbooks / "implementing.md").write_text(_composition_document("Playbook routing", routing), encoding="utf-8")
+    (playbooks / "testing.md").write_text(
+        _composition_document("Invoked by", "- [Implementation](../runbooks/implementing.md)").replace(
+            "## Composition\n\n- defined",
+            "## Composition\n\n- [Security](security.md)",
+        ),
+        encoding="utf-8",
+    )
+    (playbooks / "security.md").write_text(
+        _composition_document("Invoked by", "- [Implementation](../runbooks/implementing.md)"),
+        encoding="utf-8",
+    )
+    findings = repo_standards._check_composition_graph(tmp_path)
+    assert any("testing.md" in finding and "must not link to playbook" in finding for finding in findings)
+
+
+def test_apply_fails_when_composition_graph_remains_invalid(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
+) -> None:
+    runbooks = tmp_path / ".agents" / "runbooks"
+    runbooks.mkdir(parents=True)
+    (runbooks / "implementing.md").write_text("# Implementation\n", encoding="utf-8")
+    manifest = tmp_path / "manifest.json"
+    manifest.write_text('{"surfaces": []}\n', encoding="utf-8")
+    monkeypatch.setattr(repo_standards, "_repo_root", lambda: tmp_path)
+    monkeypatch.setattr(repo_standards, "_manifest_path", lambda: manifest)
+    monkeypatch.setattr(repo_standards, "_is_submodule", lambda _root: False)
+    monkeypatch.setattr(repo_standards.shared_checkout, "approve_mutation", lambda *_args: True)
+
+    assert repo_standards.main(["--apply", "--yes"]) == 1
+    captured = capsys.readouterr()
+    assert "unresolved composition-graph drift" in captured.err
 
 
 def test_runbook_composition_ignores_agents_md_and_absent_dir(tmp_path: Path) -> None:

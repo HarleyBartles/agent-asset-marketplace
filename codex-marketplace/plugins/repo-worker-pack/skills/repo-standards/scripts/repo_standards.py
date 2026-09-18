@@ -399,6 +399,15 @@ def _section_links(path: Path, heading: str) -> list[Path]:
     return links
 
 
+def _all_local_links(path: Path) -> list[Path]:
+    links: list[Path] = []
+    for line in _live_markdown_lines(path.read_text(encoding="utf-8")):
+        for target in _MARKDOWN_LINK.findall(line):
+            if "://" not in target:
+                links.append((path.parent / target).resolve())
+    return links
+
+
 def _check_composition_graph(repo_root: Path) -> list[str]:
     """Validate runbook roots, topical playbooks, and their explicit edges."""
     runbooks = _composition_files(repo_root / ".agents" / "runbooks")
@@ -434,6 +443,12 @@ def _check_composition_graph(repo_root: Path) -> list[str]:
                     f"{runbook.relative_to(repo_root).as_posix()}"
                 )
     for playbook, sources in parents.items():
+        for target in _all_local_links(playbook):
+            if target in playbook_set:
+                findings.append(
+                    f"{playbook.relative_to(repo_root).as_posix()}: playbook must not link to playbook "
+                    f"{target.relative_to(repo_root).as_posix()}"
+                )
         for source in sources:
             if source not in runbook_set:
                 findings.append(
@@ -703,6 +718,13 @@ under the ## Exceptions heading are skipped."""
         if _check_surface(repo_root, surface, exceptions, enabled_surface_ids):
             if _apply_surface(repo_root, surface, exceptions, args.force, enabled_surface_ids):
                 applied += 1
+
+    unresolved_graph = _check_composition_graph(repo_root)
+    if unresolved_graph:
+        for finding in unresolved_graph:
+            print(f"DRIFT: {finding}")
+        print("error: repo-standards apply left unresolved composition-graph drift", file=sys.stderr)
+        return 1
 
     print(f"OK repo-standards: applied {applied} surface(s)")
     return 0

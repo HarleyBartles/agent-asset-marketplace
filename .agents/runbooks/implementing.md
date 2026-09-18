@@ -23,6 +23,8 @@ Work from the committed plan in an isolated worktree. Edit canonical source, exe
 
 Canonical plugin source lives under `codex-marketplace/plugins/<plugin>/skills/`. Use `py -3 tools/run.py marketplace --apply` after source changes, then `py -3 tools/run.py installed-skills --apply` to refresh installed projections.
 
+When repo-local runtime subagent profiles under `.agents/agents/` change, run `py -3 tools/run.py runtime-agents --apply --allow-shared-checkout` from the worktree and restart the IDE before dispatching a changed profile.
+
 ## Evidence contract
 
 Focused tests pass, generated marketplace and mesh surfaces are current, and the normal hooked commit proves the staged tree.
