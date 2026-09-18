@@ -10,13 +10,8 @@ the public `repo-standards` invocation contract.
 
 | # | Title | Status | Plan File | Commit | PR | Rating | Notes |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| 1 | Finish runbook/playbook separation | ready | `2026-09-18-plan-1-finish-pr-321.md` | - | [#321](https://github.com/HarleyBartles/agent-asset-marketplace/pull/321) | - | Preferred route: repair and finish #321. Supersede only if completion proves untenable. |
-| 2 | Create plugin and move router intact | pending | Written just-in-time | - | - | - | Starts only from the merged or explicitly superseding taxonomy. |
-| 3 | Extract command bus and Python capabilities | pending | Written just-in-time | - | - | - | Establish focused `command-bus` and move canonical `python` custody. |
-| 4 | Extract validation and tracked hooks | pending | Written just-in-time | - | - | - | Preserve staged-snapshot and hosted-CI parity. |
-| 5 | Extract repository composition and shape | pending | Written just-in-time | - | - | - | Move runbook/playbook and structural standards behind focused owners. |
-| 6 | Extract agent assets and reduce router | pending | Written just-in-time | - | - | - | Route misplaced responsibilities and leave `repo-standards` thin. |
-| 7 | Prove compatibility and prepare consumer adoption | pending | Written just-in-time | - | - | - | Complete source/projection proof; consumer migrations remain repository-owned. |
+| 1 | Finish runbook/playbook separation | executing | `2026-09-18-plan-1-finish-pr-321.md` | `f111c3f02` | [#321](https://github.com/HarleyBartles/agent-asset-marketplace/pull/321) | - | Repaired, validated, clean, and Ready for Review; awaiting merge decision. |
+| 2 | Build Agent Operating Model plugin | pending | Written just-in-time | - | - | - | Create the plugin, move `repo-standards` and `python`, extract the focused skills, regenerate, and prove compatibility in one implementation plan. |
 
 ## Global sequencing constraints
 
@@ -28,7 +23,7 @@ the public `repo-standards` invocation contract.
   green.
 - Existing public skill names and consumer-facing command contracts remain
   compatible unless a later approved design explicitly changes them.
-- Plans are written just-in-time from current repository and GitHub state.
+- Plan 2 is written just-in-time from current repository and GitHub state.
 
 ## Handoff notes
 
