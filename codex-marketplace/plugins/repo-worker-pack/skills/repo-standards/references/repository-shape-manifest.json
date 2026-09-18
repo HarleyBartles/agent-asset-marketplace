@@ -58,8 +58,31 @@
       "optional": false
     },
     {
+      "id": "runbook-set",
+      "path": ".agents/runbooks",
+      "kind": "file",
+      "source": null,
+      "scaffold": "scaffold_runbooks.py",
+      "optional": false
+    },
+    {
+      "id": "playbook-set",
+      "path": ".agents/playbooks",
+      "kind": "file",
+      "source": null,
+      "scaffold": "scaffold_playbooks.py",
+      "optional": false
+    },
+    {
       "id": "runbooks-agents-md",
       "path": ".agents/runbooks/AGENTS.md",
+      "kind": "file",
+      "source": null,
+      "optional": true
+    },
+    {
+      "id": "playbooks-agents-md",
+      "path": ".agents/playbooks/AGENTS.md",
       "kind": "file",
       "source": null,
       "optional": true

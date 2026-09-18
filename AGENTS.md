@@ -37,14 +37,15 @@ Open pull requests as **draft**; keep them in draft while iterating and validati
 Canonical: `py -3 tools/run.py ci --check`, `py -3 tools/run.py ci --apply`, and `py -3 tools/run.py marketplace --apply`. For a normal commit, stage the intended tree and let the tracked pre-commit hook materialize the staged snapshot, run `py -3 tools/run.py ci --apply`, and then run `py -3 tools/run.py ci --check --diagnostics` as the single complete local gate. Do not run `py -3 tools/run.py ci --check` immediately before a normal commit or immediately after a successful hooked commit; run it only for an uncommitted verification, when diagnosing the pipeline, or when explicitly proving CI parity. Use `py -3 .agents/skills/selecting-a-subagent/scripts/install_profiles.py --apply` to install portable subagent profiles to the user-global agents directory; use `py -3 tools/run.py runtime-agents --apply --allow-shared-checkout` only for repo-local `.agents/agents/` profiles when working in a worktree; see `.agents/doctrine/non-repo-locations-policy.md`.
 ## Security considerations
 
-Security review must apply the relevant profile and the repository lenses in `.agents/runbooks/security.md`; `using-superpowers-plus` selects the owning workflow.
+Security review must apply the relevant profile and the repository lenses in `.agents/playbooks/security.md`; `using-superpowers-plus` selects the owning workflow.
 ## Routing pointers
 
 - [Mesh policy](.agents/doctrine/mesh-policy.md)
 - Scoped law lives in `.devin/rules/*.md` (including [PR workflow](.devin/rules/pr.md))
-- [Worker guidance](.agents/runbooks/repo-doctrine.md)
-- [Implementing workflow](.agents/runbooks/implementing.md)
-- [Runbook stage routing](.agents/runbooks/AGENTS.md), [repo runbook policy](.agents/doctrine/repo-runbook-policy.md), and [completing plans](.agents/runbooks/completing-plans.md)
+- [Worker guidance](.agents/playbooks/repo-doctrine.md) and [implementing workflow](.agents/runbooks/implementing.md)
+- [Runbook stage routing](.agents/runbooks/AGENTS.md), [playbook routing](.agents/playbooks/AGENTS.md), [repo runbook policy](.agents/doctrine/repo-runbook-policy.md), and [completing plans](.agents/playbooks/completing-plans.md)
+- [Testing instructions](.agents/playbooks/testing.md), [code style guidelines](.agents/playbooks/code-style.md), [review guidelines](.agents/runbooks/code-review.md), and [PR instructions](.agents/runbooks/pr.md)
+- [Contributing](CONTRIBUTING.md) and [security considerations](.agents/playbooks/security.md)
 - [Completed-artifact custody](.agents/doctrine/completed-artifacts.md) and the root [ADR log](adr/README.md) for the in-flight, removal, and durable-decision boundary
 - [Worktree and scratch policy](.agents/doctrine/non-repo-locations-policy.md)
 

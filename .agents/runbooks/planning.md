@@ -1,30 +1,35 @@
 # Planning Runbook
 
-Use this reference for marketplace constraints and validation in
-`agent-asset-marketplace`. General planning semantics and plan custody belong
-to the `writing-plans` skill.
+## When
+
+Use when approved requirements need an executable repository plan.
 
 ## Required skills
 
-- `writing-plans` - owning stage skill (planning semantics, plan custody).
-- `handoff-gates` - plan-readiness gate.
+- `writing-plans`
+- `handoff-gates`
 
-## Required repository context
+## Composition
 
-- Read [`.agents/doctrine/custody-and-marketplace-doctrine.md`](../doctrine/custody-and-marketplace-doctrine.md) for source custody, provenance, and plugin curation.
-- Read root [`AGENTS.md`](../../AGENTS.md) for source-of-truth and publication rules.
-- Read [`.devin/rules/tools.md`](../../.devin/rules/tools.md) for canonical generation and validation commands.
+Write the durable plan before implementation. Source and overlay edits precede regeneration and validation.
 
-Enter through `using-superpowers-plus` and follow its planning handoff. This
-runbook does not select or sequence workflow skills.
+## Doctrine and contracts
 
-## Marketplace planning constraints
+- [Custody and marketplace doctrine](../doctrine/custody-and-marketplace-doctrine.md)
+- [Repository command contract](../contracts/repo-standards-commands.json)
 
-Plans that touch marketplace skills, prompts, or installers must:
+## Local commands and paths
 
-- identify canonical source separately from generated installed copies;
-- schedule source and local-overlay edits before regeneration;
-- regenerate through the repository's canonical marketplace command;
-- keep consumer-facing guidance independent of this repository's command bus;
-- include focused contract proof and the normal hooked commit gate; and
-- identify any intentionally broken interim state.
+Plans live under `.agents/plans/`. Use `py -3 tools/run.py mesh --apply` after adding one.
+
+## Evidence contract
+
+The committed plan names exact files, test cycles, generation, validation, and publication proof.
+
+## Prohibited combinations
+
+Do not hand off an uncommitted plan.
+
+## Playbook routing
+
+- [Repository doctrine](../playbooks/repo-doctrine.md) - when the plan changes repository doctrine, standards, or routing.

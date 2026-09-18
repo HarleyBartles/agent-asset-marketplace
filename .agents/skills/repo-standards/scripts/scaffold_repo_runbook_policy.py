@@ -35,7 +35,12 @@ def _template_path() -> Path:
 
 def _has_required_boilerplate(content: str) -> bool:
     lines = [line.strip() for line in content.splitlines()]
-    return "# Repo Runbook Policy" in lines and "## Standard-to-local mapping" in lines and "## Exceptions" in lines
+    return (
+        "# Repository Runbook and Playbook Policy" in lines
+        and "## Standard runbooks" in lines
+        and "## Standard playbooks" in lines
+        and "## Exceptions" in lines
+    )
 
 
 def main(argv: list[str] | None = None) -> int:

@@ -10,7 +10,7 @@ implementation, or code review.
 Use the same ordered contract for every repo-backed stage:
 
 ~~~text
-using-superpowers-plus -> repo-worker-base (hygiene) -> stage skill (reads its baseline + local guide)
+using-superpowers-plus -> repo-worker-base (hygiene) -> stage skill (reads its baseline + stage runbook -> applicable playbooks)
 ~~~
 
 | Stage | Baseline (owned by the stage skill) | Local guide | Lane |
@@ -25,7 +25,7 @@ paths, commands, exclusions, CI, and exceptions. `repo-worker-base` supplies
 worktree, branch, scratch, validation, and publication boundaries only; it no
 longer owns stage baselines or this composition table. The local guide
 supplies its stage overlay; the stage skill supplies stage technique and reads
-its own baseline as its first step. Local guidance cannot override, reorder,
+its own baseline as its first step. The runbook is the local composition root and must route every applicable `.agents/playbooks/` concern before stage work proceeds. Local guidance cannot override, reorder,
 or bypass the required hygiene, baseline, local-guide, and lane sequence.
 
 Do not use this pairing to recursively reclassify work or to copy local policy

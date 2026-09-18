@@ -364,26 +364,89 @@ def _live_markdown_lines(text: str) -> list[str]:
     return prose.splitlines()
 
 
-def _check_runbook_composition(repo_root: Path) -> list[str]:
-    """Warn on runbooks missing the minimum composition declaration.
+_COMPOSITION_HEADINGS = (
+    "When",
+    "Required skills",
+    "Composition",
+    "Doctrine and contracts",
+    "Local commands and paths",
+    "Evidence contract",
+    "Prohibited combinations",
+)
+_MARKDOWN_LINK = re.compile(r"\[[^\]]+\]\(([^)#]+)(?:#[^)]+)?\)")
 
-    Only the `## Required skills` heading is checked; warning-free output
-    does not certify the full seven-section contract in the runbook
-    standard.
-    """
-    warnings: list[str] = []
-    runbooks_dir = repo_root / ".agents" / "runbooks"
-    if not runbooks_dir.is_dir():
-        return warnings
-    for path in sorted(runbooks_dir.glob("*.md")):
-        if path.name in ("AGENTS.md", "INDEX.md"):
+
+def _composition_files(directory: Path) -> list[Path]:
+    if not directory.is_dir():
+        return []
+    return [path for path in sorted(directory.glob("*.md")) if path.name not in ("AGENTS.md", "INDEX.md")]
+
+
+def _section_links(path: Path, heading: str) -> list[Path]:
+    lines = _live_markdown_lines(path.read_text(encoding="utf-8"))
+    in_section = False
+    links: list[Path] = []
+    for line in lines:
+        stripped = line.strip()
+        if stripped.startswith("## "):
+            in_section = stripped == f"## {heading}"
             continue
-        text = path.read_text(encoding="utf-8")
-        if not any(line.strip() == "## Required skills" for line in _live_markdown_lines(text)):
-            warnings.append(
-                f"{path.relative_to(repo_root).as_posix()}: missing '## Required skills' composition section"
-            )
-    return warnings
+        if not in_section:
+            continue
+        for target in _MARKDOWN_LINK.findall(line):
+            if "://" not in target:
+                links.append((path.parent / target).resolve())
+    return links
+
+
+def _check_composition_graph(repo_root: Path) -> list[str]:
+    """Validate runbook roots, topical playbooks, and their explicit edges."""
+    runbooks = _composition_files(repo_root / ".agents" / "runbooks")
+    playbooks = _composition_files(repo_root / ".agents" / "playbooks")
+    if not runbooks and not playbooks:
+        return []
+
+    findings: list[str] = []
+    required_by_kind = ((runbooks, "Playbook routing"), (playbooks, "Invoked by"))
+    for paths, kind_heading in required_by_kind:
+        for path in paths:
+            live = {line.strip() for line in _live_markdown_lines(path.read_text(encoding="utf-8"))}
+            for heading in (*_COMPOSITION_HEADINGS, kind_heading):
+                if f"## {heading}" not in live:
+                    findings.append(
+                        f"{path.relative_to(repo_root).as_posix()}: missing '## {heading}' composition section"
+                    )
+
+    runbook_set = {path.resolve() for path in runbooks}
+    playbook_set = {path.resolve() for path in playbooks}
+    edges: dict[Path, set[Path]] = {path.resolve(): set(_section_links(path, "Playbook routing")) for path in runbooks}
+    parents: dict[Path, set[Path]] = {path.resolve(): set(_section_links(path, "Invoked by")) for path in playbooks}
+
+    for runbook, targets in edges.items():
+        for target in targets:
+            if target not in playbook_set:
+                findings.append(
+                    f"{runbook.relative_to(repo_root).as_posix()}: playbook target does not resolve: {target}"
+                )
+            elif runbook not in parents.get(target, set()):
+                findings.append(
+                    f"{target.relative_to(repo_root).as_posix()}: missing reciprocal Invoked by link to "
+                    f"{runbook.relative_to(repo_root).as_posix()}"
+                )
+    for playbook, sources in parents.items():
+        for source in sources:
+            if source not in runbook_set:
+                findings.append(
+                    f"{playbook.relative_to(repo_root).as_posix()}: runbook target does not resolve: {source}"
+                )
+            elif playbook not in edges.get(source, set()):
+                findings.append(
+                    f"{source.relative_to(repo_root).as_posix()}: missing reciprocal Playbook routing link to "
+                    f"{playbook.relative_to(repo_root).as_posix()}"
+                )
+        if not any(playbook in targets for targets in edges.values()):
+            findings.append(f"{playbook.relative_to(repo_root).as_posix()}: playbook is not reachable from a runbook")
+    return findings
 
 
 def _check_surface(
@@ -448,7 +511,7 @@ def _check_surface(
 
     if scaffold is not None and scaffold.is_file():
         findings.extend(_run_scaffold_check(scaffold, repo_root))
-        if surf_id in ("root-agents-md", "runbooks-agents-md") and full.is_file():
+        if surf_id in ("root-agents-md", "runbooks-agents-md", "playbooks-agents-md") and full.is_file():
             findings.extend(_agents_md.validate_agents_md(full, repo_root))
         return findings
 
@@ -591,7 +654,7 @@ under the ## Exceptions heading are skipped."""
     enabled_surface_ids = _enabled_surface_ids(surfaces, exceptions)
     dependency_findings = _required_with_findings(surfaces, exceptions)
 
-    findings: list[str] = list(dependency_findings)
+    findings: list[str] = [*dependency_findings, *_check_composition_graph(repo_root)]
     for surface in surfaces:
         findings.extend(_check_surface(repo_root, surface, exceptions, enabled_surface_ids))
 
@@ -604,8 +667,6 @@ under the ## Exceptions heading are skipped."""
             unique_findings.append(f)
 
     if args.check or not args.apply:
-        for warning in _check_runbook_composition(repo_root):
-            print(f"WARN: {warning}")
         if unique_findings:
             for f in unique_findings:
                 print(f"DRIFT: {f}")

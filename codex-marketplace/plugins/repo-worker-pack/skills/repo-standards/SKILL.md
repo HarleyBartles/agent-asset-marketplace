@@ -1,6 +1,6 @@
 ---
 name: repo-standards
-description: Use when reading, creating, updating, or aligning repo standards; when determining repo shape, runbook layout, workflow order, and handoff requirements. Do not use when the task is generic repo hygiene such as worktree, branch, source custody, or publication boundaries.
+description: Use when reading, creating, updating, or aligning repo standards; when determining repo shape, runbook and playbook layout, workflow order, and handoff requirements. Do not use when the task is generic repo hygiene such as worktree, branch, source custody, or publication boundaries.
 metadata:
   source-id: repo-standards
   source-path: codex-marketplace/plugins/repo-worker-pack/skills/repo-standards/SKILL.md
@@ -12,7 +12,7 @@ metadata:
   use_when:
   - reading, creating, updating, or aligning any repo-local runbook.
   - determining the workflow order for repo-backed design, planning, implementation, or review.
-  - a repo's runbook set is missing or misaligned with the standard.
+  - a repo's runbook or playbook set is missing or misaligned with the standard.
   do_not_use_when:
   - generic repo hygiene such as worktree, branch, source custody, or publication boundaries — defer to repo-worker-base for those.
 license: MIT
@@ -20,9 +20,9 @@ license: MIT
 
 # Repo Standards
 
-This skill is the portable baseline for repo-local runbooks and agent-facing routing surfaces. It defines the cross-repo layout of root `AGENTS.md`, pointer files, the `.agents/runbooks/` set, and the workflow order for each stage.
+This skill is the portable baseline for repo-local stage runbooks, topical playbooks, and agent-facing routing surfaces. It defines the cross-repo layout of root `AGENTS.md`, pointer files, both composition sets, and the workflow order for each stage.
 
-Each repo supplies a thin overlay at `.agents/doctrine/repo-runbook-policy.md` that maps the standard to local files and records any exceptions. Local runbooks in `.agents/runbooks/` contain repo-specific paths, commands, exclusions, CI, and exceptions.
+Each repo supplies a thin overlay at `.agents/doctrine/repo-runbook-policy.md` that maps stage runbooks and topical playbooks to local files and records exceptions. Runbooks own lifecycle-stage composition; playbooks bind conditional concerns to capability skills, doctrine, contracts, commands, and evidence.
 
 ## Read when
 
@@ -71,4 +71,4 @@ After routing, the `repo-standards` workflow is:
 - Use `--force` to overwrite an existing scaffolded surface. Without `--force`, the scaffolds create missing files and leave existing ones alone.
 - `repo-standards` supports `--apply --yes` to create missing surfaces and `--apply --yes --force` to overwrite drifted surfaces.
 
-For the full list of required surfaces, runbook set, scaffold helpers, and exceptions, see [references/repository-shape-standard.md](references/repository-shape-standard.md) and [references/repository-runbook-standard.md](references/repository-runbook-standard.md).
+For the full list of required surfaces, runbook and playbook sets, scaffold helpers, and exceptions, see [references/repository-shape-standard.md](references/repository-shape-standard.md) and [references/repository-runbook-standard.md](references/repository-runbook-standard.md).

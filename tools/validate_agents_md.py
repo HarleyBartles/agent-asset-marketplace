@@ -21,6 +21,7 @@ ALLOWED_AGENTS_MD = {
     ".agents/docs/AGENTS.md",
     ".agents/doctrine/AGENTS.md",
     ".agents/runbooks/AGENTS.md",
+    ".agents/playbooks/AGENTS.md",
     ".agents/plugins/AGENTS.md",
 }
 
