@@ -8,7 +8,7 @@ import pytest
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
-SKILL_ROOT = REPO_ROOT / "codex-marketplace" / "plugins" / "repo-worker-pack" / "skills" / "repo-standards" / "scripts"
+SKILL_ROOT = REPO_ROOT / "codex-marketplace" / "plugins" / "agent-operating-model" / "skills" / "repo-shape" / "scripts"
 SCAFFOLD_AGENTS_MD = SKILL_ROOT / "scaffold_agents_md.py"
 SCAFFOLD_CONTRIBUTING = SKILL_ROOT / "scaffold_contributing.py"
 SCAFFOLD_GITIGNORE = SKILL_ROOT / "scaffold_gitignore.py"
@@ -1200,25 +1200,25 @@ _GATED_FILES = (
     REPO_ROOT
     / "codex-marketplace"
     / "plugins"
-    / "repo-worker-pack"
+    / "agent-operating-model"
     / "skills"
-    / "repo-standards"
+    / "repo-shape"
     / "references"
     / "ci-validation-pipeline.md",
     REPO_ROOT
     / "codex-marketplace"
     / "plugins"
-    / "repo-worker-pack"
+    / "agent-operating-model"
     / "skills"
-    / "repo-standards"
+    / "repo-shape"
     / "templates"
     / "pr.md",
     REPO_ROOT
     / "codex-marketplace"
     / "plugins"
-    / "repo-worker-pack"
+    / "agent-operating-model"
     / "skills"
-    / "repo-standards"
+    / "repo-shape"
     / "references"
     / "repository-shape-standard.md",
     REPO_ROOT / "AGENTS.md",

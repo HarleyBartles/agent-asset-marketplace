@@ -80,7 +80,7 @@ It also records:
 
 ## Vendor subagent profiles
 
-For each installed plugin, the core looks for `assets/profiles/*.md` inside the plugin root and delegates the actual copy and orphan removal to `repo-standards/scripts/deploy_vendor_profiles.py`. `refreshing-installed-skills` records the `vendorProfiles` provenance array (which plugin owns which profiles, source path, and file names), while `repo-standards` owns the one-shot deployment.
+For each installed plugin, the core looks for `assets/profiles/*.md` inside the plugin root and delegates the actual copy and orphan removal to `repo-shape/scripts/deploy_vendor_profiles.py`. `refreshing-installed-skills` records the `vendorProfiles` provenance array (which plugin owns which profiles, source path, and file names), while `repo-shape` owns the one-shot deployment.
 
 Profiles are copied into the consumer's agent search path at `.agents/agents/<profile>.md` only when that file does not already exist. Existing files are never overwritten, so a repo that already has `reviewer.md`, `implementer.md`, etc. keeps its own copy. Orphan vendor profiles are removed in the same step.
 

@@ -1,0 +1,106 @@
+{
+  "bundle_name": "agent-operating-model",
+  "bundle_version": "1.0.0",
+  "bundle_type": "plugin-pack",
+  "marketplace_root": ".agents/plugins/marketplace.json",
+  "plugin_root": "codex-marketplace/plugins/agent-operating-model",
+  "source_families": [
+    "first_party"
+  ],
+  "notes": [
+    "agent-operating-model combines first-party agent-operating-model skills."
+  ],
+  "provenance_refs": [],
+  "plugin_author": "Harley Bartles",
+  "plugin_license": "MIT",
+  "entries": [
+    {
+      "canonical_name": "command-bus",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "canonical_source_path": "codex-marketplace/plugins/agent-operating-model/skills/command-bus",
+      "local_path": "skills/command-bus",
+      "source_path": "codex-marketplace/plugins/agent-operating-model/skills/command-bus/SKILL.md",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Canonical first-party command-bus skill. (Command Bus first-party skill)"
+    },
+    {
+      "canonical_name": "python",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "canonical_source_path": "codex-marketplace/plugins/agent-operating-model/skills/python",
+      "local_path": "skills/python",
+      "source_path": "codex-marketplace/plugins/agent-operating-model/skills/python/SKILL.md",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Canonical first-party python skill. (Python first-party skill)"
+    },
+    {
+      "canonical_name": "repo-agent-assets",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "canonical_source_path": "codex-marketplace/plugins/agent-operating-model/skills/repo-agent-assets",
+      "local_path": "skills/repo-agent-assets",
+      "source_path": "codex-marketplace/plugins/agent-operating-model/skills/repo-agent-assets/SKILL.md",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Canonical first-party repo-agent-assets skill. (Repo Agent Assets first-party skill)"
+    },
+    {
+      "canonical_name": "repo-composition",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "canonical_source_path": "codex-marketplace/plugins/agent-operating-model/skills/repo-composition",
+      "local_path": "skills/repo-composition",
+      "source_path": "codex-marketplace/plugins/agent-operating-model/skills/repo-composition/SKILL.md",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Canonical first-party repo-composition skill. (Repo Composition first-party skill)"
+    },
+    {
+      "canonical_name": "repo-shape",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "canonical_source_path": "codex-marketplace/plugins/agent-operating-model/skills/repo-shape",
+      "local_path": "skills/repo-shape",
+      "source_path": "codex-marketplace/plugins/agent-operating-model/skills/repo-shape/SKILL.md",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Canonical first-party repo-shape skill. (Repo Shape first-party skill)"
+    },
+    {
+      "canonical_name": "repo-standards",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "canonical_source_path": "codex-marketplace/plugins/agent-operating-model/skills/repo-standards",
+      "local_path": "skills/repo-standards",
+      "source_path": "codex-marketplace/plugins/agent-operating-model/skills/repo-standards/SKILL.md",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Canonical first-party repo-standards skill. (Repo Standards router first-party skill)"
+    },
+    {
+      "canonical_name": "repository-validation",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "canonical_source_path": "codex-marketplace/plugins/agent-operating-model/skills/repository-validation",
+      "local_path": "skills/repository-validation",
+      "source_path": "codex-marketplace/plugins/agent-operating-model/skills/repository-validation/SKILL.md",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Canonical first-party repository-validation skill. (Repository Validation first-party skill)"
+    },
+    {
+      "canonical_name": "tracked-repo-hooks",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "canonical_source_path": "codex-marketplace/plugins/agent-operating-model/skills/tracked-repo-hooks",
+      "local_path": "skills/tracked-repo-hooks",
+      "source_path": "codex-marketplace/plugins/agent-operating-model/skills/tracked-repo-hooks/SKILL.md",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Canonical first-party tracked-repo-hooks skill. (Tracked Repo Hooks first-party skill)"
+    }
+  ]
+}

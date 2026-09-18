@@ -1,6 +1,6 @@
 # CI parity
 
-## Canonical registry
+## Canonical CI registry
 
 The hosted workflow `.github/workflows/marketplace-validation.yml` runs:
 

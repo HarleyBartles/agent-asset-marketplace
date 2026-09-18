@@ -282,6 +282,21 @@
         "status": "aligned",
         "note": null
       }
+    },
+    {
+      "name": "agent-operating-model",
+      "category": "Productivity",
+      "plugin_root": "codex-marketplace/plugins/agent-operating-model",
+      "plugin_manifest": "codex-marketplace/plugins/agent-operating-model/.codex-plugin/plugin.json",
+      "source_md": "codex-marketplace/plugins/agent-operating-model/SOURCE.md",
+      "bundle_manifest": "codex-marketplace/plugins/agent-operating-model/references/bundle-manifest.json",
+      "skills_path": "codex-marketplace/plugins/agent-operating-model/skills",
+      "agents_md": null,
+      "registry_path": "./codex-marketplace/plugins/agent-operating-model",
+      "registry_alignment": {
+        "status": "aligned",
+        "note": null
+      }
     }
   ]
 }
