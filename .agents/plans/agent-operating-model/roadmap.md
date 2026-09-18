@@ -10,8 +10,8 @@ the public `repo-standards` invocation contract.
 
 | # | Title | Status | Plan File | Commit | PR | Rating | Notes |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| 1 | Finish runbook/playbook separation | executing | `2026-09-18-plan-1-finish-pr-321.md` | `f111c3f02` | [#321](https://github.com/HarleyBartles/agent-asset-marketplace/pull/321) | - | Repaired, validated, clean, and Ready for Review; awaiting merge decision. |
-| 2 | Build Agent Operating Model plugin | pending | Written just-in-time | - | - | - | Create the plugin, move `repo-standards` and `python`, extract the focused skills, regenerate, and prove compatibility in one implementation plan. |
+| 1 | Finish runbook/playbook separation | done | `2026-09-18-plan-1-finish-pr-321.md` | `f111c3f02` | [#321](https://github.com/HarleyBartles/agent-asset-marketplace/pull/321) | - | Merged to `main` as `daee89c1a`. |
+| 2 | Build Agent Operating Model plugin | ready | `2026-09-18-plan-2-build-agent-operating-model.md` | - | [#322](https://github.com/HarleyBartles/agent-asset-marketplace/pull/322) | - | One implementation plan for plugin creation, custody moves, focused skills, regeneration, and validation. |
 
 ## Global sequencing constraints
 
