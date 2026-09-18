@@ -815,6 +815,42 @@ def test_scaffold_repo_runbook_policy_check_duplicate_playbook_classification_fa
     assert "both standard and repository-specific" in result.stdout
 
 
+def test_scaffold_repo_runbook_policy_check_linked_duplicate_playbook_fails(tmp_path: Path) -> None:
+    """Markdown-linked repository-specific entries cannot duplicate standard playbooks."""
+    repo = tmp_path / "linked-duplicate-playbook-policy"
+    repo.mkdir()
+    _init_git_repo(repo)
+
+    policy_path = repo / ".agents" / "doctrine" / "repo-runbook-policy.md"
+    policy_path.parent.mkdir(parents=True)
+    policy_path.write_text(
+        "# Repository Runbook and Playbook Policy\n\n"
+        "## Standard runbooks\n\n"
+        "| Standard runbook | Local path | Status |\n|---|---|---|\n"
+        "| implementing.md | `.agents/runbooks/implementing.md` | required |\n\n"
+        "## Standard playbooks\n\n"
+        "| Standard playbook | Local path | Status |\n|---|---|---|\n"
+        "| repo-doctrine.md | `.agents/playbooks/repo-doctrine.md` | optional |\n\n"
+        "## Additional repository-specific playbooks\n\n"
+        "- [Repo doctrine](../playbooks/repo-doctrine.md)\n\n"
+        "## Exceptions\n\nNone.\n",
+        encoding="utf-8",
+        newline="\n",
+    )
+
+    result = subprocess.run(
+        [sys.executable, str(SCAFFOLD_REPO_RUNBOOK_POLICY), "--check"],
+        cwd=repo,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+    )
+
+    assert result.returncode != 0
+    assert "repo-doctrine.md" in result.stdout
+    assert "both standard and repository-specific" in result.stdout
+
+
 def test_pre_commit_hook_wired_to_ci_apply_and_diagnostics(tmp_path: Path) -> None:
     """repo-standards installs a pre-commit hook that runs ci --apply then ci --check --diagnostics."""
     repo = tmp_path / "precommit-check"
@@ -1739,6 +1775,43 @@ def test_composition_graph_accepts_playbook_to_playbook_composition(tmp_path: Pa
         encoding="utf-8",
     )
     assert repo_standards._check_composition_graph(tmp_path) == []
+
+
+def test_composition_graph_rejects_missing_playbook_composition_target(tmp_path: Path) -> None:
+    playbooks = tmp_path / ".agents" / "playbooks"
+    playbooks.mkdir(parents=True)
+    (playbooks / "testing.md").write_text(
+        _composition_document("Runbook routing", "None.").replace(
+            "## Composition\n\n- defined",
+            "## Composition\n\n- [Security](security.md)",
+        ),
+        encoding="utf-8",
+    )
+
+    findings = repo_standards._check_composition_graph(tmp_path)
+    assert any("security.md" in finding and "does not resolve" in finding for finding in findings)
+
+
+def test_composition_graph_rejects_playbook_composition_cycle(tmp_path: Path) -> None:
+    playbooks = tmp_path / ".agents" / "playbooks"
+    playbooks.mkdir(parents=True)
+    (playbooks / "testing.md").write_text(
+        _composition_document("Runbook routing", "None.").replace(
+            "## Composition\n\n- defined",
+            "## Composition\n\n- [Security](security.md)",
+        ),
+        encoding="utf-8",
+    )
+    (playbooks / "security.md").write_text(
+        _composition_document("Runbook routing", "None.").replace(
+            "## Composition\n\n- defined",
+            "## Composition\n\n- [Testing](testing.md)",
+        ),
+        encoding="utf-8",
+    )
+
+    findings = repo_standards._check_composition_graph(tmp_path)
+    assert any("composition cycle" in finding and "testing.md" in finding for finding in findings)
 
 
 def test_apply_fails_when_composition_graph_remains_invalid(

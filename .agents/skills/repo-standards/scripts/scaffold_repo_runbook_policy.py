@@ -70,7 +70,7 @@ def _duplicate_playbook_classifications(content: str) -> set[str]:
     for line in _section_lines(content, "## Additional repository-specific playbooks"):
         if not line.startswith("-") or line.startswith("- <!--"):
             continue
-        match = re.search(r"`([^`]+\.md)`", line)
+        match = re.search(r"`([^`]+\.md)`", line) or re.search(r"\[[^\]]+\]\(([^)]+\.md)\)", line)
         if match:
             additional.add(Path(match.group(1)).name)
 

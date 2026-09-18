@@ -399,6 +399,50 @@ def _section_links(path: Path, heading: str) -> list[Path]:
     return links
 
 
+def _playbook_composition_links(path: Path, playbook_dir: Path) -> set[Path]:
+    links: set[Path] = set()
+    resolved_dir = playbook_dir.resolve()
+    for line in _live_markdown_lines(path.read_text(encoding="utf-8")):
+        for target in _MARKDOWN_LINK.findall(line):
+            if "://" in target:
+                continue
+            resolved = (path.parent / target).resolve()
+            if resolved.parent == resolved_dir and resolved.suffix.lower() == ".md":
+                links.add(resolved)
+    return links
+
+
+def _find_composition_cycle(edges: dict[Path, set[Path]]) -> list[Path] | None:
+    visited: set[Path] = set()
+    active: set[Path] = set()
+    stack: list[Path] = []
+
+    def visit(node: Path) -> list[Path] | None:
+        visited.add(node)
+        active.add(node)
+        stack.append(node)
+        for target in sorted(edges.get(node, set())):
+            if target not in edges:
+                continue
+            if target in active:
+                start = stack.index(target)
+                return [*stack[start:], target]
+            if target not in visited:
+                cycle = visit(target)
+                if cycle:
+                    return cycle
+        stack.pop()
+        active.remove(node)
+        return None
+
+    for node in sorted(edges):
+        if node not in visited:
+            cycle = visit(node)
+            if cycle:
+                return cycle
+    return None
+
+
 def _check_composition_graph(repo_root: Path) -> list[str]:
     """Validate runbook roots, topical playbooks, and their explicit edges."""
     runbooks = _composition_files(repo_root / ".agents" / "runbooks")
@@ -423,6 +467,9 @@ def _check_composition_graph(repo_root: Path) -> list[str]:
     parents: dict[Path, set[Path]] = {
         path.resolve(): set(_section_links(path, "Runbook routing")) for path in playbooks
     }
+    composition_edges = {
+        path.resolve(): _playbook_composition_links(path, repo_root / ".agents" / "playbooks") for path in playbooks
+    }
 
     for runbook, targets in edges.items():
         for target in targets:
@@ -446,6 +493,17 @@ def _check_composition_graph(repo_root: Path) -> list[str]:
                     f"{source.relative_to(repo_root).as_posix()}: missing reciprocal Playbook routing link to "
                     f"{playbook.relative_to(repo_root).as_posix()}"
                 )
+    for playbook, targets in composition_edges.items():
+        for target in targets:
+            if target not in playbook_set:
+                findings.append(
+                    f"{playbook.relative_to(repo_root).as_posix()}: playbook composition target does not resolve: "
+                    f"{target.relative_to(repo_root).as_posix()}"
+                )
+    cycle = _find_composition_cycle(composition_edges)
+    if cycle:
+        rendered = " -> ".join(path.relative_to(repo_root).as_posix() for path in cycle)
+        findings.append(f"playbook composition cycle: {rendered}")
     return findings
 
 
