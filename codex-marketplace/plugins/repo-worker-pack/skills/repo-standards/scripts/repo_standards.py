@@ -400,16 +400,12 @@ def _section_links(path: Path, heading: str) -> list[Path]:
 
 
 def _playbook_composition_links(path: Path, playbook_dir: Path) -> set[Path]:
-    links: set[Path] = set()
     resolved_dir = playbook_dir.resolve()
-    for line in _live_markdown_lines(path.read_text(encoding="utf-8")):
-        for target in _MARKDOWN_LINK.findall(line):
-            if "://" in target:
-                continue
-            resolved = (path.parent / target).resolve()
-            if resolved.parent == resolved_dir and resolved.suffix.lower() == ".md":
-                links.add(resolved)
-    return links
+    return {
+        target
+        for target in _section_links(path, "Composition")
+        if target.parent == resolved_dir and target.suffix.lower() == ".md"
+    }
 
 
 def _find_composition_cycle(edges: dict[Path, set[Path]]) -> list[Path] | None:

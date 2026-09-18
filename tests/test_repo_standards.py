@@ -1814,6 +1814,27 @@ def test_composition_graph_rejects_playbook_composition_cycle(tmp_path: Path) ->
     assert any("composition cycle" in finding and "testing.md" in finding for finding in findings)
 
 
+def test_composition_graph_ignores_playbook_links_outside_composition(tmp_path: Path) -> None:
+    playbooks = tmp_path / ".agents" / "playbooks"
+    playbooks.mkdir(parents=True)
+    (playbooks / "testing.md").write_text(
+        _composition_document("Runbook routing", "None.").replace(
+            "## Doctrine and contracts\n\n- defined",
+            "## Doctrine and contracts\n\n- [Security](security.md)",
+        ),
+        encoding="utf-8",
+    )
+    (playbooks / "security.md").write_text(
+        _composition_document("Runbook routing", "None.").replace(
+            "## Doctrine and contracts\n\n- defined",
+            "## Doctrine and contracts\n\n- [Testing](testing.md)",
+        ),
+        encoding="utf-8",
+    )
+
+    assert repo_standards._check_composition_graph(tmp_path) == []
+
+
 def test_apply_fails_when_composition_graph_remains_invalid(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
 ) -> None:
