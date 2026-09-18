@@ -108,15 +108,6 @@
     "reason": "Repository-local composition guidance required by the approved runbook and playbook contract."
   },
   {
-    "path": "codex-marketplace/plugins/superpowers-plus/skills/iterative-review/tests/test_review_discovery_v2.py",
-    "line": 404,
-    "pattern": "personal-path",
-    "context": "\"repo:C:/win/x.md\",",
-    "classification": "repo-local",
-    "owner": "runbook-playbook contract",
-    "reason": "Repository-local composition guidance required by the approved runbook and playbook contract."
-  },
-  {
     "path": "codex-marketplace/plugins/repo-worker-pack/skills/repo-worker-base/references/repository-validation-contract.md",
     "line": 34,
     "pattern": "every-function",
@@ -126,7 +117,7 @@
     "reason": "Repository-local composition guidance required by the approved runbook and playbook contract."
   },
   {
-    "path": "codex-marketplace/plugins/repo-worker-pack/skills/repo-standards/references/ci-validation-pipeline.md",
+    "path": "codex-marketplace/plugins/agent-operating-model/skills/repo-shape/references/ci-validation-pipeline.md",
     "line": 87,
     "pattern": "must-read",
     "context": "hook sequence, and any platform-specific wrappers. Portable workers must read",

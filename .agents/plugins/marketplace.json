@@ -219,6 +219,18 @@
         "authentication": "ON_INSTALL"
       },
       "category": "Productivity"
+    },
+    {
+      "name": "agent-operating-model",
+      "source": {
+        "source": "local",
+        "path": "./codex-marketplace/plugins/agent-operating-model"
+      },
+      "policy": {
+        "installation": "INSTALLED_BY_DEFAULT",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
     }
   ],
   "repo": {

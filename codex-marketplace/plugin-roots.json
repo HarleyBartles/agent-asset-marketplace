@@ -163,6 +163,15 @@
       "plugin_root": "codex-marketplace/plugins/writing-pack",
       "manifest_path": "codex-marketplace/plugins/writing-pack/.codex-plugin/plugin.json",
       "enabled": true
+    },
+    {
+      "order": 18,
+      "name": "agent-operating-model",
+      "category": "Productivity",
+      "registry_path": "./codex-marketplace/plugins/agent-operating-model",
+      "plugin_root": "codex-marketplace/plugins/agent-operating-model",
+      "manifest_path": "codex-marketplace/plugins/agent-operating-model/.codex-plugin/plugin.json",
+      "enabled": true
     }
   ]
 }

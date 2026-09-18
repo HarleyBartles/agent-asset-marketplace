@@ -322,7 +322,7 @@ def _apply_marketplace(ctx: Ctx) -> None:
     _run([sys.executable, "tools/sync_skill_shared_references.py", "--apply"], ctx)
     _run([sys.executable, "tools/generate_marketplace.py", "--apply"], ctx)
     _run([sys.executable, "tools/validate_marketplace.py", "--phase", "all"], ctx)
-    _run([sys.executable, ".agents/skills/repo-standards/scripts/deploy_vendor_profiles.py", "--apply"], ctx)
+    _run([sys.executable, ".agents/skills/repo-shape/scripts/deploy_vendor_profiles.py", "--apply"], ctx)
 
 
 def _check_marketplace(ctx: Ctx) -> None:
@@ -356,7 +356,7 @@ def _validate_skill_scripts(ctx: Ctx) -> None:
     _run(
         [
             sys.executable,
-            ".agents/skills/repo-standards/scripts/validate_skill_scripts.py",
+            ".agents/skills/repo-shape/scripts/validate_skill_scripts.py",
             "--check",
         ],
         ctx,
@@ -368,7 +368,7 @@ def _run_repo_standards(ctx: Ctx) -> None:
         _run(
             [
                 sys.executable,
-                ".agents/skills/repo-standards/scripts/repo_standards.py",
+                ".agents/skills/repo-shape/scripts/repo_standards.py",
                 "--check",
             ],
             ctx,
@@ -377,7 +377,7 @@ def _run_repo_standards(ctx: Ctx) -> None:
     else:
         cmd = [
             sys.executable,
-            ".agents/skills/repo-standards/scripts/repo_standards.py",
+            ".agents/skills/repo-shape/scripts/repo_standards.py",
             "--apply",
             "--yes",
         ]

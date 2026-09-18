@@ -13,6 +13,7 @@ import yaml
 ROOT = Path(__file__).resolve().parents[1]
 SKILLS = ROOT / "codex-marketplace" / "plugins" / "superpowers-plus" / "skills"
 REPO_SKILLS = ROOT / "codex-marketplace" / "plugins" / "repo-worker-pack" / "skills"
+OPERATING_SKILLS = ROOT / "codex-marketplace" / "plugins" / "agent-operating-model" / "skills"
 DOCS = ROOT / "tests" / "pressure" / "workflow-contracts"
 sys.path.insert(0, str(ROOT / "tools"))
 import run_workflow_pressure_campaign as campaign_runner  # noqa: E402
@@ -112,7 +113,7 @@ class TestAuthorityBootstrapPortability:
         machine_path = re.compile(r"(?<!\w)[A-Za-z]:[\\/]+[A-Za-z0-9_.-]")
         text_suffixes = {"", ".md", ".py", ".json", ".ps1", ".js", ".ts", ".yml", ".yaml", ".txt"}
         offenders = []
-        for root in (SKILLS, REPO_SKILLS):
+        for root in (SKILLS, REPO_SKILLS, OPERATING_SKILLS):
             for path in root.rglob("*"):
                 if not path.is_file() or path.suffix.lower() not in text_suffixes or "__pycache__" in path.parts:
                     continue
@@ -202,7 +203,10 @@ class TestPlanningDelegationReview:
             *sorted(REPO_SKILLS.rglob("*.md")),
             *sorted(REPO_SKILLS.rglob("*.json")),
             *sorted(REPO_SKILLS.rglob("*.py")),
-            REPO_SKILLS / "repo-standards" / "templates" / "pre-commit",
+            *sorted(OPERATING_SKILLS.rglob("*.md")),
+            *sorted(OPERATING_SKILLS.rglob("*.json")),
+            *sorted(OPERATING_SKILLS.rglob("*.py")),
+            OPERATING_SKILLS / "repo-shape" / "templates" / "pre-commit",
         ]
         for path in paths:
             text = _read(path).lower()
@@ -270,7 +274,7 @@ class TestRepositoryCallersAndPressure:
     def test_repo_unslop_profile_has_contract_custody(self):
         assert (ROOT / ".agents" / "contracts" / "unslop" / "repository.md").is_file()
         assert not (ROOT / ".agents" / "docs" / "unslop").exists()
-        standard = _read(REPO_SKILLS / "repo-standards" / "references" / "repository-shape-standard.md")
+        standard = _read(OPERATING_SKILLS / "repo-shape" / "references" / "repository-shape-standard.md")
         assert ".agents/contracts/unslop/" in standard
         assert "<scope>/.agents/contracts/unslop/" in standard
 
@@ -446,21 +450,21 @@ class TestRepositoryCallersAndPressure:
                 offenders.append(f"{path.relative_to(ROOT)}: missing skill identity")
         assert offenders == []
 
-    def test_repo_standards_delegates_composition_to_using_superpowers_plus(self):
-        repo_standard = REPO_SKILLS / "repo-standards"
-        surfaces = [
-            repo_standard / "SKILL.md",
-            repo_standard / "agents" / "openai.yaml",
-            repo_standard / "templates" / "pr.md",
-            repo_standard / "references" / "repository-runbook-standard.md",
-        ]
-        for path in surfaces:
-            text = _read(path).lower()
-            assert "using-superpowers-plus" in text
-            assert "routing to skills" not in text
-            assert "route to the matching superpowers skill" not in text
-        assert "repo-worker-base" not in _read(repo_standard / "agents" / "openai.yaml")
-        assert "requesting-code-review" not in _read(repo_standard / "references" / "repository-runbook-standard.md")
+    def test_repo_standards_routes_to_focused_operating_model_skills(self):
+        router = _read(OPERATING_SKILLS / "repo-standards" / "SKILL.md").lower()
+        for skill in (
+            "repo-shape",
+            "repo-composition",
+            "command-bus",
+            "repository-validation",
+            "tracked-repo-hooks",
+            "repo-agent-assets",
+            "python",
+        ):
+            assert skill in router
+        assert "repo-worker-base" in router
+        assert "worktrees" in router
+        assert "publication" in router
 
     def test_workflow_inventory_covers_every_tracked_workflow(self):
         inventory = _read(DOCS / "workflow-inventory.md")
@@ -475,7 +479,7 @@ class TestRepositoryCallersAndPressure:
         assert "feature branch" in text
 
     def test_scanner_defects_are_classified(self):
-        roots = [SKILLS, REPO_SKILLS, ROOT / ".agents" / "runbooks", ROOT / ".agents" / "playbooks"]
+        roots = [SKILLS, REPO_SKILLS, OPERATING_SKILLS, ROOT / ".agents" / "runbooks", ROOT / ".agents" / "playbooks"]
         files = [path for root in roots for path in root.rglob("*")]
         findings = pressure_scan.scan_paths(files, ROOT)
         classified = json.loads(_read(DOCS / "pressure-scan-decisions.json"))
@@ -485,7 +489,7 @@ class TestRepositoryCallersAndPressure:
         assert all(item["classification"] != "defect" for item in classified)
 
     def test_pressure_scan_has_one_owned_disposition_per_candidate(self):
-        roots = [SKILLS, REPO_SKILLS, ROOT / ".agents" / "runbooks", ROOT / ".agents" / "playbooks"]
+        roots = [SKILLS, REPO_SKILLS, OPERATING_SKILLS, ROOT / ".agents" / "runbooks", ROOT / ".agents" / "playbooks"]
         files = [path for root in roots for path in root.rglob("*")]
         findings = pressure_scan.scan_paths(files, ROOT)
         dispositions = json.loads(_read(DOCS / "pressure-scan-decisions.json"))

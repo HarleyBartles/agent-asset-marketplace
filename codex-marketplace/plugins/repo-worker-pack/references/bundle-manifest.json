@@ -15,7 +15,6 @@
   "plugin_author": "Harley Bartles",
   "plugin_license": "MIT",
   "entries": [
-
     {
       "canonical_name": "base-doctrine",
       "source_category": "first_party",
@@ -100,17 +99,6 @@
       "source_author": "Harley Bartles",
       "source_license": "MIT",
       "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
-    },
-    {
-      "canonical_name": "repo-standards",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "source_family": "first_party",
-      "canonical_source_path": "codex-marketplace/plugins/repo-worker-pack/skills/repo-standards",
-      "local_path": "skills/repo-standards",
-      "source_path": "codex-marketplace/plugins/repo-worker-pack/skills/repo-standards/SKILL.md",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "Canonical first-party repo-standards skill. Defines cross-repo guide layout, invocation, and workflow order."
     },
     {
       "canonical_name": "repo-worker-base",
