@@ -18,13 +18,13 @@ with no manifest, retention promise, or evidentiary role.
 
 Durable content promotes before removal: enduring architecture decisions
 belong in the repository's declared ADR home; operating rules belong in
-`.agents/doctrine/` or `.agents/runbooks/`. The completion runbook names the
+`.agents/doctrine/`, `.agents/runbooks/`, or `.agents/playbooks/`. The completion playbook names the
 concrete destinations.
 
 ## Ownership
 
 `cleanup-custody` owns the custody classification and the
-promotion-before-removal method. The `completing-plans.md` runbook (or the
-repo's mapped completion runbook) owns the composition that applies this
+promotion-before-removal method. The `completing-plans.md` playbook (or the
+repo's mapped completion playbook) owns the composition that applies this
 doctrine. For current conventions, use `.agents/doctrine/*.md`,
-`.agents/runbooks/*.md`, and active plans and specs.
+`.agents/runbooks/*.md`, `.agents/playbooks/*.md`, and active plans and specs.

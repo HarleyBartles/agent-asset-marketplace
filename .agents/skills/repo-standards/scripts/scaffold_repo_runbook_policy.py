@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import os
+import re
 import subprocess
 import sys
 from pathlib import Path
@@ -35,7 +36,45 @@ def _template_path() -> Path:
 
 def _has_required_boilerplate(content: str) -> bool:
     lines = [line.strip() for line in content.splitlines()]
-    return "# Repo Runbook Policy" in lines and "## Standard-to-local mapping" in lines and "## Exceptions" in lines
+    return (
+        "# Repository Runbook and Playbook Policy" in lines
+        and "## Standard runbooks" in lines
+        and "## Standard playbooks" in lines
+        and "## Exceptions" in lines
+    )
+
+
+def _section_lines(content: str, heading: str) -> list[str]:
+    lines: list[str] = []
+    in_section = False
+    for line in content.splitlines():
+        stripped = line.strip()
+        if stripped.startswith("## "):
+            in_section = stripped == heading
+            continue
+        if in_section:
+            lines.append(stripped)
+    return lines
+
+
+def _duplicate_playbook_classifications(content: str) -> set[str]:
+    standard: set[str] = set()
+    for line in _section_lines(content, "## Standard playbooks"):
+        if not line.startswith("|"):
+            continue
+        cells = [cell.strip().strip("`") for cell in line.strip("|").split("|")]
+        if cells and cells[0].endswith(".md"):
+            standard.add(cells[0])
+
+    additional: set[str] = set()
+    for line in _section_lines(content, "## Additional repository-specific playbooks"):
+        if not line.startswith("-") or line.startswith("- <!--"):
+            continue
+        match = re.search(r"`([^`]+\.md)`", line) or re.search(r"\[[^\]]+\]\(([^)]+\.md)\)", line)
+        if match:
+            additional.add(Path(match.group(1)).name)
+
+    return standard & additional
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -82,6 +121,11 @@ exit codes:
             content = policy_path.read_text(encoding="utf-8")
             if not _has_required_boilerplate(content):
                 print("DRIFT: repo-runbook-policy.md exists but is missing required boilerplate")
+                return 1
+            duplicates = _duplicate_playbook_classifications(content)
+            if duplicates:
+                joined = ", ".join(sorted(duplicates))
+                print(f"DRIFT: playbook classified as both standard and repository-specific: {joined}")
                 return 1
             print("OK repo-runbook-policy.md: mapping file present")
             return 0

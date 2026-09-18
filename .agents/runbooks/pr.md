@@ -1,38 +1,36 @@
-# PR Runbook
+# PR Instructions Runbook
 
-Use this runbook for pull-request workflow and publication proof in `agent-asset-marketplace`.
+## When
+
+Use after implementation and review are complete and source needs publication.
 
 ## Required skills
 
-- `publishing-source` - publication method and proof shape.
-- `repo-worker-base` - worktree, branch, and validation boundaries.
-- `verification-before-completion` - completion evidence.
+- `publishing-source`
+- `repo-worker-base`
+- `verification-before-completion`
 
-## Before you begin
+## Composition
 
-- Read root [`AGENTS.md`](../../AGENTS.md) `## Publication proof for repo work` and `## Draft PR policy` for the durable doctrine.
-- Read [`.devin/rules/pr.md`](../../.devin/rules/pr.md) for the conditional rule trigger that loads this runbook.
-- Invoke `using-superpowers-plus` once and follow its publication handoff.
+Commit through the tracked hook, push the task branch, open a Draft PR, verify the published head, then move to Ready only after self-review.
 
-## When to use
+## Doctrine and contracts
 
-- Preparing a branch for review.
-- Creating or updating a PR.
-- Providing publication proof for repo work.
+- [Repository command contract](../contracts/repo-standards-commands.json)
+- [Completed artifacts](../doctrine/completed-artifacts.md)
 
-## Draft PR policy
+## Local commands and paths
 
-This repo's rules:
+The base branch is `main`. Hosted proof comes from GitHub checks for the exact pushed SHA.
 
-- Open pull requests as **draft**.
-- This repo's CI must not run on draft pull requests. The `marketplace-validation` workflow skips draft PRs and runs once a PR is no longer draft; it is gated by `github.event.pull_request.draft == false`.
-- The published PR is the publication proof; its body describes scope and
-  material evidence boundaries rather than restating its own metadata.
+## Evidence contract
 
-## Repo-specific guidance
+Return the verified PR URL, head SHA, validation boundary, and any blocker.
 
-- The portable rule for when to run the complete gate lives in `repo-standards` `references/ci-validation-pipeline.md`; this repo's command is `py -3 tools/run.py ci --check [--diagnostics]`.
-- `py -3 tools/run.py marketplace --apply` regenerates derived surfaces; stage any generated changes before committing.
+## Prohibited combinations
 
-The routed publication skill owns generic Draft lifecycle, review sequencing,
-commit discipline, and publication handoff.
+Do not publish directly to `main` without explicit authorization or bypass the pre-commit hook.
+
+## Playbook routing
+
+- [Completing plans](../playbooks/completing-plans.md) - after durable decisions have been promoted and implementation is complete.

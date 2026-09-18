@@ -21,10 +21,23 @@ ALLOWED_AGENTS_MD = {
     ".agents/docs/AGENTS.md",
     ".agents/doctrine/AGENTS.md",
     ".agents/runbooks/AGENTS.md",
+    ".agents/playbooks/AGENTS.md",
     ".agents/plugins/AGENTS.md",
 }
 
-MAX_ROOT_LINES = 55
+WARN_ROOT_LINES = 55
+MAX_ROOT_LINES = 100
+
+
+def _root_line_count_finding(text: str) -> tuple[str, str] | None:
+    line_count = len(text.splitlines())
+    if line_count > MAX_ROOT_LINES:
+        return "error", f"Root AGENTS.md exceeds {MAX_ROOT_LINES} lines (found {line_count})"
+    if line_count > WARN_ROOT_LINES:
+        return "warning", (
+            f"Root AGENTS.md has {line_count} lines; consider routing detail after {WARN_ROOT_LINES} lines"
+        )
+    return None
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -65,9 +78,14 @@ def main(argv: list[str] | None = None) -> int:
         if "<" in text and ">" in text:
             print(f"Placeholder-like '<...>' content in {p}", file=sys.stderr)
             return 1
-        if p == "AGENTS.md" and text.count("\n") + 1 > MAX_ROOT_LINES:
-            print(f"Root AGENTS.md exceeds {MAX_ROOT_LINES} lines", file=sys.stderr)
-            return 1
+        if p == "AGENTS.md":
+            finding = _root_line_count_finding(text)
+            if finding is not None:
+                level, message = finding
+                if level == "error":
+                    print(message, file=sys.stderr)
+                    return 1
+                print(f"WARN: {message}")
 
     print(f"OK validate_agents_md: {len(agents_files)} allowed AGENTS.md file(s) present")
     return 0

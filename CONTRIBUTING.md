@@ -5,7 +5,7 @@ This is the contributor entry point for `agent-asset-marketplace`.
 ## Before you begin
 
 - Read root [`AGENTS.md`](./AGENTS.md) for source-of-truth and publication rules.
-- Read [`.agents/doctrine/repo-runbook-policy.md`](./.agents/doctrine/repo-runbook-policy.md) for this repo's mapping to the cross-repo runbook standard.
+- Read [`.agents/doctrine/repo-runbook-policy.md`](./.agents/doctrine/repo-runbook-policy.md) for this repo's runbook and playbook mappings.
 - Invoke `using-superpowers-plus` once and follow its handoff. The selected
   owner reads the applicable local runbook.
 

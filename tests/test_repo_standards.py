@@ -4,6 +4,8 @@ import subprocess
 import sys
 from pathlib import Path
 
+import pytest
+
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 SKILL_ROOT = REPO_ROOT / "codex-marketplace" / "plugins" / "repo-worker-pack" / "skills" / "repo-standards" / "scripts"
@@ -112,14 +114,19 @@ def test_scaffold_agents_md_check_valid_passes(tmp_path: Path) -> None:
     runbooks.mkdir(parents=True)
     runbook_files = {
         "publication.md": "# Publication proof\n",
-        "testing.md": "# Testing instructions\n",
-        "code-style.md": "# Code style guidelines\n",
         "code-review.md": "# Review guidelines\n",
         "pr.md": "# PR instructions\n",
-        "security.md": "# Security considerations\n",
     }
     for name, content in runbook_files.items():
         (runbooks / name).write_text(content, encoding="utf-8", newline="\n")
+    playbooks = repo / ".agents" / "playbooks"
+    playbooks.mkdir(parents=True)
+    for name, content in {
+        "testing.md": "# Testing instructions\n",
+        "code-style.md": "# Code style guidelines\n",
+        "security.md": "# Security considerations\n",
+    }.items():
+        (playbooks / name).write_text(content, encoding="utf-8", newline="\n")
     (repo / "CONTRIBUTING.md").write_text("# Contributing\n", encoding="utf-8", newline="\n")
 
     agents = repo / "AGENTS.md"
@@ -133,12 +140,12 @@ def test_scaffold_agents_md_check_valid_passes(tmp_path: Path) -> None:
         "- [Source-of-truth split](AGENTS.md)\n"
         "- [Publication proof](.agents/runbooks/publication.md)\n"
         "- [Build and test commands](AGENTS.md)\n"
-        "- [Testing instructions](.agents/runbooks/testing.md)\n"
-        "- [Code style guidelines](.agents/runbooks/code-style.md)\n"
+        "- [Testing instructions](.agents/playbooks/testing.md)\n"
+        "- [Code style guidelines](.agents/playbooks/code-style.md)\n"
         "- [Review guidelines](.agents/runbooks/code-review.md)\n"
         "- [PR instructions](.agents/runbooks/pr.md)\n"
         "- [Contributing](CONTRIBUTING.md)\n"
-        "- [Security considerations](.agents/runbooks/security.md)\n"
+        "- [Security considerations](.agents/playbooks/security.md)\n"
         "- [Routing pointers](AGENTS.md)\n"
         "- [Maintenance responsibility](AGENTS.md)\n\n"
         "## Maintenance responsibility\n\nMaintainer.\n",
@@ -745,11 +752,14 @@ def test_scaffold_repo_runbook_policy_check_customized_passes(tmp_path: Path) ->
     policy_path = repo / ".agents" / "doctrine" / "repo-runbook-policy.md"
     policy_path.parent.mkdir(parents=True)
     policy_path.write_text(
-        "# Repo Runbook Policy\n\n"
+        "# Repository Runbook and Playbook Policy\n\n"
         "This repository uses repo-standards.\n\n"
-        "## Standard-to-local mapping\n\n"
+        "## Standard runbooks\n\n"
         "| Standard runbook | Local path |\n|---|---|\n"
         "| code-review.md | `.agents/runbooks/code-review.md` |\n\n"
+        "## Standard playbooks\n\n"
+        "| Standard playbook | Local path |\n|---|---|\n"
+        "| testing.md | `.agents/playbooks/testing.md` |\n\n"
         "## Exceptions\n\n"
         "None.\n",
         encoding="utf-8",
@@ -765,6 +775,80 @@ def test_scaffold_repo_runbook_policy_check_customized_passes(tmp_path: Path) ->
     )
     assert result.returncode == 0, result.stdout + result.stderr
     assert "OK" in result.stdout
+
+
+def test_scaffold_repo_runbook_policy_check_duplicate_playbook_classification_fails(
+    tmp_path: Path,
+) -> None:
+    """A standard playbook cannot also be listed as repository-specific."""
+    repo = tmp_path / "duplicate-playbook-policy"
+    repo.mkdir()
+    _init_git_repo(repo)
+
+    policy_path = repo / ".agents" / "doctrine" / "repo-runbook-policy.md"
+    policy_path.parent.mkdir(parents=True)
+    policy_path.write_text(
+        "# Repository Runbook and Playbook Policy\n\n"
+        "## Standard runbooks\n\n"
+        "| Standard runbook | Local path | Status |\n|---|---|---|\n"
+        "| implementing.md | `.agents/runbooks/implementing.md` | required |\n\n"
+        "## Standard playbooks\n\n"
+        "| Standard playbook | Local path | Status |\n|---|---|---|\n"
+        "| repo-doctrine.md | `.agents/playbooks/repo-doctrine.md` | optional |\n\n"
+        "## Additional repository-specific playbooks\n\n"
+        "- `repo-doctrine.md` exists because this repository authors doctrine.\n\n"
+        "## Exceptions\n\nNone.\n",
+        encoding="utf-8",
+        newline="\n",
+    )
+
+    result = subprocess.run(
+        [sys.executable, str(SCAFFOLD_REPO_RUNBOOK_POLICY), "--check"],
+        cwd=repo,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+    )
+
+    assert result.returncode != 0
+    assert "repo-doctrine.md" in result.stdout
+    assert "both standard and repository-specific" in result.stdout
+
+
+def test_scaffold_repo_runbook_policy_check_linked_duplicate_playbook_fails(tmp_path: Path) -> None:
+    """Markdown-linked repository-specific entries cannot duplicate standard playbooks."""
+    repo = tmp_path / "linked-duplicate-playbook-policy"
+    repo.mkdir()
+    _init_git_repo(repo)
+
+    policy_path = repo / ".agents" / "doctrine" / "repo-runbook-policy.md"
+    policy_path.parent.mkdir(parents=True)
+    policy_path.write_text(
+        "# Repository Runbook and Playbook Policy\n\n"
+        "## Standard runbooks\n\n"
+        "| Standard runbook | Local path | Status |\n|---|---|---|\n"
+        "| implementing.md | `.agents/runbooks/implementing.md` | required |\n\n"
+        "## Standard playbooks\n\n"
+        "| Standard playbook | Local path | Status |\n|---|---|---|\n"
+        "| repo-doctrine.md | `.agents/playbooks/repo-doctrine.md` | optional |\n\n"
+        "## Additional repository-specific playbooks\n\n"
+        "- [Repo doctrine](../playbooks/repo-doctrine.md)\n\n"
+        "## Exceptions\n\nNone.\n",
+        encoding="utf-8",
+        newline="\n",
+    )
+
+    result = subprocess.run(
+        [sys.executable, str(SCAFFOLD_REPO_RUNBOOK_POLICY), "--check"],
+        cwd=repo,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+    )
+
+    assert result.returncode != 0
+    assert "repo-doctrine.md" in result.stdout
+    assert "both standard and repository-specific" in result.stdout
 
 
 def test_pre_commit_hook_wired_to_ci_apply_and_diagnostics(tmp_path: Path) -> None:
@@ -1561,12 +1645,12 @@ def test_repo_standards_refuses_asymmetric_command_declaration_exception(tmp_pat
     assert not (repo / "githooks" / "pre-commit").exists()
 
 
-def test_scaffold_runbooks_stub_is_composition_manifest(tmp_path: Path) -> None:
+def test_scaffold_runbooks_stub_is_stage_composition_root(tmp_path: Path) -> None:
     spec = importlib.util.spec_from_file_location("scaffold_runbooks_under_test", SKILL_ROOT / "scaffold_runbooks.py")
     mod = importlib.util.module_from_spec(spec)
     assert spec.loader is not None
     spec.loader.exec_module(mod)
-    content = mod._runbook_content("security.md")
+    content = mod._runbook_content("implementing.md")
     for heading in (
         "## When",
         "## Required skills",
@@ -1575,65 +1659,237 @@ def test_scaffold_runbooks_stub_is_composition_manifest(tmp_path: Path) -> None:
         "## Local commands and paths",
         "## Evidence contract",
         "## Prohibited combinations",
+        "## Playbook routing",
     ):
         assert heading in content
-    assert "completing-plans.md" in mod.RUNBOOK_TITLES
+    assert "completing-plans.md" not in mod.RUNBOOK_TITLES
 
 
-def test_runbook_composition_warns_on_missing_required_skills(tmp_path: Path) -> None:
+def test_scaffold_playbooks_stub_is_topical_composition(tmp_path: Path) -> None:
+    spec = importlib.util.spec_from_file_location("scaffold_playbooks_under_test", SKILL_ROOT / "scaffold_playbooks.py")
+    mod = importlib.util.module_from_spec(spec)
+    assert spec.loader is not None
+    spec.loader.exec_module(mod)
+    content = mod._playbook_content("testing.md")
+    for heading in (
+        "## When",
+        "## Required skills",
+        "## Composition",
+        "## Doctrine and contracts",
+        "## Local commands and paths",
+        "## Evidence contract",
+        "## Prohibited combinations",
+        "## Runbook routing",
+    ):
+        assert heading in content
+    assert "testing.md" in mod.PLAYBOOK_TITLES
+
+
+def test_code_style_playbook_template_teaches_ownership_boundaries() -> None:
+    template = SKILL_ROOT.parent / "templates" / "code-style.md"
+    text = template.read_text(encoding="utf-8")
+    assert "Durable coding and architecture invariants belong in doctrine" in text
+    assert "Reusable language and framework technique belongs in capability skills" in text
+    assert "## Runbook routing" in text
+
+
+def _composition_document(extra_heading: str, links: str = "") -> str:
+    headings = (
+        "When",
+        "Required skills",
+        "Composition",
+        "Doctrine and contracts",
+        "Local commands and paths",
+        "Evidence contract",
+        "Prohibited combinations",
+    )
+    body = "# Example\n\n" + "\n\n".join(f"## {heading}\n\n- defined" for heading in headings)
+    return body + f"\n\n## {extra_heading}\n\n{links}\n"
+
+
+def test_runbook_composition_reports_missing_required_sections(tmp_path: Path) -> None:
     runbooks = tmp_path / ".agents" / "runbooks"
     runbooks.mkdir(parents=True)
     (runbooks / "testing.md").write_text("# Testing\n\nLocal commands only.\n", encoding="utf-8")
-    warnings = repo_standards._check_runbook_composition(tmp_path)
-    assert any("testing.md" in w for w in warnings)
+    findings = repo_standards._check_composition_graph(tmp_path)
+    assert any("testing.md" in finding and "Required skills" in finding for finding in findings)
 
 
-def test_runbook_composition_quiet_when_section_present(tmp_path: Path) -> None:
+def test_composition_graph_accepts_reciprocal_playbook_route(tmp_path: Path) -> None:
+    runbooks = tmp_path / ".agents" / "runbooks"
+    playbooks = tmp_path / ".agents" / "playbooks"
+    runbooks.mkdir(parents=True)
+    playbooks.mkdir(parents=True)
+    (runbooks / "implementing.md").write_text(
+        _composition_document("Playbook routing", "- [Testing](../playbooks/testing.md) - when tests change."),
+        encoding="utf-8",
+    )
+    (playbooks / "testing.md").write_text(
+        _composition_document("Runbook routing", "- [Implementation](../runbooks/implementing.md)"),
+        encoding="utf-8",
+    )
+    assert repo_standards._check_composition_graph(tmp_path) == []
+
+
+def test_composition_graph_accepts_standalone_playbook(tmp_path: Path) -> None:
+    runbooks = tmp_path / ".agents" / "runbooks"
+    playbooks = tmp_path / ".agents" / "playbooks"
+    runbooks.mkdir(parents=True)
+    playbooks.mkdir(parents=True)
+    (runbooks / "implementing.md").write_text(_composition_document("Playbook routing", "None."), encoding="utf-8")
+    (playbooks / "testing.md").write_text(_composition_document("Runbook routing", "None."), encoding="utf-8")
+    assert repo_standards._check_composition_graph(tmp_path) == []
+
+
+def test_composition_graph_rejects_nonreciprocal_edge(tmp_path: Path) -> None:
+    runbooks = tmp_path / ".agents" / "runbooks"
+    playbooks = tmp_path / ".agents" / "playbooks"
+    runbooks.mkdir(parents=True)
+    playbooks.mkdir(parents=True)
+    (runbooks / "implementing.md").write_text(
+        _composition_document("Playbook routing", "- [Testing](../playbooks/testing.md)"), encoding="utf-8"
+    )
+    (playbooks / "testing.md").write_text(
+        _composition_document("Runbook routing", "- [Review](../runbooks/code-review.md)"), encoding="utf-8"
+    )
+    findings = repo_standards._check_composition_graph(tmp_path)
+    assert any("reciprocal" in finding for finding in findings)
+
+
+def test_composition_graph_accepts_playbook_to_playbook_composition(tmp_path: Path) -> None:
+    runbooks = tmp_path / ".agents" / "runbooks"
+    playbooks = tmp_path / ".agents" / "playbooks"
+    runbooks.mkdir(parents=True)
+    playbooks.mkdir(parents=True)
+    routing = "- [Testing](../playbooks/testing.md)\n- [Security](../playbooks/security.md)"
+    (runbooks / "implementing.md").write_text(_composition_document("Playbook routing", routing), encoding="utf-8")
+    (playbooks / "testing.md").write_text(
+        _composition_document("Runbook routing", "- [Implementation](../runbooks/implementing.md)").replace(
+            "## Composition\n\n- defined",
+            "## Composition\n\n- [Security](security.md)",
+        ),
+        encoding="utf-8",
+    )
+    (playbooks / "security.md").write_text(
+        _composition_document("Runbook routing", "- [Implementation](../runbooks/implementing.md)"),
+        encoding="utf-8",
+    )
+    assert repo_standards._check_composition_graph(tmp_path) == []
+
+
+def test_composition_graph_rejects_missing_playbook_composition_target(tmp_path: Path) -> None:
+    playbooks = tmp_path / ".agents" / "playbooks"
+    playbooks.mkdir(parents=True)
+    (playbooks / "testing.md").write_text(
+        _composition_document("Runbook routing", "None.").replace(
+            "## Composition\n\n- defined",
+            "## Composition\n\n- [Security](security.md)",
+        ),
+        encoding="utf-8",
+    )
+
+    findings = repo_standards._check_composition_graph(tmp_path)
+    assert any("security.md" in finding and "does not resolve" in finding for finding in findings)
+
+
+def test_composition_graph_rejects_playbook_composition_cycle(tmp_path: Path) -> None:
+    playbooks = tmp_path / ".agents" / "playbooks"
+    playbooks.mkdir(parents=True)
+    (playbooks / "testing.md").write_text(
+        _composition_document("Runbook routing", "None.").replace(
+            "## Composition\n\n- defined",
+            "## Composition\n\n- [Security](security.md)",
+        ),
+        encoding="utf-8",
+    )
+    (playbooks / "security.md").write_text(
+        _composition_document("Runbook routing", "None.").replace(
+            "## Composition\n\n- defined",
+            "## Composition\n\n- [Testing](testing.md)",
+        ),
+        encoding="utf-8",
+    )
+
+    findings = repo_standards._check_composition_graph(tmp_path)
+    assert any("composition cycle" in finding and "testing.md" in finding for finding in findings)
+
+
+def test_composition_graph_ignores_playbook_links_outside_composition(tmp_path: Path) -> None:
+    playbooks = tmp_path / ".agents" / "playbooks"
+    playbooks.mkdir(parents=True)
+    (playbooks / "testing.md").write_text(
+        _composition_document("Runbook routing", "None.").replace(
+            "## Doctrine and contracts\n\n- defined",
+            "## Doctrine and contracts\n\n- [Security](security.md)",
+        ),
+        encoding="utf-8",
+    )
+    (playbooks / "security.md").write_text(
+        _composition_document("Runbook routing", "None.").replace(
+            "## Doctrine and contracts\n\n- defined",
+            "## Doctrine and contracts\n\n- [Testing](testing.md)",
+        ),
+        encoding="utf-8",
+    )
+
+    assert repo_standards._check_composition_graph(tmp_path) == []
+
+
+def test_apply_fails_when_composition_graph_remains_invalid(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
+) -> None:
     runbooks = tmp_path / ".agents" / "runbooks"
     runbooks.mkdir(parents=True)
-    (runbooks / "testing.md").write_text(
-        "# Testing\n\n## Required skills\n\n- `test-driven-development`\n", encoding="utf-8"
-    )
-    assert repo_standards._check_runbook_composition(tmp_path) == []
+    (runbooks / "implementing.md").write_text("# Implementation\n", encoding="utf-8")
+    manifest = tmp_path / "manifest.json"
+    manifest.write_text('{"surfaces": []}\n', encoding="utf-8")
+    monkeypatch.setattr(repo_standards, "_repo_root", lambda: tmp_path)
+    monkeypatch.setattr(repo_standards, "_manifest_path", lambda: manifest)
+    monkeypatch.setattr(repo_standards, "_is_submodule", lambda _root: False)
+    monkeypatch.setattr(repo_standards.shared_checkout, "approve_mutation", lambda *_args: True)
+
+    assert repo_standards.main(["--apply", "--yes"]) == 1
+    captured = capsys.readouterr()
+    assert "unresolved composition-graph drift" in captured.err
 
 
 def test_runbook_composition_ignores_agents_md_and_absent_dir(tmp_path: Path) -> None:
-    assert repo_standards._check_runbook_composition(tmp_path) == []
+    assert repo_standards._check_composition_graph(tmp_path) == []
     runbooks = tmp_path / ".agents" / "runbooks"
     runbooks.mkdir(parents=True)
     (runbooks / "AGENTS.md").write_text("# Router\n", encoding="utf-8")
-    assert repo_standards._check_runbook_composition(tmp_path) == []
+    assert repo_standards._check_composition_graph(tmp_path) == []
 
 
 def test_runbook_composition_ignores_generated_index(tmp_path: Path) -> None:
     runbooks = tmp_path / ".agents" / "runbooks"
     runbooks.mkdir(parents=True)
     (runbooks / "INDEX.md").write_text("# Index\n", encoding="utf-8")
-    assert repo_standards._check_runbook_composition(tmp_path) == []
+    assert repo_standards._check_composition_graph(tmp_path) == []
 
 
 def test_runbook_composition_warns_on_fenced_heading(tmp_path: Path) -> None:
     runbooks = tmp_path / ".agents" / "runbooks"
     runbooks.mkdir(parents=True)
     (runbooks / "testing.md").write_text("# Testing\n\n```markdown\n## Required skills\n```\n", encoding="utf-8")
-    warnings = repo_standards._check_runbook_composition(tmp_path)
-    assert any("testing.md" in w for w in warnings)
+    findings = repo_standards._check_composition_graph(tmp_path)
+    assert any("testing.md" in finding for finding in findings)
 
 
 def test_runbook_composition_warns_on_commented_heading(tmp_path: Path) -> None:
     runbooks = tmp_path / ".agents" / "runbooks"
     runbooks.mkdir(parents=True)
     (runbooks / "testing.md").write_text("# Testing\n\n<!-- ## Required skills -->\n", encoding="utf-8")
-    warnings = repo_standards._check_runbook_composition(tmp_path)
-    assert any("testing.md" in w for w in warnings)
+    findings = repo_standards._check_composition_graph(tmp_path)
+    assert any("testing.md" in finding for finding in findings)
 
 
 def test_runbook_composition_warns_on_extended_heading(tmp_path: Path) -> None:
     runbooks = tmp_path / ".agents" / "runbooks"
     runbooks.mkdir(parents=True)
     (runbooks / "testing.md").write_text("# Testing\n\n## Required skills for maintainers\n", encoding="utf-8")
-    warnings = repo_standards._check_runbook_composition(tmp_path)
-    assert any("testing.md" in w for w in warnings)
+    findings = repo_standards._check_composition_graph(tmp_path)
+    assert any("testing.md" in finding for finding in findings)
 
 
 def test_scaffold_pr_template_carries_composition_sections() -> None:

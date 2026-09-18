@@ -18,14 +18,7 @@ RUNBOOK_TITLES: dict[str, str] = {
     "planning.md": "Planning runbook",
     "implementing.md": "Implementation runbook",
     "code-review.md": "Code review runbook",
-    "marketplace-generation.md": "Marketplace generation runbook",
-    "skill-authoring.md": "Skill authoring runbook",
-    "security.md": "Security runbook",
-    "testing.md": "Testing runbook",
     "pr.md": "Pull request runbook",
-    "code-style.md": "Code style runbook",
-    "repo-doctrine.md": "Repo doctrine runbook",
-    "completing-plans.md": "Completion runbook",
 }
 
 
@@ -75,6 +68,16 @@ def _runbook_content(name: str) -> str:
     if template.is_file():
         return template.read_text(encoding="utf-8")
     title = RUNBOOK_TITLES.get(name, name.replace("-", " ").title())
+    playbook_routing = {
+        "implementing.md": (
+            "- [Code style](../playbooks/code-style.md) - when code or technical prose changes.\n"
+            "- [Testing](../playbooks/testing.md) - when behavior changes or validation is required."
+        ),
+        "code-review.md": (
+            "- [Code style](../playbooks/code-style.md) - when reviewing code or technical prose.\n"
+            "- [Testing](../playbooks/testing.md) - when reviewing behavior or validation evidence."
+        ),
+    }.get(name, "None.")
     return (
         f"# {title}\n\n"
         "<!-- One-sentence purpose: who uses this runbook and what it governs. -->\n\n"
@@ -91,7 +94,9 @@ def _runbook_content(name: str) -> str:
         "## Evidence contract\n\n"
         "<!-- What the combined workflow must prove before it is complete. -->\n\n"
         "## Prohibited combinations\n\n"
-        "<!-- Combinations explicitly not legitimate here, or `none`. -->\n"
+        "<!-- Combinations explicitly not legitimate here, or `none`. -->\n\n"
+        "## Playbook routing\n\n"
+        f"{playbook_routing}\n"
     )
 
 

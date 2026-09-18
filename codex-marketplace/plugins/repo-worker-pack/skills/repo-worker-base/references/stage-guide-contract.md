@@ -7,14 +7,15 @@ guide for design, planning, implementation, or code review.
 
 ## Contract
 
-The canonical local guide home is .agents/runbooks/. The retired
+The canonical lifecycle-stage root home is `.agents/runbooks/`. The retired
 .agents/docs/guides/ home is forbidden for new authored guides. The canonical
-home contains four first-class thin overlays: design.md, planning.md,
-implementing.md, and code-review.md. A repository may declare
-additional guides, but each must name one stage and remain local.
+home contains the stage runbooks `design.md`, `planning.md`,
+`implementing.md`, `code-review.md`, and `pr.md`. Topical workflows belong
+under `.agents/playbooks/`; agents may use them directly, and stage runbooks
+may route to them when applicable.
 
-Each guide supplies only repository-specific paths, commands, exclusions, CI,
-and exceptions. It does not replace, override, reorder, or bypass the matching
+Each runbook supplies repository-specific composition, paths, commands,
+exclusions, CI, and exceptions. It does not replace, override, reorder, or bypass the matching
 portable baseline or selected Superpowers lane. Migrate a legacy home through
 the repository's approved plan and keep a fallback pointer only when that
 policy explicitly requires it.
