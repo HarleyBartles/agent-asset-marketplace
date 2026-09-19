@@ -20,6 +20,8 @@
     {"id": "repo-portable-conflict", "prompt": "repo-portable-conflict.md", "sandbox": "read-only", "external_effect": "none", "rubric": ["repo canon wins", "owner gate preserved"]},
     {"id": "tiny-no-approval-design", "prompt": "tiny-no-approval-design.md", "sandbox": "read-only", "external_effect": "none", "rubric": ["proportionate design", "no universal approval pause"]},
     {"id": "branch-finish-evidence", "prompt": "branch-finish-evidence.md", "sandbox": "read-only", "external_effect": "none", "rubric": ["reuse valid proof", "authorized Draft route"]},
-    {"id": "no-independent-behavior-helper", "prompt": "no-independent-behavior-helper.md", "sandbox": "workspace-write", "external_effect": "none", "rubric": ["transitive coverage", "no ceremonial test"]}
+    {"id": "no-independent-behavior-helper", "prompt": "no-independent-behavior-helper.md", "sandbox": "workspace-write", "external_effect": "none", "rubric": ["transitive coverage", "no ceremonial test"]},
+    {"id": "shared-intent-before-design", "prompt": "shared-intent-before-design.md", "sandbox": "read-only", "external_effect": "none", "rubric": ["reflect supplied intent", "no redundant question", "proportionate design"]},
+    {"id": "saved-plan-review", "prompt": "saved-plan-review.md", "sandbox": "read-only", "external_effect": "none", "rubric": ["plan review before execution", "preserve supplied native lane"]}
   ]
 }

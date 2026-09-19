@@ -287,6 +287,33 @@ class TestValidationTddPublication:
 
 
 class TestPlanningDelegationReview:
+    def test_brainstorming_establishes_shared_intent_before_path_design(self):
+        text = _read(SKILLS / "brainstorming" / "SKILL.md").lower()
+        assert "establish shared understanding" in text
+        assert "intended outcome" in text
+        assert "who it is for" in text
+        assert "what success looks like" in text
+        assert "already supplies" in text
+        assert "do not ask" in text
+
+    def test_plans_pin_review_focus_to_owning_task_tests(self):
+        text = _read(SKILLS / "writing-plans" / "SKILL.md").lower()
+        assert "## review focus" in text
+        assert "five" in text
+        assert "failure modes" in text
+        assert "owning task" in text
+        assert "saved plan" in text
+
+    def test_saved_plan_review_preserves_preselected_execution_method(self):
+        plans = _read(SKILLS / "writing-plans" / "SKILL.md").lower()
+        override = _read(SKILLS.parent / "references" / "execution-lane-override.md").lower()
+        roadmaps = _read(SKILLS / "writing-roadmaps" / "SKILL.md").lower()
+        assert "already explicitly supplied an execution method" in plans
+        assert "preserve" in plans and "review the saved plan" in plans
+        assert "native" in plans and "subagent-driven" in plans
+        assert "execution cost" in override
+        assert "review the saved plan" in roadmaps
+
     def test_review_uses_branch_base_and_reasonable_user_expectations(self):
         requesting = _read(SKILLS / "requesting-code-review" / "SKILL.md")
         reviewer = _read(SKILLS / "requesting-code-review" / "code-reviewer.md").lower()
@@ -685,7 +712,7 @@ class TestEvaluationCampaign:
     def test_campaign_schema_and_fixed_matrix(self):
         campaign = json.loads(_read(DOCS / "campaign.json"))
         campaign_runner.validate_campaign(campaign)
-        assert len(campaign["scenarios"]) == 13
+        assert len(campaign["scenarios"]) == 15
         assert all(s["external_effect"] == "none" for s in campaign["scenarios"])
 
     def test_pressure_prompts_do_not_leak_rubric_decisions(self):

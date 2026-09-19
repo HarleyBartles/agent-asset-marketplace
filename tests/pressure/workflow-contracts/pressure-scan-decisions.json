@@ -73,7 +73,7 @@
   },
   {
     "path": "codex-marketplace/plugins/superpowers-plus/skills/writing-roadmaps/SKILL.md",
-    "line": 67,
+    "line": 71,
     "pattern": "must-read",
     "context": "If a plan in progress grows beyond one deliverable, stop writing. **MUST READ:** `references/plan-scope-sizing.md` and use escape hatch 3:",
     "classification": "repo-local",

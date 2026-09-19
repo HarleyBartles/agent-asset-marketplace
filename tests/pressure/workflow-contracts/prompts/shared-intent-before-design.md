@@ -1,0 +1,1 @@
+The user asks for a small, reversible change to an existing command. They explicitly state that the command is for repository maintainers, the outcome is clearer failure diagnostics, success means the existing exit code stays unchanged while the error names the failing input, and no product choice is unresolved. Show how you begin the work.

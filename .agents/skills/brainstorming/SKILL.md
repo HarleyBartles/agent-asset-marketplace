@@ -38,6 +38,27 @@ smallest decision record that protects the consequential choices.
 The ceremony scales with uncertainty and consequence; approval is not a
 universal ritual.
 
+## Establish Shared Understanding
+
+The outcome of brainstorming is an understanding your human partner can
+recognize and correct, grounded in what they want to accomplish.
+
+1. **Discover intent.** Use the request and available context to identify the
+   intended outcome, who it is for, and what success looks like. When that
+   information is missing and materially changes the design, ask one focused
+   question about purpose or intended use before proposing an approach.
+2. **Write back your understanding.** Briefly reflect the intended outcome,
+   relevant constraints, and success criteria. Separate supplied facts from
+   assumptions so the human can correct the design basis.
+3. **Carry intent into the selected path.** Preserve that understanding in the
+   architectural spec, bounded in-chat design, or spike question. Check
+   technical choices against it.
+
+When the request already supplies purpose, audience, constraints, and success,
+reflect them and do not ask the same questions again. For already-authorized
+bounded work, this reflection is part of the short design, not a new approval
+pause.
+
 <HARD-GATE>
 Do NOT invoke any implementation skill, write any code, scaffold any
 project, or take implementation action while a consequential product,
