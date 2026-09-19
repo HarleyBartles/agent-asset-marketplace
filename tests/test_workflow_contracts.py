@@ -140,7 +140,8 @@ class TestValidationTddPublication:
         assert "draft" in text
 
     def test_branch_finish_owns_verified_post_merge_retirement(self):
-        raw = _read(SKILLS / "finishing-a-development-branch" / "SKILL.md")
+        skill_root = SKILLS / "finishing-a-development-branch"
+        raw = _read(skill_root / "SKILL.md")
         text = raw.lower()
         for phrase in (
             "merged externally",
@@ -155,6 +156,13 @@ class TestValidationTddPublication:
         assert f"py -3 {helper} --check" in raw
         assert f"py -3 {helper} --apply" in raw
         assert text.index("after the worktree is gone") < text.index("verify the local branch ref no longer exists")
+
+        frontmatter = yaml.safe_load(raw.split("---", 2)[1])
+        assert "pr merged externally" in frontmatter["description"].lower()
+
+        interface = yaml.safe_load(_read(skill_root / "agents" / "openai.yaml"))["interface"]
+        assert "merged pr" in interface["short_description"].lower()
+        assert "pr merged externally" in interface["default_prompt"].lower()
 
     def test_worktree_skill_routes_retirement_to_branch_finishing(self):
         text = _read(SKILLS / "using-git-worktrees" / "SKILL.md").lower()

@@ -1,7 +1,7 @@
 ---
 name: finishing-a-development-branch
-description: Use when implementation is complete, all tests pass, and you need to
-  decide how to integrate the work.
+description: Use when implementation is complete and needs integration, or when
+  a PR merged externally and its exact branch head and worktree need retirement.
 metadata:
   source-id: finishing-a-development-branch
   source-path: codex-marketplace/plugins/superpowers-plus/skills/finishing-a-development-branch/SKILL.md
