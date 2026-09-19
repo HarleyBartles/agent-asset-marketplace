@@ -273,6 +273,18 @@ class TestValidationTddPublication:
         assert "node ./render-graphs.js" in authoring
         assert "Invoke bundled scripts through their interpreter" in authoring
 
+    def test_subagent_workspace_uses_one_python_execution_engine(self):
+        scripts = SKILLS / "subagent-workspace" / "scripts"
+        assert {path.name for path in scripts.iterdir() if path.is_file()} == {
+            "review_package.py",
+            "task_brief.py",
+            "workspace.py",
+        }
+        skill = _read(SKILLS / "subagent-workspace" / "SKILL.md")
+        assert "default to read-only `--check`" in skill
+        assert "--apply" in skill
+        assert ".ps1" not in skill
+
 
 class TestPlanningDelegationReview:
     def test_review_uses_branch_base_and_reasonable_user_expectations(self):

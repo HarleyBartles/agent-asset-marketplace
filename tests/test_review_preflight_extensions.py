@@ -101,7 +101,7 @@ def test_canonical_path_missing_is_flagged():
 def test_canonical_path_present_is_not_flagged():
     path, content = _fixture(
         "skills/using-foo/SKILL.md",
-        "Run `subagent-workspace/scripts/sdd-workspace`.\n",
+        "Run `subagent-workspace/scripts/workspace.py`.\n",
     )
     findings = []
     review_preflight._scan_canonical_paths(path, content, findings)
