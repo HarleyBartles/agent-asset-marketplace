@@ -77,25 +77,27 @@ path forward is a guess. For those, stop and ask.
 digraph when_to_use {
     "Have implementation plan?" [shape=diamond];
     "Tasks mostly independent?" [shape=diamond];
-    "Stay in this session?" [shape=diamond];
+    "Per-task fresh contexts worth the cost?" [shape=diamond];
     "subagent-driven-development" [shape=box];
     "executing-plans" [shape=box];
     "Manual execution or brainstorm first" [shape=box];
 
     "Have implementation plan?" -> "Tasks mostly independent?" [label="yes"];
     "Have implementation plan?" -> "Manual execution or brainstorm first" [label="no"];
-    "Tasks mostly independent?" -> "Stay in this session?" [label="yes"];
-    "Tasks mostly independent?" -> "Manual execution or brainstorm first" [label="no - tightly coupled"];
-    "Stay in this session?" -> "subagent-driven-development" [label="yes"];
-    "Stay in this session?" -> "executing-plans" [label="no - parallel session"];
+    "Tasks mostly independent?" -> "Per-task fresh contexts worth the cost?" [label="yes"];
+    "Tasks mostly independent?" -> "executing-plans" [label="no - tightly coupled"];
+    "Per-task fresh contexts worth the cost?" -> "subagent-driven-development" [label="yes"];
+    "Per-task fresh contexts worth the cost?" -> "executing-plans" [label="no"];
 }
 ```
 
-**vs. Executing Plans (parallel session):**
-- Same session (no context switch)
-- Fresh subagent per task (no context pollution)
-- Review after each task (spec compliance + code quality), broad review at the end
-- Faster iteration (no human-in-loop between tasks)
+**vs. Native `executing-plans`:**
+- SDD spends a fresh implementer plus a fresh reviewer per task, then a broad
+  whole-branch review.
+- Native keeps one inline integration context and buys one fresh whole-branch
+  review at the end.
+- Prefer SDD when independent tasks and consequence justify the additional
+  context and review cost; prefer Native for tightly coupled sequential work.
 
 ## The Process
 

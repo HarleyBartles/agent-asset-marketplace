@@ -287,6 +287,29 @@ class TestValidationTddPublication:
 
 
 class TestPlanningDelegationReview:
+    def test_native_and_sdd_explain_their_distinct_review_costs(self):
+        native = _read(SKILLS / "executing-plans" / "SKILL.md").lower()
+        sdd = _read(SKILLS / "subagent-driven-development" / "SKILL.md").lower()
+        assert "native inline execution" in native
+        assert "one fresh whole-branch review" in native
+        assert "fresh implementer" in sdd and "reviewer per task" in sdd
+        assert "stay in this session?" not in sdd
+
+    def test_native_execution_uses_shared_ledger_and_completion_owners(self):
+        native = _read(SKILLS / "executing-plans" / "SKILL.md").lower()
+        for phrase in (
+            "workspace.py",
+            "task_brief.py",
+            "review focus",
+            "ruling:",
+            "handoff-gates",
+            "completing-planning-artifacts",
+            "finishing-a-development-branch",
+        ):
+            assert phrase in native
+        assert "git bash" in native
+        assert "human-owned" in native
+
     def test_brainstorming_establishes_shared_intent_before_path_design(self):
         text = _read(SKILLS / "brainstorming" / "SKILL.md").lower()
         assert "establish shared understanding" in text
