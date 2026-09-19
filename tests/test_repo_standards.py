@@ -1273,6 +1273,8 @@ def apply():
         write(".agents/skills/owned.txt", "generated")
         os.makedirs("build", exist_ok=True)
         write("build/outside.txt", "untracked")
+    elif BEHAVIOR == "format-staged":
+        write("source.py", "value = 1\\n")
     elif BEHAVIOR in ("broken", "ok"):
         pass
     print("OK apply")
@@ -1393,6 +1395,39 @@ def test_pre_commit_hook_preserves_unstaged_edits(tmp_path: Path) -> None:
     combined = result.stdout + result.stderr
     assert result.returncode == 0, combined
     assert keep.read_text(encoding="utf-8").strip() == "staged plus unstaged"
+
+
+def test_pre_commit_hook_stages_apply_edits_to_already_staged_paths(tmp_path: Path) -> None:
+    """Formatter-style apply edits belong in the candidate tree when their path was already staged."""
+    repo = tmp_path / "stage-formatted-source"
+    repo.mkdir()
+    _init_git_repo_with_commit(repo)
+    _install_repo_standards(repo)
+
+    (repo / "tools").mkdir(exist_ok=True)
+    (repo / "tools" / "run.py").write_text(_fake_tools_run_py("format-staged"), encoding="utf-8", newline="\n")
+    source = repo / "source.py"
+    source.write_text("value=1\n", encoding="utf-8", newline="\n")
+    subprocess.run(["git", "add", "-A"], cwd=repo, env=_stripped_env(), check=True)
+
+    result = subprocess.run(
+        ["git", "commit", "-m", "test staged formatter output"],
+        cwd=repo,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+    )
+
+    assert result.returncode == 0, result.stdout + result.stderr
+    committed = subprocess.run(
+        ["git", "show", "HEAD:source.py"],
+        cwd=repo,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+        check=True,
+    ).stdout
+    assert committed == "value = 1\n"
 
 
 def test_pre_commit_hook_stages_only_owned_generated_surfaces(tmp_path: Path) -> None:
