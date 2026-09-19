@@ -260,8 +260,30 @@ class TestValidationTddPublication:
         text = _read(SKILLS / "test-driven-development" / "SKILL.md").lower()
         assert "transitive" in text or "independent behavior" in text
 
+    def test_tdd_requires_the_consumer_complete_gate_before_completion(self):
+        text = _read(SKILLS / "test-driven-development" / "SKILL.md").lower()
+        assert "complete gate" in text
+        assert "focused" in text
+        assert "every failure" in text
+
+    def test_bundled_scripts_are_invoked_through_their_interpreters(self):
+        tracing = _read(SKILLS / "systematic-debugging" / "root-cause-tracing.md")
+        authoring = _read(SKILLS / "writing-skills" / "SKILL.md")
+        assert "bash ./find-polluter.sh" in tracing
+        assert "node ./render-graphs.js" in authoring
+        assert "Invoke bundled scripts through their interpreter" in authoring
+
 
 class TestPlanningDelegationReview:
+    def test_review_uses_branch_base_and_reasonable_user_expectations(self):
+        requesting = _read(SKILLS / "requesting-code-review" / "SKILL.md")
+        reviewer = _read(SKILLS / "requesting-code-review" / "code-reviewer.md").lower()
+        assert "git merge-base origin/main HEAD" in requesting
+        assert "reasonable person" in reviewer
+        assert "spec's silence is not permission" in reviewer
+        assert "declined to judge" in reviewer
+        assert "executor rules on each line" in reviewer
+
     def test_brainstorming_owns_spec_to_plan_handoff_review(self):
         brainstorming = _read(SKILLS / "brainstorming" / "SKILL.md").lower()
         brainstorming_flat = " ".join(brainstorming.split())

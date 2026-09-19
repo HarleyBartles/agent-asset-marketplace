@@ -209,6 +209,13 @@ Confirm:
 
 **Other tests fail?** Fix now.
 
+**"Other tests" means the consumer's declared complete gate, not just your
+focused file.** A green focused test proves the behavior you changed; it does
+not prove the project remains green. Before calling the change complete, run
+the repository's declared complete gate. Report every failure by name,
+including failures you did not cause, rather than silently narrowing the
+verification claim.
+
 ### REFACTOR - Clean Up
 
 After green only:
