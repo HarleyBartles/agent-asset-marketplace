@@ -75,6 +75,13 @@ work across sessions, but it is not durable repository truth.
   Promote enduring decisions, mark the plan `completed-awaiting-retirement`,
   and retain it through the completing PR so squash-merged `main` records it.
   The next substantive slice removes it in that slice's first commit.
+- **Completion boundary:** Checklist items describe work the executing agent can
+  finish in the current slice. Human-owned post-handoff actions such as final
+  approval, changing a PR from Draft to Ready, or merge must not remain as
+  unchecked plan items. When the requested handoff is a fully reviewable Draft
+  PR, complete the agent-owned publication and verification items and close the
+  plan; record later human actions in the handoff or PR state instead. A Draft
+  may keep a plan open only when the work is explicitly declared incomplete.
 - **Roadmap and index links:** Follow `completing-planning-artifacts` for the
   two-slice removal sequence; do not maintain a permanent completed-artifact index.
 

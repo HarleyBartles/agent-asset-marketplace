@@ -182,12 +182,27 @@ class TestValidationTddPublication:
             "<scratch-root>/<repo-name>/completed/<artifact-type>/",
             "repositories segregated",
             "canonical repository identity",
+            "fully checked",
+            "human-owned ready or merge actions",
+            "explicitly declared incomplete",
         ):
             assert phrase in text
 
         planning = _read(SKILLS / "writing-plans" / "SKILL.md").lower()
         assert "plans are durable" not in planning
         assert "completing-planning-artifacts" in planning
+        assert "human-owned post-handoff actions" in planning
+        assert "unchecked plan items" in planning
+
+        for publication_path in (
+            OPERATING_SKILLS / "repo-shape" / "templates" / "pr.md",
+            ROOT / ".agents" / "runbooks" / "pr.md",
+        ):
+            publication = _read(publication_path).lower()
+            assert "commercial and ci posture" in publication
+            assert "fully reviewable draft" in publication
+            assert "explicitly declared incomplete" in publication
+            assert "must not remain unchecked" in publication
 
         ingress = _read(REPO_SKILLS / "repo-worker-base" / "SKILL.md").lower()
         assert "completing-planning-artifacts" in ingress

@@ -26,7 +26,8 @@ canonical Git history without requiring a cleanup-only PR.
 
 ## Completing-slice lane
 
-Before the completing PR is ready:
+Before handing off a substantially complete PR, whether it remains Draft or is
+made Ready:
 
 1. Verify implementation and review are complete.
 2. Promote enduring architecture decisions to the repository's ADR home and
@@ -36,9 +37,15 @@ Before the completing PR is ready:
 4. Keep those artifacts tracked in the completing PR. Do not delete them before
    merge: a squash merge cannot preserve a file absent from the final PR tree.
 5. Verify the published PR contains the completion-marked artifacts.
+6. Make the plan fully checked for every agent-owned obligation. Human-owned Ready or merge actions belong in the
+   handoff or PR state, not as unchecked plan work. Draft is a commercial and
+   CI posture unless the PR is explicitly declared incomplete; a fully
+   reviewable Draft completes the agent's slice.
 
-The completing slice ends with the artifacts present on `main`. They are no
-longer active authority even though they remain tracked temporarily.
+The agent's completing slice ends at the verified, fully reviewable PR handoff.
+The artifact lifecycle then leaves the completion-marked files in that PR and
+on `main` after merge. They are no longer active authority even while tracked
+temporarily.
 
 ## Successor-slice ingress lane
 

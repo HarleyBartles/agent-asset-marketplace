@@ -64,7 +64,7 @@
   },
   {
     "path": "codex-marketplace/plugins/superpowers-plus/skills/writing-plans/SKILL.md",
-    "line": 103,
+    "line": 110,
     "pattern": "must-read",
     "context": "If you think \"this is a lot\" or \"the plan is huge\" while writing, you are at a scope sizing decision point. **MUST READ:** `references/plan-scope-sizing.md` and follow one of the three escape hatches before continuing.",
     "classification": "repo-local",

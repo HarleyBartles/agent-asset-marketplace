@@ -127,4 +127,4 @@
 - [x] Review the full diff against the spec and verify enduring decisions live in skills, templates, references, tests, or local compositions.
 - [x] Mark this spec and plan `completed-awaiting-retirement`, verify their enduring content is promoted, and keep them in the final staged tree.
 - [x] Stage the complete intended tree and commit normally so the tracked hook runs `ci --apply` and `ci --check --diagnostics` on the staged snapshot.
-- [ ] Run completion-readiness and whole-branch review, repair any findings, push the branch, open a draft PR, verify remote head/state/checks, and flip ready only after the repository PR preflight passes.
+- [x] Run completion-readiness and whole-branch review, repair all findings, push the branch, open a fully reviewable draft PR, and verify its remote head and state. The human-owned Ready/merge decision remains PR state, not unfinished plan work.

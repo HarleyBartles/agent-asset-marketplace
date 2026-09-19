@@ -28,6 +28,13 @@ promote enduring content, mark governed artifacts
 `completed-awaiting-retirement`, retain them in the PR, and verify the
 published head contains them.
 
+Draft is normally a commercial and CI posture, not evidence that implementation
+is unfinished. When the agent hands off a fully reviewable Draft, every
+agent-owned plan item is complete and human-owned Ready or merge actions must not remain unchecked.
+Keep the plan open only when the Draft is explicitly declared incomplete.
+Whoever later changes the PR state applies the repository's Ready preflight at
+that time.
+
 ## Doctrine and contracts
 
 - Read root [`AGENTS.md`](../../AGENTS.md) `## Publication proof for repo work`.
