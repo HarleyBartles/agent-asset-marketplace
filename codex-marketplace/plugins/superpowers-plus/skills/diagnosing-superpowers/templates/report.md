@@ -1,6 +1,6 @@
 # Session diagnosis: <session-id>
 
-Report path: ~/.superpowers/diagnosing-superpowers/<session-id>/report.md
+Report path: <resolved repository-segregated off-repo diagnostic path>/report.md
 Written: <ISO timestamp>
 
 ## 1. Problem statement (REQUIRED)

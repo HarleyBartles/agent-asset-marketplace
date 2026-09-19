@@ -100,13 +100,17 @@ Create a todo per step. Steps 5–7 run only on their stated condition.
    say scrubbing can miss things: they must review every file before sharing.
 7. **Similar sessions** — when asked. Turn confirmed findings into a
    signature, list candidates by mtime and size, find marker line numbers,
-   dispatch `prompts/similar-session.md` per candidate in parallel, and
-   append report §9.
+   and apply `prompts/similar-session.md` per candidate. When delegation is
+   authorized, dispatch candidates in parallel through the existing routing
+   owners; otherwise use the same disclosed sequential/self-analysis fallback
+   and do not claim candidate analysts ran. Append report §9.
 
 ## Quick reference
 
-All seven analysts always run. This table says which region to read
-yourself in step 3 and which findings to lead with in the verdict.
+All seven analytical dimensions always run, whether through authorized analyst
+subagents or the disclosed sequential/self-analysis fallback. This table says
+which region to read yourself in step 3 and which findings to lead with in the
+verdict.
 
 | Complaint | Read first, lead with |
 |---|---|

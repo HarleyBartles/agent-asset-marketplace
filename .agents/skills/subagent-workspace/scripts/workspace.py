@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import os
 import re
 import shutil
@@ -30,6 +31,11 @@ def _git(cwd: Path, *args: str) -> str:
 def _sanitize(value: str) -> str:
     cleaned = re.sub(r"[^A-Za-z0-9._-]+", "-", value.strip()).strip("-.")
     return cleaned or "unnamed"
+
+
+def _identity_segment(label: str, identity: str) -> str:
+    digest = hashlib.sha256(os.path.normcase(identity).encode("utf-8")).hexdigest()[:8]
+    return f"{_sanitize(label)}-{digest}"
 
 
 def _atomic_text(path: Path, content: str) -> None:
@@ -61,32 +67,61 @@ def workspace_path(plan_file: str | None, cwd: Path, apply: bool) -> Path:
         common_dir = (repo_root / common_dir).resolve()
     main_checkout = common_dir.parent
     scratch_parent = main_checkout.parent
-    repo_name = _sanitize(main_checkout.name)
-    branch = _sanitize(_git(repo_root, "rev-parse", "--abbrev-ref", "HEAD"))
+    branch_name = _git(repo_root, "rev-parse", "--abbrev-ref", "HEAD")
+    repo_name = _identity_segment(main_checkout.name, str(main_checkout.resolve()))
+    branch = _identity_segment(branch_name, branch_name)
     workspace_root = scratch_parent / "_agent-scratch" / repo_name / branch
 
-    legacy_root = scratch_parent / "_agent-scratch" / branch
-    if apply and legacy_root.is_dir() and not workspace_root.exists():
-        workspace_root.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copytree(legacy_root, workspace_root)
+    legacy_roots = (
+        scratch_parent / "_agent-scratch" / _sanitize(main_checkout.name) / _sanitize(branch_name),
+        scratch_parent / "_agent-scratch" / _sanitize(branch_name),
+    )
+    if apply and not workspace_root.exists():
+        for legacy_root in legacy_roots:
+            if legacy_root.is_dir():
+                workspace_root.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copytree(legacy_root, workspace_root)
+                break
+
+    if apply:
+        workspace_root.mkdir(parents=True, exist_ok=True)
+        workspace_identity = f"{repo_root.resolve()}\n{branch_name}"
+        root_marker = workspace_root / ".workspace-identity"
+        if root_marker.exists() and root_marker.read_text(encoding="utf-8").strip() != workspace_identity:
+            raise RuntimeError(f"workspace root identity collision at {workspace_root}")
+        if not root_marker.exists():
+            _atomic_text(root_marker, workspace_identity)
 
     if plan is None:
-        if apply:
-            workspace_root.mkdir(parents=True, exist_ok=True)
         return workspace_root
 
     identity = str(plan)
     stem = _sanitize(plan.stem)
-    counter = 1
-    while True:
-        suffix = "" if counter == 1 else f"-{counter}"
-        candidate = workspace_root / f"{stem}{suffix}"
-        marker = candidate / IDENTITY_FILE
-        if not candidate.exists() or not marker.exists():
+    existing: list[tuple[int, Path]] = []
+    if workspace_root.is_dir():
+        pattern = re.compile(rf"^{re.escape(stem)}(?:-([0-9]+))?$")
+        for path in workspace_root.iterdir():
+            if not path.is_dir() or not (match := pattern.fullmatch(path.name)):
+                continue
+            existing.append((int(match.group(1) or "1"), path))
+    for _, path in sorted(existing):
+        marker = path / IDENTITY_FILE
+        marker_identity = os.path.normcase(marker.read_text(encoding="utf-8").strip()) if marker.is_file() else None
+        if marker_identity == os.path.normcase(identity):
+            candidate = path
             break
-        if os.path.normcase(marker.read_text(encoding="utf-8").strip()) == os.path.normcase(identity):
-            break
-        counter += 1
+    else:
+        base_candidate = workspace_root / stem
+        if base_candidate.is_dir() and not (base_candidate / IDENTITY_FILE).exists():
+            candidate = base_candidate
+        else:
+            used = {number for number, _ in existing}
+            counter = 1
+            while counter in used:
+                counter += 1
+            suffix = "" if counter == 1 else f"-{counter}"
+            candidate = workspace_root / f"{stem}{suffix}"
+    marker = candidate / IDENTITY_FILE
 
     if apply:
         candidate.mkdir(parents=True, exist_ok=True)

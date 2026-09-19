@@ -345,12 +345,16 @@ class TestPlanningDelegationReview:
 
     def test_review_uses_branch_base_and_reasonable_user_expectations(self):
         requesting = _read(SKILLS / "requesting-code-review" / "SKILL.md")
-        reviewer = _read(SKILLS / "requesting-code-review" / "code-reviewer.md").lower()
+        reviewers = [
+            _read(SKILLS / "requesting-code-review" / name).lower()
+            for name in ("code-reviewer.md", "reviewer-prompt.md")
+        ]
         assert "git merge-base origin/main HEAD" in requesting
-        assert "reasonable person" in reviewer
-        assert "spec's silence is not permission" in reviewer
-        assert "declined to judge" in reviewer
-        assert "executor rules on each line" in reviewer
+        for reviewer in reviewers:
+            assert "reasonable person" in reviewer
+            assert "spec's silence is not permission" in reviewer
+            assert "declined to judge" in reviewer
+            assert "executor rules on each line" in reviewer
 
     def test_brainstorming_owns_spec_to_plan_handoff_review(self):
         brainstorming = _read(SKILLS / "brainstorming" / "SKILL.md").lower()

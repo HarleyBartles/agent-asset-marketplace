@@ -70,6 +70,11 @@ def test_diagnostics_preserve_evidence_custody_and_mutation_gates():
     assert "sequential/self-analysis fallback" in skill
     assert "do not claim" in skill and "analysts ran" in skill
 
+    all_text = "\n".join(path.read_text(encoding="utf-8") for path in SKILL.rglob("*") if path.is_file()).lower()
+    assert "~/.superpowers/diagnosing-superpowers" not in all_text
+    assert "claude code" not in all_text
+    assert "cursor" not in all_text
+
 
 def test_diagnostics_routes_through_existing_safety_owners():
     skill = _text("SKILL.md")
@@ -81,3 +86,8 @@ def test_diagnostics_routes_through_existing_safety_owners():
         "connector-safety",
     ):
         assert owner in skill
+
+    lowered = skill.lower()
+    assert "similar sessions" in lowered
+    assert lowered.count("sequential/self-analysis fallback") >= 2
+    assert "seven analytical dimensions" in lowered

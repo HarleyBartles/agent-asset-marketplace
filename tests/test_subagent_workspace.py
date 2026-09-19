@@ -16,7 +16,7 @@ def _git(cwd: Path, *args: str) -> str:
 
 def _repo(tmp_path: Path) -> Path:
     repo = tmp_path / "example repo"
-    repo.mkdir()
+    repo.mkdir(parents=True)
     _git(repo, "init")
     _git(repo, "config", "user.email", "test@example.invalid")
     _git(repo, "config", "user.name", "Test User")
@@ -84,9 +84,45 @@ def test_workspace_sanitizes_repo_and_branch_and_defaults_to_check(tmp_path: Pat
 
     workspace = Path(_run("workspace.py", repo, str(plan)).stdout.strip())
 
-    assert "feature-slash" in workspace.parts
+    assert any(part.startswith("feature-slash-") for part in workspace.parts)
     assert workspace.parts[-4] == "_agent-scratch"
     assert not workspace.exists()
+
+
+def test_workspace_identity_segments_resist_sanitization_collisions(tmp_path: Path):
+    first_repo = _repo(tmp_path / "one")
+    second_repo = _repo(tmp_path / "two")
+    first_plan = first_repo / "plan.md"
+    second_plan = second_repo / "plan.md"
+    first_plan.write_text("# Plan\n", encoding="utf-8")
+    second_plan.write_text("# Plan\n", encoding="utf-8")
+    _git(first_repo, "checkout", "-b", "feature/slash")
+    _git(second_repo, "checkout", "-b", "feature-slash")
+
+    first = Path(_run("workspace.py", first_repo, "--apply", str(first_plan)).stdout.strip())
+    second = Path(_run("workspace.py", second_repo, "--apply", str(second_plan)).stdout.strip())
+
+    assert first != second
+    assert (first.parent / ".workspace-identity").is_file()
+    assert (second.parent / ".workspace-identity").is_file()
+
+
+def test_workspace_reuses_matching_suffixed_identity_after_lower_slot_removed(tmp_path: Path):
+    repo = _repo(tmp_path)
+    first_plan = repo / "a" / "upgrade.md"
+    second_plan = repo / "b" / "upgrade.md"
+    first_plan.parent.mkdir()
+    second_plan.parent.mkdir()
+    first_plan.write_text("# First\n", encoding="utf-8")
+    second_plan.write_text("# Second\n", encoding="utf-8")
+    first = Path(_run("workspace.py", repo, "--apply", str(first_plan)).stdout.strip())
+    second = Path(_run("workspace.py", repo, "--apply", str(second_plan)).stdout.strip())
+
+    for child in first.iterdir():
+        child.unlink()
+    first.rmdir()
+
+    assert Path(_run("workspace.py", repo, "--apply", str(second_plan)).stdout.strip()) == second
 
 
 def test_task_brief_extracts_one_task_as_utf8_without_bom(tmp_path: Path):

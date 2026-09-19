@@ -1,6 +1,6 @@
 # Case: <session-id>
 
-Workspace: ~/.superpowers/diagnosing-superpowers/<session-id>/
+Workspace: <resolved repository-segregated off-repo diagnostic path>/
 Created: <ISO timestamp>
 
 ## Problem statement (agreed with your human partner)

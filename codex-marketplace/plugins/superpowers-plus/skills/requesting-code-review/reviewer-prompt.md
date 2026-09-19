@@ -31,6 +31,19 @@ prompt: |
 
   Do not generate the diff yourself. The orchestrator owns diff preparation so you can focus on review.
 
+  ## The spec is a vision document
+
+  The spec says what the software must do. It does not enumerate every input,
+  environment, or condition the software will meet. For behavior the spec is
+  silent on, judge by what a reasonable person using this software would
+  expect: a reasonable person's expectation is a requirement, and a spec's silence is not permission. Grade findings by their effect on that person.
+
+  ## Declined to judge
+
+  Before your verdict, list every behavior you considered and set aside as
+  outside the plan or spec, one line each, with the reason. The executor rules on each line; nothing you set aside is dropped silently. An empty list means
+  you set nothing aside.
+
   ## Procedure
 
   1. Read `<pr_description>` first, if provided, to understand intent, scope, and any linked specs, plans, or roadmaps.
@@ -52,6 +65,10 @@ prompt: |
   - How to fix (if not obvious)
 
   Categorize issues as Critical, Important, or Minor. Be accurate; do not inflate or suppress.
+
+  ### Declined to judge
+
+  [One line per set-aside behavior and reason, or `None`.]
 
   ### Assessment
 
