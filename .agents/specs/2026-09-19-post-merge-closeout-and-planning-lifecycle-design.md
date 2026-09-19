@@ -40,24 +40,30 @@ completion compositions that make the lifecycle actionable for consumers.
 5. Worktree `--force` remains a distinct, explicitly destructive route for
    consumer-owned modified or untracked state.
 6. Portable planning skills call plans/specs/roadmaps/checkpoints committed,
-   in-flight execution artifacts, never durable artifacts. They state at
-   creation time that completion promotes enduring decisions and removes the
-   finished artifacts from the tracked tree.
-7. Agent-operating-model exposes reusable planning and completing-plan
-   scaffolds, requires the completion playbook in its standard policy and
-   default scaffold set, validates that requirement, and teaches consumers the
-   same in-flight-to-retirement lifecycle for plans, specifications, roadmaps,
-   checkpoints, and equivalent execution artifacts.
-8. This repository's planning and completion compositions align with those
-   reusable sources without weakening its existing completed-artifact doctrine.
+   in-flight execution artifacts, never durable artifacts.
+7. A portable `completing-planning-artifacts` skill owns the two-slice
+   lifecycle. The completing slice promotes enduring decisions, marks its
+   artifacts `completed-awaiting-retirement`, and keeps them in the PR so a
+   squash merge records them on `main`. The next substantive slice verifies
+   that merged state, copies them to disposable off-repo custody when useful,
+   and removes them as the first commit in its eventual PR.
+8. `cleanup-custody` supports ambiguous classification and promotion; it does
+   not own the normal two-slice lifecycle.
+9. Agent-operating-model exposes reusable stage bindings that invoke the
+   portable skill at completion and successor-slice ingress. A method-heavy
+   `completing-plans.md` playbook is not mandatory across repositories; any
+   retained local playbook is a thin repository-specific binding only.
+10. This repository aligns its local guidance to those portable owners without
+    weakening its completed-artifact doctrine or creating cleanup-only PRs.
 
 ## Non-goals
 
 - Automating GitHub PR discovery or branch deletion in the helper.
 - Treating squash as mandatory or inferring integration solely from convention.
 - Preserving uncommitted content inside a consumer-owned submodule checkout.
-- Retaining completed planning artifacts as repository evidence or examples.
+- Retaining completed planning artifacts beyond the next substantive slice.
 - Creating a tracked completed-artifact archive.
+- Creating a cleanup-only follow-up PR when no substantive successor slice exists.
 
 ## Acceptance evidence
 
@@ -67,5 +73,6 @@ completion compositions that make the lifecycle actionable for consumers.
 - Agent-operating-model scaffold tests prove planning/completion templates and
   required policy are available to consumer repositories.
 - The normal hooked commit proves the final staged snapshot.
-- Before the PR is ready, this specification and its implementation plan are
-  removed after promotion checks; Git history remains the record.
+- This specification and plan are marked `completed-awaiting-retirement` and
+  remain in the completing PR. The next substantive Marketplace slice retires
+  them after verifying their squash-merged presence on `main`.

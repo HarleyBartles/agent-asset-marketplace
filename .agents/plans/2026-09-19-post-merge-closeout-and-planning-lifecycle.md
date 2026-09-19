@@ -4,7 +4,7 @@
 
 **Goal:** Make verified non-ancestry branch retirement, routine submodule teardown, and temporary planning-artifact custody portable across marketplace consumers.
 
-**Architecture:** `finishing-a-development-branch` becomes the workflow owner for post-merge retirement and its worktree-removal primitive. Superpowers+ owns portable lifecycle language; agent-operating-model owns reusable repository scaffolds; this repository keeps thin local bindings and removes this spec and plan before completion.
+**Architecture:** `finishing-a-development-branch` becomes the workflow owner for post-merge branch/worktree retirement and its removal primitive. A new repo-worker-pack `completing-planning-artifacts` skill owns the two-slice planning-artifact lifecycle; Superpowers+ planning skills and agent-operating-model stage bindings route to that owner. This slice keeps its completed spec and plan in the final PR so squash-merged `main` records them; the next substantive slice retires them.
 
 **Tech Stack:** Markdown skills and doctrine, Python 3.12 helper/tests, repository generators and tracked pre-commit gate.
 
@@ -18,7 +18,7 @@
 - Preserve consumer-owned dirty-state protections outside submodules.
 - Discard non-authoritative submodule checkout dirt during routine teardown.
 - Do not automate forge mutations or assume one merge strategy.
-- Treat this spec and plan as committed in-flight artifacts and remove both before the completing PR is ready.
+- Treat this spec and plan as committed in-flight artifacts, then mark both `completed-awaiting-retirement` and retain them through this completing PR.
 
 ---
 
@@ -52,58 +52,75 @@
 - [ ] Move the helper through an `apply_patch` edit, separate submodule `-f` from worktree `--force`, and keep locked-directory safeguards.
 - [ ] Run `py -3 -m pytest tests/test_worktree_scripts.py -v` and require GREEN.
 
-### Task 3: Teach verified post-merge retirement and planning-artifact lifecycle
+### Task 3: Teach verified post-merge retirement
 
 **Files:**
 - Modify: `codex-marketplace/plugins/superpowers-plus/skills/finishing-a-development-branch/SKILL.md`
 - Modify: `codex-marketplace/plugins/superpowers-plus/skills/using-git-worktrees/SKILL.md`
-- Modify: `codex-marketplace/plugins/superpowers-plus/skills/writing-plans/SKILL.md`
-- Modify: `codex-marketplace/plugins/superpowers-plus/skills/writing-roadmaps/SKILL.md`
-- Modify: `codex-marketplace/plugins/superpowers-plus/skills/executing-plans/SKILL.md`
 - Modify: `tests/test_workflow_contracts.py`
 
 **Interfaces:**
-- Consumes: exact merged PR identity/base/head/merge-result evidence and the completed-artifact custody contract.
-- Produces: discoverable post-merge closeout and unambiguous committed-in-flight lifecycle language.
+- Consumes: exact merged PR identity/base/head/merge-result evidence.
+- Produces: discoverable post-merge branch/worktree closeout.
 
-- [ ] Add contract tests for the approved proof sequence, ownership pointer, non-durable terminology, promotion, and removal; run them to witness RED.
+- [ ] Add contract tests for the approved proof sequence and ownership pointer; run them to witness RED.
 - [ ] Make the minimal canonical skill edits that satisfy the tests without encoding repository-specific commands.
 - [ ] Run the focused workflow-contract tests and require GREEN.
 
-### Task 4: Export the lifecycle through agent-operating-model
+### Task 4: Create and pressure-test the portable planning-artifact lifecycle skill
+
+**Files:**
+- Create: `codex-marketplace/plugins/repo-worker-pack/skills/completing-planning-artifacts/SKILL.md`
+- Modify: `codex-marketplace/plugins/superpowers-plus/skills/writing-plans/SKILL.md`
+- Modify: `codex-marketplace/plugins/superpowers-plus/skills/writing-roadmaps/SKILL.md`
+- Modify: `codex-marketplace/plugins/superpowers-plus/skills/executing-plans/SKILL.md`
+- Modify: `codex-marketplace/plugins/repo-worker-pack/skills/repo-worker-base/SKILL.md`
+- Modify: `tests/test_workflow_contracts.py`
+
+**Interfaces:**
+- Consumes: in-flight planning artifacts, completion state, merged-base evidence, and repository-local promotion paths.
+- Produces: `completed-awaiting-retirement` completion output and idempotent successor-slice retirement without cleanup-only PRs.
+
+- [ ] Run a pressure scenario without the new skill and record the observed baseline failure/rationalization.
+- [ ] Add failing contract tests for committed-in-flight terminology, two-slice ownership, squash-history preservation, successor-slice ingress, and the `cleanup-custody` ambiguity boundary; witness RED.
+- [ ] Scaffold and write the minimal first-party marketplace skill plus routing edits that address the observed failures.
+- [ ] Re-run the pressure scenario with the skill and require compliant behavior; repair and repeat if a new loophole appears.
+- [ ] Run focused workflow-contract tests and require GREEN.
+
+### Task 5: Export the lifecycle through agent-operating-model
 
 **Files:**
 - Create: `codex-marketplace/plugins/agent-operating-model/skills/repo-shape/templates/planning.md`
-- Create: `codex-marketplace/plugins/agent-operating-model/skills/repo-shape/templates/completing-plans.md`
-- Modify: `codex-marketplace/plugins/agent-operating-model/skills/repo-shape/templates/repo-runbook-policy.md`
-- Modify: `codex-marketplace/plugins/agent-operating-model/skills/repo-shape/scripts/scaffold_playbooks.py`
+- Modify: `codex-marketplace/plugins/agent-operating-model/skills/repo-shape/templates/pr.md`
 - Modify: `codex-marketplace/plugins/agent-operating-model/skills/repo-shape/references/repository-runbook-standard.md`
 - Modify: `codex-marketplace/plugins/agent-operating-model/skills/repo-shape/references/repository-shape-standard.md`
 - Modify: `.agents/runbooks/planning.md`
-- Modify: `.agents/playbooks/completing-plans.md`
+- Modify: `.agents/runbooks/pr.md`
+- Modify: `.agents/doctrine/repo-runbook-policy.md`
+- Delete: `.agents/playbooks/completing-plans.md`
 - Modify: `tests/test_repo_shape.py`
 
 **Interfaces:**
 - Consumes: portable lifecycle language and completed-artifact doctrine.
-- Produces: reusable scaffolded compositions plus aligned local bindings.
+- Produces: reusable stage bindings to the portable skill plus aligned local guidance.
 
-- [ ] Add scaffold/contract tests proving the planning template labels artifacts as committed and in flight, the completion template promotes then removes plans/specs/roadmaps/checkpoints, and both the standard policy and default scaffold require the completion playbook; run to witness RED.
+- [ ] Add scaffold/contract tests proving the planning template invokes the portable skill, completion is bound into the appropriate stage, and a method-heavy completion playbook is not required; run to witness RED.
 - [ ] Add the canonical templates/reference changes and align this repository's local runbook/playbook.
 - [ ] Run the focused repo-shape tests and require GREEN.
 
-### Task 5: Regenerate, validate, review, and retire planning artifacts
+### Task 6: Regenerate, validate, review, and mark planning artifacts complete
 
 **Files:**
 - Regenerate: marketplace manifests, installed skills, and repository indexes/mesh.
-- Delete: `.agents/specs/2026-09-19-post-merge-closeout-and-planning-lifecycle-design.md`
-- Delete: `.agents/plans/2026-09-19-post-merge-closeout-and-planning-lifecycle.md`
+- Modify: `.agents/specs/2026-09-19-post-merge-closeout-and-planning-lifecycle-design.md`
+- Modify: `.agents/plans/2026-09-19-post-merge-closeout-and-planning-lifecycle.md`
 
 **Interfaces:**
 - Consumes: completed canonical source changes and passing focused tests.
-- Produces: converged generated surfaces, no completed planning artifacts in the final tree, and publication-ready evidence.
+- Produces: converged generated surfaces, completion-marked planning artifacts retained through merge, and publication-ready evidence.
 
 - [ ] Run `py -3 tools/run.py marketplace --apply`, `py -3 tools/run.py installed-skills --apply`, and `py -3 tools/run.py mesh --apply`.
 - [ ] Review the full diff against the spec and verify enduring decisions live in skills, templates, references, tests, or local compositions.
-- [ ] Remove this completed spec and plan with `apply_patch`, rerun `py -3 tools/run.py mesh --apply`, and verify no active link depends on them.
+- [ ] Mark this spec and plan `completed-awaiting-retirement`, verify their enduring content is promoted, and keep them in the final staged tree.
 - [ ] Stage the complete intended tree and commit normally so the tracked hook runs `ci --apply` and `ci --check --diagnostics` on the staged snapshot.
 - [ ] Run completion-readiness and whole-branch review, repair any findings, push the branch, open a draft PR, verify remote head/state/checks, and flip ready only after the repository PR preflight passes.
