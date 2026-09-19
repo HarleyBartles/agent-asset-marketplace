@@ -2,9 +2,13 @@
 
 ## Status
 
-Approved in conversation on 2026-09-19. This specification is a committed,
-in-flight execution artifact. It must leave the tracked tree in the completing
-PR after any enduring decisions have been promoted to their owning surfaces.
+`completed-awaiting-retirement`
+
+Approved in conversation on 2026-09-19 and completed in this slice. Its
+enduring decisions are promoted to portable skills, agent-operating-model
+templates/references, repository doctrine/runbooks, and executable tests. It
+remains tracked through this completing PR so squash-merged `main` records it;
+the next substantive slice retires it.
 
 ## Problem
 
@@ -35,10 +39,12 @@ completion compositions that make the lifecycle actionable for consumers.
    the finishing skill.
 4. Consumer-owned worktree changes remain protected. Content dirt left inside
    consumer submodules has no source custody and is discarded during routine
-   teardown with `git submodule deinit --all -f`; the containing worktree is
-   then removed without Git's worktree `--force`.
-5. Worktree `--force` remains a distinct, explicitly destructive route for
-   consumer-owned modified or untracked state.
+   teardown with `git submodule deinit --all -f`.
+5. The helper independently preflights consumer-owned dirt. Git's mechanical
+   worktree `--force` may be used after clean submodule teardown when Git still
+   refuses a submodule-bearing worktree; the public `--force` authority remains
+   a distinct, explicitly destructive route for consumer-owned modified or
+   untracked state.
 6. Portable planning skills call plans/specs/roadmaps/checkpoints committed,
    in-flight execution artifacts, never durable artifacts.
 7. A portable `completing-planning-artifacts` skill owns the two-slice

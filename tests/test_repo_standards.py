@@ -15,6 +15,7 @@ SCAFFOLD_GITIGNORE = SKILL_ROOT / "scaffold_gitignore.py"
 SCAFFOLD_MARKETPLACE_JSON = SKILL_ROOT / "scaffold_marketplace_json.py"
 SCAFFOLD_REPO_RUNBOOK_POLICY = SKILL_ROOT / "scaffold_repo_runbook_policy.py"
 REPO_STANDARDS = SKILL_ROOT / "repo_standards.py"
+SCAFFOLD_RUNBOOKS = SKILL_ROOT / "scaffold_runbooks.py"
 sys.path.insert(0, str(SKILL_ROOT))
 _SPEC = importlib.util.spec_from_file_location("repo_standards_under_test", REPO_STANDARDS)
 repo_standards = importlib.util.module_from_spec(_SPEC)
@@ -64,6 +65,28 @@ def test_absent_surface_reports_tracked_completed_artifact_directory(tmp_path: P
         set(),
     )
     assert findings == ["retired path remains: .agents/specs/completed"]
+
+
+def test_runbook_scaffolds_bind_planning_artifact_lifecycle(tmp_path: Path) -> None:
+    repo = tmp_path / "lifecycle-runbooks"
+    repo.mkdir()
+    _init_git_repo(repo)
+
+    result = subprocess.run(
+        [sys.executable, str(SCAFFOLD_RUNBOOKS)],
+        cwd=repo,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+    )
+
+    assert result.returncode == 0, result.stderr
+    planning = (repo / ".agents" / "runbooks" / "planning.md").read_text(encoding="utf-8").lower()
+    publication = (repo / ".agents" / "runbooks" / "pr.md").read_text(encoding="utf-8").lower()
+    assert "completing-planning-artifacts" in planning
+    assert "successor-slice" in planning
+    assert "completing-planning-artifacts" in publication
+    assert "completed-awaiting-retirement" in publication
 
 
 def test_scaffold_agents_md_check_missing_fails(tmp_path: Path) -> None:

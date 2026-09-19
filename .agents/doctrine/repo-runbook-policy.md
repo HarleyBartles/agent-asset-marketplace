@@ -21,7 +21,6 @@ This repository follows `repo-standards`. Lifecycle stages are runbooks; availab
 | security.md | `.agents/playbooks/security.md` | required |
 | skill-authoring.md | `.agents/playbooks/skill-authoring.md` | required |
 | marketplace-generation.md | `.agents/playbooks/marketplace-generation.md` | required |
-| completing-plans.md | `.agents/playbooks/completing-plans.md` | required |
 | repo-doctrine.md | `.agents/playbooks/repo-doctrine.md` | required |
 
 ## Additional repository-specific playbooks

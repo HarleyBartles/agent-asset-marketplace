@@ -43,7 +43,7 @@ Security review must apply the relevant profile and the repository lenses in `.a
 - [Mesh policy](.agents/doctrine/mesh-policy.md)
 - Scoped law lives in `.devin/rules/*.md` (including [PR workflow](.devin/rules/pr.md))
 - [Worker guidance](.agents/playbooks/repo-doctrine.md) and [implementing workflow](.agents/runbooks/implementing.md)
-- [Runbook stage routing](.agents/runbooks/AGENTS.md), [playbook routing](.agents/playbooks/AGENTS.md), [repo runbook policy](.agents/doctrine/repo-runbook-policy.md), and [completing plans](.agents/playbooks/completing-plans.md)
+- [Runbook stage routing](.agents/runbooks/AGENTS.md), [playbook routing](.agents/playbooks/AGENTS.md), [repo runbook policy](.agents/doctrine/repo-runbook-policy.md), and [completed-artifact custody](.agents/doctrine/completed-artifacts.md)
 - [Testing instructions](.agents/playbooks/testing.md), [code style guidelines](.agents/playbooks/code-style.md), [review guidelines](.agents/runbooks/code-review.md), and [PR instructions](.agents/runbooks/pr.md)
 - [Contributing](CONTRIBUTING.md) and [security considerations](.agents/playbooks/security.md)
 - [Completed-artifact custody](.agents/doctrine/completed-artifacts.md) and the root [ADR log](adr/README.md) for the in-flight, removal, and durable-decision boundary

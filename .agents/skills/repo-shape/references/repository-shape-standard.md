@@ -22,7 +22,7 @@ This file describes the surfaces `repo-standards` checks and can apply. It is th
 - Root `AGENTS.md` as a router with five core sections and a routing table.
 - `.agents/runbooks/AGENTS.md` as an optional router for the runbook set (may be scaffolded by `scaffold-runbooks`).
 - `.agents/playbooks/AGENTS.md` as an optional scoped contract for topical playbooks.
-- `.agents/doctrine/completed-artifacts.md` stating that completed planning artifacts leave the tracked tree and durable decisions belong in ADRs or current doctrine.
+- `.agents/doctrine/completed-artifacts.md` stating that completion-marked planning artifacts merge to `main`, leave in the next substantive slice, and durable decisions belong in ADRs or current doctrine.
 - No tracked `completed/` archive under `.agents/plans/`, `.agents/specs/`, or `.agents/roadmaps/`.
 
 ## Router AGENTS.md model
@@ -89,6 +89,6 @@ The root `.gitignore` must not contain a stale in-repo rule such as:
 ## Completed artifacts
 
 The `completed-artifacts-doctrine` surface carries this repo's custody truth
-for finished planning artifacts. `cleanup-custody` owns the custody method and
-promotion-before-removal step; the mapped completion playbook owns the removal
-composition.
+for finished planning artifacts. `completing-planning-artifacts` owns the
+normal two-slice lifecycle, `cleanup-custody` owns ambiguous classification,
+and the planning and PR runbooks bind both to repository-local paths and commands.

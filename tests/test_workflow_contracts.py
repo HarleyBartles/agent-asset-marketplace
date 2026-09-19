@@ -139,6 +139,46 @@ class TestValidationTddPublication:
         assert "reuse" in text and "evidence" in text
         assert "draft" in text
 
+    def test_branch_finish_owns_verified_post_merge_retirement(self):
+        raw = _read(SKILLS / "finishing-a-development-branch" / "SKILL.md")
+        text = raw.lower()
+        for phrase in (
+            "merged externally",
+            "recorded head sha",
+            "expected base",
+            "recorded merge result",
+            "git branch -d",
+        ):
+            assert phrase in text
+        assert "git branch -D" in raw
+
+    def test_worktree_skill_routes_retirement_to_branch_finishing(self):
+        text = _read(SKILLS / "using-git-worktrees" / "SKILL.md").lower()
+        assert "finishing-a-development-branch" in text
+        assert "remove_worktree.py" not in text
+
+    def test_planning_artifact_lifecycle_has_one_portable_owner(self):
+        owner = REPO_SKILLS / "completing-planning-artifacts" / "SKILL.md"
+        assert owner.is_file()
+        text = _read(owner).lower()
+        for phrase in (
+            "committed, in-flight",
+            "completed-awaiting-retirement",
+            "squash",
+            "next substantive slice",
+            "first commit",
+            "cleanup-only pr",
+            "cleanup-custody",
+        ):
+            assert phrase in text
+
+        planning = _read(SKILLS / "writing-plans" / "SKILL.md").lower()
+        assert "plans are durable" not in planning
+        assert "completing-planning-artifacts" in planning
+
+        ingress = _read(REPO_SKILLS / "repo-worker-base" / "SKILL.md").lower()
+        assert "completing-planning-artifacts" in ingress
+
     def test_tdd_allows_transitive_coverage_for_glue(self):
         text = _read(SKILLS / "test-driven-development" / "SKILL.md").lower()
         assert "transitive" in text or "independent behavior" in text
@@ -963,8 +1003,8 @@ class TestPressureRepairContracts:
         assert "Tiny bounded sketch" in brainstorming
         assert "missing destructive authority" in environment.split("---", 2)[1]
         assert "read that checkpoint before this skill or any" in bootstrap
-        assert "read the durable checkpoint before live repository inspection" in execution
-        assert "durable checkpoint before live repository inspection" in execution
+        assert "read the committed in-flight checkpoint before live repository inspection" in execution
+        assert "committed in-flight checkpoint before live repository inspection" in execution
         assert "inspect the current branch and status" in finishing
         assert "find .agents -maxdepth 2 -type f -iname '*evidence*'" in finishing
         assert "first response" in safety and "reversible alternative" in safety

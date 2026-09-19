@@ -33,6 +33,13 @@ its paths, commands, exclusions, CI, and exceptions through its local
 hygiene/layout policy and stage runbooks. Superpowers lane composition is owned
 by `using-superpowers-plus`; each stage skill owns its own baseline.
 
+At the start of a new substantive slice, after refreshing the required base and
+creating its isolated branch/worktree, inspect current `main` for planning
+artifacts marked `completed-awaiting-retirement`. **REQUIRED SUB-SKILL:** Use
+`completing-planning-artifacts` in its successor-slice ingress lane before
+substantive edits. Carry retirement as the first commit in the same eventual
+PR; do not create a cleanup-only PR.
+
 ## Read when
 
 | Need | Read |

@@ -14,6 +14,7 @@ metadata:
     integrate the work.
   - implementation through executing-plans or subagent-driven-development is complete.
   - the branch needs merge, PR, keep, or discard.
+  - a PR merged externally and its exact branch head and linked worktree need retirement.
   do_not_use_when:
   - tests are failing.
   - the work is incomplete.
@@ -37,6 +38,30 @@ This marketplace-maintained derivative is based on `obra/superpowers` v6.3.0 com
 **Core principle:** Verify state-bound evidence → Detect environment → Present options → Execute choice → Clean up.
 
 **Announce at start:** "I'm using the finishing-a-development-branch skill to complete this work."
+
+## Post-merge re-entry
+
+When a PR merged externally while the agent was away, do not show the
+pre-integration menu. Prove the exact published work before retiring it:
+
+1. Find the forge PR associated with the branch and verify it is `MERGED` into
+   the expected base.
+2. Verify the PR's recorded head SHA equals the branch head being retired. If
+   the branch moved after that recorded head SHA, stop: it contains additional
+   work.
+3. Verify the PR's recorded merge result is contained in the current expected
+   base history.
+4. Check whether the feature head is an ancestor of the base. Preserved
+   ancestry permits `git branch -d`; verified non-ancestry integration permits
+   deliberate `git branch -D` because ancestry-aware deletion cannot succeed.
+5. Run `scripts/remove_worktree.py --check <target>` and then `--apply` from
+   outside the target worktree. Use its worktree `--force` only with explicit
+   authority to discard consumer-owned modified or untracked files.
+
+Squash is a common reason ancestry is absent, but convention is not proof. The
+merged state, expected base, recorded head SHA, recorded merge result, and
+current graph are the proof. Stop if any identity or integration fact is
+ambiguous.
 
 ## Step 1: Verify Tests
 
@@ -228,12 +253,15 @@ Step 2, from before that directory change.
 
 **If `GIT_DIR == GIT_COMMON`:** Normal repo, no worktree to clean up. Done.
 
-**If `WORKTREE_PATH` is under `.worktrees/` or `worktrees/`:** Superpowers
-created this worktree — we own cleanup:
+**If the host does not own workspace cleanup:** Run the bundled helper from the
+main checkout. It resolves registered worktrees by full branch ref or absolute
+path, routinely discards non-authoritative submodule checkout residue, and
+preserves consumer-owned dirty files unless destructive force was explicitly
+authorized:
 
 ```bash
-git worktree remove "$WORKTREE_PATH"
-git worktree prune  # Self-healing: clean up any stale registrations
+py -3 scripts/remove_worktree.py --check "$WORKTREE_PATH"
+py -3 scripts/remove_worktree.py --apply "$WORKTREE_PATH"
 ```
 
 **If removal is refused** (`contains modified or untracked files`): the

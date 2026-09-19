@@ -16,7 +16,6 @@ PLAYBOOK_TITLES: dict[str, str] = {
     "testing.md": "Testing playbook",
     "code-style.md": "Code style playbook",
     "repo-doctrine.md": "Repo doctrine playbook",
-    "completing-plans.md": "Completion playbook",
 }
 
 

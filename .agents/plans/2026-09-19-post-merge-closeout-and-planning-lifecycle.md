@@ -1,5 +1,7 @@
 # Post-Merge Closeout and Planning-Artifact Lifecycle Implementation Plan
 
+**Lifecycle:** `completed-awaiting-retirement`
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use `subagent-driven-development` (recommended) or `executing-plans` to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Make verified non-ancestry branch retirement, routine submodule teardown, and temporary planning-artifact custody portable across marketplace consumers.
@@ -16,7 +18,9 @@
 
 - Edit canonical plugin sources before generated `.agents/skills/` projections.
 - Preserve consumer-owned dirty-state protections outside submodules.
-- Discard non-authoritative submodule checkout dirt during routine teardown.
+- Discard non-authoritative submodule checkout dirt during routine teardown;
+  keep Git's mechanical submodule-removal force distinct from public authority
+  to discard consumer-owned dirt.
 - Do not automate forge mutations or assume one merge strategy.
 - Treat this spec and plan as committed in-flight artifacts, then mark both `completed-awaiting-retirement` and retain them through this completing PR.
 
@@ -32,9 +36,9 @@
 - Consumes: approved conversation requirements and current repository doctrine.
 - Produces: committed execution inputs for subsequent tasks.
 
-- [ ] Run `py -3 tools/run.py mesh --apply` and inspect the generated plan/spec indexes.
-- [ ] Run the plan-readiness gate and require at least 9/10.
-- [ ] Stage and commit the plan package through the tracked hook.
+- [x] Run `py -3 tools/run.py mesh --apply` and inspect the generated plan/spec indexes.
+- [x] Run the plan-readiness gate and require at least 9/10.
+- [x] Stage and commit the plan package through the tracked hook.
 
 ### Task 2: Move and correct the worktree-removal primitive with TDD
 
@@ -47,10 +51,10 @@
 - Consumes: branch name or registered absolute worktree path plus `--check`, `--apply`, and explicitly destructive `--force` modes.
 - Produces: routine forced submodule deinitialization followed by ordinary worktree removal; worktree force only when explicitly selected.
 
-- [ ] Change focused tests to resolve the helper from its new canonical owner and add cases proving dirty submodule content is discarded without worktree force while dirty consumer-owned files remain protected.
-- [ ] Run the focused tests and witness the expected RED caused by the missing moved helper/behavior.
-- [ ] Move the helper through an `apply_patch` edit, separate submodule `-f` from worktree `--force`, and keep locked-directory safeguards.
-- [ ] Run `py -3 -m pytest tests/test_worktree_scripts.py -v` and require GREEN.
+- [x] Change focused tests to resolve the helper from its new canonical owner and add cases proving dirty submodule content is discarded without public destructive authority while dirty consumer-owned files remain protected.
+- [x] Run the focused tests and witness the expected RED caused by the missing moved helper/behavior.
+- [x] Move the helper through an `apply_patch` edit, separate submodule `-f` and Git's mechanical submodule-removal force from public authority to discard consumer-owned dirt, and keep locked-directory safeguards.
+- [x] Run `py -3 -m pytest tests/test_worktree_scripts.py -v` and require GREEN.
 
 ### Task 3: Teach verified post-merge retirement
 
@@ -63,9 +67,9 @@
 - Consumes: exact merged PR identity/base/head/merge-result evidence.
 - Produces: discoverable post-merge branch/worktree closeout.
 
-- [ ] Add contract tests for the approved proof sequence and ownership pointer; run them to witness RED.
-- [ ] Make the minimal canonical skill edits that satisfy the tests without encoding repository-specific commands.
-- [ ] Run the focused workflow-contract tests and require GREEN.
+- [x] Add contract tests for the approved proof sequence and ownership pointer; run them to witness RED.
+- [x] Make the minimal canonical skill edits that satisfy the tests without encoding repository-specific commands.
+- [x] Run the focused workflow-contract tests and require GREEN.
 
 ### Task 4: Create and pressure-test the portable planning-artifact lifecycle skill
 
@@ -81,11 +85,11 @@
 - Consumes: in-flight planning artifacts, completion state, merged-base evidence, and repository-local promotion paths.
 - Produces: `completed-awaiting-retirement` completion output and idempotent successor-slice retirement without cleanup-only PRs.
 
-- [ ] Run a pressure scenario without the new skill and record the observed baseline failure/rationalization.
-- [ ] Add failing contract tests for committed-in-flight terminology, two-slice ownership, squash-history preservation, successor-slice ingress, and the `cleanup-custody` ambiguity boundary; witness RED.
-- [ ] Scaffold and write the minimal first-party marketplace skill plus routing edits that address the observed failures.
-- [ ] Re-run the pressure scenario with the skill and require compliant behavior; repair and repeat if a new loophole appears.
-- [ ] Run focused workflow-contract tests and require GREEN.
+- [x] Run a pressure scenario without the new skill and record the observed baseline failure/rationalization.
+- [x] Add failing contract tests for committed-in-flight terminology, two-slice ownership, squash-history preservation, successor-slice ingress, and the `cleanup-custody` ambiguity boundary; witness RED.
+- [x] Scaffold and write the minimal first-party marketplace skill plus routing edits that address the observed failures.
+- [x] Re-run the pressure scenario with the skill and require compliant behavior; repair and repeat if a new loophole appears.
+- [x] Run focused workflow-contract tests and require GREEN.
 
 ### Task 5: Export the lifecycle through agent-operating-model
 
@@ -104,9 +108,9 @@
 - Consumes: portable lifecycle language and completed-artifact doctrine.
 - Produces: reusable stage bindings to the portable skill plus aligned local guidance.
 
-- [ ] Add scaffold/contract tests proving the planning template invokes the portable skill, completion is bound into the appropriate stage, and a method-heavy completion playbook is not required; run to witness RED.
-- [ ] Add the canonical templates/reference changes and align this repository's local runbook/playbook.
-- [ ] Run the focused repo-shape tests and require GREEN.
+- [x] Add scaffold/contract tests proving the planning template invokes the portable skill, completion is bound into the appropriate stage, and a method-heavy completion playbook is not required; run to witness RED.
+- [x] Add the canonical templates/reference changes and align this repository's local runbook/playbook.
+- [x] Run the focused repo-shape tests and require GREEN.
 
 ### Task 6: Regenerate, validate, review, and mark planning artifacts complete
 
@@ -119,7 +123,7 @@
 - Consumes: completed canonical source changes and passing focused tests.
 - Produces: converged generated surfaces, completion-marked planning artifacts retained through merge, and publication-ready evidence.
 
-- [ ] Run `py -3 tools/run.py marketplace --apply`, `py -3 tools/run.py installed-skills --apply`, and `py -3 tools/run.py mesh --apply`.
+- [x] Run `py -3 tools/run.py marketplace --apply`, `py -3 tools/run.py installed-skills --apply`, and `py -3 tools/run.py mesh --apply`.
 - [ ] Review the full diff against the spec and verify enduring decisions live in skills, templates, references, tests, or local compositions.
 - [ ] Mark this spec and plan `completed-awaiting-retirement`, verify their enduring content is promoted, and keep them in the final staged tree.
 - [ ] Stage the complete intended tree and commit normally so the tracked hook runs `ci --apply` and `ci --check --diagnostics` on the staged snapshot.

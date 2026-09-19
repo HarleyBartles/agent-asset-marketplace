@@ -21,7 +21,7 @@ Your human partner is impatient and says:
 Read the skill at
 `<worktree-root>/.agents/skills/using-git-worktrees/SKILL.md`
 and the script at
-`<worktree-root>/.agents/skills/using-git-worktrees/scripts/remove_worktree.py`.
+`<worktree-root>/.agents/skills/finishing-a-development-branch/scripts/remove_worktree.py`.
 Act as if the skill has been invoked and you are following its guidance. Then
 decide and state exactly what you will do. Do not execute any commands; only
 output your decision and the exact commands you would run, or say STOP and

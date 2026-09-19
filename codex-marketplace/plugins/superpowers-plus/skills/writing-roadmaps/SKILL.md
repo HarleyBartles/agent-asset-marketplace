@@ -39,7 +39,9 @@ license: MIT
 
 ## Overview
 
-Break large goals into a roadmap of consecutive plans, execute them, and keep the roadmap as a live work log.
+Break large goals into a roadmap of consecutive plans and keep it as a
+committed, in-flight work log. When the roadmap completes, use
+`completing-planning-artifacts`; it is not durable repository truth.
 
 ## Lane 1 — Start an Epic
 

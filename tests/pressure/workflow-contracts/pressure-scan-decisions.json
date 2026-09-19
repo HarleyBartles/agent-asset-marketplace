@@ -64,7 +64,7 @@
   },
   {
     "path": "codex-marketplace/plugins/superpowers-plus/skills/writing-plans/SKILL.md",
-    "line": 98,
+    "line": 103,
     "pattern": "must-read",
     "context": "If you think \"this is a lot\" or \"the plan is huge\" while writing, you are at a scope sizing decision point. **MUST READ:** `references/plan-scope-sizing.md` and follow one of the three escape hatches before continuing.",
     "classification": "repo-local",
@@ -73,7 +73,7 @@
   },
   {
     "path": "codex-marketplace/plugins/superpowers-plus/skills/writing-roadmaps/SKILL.md",
-    "line": 65,
+    "line": 67,
     "pattern": "must-read",
     "context": "If a plan in progress grows beyond one deliverable, stop writing. **MUST READ:** `references/plan-scope-sizing.md` and use escape hatch 3:",
     "classification": "repo-local",
@@ -154,18 +154,9 @@
   },
   {
     "path": ".agents/runbooks/planning.md",
-    "line": 23,
+    "line": 27,
     "pattern": "portable-repo-command",
     "context": "Plans live under `.agents/plans/`. Use `py -3 tools/run.py mesh --apply` after adding one.",
-    "classification": "repo-local",
-    "owner": "runbook-playbook contract",
-    "reason": "Repository-local composition guidance required by the approved runbook and playbook contract."
-  },
-  {
-    "path": ".agents/playbooks/completing-plans.md",
-    "line": 22,
-    "pattern": "portable-repo-command",
-    "context": "Remove completed artifacts from `.agents/plans/`, `.agents/specs/`, or `.agents/roadmaps/` and run `py -3 tools/run.py mesh --apply` only after durable decisions are promoted. Disposable copies may live under `_agent-scratch/<repo-name>/completed/<artifact-type>/`.",
     "classification": "repo-local",
     "owner": "runbook-playbook contract",
     "reason": "Repository-local composition guidance required by the approved runbook and playbook contract."
