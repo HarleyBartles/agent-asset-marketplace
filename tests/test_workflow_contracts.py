@@ -151,6 +151,10 @@ class TestValidationTddPublication:
         ):
             assert phrase in text
         assert "git branch -D" in raw
+        helper = ".agents/skills/finishing-a-development-branch/scripts/remove_worktree.py"
+        assert f"py -3 {helper} --check" in raw
+        assert f"py -3 {helper} --apply" in raw
+        assert text.index("after the worktree is gone") < text.index("verify the local branch ref no longer exists")
 
     def test_worktree_skill_routes_retirement_to_branch_finishing(self):
         text = _read(SKILLS / "using-git-worktrees" / "SKILL.md").lower()
@@ -175,6 +179,9 @@ class TestValidationTddPublication:
             "first commit",
             "cleanup-only pr",
             "cleanup-custody",
+            "<scratch-root>/<repo-name>/completed/<artifact-type>/",
+            "repositories segregated",
+            "canonical repository identity",
         ):
             assert phrase in text
 
@@ -184,6 +191,19 @@ class TestValidationTddPublication:
 
         ingress = _read(REPO_SKILLS / "repo-worker-base" / "SKILL.md").lower()
         assert "completing-planning-artifacts" in ingress
+
+        manifest_path = (
+            ROOT / "codex-marketplace" / "plugins" / "repo-worker-pack" / "references" / "bundle-manifest.json"
+        )
+        manifest = json.loads(_read(manifest_path))
+        declared = {entry["canonical_name"] for entry in manifest["entries"]}
+        canonical = {path.name for path in REPO_SKILLS.iterdir() if (path / "SKILL.md").is_file()}
+        assert declared == canonical
+
+        completed_artifacts = _read(OPERATING_SKILLS / "repo-shape" / "templates" / "completed-artifacts.md").lower()
+        assert "completion playbook" not in completed_artifacts
+        assert "portable" in completed_artifacts
+        assert "completion skill owns the lifecycle" in completed_artifacts
 
     def test_tdd_allows_transitive_coverage_for_glue(self):
         text = _read(SKILLS / "test-driven-development" / "SKILL.md").lower()

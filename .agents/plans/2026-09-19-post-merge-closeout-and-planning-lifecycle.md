@@ -124,7 +124,7 @@
 - Produces: converged generated surfaces, completion-marked planning artifacts retained through merge, and publication-ready evidence.
 
 - [x] Run `py -3 tools/run.py marketplace --apply`, `py -3 tools/run.py installed-skills --apply`, and `py -3 tools/run.py mesh --apply`.
-- [ ] Review the full diff against the spec and verify enduring decisions live in skills, templates, references, tests, or local compositions.
-- [ ] Mark this spec and plan `completed-awaiting-retirement`, verify their enduring content is promoted, and keep them in the final staged tree.
-- [ ] Stage the complete intended tree and commit normally so the tracked hook runs `ci --apply` and `ci --check --diagnostics` on the staged snapshot.
+- [x] Review the full diff against the spec and verify enduring decisions live in skills, templates, references, tests, or local compositions.
+- [x] Mark this spec and plan `completed-awaiting-retirement`, verify their enduring content is promoted, and keep them in the final staged tree.
+- [x] Stage the complete intended tree and commit normally so the tracked hook runs `ci --apply` and `ci --check --diagnostics` on the staged snapshot.
 - [ ] Run completion-readiness and whole-branch review, repair any findings, push the branch, open a draft PR, verify remote head/state/checks, and flip ready only after the repository PR preflight passes.

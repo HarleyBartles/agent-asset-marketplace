@@ -20,8 +20,9 @@ with no manifest, retention promise, or evidentiary role.
 
 Durable content promotes before removal: enduring architecture decisions
 belong in the repository's declared ADR home; operating rules belong in
-`.agents/doctrine/`, `.agents/runbooks/`, or `.agents/playbooks/`. The completion playbook names the
-concrete destinations.
+`.agents/doctrine/`, `.agents/runbooks/`, or `.agents/playbooks/`. The portable
+completion skill owns the lifecycle; the repository's planning and PR runbooks
+name the concrete destinations and commands.
 
 ## Ownership
 

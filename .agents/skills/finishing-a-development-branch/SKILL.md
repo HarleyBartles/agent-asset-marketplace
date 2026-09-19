@@ -51,12 +51,15 @@ pre-integration menu. Prove the exact published work before retiring it:
    work.
 3. Verify the PR's recorded merge result is contained in the current expected
    base history.
-4. Check whether the feature head is an ancestor of the base. Preserved
-   ancestry permits `git branch -d`; verified non-ancestry integration permits
-   deliberate `git branch -D` because ancestry-aware deletion cannot succeed.
+4. Check whether the feature head is an ancestor of the base and record the
+   branch-deletion command. Preserved ancestry selects `git branch -d
+   <branch>`; verified non-ancestry integration selects deliberate `git branch
+   -D <branch>` because ancestry-aware deletion cannot succeed.
 5. Run `scripts/remove_worktree.py --check <target>` and then `--apply` from
    outside the target worktree. Use its worktree `--force` only with explicit
    authority to discard consumer-owned modified or untracked files.
+6. After the worktree is gone, run the selected branch-deletion command and
+   verify the local branch ref no longer exists.
 
 Squash is a common reason ancestry is absent, but convention is not proof. The
 merged state, expected base, recorded head SHA, recorded merge result, and
@@ -260,8 +263,8 @@ preserves consumer-owned dirty files unless destructive force was explicitly
 authorized:
 
 ```bash
-py -3 scripts/remove_worktree.py --check "$WORKTREE_PATH"
-py -3 scripts/remove_worktree.py --apply "$WORKTREE_PATH"
+py -3 .agents/skills/finishing-a-development-branch/scripts/remove_worktree.py --check "$WORKTREE_PATH"
+py -3 .agents/skills/finishing-a-development-branch/scripts/remove_worktree.py --apply "$WORKTREE_PATH"
 ```
 
 **If removal is refused** (`contains modified or untracked files`): the

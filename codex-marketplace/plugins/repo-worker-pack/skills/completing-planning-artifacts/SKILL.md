@@ -51,8 +51,15 @@ before its substantive edits:
    proof.
 3. Verify enduring content was promoted. Use **REQUIRED SUB-SKILL:**
    `cleanup-custody` if completion or promotion is ambiguous.
-4. If the consumer declares a completed-artifact scratch location, copy the
-   files there as disposable, non-evidentiary convenience copies.
+4. If the consumer permits a completed-artifact convenience copy, resolve its
+   off-repo scratch root from host or repository policy; do not invent a drive
+   or fixed absolute path. Keep repositories segregated beneath that root as
+   `<scratch-root>/<repo-name>/completed/<artifact-type>/`, where `<repo-name>`
+   is the canonical repository identity rather than a feature-worktree leaf.
+   Copy the files there as disposable, non-evidentiary convenience copies.
+   A consumer-declared resolver or more specific repo-segregated layout takes
+   precedence over this conventional shape; never flatten artifacts from
+   multiple repositories into one shared `completed/` directory.
 5. Remove the tracked artifacts and stale links or generated indexes, then run
    the consumer's owning regeneration command.
 6. Commit retirement as the first commit in the next substantive slice's
