@@ -228,6 +228,16 @@ class TestValidationTddPublication:
         assert "portable" in completed_artifacts
         assert "completion skill owns the lifecycle" in completed_artifacts
 
+        runbook_standard = _read(
+            OPERATING_SKILLS / "repo-shape" / "references" / "repository-runbook-standard.md"
+        ).lower()
+        shape_standard = _read(OPERATING_SKILLS / "repo-shape" / "references" / "repository-shape-standard.md").lower()
+        for standard in (runbook_standard, shape_standard):
+            assert "completing-planning-artifacts" not in standard
+            assert "completed-awaiting-retirement" not in standard
+        assert "mandatory cross-repository capabilities belong in portable skills" in runbook_standard
+        assert "routes to its current lifecycle owners" in shape_standard
+
     def test_tdd_allows_transitive_coverage_for_glue(self):
         text = _read(SKILLS / "test-driven-development" / "SKILL.md").lower()
         assert "transitive" in text or "independent behavior" in text
@@ -1031,6 +1041,7 @@ class TestPressureRepairContracts:
     def test_pressure_repairs_are_owned_by_canonical_instruction_sources(self):
         bootstrap = _read(SKILLS / "using-superpowers-plus" / "SKILL.md")
         routing = _read(SKILLS / "using-superpowers-plus" / "references" / "bootstrap-routing.md")
+        routing_flat = " ".join(routing.split())
         questions = _read(SKILLS / "asking-clarifying-questions" / "SKILL.md")
         brainstorming = _read(SKILLS / "brainstorming" / "SKILL.md")
         environment = _read(SKILLS / "inspecting-the-environment" / "SKILL.md")
@@ -1039,6 +1050,10 @@ class TestPressureRepairContracts:
         safety = _read(REPO_SKILLS / "risk-gates" / "references" / "gates" / "safety-gate.md")
         repo_worker = _read(REPO_SKILLS / "repo-worker-base" / "SKILL.md")
         assert "tiny_reversible_change" in routing
+        assert ".agents/playbooks/INDEX.md" in routing
+        assert ".agents/runbooks/INDEX.md" in routing
+        assert "session start, resume, and whenever the active concern changes" in routing_flat
+        assert "independently of runbook selection" in routing_flat
         assert "Tiny reversible fast path" in bootstrap
         assert "Taste ambiguity stop" in bootstrap
         assert "Checkpoint-first resume exception" in bootstrap

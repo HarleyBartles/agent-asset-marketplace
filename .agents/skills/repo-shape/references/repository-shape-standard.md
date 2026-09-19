@@ -88,7 +88,7 @@ The root `.gitignore` must not contain a stale in-repo rule such as:
 
 ## Completed artifacts
 
-The `completed-artifacts-doctrine` surface carries this repo's custody truth
-for finished planning artifacts. `completing-planning-artifacts` owns the
-normal two-slice lifecycle, `cleanup-custody` owns ambiguous classification,
-and the planning and PR runbooks bind both to repository-local paths and commands.
+The `completed-artifacts-doctrine` surface carries this repo's current custody
+truth for finished planning artifacts. It routes to its current lifecycle owners
+and records the repository-local paths, commands, and evidence bindings without
+duplicating their procedures in this structural standard.

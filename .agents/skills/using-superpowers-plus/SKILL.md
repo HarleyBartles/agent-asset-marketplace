@@ -168,11 +168,16 @@ is unclear, run these steps in order and then hand off.
    `inspecting-the-environment` when shell, repository, branch, worktree, or
    connector facts can change the selected route or immediate action. Do not
    perform a broad inventory merely because the skill is available.
-3. **Load only selected doctrine.** Invoke `base-doctrine` for cross-runtime
+3. **Discover repository composition.** For repo-backed modes, follow
+   [`references/bootstrap-routing.md`](references/bootstrap-routing.md) to
+   consult the repository's playbook inventory independently of runbook
+   selection and resolve its runbook inventory when the stage is not explicit.
+   Repeat this bounded discovery on resume and when the active concern changes.
+4. **Load only selected doctrine.** Invoke `base-doctrine` for cross-runtime
    invariants, then read only the repo-local doctrine and owning references
    required by the selected route. For local-doctrine and user-instruction
    priority rules, see [`references/repo-doctrine.md`](references/repo-doctrine.md).
-4. **Route and stop.** Hand off to the owning skill and stop reading once the
+5. **Route and stop.** Hand off to the owning skill and stop reading once the
    next lawful action is known. Do not load additional
    skills unless the current skill leaves a decision unresolved and the
    candidate skill directly owns it.

@@ -19,6 +19,26 @@ skill.
 | `verification_or_reporting` | QA, closeout posture, validation, review-feedback, or report writing | `verification-before-completion` and `writing-with-clarity` |
 | `skill_work` | Create, update, validate, package, install, or troubleshoot skills | `writing-skills` |
 
+## Repository composition discovery
+
+For every repo-backed mode, use the root `AGENTS.md` routing pointers to locate
+the repository's workflow inventories. At session start, resume, and whenever
+the active concern changes:
+
+1. Read `.agents/playbooks/INDEX.md` when the repository exposes it. Match the
+   request's topical concerns against that inventory independently of runbook
+   selection, then read only the applicable playbooks.
+2. Use `.agents/runbooks/INDEX.md` to resolve the available lifecycle stages
+   when the stage route is not already explicit. The selected stage skill still
+   reads its owning runbook as part of the normal handoff.
+3. Treat runbook-to-playbook links as additional predictable composition, not
+   as the only way a playbook becomes available.
+
+Do not read every playbook body speculatively. The indexes are the bounded
+discovery surface; a playbook body loads only when its named concern applies.
+If an inventory is absent, follow the repository's declared shape and do not
+invent a local workflow.
+
 ## Repo-backed work handoff
 
 For repo-backed work, the mandatory handoff is:

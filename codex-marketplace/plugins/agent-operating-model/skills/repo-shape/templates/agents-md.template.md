@@ -28,6 +28,8 @@
 - PR instructions: [AGENTS.md](AGENTS.md)
 - Contributing: [CONTRIBUTING.md](CONTRIBUTING.md)
 - Security considerations: [AGENTS.md](AGENTS.md)
+- Runbook inventory: [.agents/runbooks/INDEX.md](.agents/runbooks/INDEX.md)
+- Playbook inventory: [.agents/playbooks/INDEX.md](.agents/playbooks/INDEX.md)
 - Routing pointers: [AGENTS.md](AGENTS.md)
 - Maintenance responsibility: [AGENTS.md](AGENTS.md)
 
