@@ -140,6 +140,20 @@ def test_review_package_contains_commits_stat_and_context_diff(tmp_path: Path):
     assert "## Diff" in content and "@@" in content
 
 
+def test_review_package_decodes_utf8_diff_on_windows(tmp_path: Path):
+    repo = _repo(tmp_path)
+    base = _git(repo, "rev-parse", "HEAD")
+    (repo / "unicode.txt").write_text("Native → review\n", encoding="utf-8")
+    _git(repo, "add", "unicode.txt")
+    _git(repo, "commit", "-m", "add unicode")
+    head = _git(repo, "rev-parse", "HEAD")
+
+    result = _run("review_package.py", repo, "--apply", "-", base, head)
+    output = Path(result.stdout.strip().split("wrote ", 1)[1].split(": ", 1)[0])
+
+    assert "Native → review" in output.read_text(encoding="utf-8")
+
+
 def test_python_helpers_expose_help_and_default_to_read_only(tmp_path: Path):
     repo = _repo(tmp_path)
     plan = repo / "plan.md"
