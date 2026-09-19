@@ -157,6 +157,12 @@ class TestValidationTddPublication:
         assert "finishing-a-development-branch" in text
         assert "remove_worktree.py" not in text
 
+        old_scripts = SKILLS / "using-git-worktrees" / "scripts"
+        owner_scripts = SKILLS / "finishing-a-development-branch" / "scripts"
+        for filename in ("remove_worktree.py", "remove-worktree.ps1", "remove-worktree.sh"):
+            assert not (old_scripts / filename).exists()
+            assert (owner_scripts / filename).is_file()
+
     def test_planning_artifact_lifecycle_has_one_portable_owner(self):
         owner = REPO_SKILLS / "completing-planning-artifacts" / "SKILL.md"
         assert owner.is_file()
