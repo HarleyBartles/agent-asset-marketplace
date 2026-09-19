@@ -144,7 +144,7 @@ def write_large_text(target: Path, text: str, scratch_root: Path) -> None:
 
 ## Windows notes
 
-- Keep temp files on the same volume as the target so `Path.replace()` stays atomic. `sdd-workspace` produces an off-repo scratch that is a sibling of the main checkout, which is normally on the same volume.
+- Keep temp files on the same volume as the target so `Path.replace()` stays atomic. `subagent-workspace/scripts/workspace.py` produces an off-repo scratch that is a sibling of the main checkout, which is normally on the same volume.
 - Prefer explicit `encoding="utf-8"` and `newline="\n"` for text generation.
 - If a tool or editor has trouble with a very large file, route through a script instead of the interactive editor.
 - If the repo has a safer existing helper for batch writes, use that helper instead of inventing a second path.
@@ -157,7 +157,7 @@ If you would be tempted to compose a large document inline in the main session c
 
 ## Scratch folder for large temporary outputs
 
-For large temporary outputs that don't need to be committed, use the centralized off-repo scratch provided by `subagent-workspace/scripts/sdd-workspace` (or `sdd-workspace.ps1` on Windows). It resolves `<main-checkout>/../_agent-scratch/<repo-name>/<branch>/<plan-basename>/`, which is always outside the repo tree and on the same volume as the working tree.
+For large temporary outputs that don't need to be committed, use the centralized off-repo scratch provided by `py -3 subagent-workspace/scripts/workspace.py --apply`. It resolves `<main-checkout>/../_agent-scratch/<repo-name>/<branch>/<plan-basename>/`, which is always outside the repo tree and on the same volume as the working tree.
 
 ### When to use scratch folder vs. bounded composition
 
@@ -186,7 +186,7 @@ Use bounded composition when:
 
 ### Usage pattern
 
-1. Resolve the scratch folder: run `subagent-workspace/scripts/sdd-workspace` with no plan file and capture the printed path.
+1. Resolve the scratch folder: run `py -3 subagent-workspace/scripts/workspace.py --apply` with no plan file and capture the printed path.
 2. Write large temporary outputs (e.g. the `.tmp` staging file in `write_large_text`) to that scratch folder.
 3. Use the temporary outputs as needed during the session.
 4. Clean up the scratch folder when work is complete (when cleaning up worktree).
