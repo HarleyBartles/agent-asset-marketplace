@@ -10,7 +10,7 @@
 
 **Spec:** Conversation-approved migration strategy from 2026-09-19; upstream basis `obra/superpowers` v6.4.1 commit `5bf4e78011075bcfc0dc295f0724994cd123ee71`; previous basis v6.3.0 commit `b36e0829c6d0140e93cfef2ca599b1b07d4a7797`.
 
-**Execution Strategy:** `subagent-driven-development` — the seven tasks have explicit producer/consumer boundaries, and task-level review is valuable where upstream semantics are merged with Superpowers+ policy.
+**Execution Strategy:** `executing-plans` — this upgrade is one tightly coupled three-way semantic merge. Later tasks depend on the exact contracts and paths established by earlier tasks, so Native inline execution keeps the integration context coherent and uses one fresh whole-branch review at completion.
 
 ## Global Constraints
 

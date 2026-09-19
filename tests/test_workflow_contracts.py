@@ -73,8 +73,24 @@ class TestAuthorityBootstrapPortability:
     def test_superpowers_plus_version_matches_pinned_upstream_release(self):
         plugin = json.loads(_read(SKILLS.parent / ".codex-plugin" / "plugin.json"))
         bundle = json.loads(_read(SKILLS.parent / "references" / "bundle-manifest.json"))
-        assert plugin["version"] == "6.3.0"
-        assert bundle["bundle_version"] == "6.3.0"
+        source = _read(SKILLS.parent / "SOURCE.md")
+        assert plugin["version"] == "6.4.1"
+        assert bundle["bundle_version"] == "6.4.1"
+        assert "5bf4e78011075bcfc0dc295f0724994cd123ee71" in source
+
+    def test_superpowers_plus_retains_first_party_helper_inventory(self):
+        bundle = json.loads(_read(SKILLS.parent / "references" / "bundle-manifest.json"))
+        names = {entry["canonical_name"] for entry in bundle["entries"]}
+        assert {
+            "asking-clarifying-questions",
+            "handoff-gates",
+            "inspecting-the-environment",
+            "iterative-review",
+            "publishing-source",
+            "selecting-a-subagent",
+            "subagent-workspace",
+            "writing-roadmaps",
+        } <= names
 
     def test_operating_contract_declares_shared_authority(self):
         path = REPO_SKILLS / "base-doctrine" / "references" / "operating-contract.md"
@@ -406,7 +422,7 @@ class TestRepositoryCallersAndPressure:
 
     def test_superpowers_provenance_does_not_claim_a_retained_snapshot(self):
         source = _read(ROOT / "codex-marketplace" / "plugins" / "superpowers-plus" / "SOURCE.md")
-        assert "b36e0829c6d0140e93cfef2ca599b1b07d4a7797" in source
+        assert "5bf4e78011075bcfc0dc295f0724994cd123ee71" in source
         assert "Retained snapshot" not in source
         offenders = []
         plugin = ROOT / "codex-marketplace" / "plugins" / "superpowers-plus"
