@@ -92,6 +92,12 @@ class TestAuthorityBootstrapPortability:
             "writing-roadmaps",
         } <= names
 
+    def test_superpowers_plus_bundles_session_diagnostics(self):
+        bundle = json.loads(_read(SKILLS.parent / "references" / "bundle-manifest.json"))
+        names = {entry["canonical_name"] for entry in bundle["entries"]}
+        assert "diagnosing-superpowers" in names
+        assert (SKILLS / "diagnosing-superpowers" / "SKILL.md").is_file()
+
     def test_operating_contract_declares_shared_authority(self):
         path = REPO_SKILLS / "base-doctrine" / "references" / "operating-contract.md"
         text = _read(path)

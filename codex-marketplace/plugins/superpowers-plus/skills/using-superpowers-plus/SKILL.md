@@ -33,6 +33,7 @@ metadata:
   - requesting-code-review
   - iterative-review
   - writing-roadmaps
+  - diagnosing-superpowers
   related_skills:
   - brainstorming
   - systematic-debugging
@@ -49,6 +50,7 @@ metadata:
   - iterative-review
   - writing-skills
   - writing-roadmaps
+  - diagnosing-superpowers
   - repo-worker-base
   - base-doctrine
   - inspecting-the-environment

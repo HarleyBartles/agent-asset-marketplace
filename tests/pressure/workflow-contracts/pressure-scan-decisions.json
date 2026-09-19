@@ -55,7 +55,7 @@
   },
   {
     "path": "codex-marketplace/plugins/superpowers-plus/skills/using-superpowers-plus/SKILL.md",
-    "line": 67,
+    "line": 69,
     "pattern": "universal-startup-read",
     "context": "At the start of every conversation, use `using-superpowers-plus` as the sole",
     "classification": "repo-local",

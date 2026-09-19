@@ -26,6 +26,17 @@
       "provenance_note": "First-party skill derived from the obra/superpowers v6.4.1 MIT upstream basis recorded in `SOURCE.md`."
     },
     {
+      "canonical_name": "diagnosing-superpowers",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "canonical_source_path": "codex-marketplace/plugins/superpowers-plus/skills/diagnosing-superpowers",
+      "local_path": "skills/diagnosing-superpowers",
+      "source_path": "codex-marketplace/plugins/superpowers-plus/skills/diagnosing-superpowers/SKILL.md",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "First-party skill derived from the obra/superpowers v6.4.1 MIT upstream basis recorded in `SOURCE.md`."
+    },
+    {
       "canonical_name": "asking-clarifying-questions",
       "source_category": "first_party",
       "content_mode": "verbatim",

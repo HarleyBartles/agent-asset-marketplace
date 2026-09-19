@@ -2,6 +2,9 @@
 
 This bundle contains the first-party Superpowers+ workflow skills, including the `using-superpowers-plus` workflow-selection entrypoint.
 
+It also includes `diagnosing-superpowers`, the v6.4.1 evidence-reporting flow
+adapted for Codex and Devin Desktop session custody.
+
 ## Bundle contents
 
 ### Documentation
