@@ -22,7 +22,7 @@ This file describes the surfaces `repo-standards` checks and can apply. It is th
 - Root `AGENTS.md` as a router with five core sections and a routing table.
 - `.agents/runbooks/AGENTS.md` as an optional router for the runbook set (may be scaffolded by `scaffold-runbooks`).
 - `.agents/playbooks/AGENTS.md` as an optional scoped contract for topical playbooks.
-- `.agents/doctrine/completed-artifacts.md` stating that completion-marked planning artifacts merge to `main`, leave in the next substantive slice, and durable decisions belong in ADRs or current doctrine.
+- `.agents/doctrine/completed-artifacts.md` declaring the repository's current custody boundary for finished planning artifacts and routing lifecycle and promotion work to their owners.
 - No tracked `completed/` archive under `.agents/plans/`, `.agents/specs/`, or `.agents/roadmaps/`.
 
 ## Router AGENTS.md model

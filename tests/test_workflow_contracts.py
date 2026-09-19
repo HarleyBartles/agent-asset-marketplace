@@ -235,6 +235,8 @@ class TestValidationTddPublication:
         for standard in (runbook_standard, shape_standard):
             assert "completing-planning-artifacts" not in standard
             assert "completed-awaiting-retirement" not in standard
+            assert "next substantive slice" not in standard
+            assert "two-slice lifecycle" not in standard
         assert "mandatory cross-repository capabilities belong in portable skills" in runbook_standard
         assert "routes to its current lifecycle owners" in shape_standard
 
