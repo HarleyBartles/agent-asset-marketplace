@@ -38,6 +38,17 @@
       "provenance_note": "Canonical first-party cleanup-custody skill."
     },
     {
+      "canonical_name": "completing-planning-artifacts",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "canonical_source_path": "codex-marketplace/plugins/repo-worker-pack/skills/completing-planning-artifacts",
+      "local_path": "skills/completing-planning-artifacts",
+      "source_path": "codex-marketplace/plugins/repo-worker-pack/skills/completing-planning-artifacts/SKILL.md",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Canonical first-party completing-planning-artifacts skill."
+    },
+    {
       "canonical_name": "connector-safety",
       "source_category": "first_party",
       "content_mode": "verbatim",

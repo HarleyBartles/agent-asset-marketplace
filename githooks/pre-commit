@@ -36,6 +36,7 @@ export REPO_STANDARDS_STAGED_SNAPSHOT=1
 
 AFTER_STATUS=""
 UNSTAGED_PATCH=$(mktemp)
+ORIGINAL_STAGED_PATHS=$(mktemp)
 UNTRACKED_STASHED=0
 WORKTREE_RESET=0
 PATCH_RESTORE_FAILED=0
@@ -57,6 +58,7 @@ restore_worktree() {
     fi
   fi
   rm -f "$AFTER_STATUS"
+  rm -f "$ORIGINAL_STAGED_PATHS"
   if [ "$PATCH_RESTORE_FAILED" -eq 0 ]; then
     rm -f "$UNSTAGED_PATCH"
   fi
@@ -64,6 +66,11 @@ restore_worktree() {
 }
 
 trap restore_worktree EXIT
+
+# Remember the user's intended paths before apply-mode tools rewrite the staged
+# snapshot. Mechanical edits to these paths (for example formatter output) are
+# part of the candidate tree; unrelated authored paths remain protected.
+git diff --cached --name-only -z > "$ORIGINAL_STAGED_PATHS"
 
 # The public marketplace source is a build input. Never derive installed skills
 # from submodule bytes that are absent from the staged gitlink or that do not
@@ -140,6 +147,11 @@ PY
 }
 
 run_declared apply
+
+# Re-stage apply-mode edits only for paths the user had already staged. Update
+# the index directly so additions, rewrites, and removals all work in local and
+# hosted full-PR snapshots. The NUL-delimited input keeps filenames safe.
+git update-index --add --remove -z --stdin < "$ORIGINAL_STAGED_PATHS"
 
 git add -A -- .agents/skills/ 2>/dev/null || true
 git add -- ':(glob)**/INDEX.md' 2>/dev/null || true

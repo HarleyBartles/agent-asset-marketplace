@@ -1,7 +1,7 @@
 ---
 name: executing-plans
 description: Use when executing an approved written plan in a separate session or
-  resuming plan execution from a durable checkpoint.
+  resuming plan execution from a committed in-flight checkpoint.
 metadata:
   source-id: executing-plans
   source-path: codex-marketplace/plugins/superpowers-plus/skills/executing-plans/SKILL.md
@@ -47,7 +47,7 @@ Load plan, review critically, execute all tasks, report when complete.
 Read this skill's baseline (`references/implementation-baseline.md`) and the repo's `.agents/runbooks/implementing.md` before executing the stage checklist.
 
 ### Step 1: Load and Review Plan
-1. On a resumed or compacted session, read the durable checkpoint before live repository inspection. Its claims are context, not current truth, but it determines the minimum state that must be reconciled.
+1. On a resumed or compacted session, read the committed in-flight checkpoint before live repository inspection. Its claims are context, not current truth, but it determines the minimum state that must be reconciled.
 2. Ensure an isolated workspace: use using-git-worktrees to create one or verify the existing one
 3. Read plan file (or the minimum sections named by the checkpoint)
 4. Note the `Execution Strategy` in the plan header. **MUST READ:** `references/execution-lane-override.md` and confirm the lane you are using is the right one: human explicit direction wins, then your own assessment, then the plan's recommendation
@@ -69,9 +69,10 @@ For each task:
 After all tasks complete and verified:
 1. Run the `handoff-gates` completion-readiness lane against the plan and repo code-review guide. Rate the work (9/10 target), report the rating in the current handoff, and do not persist it or hand off below 8/10.
 2. Invoke `requesting-code-review` for the final whole-branch review.
-3. Announce: "I'm using the finishing-a-development-branch skill to complete this work."
-4. **REQUIRED SUB-SKILL:** Use `finishing-a-development-branch`
-5. Follow that skill to verify tests, present options, execute choice
+3. **REQUIRED SUB-SKILL:** Use `completing-planning-artifacts` in its completing-slice lane.
+4. Announce: "I'm using the finishing-a-development-branch skill to complete this work."
+5. **REQUIRED SUB-SKILL:** Use `finishing-a-development-branch`
+6. Follow that skill to verify tests, present options, execute choice
 
 ## When to Stop and Ask for Help
 

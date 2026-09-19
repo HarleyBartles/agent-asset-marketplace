@@ -34,7 +34,7 @@ Every runbook contains these exact second-level sections:
 
 ## Playbooks
 
-A playbook owns a topical workflow available to an agent whenever that concern applies. A runbook may route to a playbook, but runbook selection is not a prerequisite for using one. Common playbooks include `code-style.md`, `testing.md`, `security.md`, `skill-authoring.md`, `marketplace-generation.md`, and `completing-plans.md`.
+A playbook owns a topical workflow available to an agent whenever that concern applies. A runbook may route to a playbook, but runbook selection is not a prerequisite for using one. Common playbooks include `code-style.md`, `testing.md`, `security.md`, `skill-authoring.md`, and `marketplace-generation.md`. Mandatory cross-repository capabilities belong in portable skills; repository runbooks bind those capabilities to local lifecycle stages, commands, and evidence.
 
 Every playbook contains the same seven common composition sections as a runbook, followed by `Runbook routing`. That section optionally links stage runbooks that commonly route to it; `None.` is valid for a standalone playbook.
 

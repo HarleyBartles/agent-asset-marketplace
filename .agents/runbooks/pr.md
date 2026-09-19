@@ -9,10 +9,22 @@ Use after implementation and review are complete and source needs publication.
 - `publishing-source`
 - `repo-worker-base`
 - `verification-before-completion`
+- `completing-planning-artifacts`
 
 ## Composition
 
-Commit through the tracked hook, push the task branch, open a Draft PR, verify the published head, then move to Ready only after self-review.
+Before Ready, use the `completing-planning-artifacts` completing-slice lane:
+promote enduring content, mark governed artifacts
+`completed-awaiting-retirement`, retain them in the PR, and verify the
+published head contains them. Commit through the tracked hook, push the task
+branch, open a Draft PR, and verify the published head.
+
+Draft is normally a commercial and CI posture, not evidence that implementation
+is unfinished. When the agent hands off a fully reviewable Draft, every
+agent-owned plan item is complete and human-owned Ready or merge actions must not remain unchecked.
+Keep the plan open only when the Draft is explicitly declared incomplete.
+Whoever later changes the PR state applies the repository's Ready preflight at
+that time.
 
 ## Doctrine and contracts
 
@@ -33,4 +45,4 @@ Do not publish directly to `main` without explicit authorization or bypass the p
 
 ## Playbook routing
 
-- [Completing plans](../playbooks/completing-plans.md) - after durable decisions have been promoted and implementation is complete.
+None.

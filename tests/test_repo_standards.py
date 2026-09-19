@@ -15,6 +15,7 @@ SCAFFOLD_GITIGNORE = SKILL_ROOT / "scaffold_gitignore.py"
 SCAFFOLD_MARKETPLACE_JSON = SKILL_ROOT / "scaffold_marketplace_json.py"
 SCAFFOLD_REPO_RUNBOOK_POLICY = SKILL_ROOT / "scaffold_repo_runbook_policy.py"
 REPO_STANDARDS = SKILL_ROOT / "repo_standards.py"
+SCAFFOLD_RUNBOOKS = SKILL_ROOT / "scaffold_runbooks.py"
 sys.path.insert(0, str(SKILL_ROOT))
 _SPEC = importlib.util.spec_from_file_location("repo_standards_under_test", REPO_STANDARDS)
 repo_standards = importlib.util.module_from_spec(_SPEC)
@@ -66,6 +67,28 @@ def test_absent_surface_reports_tracked_completed_artifact_directory(tmp_path: P
     assert findings == ["retired path remains: .agents/specs/completed"]
 
 
+def test_runbook_scaffolds_bind_planning_artifact_lifecycle(tmp_path: Path) -> None:
+    repo = tmp_path / "lifecycle-runbooks"
+    repo.mkdir()
+    _init_git_repo(repo)
+
+    result = subprocess.run(
+        [sys.executable, str(SCAFFOLD_RUNBOOKS)],
+        cwd=repo,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+    )
+
+    assert result.returncode == 0, result.stderr
+    planning = (repo / ".agents" / "runbooks" / "planning.md").read_text(encoding="utf-8").lower()
+    publication = (repo / ".agents" / "runbooks" / "pr.md").read_text(encoding="utf-8").lower()
+    assert "completing-planning-artifacts" in planning
+    assert "successor-slice" in planning
+    assert "completing-planning-artifacts" in publication
+    assert "completed-awaiting-retirement" in publication
+
+
 def test_scaffold_agents_md_check_missing_fails(tmp_path: Path) -> None:
     """scaffold_agents_md --check fails when root AGENTS.md is missing."""
     repo = tmp_path / "no-agents"
@@ -102,6 +125,8 @@ def test_scaffold_agents_md_creates_agents_md(tmp_path: Path) -> None:
     text = agents.read_text(encoding="utf-8")
     assert "## Repository purpose" in text
     assert "## Routing pointers" in text
+    assert ".agents/runbooks/INDEX.md" in text
+    assert ".agents/playbooks/INDEX.md" in text
 
 
 def test_scaffold_agents_md_check_valid_passes(tmp_path: Path) -> None:
@@ -127,6 +152,8 @@ def test_scaffold_agents_md_check_valid_passes(tmp_path: Path) -> None:
         "security.md": "# Security considerations\n",
     }.items():
         (playbooks / name).write_text(content, encoding="utf-8", newline="\n")
+    (runbooks / "INDEX.md").write_text("# Runbook inventory\n", encoding="utf-8", newline="\n")
+    (playbooks / "INDEX.md").write_text("# Playbook inventory\n", encoding="utf-8", newline="\n")
     (repo / "CONTRIBUTING.md").write_text("# Contributing\n", encoding="utf-8", newline="\n")
 
     agents = repo / "AGENTS.md"
@@ -146,6 +173,8 @@ def test_scaffold_agents_md_check_valid_passes(tmp_path: Path) -> None:
         "- [PR instructions](.agents/runbooks/pr.md)\n"
         "- [Contributing](CONTRIBUTING.md)\n"
         "- [Security considerations](.agents/playbooks/security.md)\n"
+        "- [Runbook inventory](.agents/runbooks/INDEX.md)\n"
+        "- [Playbook inventory](.agents/playbooks/INDEX.md)\n"
         "- [Routing pointers](AGENTS.md)\n"
         "- [Maintenance responsibility](AGENTS.md)\n\n"
         "## Maintenance responsibility\n\nMaintainer.\n",
@@ -162,6 +191,44 @@ def test_scaffold_agents_md_check_valid_passes(tmp_path: Path) -> None:
     )
     assert result.returncode == 0, result.stdout + result.stderr
     assert "OK" in result.stdout
+
+
+def test_agents_router_requires_direct_runbook_and_playbook_inventory_links(tmp_path: Path) -> None:
+    repo = tmp_path / "missing-workflow-inventories"
+    repo.mkdir()
+    _init_git_repo(repo)
+    (repo / "CONTRIBUTING.md").write_text("# Contributing\n", encoding="utf-8", newline="\n")
+    for directory, title in (("runbooks", "Runbook inventory"), ("playbooks", "Playbook inventory")):
+        path = repo / ".agents" / directory
+        path.mkdir(parents=True)
+        (path / "INDEX.md").write_text(f"# {title}\n", encoding="utf-8", newline="\n")
+
+    agents = repo / "AGENTS.md"
+    agents.write_text(
+        "# Repo\n\n"
+        "## Repository purpose\n\nPurpose.\n\n"
+        "## Source-of-truth split\n\nSplit.\n\n"
+        "## Build and test commands\n\nCommands.\n\n"
+        "## Routing pointers\n\n"
+        "- [Routing pointers](AGENTS.md)\n"
+        "- [Contributing](CONTRIBUTING.md)\n\n"
+        "## Maintenance responsibility\n\nMaintainer.\n",
+        encoding="utf-8",
+        newline="\n",
+    )
+
+    result = subprocess.run(
+        [sys.executable, str(SCAFFOLD_AGENTS_MD), "--check"],
+        cwd=repo,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+    )
+    combined = result.stdout + result.stderr
+
+    assert result.returncode != 0
+    assert "AGENTS.md missing direct runbook inventory link: .agents/runbooks/INDEX.md" in combined
+    assert "AGENTS.md missing direct playbook inventory link: .agents/playbooks/INDEX.md" in combined
 
 
 def test_scaffold_agents_md_check_missing_core_section(tmp_path: Path) -> None:
@@ -1066,6 +1133,10 @@ def test_hosted_hook_reconstructs_commit_as_staged_snapshot(tmp_path: Path) -> N
     repo = tmp_path / "hosted-parity"
     repo.mkdir()
     _init_git_repo_with_commit(repo)
+    retired = repo / "retired-plan.md"
+    retired.write_text("completed\n", encoding="utf-8", newline="\n")
+    subprocess.run(["git", "add", "retired-plan.md"], cwd=repo, check=True)
+    subprocess.run(["git", "commit", "--no-verify", "-m", "add completed plan"], cwd=repo, check=True)
     _install_repo_standards(repo)
     tools = repo / "tools"
     tools.mkdir(exist_ok=True)
@@ -1091,6 +1162,7 @@ raise SystemExit(2)
         newline="\n",
     )
     (repo / "change.txt").write_text("published\n", encoding="utf-8", newline="\n")
+    retired.unlink()
     subprocess.run(["git", "add", "-A"], cwd=repo, check=True)
     subprocess.run(["git", "commit", "--no-verify", "-m", "published change"], cwd=repo, check=True)
     published_tree = subprocess.run(
@@ -1250,6 +1322,8 @@ def apply():
         write(".agents/skills/owned.txt", "generated")
         os.makedirs("build", exist_ok=True)
         write("build/outside.txt", "untracked")
+    elif BEHAVIOR == "format-staged":
+        write("source.py", "value = 1\\n")
     elif BEHAVIOR in ("broken", "ok"):
         pass
     print("OK apply")
@@ -1370,6 +1444,39 @@ def test_pre_commit_hook_preserves_unstaged_edits(tmp_path: Path) -> None:
     combined = result.stdout + result.stderr
     assert result.returncode == 0, combined
     assert keep.read_text(encoding="utf-8").strip() == "staged plus unstaged"
+
+
+def test_pre_commit_hook_stages_apply_edits_to_already_staged_paths(tmp_path: Path) -> None:
+    """Formatter-style apply edits belong in the candidate tree when their path was already staged."""
+    repo = tmp_path / "stage-formatted-source"
+    repo.mkdir()
+    _init_git_repo_with_commit(repo)
+    _install_repo_standards(repo)
+
+    (repo / "tools").mkdir(exist_ok=True)
+    (repo / "tools" / "run.py").write_text(_fake_tools_run_py("format-staged"), encoding="utf-8", newline="\n")
+    source = repo / "source.py"
+    source.write_text("value=1\n", encoding="utf-8", newline="\n")
+    subprocess.run(["git", "add", "-A"], cwd=repo, env=_stripped_env(), check=True)
+
+    result = subprocess.run(
+        ["git", "commit", "-m", "test staged formatter output"],
+        cwd=repo,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+    )
+
+    assert result.returncode == 0, result.stdout + result.stderr
+    committed = subprocess.run(
+        ["git", "show", "HEAD:source.py"],
+        cwd=repo,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+        check=True,
+    ).stdout
+    assert committed == "value = 1\n"
 
 
 def test_pre_commit_hook_stages_only_owned_generated_surfaces(tmp_path: Path) -> None:

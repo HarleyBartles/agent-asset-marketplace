@@ -8,10 +8,14 @@ Use when approved requirements need an executable repository plan.
 
 - `writing-plans`
 - `handoff-gates`
+- `completing-planning-artifacts`
 
 ## Composition
 
-Write the durable plan before implementation. Source and overlay edits precede regeneration and validation.
+After refreshing `main` and creating the slice worktree, run the
+`completing-planning-artifacts` successor-slice ingress lane before substantive
+edits. Write the committed, in-flight plan before implementation. Source and
+overlay edits precede regeneration and validation.
 
 ## Doctrine and contracts
 
@@ -24,11 +28,13 @@ Plans live under `.agents/plans/`. Use `py -3 tools/run.py mesh --apply` after a
 
 ## Evidence contract
 
-The committed plan names exact files, test cycles, generation, validation, and publication proof.
+Eligible predecessor artifacts are retired in the first commit of this
+eventual PR. The committed in-flight plan names exact files, test cycles,
+generation, validation, and publication proof.
 
 ## Prohibited combinations
 
-Do not hand off an uncommitted plan.
+Do not hand off an uncommitted plan, call it durable repository truth, or open a cleanup-only PR.
 
 ## Playbook routing
 

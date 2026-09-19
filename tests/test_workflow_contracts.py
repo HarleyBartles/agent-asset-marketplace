@@ -139,6 +139,107 @@ class TestValidationTddPublication:
         assert "reuse" in text and "evidence" in text
         assert "draft" in text
 
+    def test_branch_finish_owns_verified_post_merge_retirement(self):
+        skill_root = SKILLS / "finishing-a-development-branch"
+        raw = _read(skill_root / "SKILL.md")
+        text = raw.lower()
+        for phrase in (
+            "merged externally",
+            "recorded head sha",
+            "expected base",
+            "recorded merge result",
+            "git branch -d",
+        ):
+            assert phrase in text
+        assert "git branch -D" in raw
+        helper = ".agents/skills/finishing-a-development-branch/scripts/remove_worktree.py"
+        assert f"py -3 {helper} --check" in raw
+        assert f"py -3 {helper} --apply" in raw
+        assert text.index("after the worktree is gone") < text.index("verify the local branch ref no longer exists")
+
+        frontmatter = yaml.safe_load(raw.split("---", 2)[1])
+        assert "pr merged externally" in frontmatter["description"].lower()
+
+        interface = yaml.safe_load(_read(skill_root / "agents" / "openai.yaml"))["interface"]
+        assert "merged pr" in interface["short_description"].lower()
+        assert "pr merged externally" in interface["default_prompt"].lower()
+
+    def test_worktree_skill_routes_retirement_to_branch_finishing(self):
+        text = _read(SKILLS / "using-git-worktrees" / "SKILL.md").lower()
+        assert "finishing-a-development-branch" in text
+        assert "remove_worktree.py" not in text
+
+        old_scripts = SKILLS / "using-git-worktrees" / "scripts"
+        owner_scripts = SKILLS / "finishing-a-development-branch" / "scripts"
+        for filename in ("remove_worktree.py", "remove-worktree.ps1", "remove-worktree.sh"):
+            assert not (old_scripts / filename).exists()
+            assert (owner_scripts / filename).is_file()
+
+    def test_planning_artifact_lifecycle_has_one_portable_owner(self):
+        owner = REPO_SKILLS / "completing-planning-artifacts" / "SKILL.md"
+        assert owner.is_file()
+        text = _read(owner).lower()
+        for phrase in (
+            "committed, in-flight",
+            "completed-awaiting-retirement",
+            "squash",
+            "next substantive slice",
+            "first commit",
+            "cleanup-only pr",
+            "cleanup-custody",
+            "<scratch-root>/<repo-name>/completed/<artifact-type>/",
+            "repositories segregated",
+            "canonical repository identity",
+            "fully checked",
+            "human-owned ready or merge actions",
+            "explicitly declared incomplete",
+        ):
+            assert phrase in text
+
+        planning = _read(SKILLS / "writing-plans" / "SKILL.md").lower()
+        assert "plans are durable" not in planning
+        assert "completing-planning-artifacts" in planning
+        assert "human-owned post-handoff actions" in planning
+        assert "unchecked plan items" in planning
+
+        for publication_path in (
+            OPERATING_SKILLS / "repo-shape" / "templates" / "pr.md",
+            ROOT / ".agents" / "runbooks" / "pr.md",
+        ):
+            publication = _read(publication_path).lower()
+            assert "commercial and ci posture" in publication
+            assert "fully reviewable draft" in publication
+            assert "explicitly declared incomplete" in publication
+            assert "must not remain unchecked" in publication
+
+        ingress = _read(REPO_SKILLS / "repo-worker-base" / "SKILL.md").lower()
+        assert "completing-planning-artifacts" in ingress
+
+        manifest_path = (
+            ROOT / "codex-marketplace" / "plugins" / "repo-worker-pack" / "references" / "bundle-manifest.json"
+        )
+        manifest = json.loads(_read(manifest_path))
+        declared = {entry["canonical_name"] for entry in manifest["entries"]}
+        canonical = {path.name for path in REPO_SKILLS.iterdir() if (path / "SKILL.md").is_file()}
+        assert declared == canonical
+
+        completed_artifacts = _read(OPERATING_SKILLS / "repo-shape" / "templates" / "completed-artifacts.md").lower()
+        assert "completion playbook" not in completed_artifacts
+        assert "portable" in completed_artifacts
+        assert "completion skill owns the lifecycle" in completed_artifacts
+
+        runbook_standard = _read(
+            OPERATING_SKILLS / "repo-shape" / "references" / "repository-runbook-standard.md"
+        ).lower()
+        shape_standard = _read(OPERATING_SKILLS / "repo-shape" / "references" / "repository-shape-standard.md").lower()
+        for standard in (runbook_standard, shape_standard):
+            assert "completing-planning-artifacts" not in standard
+            assert "completed-awaiting-retirement" not in standard
+            assert "next substantive slice" not in standard
+            assert "two-slice lifecycle" not in standard
+        assert "mandatory cross-repository capabilities belong in portable skills" in runbook_standard
+        assert "routes to its current lifecycle owners" in shape_standard
+
     def test_tdd_allows_transitive_coverage_for_glue(self):
         text = _read(SKILLS / "test-driven-development" / "SKILL.md").lower()
         assert "transitive" in text or "independent behavior" in text
@@ -942,6 +1043,7 @@ class TestPressureRepairContracts:
     def test_pressure_repairs_are_owned_by_canonical_instruction_sources(self):
         bootstrap = _read(SKILLS / "using-superpowers-plus" / "SKILL.md")
         routing = _read(SKILLS / "using-superpowers-plus" / "references" / "bootstrap-routing.md")
+        routing_flat = " ".join(routing.split())
         questions = _read(SKILLS / "asking-clarifying-questions" / "SKILL.md")
         brainstorming = _read(SKILLS / "brainstorming" / "SKILL.md")
         environment = _read(SKILLS / "inspecting-the-environment" / "SKILL.md")
@@ -950,6 +1052,10 @@ class TestPressureRepairContracts:
         safety = _read(REPO_SKILLS / "risk-gates" / "references" / "gates" / "safety-gate.md")
         repo_worker = _read(REPO_SKILLS / "repo-worker-base" / "SKILL.md")
         assert "tiny_reversible_change" in routing
+        assert ".agents/playbooks/INDEX.md" in routing
+        assert ".agents/runbooks/INDEX.md" in routing
+        assert "session start, resume, and whenever the active concern changes" in routing_flat
+        assert "independently of runbook selection" in routing_flat
         assert "Tiny reversible fast path" in bootstrap
         assert "Taste ambiguity stop" in bootstrap
         assert "Checkpoint-first resume exception" in bootstrap
@@ -963,8 +1069,8 @@ class TestPressureRepairContracts:
         assert "Tiny bounded sketch" in brainstorming
         assert "missing destructive authority" in environment.split("---", 2)[1]
         assert "read that checkpoint before this skill or any" in bootstrap
-        assert "read the durable checkpoint before live repository inspection" in execution
-        assert "durable checkpoint before live repository inspection" in execution
+        assert "read the committed in-flight checkpoint before live repository inspection" in execution
+        assert "committed in-flight checkpoint before live repository inspection" in execution
         assert "inspect the current branch and status" in finishing
         assert "find .agents -maxdepth 2 -type f -iname '*evidence*'" in finishing
         assert "first response" in safety and "reversible alternative" in safety

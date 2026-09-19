@@ -86,7 +86,7 @@ Native tools handle directory placement, branch creation, and cleanup automatica
 
 Only proceed to Step 1b if you have no native worktree tool available.
 
-Use the `new-worktree`/`remove-worktree` scripts bundled with this skill as the Step 1b fallback. If the repo also provides its own worktree helpers (for example, in a `scripts/` directory at the repo root), prefer the repo-specific ones. The bundled scripts are installed at `.agents/skills/using-git-worktrees/scripts/` and place the worktree at the canonical sibling-folder root (`../_agent-worktrees/<repo-name>/<branch>`), automatically refreshing installed skills after creation. If `refreshing-installed-skills` is not available, the script creates the worktree and prints a warning instead of failing.
+Use the `new-worktree` script bundled with this skill as the Step 1b fallback. If the repo also provides its own worktree helper (for example, in a `scripts/` directory at the repo root), prefer the repo-specific one. The bundled script is installed at `.agents/skills/using-git-worktrees/scripts/` and places the worktree at the canonical sibling-folder root (`../_agent-worktrees/<repo-name>/<branch>`), automatically refreshing installed skills after creation. If `refreshing-installed-skills` is not available, the script creates the worktree and prints a warning instead of failing. Worktree and branch retirement belongs to `finishing-a-development-branch`.
 
 The bundled `new-worktree` script does not require `--allow-shared-checkout`; a new worktree is an isolated linked worktree, so child skill scripts can write inside it without the flag. Example: `py -3 .agents/skills/using-git-worktrees/scripts/new_worktree.py --apply <branch>`. Preview with `--check <branch>` first.
 
@@ -186,7 +186,6 @@ Ready to implement <feature-name>
 | Script | Purpose | Safe invocation |
 |---|---|---|
 | `scripts/new_worktree.py` | Create a linked worktree at the canonical sibling root | `py -3 scripts/new_worktree.py --check <branch>` then `py -3 scripts/new_worktree.py --apply <branch>` |
-| `scripts/remove_worktree.py` | Remove a linked worktree | `py -3 scripts/remove_worktree.py --check <branch>` then `py -3 scripts/remove_worktree.py --apply <branch>` |
 
 All scripts support `--help` and classify each flag as `read-only` or `mutating`. `--check` is the default; `--apply` is required for any filesystem or git mutation.
 
@@ -208,7 +207,7 @@ All scripts support `--help` and classify each flag as `read-only` or `mutating`
 | Tests fail during baseline | Report failures + ask |
 | No supported manifest | Skip dependency install |
 | Bundled `new-worktree` script | Use it instead of `git worktree add` |
-| Bundled `remove-worktree` script | Use it to remove a worktree and deinit submodules |
+| Completed branch/worktree | Use `finishing-a-development-branch` for verified retirement |
 | Skills need refresh after creation | `new-worktree` auto-runs `refreshing-installed-skills` |
 
 ## Common Rationalizations
@@ -221,29 +220,8 @@ All scripts support `--help` and classify each flag as `read-only` or `mutating`
 | "Any directory name works" | Explicit instructions beat an existing project-local directory, which beats the `.worktrees/` default. |
 | "The workspace is fresh — baseline tests can wait" | A dirty baseline makes every later failure ambiguous. Run the tests now; proceeding past failures is your human partner's call. |
 
-## Remove a Worktree
+## Retirement handoff
 
-When a feature branch is complete, remove the isolated worktree to avoid stale copies.
-
-1. Run the bundled `remove-worktree` script if available:
-   ```bash
-   bash .agents/skills/using-git-worktrees/scripts/remove-worktree.sh --apply <branch-name>
-   # or on Windows:
-   .agents/skills/using-git-worktrees/scripts/remove-worktree.ps1 --apply <branch-name>
-   ```
-
-   Preview first with `--check <branch-name>`.
-   If the script reports that the directory is locked, **stop immediately**. The git worktree is already deregistered; the locked on-disk folder can be deleted later once no process holds it.
-
-2. If no bundled script is available, use `git worktree remove` directly:
-   ```bash
-   git worktree remove <path-to-worktree>
-   ```
-   Then manually deinitialize submodules if the repo uses them.
-
-Never remove the main repository checkout with this command.
-
-## Red Flags
-
-Never run `rm -rf`, `rmdir /s /q`, or `Remove-Item -Recurse -Force` on a worktree directory that `remove-worktree` failed to delete.
-A locked directory is usually another process's current working directory or an open file handle; force-deleting it can delete the wrong directory or other repositories.
+When the feature is complete or a published PR has merged, use
+`finishing-a-development-branch`. That skill owns integration proof, branch
+retirement, worktree removal, submodule teardown, and locked-directory stops.

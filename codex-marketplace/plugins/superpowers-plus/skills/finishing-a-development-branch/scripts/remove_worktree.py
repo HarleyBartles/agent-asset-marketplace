@@ -105,6 +105,22 @@ def _is_worktree_registered(repo_root: Path, worktree: Path) -> bool:
     return worktree.resolve() in registered_paths
 
 
+def _consumer_owned_changes(worktree: Path) -> str:
+    """Return superproject changes while ignoring dependency-submodule residue."""
+    result = subprocess.run(
+        ["git", "-C", str(worktree), "status", "--porcelain", "-uall", "--ignore-submodules=all"],
+        capture_output=True,
+        text=True,
+        check=True,
+        env=_stripped_env(),
+    )
+    return result.stdout.strip()
+
+
+def _declares_submodules(worktree: Path) -> bool:
+    return (worktree / ".gitmodules").is_file()
+
+
 def _check_worktree(repo_root: Path, target: str) -> tuple[int, Path, str]:
     """Return (exit_code, worktree_path, summary).
 
@@ -127,21 +143,45 @@ def _apply_remove(repo_root: Path, worktree: Path, force: bool) -> int:
         print("error: refusing to remove the main repository checkout", file=sys.stderr)
         return 1
 
-    if force:
-        # Deinitialize submodules only when force-removing; this mutates the
-        # shared git config and can affect other worktrees, so it is gated.
-        try:
-            subprocess.run(
-                ["git", "-C", str(worktree), "submodule", "deinit", "--all", "-f"],
-                check=False,
-                capture_output=True,
-                env=_stripped_env(),
-            )
-        except (OSError, subprocess.SubprocessError) as exc:
-            print(f"warning: submodule deinit failed: {exc}", file=sys.stderr)
+    try:
+        consumer_changes = _consumer_owned_changes(worktree)
+    except (OSError, subprocess.SubprocessError) as exc:
+        print(f"error: could not inspect consumer-owned worktree state: {exc}", file=sys.stderr)
+        return 1
+    if consumer_changes and not force:
+        print(
+            "error: worktree contains consumer-owned modified or untracked files; "
+            "refusing removal without explicit --force:\n" + consumer_changes,
+            file=sys.stderr,
+        )
+        return 1
+
+    has_submodules = _declares_submodules(worktree)
+
+    # Consumer repositories do not own edits inside dependency submodules.
+    # Discard that residue during routine teardown, independently of whether
+    # destructive removal of consumer-owned worktree files was authorized.
+    try:
+        deinit = subprocess.run(
+            ["git", "-C", str(worktree), "submodule", "deinit", "--all", "-f"],
+            check=False,
+            capture_output=True,
+            text=True,
+            env=_stripped_env(),
+        )
+    except (OSError, subprocess.SubprocessError) as exc:
+        print(f"error: submodule deinit failed: {exc}", file=sys.stderr)
+        return 1
+    if deinit.returncode != 0:
+        if deinit.stderr:
+            print(deinit.stderr, file=sys.stderr)
+        return deinit.returncode
 
     cmd = ["git", "worktree", "remove", str(worktree)]
-    if force:
+    # Git refuses ordinary removal for a linked worktree that declares
+    # submodules even after they are deinitialized. The preflight above keeps
+    # this mechanical force separate from authority to discard consumer files.
+    if force or has_submodules:
         cmd.append("--force")
 
     result = subprocess.run(
@@ -189,7 +229,7 @@ def _build_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--force",
         action="store_true",
-        help="force remove the worktree, including submodule deinit (mutating, used with --apply)",
+        help="force remove consumer-owned modified or untracked worktree files (destructive, used with --apply)",
     )
     mode = parser.add_mutually_exclusive_group()
     mode.add_argument(

@@ -32,6 +32,11 @@ CANONICAL_TOPICS = {
     "Maintenance responsibility": {"maintenance responsibility"},
 }
 
+REQUIRED_INVENTORY_LINKS = {
+    ".agents/runbooks/INDEX.md": "runbook",
+    ".agents/playbooks/INDEX.md": "playbook",
+}
+
 
 def _normalize_heading(text: str) -> str:
     return re.sub(r"[^a-z0-9]+", " ", text.strip().lower()).strip()
@@ -107,8 +112,11 @@ def validate_agents_md(agents_path: Path, repo_root: Path) -> list[str]:
         if not links:
             findings.append("AGENTS.md Routing pointers section has no links")
         seen: set[Path] = set()
+        linked_paths: set[str] = set()
         routed_headings: set[str] = set()
         for label, raw_target in links:
+            clean_target = raw_target.split("#", 1)[0].lstrip("/").replace("\\", "/")
+            linked_paths.add(clean_target)
             resolved = _resolve_link(agents_path, raw_target, repo_root)
             if resolved is None:
                 findings.append(f"AGENTS.md broken link: {label} -> {raw_target}")
@@ -122,6 +130,10 @@ def validate_agents_md(agents_path: Path, repo_root: Path) -> list[str]:
                 except (OSError, UnicodeDecodeError):
                     continue
                 routed_headings.update(_heading_set(target_text))
+
+        for required_path, inventory_name in REQUIRED_INVENTORY_LINKS.items():
+            if required_path not in linked_paths:
+                findings.append(f"AGENTS.md missing direct {inventory_name} inventory link: {required_path}")
 
         all_headings = headings | routed_headings
         covered = _topic_coverage(all_headings)

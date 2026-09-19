@@ -66,12 +66,24 @@ If a single missing fact blocks the next step, invoke `asking-clarifying-questio
 
 ## Plan Lifecycle
 
-Plans are durable, tracked files. The in-flight plan is the source of truth for the work, not a transient scratch note.
+Plans are committed, in-flight execution artifacts. The active plan governs the
+work across sessions, but it is not durable repository truth.
 
 - **In-flight home:** `.agents/plans/YYYY-MM-DD-<feature-name>.md` (or `.agents/plans/<epic-name>/YYYY-MM-DD-<feature-name>.md` for epic plans). Off-repo scratch is for transient session artifacts only; the plan itself always lives in the in-flight plan home.
 - **Commit before handoff:** A plan must exist and be committed before it can be handed to `executing-plans` or `subagent-driven-development`. Execution skills read the saved, committed file, not unsaved editor state.
-- **Completion:** When the work is complete, promote enduring decisions to ADRs or current doctrine, then remove the finished plan and associated planning artifacts from Git. A convenience copy may live in the consumer's central completed-artifact scratch store but is disposable and not evidence.
-- **Roadmap and index links:** Remove links to completed artifacts rather than maintaining a completed-artifact index. See the consumer's completion playbook for its removal sequence.
+- **Completion:** **REQUIRED SUB-SKILL:** Use `completing-planning-artifacts`.
+  Promote enduring decisions, mark the plan `completed-awaiting-retirement`,
+  and retain it through the completing PR so squash-merged `main` records it.
+  The next substantive slice removes it in that slice's first commit.
+- **Completion boundary:** Checklist items describe work the executing agent can
+  finish in the current slice. Human-owned post-handoff actions such as final
+  approval, changing a PR from Draft to Ready, or merge must not remain as
+  unchecked plan items. When the requested handoff is a fully reviewable Draft
+  PR, complete the agent-owned publication and verification items and close the
+  plan; record later human actions in the handoff or PR state instead. A Draft
+  may keep a plan open only when the work is explicitly declared incomplete.
+- **Roadmap and index links:** Follow `completing-planning-artifacts` for the
+  two-slice removal sequence; do not maintain a permanent completed-artifact index.
 
 ## File Structure
 
