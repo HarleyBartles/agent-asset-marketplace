@@ -148,11 +148,10 @@ PY
 
 run_declared apply
 
-# Re-stage apply-mode edits only for paths the user had already staged. Use a
-# NUL-delimited list so spaces and other ordinary filename characters are safe.
-while IFS= read -r -d '' staged_path; do
-  git add -A -- "$staged_path"
-done < "$ORIGINAL_STAGED_PATHS"
+# Re-stage apply-mode edits only for paths the user had already staged. Update
+# the index directly so additions, rewrites, and removals all work in local and
+# hosted full-PR snapshots. The NUL-delimited input keeps filenames safe.
+git update-index --add --remove -z --stdin < "$ORIGINAL_STAGED_PATHS"
 
 git add -A -- .agents/skills/ 2>/dev/null || true
 git add -- ':(glob)**/INDEX.md' 2>/dev/null || true

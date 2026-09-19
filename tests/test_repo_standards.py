@@ -1089,6 +1089,10 @@ def test_hosted_hook_reconstructs_commit_as_staged_snapshot(tmp_path: Path) -> N
     repo = tmp_path / "hosted-parity"
     repo.mkdir()
     _init_git_repo_with_commit(repo)
+    retired = repo / "retired-plan.md"
+    retired.write_text("completed\n", encoding="utf-8", newline="\n")
+    subprocess.run(["git", "add", "retired-plan.md"], cwd=repo, check=True)
+    subprocess.run(["git", "commit", "--no-verify", "-m", "add completed plan"], cwd=repo, check=True)
     _install_repo_standards(repo)
     tools = repo / "tools"
     tools.mkdir(exist_ok=True)
@@ -1114,6 +1118,7 @@ raise SystemExit(2)
         newline="\n",
     )
     (repo / "change.txt").write_text("published\n", encoding="utf-8", newline="\n")
+    retired.unlink()
     subprocess.run(["git", "add", "-A"], cwd=repo, check=True)
     subprocess.run(["git", "commit", "--no-verify", "-m", "published change"], cwd=repo, check=True)
     published_tree = subprocess.run(
