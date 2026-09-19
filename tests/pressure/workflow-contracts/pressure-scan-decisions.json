@@ -37,16 +37,16 @@
   },
   {
     "path": "codex-marketplace/plugins/superpowers-plus/skills/executing-plans/SKILL.md",
-    "line": 53,
-    "pattern": "must-read",
-    "context": "4. Note the `Execution Strategy` in the plan header. **MUST READ:** `references/execution-lane-override.md` and confirm the lane you are using is the right one: human explicit direction wins, then your own assessment, then the plan's recommendation",
+    "line": 93,
+    "pattern": "full-test-suite",
+    "context": "On Windows, invoke it through Git Bash. The helper stores the full test log,",
     "classification": "repo-local",
     "owner": "runbook-playbook contract",
     "reason": "Repository-local composition guidance required by the approved runbook and playbook contract."
   },
   {
     "path": "codex-marketplace/plugins/superpowers-plus/skills/subagent-driven-development/SKILL.md",
-    "line": 211,
+    "line": 213,
     "pattern": "must-read",
     "context": "`Execution Strategy` in the plan header. **MUST READ:**",
     "classification": "repo-local",
@@ -55,7 +55,7 @@
   },
   {
     "path": "codex-marketplace/plugins/superpowers-plus/skills/using-superpowers-plus/SKILL.md",
-    "line": 67,
+    "line": 69,
     "pattern": "universal-startup-read",
     "context": "At the start of every conversation, use `using-superpowers-plus` as the sole",
     "classification": "repo-local",
@@ -73,7 +73,7 @@
   },
   {
     "path": "codex-marketplace/plugins/superpowers-plus/skills/writing-roadmaps/SKILL.md",
-    "line": 67,
+    "line": 71,
     "pattern": "must-read",
     "context": "If a plan in progress grows beyond one deliverable, stop writing. **MUST READ:** `references/plan-scope-sizing.md` and use escape hatch 3:",
     "classification": "repo-local",

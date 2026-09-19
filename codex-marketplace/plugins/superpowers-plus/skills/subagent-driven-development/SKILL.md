@@ -29,7 +29,7 @@ license: MIT
 
 ## Provenance
 
-This marketplace-maintained derivative is based on `obra/superpowers` v6.3.0 commit `b36e0829c6d0140e93cfef2ca599b1b07d4a7797` under the MIT License. Upstream source is not vendored; this directory contains the maintained Superpowers+ implementation.
+This marketplace-maintained derivative is based on `obra/superpowers` v6.4.1 commit `5bf4e78011075bcfc0dc295f0724994cd123ee71` under the MIT License. Upstream source is not vendored; this directory contains the maintained Superpowers+ implementation.
 
 # Subagent-Driven Development
 
@@ -77,25 +77,27 @@ path forward is a guess. For those, stop and ask.
 digraph when_to_use {
     "Have implementation plan?" [shape=diamond];
     "Tasks mostly independent?" [shape=diamond];
-    "Stay in this session?" [shape=diamond];
+    "Per-task fresh contexts worth the cost?" [shape=diamond];
     "subagent-driven-development" [shape=box];
     "executing-plans" [shape=box];
     "Manual execution or brainstorm first" [shape=box];
 
     "Have implementation plan?" -> "Tasks mostly independent?" [label="yes"];
     "Have implementation plan?" -> "Manual execution or brainstorm first" [label="no"];
-    "Tasks mostly independent?" -> "Stay in this session?" [label="yes"];
-    "Tasks mostly independent?" -> "Manual execution or brainstorm first" [label="no - tightly coupled"];
-    "Stay in this session?" -> "subagent-driven-development" [label="yes"];
-    "Stay in this session?" -> "executing-plans" [label="no - parallel session"];
+    "Tasks mostly independent?" -> "Per-task fresh contexts worth the cost?" [label="yes"];
+    "Tasks mostly independent?" -> "executing-plans" [label="no - tightly coupled"];
+    "Per-task fresh contexts worth the cost?" -> "subagent-driven-development" [label="yes"];
+    "Per-task fresh contexts worth the cost?" -> "executing-plans" [label="no"];
 }
 ```
 
-**vs. Executing Plans (parallel session):**
-- Same session (no context switch)
-- Fresh subagent per task (no context pollution)
-- Review after each task (spec compliance + code quality), broad review at the end
-- Faster iteration (no human-in-loop between tasks)
+**vs. Native `executing-plans`:**
+- SDD spends a fresh implementer plus a fresh reviewer per task, then a broad
+  whole-branch review.
+- Native keeps one inline integration context and buys one fresh whole-branch
+  review at the end.
+- Prefer SDD when independent tasks and consequence justify the additional
+  context and review cost; prefer Native for tightly coupled sequential work.
 
 ## The Process
 
@@ -177,7 +179,7 @@ controllers that lost their place have re-dispatched entire completed task
 sequences — the single most expensive failure observed. Track progress in
 a ledger file, not only in todos.
 
-- Each plan owns a workspace: at skill start, run `.agents/skills/subagent-workspace/scripts/sdd-workspace PLAN_FILE` — it prints the plan's off-repo
+- Each plan owns a workspace: at skill start, run `py -3 .agents/skills/subagent-workspace/scripts/workspace.py --apply PLAN_FILE` — it prints the plan's off-repo
 directory (`<main-checkout>/../_agent-scratch/<repo-name>/<branch>/<plan-basename>/`), home to
   every artifact for THIS plan: ledger, briefs, reports, review packages.
   Another plan's directory is never yours to read or write.
@@ -286,7 +288,7 @@ Record BASE (`git rev-parse HEAD`) before dispatching — the review package
 and fix-round diffs need it.
 
 - **Task brief:** before dispatching an implementer, run this skill's
-  `.agents/skills/subagent-workspace/scripts/task-brief PLAN_FILE N` — it extracts the task's full text to a
+  `py -3 .agents/skills/subagent-workspace/scripts/task_brief.py --apply PLAN_FILE N` — it extracts the task's full text to a
   uniquely named file and prints the path. Compose the dispatch so the
   brief stays the single source of
   requirements. Your dispatch should contain: (1) one line on where this
@@ -318,7 +320,7 @@ Template: [implementer-prompt.md](implementer-prompt.md)
 
 Implementer subagents report one of four statuses. Handle each appropriately:
 
-**DONE:** Generate the review package (`.agents/skills/subagent-workspace/scripts/review-package PLAN_FILE BASE HEAD`, from this skill's directory — it prints the unique file path it wrote; BASE is the commit you recorded before dispatching the implementer — never `HEAD~1`, which silently drops all but the last commit of a multi-commit task), then dispatch the task reviewer with the printed path.
+**DONE:** Generate the review package (`py -3 .agents/skills/subagent-workspace/scripts/review_package.py --apply PLAN_FILE BASE HEAD` — it prints the unique file path it wrote; BASE is the commit you recorded before dispatching the implementer — never `HEAD~1`, which silently drops all but the last commit of a multi-commit task), then dispatch the task reviewer with the printed path.
 
 **DONE_WITH_CONCERNS:** The implementer completed the work but flagged doubts. Read the concerns before proceeding. If the concerns are about correctness or scope, address them before review. If they're observations (e.g., "this file is getting large"), note them and proceed to review.
 
@@ -349,8 +351,8 @@ right reviewer profile (`reviewer`, `reviewer-strong`, or `reviewer-fixes`)
 for the task diff.
 
 - Hand the reviewer its diff as a file: run this skill's
-  `.agents/skills/subagent-workspace/scripts/review-package PLAN_FILE BASE HEAD` (or `.agents/skills/subagent-workspace/scripts/review-package.ps1`
-  on PowerShell) and pass the reviewer the file path it prints. The script writes
+  `py -3 .agents/skills/subagent-workspace/scripts/review_package.py --apply PLAN_FILE BASE HEAD`
+  and pass the reviewer the file path it prints. The script writes
   the package as UTF-8 with no BOM. The output never enters your own context, and
   the reviewer sees the commit list, stat summary, and full diff with context in
   one `read` call. Use the BASE you recorded before dispatching the implementer —
@@ -426,7 +428,7 @@ output; dispatch the re-review once all three are present. Name the
 covering test files in the fix message — a one-line fix does not need the
 whole suite.
 
-**The re-review is scoped.** Run `.agents/skills/subagent-workspace/scripts/review-package PLAN_FILE FIX_BASE HEAD`
+**The re-review is scoped.** Run `py -3 .agents/skills/subagent-workspace/scripts/review_package.py --apply PLAN_FILE FIX_BASE HEAD`
 where FIX_BASE is the head the previous review saw, and dispatch
 [re-review-prompt.md](re-review-prompt.md) with the findings list, the
 brief, the report file, and the printed diff path. The re-reviewer verdicts
@@ -493,7 +495,7 @@ with the complete findings list — not one fixer per finding.
 Per-finding fixers each rebuild context and re-run suites; a real
 session's final-review fix wave cost more than all its tasks combined.
 Then run exactly one scoped re-review of the fix wave
-(`.agents/skills/subagent-workspace/scripts/review-package PLAN_FILE FIX_BASE HEAD` over the fix range,
+(`py -3 .agents/skills/subagent-workspace/scripts/review_package.py --apply PLAN_FILE FIX_BASE HEAD` over the fix range,
 [re-review-prompt.md](re-review-prompt.md)).
 Adjudicate any residual findings as in the task loop's breaker: park with
 rulings, or stop on load-bearing ones. There is no second fix wave —
@@ -539,7 +541,7 @@ You: I'm using Subagent-Driven Development to execute this plan.
 
 [Setup: worktree verified]
 [Read plan file once: .agents/plans/feature-plan.md]
-[Resolve workspace: .agents/skills/subagent-workspace/scripts/sdd-workspace .agents/plans/feature-plan.md — no ledger inside, fresh start]
+[Resolve workspace: py -3 .agents/skills/subagent-workspace/scripts/workspace.py --apply .agents/plans/feature-plan.md — no ledger inside, fresh start]
 [Create todos for all tasks]
 
 Task 1: Hook installation script

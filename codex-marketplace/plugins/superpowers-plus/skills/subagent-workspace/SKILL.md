@@ -40,29 +40,28 @@ path. The workspace is never committed and survives `git clean`.
 
 ## Scripts
 
-- `scripts/sdd-workspace [PLAN_FILE]` — bash workspace resolver.
-- `scripts/sdd-workspace.ps1 [PLAN_FILE]` — PowerShell workspace resolver.
-- `scripts/task-brief PLAN_FILE TASK_NUMBER [OUTFILE]` — bash task-brief extractor.
-- `scripts/task-brief.ps1 PLAN_FILE TASK_NUMBER [OUTFILE]` — PowerShell task-brief extractor.
-- `scripts/review-package PLAN_FILE BASE HEAD [OUTFILE]` — bash review-package builder; `PLAN_FILE` can be `-` for no plan.
-- `scripts/review-package.ps1 PLAN_FILE BASE HEAD [OUTFILE]` — PowerShell review-package builder; `PLAN_FILE` can be `-` for no plan.
+- `py -3 scripts/workspace.py --apply [PLAN_FILE]` — workspace resolver.
+- `py -3 scripts/task_brief.py --apply PLAN_FILE TASK_NUMBER [OUTFILE]` — task-brief extractor.
+- `py -3 scripts/review_package.py --apply PLAN_FILE BASE HEAD [OUTFILE]` — review-package builder; `PLAN_FILE` can be `-` for no plan.
 
-All scripts print the absolute output path. They write UTF-8 without a BOM so subagent `read` can open the files.
+All helpers are Python 3 CLIs. They default to read-only `--check` behavior;
+filesystem writes require `--apply`. They print the absolute output path and
+write UTF-8 without a BOM so subagent `read` can open the files.
 
 ## Usage
 
 For subagent-driven plans:
 
-1. Run `scripts/sdd-workspace PLAN_FILE` and capture the printed path.
-2. Run `scripts/task-brief PLAN_FILE <task-number>` to produce the task brief.
-3. Run `scripts/review-package PLAN_FILE BASE HEAD` to produce the review package.
+1. Run `py -3 scripts/workspace.py --apply PLAN_FILE` and capture the printed path.
+2. Run `py -3 scripts/task_brief.py --apply PLAN_FILE <task-number>` to produce the task brief.
+3. Run `py -3 scripts/review_package.py --apply PLAN_FILE BASE HEAD` to produce the review package.
 4. Write the subagent prompt and report under the same workspace.
 5. When the task is done, the scratch directory can be discarded.
 
 For iterative review:
 
-1. Run `scripts/sdd-workspace` with no plan file and capture the workspace path.
-2. Run `scripts/review-package - <base> <head> "$workspace/iterative-review-<pr_number>/review-<base7>..<head7>.diff"` to produce the UTF-8 diff package.
+1. Run `py -3 scripts/workspace.py --apply` with no plan file and capture the workspace path.
+2. Run `py -3 scripts/review_package.py --apply - <base> <head> <output-path>` to produce the UTF-8 diff package.
 3. Write `pr.json` and `review-log.md` under the same `iterative-review-<pr_number>` directory.
 
 ## Rules

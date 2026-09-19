@@ -27,7 +27,7 @@ license: MIT
 ---
 ## Provenance
 
-This marketplace-maintained derivative is based on `obra/superpowers` v6.3.0 commit `b36e0829c6d0140e93cfef2ca599b1b07d4a7797` under the MIT License. Upstream source is not vendored; this directory contains the maintained Superpowers+ implementation.
+This marketplace-maintained derivative is based on `obra/superpowers` v6.4.1 commit `5bf4e78011075bcfc0dc295f0724994cd123ee71` under the MIT License. Upstream source is not vendored; this directory contains the maintained Superpowers+ implementation.
 
 # Requesting Code Review
 
@@ -53,7 +53,7 @@ Dispatch a code reviewer subagent to catch issues before they cascade. The revie
 
 **1. Get git SHAs:**
 ```bash
-BASE_SHA=$(git rev-parse HEAD~1)  # or origin/main
+BASE_SHA=$(git rev-parse HEAD~1)  # or: git merge-base origin/main HEAD
 HEAD_SHA=$(git rev-parse HEAD)
 ```
 
@@ -80,9 +80,9 @@ prepares the review inputs; the reviewer subagent only reads the prepared diff a
 description.
 
 1. Determine the base ref (`<base>`) and branch (`<branch>`).
-2. Generate the review package as UTF-8 without a BOM:
-   - Bash: `.agents/skills/subagent-workspace/scripts/review-package - <base> <branch> <diff_path>` (use `-` for no plan file; `diff_path` is optional and the script prints the path it wrote).
-   - PowerShell: `.agents/skills/subagent-workspace/scripts/review-package.ps1 - <base> <branch> <diff_path>`
+2. Generate the review package as UTF-8 without a BOM with
+   `py -3 .agents/skills/subagent-workspace/scripts/review_package.py --apply - <base> <branch> <diff_path>`.
+   Use `-` for no plan file; `diff_path` is optional and the script prints the path it wrote.
 3. If the review object is a PR, capture the PR title and body into `<pr_description>`
    (e.g. with `gh pr view <number> --json title,body` or `mcp_call_tool`).
 4. Dispatch the reviewer subagent with the prepared inputs:

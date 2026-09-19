@@ -6,10 +6,10 @@ This plugin contains the first-party Superpowers+ workflow skills, including the
 
 - Repo: `obra/superpowers`
 - URL: <https://github.com/obra/superpowers>
-- Active upstream basis: v6.3.0 at commit
+- Active upstream basis: v6.4.1 at commit
+  `5bf4e78011075bcfc0dc295f0724994cd123ee71`
+- Audited prior comparison point: v6.3.0 at commit
   `b36e0829c6d0140e93cfef2ca599b1b07d4a7797`
-- Audited comparison point: v6.2.0 at commit
-  `3dcbd5c4b48e02263fbf4a3c01e3fe4f81d584d9`
 - Provenance record: this `SOURCE.md`
 - License: `MIT`
 - Upstream source is not vendored. Compare against the repository URL and pinned
@@ -34,8 +34,8 @@ There are no generated flat skill zip exports. Skills install from the Codex plu
 
 ## Prior comparison point
 
-The v6.2.0 commit above is the prior audited comparison point. The current
-comparison pin is v6.3.0. Upstream source is read from its repository when a
+The v6.3.0 commit above is the prior audited comparison point. The current
+comparison pin is v6.4.1. Upstream source is read from its repository when a
 comparison is needed; this plugin contains only its first-party skill sources.
 
 ## Plugin custody

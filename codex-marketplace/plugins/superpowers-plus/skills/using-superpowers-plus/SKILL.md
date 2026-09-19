@@ -33,6 +33,7 @@ metadata:
   - requesting-code-review
   - iterative-review
   - writing-roadmaps
+  - diagnosing-superpowers
   related_skills:
   - brainstorming
   - systematic-debugging
@@ -49,6 +50,7 @@ metadata:
   - iterative-review
   - writing-skills
   - writing-roadmaps
+  - diagnosing-superpowers
   - repo-worker-base
   - base-doctrine
   - inspecting-the-environment
@@ -57,7 +59,7 @@ license: MIT
 
 ## Provenance
 
-This marketplace-maintained skill succeeds upstream `using-superpowers` and is based on `obra/superpowers` v6.3.0 commit `b36e0829c6d0140e93cfef2ca599b1b07d4a7797` under the MIT License. Upstream source is not vendored; this directory contains the maintained Superpowers+ implementation.
+This marketplace-maintained skill succeeds upstream `using-superpowers` and is based on `obra/superpowers` v6.4.1 commit `5bf4e78011075bcfc0dc295f0724994cd123ee71` under the MIT License. Upstream source is not vendored; this directory contains the maintained Superpowers+ implementation.
 
 <SUBAGENT-STOP>
 If you were dispatched as a subagent to execute a specific task, ignore this skill.
@@ -187,9 +189,8 @@ is unclear, run these steps in order and then hand off.
 If your harness appears here, read its reference file for special instructions:
 
 - Codex: `references/codex-tools.md`
-- Pi: `references/pi-tools.md`
-- Antigravity: `references/antigravity-tools.md`
-- Gemini: `references/gemini-tools.md`
+- Devin Desktop: use its native repository, terminal, connector, and custom
+  agent surfaces; route model/profile selection through `selecting-a-subagent`.
 
 For the local-doctrine and user-instruction priority rules, see
 [`references/repo-doctrine.md`](references/repo-doctrine.md).
