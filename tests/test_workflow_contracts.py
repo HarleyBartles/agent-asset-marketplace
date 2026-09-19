@@ -246,6 +246,31 @@ class TestValidationTddPublication:
 
 
 class TestPlanningDelegationReview:
+    def test_brainstorming_owns_spec_to_plan_handoff_review(self):
+        brainstorming = _read(SKILLS / "brainstorming" / "SKILL.md").lower()
+        brainstorming_flat = " ".join(brainstorming.split())
+        handoff = _read(SKILLS / "handoff-gates" / "SKILL.md").lower()
+        handoff_scope = _read(SKILLS / "handoff-gates" / "references" / "scope-notes.md").lower()
+        handoff_wrapper = _read(SKILLS / "handoff-gates" / "agents" / "openai.yaml").lower()
+        roadmaps = _read(SKILLS / "writing-roadmaps" / "SKILL.md").lower()
+        design_runbook = _read(ROOT / ".agents" / "runbooks" / "design.md").lower()
+
+        for phrase in (
+            "planning-handoff review",
+            "burden ledger",
+            "exactly one branch",
+            "total weighted burden is lower",
+            "restore the preserved initial draft",
+            "private review",
+        ):
+            assert phrase in brainstorming_flat
+
+        assert "spec-readiness" not in handoff
+        assert "spec-readiness" not in handoff_scope
+        assert "spec" not in handoff_wrapper.split("short_description:", 1)[1].splitlines()[0]
+        assert "spec-readiness" not in roadmaps
+        assert "handoff-gates" not in design_runbook
+
     def test_design_scales_to_uncertainty_without_universal_approval(self):
         text = _read(SKILLS / "brainstorming" / "SKILL.md")
         assert "Three Paths" in text

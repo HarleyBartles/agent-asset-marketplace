@@ -46,7 +46,7 @@ committed, in-flight work log. When the roadmap completes, use
 ## Lane 1 — Start an Epic
 
 1. Read the spec from brainstorming or the human.
-2. Run `handoff-gates` spec-readiness.
+2. Verify that `brainstorming` completed its planning-handoff review, or treat a human-supplied approved spec as the design authority.
 3. Create `.agents/plans/<epic-name>/roadmap.md` with a plan sequence table.
 4. Use `writing-plans` to write Plan 1 with roadmap context.
 5. Run `handoff-gates` plan-readiness.
