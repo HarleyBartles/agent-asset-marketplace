@@ -184,6 +184,11 @@ is unclear, run these steps in order and then hand off.
    skills unless the current skill leaves a decision unresolved and the
    candidate skill directly owns it.
 
+Further inspection, skill loading, reviewers, preflights, wrappers, and
+alternate modes require a concrete unresolved question that could change the
+next lawful action. "Might be useful" is not sufficient. Do not turn bootstrap
+thoroughness into permission to embellish an already-defined workflow.
+
 ## Platform Adaptation
 
 If your harness appears here, read its reference file for special instructions:

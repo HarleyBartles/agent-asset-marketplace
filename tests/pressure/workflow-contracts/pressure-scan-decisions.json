@@ -109,7 +109,7 @@
   },
   {
     "path": "codex-marketplace/plugins/repo-worker-pack/skills/repo-worker-base/references/repository-validation-contract.md",
-    "line": 34,
+    "line": 40,
     "pattern": "every-function",
     "context": "not require a ceremonial direct test for every function or method.",
     "classification": "repo-local",
