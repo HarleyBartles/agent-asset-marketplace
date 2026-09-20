@@ -16,6 +16,7 @@ from typing import NamedTuple
 
 import document_contracts
 import plugin_contracts
+import skill_link_contract
 import surface_contracts
 
 
@@ -822,6 +823,7 @@ under the ## Exceptions heading are skipped."""
     findings: list[str] = [*dependency_findings, *_check_composition_graph(repo_root)]
     for surface in surfaces:
         findings.extend(_check_surface(repo_root, surface, exceptions, enabled_surface_ids))
+    findings.extend(item.message for item in skill_link_contract.check_skill_links(repo_root))
 
     structured_findings = [
         surface_contracts.Finding(
