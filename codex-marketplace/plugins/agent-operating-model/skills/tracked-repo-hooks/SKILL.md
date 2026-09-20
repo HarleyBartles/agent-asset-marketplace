@@ -16,7 +16,10 @@ license: MIT
 The canonical hook is tracked at `githooks/pre-commit` and activated through
 `core.hooksPath=githooks`. It materializes the staged tree, invokes the
 consumer-declared apply and check vectors, stages only owned generated
-surfaces, restores unrelated working state, and rejects unresolved drift.
+surfaces declared in `.agents/contracts/repo-standards-commands.json`, restores
+unrelated working state, and rejects unresolved contract failures. The tracked
+hook is a behavioral seed: consumer-owned edits are valid when they preserve
+the staged-snapshot, apply-before-check, restoration, and hosted-parity contract.
 
 Hosted CI invokes the same hook against the checked-out commit with
 `REPO_STANDARDS_HOSTED_COMMIT=HEAD`. The portable hook never hard-codes Python,
