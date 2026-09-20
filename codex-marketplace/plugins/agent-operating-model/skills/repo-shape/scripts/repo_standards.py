@@ -735,8 +735,10 @@ exit codes:
   1  drift detected, apply aborted, or an error occurred
 
 The manifest is read from references/repository-shape-manifest.json inside the
-repo-standards skill. Exceptions declared in .agents/doctrine/repo-runbook-policy.md
-under the ## Exceptions heading are skipped."""
+repo-standards skill. Consumer exceptions are declared as {id, reason} objects in
+.agents/contracts/agent-operating-model.json. Legacy ## Exceptions entries in
+.agents/doctrine/repo-runbook-policy.md are read only as a compatibility fallback
+while the contract is absent."""
     parser = argparse.ArgumentParser(
         description="Check or apply the repo-standards surface manifest. (mixed)",
         epilog=epilog,

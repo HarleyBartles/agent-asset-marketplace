@@ -15,6 +15,7 @@ MODULE_PATH = SKILL_ROOT / "scripts" / "surface_contracts.py"
 SCHEMA_PATH = SKILL_ROOT / "references" / "repository-shape-manifest.schema.json"
 AUDIT_PATH = SKILL_ROOT / "references" / "consumer-surface-audit.md"
 SCAFFOLD_PATH = SKILL_ROOT / "scripts" / "scaffold_operating_model_contract.py"
+REPO_STANDARDS_PATH = SKILL_ROOT / "scripts" / "repo_standards.py"
 
 
 def _module():
@@ -63,6 +64,19 @@ def _run_scaffold(repo: Path, *args: str) -> subprocess.CompletedProcess[str]:
         capture_output=True,
         text=True,
     )
+
+
+def test_repo_standards_help_points_exceptions_at_consumer_contract() -> None:
+    result = subprocess.run(
+        [sys.executable, str(REPO_STANDARDS_PATH), "--help"],
+        cwd=ROOT,
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode == 0, result.stdout + result.stderr
+    assert ".agents/contracts/agent-operating-model.json" in result.stdout
+    assert "compatibility fallback" in result.stdout
+    assert "Exceptions declared in .agents/doctrine/repo-runbook-policy.md" not in result.stdout
 
 
 def test_operating_model_contract_scaffold_creates_missing_file(tmp_path: Path) -> None:
