@@ -703,13 +703,12 @@ class TestRepositoryCallersAndPressure:
         assert "publication" in router
 
     def test_operating_model_consumer_surface_contract_is_durable(self):
-        spec = _read(ROOT / ".agents" / "specs" / "2026-09-20-agent-operating-model-contract-audit-design.md")
-        audit = OPERATING_SKILLS / "repo-shape" / "references" / "consumer-surface-audit.md"
+        audit_path = OPERATING_SKILLS / "repo-shape" / "references" / "consumer-surface-audit.md"
         schema = OPERATING_SKILLS / "repo-shape" / "references" / "repository-shape-manifest.schema.json"
         coordinator = _read(OPERATING_SKILLS / "repo-shape" / "scripts" / "repo_standards.py")
-        assert "Templates are seeds, not continuing owners" in spec
-        assert "Conformance targets invariants" in spec
-        assert audit.is_file()
+        audit = _read(audit_path)
+        assert "Mandatory invariants" in audit
+        assert "consumer-authored" in audit
         assert schema.is_file()
         assert 'surface.get("check_content", True)' not in coordinator
 
