@@ -37,6 +37,7 @@ export REPO_STANDARDS_STAGED_SNAPSHOT=1
 AFTER_STATUS=""
 UNSTAGED_PATCH=$(mktemp)
 ORIGINAL_STAGED_PATHS=$(mktemp)
+GENERATED_PATHS_FILE=$(mktemp)
 UNTRACKED_STASHED=0
 WORKTREE_RESET=0
 PATCH_RESTORE_FAILED=0
@@ -58,6 +59,7 @@ restore_worktree() {
     fi
   fi
   rm -f "$AFTER_STATUS"
+  rm -f "$GENERATED_PATHS_FILE"
   rm -f "$ORIGINAL_STAGED_PATHS"
   if [ "$PATCH_RESTORE_FAILED" -eq 0 ]; then
     rm -f "$UNSTAGED_PATCH"
@@ -153,13 +155,34 @@ run_declared apply
 # hosted full-PR snapshots. The NUL-delimited input keeps filenames safe.
 git update-index --add --remove -z --stdin < "$ORIGINAL_STAGED_PATHS"
 
-git add -A -- .agents/skills/ 2>/dev/null || true
-git add -- ':(glob)**/INDEX.md' 2>/dev/null || true
-git add -- ':(glob)**/INDEX.json' 2>/dev/null || true
-git add -- ':(glob)**/.provenance.json' 2>/dev/null || true
-git add -- .agents/plugins/marketplace.json 2>/dev/null || true
-git add -- codex-marketplace/plugin-roots.json 2>/dev/null || true
-git add -- codex-marketplace/manifest.json 2>/dev/null || true
+if ! "${PYTHON[@]}" - "$COMMAND_DECLARATION" > "$GENERATED_PATHS_FILE" <<'PY'
+import json, pathlib, re, sys
+for raw in json.load(open(sys.argv[1], encoding="utf-8"))["generated_paths"]:
+    path = raw.replace("\\", "/") if isinstance(raw, str) else ""
+    parts = pathlib.PurePosixPath(path).parts if path else ()
+    invalid = (
+        not path or path in {"*", "**", ".", "./*", "./**"}
+        or path.startswith(("/", ":", "!")) or re.match(r"^[A-Za-z]:/", path)
+        or ".." in parts or "\x00" in path
+    )
+    if invalid:
+        raise SystemExit(f"invalid generated_paths entry: {raw!r}")
+    print(path)
+PY
+then
+  exit 1
+fi
+
+while IFS= read -r generated_path; do
+  [ -n "$generated_path" ] || continue
+  if [[ "$generated_path" == */** ]]; then
+    git add -A -- "${generated_path%/**}/" 2>/dev/null || true
+  elif [[ "$generated_path" == *"*"* ]]; then
+    git add -A -- ":(glob)$generated_path" 2>/dev/null || true
+  else
+    git add -A -- "$generated_path" 2>/dev/null || true
+  fi
+done < "$GENERATED_PATHS_FILE"
 
 AFTER_STATUS=$(mktemp)
 git status --porcelain --untracked-files=all > "$AFTER_STATUS"

@@ -702,6 +702,17 @@ class TestRepositoryCallersAndPressure:
         assert "worktrees" in router
         assert "publication" in router
 
+    def test_operating_model_consumer_surface_contract_is_durable(self):
+        spec = _read(ROOT / ".agents" / "specs" / "2026-09-20-agent-operating-model-contract-audit-design.md")
+        audit = OPERATING_SKILLS / "repo-shape" / "references" / "consumer-surface-audit.md"
+        schema = OPERATING_SKILLS / "repo-shape" / "references" / "repository-shape-manifest.schema.json"
+        coordinator = _read(OPERATING_SKILLS / "repo-shape" / "scripts" / "repo_standards.py")
+        assert "Templates are seeds, not continuing owners" in spec
+        assert "Conformance targets invariants" in spec
+        assert audit.is_file()
+        assert schema.is_file()
+        assert 'surface.get("check_content", True)' not in coordinator
+
     def test_workflow_inventory_covers_every_tracked_workflow(self):
         inventory = _read(DOCS / "workflow-inventory.md")
         workflows = list((ROOT / ".github" / "workflows").glob("*.y*ml"))

@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import os
+import re
 import subprocess
 from pathlib import Path
 
@@ -60,7 +61,12 @@ def _default_mapping() -> dict[str, Path]:
 def _playbook_content(name: str) -> str:
     template = Path(__file__).resolve().parent.parent / "templates" / name
     if template.is_file():
-        return template.read_text(encoding="utf-8")
+        return re.sub(
+            r"<!--.*?-->",
+            "Repository-specific binding may extend this required section.",
+            template.read_text(encoding="utf-8"),
+            flags=re.DOTALL,
+        )
     title = PLAYBOOK_TITLES.get(name, name.replace("-", " ").title())
     sections = (
         ("When", "The class of change or trigger this playbook covers."),
@@ -76,9 +82,9 @@ def _playbook_content(name: str) -> str:
             "use `None.` when standalone.",
         ),
     )
-    body = f"# {title}\n\n<!-- One-sentence purpose: which concern this playbook composes. -->\n"
+    body = f"# {title}\n\nThis starter playbook composes the named repository concern.\n"
     for heading, prompt in sections:
-        body += f"\n## {heading}\n\n<!-- {prompt} -->\n"
+        body += f"\n## {heading}\n\n{prompt}\n"
     return body
 
 
@@ -87,6 +93,9 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--check", action="store_true", help="Report missing playbooks without writing")
     parser.add_argument("--force", action="store_true", help="Overwrite existing playbook files")
     args = parser.parse_args(argv)
+    if args.force:
+        print("ERROR: direct scaffold force is disabled; use confirmed repo-standards --force <surface-id>")
+        return 1
     root = _repo_root()
     mapping = _parse_policy(root / ".agents/doctrine/repo-runbook-policy.md") or _default_mapping()
     missing: list[str] = []
@@ -112,7 +121,7 @@ def main(argv: list[str] | None = None) -> int:
         for path in written:
             print(f"wrote {path}")
     else:
-        print("All mapped playbooks already exist; use --force to overwrite")
+        print("Mapped playbooks exist; normal apply preserves them; use confirmed coordinator force for restore")
     return 0
 
 

@@ -58,7 +58,8 @@ After routing, the `repo-shape` workflow is:
 
 - Every Python script and wrapper accepts `--help`. Run it before reading the implementation.
 - `--check` is always a safe, read-only drift report.
-- Use `--force` to overwrite an existing scaffolded surface. Without `--force`, the scaffolds create missing files and leave existing ones alone.
-- `repo-standards` supports `--apply --yes` to create missing surfaces and `--apply --yes --force` to overwrite drifted surfaces.
+- Normal apply creates missing starter surfaces and preserves repository-owned customizations.
+- `--force <surface-id>` is a targeted template deployment, never a generic repair switch. It requires `--confirm-local-customisations-will-be-overwritten`; bare `--force` and `--apply --force` are invalid.
+- `repo-standards --check` is the read-only migration audit. It reports contract/schema issues, dead links, unsafe customizations, and available force-reset surfaces without mutating.
 
 For the full list of required surfaces, runbook and playbook sets, scaffold helpers, and exceptions, see [references/repository-shape-standard.md](references/repository-shape-standard.md) and [references/repository-runbook-standard.md](references/repository-runbook-standard.md).

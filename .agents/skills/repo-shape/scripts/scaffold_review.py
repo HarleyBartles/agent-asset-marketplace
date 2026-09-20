@@ -13,6 +13,8 @@ import subprocess
 import sys
 from pathlib import Path
 
+import document_contracts
+
 
 def _stripped_env() -> dict[str, str]:
     env = os.environ.copy()
@@ -50,7 +52,7 @@ def main(argv: list[str] | None = None) -> int:
 examples:
   %(prog)s --check               verify REVIEW.md exists and contains boilerplate
   %(prog)s                       write REVIEW.md if it is missing
-  %(prog)s --force               overwrite REVIEW.md with the template
+  %(prog)s --force               legacy option; use coordinator force deployment
 
 The template expects the file to keep the `# Review entry point` heading and
 references to `.agents/doctrine/repo-runbook-policy.md` and `using-superpowers-plus`.
@@ -74,6 +76,9 @@ exit codes:
         help="Overwrite an existing REVIEW.md",
     )
     args = parser.parse_args(argv)
+    if args.force:
+        print("ERROR: direct scaffold force is disabled; use confirmed repo-standards --force <surface-id>")
+        return 1
 
     repo_root = _repo_root()
     review_path = repo_root / "REVIEW.md"
@@ -84,14 +89,15 @@ exit codes:
 
     if review_path.is_file():
         if args.check:
-            content = review_path.read_text(encoding="utf-8")
-            if not _has_required_boilerplate(content):
-                print("DRIFT: REVIEW.md exists but is missing required boilerplate")
+            findings = document_contracts.check_review(review_path, repo_root)
+            if findings:
+                for finding in findings:
+                    print(f"DRIFT: [{finding.code}] {finding.message}")
                 return 1
             print("OK REVIEW.md: review entry point present")
             return 0
         if not args.force:
-            print("REVIEW.md already exists; use --force to overwrite")
+            print("REVIEW.md exists; normal apply preserves it; use confirmed coordinator force for restore")
             return 0
 
     if args.check:

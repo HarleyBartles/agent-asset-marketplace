@@ -10,6 +10,8 @@ import subprocess
 import sys
 from pathlib import Path
 
+import document_contracts
+
 
 def _stripped_env() -> dict[str, str]:
     env = os.environ.copy()
@@ -82,7 +84,7 @@ def main(argv: list[str] | None = None) -> int:
 examples:
   %(prog)s --check               verify repo-runbook-policy.md exists and contains boilerplate
   %(prog)s                       write repo-runbook-policy.md if it is missing
-  %(prog)s --force               overwrite repo-runbook-policy.md with the template
+  %(prog)s --force               legacy option; use coordinator force deployment
 
 This file maps the cross-repo runbook standard to the repo's local paths and
 records any surface exceptions under ## Exceptions. The boilerplate check
@@ -108,6 +110,9 @@ exit codes:
         help="Overwrite an existing repo-runbook-policy.md",
     )
     args = parser.parse_args(argv)
+    if args.force:
+        print("ERROR: direct scaffold force is disabled; use confirmed repo-standards --force <surface-id>")
+        return 1
 
     repo_root = _repo_root()
     policy_path = repo_root / ".agents" / "doctrine" / "repo-runbook-policy.md"
@@ -119,8 +124,10 @@ exit codes:
     if policy_path.is_file():
         if args.check:
             content = policy_path.read_text(encoding="utf-8")
-            if not _has_required_boilerplate(content):
-                print("DRIFT: repo-runbook-policy.md exists but is missing required boilerplate")
+            findings = document_contracts.check_policy(policy_path, repo_root)
+            if findings:
+                for finding in findings:
+                    print(f"DRIFT: [{finding.code}] {finding.message}")
                 return 1
             duplicates = _duplicate_playbook_classifications(content)
             if duplicates:
@@ -130,7 +137,7 @@ exit codes:
             print("OK repo-runbook-policy.md: mapping file present")
             return 0
         if not args.force:
-            print("repo-runbook-policy.md already exists; use --force to overwrite")
+            print("Policy exists; normal apply preserves it; use confirmed coordinator force for restore")
             return 0
 
     if args.check:

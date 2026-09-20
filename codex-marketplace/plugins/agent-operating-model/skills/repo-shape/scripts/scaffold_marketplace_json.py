@@ -138,7 +138,7 @@ def main(argv: list[str] | None = None) -> int:
 examples:
   %(prog)s --check               validate .agents/plugins/marketplace.json
   %(prog)s                       write or migrate marketplace.json
-  %(prog)s --force               rewrite marketplace.json with normalized content
+  %(prog)s --force               rejected; force deployment belongs to repo-standards
 
 The marketplace.json file is read from .agents/plugins/marketplace.json under
 the repo root. Legacy top-level or repo-level keys named local_skill_prefixes
@@ -156,6 +156,9 @@ exit codes:
     parser.add_argument("--check", action="store_true", help="Report drift without writing")
     parser.add_argument("--force", action="store_true", help="Overwrite an existing marketplace.json")
     args = parser.parse_args(argv)
+    if args.force:
+        print("ERROR: direct scaffold force is disabled; use confirmed repo-standards --force <surface-id>")
+        return 1
 
     repo_root = _repo_root()
     marketplace = repo_root / ".agents" / "plugins" / "marketplace.json"

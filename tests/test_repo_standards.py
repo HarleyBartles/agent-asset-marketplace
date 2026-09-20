@@ -1,4 +1,5 @@
 import os
+import json
 import importlib.util
 import subprocess
 import sys
@@ -501,8 +502,8 @@ def test_scaffold_repo_runbook_policy_check_missing_boilerplate_fails(tmp_path: 
     assert "DRIFT: repo-runbook-policy.md" in result.stdout
 
 
-def test_scaffold_gitignore_accepts_force_no_op(tmp_path: Path) -> None:
-    """scaffold_gitignore --force is accepted as a uniform CLI no-op."""
+def test_scaffold_gitignore_rejects_direct_force(tmp_path: Path) -> None:
+    """Individual scaffolds cannot bypass coordinator force confirmation."""
     repo = tmp_path / "gitignore-force"
     repo.mkdir()
     _init_git_repo(repo)
@@ -514,8 +515,9 @@ def test_scaffold_gitignore_accepts_force_no_op(tmp_path: Path) -> None:
         capture_output=True,
         text=True,
     )
-    assert result.returncode == 0, result.stderr
-    assert (repo / ".gitignore").is_file()
+    assert result.returncode == 1, result.stdout + result.stderr
+    assert "direct scaffold force is disabled" in result.stdout
+    assert not (repo / ".gitignore").exists()
 
 
 def test_scaffold_gitignore_check_no_stale_sdd_scaffold_passes(tmp_path: Path) -> None:
@@ -612,8 +614,8 @@ def test_scaffold_gitignore_check_stale_root_rule_fails(tmp_path: Path) -> None:
     assert ".gitignore" in combined
 
 
-def test_repo_standards_apply_force_overwrites_drifted_contributing(tmp_path: Path) -> None:
-    """repo_standards --apply --yes --force overwrites a drifted scaffolded surface."""
+def test_repo_standards_force_rejects_surface_without_reset_contract(tmp_path: Path) -> None:
+    """Targeted force cannot bypass a surface's unavailable reset contract."""
     repo = tmp_path / "repo-standards-force"
     repo.mkdir()
     _init_git_repo(repo)
@@ -639,17 +641,40 @@ def test_repo_standards_apply_force_overwrites_drifted_contributing(tmp_path: Pa
     (repo / "CONTRIBUTING.md").write_text("# Contributing\n\nStale.\n", encoding="utf-8", newline="\n")
 
     result = subprocess.run(
-        [sys.executable, str(REPO_STANDARDS), "--apply", "--yes", "--force", "--allow-shared-checkout"],
+        [
+            sys.executable,
+            str(REPO_STANDARDS),
+            "--force",
+            "contributing-entry",
+            "--confirm-local-customisations-will-be-overwritten",
+            "--allow-shared-checkout",
+        ],
         cwd=repo,
         env=_stripped_env(),
         capture_output=True,
         text=True,
     )
     combined = result.stdout + result.stderr
-    assert result.returncode == 0, combined
-    text = (repo / "CONTRIBUTING.md").read_text(encoding="utf-8")
-    assert "using-superpowers-plus" in text
-    assert "/using-superpowers-plus" not in text
+    assert result.returncode == 1, combined
+    assert "force reset is unavailable" in combined
+    assert (repo / "CONTRIBUTING.md").read_text(encoding="utf-8") == "# Contributing\n\nStale.\n"
+
+
+def test_targeted_force_warns_and_requires_noninteractive_acknowledgement(tmp_path: Path) -> None:
+    repo = tmp_path / "force-confirmation"
+    repo.mkdir()
+    _init_git_repo(repo)
+    result = subprocess.run(
+        [sys.executable, str(REPO_STANDARDS), "--force", "completed-artifacts-doctrine"],
+        cwd=repo,
+        input="",
+        capture_output=True,
+        text=True,
+    )
+    combined = result.stdout + result.stderr
+    assert result.returncode == 1
+    assert "are you sure? This will force overwrite repo-local customisations" in combined
+    assert "--confirm-local-customisations-will-be-overwritten" in combined
 
 
 def test_scaffold_contributing_check_customized_passes(tmp_path: Path) -> None:
@@ -678,8 +703,8 @@ def test_scaffold_contributing_check_customized_passes(tmp_path: Path) -> None:
     assert "OK" in result.stdout
 
 
-def test_repo_standards_allow_shared_checkout_combines_with_apply(tmp_path: Path) -> None:
-    """repo_standards --apply --allow-shared-checkout works in the main shared checkout."""
+def test_repo_standards_allow_shared_checkout_does_not_mask_non_convergence(tmp_path: Path) -> None:
+    """Shared-checkout approval does not turn an incomplete consumer into success."""
     repo = tmp_path / "allow-apply"
     repo.mkdir()
     _init_git_repo_with_commit(repo)
@@ -689,7 +714,7 @@ def test_repo_standards_allow_shared_checkout_combines_with_apply(tmp_path: Path
     command_dir.mkdir(parents=True)
     (command_dir / "repo-standards-commands.json").write_text(
         '{"apply":["@python","tools/run.py","ci","--apply"],'
-        '"check":["@python","tools/run.py","ci","--check","--diagnostics"]}\n',
+        '"check":["@python","tools/run.py","ci","--check","--diagnostics"],"generated_paths":[".agents/skills/**"]}\n',
         encoding="utf-8",
     )
 
@@ -701,8 +726,9 @@ def test_repo_standards_allow_shared_checkout_combines_with_apply(tmp_path: Path
         text=True,
     )
     combined = result.stdout + result.stderr
-    assert result.returncode == 0, combined
+    assert result.returncode == 1, combined
     assert "--allow-shared-checkout supplied" in combined
+    assert "did not converge" in combined
 
 
 def test_repo_standards_allow_shared_checkout_requires_apply(tmp_path: Path) -> None:
@@ -761,8 +787,8 @@ def test_repo_standards_apply_in_main_shared_checkout_requires_approval(tmp_path
     assert "Pass --allow-shared-checkout" in combined
 
 
-def test_repo_standards_apply_in_shared_checkout_with_flag_succeeds(tmp_path: Path) -> None:
-    """repo_standards --apply --allow-shared-checkout in a shared checkout applies changes."""
+def test_repo_standards_force_preflight_precedes_shared_checkout_mutation(tmp_path: Path) -> None:
+    """Invalid force targets fail before shared-checkout mutation or writes."""
     repo = tmp_path / "shared-apply"
     repo.mkdir()
     _init_git_repo_with_commit(repo)
@@ -797,17 +823,23 @@ def test_repo_standards_apply_in_shared_checkout_with_flag_succeeds(tmp_path: Pa
     (worktree / "CONTRIBUTING.md").write_text("# Contributing\n\nStale.\n", encoding="utf-8", newline="\n")
 
     result = subprocess.run(
-        [sys.executable, str(REPO_STANDARDS), "--apply", "--yes", "--force", "--allow-shared-checkout"],
+        [
+            sys.executable,
+            str(REPO_STANDARDS),
+            "--force",
+            "contributing-entry",
+            "--confirm-local-customisations-will-be-overwritten",
+            "--allow-shared-checkout",
+        ],
         cwd=worktree,
         env=_stripped_env(),
         capture_output=True,
         text=True,
     )
     combined = result.stdout + result.stderr
-    assert result.returncode == 0, combined
-    text = (worktree / "CONTRIBUTING.md").read_text(encoding="utf-8")
-    assert "using-superpowers-plus" in text
-    assert "/using-superpowers-plus" not in text
+    assert result.returncode == 1, combined
+    assert "force reset is unavailable" in combined
+    assert (worktree / "CONTRIBUTING.md").read_text(encoding="utf-8") == "# Contributing\n\nStale.\n"
 
 
 def test_scaffold_repo_runbook_policy_check_customized_passes(tmp_path: Path) -> None:
@@ -946,7 +978,7 @@ def test_pre_commit_hook_wired_to_ci_apply_and_diagnostics(tmp_path: Path) -> No
     command_dir.mkdir(parents=True)
     (command_dir / "repo-standards-commands.json").write_text(
         '{"apply":["@python","tools/run.py","ci","--apply"],'
-        '"check":["@python","tools/run.py","ci","--check","--diagnostics"]}\n',
+        '"check":["@python","tools/run.py","ci","--check","--diagnostics"],"generated_paths":[".agents/skills/**"]}\n',
         encoding="utf-8",
     )
 
@@ -1022,7 +1054,7 @@ def test_tracked_hook_check_rejects_drift_and_wrong_hooks_path(tmp_path: Path) -
     command_dir = repo / ".agents" / "contracts"
     command_dir.mkdir(parents=True)
     (command_dir / "repo-standards-commands.json").write_text(
-        '{"apply":["@python","consumer.py","--apply"],"check":["@python","consumer.py","--check"]}\n',
+        '{"apply":["@python","consumer.py","--apply"],"check":["@python","consumer.py","--check"],"generated_paths":[".agents/skills/**"]}\n',
         encoding="utf-8",
     )
     hook = repo / "githooks" / "pre-commit"
@@ -1104,7 +1136,7 @@ def test_tracked_hook_platform_execution_contract(tmp_path: Path) -> None:
     command_dir = repo / ".agents" / "contracts"
     command_dir.mkdir(parents=True)
     (command_dir / "repo-standards-commands.json").write_text(
-        '{"apply":["@python","consumer.py","--apply"],"check":["@python","consumer.py","--check"]}\n',
+        '{"apply":["@python","consumer.py","--apply"],"check":["@python","consumer.py","--check"],"generated_paths":[".agents/skills/**"]}\n',
         encoding="utf-8",
     )
     template = Path(repo_standards.__file__).parent.parent / "templates" / "pre-commit"
@@ -1209,7 +1241,7 @@ def test_hook_validator_rejects_unbound_apply_and_check_switches(tmp_path: Path)
     declaration = repo / ".agents" / "contracts"
     declaration.mkdir(parents=True)
     (declaration / "repo-standards-commands.json").write_text(
-        '{"apply":["@python","consumer.py","--apply"],"check":["@python","consumer.py","--check"]}\n',
+        '{"apply":["@python","consumer.py","--apply"],"check":["@python","consumer.py","--check"],"generated_paths":[".agents/skills/**"]}\n',
         encoding="utf-8",
     )
     hook = repo / "pre-commit"
@@ -1228,7 +1260,7 @@ def test_hook_validator_rejects_marker_bearing_but_incomplete_hook(tmp_path: Pat
     declaration = repo / ".agents" / "contracts"
     declaration.mkdir(parents=True)
     (declaration / "repo-standards-commands.json").write_text(
-        '{"apply":["@python","consumer.py","--apply"],"check":["@python","consumer.py","--check"]}\n',
+        '{"apply":["@python","consumer.py","--apply"],"check":["@python","consumer.py","--check"],"generated_paths":[".agents/skills/**"]}\n',
         encoding="utf-8",
     )
     hook = repo / "pre-commit"
@@ -1245,6 +1277,47 @@ def test_hook_validator_rejects_marker_bearing_but_incomplete_hook(tmp_path: Pat
     assert any("canonical staged-snapshot contract" in finding for finding in findings)
 
 
+def test_command_declaration_exposes_generated_paths(tmp_path: Path) -> None:
+    path = tmp_path / ".agents" / "contracts" / "repo-standards-commands.json"
+    path.parent.mkdir(parents=True)
+    path.write_text(
+        json.dumps(
+            {
+                "apply": ["@python", "tools/run.py", "ci", "--apply"],
+                "check": ["@python", "tools/run.py", "ci", "--check"],
+                "generated_paths": [".agents/skills/**", "**/INDEX.md"],
+            }
+        ),
+        encoding="utf-8",
+    )
+    declaration, findings = repo_standards._check_declared_commands(tmp_path)
+    assert findings == []
+    assert declaration is not None
+    assert declaration.generated_paths == (".agents/skills/**", "**/INDEX.md")
+
+
+@pytest.mark.parametrize(
+    "generated_path",
+    ["", "../outside", "/absolute", "C:/absolute", "*", "**", "./**", ":(top)**", "!ignored"],
+)
+def test_command_declaration_rejects_unsafe_generated_paths(tmp_path: Path, generated_path: str) -> None:
+    path = tmp_path / ".agents" / "contracts" / "repo-standards-commands.json"
+    path.parent.mkdir(parents=True)
+    path.write_text(
+        json.dumps(
+            {
+                "apply": ["@python", "tools/run.py", "ci", "--apply"],
+                "check": ["@python", "tools/run.py", "ci", "--check"],
+                "generated_paths": [generated_path],
+            }
+        ),
+        encoding="utf-8",
+    )
+    declaration, findings = repo_standards._check_declared_commands(tmp_path)
+    assert declaration is None
+    assert any("generated_paths" in finding for finding in findings)
+
+
 def test_hook_rejects_inserted_control_flow() -> None:
     template = Path(repo_standards.__file__).parent.parent / "templates" / "pre-commit"
     text = template.read_text(encoding="utf-8")
@@ -1253,6 +1326,48 @@ def test_hook_rejects_inserted_control_flow() -> None:
         altered = text.replace("run_declared apply", injected + "\nrun_declared apply", 1)
         assert not repo_standards._retains_canonical_hook_contract(altered)
     assert not repo_standards._retains_canonical_hook_contract("if false; then\n" + text + "\nfi\n")
+
+
+def test_ordinary_apply_preserves_existing_customized_hook(tmp_path: Path) -> None:
+    repo = tmp_path / "preserve-custom-hook"
+    repo.mkdir()
+    _init_git_repo(repo)
+    template = Path(repo_standards.__file__).parent.parent / "templates" / "pre-commit"
+    hook = repo / "githooks/pre-commit"
+    hook.parent.mkdir(parents=True)
+    customized = template.read_text(encoding="utf-8") + "\n# repository-owned audit note\n"
+    hook.write_text(customized, encoding="utf-8", newline="\n")
+    surface = {
+        "id": "pre-commit-hook",
+        "path": "githooks/pre-commit",
+        "kind": "hook",
+        "source": "templates/pre-commit",
+    }
+
+    assert not repo_standards._apply_surface(repo, surface, set(), False)
+    assert hook.read_text(encoding="utf-8") == customized
+    configured = subprocess.run(
+        ["git", "config", "--get", "core.hooksPath"],
+        cwd=repo,
+        capture_output=True,
+        text=True,
+        check=True,
+    ).stdout.strip()
+    assert configured == "githooks"
+
+
+def test_direct_scaffold_force_is_disabled(tmp_path: Path) -> None:
+    repo = tmp_path / "direct-force"
+    repo.mkdir()
+    _init_git_repo(repo)
+    result = subprocess.run(
+        [sys.executable, str(SCAFFOLD_CONTRIBUTING), "--force"],
+        cwd=repo,
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode == 1
+    assert "direct scaffold force is disabled" in result.stdout
 
 
 def _forbidden_ci_check_guidance() -> tuple[str, ...]:
@@ -1368,7 +1483,7 @@ def _install_repo_standards(repo: Path) -> None:
     command_dir.mkdir(parents=True, exist_ok=True)
     (command_dir / "repo-standards-commands.json").write_text(
         '{"apply":["@python","tools/run.py","ci","--apply"],'
-        '"check":["@python","tools/run.py","ci","--check","--diagnostics"]}\n',
+        '"check":["@python","tools/run.py","ci","--check","--diagnostics"],"generated_paths":[".agents/skills/**"]}\n',
         encoding="utf-8",
     )
     subprocess.run(
@@ -1522,6 +1637,29 @@ def test_pre_commit_hook_stages_only_owned_generated_surfaces(tmp_path: Path) ->
     assert "build/outside.txt" in status, status
 
 
+def test_pre_commit_hook_rejects_invalid_generated_pathspec_at_runtime(tmp_path: Path) -> None:
+    repo = tmp_path / "invalid-generated-pathspec"
+    repo.mkdir()
+    _init_git_repo_with_commit(repo)
+    _install_repo_standards(repo)
+    (repo / "tools").mkdir(exist_ok=True)
+    (repo / "tools/run.py").write_text(_fake_tools_run_py("ok"), encoding="utf-8", newline="\n")
+    declaration = repo / ".agents/contracts/repo-standards-commands.json"
+    data = json.loads(declaration.read_text(encoding="utf-8"))
+    data["generated_paths"] = [":(top)**"]
+    declaration.write_text(json.dumps(data) + "\n", encoding="utf-8", newline="\n")
+    subprocess.run(["git", "add", "tools/run.py", str(declaration.relative_to(repo))], cwd=repo, check=True)
+
+    result = subprocess.run(
+        ["git", "commit", "-m", "reject unsafe generated path"],
+        cwd=repo,
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode != 0
+    assert "invalid generated_paths entry" in result.stdout + result.stderr
+
+
 def _add_marketplace_submodule(repo: Path, marketplace: Path) -> None:
     subprocess.run(
         [
@@ -1567,7 +1705,7 @@ def _install_repo_standards_with_submodule(repo: Path) -> None:
     command_dir.mkdir(parents=True, exist_ok=True)
     (command_dir / "repo-standards-commands.json").write_text(
         '{"apply":["@python","tools/run.py","ci","--apply"],'
-        '"check":["@python","tools/run.py","ci","--check","--diagnostics"]}\n',
+        '"check":["@python","tools/run.py","ci","--check","--diagnostics"],"generated_paths":[".agents/skills/**"]}\n',
         encoding="utf-8",
     )
     subprocess.run(
@@ -1949,7 +2087,7 @@ def test_apply_fails_when_composition_graph_remains_invalid(
     runbooks.mkdir(parents=True)
     (runbooks / "implementing.md").write_text("# Implementation\n", encoding="utf-8")
     manifest = tmp_path / "manifest.json"
-    manifest.write_text('{"surfaces": []}\n', encoding="utf-8")
+    manifest.write_text('{"version": 3, "surfaces": []}\n', encoding="utf-8")
     monkeypatch.setattr(repo_standards, "_repo_root", lambda: tmp_path)
     monkeypatch.setattr(repo_standards, "_manifest_path", lambda: manifest)
     monkeypatch.setattr(repo_standards, "_is_submodule", lambda _root: False)
@@ -1957,7 +2095,7 @@ def test_apply_fails_when_composition_graph_remains_invalid(
 
     assert repo_standards.main(["--apply", "--yes"]) == 1
     captured = capsys.readouterr()
-    assert "unresolved composition-graph drift" in captured.err
+    assert "apply did not converge" in captured.err
 
 
 def test_runbook_composition_ignores_agents_md_and_absent_dir(tmp_path: Path) -> None:

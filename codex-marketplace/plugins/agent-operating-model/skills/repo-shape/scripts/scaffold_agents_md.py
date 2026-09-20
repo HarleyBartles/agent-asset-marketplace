@@ -44,7 +44,7 @@ def main(argv: list[str] | None = None) -> int:
 examples:
   %(prog)s --check               validate the current AGENTS.md router
   %(prog)s                       write AGENTS.md from the template if missing
-  %(prog)s --force               overwrite AGENTS.md with the template
+  %(prog)s --force               legacy option; use coordinator force deployment
 
 validation:
   The five core sections (Repository purpose, Source-of-truth split,
@@ -64,6 +64,9 @@ exit codes:
     parser.add_argument("--check", action="store_true", help="Report drift without writing")
     parser.add_argument("--force", action="store_true", help="Overwrite an existing AGENTS.md")
     args = parser.parse_args(argv)
+    if args.force:
+        print("ERROR: direct scaffold force is disabled; use confirmed repo-standards --force <surface-id>")
+        return 1
 
     repo_root = _repo_root()
     agents_path = repo_root / "AGENTS.md"
@@ -78,7 +81,7 @@ exit codes:
         return 0
 
     if agents_path.is_file() and not args.force:
-        print("AGENTS.md already exists; use --force to overwrite")
+        print("AGENTS.md exists; normal apply preserves it; use confirmed coordinator force for restore")
         return 0
 
     with agents_path.open("w", encoding="utf-8", newline="\n") as f:

@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import argparse
 import os
+import re
 import subprocess
 from pathlib import Path
 
@@ -66,7 +67,12 @@ def _template_dir() -> Path:
 def _runbook_content(name: str) -> str:
     template = _template_dir() / name
     if template.is_file():
-        return template.read_text(encoding="utf-8")
+        return re.sub(
+            r"<!--.*?-->",
+            "Repository-specific binding may extend this required section.",
+            template.read_text(encoding="utf-8"),
+            flags=re.DOTALL,
+        )
     title = RUNBOOK_TITLES.get(name, name.replace("-", " ").title())
     playbook_routing = {
         "implementing.md": (
@@ -80,21 +86,21 @@ def _runbook_content(name: str) -> str:
     }.get(name, "None.")
     return (
         f"# {title}\n\n"
-        "<!-- One-sentence purpose: who uses this runbook and what it governs. -->\n\n"
+        "This starter runbook binds the repository's lifecycle workflow.\n\n"
         "## When\n\n"
-        "<!-- The class of change or trigger this runbook covers. -->\n\n"
+        "Use for the lifecycle stage named by this runbook.\n\n"
         "## Required skills\n\n"
-        "<!-- The skills this composition invokes; the owning stage skill for stage runbooks. -->\n\n"
+        "None until the repository binds a focused capability.\n\n"
         "## Composition\n\n"
-        "<!-- Order or conditions under which the required skills apply. -->\n\n"
+        "Follow repository doctrine, then execute the local commands and collect evidence.\n\n"
         "## Doctrine and contracts\n\n"
-        "<!-- Local truths and shapes that constrain this composition. -->\n\n"
+        "Read the repository's agent doctrine and declared contracts.\n\n"
         "## Local commands and paths\n\n"
-        "<!-- Repository commands, paths, and exceptions. -->\n\n"
+        "Use the repository's declared command bus and owned paths.\n\n"
         "## Evidence contract\n\n"
-        "<!-- What the combined workflow must prove before it is complete. -->\n\n"
+        "Record current validation evidence for the changed tree.\n\n"
         "## Prohibited combinations\n\n"
-        "<!-- Combinations explicitly not legitimate here, or `none`. -->\n\n"
+        "Do not bypass repository validation or publication proof.\n\n"
         "## Playbook routing\n\n"
         f"{playbook_routing}\n"
     )
@@ -105,7 +111,7 @@ def main(argv: list[str] | None = None) -> int:
 examples:
   %(prog)s --check               verify that all mapped runbooks exist
   %(prog)s                       create any missing mapped runbooks
-  %(prog)s --force               overwrite all mapped runbooks with scaffolds
+  %(prog)s --force               legacy option; use coordinator force deployment
 
 The runbook list is read from the table in .agents/doctrine/repo-runbook-policy.md
 under ## Standard-to-local mapping if it exists, otherwise the standard runbook
@@ -130,6 +136,9 @@ exit codes:
         help="Overwrite existing runbook files",
     )
     args = parser.parse_args(argv)
+    if args.force:
+        print("ERROR: direct scaffold force is disabled; use confirmed repo-standards --force <surface-id>")
+        return 1
 
     repo_root = _repo_root()
     policy_path = repo_root / ".agents" / "doctrine" / "repo-runbook-policy.md"
@@ -164,7 +173,7 @@ exit codes:
         for path in written:
             print(f"wrote {path}")
     else:
-        print("All mapped runbooks already exist; use --force to overwrite")
+        print("Mapped runbooks exist; normal apply preserves them; use confirmed coordinator force for restore")
     return 0
 
 

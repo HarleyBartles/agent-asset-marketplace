@@ -12,8 +12,12 @@ import stat
 import subprocess
 import sys
 from pathlib import Path
+from typing import NamedTuple
 
-import _agents_md
+import document_contracts
+import plugin_contracts
+import skill_link_contract
+import surface_contracts
 
 
 def _stripped_env() -> dict[str, str]:
@@ -58,6 +62,12 @@ _SCRIPT_NAME = "repo-standards"
 _COMMAND_DECLARATION = Path(".agents/contracts/repo-standards-commands.json")
 
 
+class CommandDeclaration(NamedTuple):
+    apply: tuple[str, ...]
+    check: tuple[str, ...]
+    generated_paths: tuple[str, ...]
+
+
 def _is_submodule(repo_root: Path) -> bool:
     result = subprocess.run(
         ["git", "rev-parse", "--show-superproject-working-tree"],
@@ -71,6 +81,29 @@ def _is_submodule(repo_root: Path) -> bool:
 
 def _manifest_path() -> Path:
     return Path(__file__).resolve().parent.parent / "references" / "repository-shape-manifest.json"
+
+
+def _coordinator_surface(surface: surface_contracts.SurfaceContract) -> dict[str, object]:
+    """Bridge explicit version-3 contracts to the current coordinator lanes."""
+
+    kind_by_validator = {
+        "command-declaration": "command-declaration",
+        "hook-contract": "hook",
+        "must-be-absent": "absent",
+        "submodule-contract": "submodule",
+    }
+    return {
+        "id": surface.id,
+        "path": surface.path,
+        "kind": kind_by_validator.get(surface.validator, "file"),
+        "source": surface.seed,
+        "scaffold": surface.scaffold,
+        "optional": surface.presence == "optional",
+        "required_with": surface.required_with,
+        "validator": surface.validator,
+        "apply_mode": surface.apply,
+        "force_reset": surface.force_reset,
+    }
 
 
 def _load_exceptions(repo_root: Path) -> set[str]:
@@ -217,7 +250,7 @@ def _run_scaffold_check(scaffold: Path, repo_root: Path) -> list[str]:
     return findings
 
 
-def _check_declared_commands(repo_root: Path) -> tuple[dict[str, list[str]] | None, list[str]]:
+def _check_declared_commands(repo_root: Path) -> tuple[CommandDeclaration | None, list[str]]:
     path = repo_root / _COMMAND_DECLARATION
     if not path.is_file():
         return None, [f"missing consumer command declaration: {_COMMAND_DECLARATION.as_posix()}"]
@@ -228,7 +261,7 @@ def _check_declared_commands(repo_root: Path) -> tuple[dict[str, list[str]] | No
     if not isinstance(data, dict):
         return None, ["consumer command declaration must be a JSON object"]
     findings: list[str] = []
-    commands: dict[str, list[str]] = {}
+    commands: dict[str, tuple[str, ...]] = {}
     for capability, switch in (("apply", "--apply"), ("check", "--check")):
         command = data.get(capability)
         if not isinstance(command, list) or not command or not all(isinstance(item, str) for item in command):
@@ -237,8 +270,36 @@ def _check_declared_commands(repo_root: Path) -> tuple[dict[str, list[str]] | No
         if switch not in command:
             findings.append(f"declared {capability} command is missing {switch}")
             continue
-        commands[capability] = command
-    return (commands if len(commands) == 2 else None), findings
+        commands[capability] = tuple(command)
+    generated_paths = data.get("generated_paths")
+    valid_generated_paths: list[str] = []
+    if not isinstance(generated_paths, list) or not generated_paths:
+        findings.append("consumer command declaration has invalid generated_paths")
+    else:
+        for value in generated_paths:
+            normalized = value.replace("\\", "/") if isinstance(value, str) else ""
+            path = Path(normalized) if normalized else None
+            if (
+                not normalized
+                or normalized in {"*", "**", ".", "./*", "./**"}
+                or normalized.startswith("/")
+                or normalized.startswith((":", "!"))
+                or re.match(r"^[A-Za-z]:/", normalized)
+                or "\x00" in normalized
+                or path is None
+                or ".." in path.parts
+            ):
+                findings.append(f"consumer command declaration has invalid generated_paths entry: {value!r}")
+            else:
+                valid_generated_paths.append(normalized)
+    declaration = None
+    if len(commands) == 2 and not findings:
+        declaration = CommandDeclaration(
+            apply=commands["apply"],
+            check=commands["check"],
+            generated_paths=tuple(valid_generated_paths),
+        )
+    return declaration, findings
 
 
 def _check_hook_contract(
@@ -305,13 +366,20 @@ def _check_hook_contract(
 
 
 def _retains_canonical_hook_contract(text: str) -> bool:
-    """Require the canonical executable body; customize commands via its declaration."""
-    template = Path(__file__).resolve().parent.parent / "templates" / "pre-commit"
-    if not template.is_file():
+    """Require the hook's behavior contract while allowing repository-owned prose/customization."""
+    required = (
+        "set -euo pipefail",
+        ".agents/contracts/repo-standards-commands.json",
+        "run_declared apply",
+        "git add -A",
+        "run_declared check",
+        "REPO_STANDARDS_HOSTED_COMMIT",
+        "trap",
+    )
+    if any(marker not in text for marker in required):
         return False
-    required = template.read_text(encoding="utf-8", errors="replace").splitlines()
-    actual = text.splitlines()
-    return actual == required
+    forbidden = ("exit 0", "set +e", "run_declared() { :; }", "if false; then")
+    return not any(marker in text for marker in forbidden)
 
 
 def _has_shell_guard(non_comment: list[str]) -> bool:
@@ -563,19 +631,24 @@ def _check_surface(
     if optional and not full.exists():
         return findings
 
+    validator = document_contracts.DOCUMENT_VALIDATORS.get(str(surface.get("validator", "")))
+
     if scaffold is not None and scaffold.is_file():
         findings.extend(_run_scaffold_check(scaffold, repo_root))
-        if surf_id in ("root-agents-md", "runbooks-agents-md", "playbooks-agents-md") and full.is_file():
-            findings.extend(_agents_md.validate_agents_md(full, repo_root))
+        if validator is not None and surf_id not in {"review-entry", "contributing-entry", "repo-runbook-policy"}:
+            findings.extend(item.message for item in validator(full, repo_root))
         return findings
 
     if not full.exists():
         findings.append(f"missing: {rel}")
         return findings
 
-    if template is not None and template.is_file():
-        if surface.get("check_content", True):
-            findings.extend(_check_surface_content(repo_root, rel, template))
+    if validator is not None:
+        findings.extend(item.message for item in validator(full, repo_root))
+        return findings
+
+    if template is not None and template.is_file() and surf_id != "tools-shared-checkout":
+        findings.extend(_check_surface_content(repo_root, rel, template))
     return findings
 
 
@@ -595,6 +668,19 @@ def _apply_surface(
     kind = str(surface.get("kind", "file"))
     template = _template_path(surface)
     scaffold = _scaffold_script_path(surface)
+    if scaffold is not None and scaffold.is_file() and not force:
+        result = subprocess.run(
+            [sys.executable, str(scaffold)],
+            cwd=repo_root,
+            capture_output=True,
+            text=True,
+            env=_stripped_env(),
+        )
+        if result.returncode != 0:
+            print(f"error applying {rel}: {result.stderr or result.stdout}", file=sys.stderr)
+            return False
+        print(result.stdout.strip())
+        return True
     if kind == "directory":
         full = repo_root / rel
         if full.is_dir():
@@ -611,8 +697,15 @@ def _apply_surface(
 
     if kind in ("file", "hook") and template is not None:
         full = repo_root / rel
-        if full.is_file() and not force and kind != "hook":
-            print(f"skip {rel}: exists; use --force to overwrite")
+        if full.is_file() and not force:
+            if kind == "hook":
+                subprocess.run(
+                    ["git", "config", "core.hooksPath", str(Path(rel).parent).replace("\\", "/")],
+                    cwd=repo_root,
+                    check=True,
+                    env=_stripped_env(),
+                )
+            print(f"skip {rel}: exists; use targeted repo-standards force deployment with confirmation")
             return False
         full.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(template, full)
@@ -626,22 +719,6 @@ def _apply_surface(
             )
         print(f"wrote {rel}")
         return True
-    if scaffold is not None and scaffold.is_file():
-        cmd = [sys.executable, str(scaffold)]
-        if force:
-            cmd.append("--force")
-        result = subprocess.run(
-            cmd,
-            cwd=repo_root,
-            capture_output=True,
-            text=True,
-            env=_stripped_env(),
-        )
-        if result.returncode != 0:
-            print(f"error applying {rel}: {result.stderr or result.stdout}", file=sys.stderr)
-            return False
-        print(result.stdout.strip())
-        return True
     return False
 
 
@@ -650,7 +727,7 @@ def main(argv: list[str] | None = None) -> int:
 examples:
   %(prog)s --check                                report drift for every surface in the manifest
   %(prog)s --apply --yes                          create missing surfaces without prompting
-  %(prog)s --apply --yes --force                  create missing surfaces and overwrite drifted ones
+  %(prog)s --force <surface-id>                          targeted confirmed template deployment
   %(prog)s --apply --yes --allow-shared-checkout  create missing surfaces in a shared/git-worktree checkout
 
 exit codes:
@@ -658,8 +735,10 @@ exit codes:
   1  drift detected, apply aborted, or an error occurred
 
 The manifest is read from references/repository-shape-manifest.json inside the
-repo-standards skill. Exceptions declared in .agents/doctrine/repo-runbook-policy.md
-under the ## Exceptions heading are skipped."""
+repo-standards skill. Consumer exceptions are declared as {id, reason} objects in
+.agents/contracts/agent-operating-model.json. Legacy ## Exceptions entries in
+.agents/doctrine/repo-runbook-policy.md are read only as a compatibility fallback
+while the contract is absent."""
     parser = argparse.ArgumentParser(
         description="Check or apply the repo-standards surface manifest. (mixed)",
         epilog=epilog,
@@ -677,8 +756,15 @@ under the ## Exceptions heading are skipped."""
     )
     parser.add_argument(
         "--force",
+        action="append",
+        nargs="?",
+        const="",
+        help="force-deploy a named surface template; repeat for multiple surfaces",
+    )
+    parser.add_argument(
+        "--confirm-local-customisations-will-be-overwritten",
         action="store_true",
-        help="when applying, overwrite existing drifted surfaces (safe only for generated/template surfaces)",
+        help="acknowledge that targeted force deployment overwrites local customizations",
     )
     parser.add_argument(
         "--allow-shared-checkout",
@@ -689,6 +775,17 @@ under the ## Exceptions heading are skipped."""
         ),
     )
     args = parser.parse_args(argv)
+
+    force_targets = set(args.force or [])
+    if args.force is not None:
+        if "" in force_targets:
+            print("error: --force requires a surface id; bare --force is invalid", file=sys.stderr)
+            return 1
+        if args.apply or args.check:
+            print("error: --force is a standalone targeted deployment mode", file=sys.stderr)
+            return 1
+        args.apply = True
+        args.yes = True
 
     repo_root = _repo_root()
     if _is_submodule(repo_root):
@@ -702,41 +799,109 @@ under the ## Exceptions heading are skipped."""
         print("error: --allow-shared-checkout requires --apply", file=sys.stderr)
         return 1
 
-    manifest = json.loads(_manifest_path().read_text(encoding="utf-8"))
-    surfaces = manifest.get("surfaces", [])
-    exceptions = _load_exceptions(repo_root)
+    manifest = surface_contracts.load_manifest(_manifest_path())
+    surfaces = [_coordinator_surface(surface) for surface in manifest.surfaces]
+    known_surface_ids = {str(surface.get("id", "")) for surface in surfaces}
+    unknown_force_targets = force_targets - known_surface_ids
+    if unknown_force_targets:
+        print(f"error: unknown force surface id(s): {', '.join(sorted(unknown_force_targets))}", file=sys.stderr)
+        return 1
+    if force_targets:
+        force_preflight: list[str] = []
+        by_id = {str(surface.get("id", "")): surface for surface in surfaces}
+        for target in sorted(force_targets):
+            surface = by_id[target]
+            if surface.get("force_reset") != "confirmed-template-restore":
+                force_preflight.append(f"{target}: force reset is unavailable")
+                continue
+            template = _template_path(surface)
+            if template is None or not template.is_file():
+                force_preflight.append(f"{target}: force reset seed is unavailable")
+        if force_preflight:
+            for finding in force_preflight:
+                print(f"error: {finding}", file=sys.stderr)
+            return 1
+        targets = ", ".join(sorted(force_targets))
+        warning = f"WARNING: are you sure? This will force overwrite repo-local customisations for: {targets}"
+        print(warning, file=sys.stderr)
+        if not args.confirm_local_customisations_will_be_overwritten:
+            if not sys.stdin.isatty():
+                print(
+                    "error: targeted --force requires --confirm-local-customisations-will-be-overwritten",
+                    file=sys.stderr,
+                )
+                return 1
+            if input("Type 'yes' to continue: ").strip().lower() != "yes":
+                print("error: force deployment cancelled", file=sys.stderr)
+                return 1
+    plugin_findings: list[surface_contracts.Finding] = []
+    consumer_contract_path = repo_root / ".agents/contracts/agent-operating-model.json"
+    if consumer_contract_path.is_file():
+        try:
+            consumer_contract = plugin_contracts.load_consumer_contract(repo_root)
+        except (OSError, json.JSONDecodeError, KeyError, TypeError) as exc:
+            plugin_findings.append(
+                surface_contracts.Finding(
+                    "failure",
+                    "invalid-operating-model-contract",
+                    "operating-model-contract",
+                    f"consumer operating-model contract cannot be loaded: {exc}",
+                    "run scaffold-operating-model-contract and repair the reported contract fields",
+                )
+            )
+            exceptions = _load_exceptions(repo_root)
+        else:
+            exceptions = set(consumer_contract.surface_exceptions)
+            if "marketplace-json" not in exceptions:
+                plugin_findings.extend(plugin_contracts.check_plugin_contract(repo_root, consumer_contract))
+    else:
+        exceptions = _load_exceptions(repo_root)
     enabled_surface_ids = _enabled_surface_ids(surfaces, exceptions)
     dependency_findings = _required_with_findings(surfaces, exceptions)
 
     findings: list[str] = [*dependency_findings, *_check_composition_graph(repo_root)]
     for surface in surfaces:
         findings.extend(_check_surface(repo_root, surface, exceptions, enabled_surface_ids))
+    if "marketplace-json" not in exceptions:
+        findings.extend(item.message for item in skill_link_contract.check_skill_links(repo_root))
 
-    # Deduplicate while preserving order
-    seen = set()
-    unique_findings: list[str] = []
-    for f in findings:
-        if f not in seen:
-            seen.add(f)
-            unique_findings.append(f)
+    structured_findings = [
+        surface_contracts.Finding(
+            severity="failure",
+            code="surface-contract",
+            surface="repository",
+            message=message,
+            repair="run the owning scaffold or repair the named consumer contract",
+        )
+        for message in findings
+    ]
+    # Deduplicate structured findings while preserving diagnostic order.
+    unique_findings = list(dict.fromkeys([*structured_findings, *plugin_findings]))
+    warnings = [finding for finding in unique_findings if finding.severity == "warning"]
+    failures = [finding for finding in unique_findings if finding.severity == "failure"]
+    for finding in warnings:
+        print(f"WARN: [{finding.code}] {finding.message}; {finding.repair}")
 
     if args.check or not args.apply:
-        if unique_findings:
-            for f in unique_findings:
-                print(f"DRIFT: {f}")
+        if failures:
+            for finding in failures:
+                print(f"DRIFT: [{finding.code}] {finding.message}; {finding.repair}")
             return 1
         print("OK repo-standards: all surfaces present")
         return 0
 
-    if dependency_findings:
+    plugin_failures = [finding for finding in plugin_findings if finding.severity == "failure"]
+    if dependency_findings or plugin_failures:
         for finding in dependency_findings:
             print(f"DRIFT: {finding}")
+        for finding in plugin_failures:
+            print(f"DRIFT: [{finding.code}] {finding.message}; {finding.repair}")
         print("error: invalid repo-standards exception dependency", file=sys.stderr)
         return 1
 
     if not args.yes:
-        print(f"Will apply {len(unique_findings)} surfaces with drift: {unique_findings}")
-        print("Add --yes to apply. Add --yes --force to overwrite existing drifted surfaces.")
+        print(f"Will apply {len(failures)} surfaces with drift: {[finding.message for finding in failures]}")
+        print("Add --yes to apply. Use a confirmed named force target for template deployment.")
         return 1
 
     if not shared_checkout.approve_mutation(repo_root, _SCRIPT_NAME, args.allow_shared_checkout):
@@ -754,15 +919,38 @@ under the ## Exceptions heading are skipped."""
 
     applied = 0
     for surface in surfaces:
-        if _check_surface(repo_root, surface, exceptions, enabled_surface_ids):
-            if _apply_surface(repo_root, surface, exceptions, args.force, enabled_surface_ids):
+        if force_targets and str(surface.get("id", "")) not in force_targets:
+            continue
+        if force_targets or _check_surface(repo_root, surface, exceptions, enabled_surface_ids):
+            if _apply_surface(repo_root, surface, exceptions, bool(force_targets), enabled_surface_ids):
                 applied += 1
 
-    unresolved_graph = _check_composition_graph(repo_root)
-    if unresolved_graph:
-        for finding in unresolved_graph:
+    # Contract-level convergence: reload consumer configuration and rerun the
+    # complete check after every mutation lane.
+    if consumer_contract_path.is_file():
+        refreshed_contract = plugin_contracts.load_consumer_contract(repo_root)
+        refreshed_exceptions = set(refreshed_contract.surface_exceptions)
+    else:
+        refreshed_contract = plugin_contracts.ConsumerContract(tuple(exceptions), ())
+        refreshed_exceptions = set(exceptions)
+    refreshed_enabled = _enabled_surface_ids(surfaces, refreshed_exceptions)
+    unresolved = [
+        *_required_with_findings(surfaces, refreshed_exceptions),
+        *_check_composition_graph(repo_root),
+    ]
+    for surface in surfaces:
+        unresolved.extend(_check_surface(repo_root, surface, refreshed_exceptions, refreshed_enabled))
+    if "operating-model-contract" in known_surface_ids and "marketplace-json" not in refreshed_exceptions:
+        unresolved.extend(item.message for item in skill_link_contract.check_skill_links(repo_root))
+        unresolved.extend(
+            finding.message
+            for finding in plugin_contracts.check_plugin_contract(repo_root, refreshed_contract)
+            if finding.severity == "failure"
+        )
+    if unresolved:
+        for finding in dict.fromkeys(unresolved):
             print(f"DRIFT: {finding}")
-        print("error: repo-standards apply left unresolved composition-graph drift", file=sys.stderr)
+        print("error: repo-standards apply did not converge", file=sys.stderr)
         return 1
 
     print(f"OK repo-standards: applied {applied} surface(s)")

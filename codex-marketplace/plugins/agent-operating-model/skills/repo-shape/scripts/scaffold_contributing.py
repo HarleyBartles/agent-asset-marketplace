@@ -9,6 +9,8 @@ import subprocess
 import sys
 from pathlib import Path
 
+import document_contracts
+
 
 def _stripped_env() -> dict[str, str]:
     env = os.environ.copy()
@@ -45,11 +47,11 @@ def main(argv: list[str] | None = None) -> int:
 examples:
   %(prog)s --check               verify CONTRIBUTING.md exists and contains boilerplate
   %(prog)s                       write CONTRIBUTING.md if it is missing
-  %(prog)s --force               overwrite CONTRIBUTING.md with the template
+  %(prog)s --force               legacy option; use coordinator force deployment
 
 The template expects the file to keep the `# Contributing` heading and the
-`using-superpowers-plus` bootstrap route. Use --force to restore the scaffold
-after heavy customization.
+`using-superpowers-plus` bootstrap route. Direct force is rejected; confirmed
+targeted restoration belongs to the repo-standards coordinator.
 
 exit codes:
   0  CONTRIBUTING.md is present/valid or was written
@@ -70,6 +72,9 @@ exit codes:
         help="Overwrite an existing CONTRIBUTING.md",
     )
     args = parser.parse_args(argv)
+    if args.force:
+        print("ERROR: direct scaffold force is disabled; use confirmed repo-standards --force <surface-id>")
+        return 1
 
     repo_root = _repo_root()
     contributing_path = repo_root / "CONTRIBUTING.md"
@@ -80,14 +85,15 @@ exit codes:
 
     if contributing_path.is_file():
         if args.check:
-            content = contributing_path.read_text(encoding="utf-8")
-            if not _has_required_boilerplate(content):
-                print("DRIFT: CONTRIBUTING.md exists but is missing required boilerplate")
+            findings = document_contracts.check_contributing(contributing_path, repo_root)
+            if findings:
+                for finding in findings:
+                    print(f"DRIFT: CONTRIBUTING.md [{finding.code}] {finding.message}")
                 return 1
             print("OK CONTRIBUTING.md: contributor entry point present")
             return 0
         if not args.force:
-            print("CONTRIBUTING.md already exists; use --force to overwrite")
+            print("CONTRIBUTING.md exists; normal apply preserves it; use confirmed coordinator force for restore")
             return 0
 
     if args.check:
