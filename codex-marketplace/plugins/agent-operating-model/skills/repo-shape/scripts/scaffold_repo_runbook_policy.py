@@ -110,6 +110,9 @@ exit codes:
         help="Overwrite an existing repo-runbook-policy.md",
     )
     args = parser.parse_args(argv)
+    if args.force:
+        print("ERROR: direct scaffold force is disabled; use confirmed repo-standards --force <surface-id>")
+        return 1
 
     repo_root = _repo_root()
     policy_path = repo_root / ".agents" / "doctrine" / "repo-runbook-policy.md"

@@ -10,9 +10,10 @@ from pathlib import Path
 from surface_contracts import Finding
 
 
-def _visible_skills(root: Path) -> set[str]:
+def _visible_skills(root: Path) -> tuple[set[str], list[Finding]]:
     skills = root / ".agents/skills"
     visible: set[str] = set()
+    findings: list[Finding] = []
     for path in skills.iterdir() if skills.is_dir() else ():
         if not path.is_dir() or not (path / "SKILL.md").is_file():
             continue
@@ -24,15 +25,36 @@ def _visible_skills(root: Path) -> set[str]:
         data = json.loads((root / ".agents/plugins/marketplace.json").read_text(encoding="utf-8"))
         for name in data.get("repo", {}).get("local_skills", []):
             if isinstance(name, str):
-                visible.add(name)
+                skill_file = skills / name / "SKILL.md"
+                if not skill_file.is_file():
+                    findings.append(
+                        Finding(
+                            "failure",
+                            "missing-repo-local-skill",
+                            ".agents/plugins/marketplace.json",
+                            f"declared repo-local skill is not installed: {name}",
+                            "create the declared local skill or remove its exact declaration",
+                        )
+                    )
+                    continue
+                match = re.search(r"(?im)^name:\s*['\"]?([^'\"\n]+)", skill_file.read_text(encoding="utf-8"))
+                if match is None or match.group(1).strip() != name:
+                    findings.append(
+                        Finding(
+                            "failure",
+                            "repo-local-skill-name-mismatch",
+                            skill_file.relative_to(root).as_posix(),
+                            f"declared repo-local skill name does not match frontmatter: {name}",
+                            "align the directory, declaration, and SKILL.md name exactly",
+                        )
+                    )
     except (OSError, json.JSONDecodeError, AttributeError):
         pass
-    return visible
+    return visible, findings
 
 
 def check_skill_links(repo_root: Path) -> list[Finding]:
-    visible = _visible_skills(repo_root)
-    findings: list[Finding] = []
+    visible, findings = _visible_skills(repo_root)
     for directory, heading, composition in (
         ("runbooks", "Required skills", "Composition"),
         ("playbooks", "Required skills", "Composition"),

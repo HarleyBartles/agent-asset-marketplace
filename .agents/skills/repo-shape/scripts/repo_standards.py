@@ -666,6 +666,19 @@ def _apply_surface(
     kind = str(surface.get("kind", "file"))
     template = _template_path(surface)
     scaffold = _scaffold_script_path(surface)
+    if scaffold is not None and scaffold.is_file() and not force:
+        result = subprocess.run(
+            [sys.executable, str(scaffold)],
+            cwd=repo_root,
+            capture_output=True,
+            text=True,
+            env=_stripped_env(),
+        )
+        if result.returncode != 0:
+            print(f"error applying {rel}: {result.stderr or result.stdout}", file=sys.stderr)
+            return False
+        print(result.stdout.strip())
+        return True
     if kind == "directory":
         full = repo_root / rel
         if full.is_dir():
@@ -682,7 +695,14 @@ def _apply_surface(
 
     if kind in ("file", "hook") and template is not None:
         full = repo_root / rel
-        if full.is_file() and not force and kind != "hook":
+        if full.is_file() and not force:
+            if kind == "hook":
+                subprocess.run(
+                    ["git", "config", "core.hooksPath", str(Path(rel).parent).replace("\\", "/")],
+                    cwd=repo_root,
+                    check=True,
+                    env=_stripped_env(),
+                )
             print(f"skip {rel}: exists; use targeted repo-standards force deployment with confirmation")
             return False
         full.parent.mkdir(parents=True, exist_ok=True)
@@ -696,22 +716,6 @@ def _apply_surface(
                 env=_stripped_env(),
             )
         print(f"wrote {rel}")
-        return True
-    if scaffold is not None and scaffold.is_file():
-        cmd = [sys.executable, str(scaffold)]
-        if force:
-            cmd.append("--force")
-        result = subprocess.run(
-            cmd,
-            cwd=repo_root,
-            capture_output=True,
-            text=True,
-            env=_stripped_env(),
-        )
-        if result.returncode != 0:
-            print(f"error applying {rel}: {result.stderr or result.stdout}", file=sys.stderr)
-            return False
-        print(result.stdout.strip())
         return True
     return False
 
@@ -803,6 +807,21 @@ under the ## Exceptions heading are skipped."""
     if unknown_force_targets:
         print(f"error: unknown force surface id(s): {', '.join(sorted(unknown_force_targets))}", file=sys.stderr)
         return 1
+    if force_targets:
+        force_preflight: list[str] = []
+        by_id = {str(surface.get("id", "")): surface for surface in surfaces}
+        for target in sorted(force_targets):
+            surface = by_id[target]
+            if surface.get("force_reset") != "confirmed-template-restore":
+                force_preflight.append(f"{target}: force reset is unavailable")
+                continue
+            template = _template_path(surface)
+            if template is None or not template.is_file():
+                force_preflight.append(f"{target}: force reset seed is unavailable")
+        if force_preflight:
+            for finding in force_preflight:
+                print(f"error: {finding}", file=sys.stderr)
+            return 1
     plugin_findings: list[surface_contracts.Finding] = []
     consumer_contract_path = repo_root / ".agents/contracts/agent-operating-model.json"
     if consumer_contract_path.is_file():
@@ -821,7 +840,8 @@ under the ## Exceptions heading are skipped."""
             exceptions = _load_exceptions(repo_root)
         else:
             exceptions = set(consumer_contract.surface_exceptions)
-            plugin_findings.extend(plugin_contracts.check_plugin_contract(repo_root, consumer_contract))
+            if "marketplace-json" not in exceptions:
+                plugin_findings.extend(plugin_contracts.check_plugin_contract(repo_root, consumer_contract))
     else:
         exceptions = _load_exceptions(repo_root)
     enabled_surface_ids = _enabled_surface_ids(surfaces, exceptions)
@@ -830,7 +850,8 @@ under the ## Exceptions heading are skipped."""
     findings: list[str] = [*dependency_findings, *_check_composition_graph(repo_root)]
     for surface in surfaces:
         findings.extend(_check_surface(repo_root, surface, exceptions, enabled_surface_ids))
-    findings.extend(item.message for item in skill_link_contract.check_skill_links(repo_root))
+    if "marketplace-json" not in exceptions:
+        findings.extend(item.message for item in skill_link_contract.check_skill_links(repo_root))
 
     structured_findings = [
         surface_contracts.Finding(
@@ -892,11 +913,32 @@ under the ## Exceptions heading are skipped."""
             if _apply_surface(repo_root, surface, exceptions, bool(force_targets), enabled_surface_ids):
                 applied += 1
 
-    unresolved_graph = _check_composition_graph(repo_root)
-    if unresolved_graph:
-        for finding in unresolved_graph:
+    # Contract-level convergence: reload consumer configuration and rerun the
+    # complete check after every mutation lane.
+    if consumer_contract_path.is_file():
+        refreshed_contract = plugin_contracts.load_consumer_contract(repo_root)
+        refreshed_exceptions = set(refreshed_contract.surface_exceptions)
+    else:
+        refreshed_contract = plugin_contracts.ConsumerContract(tuple(exceptions), ())
+        refreshed_exceptions = set(exceptions)
+    refreshed_enabled = _enabled_surface_ids(surfaces, refreshed_exceptions)
+    unresolved = [
+        *_required_with_findings(surfaces, refreshed_exceptions),
+        *_check_composition_graph(repo_root),
+    ]
+    for surface in surfaces:
+        unresolved.extend(_check_surface(repo_root, surface, refreshed_exceptions, refreshed_enabled))
+    if "operating-model-contract" in known_surface_ids and "marketplace-json" not in refreshed_exceptions:
+        unresolved.extend(item.message for item in skill_link_contract.check_skill_links(repo_root))
+        unresolved.extend(
+            finding.message
+            for finding in plugin_contracts.check_plugin_contract(repo_root, refreshed_contract)
+            if finding.severity == "failure"
+        )
+    if unresolved:
+        for finding in dict.fromkeys(unresolved):
             print(f"DRIFT: {finding}")
-        print("error: repo-standards apply left unresolved composition-graph drift", file=sys.stderr)
+        print("error: repo-standards apply did not converge", file=sys.stderr)
         return 1
 
     print(f"OK repo-standards: applied {applied} surface(s)")

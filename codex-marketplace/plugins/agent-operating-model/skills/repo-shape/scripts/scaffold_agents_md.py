@@ -64,6 +64,9 @@ exit codes:
     parser.add_argument("--check", action="store_true", help="Report drift without writing")
     parser.add_argument("--force", action="store_true", help="Overwrite an existing AGENTS.md")
     args = parser.parse_args(argv)
+    if args.force:
+        print("ERROR: direct scaffold force is disabled; use confirmed repo-standards --force <surface-id>")
+        return 1
 
     repo_root = _repo_root()
     agents_path = repo_root / "AGENTS.md"

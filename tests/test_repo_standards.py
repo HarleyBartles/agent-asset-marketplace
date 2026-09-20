@@ -613,8 +613,8 @@ def test_scaffold_gitignore_check_stale_root_rule_fails(tmp_path: Path) -> None:
     assert ".gitignore" in combined
 
 
-def test_repo_standards_apply_force_overwrites_drifted_contributing(tmp_path: Path) -> None:
-    """repo_standards --apply --yes --force overwrites a drifted scaffolded surface."""
+def test_repo_standards_force_rejects_surface_without_reset_contract(tmp_path: Path) -> None:
+    """Targeted force cannot bypass a surface's unavailable reset contract."""
     repo = tmp_path / "repo-standards-force"
     repo.mkdir()
     _init_git_repo(repo)
@@ -654,10 +654,9 @@ def test_repo_standards_apply_force_overwrites_drifted_contributing(tmp_path: Pa
         text=True,
     )
     combined = result.stdout + result.stderr
-    assert result.returncode == 0, combined
-    text = (repo / "CONTRIBUTING.md").read_text(encoding="utf-8")
-    assert "using-superpowers-plus" in text
-    assert "/using-superpowers-plus" not in text
+    assert result.returncode == 1, combined
+    assert "force reset is unavailable" in combined
+    assert (repo / "CONTRIBUTING.md").read_text(encoding="utf-8") == "# Contributing\n\nStale.\n"
 
 
 def test_scaffold_contributing_check_customized_passes(tmp_path: Path) -> None:
@@ -686,8 +685,8 @@ def test_scaffold_contributing_check_customized_passes(tmp_path: Path) -> None:
     assert "OK" in result.stdout
 
 
-def test_repo_standards_allow_shared_checkout_combines_with_apply(tmp_path: Path) -> None:
-    """repo_standards --apply --allow-shared-checkout works in the main shared checkout."""
+def test_repo_standards_allow_shared_checkout_does_not_mask_non_convergence(tmp_path: Path) -> None:
+    """Shared-checkout approval does not turn an incomplete consumer into success."""
     repo = tmp_path / "allow-apply"
     repo.mkdir()
     _init_git_repo_with_commit(repo)
@@ -709,8 +708,9 @@ def test_repo_standards_allow_shared_checkout_combines_with_apply(tmp_path: Path
         text=True,
     )
     combined = result.stdout + result.stderr
-    assert result.returncode == 0, combined
+    assert result.returncode == 1, combined
     assert "--allow-shared-checkout supplied" in combined
+    assert "did not converge" in combined
 
 
 def test_repo_standards_allow_shared_checkout_requires_apply(tmp_path: Path) -> None:
@@ -769,8 +769,8 @@ def test_repo_standards_apply_in_main_shared_checkout_requires_approval(tmp_path
     assert "Pass --allow-shared-checkout" in combined
 
 
-def test_repo_standards_apply_in_shared_checkout_with_flag_succeeds(tmp_path: Path) -> None:
-    """repo_standards --apply --allow-shared-checkout in a shared checkout applies changes."""
+def test_repo_standards_force_preflight_precedes_shared_checkout_mutation(tmp_path: Path) -> None:
+    """Invalid force targets fail before shared-checkout mutation or writes."""
     repo = tmp_path / "shared-apply"
     repo.mkdir()
     _init_git_repo_with_commit(repo)
@@ -819,10 +819,9 @@ def test_repo_standards_apply_in_shared_checkout_with_flag_succeeds(tmp_path: Pa
         text=True,
     )
     combined = result.stdout + result.stderr
-    assert result.returncode == 0, combined
-    text = (worktree / "CONTRIBUTING.md").read_text(encoding="utf-8")
-    assert "using-superpowers-plus" in text
-    assert "/using-superpowers-plus" not in text
+    assert result.returncode == 1, combined
+    assert "force reset is unavailable" in combined
+    assert (worktree / "CONTRIBUTING.md").read_text(encoding="utf-8") == "# Contributing\n\nStale.\n"
 
 
 def test_scaffold_repo_runbook_policy_check_customized_passes(tmp_path: Path) -> None:
@@ -1306,6 +1305,48 @@ def test_hook_rejects_inserted_control_flow() -> None:
         altered = text.replace("run_declared apply", injected + "\nrun_declared apply", 1)
         assert not repo_standards._retains_canonical_hook_contract(altered)
     assert not repo_standards._retains_canonical_hook_contract("if false; then\n" + text + "\nfi\n")
+
+
+def test_ordinary_apply_preserves_existing_customized_hook(tmp_path: Path) -> None:
+    repo = tmp_path / "preserve-custom-hook"
+    repo.mkdir()
+    _init_git_repo(repo)
+    template = Path(repo_standards.__file__).parent.parent / "templates" / "pre-commit"
+    hook = repo / "githooks/pre-commit"
+    hook.parent.mkdir(parents=True)
+    customized = template.read_text(encoding="utf-8") + "\n# repository-owned audit note\n"
+    hook.write_text(customized, encoding="utf-8", newline="\n")
+    surface = {
+        "id": "pre-commit-hook",
+        "path": "githooks/pre-commit",
+        "kind": "hook",
+        "source": "templates/pre-commit",
+    }
+
+    assert not repo_standards._apply_surface(repo, surface, set(), False)
+    assert hook.read_text(encoding="utf-8") == customized
+    configured = subprocess.run(
+        ["git", "config", "--get", "core.hooksPath"],
+        cwd=repo,
+        capture_output=True,
+        text=True,
+        check=True,
+    ).stdout.strip()
+    assert configured == "githooks"
+
+
+def test_direct_scaffold_force_is_disabled(tmp_path: Path) -> None:
+    repo = tmp_path / "direct-force"
+    repo.mkdir()
+    _init_git_repo(repo)
+    result = subprocess.run(
+        [sys.executable, str(SCAFFOLD_CONTRIBUTING), "--force"],
+        cwd=repo,
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode == 1
+    assert "direct scaffold force is disabled" in result.stdout
 
 
 def _forbidden_ci_check_guidance() -> tuple[str, ...]:
@@ -2010,7 +2051,7 @@ def test_apply_fails_when_composition_graph_remains_invalid(
 
     assert repo_standards.main(["--apply", "--yes"]) == 1
     captured = capsys.readouterr()
-    assert "unresolved composition-graph drift" in captured.err
+    assert "apply did not converge" in captured.err
 
 
 def test_runbook_composition_ignores_agents_md_and_absent_dir(tmp_path: Path) -> None:

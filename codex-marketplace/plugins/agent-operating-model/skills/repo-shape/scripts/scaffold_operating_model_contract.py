@@ -12,6 +12,41 @@ from pathlib import Path
 import surface_contracts
 
 
+def _legacy_exceptions(root: Path) -> list[dict[str, str]]:
+    known = {
+        surface.id
+        for surface in surface_contracts.load_manifest(
+            Path(__file__).resolve().parent.parent / "references" / "repository-shape-manifest.json"
+        ).surfaces
+    }
+    for relative in (
+        ".agents/doctrine/repo-runbook-policy.md",
+        ".agents/docs/repo-runbook-policy.md",
+    ):
+        path = root / relative
+        if not path.is_file():
+            continue
+        in_exceptions = False
+        migrated: list[dict[str, str]] = []
+        for line in path.read_text(encoding="utf-8").splitlines():
+            stripped = line.strip()
+            if stripped.startswith("## "):
+                in_exceptions = stripped.lower() == "## exceptions"
+                continue
+            if not in_exceptions or not stripped.startswith("-"):
+                continue
+            surface_id = stripped.lstrip("-").strip().replace("`", "")
+            for separator in (" -- ", " - ", " — ", " – "):
+                if separator in surface_id:
+                    surface_id = surface_id.split(separator, 1)[0]
+                    break
+            if surface_id in known:
+                migrated.append({"id": surface_id, "reason": f"migrated from {relative}"})
+        if migrated:
+            return migrated
+    return []
+
+
 def _repo_root() -> Path:
     env = os.environ.copy()
     for name in ("GIT_DIR", "GIT_WORK_TREE", "GIT_INDEX_FILE"):
@@ -74,7 +109,9 @@ def main(argv: list[str] | None = None) -> int:
             print("DRIFT: .agents/contracts/agent-operating-model.json missing")
             return 1
         target.parent.mkdir(parents=True, exist_ok=True)
-        target.write_bytes(template.read_bytes())
+        data = json.loads(template.read_text(encoding="utf-8"))
+        data["surface_exceptions"] = _legacy_exceptions(root)
+        target.write_text(json.dumps(data, indent=2) + "\n", encoding="utf-8", newline="\n")
         print("wrote .agents/contracts/agent-operating-model.json")
         return 0
     try:
