@@ -46,11 +46,13 @@ committed, in-flight work log. When the roadmap completes, use
 ## Lane 1 — Start an Epic
 
 1. Read the spec from brainstorming or the human.
-2. Run `handoff-gates` spec-readiness.
+2. Verify that `brainstorming` completed its planning-handoff review, or treat a human-supplied approved spec as the design authority.
 3. Create `.agents/plans/<epic-name>/roadmap.md` with a plan sequence table.
-4. Use `writing-plans` to write Plan 1 with roadmap context.
+4. Use `writing-plans` to write Plan 1 with roadmap context and Review Focus.
 5. Run `handoff-gates` plan-readiness.
-6. Hand off to `executing-plans` or `subagent-driven-development`.
+6. Ask the human to review the saved plan before execution, preserving any
+   execution method they already supplied.
+7. Hand off to `executing-plans` or `subagent-driven-development`.
 
 ## Lane 2 — Continue an Epic
 
@@ -58,9 +60,11 @@ committed, in-flight work log. When the roadmap completes, use
 2. Pick the next pending or blocked item.
 3. Use `writing-plans` to write the next plan just-in-time, including all prior commits, PRs, worktree state, and learnings.
 4. Run `handoff-gates` plan-readiness.
-5. Execute the plan.
-6. Update the roadmap only when the remaining sequence, scope, or blockers changed.
-7. Repeat until done. Run `handoff-gates` completion-readiness before code review.
+5. Ask the human to review the saved plan before execution, preserving any
+   execution method they already supplied.
+6. Execute the plan.
+7. Update the roadmap only when the remaining sequence, scope, or blockers changed.
+8. Repeat until done. Run `handoff-gates` completion-readiness before code review.
 
 ## Lane 3 — Split an Oversized Plan
 

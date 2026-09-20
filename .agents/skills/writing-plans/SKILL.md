@@ -28,7 +28,7 @@ license: MIT
 ---
 ## Provenance
 
-This marketplace-maintained derivative is based on `obra/superpowers` v6.3.0 commit `b36e0829c6d0140e93cfef2ca599b1b07d4a7797` under the MIT License. Upstream source is not vendored; this directory contains the maintained Superpowers+ implementation.
+This marketplace-maintained derivative is based on `obra/superpowers` v6.4.1 commit `5bf4e78011075bcfc0dc295f0724994cd123ee71` under the MIT License. Upstream source is not vendored; this directory contains the maintained Superpowers+ implementation.
 
 # Writing Plans
 
@@ -158,6 +158,15 @@ naming and copy rules, platform requirements — one line each, with exact
 values copied verbatim from the spec. Every task's requirements implicitly
 include this section.]
 
+## Review Focus
+
+[Up to five input classes or failure modes the spec implies but the draft
+tasks do not yet exercise, most likely first. Name the condition and the
+behavior a reasonable user would expect. For every line, add the covering
+test to the task that owns the code; this section is the index, not a
+substitute for tests in the owning task. An empty section means the review
+found no uncovered case.]
+
 ---
 ```
 
@@ -230,9 +239,13 @@ After writing the complete plan, look at the spec with fresh eyes and check the 
 
 **3. Type consistency:** Do the types, method signatures, and property names you used in later tasks match what you defined in earlier tasks? A function called `clearLayers()` in Task 3 but `clearFullLayers()` in Task 7 is a bug.
 
+**4. Review Focus:** With the spec in front of you, identify up to five
+untested input classes or failure modes most likely to bite a reasonable user.
+Put them in `Review Focus`, then add each covering test to the owning task.
+
 **5. Plan Size Check:** Did you think the plan was too large while writing? If yes, did you apply one of the escape hatches in `references/plan-scope-sizing.md`? Is the `Execution Strategy` field filled with an allowed value and a clear rationale?
 
-**4. Plan-readiness rating:** Use the `handoff-gates` `plan-readiness` lane.
+**6. Plan-readiness rating:** Use the `handoff-gates` `plan-readiness` lane.
 Rate the plan for execution confidence (8/10 floor, 9/10 target), report the
 rating in the current handoff, and do not persist it or execute below 8/10.
 
@@ -240,9 +253,19 @@ If you find issues during the self-review, fix them inline and re-run the plan-r
 
 ## Execution Handoff
 
-After the saved plan meets the readiness floor, read the `Execution Strategy` and present it to the user:
+After the saved plan meets the readiness floor, link the saved plan for human
+review before implementation. If the human already explicitly supplied an execution method,
+preserve it: ask them to review the saved plan and confirm
+that it captures what they want, without reopening lane selection. Otherwise,
+present the recommended lane and its execution cost:
 
 > "Plan complete and saved to `.agents/plans/<filename>.md`. The `Execution Strategy` is `<strategy>`. The plan-readiness rating is `<X>/10`.
 > Do you want to proceed with the recommended strategy, or switch to another lane?"
+
+Describe the choice accurately: `subagent-driven-development` buys a fresh
+implementer and reviewer per task plus whole-branch review; Native
+`executing-plans` keeps implementation inline and buys one fresh whole-branch
+review. Recommend from task coupling, consequence, and verification burden—not
+from a blanket preference for either lane.
 
 If the user chooses a different lane, note it in the handoff and let the executing skill handle the override. Do not re-derive the whole plan from scratch.

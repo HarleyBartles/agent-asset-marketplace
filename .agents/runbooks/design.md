@@ -7,7 +7,6 @@ Use for repository-backed design and shaping.
 ## Required skills
 
 - `brainstorming`
-- `handoff-gates`
 
 ## Composition
 

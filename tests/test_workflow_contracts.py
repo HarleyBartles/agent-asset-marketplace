@@ -73,8 +73,30 @@ class TestAuthorityBootstrapPortability:
     def test_superpowers_plus_version_matches_pinned_upstream_release(self):
         plugin = json.loads(_read(SKILLS.parent / ".codex-plugin" / "plugin.json"))
         bundle = json.loads(_read(SKILLS.parent / "references" / "bundle-manifest.json"))
-        assert plugin["version"] == "6.3.0"
-        assert bundle["bundle_version"] == "6.3.0"
+        source = _read(SKILLS.parent / "SOURCE.md")
+        assert plugin["version"] == "6.4.1"
+        assert bundle["bundle_version"] == "6.4.1"
+        assert "5bf4e78011075bcfc0dc295f0724994cd123ee71" in source
+
+    def test_superpowers_plus_retains_first_party_helper_inventory(self):
+        bundle = json.loads(_read(SKILLS.parent / "references" / "bundle-manifest.json"))
+        names = {entry["canonical_name"] for entry in bundle["entries"]}
+        assert {
+            "asking-clarifying-questions",
+            "handoff-gates",
+            "inspecting-the-environment",
+            "iterative-review",
+            "publishing-source",
+            "selecting-a-subagent",
+            "subagent-workspace",
+            "writing-roadmaps",
+        } <= names
+
+    def test_superpowers_plus_bundles_session_diagnostics(self):
+        bundle = json.loads(_read(SKILLS.parent / "references" / "bundle-manifest.json"))
+        names = {entry["canonical_name"] for entry in bundle["entries"]}
+        assert "diagnosing-superpowers" in names
+        assert (SKILLS / "diagnosing-superpowers" / "SKILL.md").is_file()
 
     def test_operating_contract_declares_shared_authority(self):
         path = REPO_SKILLS / "base-doctrine" / "references" / "operating-contract.md"
@@ -244,8 +266,121 @@ class TestValidationTddPublication:
         text = _read(SKILLS / "test-driven-development" / "SKILL.md").lower()
         assert "transitive" in text or "independent behavior" in text
 
+    def test_tdd_requires_the_consumer_complete_gate_before_completion(self):
+        text = _read(SKILLS / "test-driven-development" / "SKILL.md").lower()
+        assert "complete gate" in text
+        assert "focused" in text
+        assert "every failure" in text
+
+    def test_bundled_scripts_are_invoked_through_their_interpreters(self):
+        tracing = _read(SKILLS / "systematic-debugging" / "root-cause-tracing.md")
+        authoring = _read(SKILLS / "writing-skills" / "SKILL.md")
+        assert "bash ./find-polluter.sh" in tracing
+        assert "node ./render-graphs.js" in authoring
+        assert "Invoke bundled scripts through their interpreter" in authoring
+
+    def test_subagent_workspace_uses_one_python_execution_engine(self):
+        scripts = SKILLS / "subagent-workspace" / "scripts"
+        assert {path.name for path in scripts.iterdir() if path.is_file()} == {
+            "review_package.py",
+            "task_brief.py",
+            "workspace.py",
+        }
+        skill = _read(SKILLS / "subagent-workspace" / "SKILL.md")
+        assert "default to read-only `--check`" in skill
+        assert "--apply" in skill
+        assert ".ps1" not in skill
+
 
 class TestPlanningDelegationReview:
+    def test_native_and_sdd_explain_their_distinct_review_costs(self):
+        native = _read(SKILLS / "executing-plans" / "SKILL.md").lower()
+        sdd = _read(SKILLS / "subagent-driven-development" / "SKILL.md").lower()
+        assert "native inline execution" in native
+        assert "one fresh whole-branch review" in native
+        assert "fresh implementer" in sdd and "reviewer per task" in sdd
+        assert "stay in this session?" not in sdd
+
+    def test_native_execution_uses_shared_ledger_and_completion_owners(self):
+        native = _read(SKILLS / "executing-plans" / "SKILL.md").lower()
+        for phrase in (
+            "workspace.py",
+            "task_brief.py",
+            "review focus",
+            "ruling:",
+            "handoff-gates",
+            "completing-planning-artifacts",
+            "finishing-a-development-branch",
+        ):
+            assert phrase in native
+        assert "git bash" in native
+        assert "human-owned" in native
+
+    def test_brainstorming_establishes_shared_intent_before_path_design(self):
+        text = _read(SKILLS / "brainstorming" / "SKILL.md").lower()
+        assert "establish shared understanding" in text
+        assert "intended outcome" in text
+        assert "who it is for" in text
+        assert "what success looks like" in text
+        assert "already supplies" in text
+        assert "do not ask" in text
+
+    def test_plans_pin_review_focus_to_owning_task_tests(self):
+        text = _read(SKILLS / "writing-plans" / "SKILL.md").lower()
+        assert "## review focus" in text
+        assert "five" in text
+        assert "failure modes" in text
+        assert "owning task" in text
+        assert "saved plan" in text
+
+    def test_saved_plan_review_preserves_preselected_execution_method(self):
+        plans = _read(SKILLS / "writing-plans" / "SKILL.md").lower()
+        override = _read(SKILLS.parent / "references" / "execution-lane-override.md").lower()
+        roadmaps = _read(SKILLS / "writing-roadmaps" / "SKILL.md").lower()
+        assert "already explicitly supplied an execution method" in plans
+        assert "preserve" in plans and "review the saved plan" in plans
+        assert "native" in plans and "subagent-driven" in plans
+        assert "execution cost" in override
+        assert "review the saved plan" in roadmaps
+
+    def test_review_uses_branch_base_and_reasonable_user_expectations(self):
+        requesting = _read(SKILLS / "requesting-code-review" / "SKILL.md")
+        reviewers = [
+            _read(SKILLS / "requesting-code-review" / name).lower()
+            for name in ("code-reviewer.md", "reviewer-prompt.md")
+        ]
+        assert "git merge-base origin/main HEAD" in requesting
+        for reviewer in reviewers:
+            assert "reasonable person" in reviewer
+            assert "spec's silence is not permission" in reviewer
+            assert "declined to judge" in reviewer
+            assert "executor rules on each line" in reviewer
+
+    def test_brainstorming_owns_spec_to_plan_handoff_review(self):
+        brainstorming = _read(SKILLS / "brainstorming" / "SKILL.md").lower()
+        brainstorming_flat = " ".join(brainstorming.split())
+        handoff = _read(SKILLS / "handoff-gates" / "SKILL.md").lower()
+        handoff_scope = _read(SKILLS / "handoff-gates" / "references" / "scope-notes.md").lower()
+        handoff_wrapper = _read(SKILLS / "handoff-gates" / "agents" / "openai.yaml").lower()
+        roadmaps = _read(SKILLS / "writing-roadmaps" / "SKILL.md").lower()
+        design_runbook = _read(ROOT / ".agents" / "runbooks" / "design.md").lower()
+
+        for phrase in (
+            "planning-handoff review",
+            "burden ledger",
+            "exactly one branch",
+            "total weighted burden is lower",
+            "restore the preserved initial draft",
+            "private review",
+        ):
+            assert phrase in brainstorming_flat
+
+        assert "spec-readiness" not in handoff
+        assert "spec-readiness" not in handoff_scope
+        assert "spec" not in handoff_wrapper.split("short_description:", 1)[1].splitlines()[0]
+        assert "spec-readiness" not in roadmaps
+        assert "handoff-gates" not in design_runbook
+
     def test_design_scales_to_uncertainty_without_universal_approval(self):
         text = _read(SKILLS / "brainstorming" / "SKILL.md")
         assert "Three Paths" in text
@@ -381,7 +516,7 @@ class TestRepositoryCallersAndPressure:
 
     def test_superpowers_provenance_does_not_claim_a_retained_snapshot(self):
         source = _read(ROOT / "codex-marketplace" / "plugins" / "superpowers-plus" / "SOURCE.md")
-        assert "b36e0829c6d0140e93cfef2ca599b1b07d4a7797" in source
+        assert "5bf4e78011075bcfc0dc295f0724994cd123ee71" in source
         assert "Retained snapshot" not in source
         offenders = []
         plugin = ROOT / "codex-marketplace" / "plugins" / "superpowers-plus"
@@ -610,7 +745,7 @@ class TestEvaluationCampaign:
     def test_campaign_schema_and_fixed_matrix(self):
         campaign = json.loads(_read(DOCS / "campaign.json"))
         campaign_runner.validate_campaign(campaign)
-        assert len(campaign["scenarios"]) == 13
+        assert len(campaign["scenarios"]) == 15
         assert all(s["external_effect"] == "none" for s in campaign["scenarios"])
 
     def test_pressure_prompts_do_not_leak_rubric_decisions(self):
