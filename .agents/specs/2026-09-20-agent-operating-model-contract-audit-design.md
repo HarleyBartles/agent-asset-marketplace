@@ -374,16 +374,19 @@ The standards command exposes clear modes:
 - reruns the complete check after mutation; and
 - succeeds only when no failures remain.
 
-### Force reset
+### Force template deployment
 
-- targets an explicit surface or explicitly enumerated set;
+- uses `--force <surface-id>` for each explicit surface to restore;
 - previews every file that will be replaced;
 - warns that repo-local customisations will be overwritten;
-- requires the additional destructive acknowledgement;
+- requires `--confirm-local-customisations-will-be-overwritten` in
+  non-interactive use, or the equivalent interactive confirmation;
 - refuses surfaces without a seed or force-reset contract; and
 - reruns complete conformance after replacement.
 
-`--force` must not remain an ambiguous modifier on ordinary apply.
+Bare `--force` and `--apply --force` are invalid. The flag is a distinct,
+targeted template-deployment mode rather than an ambiguous modifier on
+ordinary apply.
 
 ## Hook and hosted CI integration
 
@@ -447,7 +450,8 @@ Diagnostics distinguish ownership-level remedies:
    them against customized consumer fixtures.
 4. Introduce explicit plugin prerequisite and dead-skill-link checks.
 5. Replace implicit manifest semantics and `check_content` with the new schema.
-6. Split ordinary apply from confirmed force reset and add mandatory post-apply
+6. Split ordinary apply from confirmed `--force <surface-id>` template
+   deployment and add mandatory post-apply
    convergence checking.
 7. Convert the hook from template identity to behavioral validation and move
    generated-output ownership into the consumer contract.
