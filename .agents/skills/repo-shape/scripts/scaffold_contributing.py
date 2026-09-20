@@ -50,8 +50,8 @@ examples:
   %(prog)s --force               legacy option; use coordinator force deployment
 
 The template expects the file to keep the `# Contributing` heading and the
-`using-superpowers-plus` bootstrap route. Use --force to restore the scaffold
-after heavy customization.
+`using-superpowers-plus` bootstrap route. Direct force is rejected; confirmed
+targeted restoration belongs to the repo-standards coordinator.
 
 exit codes:
   0  CONTRIBUTING.md is present/valid or was written

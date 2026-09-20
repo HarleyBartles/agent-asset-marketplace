@@ -138,7 +138,7 @@ def main(argv: list[str] | None = None) -> int:
 examples:
   %(prog)s --check               validate .agents/plugins/marketplace.json
   %(prog)s                       write or migrate marketplace.json
-  %(prog)s --force               rewrite marketplace.json with normalized content
+  %(prog)s --force               rejected; force deployment belongs to repo-standards
 
 The marketplace.json file is read from .agents/plugins/marketplace.json under
 the repo root. Legacy top-level or repo-level keys named local_skill_prefixes

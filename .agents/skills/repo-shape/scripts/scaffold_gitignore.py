@@ -93,7 +93,7 @@ def main(argv: list[str] | None = None) -> int:
 examples:
   %(prog)s --check               verify the root .gitignore has no stale sdd rule
   %(prog)s                       remove any stale sdd rule or in-repo sdd scaffold
-  %(prog)s --force               same as without --force (accepted for uniform CLI)
+  %(prog)s --force               rejected; force deployment belongs to repo-standards
 
 The SDD workspace now lives outside the repo at:
 

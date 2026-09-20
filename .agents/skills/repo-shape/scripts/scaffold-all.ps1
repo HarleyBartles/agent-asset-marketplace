@@ -8,7 +8,7 @@ $helpArgs = @('-?', '--help', '-h', '/?')
 foreach ($a in $args) {
     if ($helpArgs -contains $a) {
         @'
-Usage: scaffold-all.ps1 [--check] [--force]
+Usage: scaffold-all.ps1 [--check]
 
 Runs the standard repo-standards scaffolds in order:
   scaffold-repo-runbook-policy, scaffold-runbooks, scaffold-playbooks, scaffold-review,
@@ -17,13 +17,16 @@ Runs the standard repo-standards scaffolds in order:
 
 Options:
   --check   Report drift without writing
-  --force   Overwrite existing scaffolded surfaces
-
 Each scaffold has its own --help; pass the individual script name
 with --help to learn what it writes and validates.
 '@ | Write-Output
         exit 0
     }
+}
+
+if ($args -contains '--force' -or $args -contains '-Force') {
+    Write-Error 'Direct scaffold force is disabled; use confirmed repo-standards --force <surface-id>.'
+    exit 1
 }
 
 $ScriptDir = (Resolve-Path $PSScriptRoot).Path
