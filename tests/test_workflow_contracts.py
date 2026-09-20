@@ -180,12 +180,13 @@ class TestValidationTddPublication:
             assert phrase in text
 
     def test_debugging_rejects_unauthorized_semantic_expansion(self):
-        text = _read(SKILLS / "systematic-debugging" / "SKILL.md").lower()
+        text = " ".join(_read(SKILLS / "systematic-debugging" / "SKILL.md").lower().split())
         for phrase in (
             "new mode",
             "environment-sensitive branch",
             "identify its authority",
             "authorizes diagnosis and repair",
+            "do not substitute a familiar adjacent failure",
         ):
             assert phrase in text
 

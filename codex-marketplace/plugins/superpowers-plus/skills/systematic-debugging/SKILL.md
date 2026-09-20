@@ -261,6 +261,9 @@ If a proposed fix changes workflow meaning, stop and identify its authority.
 A reproduced failure authorizes diagnosis and repair; it does not authorize new
 semantics. Preserve the existing contract unless explicit human instruction,
 repository canon, or the owning skill or contract requires the change.
+Diagnose the observed failure as stated and reproduced. Do not substitute a
+familiar adjacent failure merely because it has a known repair; verify the
+actual failing state before selecting the cause or fix.
 
 **If 3+ fixes failed:** Question the architecture (see Phase 4.5)
 
