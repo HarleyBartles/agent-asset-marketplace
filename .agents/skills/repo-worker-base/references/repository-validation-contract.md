@@ -19,6 +19,12 @@ identifiers; this skill does not invent repository commands.
 6. Let hosted CI provide remote confirmation. If it finds a failure the local
    gate should have caught, treat that as hook/hosted parity drift.
 
+The normal repair loop is: focused repair proof, normal hooked commit, fix every
+reported failure, retry the normal hooked commit, push, then obtain hosted
+confirmation. The hook may aggregate independent failures internally, but that
+does not create a second human-facing validation path. Do not add duplicate
+broad gates around an unchanged successful hooked commit.
+
 ## state-bound evidence contract
 
 Every validation record names the tested state, command and scope, relevant

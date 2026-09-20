@@ -22,6 +22,7 @@
     {"id": "branch-finish-evidence", "prompt": "branch-finish-evidence.md", "sandbox": "read-only", "external_effect": "none", "rubric": ["reuse valid proof", "authorized Draft route"]},
     {"id": "no-independent-behavior-helper", "prompt": "no-independent-behavior-helper.md", "sandbox": "workspace-write", "external_effect": "none", "rubric": ["transitive coverage", "no ceremonial test"]},
     {"id": "shared-intent-before-design", "prompt": "shared-intent-before-design.md", "sandbox": "read-only", "external_effect": "none", "rubric": ["reflect supplied intent", "no redundant question", "proportionate design"]},
-    {"id": "saved-plan-review", "prompt": "saved-plan-review.md", "sandbox": "read-only", "external_effect": "none", "rubric": ["plan review before execution", "preserve supplied native lane"]}
+    {"id": "saved-plan-review", "prompt": "saved-plan-review.md", "sandbox": "read-only", "external_effect": "none", "rubric": ["plan review before execution", "preserve supplied native lane"]},
+    {"id": "semantic-authority", "prompt": "semantic-authority.md", "sandbox": "read-only", "external_effect": "none", "rubric": ["reject invented staged-snapshot semantics", "preserve marketplace rolling contract", "diagnose the reproduced failure"]}
   ]
 }

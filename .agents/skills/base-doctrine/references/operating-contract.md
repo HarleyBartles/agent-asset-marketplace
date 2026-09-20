@@ -15,6 +15,21 @@ The owning skill defines applicability and entry conditions. A caller may
 request a capability, but cannot bypass, weaken, or strengthen the owner's
 gate. Portable skills do not outrank repository canon.
 
+## Semantic authority
+
+Evidence can change what an agent believes; only authority can change what the
+workflow means. An implementation detail, environment marker, reproduced
+failure, convenient workaround, or internal mechanism has no policy meaning
+unless explicit human instruction, repository canon, or the owning skill or
+contract establishes that meaning.
+
+Before introducing a new workflow mode, semantic branch, exception, flag,
+validation ceremony, or constraint, name the authority that requires it and
+the existing contract it preserves or explicitly changes. A reproduced failure
+authorizes investigation and repair, not a new policy. When no authority
+requires changed semantics, preserve the existing workflow semantics and fix
+the failure within them.
+
 ## Reversible-work autonomy
 
 An instruction to do work authorizes the reversible investigation, diagnosis,

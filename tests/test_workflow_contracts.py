@@ -123,6 +123,22 @@ class TestAuthorityBootstrapPortability:
         assert "cannot bypass" in text
         assert "applicability" in text
 
+    def test_operating_contract_requires_authority_for_new_workflow_semantics(self):
+        text = " ".join(_read(REPO_SKILLS / "base-doctrine" / "references" / "operating-contract.md").lower().split())
+        for phrase in (
+            "only authority can change what the workflow means",
+            "implementation detail",
+            "environment marker",
+            "reproduced failure",
+            "preserve the existing workflow semantics",
+        ):
+            assert phrase in text
+
+    def test_bootstrap_stops_expansion_without_a_route_changing_question(self):
+        text = _read(SKILLS / "using-superpowers-plus" / "SKILL.md").lower()
+        assert "concrete unresolved question" in text
+        assert "might be useful" in text
+
     def test_sdd_stops_for_human_owned_requirements_but_rules_technical_findings(self):
         text = _read(SKILLS / "subagent-driven-development" / "SKILL.md").lower()
         assert "human-owned requirements" in text
@@ -149,6 +165,38 @@ class TestValidationTddPublication:
     def test_repository_validation_contract_defines_the_evidence_sequence(self):
         text = _read(REPO_SKILLS / "repo-worker-base" / "references" / "repository-validation-contract.md")
         for phrase in ("focused slice", "hooked", "Draft", "Ready", "state-bound"):
+            assert phrase in text
+
+    def test_repository_validation_contract_keeps_one_cheap_commit_loop(self):
+        text = " ".join(
+            _read(REPO_SKILLS / "repo-worker-base" / "references" / "repository-validation-contract.md").lower().split()
+        )
+        for phrase in (
+            "fix every reported failure",
+            "normal hooked commit",
+            "hosted confirmation",
+            "do not add duplicate broad gates",
+        ):
+            assert phrase in text
+
+    def test_debugging_rejects_unauthorized_semantic_expansion(self):
+        text = _read(SKILLS / "systematic-debugging" / "SKILL.md").lower()
+        for phrase in (
+            "new mode",
+            "environment-sensitive branch",
+            "identify its authority",
+            "authorizes diagnosis and repair",
+        ):
+            assert phrase in text
+
+    def test_staged_snapshot_marker_does_not_change_consumer_semantics(self):
+        text = " ".join(_read(OPERATING_SKILLS / "tracked-repo-hooks" / "SKILL.md").lower().split())
+        for phrase in (
+            "identifies the candidate tree",
+            "does not alter consumer command semantics",
+            "marketplace-source rolling",
+            "explicitly declares otherwise",
+        ):
             assert phrase in text
 
     def test_verification_is_state_bound_not_message_bound(self):
@@ -755,7 +803,7 @@ class TestEvaluationCampaign:
     def test_campaign_schema_and_fixed_matrix(self):
         campaign = json.loads(_read(DOCS / "campaign.json"))
         campaign_runner.validate_campaign(campaign)
-        assert len(campaign["scenarios"]) == 15
+        assert len(campaign["scenarios"]) == 16
         assert all(s["external_effect"] == "none" for s in campaign["scenarios"])
 
     def test_pressure_prompts_do_not_leak_rubric_decisions(self):

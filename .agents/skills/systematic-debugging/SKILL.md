@@ -252,8 +252,15 @@ If you catch yourself thinking:
 - Proposing solutions before tracing data flow
 - **"One more fix attempt" (when already tried 2+)**
 - **Each fix reveals new problem in different place**
+- "This failure proves we need a new mode, flag, exception, or
+  environment-sensitive branch"
 
 **ALL of these mean: STOP. Return to Phase 1.**
+
+If a proposed fix changes workflow meaning, stop and identify its authority.
+A reproduced failure authorizes diagnosis and repair; it does not authorize new
+semantics. Preserve the existing contract unless explicit human instruction,
+repository canon, or the owning skill or contract requires the change.
 
 **If 3+ fixes failed:** Question the architecture (see Phase 4.5)
 
