@@ -14,7 +14,7 @@ import sys
 from pathlib import Path
 from typing import NamedTuple
 
-import _agents_md
+import document_contracts
 import plugin_contracts
 import surface_contracts
 
@@ -621,14 +621,20 @@ def _check_surface(
     if optional and not full.exists():
         return findings
 
+    validator = document_contracts.DOCUMENT_VALIDATORS.get(str(surface.get("validator", "")))
+
     if scaffold is not None and scaffold.is_file():
         findings.extend(_run_scaffold_check(scaffold, repo_root))
-        if surf_id in ("root-agents-md", "runbooks-agents-md", "playbooks-agents-md") and full.is_file():
-            findings.extend(_agents_md.validate_agents_md(full, repo_root))
+        if validator is not None and surf_id not in {"review-entry", "contributing-entry", "repo-runbook-policy"}:
+            findings.extend(item.message for item in validator(full, repo_root))
         return findings
 
     if not full.exists():
         findings.append(f"missing: {rel}")
+        return findings
+
+    if validator is not None:
+        findings.extend(item.message for item in validator(full, repo_root))
         return findings
 
     if template is not None and template.is_file() and surf_id != "tools-shared-checkout":
@@ -734,8 +740,15 @@ under the ## Exceptions heading are skipped."""
     )
     parser.add_argument(
         "--force",
+        action="append",
+        nargs="?",
+        const="",
+        help="force-deploy a named surface template; repeat for multiple surfaces",
+    )
+    parser.add_argument(
+        "--confirm-local-customisations-will-be-overwritten",
         action="store_true",
-        help="when applying, overwrite existing drifted surfaces (safe only for generated/template surfaces)",
+        help="acknowledge that targeted force deployment overwrites local customizations",
     )
     parser.add_argument(
         "--allow-shared-checkout",
@@ -746,6 +759,22 @@ under the ## Exceptions heading are skipped."""
         ),
     )
     args = parser.parse_args(argv)
+
+    force_targets = set(args.force or [])
+    if args.force is not None:
+        if "" in force_targets:
+            print("error: --force requires a surface id; bare --force is invalid", file=sys.stderr)
+            return 1
+        if args.apply or args.check:
+            print("error: --force is a standalone targeted deployment mode", file=sys.stderr)
+            return 1
+        if not args.confirm_local_customisations_will_be_overwritten:
+            print(
+                "error: targeted --force requires --confirm-local-customisations-will-be-overwritten", file=sys.stderr
+            )
+            return 1
+        args.apply = True
+        args.yes = True
 
     repo_root = _repo_root()
     if _is_submodule(repo_root):
@@ -761,6 +790,11 @@ under the ## Exceptions heading are skipped."""
 
     manifest = surface_contracts.load_manifest(_manifest_path())
     surfaces = [_coordinator_surface(surface) for surface in manifest.surfaces]
+    known_surface_ids = {str(surface.get("id", "")) for surface in surfaces}
+    unknown_force_targets = force_targets - known_surface_ids
+    if unknown_force_targets:
+        print(f"error: unknown force surface id(s): {', '.join(sorted(unknown_force_targets))}", file=sys.stderr)
+        return 1
     plugin_findings: list[surface_contracts.Finding] = []
     consumer_contract_path = repo_root / ".agents/contracts/agent-operating-model.json"
     if consumer_contract_path.is_file():
@@ -843,8 +877,10 @@ under the ## Exceptions heading are skipped."""
 
     applied = 0
     for surface in surfaces:
-        if _check_surface(repo_root, surface, exceptions, enabled_surface_ids):
-            if _apply_surface(repo_root, surface, exceptions, args.force, enabled_surface_ids):
+        if force_targets and str(surface.get("id", "")) not in force_targets:
+            continue
+        if force_targets or _check_surface(repo_root, surface, exceptions, enabled_surface_ids):
+            if _apply_surface(repo_root, surface, exceptions, bool(force_targets), enabled_surface_ids):
                 applied += 1
 
     unresolved_graph = _check_composition_graph(repo_root)

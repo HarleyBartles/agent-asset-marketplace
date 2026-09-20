@@ -640,7 +640,14 @@ def test_repo_standards_apply_force_overwrites_drifted_contributing(tmp_path: Pa
     (repo / "CONTRIBUTING.md").write_text("# Contributing\n\nStale.\n", encoding="utf-8", newline="\n")
 
     result = subprocess.run(
-        [sys.executable, str(REPO_STANDARDS), "--apply", "--yes", "--force", "--allow-shared-checkout"],
+        [
+            sys.executable,
+            str(REPO_STANDARDS),
+            "--force",
+            "contributing-entry",
+            "--confirm-local-customisations-will-be-overwritten",
+            "--allow-shared-checkout",
+        ],
         cwd=repo,
         env=_stripped_env(),
         capture_output=True,
@@ -798,7 +805,14 @@ def test_repo_standards_apply_in_shared_checkout_with_flag_succeeds(tmp_path: Pa
     (worktree / "CONTRIBUTING.md").write_text("# Contributing\n\nStale.\n", encoding="utf-8", newline="\n")
 
     result = subprocess.run(
-        [sys.executable, str(REPO_STANDARDS), "--apply", "--yes", "--force", "--allow-shared-checkout"],
+        [
+            sys.executable,
+            str(REPO_STANDARDS),
+            "--force",
+            "contributing-entry",
+            "--confirm-local-customisations-will-be-overwritten",
+            "--allow-shared-checkout",
+        ],
         cwd=worktree,
         env=_stripped_env(),
         capture_output=True,

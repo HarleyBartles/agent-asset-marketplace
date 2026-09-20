@@ -9,6 +9,8 @@ import subprocess
 import sys
 from pathlib import Path
 
+import document_contracts
+
 
 def _stripped_env() -> dict[str, str]:
     env = os.environ.copy()
@@ -80,9 +82,10 @@ exit codes:
 
     if contributing_path.is_file():
         if args.check:
-            content = contributing_path.read_text(encoding="utf-8")
-            if not _has_required_boilerplate(content):
-                print("DRIFT: CONTRIBUTING.md exists but is missing required boilerplate")
+            findings = document_contracts.check_contributing(contributing_path, repo_root)
+            if findings:
+                for finding in findings:
+                    print(f"DRIFT: CONTRIBUTING.md [{finding.code}] {finding.message}")
                 return 1
             print("OK CONTRIBUTING.md: contributor entry point present")
             return 0
