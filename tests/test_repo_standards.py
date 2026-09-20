@@ -1637,6 +1637,15 @@ def test_pre_commit_hook_stages_only_owned_generated_surfaces(tmp_path: Path) ->
     assert "build/outside.txt" in status, status
 
 
+def test_pre_commit_hook_normalizes_crlf_generated_path_lines() -> None:
+    """Windows Python may emit CRLF, so the Bash reader must remove the trailing CR."""
+    template = Path(repo_standards.__file__).parent.parent / "templates" / "pre-commit"
+    text = template.read_text(encoding="utf-8")
+    read_loop = "while IFS= read -r generated_path; do\n"
+    normalization = "  generated_path=\"${generated_path%$'\\r'}\"\n"
+    assert read_loop + normalization in text
+
+
 def test_pre_commit_hook_rejects_invalid_generated_pathspec_at_runtime(tmp_path: Path) -> None:
     repo = tmp_path / "invalid-generated-pathspec"
     repo.mkdir()
