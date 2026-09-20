@@ -145,6 +145,15 @@ def test_surface_contract_rejects_unregistered_validator(tmp_path: Path) -> None
         _module().load_manifest(_write_manifest(tmp_path, [surface]))
 
 
+@pytest.mark.parametrize(
+    ("field", "value"), [("path", "../outside"), ("seed", "/absolute"), ("scaffold", "../tool.py")]
+)
+def test_surface_contract_rejects_escaping_paths(tmp_path: Path, field: str, value: str) -> None:
+    surface = _valid_surface(**{field: value})
+    with pytest.raises(ValueError, match="repository-relative path"):
+        _module().load_manifest(_write_manifest(tmp_path, [surface]))
+
+
 def test_forbidden_surface_requires_remediation(tmp_path: Path) -> None:
     surface = _valid_surface(presence="forbidden", apply="create")
     with pytest.raises(ValueError, match="forbidden.*manual-remediation"):

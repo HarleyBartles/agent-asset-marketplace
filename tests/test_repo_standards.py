@@ -659,6 +659,23 @@ def test_repo_standards_force_rejects_surface_without_reset_contract(tmp_path: P
     assert (repo / "CONTRIBUTING.md").read_text(encoding="utf-8") == "# Contributing\n\nStale.\n"
 
 
+def test_targeted_force_warns_and_requires_noninteractive_acknowledgement(tmp_path: Path) -> None:
+    repo = tmp_path / "force-confirmation"
+    repo.mkdir()
+    _init_git_repo(repo)
+    result = subprocess.run(
+        [sys.executable, str(REPO_STANDARDS), "--force", "completed-artifacts-doctrine"],
+        cwd=repo,
+        input="",
+        capture_output=True,
+        text=True,
+    )
+    combined = result.stdout + result.stderr
+    assert result.returncode == 1
+    assert "are you sure? This will force overwrite repo-local customisations" in combined
+    assert "--confirm-local-customisations-will-be-overwritten" in combined
+
+
 def test_scaffold_contributing_check_customized_passes(tmp_path: Path) -> None:
     """scaffold_contributing --check passes with the heading and sole bootstrap route."""
     repo = tmp_path / "custom-contributing"
@@ -1278,7 +1295,10 @@ def test_command_declaration_exposes_generated_paths(tmp_path: Path) -> None:
     assert declaration.generated_paths == (".agents/skills/**", "**/INDEX.md")
 
 
-@pytest.mark.parametrize("generated_path", ["", "../outside", "/absolute", "C:/absolute", "**"])
+@pytest.mark.parametrize(
+    "generated_path",
+    ["", "../outside", "/absolute", "C:/absolute", "*", "**", "./**", ":(top)**", "!ignored"],
+)
 def test_command_declaration_rejects_unsafe_generated_paths(tmp_path: Path, generated_path: str) -> None:
     path = tmp_path / ".agents" / "contracts" / "repo-standards-commands.json"
     path.parent.mkdir(parents=True)
@@ -1614,6 +1634,29 @@ def test_pre_commit_hook_stages_only_owned_generated_surfaces(tmp_path: Path) ->
         text=True,
     ).stdout
     assert "build/outside.txt" in status, status
+
+
+def test_pre_commit_hook_rejects_invalid_generated_pathspec_at_runtime(tmp_path: Path) -> None:
+    repo = tmp_path / "invalid-generated-pathspec"
+    repo.mkdir()
+    _init_git_repo_with_commit(repo)
+    _install_repo_standards(repo)
+    (repo / "tools").mkdir(exist_ok=True)
+    (repo / "tools/run.py").write_text(_fake_tools_run_py("ok"), encoding="utf-8", newline="\n")
+    declaration = repo / ".agents/contracts/repo-standards-commands.json"
+    data = json.loads(declaration.read_text(encoding="utf-8"))
+    data["generated_paths"] = [":(top)**"]
+    declaration.write_text(json.dumps(data) + "\n", encoding="utf-8", newline="\n")
+    subprocess.run(["git", "add", "tools/run.py", str(declaration.relative_to(repo))], cwd=repo, check=True)
+
+    result = subprocess.run(
+        ["git", "commit", "-m", "reject unsafe generated path"],
+        cwd=repo,
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode != 0
+    assert "invalid generated_paths entry" in result.stdout + result.stderr
 
 
 def _add_marketplace_submodule(repo: Path, marketplace: Path) -> None:

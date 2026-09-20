@@ -281,9 +281,11 @@ def _check_declared_commands(repo_root: Path) -> tuple[CommandDeclaration | None
             path = Path(normalized) if normalized else None
             if (
                 not normalized
-                or normalized == "**"
+                or normalized in {"*", "**", ".", "./*", "./**"}
                 or normalized.startswith("/")
+                or normalized.startswith((":", "!"))
                 or re.match(r"^[A-Za-z]:/", normalized)
+                or "\x00" in normalized
                 or path is None
                 or ".." in path.parts
             ):
@@ -780,11 +782,6 @@ under the ## Exceptions heading are skipped."""
         if args.apply or args.check:
             print("error: --force is a standalone targeted deployment mode", file=sys.stderr)
             return 1
-        if not args.confirm_local_customisations_will_be_overwritten:
-            print(
-                "error: targeted --force requires --confirm-local-customisations-will-be-overwritten", file=sys.stderr
-            )
-            return 1
         args.apply = True
         args.yes = True
 
@@ -822,6 +819,19 @@ under the ## Exceptions heading are skipped."""
             for finding in force_preflight:
                 print(f"error: {finding}", file=sys.stderr)
             return 1
+        targets = ", ".join(sorted(force_targets))
+        warning = f"WARNING: are you sure? This will force overwrite repo-local customisations for: {targets}"
+        print(warning, file=sys.stderr)
+        if not args.confirm_local_customisations_will_be_overwritten:
+            if not sys.stdin.isatty():
+                print(
+                    "error: targeted --force requires --confirm-local-customisations-will-be-overwritten",
+                    file=sys.stderr,
+                )
+                return 1
+            if input("Type 'yes' to continue: ").strip().lower() != "yes":
+                print("error: force deployment cancelled", file=sys.stderr)
+                return 1
     plugin_findings: list[surface_contracts.Finding] = []
     consumer_contract_path = repo_root / ".agents/contracts/agent-operating-model.json"
     if consumer_contract_path.is_file():

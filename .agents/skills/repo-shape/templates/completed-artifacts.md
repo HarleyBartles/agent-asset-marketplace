@@ -18,6 +18,12 @@ convenience copy may live at
 `<main-checkout>/../_agent-scratch/<repo-name>/completed/<artifact-type>/`
 with no manifest, retention promise, or evidentiary role.
 
+Every governed artifact ends through an explicit repository-owned decision:
+either it is marked `completed-awaiting-retirement`, or it is abandoned with a
+recorded reason. Abandonment is not inferred from scratch output, a rejected
+candidate, inactivity, or deletion. Promote any durable content before removing
+an abandoned artifact.
+
 Durable content promotes before removal: enduring architecture decisions
 belong in the repository's declared ADR home; operating rules belong in
 `.agents/doctrine/`, `.agents/runbooks/`, or `.agents/playbooks/`. The portable

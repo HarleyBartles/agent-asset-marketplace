@@ -93,6 +93,14 @@ def _optional_string(raw: dict[str, object], field: str, index: int) -> str | No
     return value
 
 
+def _relative_path(value: str, field: str, index: int) -> str:
+    normalized = value.replace("\\", "/")
+    path = Path(normalized)
+    if path.is_absolute() or normalized.startswith("/") or ".." in path.parts or normalized in {"", "."}:
+        raise ValueError(f"surface[{index}] {field} must be a repository-relative path without '..'")
+    return normalized
+
+
 def _parse_surface(raw: object, index: int) -> SurfaceContract:
     if not isinstance(raw, dict):
         raise ValueError(f"surface[{index}] must be an object")
@@ -128,12 +136,17 @@ def _parse_surface(raw: object, index: int) -> SurfaceContract:
     seed = _optional_string(raw, "seed", index)
     scaffold = _optional_string(raw, "scaffold", index)
     required_with = _optional_string(raw, "required_with", index)
+    surface_path = _relative_path(_required_string(raw, "path", index), "path", index)
+    if seed is not None:
+        seed = _relative_path(seed, "seed", index)
+    if scaffold is not None:
+        scaffold = _relative_path(scaffold, "scaffold", index)
     if force_reset == "confirmed-template-restore" and seed is None:
         raise ValueError("confirmed-template-restore requires a seed")
 
     return SurfaceContract(
         id=_required_string(raw, "id", index),
-        path=_required_string(raw, "path", index),
+        path=surface_path,
         presence=presence,  # type: ignore[arg-type]
         ownership=ownership,  # type: ignore[arg-type]
         validator=validator,

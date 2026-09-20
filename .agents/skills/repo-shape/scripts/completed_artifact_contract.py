@@ -54,6 +54,8 @@ def check_completed_artifact_doctrine(path: Path, repo_root: Path | None = None)
         ("successor", "missing-successor-retirement"),
         ("completed-awaiting-retirement", "missing-completion-marking"),
         ("git history", "missing-history-retention"),
+        ("abandon", "missing-abandonment-path"),
+        ("promot", "missing-promotion-before-removal"),
     ):
         if invariant not in lowered:
             findings.append(
