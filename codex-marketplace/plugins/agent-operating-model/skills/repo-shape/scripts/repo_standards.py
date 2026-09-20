@@ -14,6 +14,7 @@ import sys
 from pathlib import Path
 
 import _agents_md
+import surface_contracts
 
 
 def _stripped_env() -> dict[str, str]:
@@ -71,6 +72,29 @@ def _is_submodule(repo_root: Path) -> bool:
 
 def _manifest_path() -> Path:
     return Path(__file__).resolve().parent.parent / "references" / "repository-shape-manifest.json"
+
+
+def _coordinator_surface(surface: surface_contracts.SurfaceContract) -> dict[str, object]:
+    """Bridge explicit version-3 contracts to the current coordinator lanes."""
+
+    kind_by_validator = {
+        "command-declaration": "command-declaration",
+        "hook-contract": "hook",
+        "must-be-absent": "absent",
+        "submodule-contract": "submodule",
+    }
+    return {
+        "id": surface.id,
+        "path": surface.path,
+        "kind": kind_by_validator.get(surface.validator, "file"),
+        "source": surface.seed,
+        "scaffold": surface.scaffold,
+        "optional": surface.presence == "optional",
+        "required_with": surface.required_with,
+        "validator": surface.validator,
+        "apply_mode": surface.apply,
+        "force_reset": surface.force_reset,
+    }
 
 
 def _load_exceptions(repo_root: Path) -> set[str]:
@@ -573,9 +597,8 @@ def _check_surface(
         findings.append(f"missing: {rel}")
         return findings
 
-    if template is not None and template.is_file():
-        if surface.get("check_content", True):
-            findings.extend(_check_surface_content(repo_root, rel, template))
+    if template is not None and template.is_file() and surf_id != "tools-shared-checkout":
+        findings.extend(_check_surface_content(repo_root, rel, template))
     return findings
 
 
@@ -702,8 +725,8 @@ under the ## Exceptions heading are skipped."""
         print("error: --allow-shared-checkout requires --apply", file=sys.stderr)
         return 1
 
-    manifest = json.loads(_manifest_path().read_text(encoding="utf-8"))
-    surfaces = manifest.get("surfaces", [])
+    manifest = surface_contracts.load_manifest(_manifest_path())
+    surfaces = [_coordinator_surface(surface) for surface in manifest.surfaces]
     exceptions = _load_exceptions(repo_root)
     enabled_surface_ids = _enabled_surface_ids(surfaces, exceptions)
     dependency_findings = _required_with_findings(surfaces, exceptions)

@@ -1949,7 +1949,7 @@ def test_apply_fails_when_composition_graph_remains_invalid(
     runbooks.mkdir(parents=True)
     (runbooks / "implementing.md").write_text("# Implementation\n", encoding="utf-8")
     manifest = tmp_path / "manifest.json"
-    manifest.write_text('{"surfaces": []}\n', encoding="utf-8")
+    manifest.write_text('{"version": 3, "surfaces": []}\n', encoding="utf-8")
     monkeypatch.setattr(repo_standards, "_repo_root", lambda: tmp_path)
     monkeypatch.setattr(repo_standards, "_manifest_path", lambda: manifest)
     monkeypatch.setattr(repo_standards, "_is_submodule", lambda _root: False)
