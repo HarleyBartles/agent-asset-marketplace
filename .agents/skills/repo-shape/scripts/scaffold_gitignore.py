@@ -123,6 +123,9 @@ exit codes:
         help="Accepted for a uniform scaffold interface; has no destructive effect",
     )
     args = parser.parse_args(argv)
+    if args.force:
+        print("ERROR: direct scaffold force is disabled; use confirmed repo-standards --force <surface-id>")
+        return 1
 
     repo_root = _repo_root()
     root_gitignore_path = repo_root / ".gitignore"

@@ -10,6 +10,17 @@ from pathlib import Path
 from surface_contracts import Finding
 
 
+def _frontmatter_name(skill_file: Path) -> str | None:
+    text = skill_file.read_text(encoding="utf-8")
+    if not text.startswith("---"):
+        return None
+    parts = text.split("---", 2)
+    if len(parts) < 3:
+        return None
+    match = re.search(r"(?im)^name:\s*['\"]?([^'\"\n]+)", parts[1])
+    return match.group(1).strip() if match else None
+
+
 def _visible_skills(root: Path) -> tuple[set[str], list[Finding]]:
     skills = root / ".agents/skills"
     visible: set[str] = set()
@@ -18,9 +29,9 @@ def _visible_skills(root: Path) -> tuple[set[str], list[Finding]]:
         if not path.is_dir() or not (path / "SKILL.md").is_file():
             continue
         visible.add(path.name)
-        match = re.search(r"(?im)^name:\s*['\"]?([^'\"\n]+)", (path / "SKILL.md").read_text(encoding="utf-8"))
-        if match:
-            visible.add(match.group(1).strip())
+        frontmatter_name = _frontmatter_name(path / "SKILL.md")
+        if frontmatter_name:
+            visible.add(frontmatter_name)
     try:
         data = json.loads((root / ".agents/plugins/marketplace.json").read_text(encoding="utf-8"))
         for name in data.get("repo", {}).get("local_skills", []):
@@ -37,8 +48,7 @@ def _visible_skills(root: Path) -> tuple[set[str], list[Finding]]:
                         )
                     )
                     continue
-                match = re.search(r"(?im)^name:\s*['\"]?([^'\"\n]+)", skill_file.read_text(encoding="utf-8"))
-                if match is None or match.group(1).strip() != name:
+                if _frontmatter_name(skill_file) != name:
                     findings.append(
                         Finding(
                             "failure",

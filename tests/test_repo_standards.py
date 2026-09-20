@@ -502,8 +502,8 @@ def test_scaffold_repo_runbook_policy_check_missing_boilerplate_fails(tmp_path: 
     assert "DRIFT: repo-runbook-policy.md" in result.stdout
 
 
-def test_scaffold_gitignore_accepts_force_no_op(tmp_path: Path) -> None:
-    """scaffold_gitignore --force is accepted as a uniform CLI no-op."""
+def test_scaffold_gitignore_rejects_direct_force(tmp_path: Path) -> None:
+    """Individual scaffolds cannot bypass coordinator force confirmation."""
     repo = tmp_path / "gitignore-force"
     repo.mkdir()
     _init_git_repo(repo)
@@ -515,8 +515,9 @@ def test_scaffold_gitignore_accepts_force_no_op(tmp_path: Path) -> None:
         capture_output=True,
         text=True,
     )
-    assert result.returncode == 0, result.stderr
-    assert (repo / ".gitignore").is_file()
+    assert result.returncode == 1, result.stdout + result.stderr
+    assert "direct scaffold force is disabled" in result.stdout
+    assert not (repo / ".gitignore").exists()
 
 
 def test_scaffold_gitignore_check_no_stale_sdd_scaffold_passes(tmp_path: Path) -> None:
