@@ -105,7 +105,7 @@ def main(argv: list[str] | None = None) -> int:
 examples:
   %(prog)s --check               verify that all mapped runbooks exist
   %(prog)s                       create any missing mapped runbooks
-  %(prog)s --force               overwrite all mapped runbooks with scaffolds
+  %(prog)s --force               legacy option; use coordinator force deployment
 
 The runbook list is read from the table in .agents/doctrine/repo-runbook-policy.md
 under ## Standard-to-local mapping if it exists, otherwise the standard runbook
@@ -164,7 +164,7 @@ exit codes:
         for path in written:
             print(f"wrote {path}")
     else:
-        print("All mapped runbooks already exist; use --force to overwrite")
+        print("Mapped runbooks exist; normal apply preserves them; use confirmed coordinator force for restore")
     return 0
 
 

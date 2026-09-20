@@ -84,7 +84,7 @@ def main(argv: list[str] | None = None) -> int:
 examples:
   %(prog)s --check               verify repo-runbook-policy.md exists and contains boilerplate
   %(prog)s                       write repo-runbook-policy.md if it is missing
-  %(prog)s --force               overwrite repo-runbook-policy.md with the template
+  %(prog)s --force               legacy option; use coordinator force deployment
 
 This file maps the cross-repo runbook standard to the repo's local paths and
 records any surface exceptions under ## Exceptions. The boilerplate check
@@ -134,7 +134,7 @@ exit codes:
             print("OK repo-runbook-policy.md: mapping file present")
             return 0
         if not args.force:
-            print("repo-runbook-policy.md already exists; use --force to overwrite")
+            print("Policy exists; normal apply preserves it; use confirmed coordinator force for restore")
             return 0
 
     if args.check:

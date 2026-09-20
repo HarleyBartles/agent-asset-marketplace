@@ -683,7 +683,7 @@ def _apply_surface(
     if kind in ("file", "hook") and template is not None:
         full = repo_root / rel
         if full.is_file() and not force and kind != "hook":
-            print(f"skip {rel}: exists; use --force to overwrite")
+            print(f"skip {rel}: exists; use targeted repo-standards force deployment with confirmation")
             return False
         full.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(template, full)
@@ -721,7 +721,7 @@ def main(argv: list[str] | None = None) -> int:
 examples:
   %(prog)s --check                                report drift for every surface in the manifest
   %(prog)s --apply --yes                          create missing surfaces without prompting
-  %(prog)s --apply --yes --force                  create missing surfaces and overwrite drifted ones
+  %(prog)s --force <surface-id>                          targeted confirmed template deployment
   %(prog)s --apply --yes --allow-shared-checkout  create missing surfaces in a shared/git-worktree checkout
 
 exit codes:
@@ -868,7 +868,7 @@ under the ## Exceptions heading are skipped."""
 
     if not args.yes:
         print(f"Will apply {len(failures)} surfaces with drift: {[finding.message for finding in failures]}")
-        print("Add --yes to apply. Add --yes --force to overwrite existing drifted surfaces.")
+        print("Add --yes to apply. Use a confirmed named force target for template deployment.")
         return 1
 
     if not shared_checkout.approve_mutation(repo_root, _SCRIPT_NAME, args.allow_shared_checkout):

@@ -112,7 +112,7 @@ def main(argv: list[str] | None = None) -> int:
         for path in written:
             print(f"wrote {path}")
     else:
-        print("All mapped playbooks already exist; use --force to overwrite")
+        print("Mapped playbooks exist; normal apply preserves them; use confirmed coordinator force for restore")
     return 0
 
 

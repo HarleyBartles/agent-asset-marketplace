@@ -52,7 +52,7 @@ def main(argv: list[str] | None = None) -> int:
 examples:
   %(prog)s --check               verify REVIEW.md exists and contains boilerplate
   %(prog)s                       write REVIEW.md if it is missing
-  %(prog)s --force               overwrite REVIEW.md with the template
+  %(prog)s --force               legacy option; use coordinator force deployment
 
 The template expects the file to keep the `# Review entry point` heading and
 references to `.agents/doctrine/repo-runbook-policy.md` and `using-superpowers-plus`.
@@ -94,7 +94,7 @@ exit codes:
             print("OK REVIEW.md: review entry point present")
             return 0
         if not args.force:
-            print("REVIEW.md already exists; use --force to overwrite")
+            print("REVIEW.md exists; normal apply preserves it; use confirmed coordinator force for restore")
             return 0
 
     if args.check:

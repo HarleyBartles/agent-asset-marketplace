@@ -47,7 +47,7 @@ def main(argv: list[str] | None = None) -> int:
 examples:
   %(prog)s --check               verify CONTRIBUTING.md exists and contains boilerplate
   %(prog)s                       write CONTRIBUTING.md if it is missing
-  %(prog)s --force               overwrite CONTRIBUTING.md with the template
+  %(prog)s --force               legacy option; use coordinator force deployment
 
 The template expects the file to keep the `# Contributing` heading and the
 `using-superpowers-plus` bootstrap route. Use --force to restore the scaffold
@@ -90,7 +90,7 @@ exit codes:
             print("OK CONTRIBUTING.md: contributor entry point present")
             return 0
         if not args.force:
-            print("CONTRIBUTING.md already exists; use --force to overwrite")
+            print("CONTRIBUTING.md exists; normal apply preserves it; use confirmed coordinator force for restore")
             return 0
 
     if args.check:

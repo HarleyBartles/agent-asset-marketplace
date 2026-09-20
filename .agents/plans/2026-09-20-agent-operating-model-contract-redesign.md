@@ -1,5 +1,7 @@
 # Agent Operating Model Contract Redesign Implementation Plan
 
+> Status: completed-awaiting-retirement. The implementation and verification evidence remain in this completing PR; retire this plan in the first commit of the next substantive slice.
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use `subagent-driven-development` (recommended) or `executing-plans` to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Replace the operating model's implicit template and presence semantics with explicit consumer-surface contracts, semantic validation, safe convergent apply, confirmed force template deployment, plugin prerequisite diagnostics, and dead skill-link checks.
