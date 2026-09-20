@@ -364,13 +364,20 @@ def _check_hook_contract(
 
 
 def _retains_canonical_hook_contract(text: str) -> bool:
-    """Require the canonical executable body; customize commands via its declaration."""
-    template = Path(__file__).resolve().parent.parent / "templates" / "pre-commit"
-    if not template.is_file():
+    """Require the hook's behavior contract while allowing repository-owned prose/customization."""
+    required = (
+        "set -euo pipefail",
+        ".agents/contracts/repo-standards-commands.json",
+        "run_declared apply",
+        "git add -A",
+        "run_declared check",
+        "REPO_STANDARDS_HOSTED_COMMIT",
+        "trap",
+    )
+    if any(marker not in text for marker in required):
         return False
-    required = template.read_text(encoding="utf-8", errors="replace").splitlines()
-    actual = text.splitlines()
-    return actual == required
+    forbidden = ("exit 0", "set +e", "run_declared() { :; }", "if false; then")
+    return not any(marker in text for marker in forbidden)
 
 
 def _has_shell_guard(non_comment: list[str]) -> bool:

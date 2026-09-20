@@ -153,13 +153,21 @@ run_declared apply
 # hosted full-PR snapshots. The NUL-delimited input keeps filenames safe.
 git update-index --add --remove -z --stdin < "$ORIGINAL_STAGED_PATHS"
 
-git add -A -- .agents/skills/ 2>/dev/null || true
-git add -- ':(glob)**/INDEX.md' 2>/dev/null || true
-git add -- ':(glob)**/INDEX.json' 2>/dev/null || true
-git add -- ':(glob)**/.provenance.json' 2>/dev/null || true
-git add -- .agents/plugins/marketplace.json 2>/dev/null || true
-git add -- codex-marketplace/plugin-roots.json 2>/dev/null || true
-git add -- codex-marketplace/manifest.json 2>/dev/null || true
+while IFS= read -r generated_path; do
+  [ -n "$generated_path" ] || continue
+  if [[ "$generated_path" == */** ]]; then
+    git add -A -- "${generated_path%/**}/" 2>/dev/null || true
+  elif [[ "$generated_path" == *"*"* ]]; then
+    git add -A -- ":(glob)$generated_path" 2>/dev/null || true
+  else
+    git add -A -- "$generated_path" 2>/dev/null || true
+  fi
+done < <("${PYTHON[@]}" - "$COMMAND_DECLARATION" <<'PY'
+import json, sys
+for path in json.load(open(sys.argv[1], encoding="utf-8"))["generated_paths"]:
+    print(path)
+PY
+)
 
 AFTER_STATUS=$(mktemp)
 git status --porcelain --untracked-files=all > "$AFTER_STATUS"
