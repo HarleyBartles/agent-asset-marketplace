@@ -15,6 +15,7 @@ from pathlib import Path
 from typing import NamedTuple
 
 import _agents_md
+import plugin_contracts
 import surface_contracts
 
 
@@ -760,7 +761,27 @@ under the ## Exceptions heading are skipped."""
 
     manifest = surface_contracts.load_manifest(_manifest_path())
     surfaces = [_coordinator_surface(surface) for surface in manifest.surfaces]
-    exceptions = _load_exceptions(repo_root)
+    plugin_findings: list[surface_contracts.Finding] = []
+    consumer_contract_path = repo_root / ".agents/contracts/agent-operating-model.json"
+    if consumer_contract_path.is_file():
+        try:
+            consumer_contract = plugin_contracts.load_consumer_contract(repo_root)
+        except (OSError, json.JSONDecodeError, KeyError, TypeError) as exc:
+            plugin_findings.append(
+                surface_contracts.Finding(
+                    "failure",
+                    "invalid-operating-model-contract",
+                    "operating-model-contract",
+                    f"consumer operating-model contract cannot be loaded: {exc}",
+                    "run scaffold-operating-model-contract and repair the reported contract fields",
+                )
+            )
+            exceptions = _load_exceptions(repo_root)
+        else:
+            exceptions = set(consumer_contract.surface_exceptions)
+            plugin_findings.extend(plugin_contracts.check_plugin_contract(repo_root, consumer_contract))
+    else:
+        exceptions = _load_exceptions(repo_root)
     enabled_surface_ids = _enabled_surface_ids(surfaces, exceptions)
     dependency_findings = _required_with_findings(surfaces, exceptions)
 
@@ -768,30 +789,42 @@ under the ## Exceptions heading are skipped."""
     for surface in surfaces:
         findings.extend(_check_surface(repo_root, surface, exceptions, enabled_surface_ids))
 
-    # Deduplicate while preserving order
-    seen = set()
-    unique_findings: list[str] = []
-    for f in findings:
-        if f not in seen:
-            seen.add(f)
-            unique_findings.append(f)
+    structured_findings = [
+        surface_contracts.Finding(
+            severity="failure",
+            code="surface-contract",
+            surface="repository",
+            message=message,
+            repair="run the owning scaffold or repair the named consumer contract",
+        )
+        for message in findings
+    ]
+    # Deduplicate structured findings while preserving diagnostic order.
+    unique_findings = list(dict.fromkeys([*structured_findings, *plugin_findings]))
+    warnings = [finding for finding in unique_findings if finding.severity == "warning"]
+    failures = [finding for finding in unique_findings if finding.severity == "failure"]
+    for finding in warnings:
+        print(f"WARN: [{finding.code}] {finding.message}; {finding.repair}")
 
     if args.check or not args.apply:
-        if unique_findings:
-            for f in unique_findings:
-                print(f"DRIFT: {f}")
+        if failures:
+            for finding in failures:
+                print(f"DRIFT: [{finding.code}] {finding.message}; {finding.repair}")
             return 1
         print("OK repo-standards: all surfaces present")
         return 0
 
-    if dependency_findings:
+    plugin_failures = [finding for finding in plugin_findings if finding.severity == "failure"]
+    if dependency_findings or plugin_failures:
         for finding in dependency_findings:
             print(f"DRIFT: {finding}")
+        for finding in plugin_failures:
+            print(f"DRIFT: [{finding.code}] {finding.message}; {finding.repair}")
         print("error: invalid repo-standards exception dependency", file=sys.stderr)
         return 1
 
     if not args.yes:
-        print(f"Will apply {len(unique_findings)} surfaces with drift: {unique_findings}")
+        print(f"Will apply {len(failures)} surfaces with drift: {[finding.message for finding in failures]}")
         print("Add --yes to apply. Add --yes --force to overwrite existing drifted surfaces.")
         return 1
 

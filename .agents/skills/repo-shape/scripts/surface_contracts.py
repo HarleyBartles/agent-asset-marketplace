@@ -9,6 +9,18 @@ from pathlib import Path
 from typing import Literal
 
 
+Severity = Literal["warning", "failure"]
+
+
+@dataclass(frozen=True)
+class Finding:
+    severity: Severity
+    code: str
+    surface: str
+    message: str
+    repair: str
+
+
 Presence = Literal["required", "optional", "forbidden"]
 Ownership = Literal["consumer-authored", "consumer-generated"]
 ApplyMode = Literal["create", "create-or-migrate", "manual-remediation", "delegate-generator"]
