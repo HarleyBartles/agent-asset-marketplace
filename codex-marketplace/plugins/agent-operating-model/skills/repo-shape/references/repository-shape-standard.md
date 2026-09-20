@@ -6,7 +6,8 @@ This file describes the surfaces `repo-standards` checks and can apply. It is th
 
 - `.agents/plugins/marketplace-source` as a git submodule pointing at the marketplace source.
 - `.agents/plugins/marketplace.json` with exact repo-local skill identifiers in `repo.local_skills`; naming prefixes are not required.
-- `.agents/contracts/repo-standards-commands.json` declaring the consumer's canonical `apply` and `check` command vectors whenever the `pre-commit-hook` surface is enabled. `repo-standards` validates this declaration but does not invent repository-specific commands; a consumer must supply it before `--apply` can install or repair the hook. Repositories that explicitly except the hook also except this dependent declaration.
+- `.agents/contracts/agent-operating-model.json` declaring consumer-specific surface exceptions and governed unslop-profile roots. This is separate from plugin subscription state in marketplace JSON and from workflow mapping in the runbook policy.
+- `.agents/contracts/repo-standards-commands.json` declaring the consumer's canonical `apply` and `check` command vectors plus the repository-relative paths those commands generate whenever the `pre-commit-hook` surface is enabled. `repo-standards` validates this declaration but does not invent repository-specific commands or generated-output ownership; a consumer must supply it before `--apply` can install or repair the hook. Repositories that explicitly except the hook also except this dependent declaration.
 - The consumer's canonical validation capability, declared in its local repository guidance. See [ci-validation-pipeline.md](ci-validation-pipeline.md) for the contract.
 - Tracked `githooks/pre-commit`, activated with repository-local `core.hooksPath=githooks`, wired to the consumer's canonical apply capability followed by its canonical check capability. The hook is validated by contract (it must be executable on POSIX; it must carry a `#!` shebang on Windows/NT where the executable bit is not reliably represented; it must apply and check the exact staged snapshot; it must preserve and restore unstaged/untracked work; it must enable `errexit`, `nounset`, and `pipefail`). The canonical staged-snapshot command skeleton from the template must remain intact and in order so a marker-only/no-op hook cannot certify itself. Because the relative hooks path resolves from each checkout, the same configuration activates the tracked hook in the main checkout and linked worktrees. Hosted CI invokes that same file with `REPO_STANDARDS_HOSTED_COMMIT=HEAD`; the hook reconstructs the checked-out commit as a staged snapshot and verifies that validation does not change its tree.
 - `.agents/doctrine/repo-runbook-policy.md` mapping the repo to `repo-standards`.
@@ -51,6 +52,7 @@ Use these idempotent scripts to create missing user-content surfaces. The agent 
 - `scaffold-gitignore` removes any stale `.agents/superpowers/sdd/**` root `.gitignore` rule and any obsolete `.agents/superpowers/sdd/.gitignore` directory.
 - `scaffold-agents-md` scaffolds or validates root `AGENTS.md` as a router.
 - `scaffold-marketplace-json` scaffolds or validates `.agents/plugins/marketplace.json` with `repo.local_skills`.
+- `scaffold-operating-model-contract` creates a missing conformance contract and validates existing consumer-owned content without rewriting it.
 - `scaffold-all` runs the above in sequence.
 
 `repo-standards --apply` also invokes the appropriate scaffold when a surface has `scaffold` set in the manifest.
@@ -63,7 +65,7 @@ Use these idempotent scripts to create missing user-content surfaces. The agent 
 
 ## Exceptions
 
-Repos may record surface exceptions in the `## Exceptions` section of `.agents/doctrine/repo-runbook-policy.md` using the surface `id` (one per line). `repo-standards --check` and `--apply` skip those surfaces. A surface named by another surface's `required_with` relationship cannot be excepted while the dependent surface remains enabled; that configuration is drift and `--apply` fails before mutation.
+Repos record justified surface exceptions as `{id, reason}` objects in `.agents/contracts/agent-operating-model.json`. The runbook policy maps repository workflows and does not double as machine configuration. `repo-standards --check` and `--apply` skip declared exception surfaces. A surface named by another surface's `required_with` relationship cannot be excepted while the dependent surface remains enabled; that configuration is drift and `--apply` fails before mutation.
 
 ## Local overrides
 

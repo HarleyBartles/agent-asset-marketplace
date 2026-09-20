@@ -12,6 +12,7 @@ import stat
 import subprocess
 import sys
 from pathlib import Path
+from typing import NamedTuple
 
 import _agents_md
 import surface_contracts
@@ -57,6 +58,12 @@ import shared_checkout  # noqa: E402
 
 _SCRIPT_NAME = "repo-standards"
 _COMMAND_DECLARATION = Path(".agents/contracts/repo-standards-commands.json")
+
+
+class CommandDeclaration(NamedTuple):
+    apply: tuple[str, ...]
+    check: tuple[str, ...]
+    generated_paths: tuple[str, ...]
 
 
 def _is_submodule(repo_root: Path) -> bool:
@@ -241,7 +248,7 @@ def _run_scaffold_check(scaffold: Path, repo_root: Path) -> list[str]:
     return findings
 
 
-def _check_declared_commands(repo_root: Path) -> tuple[dict[str, list[str]] | None, list[str]]:
+def _check_declared_commands(repo_root: Path) -> tuple[CommandDeclaration | None, list[str]]:
     path = repo_root / _COMMAND_DECLARATION
     if not path.is_file():
         return None, [f"missing consumer command declaration: {_COMMAND_DECLARATION.as_posix()}"]
@@ -252,7 +259,7 @@ def _check_declared_commands(repo_root: Path) -> tuple[dict[str, list[str]] | No
     if not isinstance(data, dict):
         return None, ["consumer command declaration must be a JSON object"]
     findings: list[str] = []
-    commands: dict[str, list[str]] = {}
+    commands: dict[str, tuple[str, ...]] = {}
     for capability, switch in (("apply", "--apply"), ("check", "--check")):
         command = data.get(capability)
         if not isinstance(command, list) or not command or not all(isinstance(item, str) for item in command):
@@ -261,8 +268,34 @@ def _check_declared_commands(repo_root: Path) -> tuple[dict[str, list[str]] | No
         if switch not in command:
             findings.append(f"declared {capability} command is missing {switch}")
             continue
-        commands[capability] = command
-    return (commands if len(commands) == 2 else None), findings
+        commands[capability] = tuple(command)
+    generated_paths = data.get("generated_paths")
+    valid_generated_paths: list[str] = []
+    if not isinstance(generated_paths, list) or not generated_paths:
+        findings.append("consumer command declaration has invalid generated_paths")
+    else:
+        for value in generated_paths:
+            normalized = value.replace("\\", "/") if isinstance(value, str) else ""
+            path = Path(normalized) if normalized else None
+            if (
+                not normalized
+                or normalized == "**"
+                or normalized.startswith("/")
+                or re.match(r"^[A-Za-z]:/", normalized)
+                or path is None
+                or ".." in path.parts
+            ):
+                findings.append(f"consumer command declaration has invalid generated_paths entry: {value!r}")
+            else:
+                valid_generated_paths.append(normalized)
+    declaration = None
+    if len(commands) == 2 and not findings:
+        declaration = CommandDeclaration(
+            apply=commands["apply"],
+            check=commands["check"],
+            generated_paths=tuple(valid_generated_paths),
+        )
+    return declaration, findings
 
 
 def _check_hook_contract(

@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import importlib.util
 import json
+import subprocess
 import sys
 from pathlib import Path
 
@@ -13,6 +14,7 @@ SKILL_ROOT = ROOT / "codex-marketplace" / "plugins" / "agent-operating-model" / 
 MODULE_PATH = SKILL_ROOT / "scripts" / "surface_contracts.py"
 SCHEMA_PATH = SKILL_ROOT / "references" / "repository-shape-manifest.schema.json"
 AUDIT_PATH = SKILL_ROOT / "references" / "consumer-surface-audit.md"
+SCAFFOLD_PATH = SKILL_ROOT / "scripts" / "scaffold_operating_model_contract.py"
 
 
 def _module():
@@ -52,6 +54,63 @@ def test_surface_contract_assets_exist() -> None:
     assert MODULE_PATH.is_file()
     assert SCHEMA_PATH.is_file()
     assert AUDIT_PATH.is_file()
+
+
+def _run_scaffold(repo: Path, *args: str) -> subprocess.CompletedProcess[str]:
+    return subprocess.run(
+        [sys.executable, str(SCAFFOLD_PATH), *args],
+        cwd=repo,
+        capture_output=True,
+        text=True,
+    )
+
+
+def test_operating_model_contract_scaffold_creates_missing_file(tmp_path: Path) -> None:
+    subprocess.run(["git", "init"], cwd=tmp_path, check=True, capture_output=True)
+    result = _run_scaffold(tmp_path)
+    assert result.returncode == 0, result.stdout + result.stderr
+    data = json.loads((tmp_path / ".agents/contracts/agent-operating-model.json").read_text())
+    assert data == {"version": 1, "surface_exceptions": [], "unslop_profile_roots": [".agents/contracts/unslop"]}
+
+
+def test_operating_model_contract_customized_valid_passes(tmp_path: Path) -> None:
+    subprocess.run(["git", "init"], cwd=tmp_path, check=True, capture_output=True)
+    path = tmp_path / ".agents/contracts/agent-operating-model.json"
+    path.parent.mkdir(parents=True)
+    path.write_text(
+        json.dumps(
+            {
+                "version": 1,
+                "surface_exceptions": [{"id": "marketplace-source-submodule", "reason": "source repository"}],
+                "unslop_profile_roots": [".agents/contracts/unslop", "packages/ui/.agents/contracts/unslop"],
+            }
+        ),
+        encoding="utf-8",
+    )
+    before = path.read_bytes()
+    assert _run_scaffold(tmp_path, "--check").returncode == 0
+    assert _run_scaffold(tmp_path).returncode == 0
+    assert path.read_bytes() == before
+
+
+@pytest.mark.parametrize(
+    ("payload", "message"),
+    [
+        ({"version": 2, "surface_exceptions": [], "unslop_profile_roots": []}, "version"),
+        (
+            {"version": 1, "surface_exceptions": [{"id": "invented", "reason": "x"}], "unslop_profile_roots": []},
+            "unknown surface",
+        ),
+    ],
+)
+def test_operating_model_contract_rejects_invalid_content(tmp_path: Path, payload: object, message: str) -> None:
+    subprocess.run(["git", "init"], cwd=tmp_path, check=True, capture_output=True)
+    path = tmp_path / ".agents/contracts/agent-operating-model.json"
+    path.parent.mkdir(parents=True)
+    path.write_text(json.dumps(payload), encoding="utf-8")
+    result = _run_scaffold(tmp_path, "--check")
+    assert result.returncode != 0
+    assert message in (result.stdout + result.stderr).lower()
 
 
 @pytest.mark.parametrize("missing", ["presence", "ownership", "validator", "apply", "force_reset"])

@@ -1,4 +1,5 @@
 import os
+import json
 import importlib.util
 import subprocess
 import sys
@@ -689,7 +690,7 @@ def test_repo_standards_allow_shared_checkout_combines_with_apply(tmp_path: Path
     command_dir.mkdir(parents=True)
     (command_dir / "repo-standards-commands.json").write_text(
         '{"apply":["@python","tools/run.py","ci","--apply"],'
-        '"check":["@python","tools/run.py","ci","--check","--diagnostics"]}\n',
+        '"check":["@python","tools/run.py","ci","--check","--diagnostics"],"generated_paths":["generated/**"]}\n',
         encoding="utf-8",
     )
 
@@ -946,7 +947,7 @@ def test_pre_commit_hook_wired_to_ci_apply_and_diagnostics(tmp_path: Path) -> No
     command_dir.mkdir(parents=True)
     (command_dir / "repo-standards-commands.json").write_text(
         '{"apply":["@python","tools/run.py","ci","--apply"],'
-        '"check":["@python","tools/run.py","ci","--check","--diagnostics"]}\n',
+        '"check":["@python","tools/run.py","ci","--check","--diagnostics"],"generated_paths":["generated/**"]}\n',
         encoding="utf-8",
     )
 
@@ -1022,7 +1023,7 @@ def test_tracked_hook_check_rejects_drift_and_wrong_hooks_path(tmp_path: Path) -
     command_dir = repo / ".agents" / "contracts"
     command_dir.mkdir(parents=True)
     (command_dir / "repo-standards-commands.json").write_text(
-        '{"apply":["@python","consumer.py","--apply"],"check":["@python","consumer.py","--check"]}\n',
+        '{"apply":["@python","consumer.py","--apply"],"check":["@python","consumer.py","--check"],"generated_paths":["generated/**"]}\n',
         encoding="utf-8",
     )
     hook = repo / "githooks" / "pre-commit"
@@ -1104,7 +1105,7 @@ def test_tracked_hook_platform_execution_contract(tmp_path: Path) -> None:
     command_dir = repo / ".agents" / "contracts"
     command_dir.mkdir(parents=True)
     (command_dir / "repo-standards-commands.json").write_text(
-        '{"apply":["@python","consumer.py","--apply"],"check":["@python","consumer.py","--check"]}\n',
+        '{"apply":["@python","consumer.py","--apply"],"check":["@python","consumer.py","--check"],"generated_paths":["generated/**"]}\n',
         encoding="utf-8",
     )
     template = Path(repo_standards.__file__).parent.parent / "templates" / "pre-commit"
@@ -1209,7 +1210,7 @@ def test_hook_validator_rejects_unbound_apply_and_check_switches(tmp_path: Path)
     declaration = repo / ".agents" / "contracts"
     declaration.mkdir(parents=True)
     (declaration / "repo-standards-commands.json").write_text(
-        '{"apply":["@python","consumer.py","--apply"],"check":["@python","consumer.py","--check"]}\n',
+        '{"apply":["@python","consumer.py","--apply"],"check":["@python","consumer.py","--check"],"generated_paths":["generated/**"]}\n',
         encoding="utf-8",
     )
     hook = repo / "pre-commit"
@@ -1228,7 +1229,7 @@ def test_hook_validator_rejects_marker_bearing_but_incomplete_hook(tmp_path: Pat
     declaration = repo / ".agents" / "contracts"
     declaration.mkdir(parents=True)
     (declaration / "repo-standards-commands.json").write_text(
-        '{"apply":["@python","consumer.py","--apply"],"check":["@python","consumer.py","--check"]}\n',
+        '{"apply":["@python","consumer.py","--apply"],"check":["@python","consumer.py","--check"],"generated_paths":["generated/**"]}\n',
         encoding="utf-8",
     )
     hook = repo / "pre-commit"
@@ -1243,6 +1244,44 @@ def test_hook_validator_rejects_marker_bearing_but_incomplete_hook(tmp_path: Pat
     )
     findings = repo_standards._check_hook_contract(hook, repo)
     assert any("canonical staged-snapshot contract" in finding for finding in findings)
+
+
+def test_command_declaration_exposes_generated_paths(tmp_path: Path) -> None:
+    path = tmp_path / ".agents" / "contracts" / "repo-standards-commands.json"
+    path.parent.mkdir(parents=True)
+    path.write_text(
+        json.dumps(
+            {
+                "apply": ["@python", "tools/run.py", "ci", "--apply"],
+                "check": ["@python", "tools/run.py", "ci", "--check"],
+                "generated_paths": [".agents/skills/**", "**/INDEX.md"],
+            }
+        ),
+        encoding="utf-8",
+    )
+    declaration, findings = repo_standards._check_declared_commands(tmp_path)
+    assert findings == []
+    assert declaration is not None
+    assert declaration.generated_paths == (".agents/skills/**", "**/INDEX.md")
+
+
+@pytest.mark.parametrize("generated_path", ["", "../outside", "/absolute", "C:/absolute", "**"])
+def test_command_declaration_rejects_unsafe_generated_paths(tmp_path: Path, generated_path: str) -> None:
+    path = tmp_path / ".agents" / "contracts" / "repo-standards-commands.json"
+    path.parent.mkdir(parents=True)
+    path.write_text(
+        json.dumps(
+            {
+                "apply": ["@python", "tools/run.py", "ci", "--apply"],
+                "check": ["@python", "tools/run.py", "ci", "--check"],
+                "generated_paths": [generated_path],
+            }
+        ),
+        encoding="utf-8",
+    )
+    declaration, findings = repo_standards._check_declared_commands(tmp_path)
+    assert declaration is None
+    assert any("generated_paths" in finding for finding in findings)
 
 
 def test_hook_rejects_inserted_control_flow() -> None:
@@ -1368,7 +1407,7 @@ def _install_repo_standards(repo: Path) -> None:
     command_dir.mkdir(parents=True, exist_ok=True)
     (command_dir / "repo-standards-commands.json").write_text(
         '{"apply":["@python","tools/run.py","ci","--apply"],'
-        '"check":["@python","tools/run.py","ci","--check","--diagnostics"]}\n',
+        '"check":["@python","tools/run.py","ci","--check","--diagnostics"],"generated_paths":["generated/**"]}\n',
         encoding="utf-8",
     )
     subprocess.run(
@@ -1567,7 +1606,7 @@ def _install_repo_standards_with_submodule(repo: Path) -> None:
     command_dir.mkdir(parents=True, exist_ok=True)
     (command_dir / "repo-standards-commands.json").write_text(
         '{"apply":["@python","tools/run.py","ci","--apply"],'
-        '"check":["@python","tools/run.py","ci","--check","--diagnostics"]}\n',
+        '"check":["@python","tools/run.py","ci","--check","--diagnostics"],"generated_paths":["generated/**"]}\n',
         encoding="utf-8",
     )
     subprocess.run(

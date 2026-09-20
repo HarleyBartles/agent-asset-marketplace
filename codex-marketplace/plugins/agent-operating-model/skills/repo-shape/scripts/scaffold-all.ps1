@@ -13,7 +13,7 @@ Usage: scaffold-all.ps1 [--check] [--force]
 Runs the standard repo-standards scaffolds in order:
   scaffold-repo-runbook-policy, scaffold-runbooks, scaffold-playbooks, scaffold-review,
   scaffold-contributing, scaffold-gitignore,
-  scaffold-agents-md, scaffold-marketplace-json
+  scaffold-agents-md, scaffold-marketplace-json, scaffold-operating-model-contract
 
 Options:
   --check   Report drift without writing
@@ -27,7 +27,7 @@ with --help to learn what it writes and validates.
 }
 
 $ScriptDir = (Resolve-Path $PSScriptRoot).Path
-$scripts = @('scaffold-repo-runbook-policy', 'scaffold-runbooks', 'scaffold-playbooks', 'scaffold-review', 'scaffold-contributing', 'scaffold-gitignore', 'scaffold-agents-md', 'scaffold-marketplace-json')
+$scripts = @('scaffold-repo-runbook-policy', 'scaffold-runbooks', 'scaffold-playbooks', 'scaffold-review', 'scaffold-contributing', 'scaffold-gitignore', 'scaffold-agents-md', 'scaffold-marketplace-json', 'scaffold-operating-model-contract')
 
 foreach ($name in $scripts) {
     Write-Host "==> running ${name}"
