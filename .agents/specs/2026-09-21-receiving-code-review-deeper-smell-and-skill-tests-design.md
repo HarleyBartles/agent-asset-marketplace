@@ -1,18 +1,14 @@
-# Receiving Code Review Deeper-Smell and Skill Tests Design
+# Receiving Code Review Deeper-Smell Design
 
-> **Status:** Approved for implementation on 2026-09-21.
+> **Status:** Approved for implementation on 2026-09-21. Deferred to a fresh PR after draft PR #328.
 
 ## Problem
 
 The current `receiving-code-review` skill stops after it verifies feedback, evaluates the suggestion, implements the reported correction, and tests that correction. That is sufficient for literal review satisfaction, but it does not prompt the receiver to inspect whether a correct finding exposes a repeatable failure mechanism in the repository. A competent agent can therefore repair one manifest entry, unsafe call site, or duplicated check while leaving the condition that will produce the same class of defect again.
 
-The marketplace's skill-testing custody is also inconsistent. The repository policy currently requires pressure scenarios at `assets/pressure-tests.md`, which makes maintainer verification look like behavioural input to an invoked skill. Other skill-owned tests sit at a skill root, while `iterative-review` already keeps its test code and fixtures under `tests/`. The Agent Skills specification permits additional directories but does not define a canonical `tests/` lane. This repository needs its own explicit convention.
-
 ## Goal
 
 Make code-review reception include one bounded deeper-smell inspection after a finding is verified as correct, and prove that new behaviour with a blinded RED/GREEN exercise in a fresh local Git repository.
-
-At the same time, establish `tests/` at a skill root as this marketplace's maintainer-facing verification lane, move existing misplaced test material into that lane, and prevent new pressure-test material from returning to `assets/` or a skill root.
 
 ## Success criteria
 
@@ -21,9 +17,6 @@ At the same time, establish `tests/` at a skill root as this marketplace's maint
 - The new guidance does not turn isolated mistakes into speculative redesign.
 - A blinded baseline run demonstrates the current failure: correct local repair and verification followed by an unjustified stop at the specimen.
 - A blinded treatment run on an identical fixture demonstrates transfer to a defect class other than manifest drift.
-- Skill-owned tests, fixtures, rubrics, and stable evaluation inputs live under `<skill>/tests/`, ship with the skill, and remain outside ordinary skill invocation.
-- The standards contract states the repository's governing position: skills are code, code ships with tests, and neither code nor skills ship test results.
-- Existing misplaced skill test material is relocated without reclassifying behavioural references or operational assets as tests.
 
 ## Design decisions
 
@@ -72,28 +65,11 @@ This scenario proves transfer because the skill may use manifest drift as an exp
 
 ### 4. Ship and materialize an ordinary local PR fixture
 
-The skill will ship the complete lightweight fixture source tree, not code that reconstructs the fixture file by file. It will live at:
+The skill will ship the complete lightweight fixture source tree at `codex-marketplace/plugins/superpowers-plus/skills/receiving-code-review/tests/deeper-smell/`. The tree will contain the materializer, review comment, rubric, feature patch, and a deliberately small fixture repository. It will contain no dependency trees, build output, binaries, caches, or captured run artifacts.
 
-```text
-codex-marketplace/plugins/superpowers-plus/skills/receiving-code-review/
-└── tests/
-    └── deeper-smell/
-        ├── README.md
-        ├── materialize.py
-        ├── review-comment.md
-        ├── rubric.md
-        ├── feature.patch
-        └── fixture/
-            ├── pyproject.toml
-            ├── src/
-            └── tests/
-```
+`materialize.py` will default to a read-only check and require an explicit apply mode, empty destination, and skill-source path before it writes. It will copy the fixture unchanged into a neutral project, initialize Git, commit the complete base state on `main`, install the selected `receiving-code-review` behavioural surface, create a feature branch, apply and commit the feature patch, and leave a clean PR-head working tree. The installed copy excludes the skill's `tests/` tree so the fixture recipe, hidden rubric, and expected result cannot leak into the blinded worker context. `git diff main...HEAD` will show only the implementation under review.
 
-`materialize.py` will default to a read-only check and require an explicit apply mode, empty destination, and skill-source path before it writes. It will copy `fixture/` unchanged into a neutral, ordinary-looking project such as `signal-exporter`, initialize Git, commit that complete base state on `main`, install the selected `receiving-code-review` behavioral surface into the repository, create a feature branch, apply and commit `feature.patch`, and leave a clean PR-head working tree. The installed copy excludes the skill's `tests/` tree so the fixture recipe, hidden rubric, and expected result cannot leak into the blinded worker context. It includes `SKILL.md` and any ordinary behavioral resources the skill uses. That installed surface is part of both base and feature history, so `git diff main...HEAD` shows only the implementation under review.
-
-Keeping the repository-shaped fixture directly inspectable is preferable to a clever generator. The fixture must therefore stay deliberately small: source, tests, and minimum project metadata only; no dependency trees, build output, binaries, caches, or captured run artifacts. A focused check will cap its file count and byte size so test growth cannot silently make the shipped skill materially heavy.
-
-The materializer is maintainer test code. It must be deterministic apart from irrelevant Git timestamps, fail closed on a non-empty destination, avoid remote configuration, and expose no network or external connector surface. Generated repositories and run output live under the repository's resolved off-repo scratch root and are removed after the campaign.
+The materializer must be deterministic apart from irrelevant Git timestamps, fail closed on a non-empty destination, avoid remote configuration, and expose no network or external connector surface. Generated repositories and run output live under the repository's resolved off-repo scratch root and are removed after the campaign.
 
 The subagent receives a fresh context, the fixture repository as its working directory, an instruction to read the installed `receiving-code-review` skill, and one blocking inline-review comment naming the changed file and line. It is not shown the fixture recipe, rubric, RED/GREEN terminology, prior conversation, or expected deeper smell.
 
@@ -101,7 +77,7 @@ The subagent receives a fresh context, the fixture repository as its working dir
 
 The RED repository is materialized from the current skill before the behavioural addition. Its subagent patch, test output, searches, and final report are kept only as transient scratch evidence for the current change. The run record names the fixture-recipe digest, baseline-skill digest, base commit, PR-head commit, model/profile selection, and rubric version without retaining a full transcript.
 
-After the RED is confirmed, the minimal skill addition is authored. GREEN uses a newly materialized repository from the same fixture tree and feature patch, with only the installed skill content changed to the candidate version. Model, reasoning, prompt, tools, repository shape, review comment, and scoring rubric stay equal. Its run record captures the corresponding candidate-skill digest and fixture identities so the comparison can prove that the skill content was the sole intentional treatment difference.
+After RED is confirmed, the minimal skill addition is authored. GREEN uses a newly materialized repository from the same fixture tree and feature patch, with only the installed skill content changed to the candidate version. Model, reasoning, prompt, tools, repository shape, review comment, and scoring rubric stay equal.
 
 GREEN requires observable evidence that the agent:
 
@@ -116,73 +92,9 @@ Mentioning a possible systemic issue without inspecting it is not GREEN. Redesig
 
 Stable prompts, fixture inputs, and the rubric remain tracked. Full model transcripts, score directories, copied model metadata, and generated Git repositories do not become repository evidence.
 
-### 6. Establish the marketplace `tests/` convention
-
-`.agents/doctrine/skill-standards-policy.md` will add `tests/` to this repository's skill-directory convention:
-
-```text
-tests/  # Optional: maintainer verification, fixtures, rubrics, and evaluations
-```
-
-The policy will state:
-
-- Skills are code. Code ships with its tests, so skill-owned tests ship with the skill. Code does not ship test results, so run-specific transcripts, scores, verdicts, generated repositories, and other execution output do not ship with the skill.
-- `tests/` is permitted but undefined by the Agent Skills specification; this repository defines its meaning locally.
-- It contains verification of the skill itself, including automated tests, evaluation scenarios, complete lightweight fixture trees, materialization helpers, rubrics, and stable expected results.
-- It is shipped with canonical and installed skill directories so maintainers can test the skill in the environment where it is installed.
-- It is not part of the skill's behavioural interface. Ordinary invocation must not require or direct the agent to load `tests/`.
-- A skill may have no `tests/` directory when it has no test material yet; opportunistic backfill remains preferable to inventing low-value tests.
-- Transient run outputs and generated test repositories remain off-repo.
-- `assets/` remains for resources used during ordinary skill execution; `references/` remains on-demand behavioural knowledge; `scripts/` remains runtime capability code.
-
-The pressure-testing section of that policy and `tests/pressure/README.md` will replace `assets/pressure-tests.md` with skill-root `tests/` custody. The GREEN instructions will load the candidate `SKILL.md` and its behavioural resources, not the rubric or expected result. Maintainer orchestration may read the skill-root test recipe and rubric.
-
-Repository-root `tests/pressure/` remains the home for shared campaign orchestration, generic run instructions, and repository-wide validation of pressure artifacts. Skill-root `tests/` is the portable source of a particular skill's fixture tree, prompt inputs, rubric, and deterministic assertions. A repo-root campaign adapter may point to those skill-owned files, but it must not duplicate or become a second source of truth for them.
-
-Focused repository contract tests will assert the new doctrine and reject the retired `assets/pressure-tests.md` convention. Packaging/projection validation will prove that a tracked skill-root `tests/` tree survives marketplace generation and installed-skill refresh byte-for-byte. The tests lane will not be added to runtime skill discovery or automatic skill loading.
-
-### 7. Normalize existing test-material custody
-
-The repository-wide inventory found 84 declared skill directories across all 19 active plugin roots, with no missing or undeclared skill directories. Six tracked files in two skills require relocation:
-
-```text
-using-playwright-mcp/assets/pressure-tests.md
-  -> using-playwright-mcp/tests/pressure-tests.md
-
-systematic-debugging/test-academic.md
-  -> systematic-debugging/tests/scenarios/academic.md
-
-systematic-debugging/test-pressure-1.md
-  -> systematic-debugging/tests/scenarios/pressure-1.md
-
-systematic-debugging/test-pressure-2.md
-  -> systematic-debugging/tests/scenarios/pressure-2.md
-
-systematic-debugging/test-pressure-3.md
-  -> systematic-debugging/tests/scenarios/pressure-3.md
-
-systematic-debugging/CREATION-LOG.md
-  -> systematic-debugging/tests/evidence/creation-log.md
-```
-
-`iterative-review/tests/` already conforms and remains unchanged.
-
-Similarly named behavioural material remains in place: the subagent-selection pressure scenarios are runtime decision guidance; the `writing-skills` methodology and worked example teach skill authors; DeepWiki golden questions, Linear golden-gate guidance, writing-profile goldens, and testing profiles are runtime references or data rather than tests of their containing skills.
-
 ## Source and generated surfaces
 
-Authored changes belong in canonical plugin skill trees and repository doctrine. Installed `.agents/skills/` copies, marketplace manifests, indexes, and mesh surfaces remain generated outputs. Normal regeneration must preserve complete skill directories, including the new `tests/` lane; no installed projection is edited by hand.
-
-Expected authored surfaces include:
-
-- `codex-marketplace/plugins/superpowers-plus/skills/receiving-code-review/`
-- `codex-marketplace/plugins/superpowers-plus/skills/systematic-debugging/`
-- `codex-marketplace/plugins/mcp-usage-pack/skills/using-playwright-mcp/`
-- `.agents/doctrine/skill-standards-policy.md`
-- `tests/pressure/README.md`
-- focused repository contract or marketplace-projection tests.
-
-Generated surfaces include the installed skill projections, marketplace inventory/manifests, and mesh/index files owned by repository commands.
+Authored changes belong in the canonical `receiving-code-review` skill tree. The installed `.agents/skills/receiving-code-review/` copy, marketplace manifests, indexes, and mesh surfaces remain generated outputs. No installed projection is edited by hand.
 
 ## Failure handling
 
@@ -190,21 +102,10 @@ Generated surfaces include the installed skill projections, marketplace inventor
 - If GREEN fixes only the specimen, refine the minimal skill wording against the observed omission and rerun the paired proof.
 - If GREEN overreaches, tighten the evidence and authority branches rather than accepting deeper-smell recognition alone.
 - If RED and GREEN differ in anything besides the skill content, discard the comparison and rematerialize both sides.
-- If packaging drops, mutates, or runtime-loads `tests/`, treat that as a convention implementation failure and repair the owning generator or validator before publication.
 
 ## Validation
 
-Validation will include:
-
-- deterministic tests of the fixture materializer's branch, commit, diff, cleanliness, and refusal of non-empty destinations;
-- a focused fixture weight check covering both file count and total bytes;
-- a clean RED recorded before editing the skill;
-- one bounded clean GREEN after the minimal skill edit;
-- focused repository assertions for the `tests/` doctrine and retirement of `assets/pressure-tests.md`;
-- projection checks proving skill-root tests survive canonical marketplace and installed-skill generation;
-- focused tests for any changed helper or validator;
-- the repository's normal staged hooked commit gate on the final tree; and
-- self-review of the complete change before Ready status.
+Validation will include deterministic tests of the fixture materializer's branch, commit, diff, cleanliness, refusal of non-empty destinations, and weight limits; a clean RED recorded before editing the skill; one bounded clean GREEN after the minimal skill edit; focused prose-contract tests for the evidence and authority branches; normal marketplace and installed-skill regeneration; the repository's staged hooked commit gate; and self-review before Ready status.
 
 ## Non-goals
 
@@ -213,10 +114,8 @@ Validation will include:
 - Giving review feedback authority to expand implementation scope silently.
 - Building a general-purpose evaluation service or permanent GitHub fixture repository.
 - Loading test recipes or rubrics during ordinary skill invocation.
-- Moving behavioural references merely because their names contain `test`, `pressure`, `golden`, or `scenario`.
 - Retaining full model transcripts or generated fixture repositories in Git.
-- Backfilling test suites for every marketplace skill in this change.
 
 ## Planning handoff
 
-The implementation plan should preserve this order of authority: establish the fixture and observe the current clean RED before changing the skill; make the minimal behavioural addition; prove GREEN on a newly materialized equivalent repository; then complete the convention migration, projection proof, generated refresh, and repository gate. The plan must not treat the proposed skill wording in this design as pre-implemented source or skip the observed RED requirement.
+The existing implementation plan remains the execution artifact for this work. Its already-completed test-custody tasks are historical prerequisites supplied by draft PR #328; the fresh deeper-smell PR begins at the fixture and observed-RED work. Execution must establish a competent RED before changing the skill, make the minimal behavioural addition, prove GREEN on a newly materialized equivalent repository, regenerate projections, and pass the repository gate.
