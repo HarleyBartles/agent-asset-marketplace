@@ -63,8 +63,8 @@ _COMMAND_DECLARATION = Path(".agents/contracts/repo-standards-commands.json")
 
 
 class CommandDeclaration(NamedTuple):
-    apply: tuple[str, ...]
-    check: tuple[str, ...]
+    apply: tuple[tuple[str, ...], ...]
+    check: tuple[tuple[str, ...], ...]
     generated_paths: tuple[str, ...]
 
 
@@ -261,16 +261,27 @@ def _check_declared_commands(repo_root: Path) -> tuple[CommandDeclaration | None
     if not isinstance(data, dict):
         return None, ["consumer command declaration must be a JSON object"]
     findings: list[str] = []
-    commands: dict[str, tuple[str, ...]] = {}
+    commands: dict[str, tuple[tuple[str, ...], ...]] = {}
     for capability, switch in (("apply", "--apply"), ("check", "--check")):
-        command = data.get(capability)
-        if not isinstance(command, list) or not command or not all(isinstance(item, str) for item in command):
+        raw = data.get(capability)
+        if isinstance(raw, list) and raw and all(isinstance(item, str) for item in raw):
+            vectors = [raw]
+        elif (
+            isinstance(raw, list)
+            and raw
+            and all(
+                isinstance(vector, list) and len(vector) >= 2 and all(isinstance(item, str) and item for item in vector)
+                for vector in raw
+            )
+        ):
+            vectors = raw
+        else:
             findings.append(f"consumer command declaration has invalid {capability} command")
             continue
-        if switch not in command:
+        if any(switch not in vector for vector in vectors):
             findings.append(f"declared {capability} command is missing {switch}")
             continue
-        commands[capability] = tuple(command)
+        commands[capability] = tuple(tuple(vector) for vector in vectors)
     generated_paths = data.get("generated_paths")
     valid_generated_paths: list[str] = []
     if not isinstance(generated_paths, list) or not generated_paths:
