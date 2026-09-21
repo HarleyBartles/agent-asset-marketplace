@@ -25,10 +25,14 @@ codex-marketplace/plugins/<plugin-pack>/skills/<skill-name>/
 ├── agents/               # Optional: agent configuration
 ├── references/           # Optional: supporting documentation
 ├── scripts/              # Optional: helper scripts
-└── assets/               # Optional: templates, authority
+├── assets/               # Optional: ordinary-use templates and authority
+└── tests/                # Optional: maintainer verification shipped with the skill
 ```
 
 The skill directory name must match the `name` field in `SKILL.md` frontmatter.
+
+The Agent Skills specification permits additional directories but does not
+define `tests/`; this repository defines that directory locally.
 
 ## Local skills
 
@@ -102,6 +106,27 @@ Files in a skill's `scripts/` directory that are not executed directly (they hav
 
 ## Testing
 
+Skills are code, and code ships with its tests. Skill-owned tests therefore
+ship in the canonical skill directory and every installed projection. Code
+does not ship test results, and skills do not ship test results: run-specific
+transcripts, scores, verdicts, generated repositories, and other execution
+output remain transient and off-repo.
+
+`tests/` is the maintainer-verification surface for automated checks,
+evaluation scenarios, complete lightweight fixture trees, materialization
+helpers, rubrics, and stable expected results. It is not part of ordinary skill
+invocation: an invoked skill neither requires nor directs the agent to load
+`tests/`. A skill with no test material yet need not contain an empty directory
+or invented low-value tests; backfill useful tests opportunistically.
+
+Keep directory roles distinct:
+
+- `assets/` contains templates, authority evidence, and other resources used
+  during ordinary skill execution.
+- `references/` contains behavioral knowledge loaded on demand.
+- `scripts/` contains runtime capability code.
+- `tests/` verifies the skill itself and ships with it for maintainers.
+
 Before deploying a skill, verify:
 
 1. Frontmatter validates against the contract.
@@ -126,13 +151,18 @@ Pure reference skills (syntax guides, API docs) and skills without a concrete fa
 
 ### Required artifacts when pressure testing
 
-1. **Scenario file in the skill:** Add `assets/pressure-tests.md` to the skill describing the RED and GREEN paths and the tool or decision under pressure. Keep it short and scenario-focused. The scenario ships with the skill so any consumer can run it.
+1. **Test package in the skill:** Keep reusable prompts, evaluation scenarios,
+   complete lightweight fixture trees, materializers, rubrics, and
+   deterministic assertions under the skill's `tests/` directory. These ship
+   with the skill; run outputs do not.
 2. **RED/GREEN comparison:** When the acceptance claim depends on behavior,
    compare the scenario without and with the skill. Keep reusable prompts and
    deterministic assertions; do not retain run-by-run transcripts, score
    folders, or copied model metadata as permanent repository proof.
 3. **Tool-calling fidelity:** Subagents cannot invoke skills, but they can read the skill files from disk and call available MCP or other tools directly. Do not pre-truncate or fabricate tool-list fixtures; let the subagent call the actual MCP server (e.g., `mcp_list_tools`) and experience the same truncation or discovery cost a real agent would.
-4. **Cross-reference:** Link to the scenario from `assets/pressure-tests.md` and, where relevant, from the skill body.
+4. **Blinding:** The maintainer orchestration may read the skill-root test
+   package. The GREEN worker reads `SKILL.md` and its ordinary behavioral
+   resources, never the hidden rubric or expected result.
 
 ### Policy expectations
 
@@ -140,7 +170,9 @@ Pure reference skills (syntax guides, API docs) and skills without a concrete fa
 - Modified skills: if the change affects routing, decisions, or tool selection, re-examine whether a pressure test is now warranted or needs updating.
 - Existing skills: backfill pressure tests opportunistically; do not block current work on full backfill.
 
-See `tests/pressure/README.md` for the generic subagent pressure-test runbook and `codex-marketplace/plugins/superpowers-plus/skills/writing-skills/testing-skills-with-subagents.md` for the RED/GREEN methodology.
+See `tests/pressure/README.md` for shared campaign orchestration and
+`codex-marketplace/plugins/superpowers-plus/skills/writing-skills/testing-skills-with-subagents.md`
+for the RED/GREEN methodology.
 
 ## Compliance status
 

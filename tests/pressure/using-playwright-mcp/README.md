@@ -6,6 +6,10 @@ A page shows a "Saving..." label. After a save action, the agent must wait until
 
 ## Method
 
+The portable scenario is owned by
+`codex-marketplace/plugins/mcp-usage-pack/skills/using-playwright-mcp/tests/pressure-tests.md`.
+This repository-root adapter owns only the shared campaign instructions.
+
 Two isolated agents were given the same task:
 
 - **RED (baseline):** No access to the `using-playwright-mcp` skill; could only reason over the live `mcp_list_tools` output for `mcp-playwright`.

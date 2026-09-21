@@ -37,9 +37,9 @@
   },
   {
     "path": "codex-marketplace/plugins/superpowers-plus/skills/executing-plans/SKILL.md",
-    "line": 93,
+    "line": 105,
     "pattern": "full-test-suite",
-    "context": "On Windows, invoke it through Git Bash. The helper stores the full test log,",
+    "context": "through the same verified Bash. The helper stores the full test log, prints",
     "classification": "repo-local",
     "owner": "runbook-playbook contract",
     "reason": "Repository-local composition guidance required by the approved runbook and playbook contract."

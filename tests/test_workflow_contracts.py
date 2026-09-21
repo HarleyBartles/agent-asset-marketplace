@@ -362,7 +362,8 @@ class TestPlanningDelegationReview:
             "finishing-a-development-branch",
         ):
             assert phrase in native
-        assert "git bash" in native
+        assert "same host environment" in native
+        assert "must not cross implicitly into wsl" in native
         assert "human-owned" in native
 
     def test_brainstorming_establishes_shared_intent_before_path_design(self):
@@ -523,6 +524,58 @@ class TestPlanningDelegationReview:
 
 
 class TestRepositoryCallersAndPressure:
+    def test_skill_tests_ship_with_skills_but_test_results_do_not(self):
+        policy = " ".join(_read(ROOT / ".agents" / "doctrine" / "skill-standards-policy.md").lower().split())
+        pressure = _read(ROOT / "tests" / "pressure" / "README.md").lower()
+
+        assert "skills are code" in policy
+        assert "code ships with its tests" in policy
+        assert "skills do not ship test results" in policy
+        assert "tests/" in policy and "maintainer" in policy
+        assert "ordinary skill invocation" in policy
+        for responsibility in (
+            "complete lightweight fixture trees",
+            "materialization helpers",
+            "assets/",
+            "references/",
+            "scripts/",
+            "transcripts",
+            "scores",
+            "verdicts",
+            "generated repositories",
+        ):
+            assert responsibility in policy
+
+        assert "skill-root `tests/`" in pressure
+        assert "assets/pressure-tests.md" not in pressure
+
+    def test_skill_test_material_uses_the_tests_directory(self):
+        skill_roots = []
+        for bundle_path in sorted((ROOT / "codex-marketplace" / "plugins").glob("*/references/bundle-manifest.json")):
+            bundle = json.loads(_read(bundle_path))
+            for entry in bundle["entries"]:
+                skill_roots.append(ROOT / entry["canonical_source_path"])
+
+        misplaced = []
+        for skill_root in skill_roots:
+            candidates = [
+                skill_root / "assets" / "pressure-tests.md",
+                skill_root / "CREATION-LOG.md",
+                *skill_root.glob("test-*.md"),
+            ]
+            misplaced.extend(path.relative_to(ROOT).as_posix() for path in candidates if path.is_file())
+
+        assert misplaced == []
+        expected = (
+            "codex-marketplace/plugins/mcp-usage-pack/skills/using-playwright-mcp/tests/pressure-tests.md",
+            "codex-marketplace/plugins/superpowers-plus/skills/systematic-debugging/tests/scenarios/academic.md",
+            "codex-marketplace/plugins/superpowers-plus/skills/systematic-debugging/tests/scenarios/pressure-1.md",
+            "codex-marketplace/plugins/superpowers-plus/skills/systematic-debugging/tests/scenarios/pressure-2.md",
+            "codex-marketplace/plugins/superpowers-plus/skills/systematic-debugging/tests/scenarios/pressure-3.md",
+            "codex-marketplace/plugins/superpowers-plus/skills/systematic-debugging/tests/evidence/creation-log.md",
+        )
+        assert all((ROOT / path).is_file() for path in expected)
+
     def test_skill_language_contract_assigns_one_role_per_field(self):
         frontmatter = _read(ROOT / ".agents" / "contracts" / "skill-frontmatter.md")
         wrapper = _read(ROOT / ".agents" / "contracts" / "openai-agent-yaml.md")

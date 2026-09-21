@@ -1,9 +1,12 @@
 # Pressure testing with subagents
 
-This directory holds reusable pressure-test inputs for first-party skills. Each
-subdirectory defines a scenario and the behavior to inspect. A run is transient
-evidence for the current handoff; its model output, scores, transcripts, and
-result records do not belong in Git.
+This repository-root directory owns shared campaign orchestration, generic run
+instructions, and repository-wide validation for first-party skill pressure
+tests. Portable inputs for one skill—prompts, fixture trees, rubrics, and
+deterministic assertions—belong in that skill's `tests/` directory. A run is
+transient evidence for the current handoff; its model output, scores,
+transcripts, verdicts, generated repositories, and result records do not belong
+in Git.
 
 ## When to pressure-test a skill
 
@@ -21,23 +24,27 @@ Pure reference skills or skills without a concrete failure mode usually do not n
 
 Write the pressure scenario as a realistic task where an agent is likely to choose the wrong tool or action.
 
-### 2. Prepare the scenario file
+### 2. Prepare the skill-root test package
 
-Add `assets/pressure-tests.md` to the skill. This scenario file ships with the skill so any consumer can run the test; proof records do not ship with the skill. It should include:
+Add the reusable scenario under the skill-root `tests/` directory. Tests ship
+with the skill; test results do not. Keep the package small and include only
+the stable material the campaign needs:
 
 - A short task description.
 - A **RED** path: what an agent without the skill is likely to do.
 - A **GREEN** path: what an agent with the skill does.
 - The exact tool, inputs, and reasoning that prove the skill's value.
 
-Example: `codex-marketplace/plugins/mcp-usage-pack/skills/using-playwright-mcp/assets/pressure-tests.md`
+Example: `codex-marketplace/plugins/mcp-usage-pack/skills/using-playwright-mcp/tests/pressure-tests.md`
 
 ### 3. Run RED and GREEN subagents
 
 Launch two `subagent_general` runs in parallel:
 
 - **RED:** The subagent may not read the skill files. It can call MCP tools (e.g., `mcp_list_tools`) and use general reasoning.
-- **GREEN:** The subagent reads the skill's `SKILL.md`, `references/`, and `assets/pressure-tests.md` files and applies them as if it had invoked the skill.
+- **GREEN:** The subagent reads the skill's `SKILL.md` and only the ordinary
+  behavioral resources it routes to. The maintainer harness, not the worker,
+  reads the skill-root `tests/` package and hidden rubric.
 
 Subagents cannot invoke skills directly, but they can read skill files from disk and act on them. They may also call any tools they have access to, including MCP tools.
 
