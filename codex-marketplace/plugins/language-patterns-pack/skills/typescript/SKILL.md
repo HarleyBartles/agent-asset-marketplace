@@ -1,8 +1,6 @@
 ---
 name: typescript
-description: Use when writing or reviewing TypeScript type design, generics, module
-  resolution, or compiler configuration. Do not use when the work is JavaScript runtime
-  debugging or framework-specific UI composition.
+description: Use when writing or reviewing TypeScript type design, generics, module resolution, or compiler configuration. Do not use when the work is JavaScript runtime debugging or framework-specific UI composition.
 metadata:
   source-id: typescript
   source-path: codex-marketplace/plugins/language-patterns-pack/skills/typescript/SKILL.md
@@ -12,13 +10,13 @@ metadata:
   owner: Harley Bartles
   scope: TypeScript type design, generics, module resolution, and compiler configuration.
   use_when:
-  - writing or reviewing TypeScript type design.
-  - working with generics, mapped types, or conditional types.
-  - resolving module paths or configuring tsconfig.json.
-  - narrowing types or writing type guards.
+    - writing or reviewing TypeScript type design.
+    - working with generics, mapped types, or conditional types.
+    - resolving module paths or configuring tsconfig.json.
+    - narrowing types or writing type guards.
   do_not_use_when:
-  - the work is JavaScript runtime debugging.
-  - the work is framework-specific UI composition.
+    - the work is JavaScript runtime debugging.
+    - the work is framework-specific UI composition.
 license: MIT
 ---
 
@@ -41,10 +39,10 @@ Do not use for runtime behavior, build tooling unrelated to types, or framework-
 ## Core Pattern
 
 1. Model data with `interface` or `type` before writing logic.
-2. Use generics only when the function or type must work across multiple concrete types; add constraints.
-3. Let inference do the work; add annotations at module boundaries and public APIs.
-4. Prefer `unknown` over `any`; narrow with type guards before use.
-5. Keep `strict` and `noImplicitAny` enabled; align `module`, `moduleResolution`, and `target` with the runtime.
+1. Use generics only when the function or type must work across multiple concrete types; add constraints.
+1. Let inference do the work; add annotations at module boundaries and public APIs.
+1. Prefer `unknown` over `any`; narrow with type guards before use.
+1. Keep `strict` and `noImplicitAny` enabled; align `module`, `moduleResolution`, and `target` with the runtime.
 
 ## Common Mistakes
 

@@ -38,10 +38,10 @@ Use OpenTelemetry to collect distributed traces, metrics, and logs with a single
 ## Core Pattern
 
 1. **Instrument** with the OpenTelemetry API: create tracers, record spans, add metrics, and emit logs.
-2. **Configure** the SDK with resource attributes, exporters, and samplers.
-3. **Propagate** context across process boundaries using W3C Trace Context and Baggage.
-4. **Export** via OTLP to the OpenTelemetry Collector or directly to a backend.
-5. **Enrich** telemetry with semantic conventions and custom attributes.
+1. **Configure** the SDK with resource attributes, exporters, and samplers.
+1. **Propagate** context across process boundaries using W3C Trace Context and Baggage.
+1. **Export** via OTLP to the OpenTelemetry Collector or directly to a backend.
+1. **Enrich** telemetry with semantic conventions and custom attributes.
 
 ## Common Mistakes
 

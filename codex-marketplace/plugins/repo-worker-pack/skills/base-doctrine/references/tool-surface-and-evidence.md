@@ -7,9 +7,9 @@ Skills should describe the capability needed, not prescribe an exact runtime too
 Before claiming a tool, connector, memory route, repository route, plugin, marketplace, or source is unavailable:
 
 1. Check the actual available route when possible.
-2. Record the exact failure or absence.
-3. Distinguish product setting, current session tool surface, connector authorization, plugin installation, source binding, indexed source scope, and runtime/tool error.
-4. Do not infer global unavailability from one route failing.
+1. Record the exact failure or absence.
+1. Distinguish product setting, current session tool surface, connector authorization, plugin installation, source binding, indexed source scope, and runtime/tool error.
+1. Do not infer global unavailability from one route failing.
 
 For repository work, choose routes by active capability:
 

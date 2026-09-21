@@ -32,11 +32,11 @@ Use this section to decide whether `reviewer-mesh` should be dispatched for a PR
 Use this checklist during `orchestrator-self-review` and as the core of the diff review:
 
 1. **Not hand-edited** — generated `INDEX.md`, mesh, and scaffolder output (e.g. `scripts/scaffold_*`, `generating-agent-mesh` output) are not hand-edited in the diff.
-2. **Metadata preservation** — scaffolder and mesh generators preserve existing top-level fields and do not lose provenance / author / license data.
-3. **Check/apply/sync semantics** — `--check` / `--apply` / `--sync` semantics for the `INDEX.md` / mesh / `repo-standards` generators are respected; dry-run exit codes are correct.
-4. **No direct installed copy edits** — no generated file is modified directly in `.agents/skills/` (installed copies) or in generated `INDEX.md` trees; changes flow from pack source through `marketplace --apply`.
-5. **Path safety** — scripts that generate or validate mesh resolve absolute output paths and restore the original directory.
-6. **Cross-repo patterns** — scaffolder/mesh globs and keywords are generic and do not hard-code `<repo_name>`-specific paths.
+1. **Metadata preservation** — scaffolder and mesh generators preserve existing top-level fields and do not lose provenance / author / license data.
+1. **Check/apply/sync semantics** — `--check` / `--apply` / `--sync` semantics for the `INDEX.md` / mesh / `repo-standards` generators are respected; dry-run exit codes are correct.
+1. **No direct installed copy edits** — no generated file is modified directly in `.agents/skills/` (installed copies) or in generated `INDEX.md` trees; changes flow from pack source through `marketplace --apply`.
+1. **Path safety** — scripts that generate or validate mesh resolve absolute output paths and restore the original directory.
+1. **Cross-repo patterns** — scaffolder/mesh globs and keywords are generic and do not hard-code `<repo_name>`-specific paths.
 
 ## Invariants
 
@@ -68,16 +68,17 @@ Write `review-log-mesh.md` in the off-repo scratch. Begin with a brief `## Input
 ## Procedure
 
 1. If `<scan_findings>` is provided, read it first and do not duplicate its findings; verify the preflight caught the pattern in the right place.
-2. If `<pr_description>` is provided, read it for scope.
-3. If `<diff_path>` is provided, read it. If it truncates, use the overflow file or re-read with `offset` and `limit`.
-4. Apply the `## Checklist`.
-5. Use `grep` and `find_file_by_name` to confirm that any changed generated file can be traced to a generator or pack source.
-6. Report only mesh/scaffolder/generated issues. Cite `file:line`, severity, and remediation.
-7. End with `reviewer-mesh: N issue(s)` or `reviewer-mesh: clean`.
+1. If `<pr_description>` is provided, read it for scope.
+1. If `<diff_path>` is provided, read it. If it truncates, use the overflow file or re-read with `offset` and `limit`.
+1. Apply the `## Checklist`.
+1. Use `grep` and `find_file_by_name` to confirm that any changed generated file can be traced to a generator or pack source.
+1. Report only mesh/scaffolder/generated issues. Cite `file:line`, severity, and remediation.
+1. End with `reviewer-mesh: N issue(s)` or `reviewer-mesh: clean`.
 
 ## Output format
 
 For each issue:
+
 - `file:line` reference.
 - Severity: **blocking** / **important** / **minor**.
 - What is wrong and why it matters for the mesh/scaffolder surface.
@@ -96,6 +97,7 @@ You are a reviewer, not a ledger. Do not count tool calls. Read the items that y
 - As a hard backstop, do not exceed 50 total tool calls after loading the inputs.
 
 A partial, cited report is better than an infinite loop. Do not announce that you are writing the report — just write it.
+
 ## Final response (hard contract)
 
 After writing the off-repo `review-log-*.md` report, your final response to the orchestrator must be exactly one line in this exact form:

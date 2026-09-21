@@ -3,6 +3,7 @@ description: "Tooling and validation rules"
 trigger: glob
 globs: "tools/**"
 ---
+
 ## Scope
 
 For the canonical doctrine behind this rule, read `.agents/doctrine/tools.md`.

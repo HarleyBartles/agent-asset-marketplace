@@ -35,11 +35,12 @@
 - A credible but consequential prevention must produce an evidence-backed follow-up rather than silent scope expansion; covered in Task 3's prose-contract test.
 - Nested skill test files must survive installation byte-for-byte without becoming runtime discovery inputs; covered in Task 5's projection test and Task 6's generated-tree comparison.
 
----
+______________________________________________________________________
 
 ### Task 1: Build the lightweight local-PR fixture and materializer
 
 **Files:**
+
 - Create: `codex-marketplace/plugins/superpowers-plus/skills/receiving-code-review/tests/deeper-smell/README.md`
 - Create: `codex-marketplace/plugins/superpowers-plus/skills/receiving-code-review/tests/deeper-smell/materialize.py`
 - Create: `codex-marketplace/plugins/superpowers-plus/skills/receiving-code-review/tests/deeper-smell/test_materialize.py`
@@ -52,7 +53,9 @@
 - Create: `codex-marketplace/plugins/superpowers-plus/skills/receiving-code-review/tests/deeper-smell/fixture/tests/test_commands.py`
 
 **Interfaces:**
+
 - Consumes: canonical baseline or candidate skill directory supplied with `--skill-source`; an empty destination supplied with `--destination`; local Git and Python only.
+
 - Produces: `FixtureStats(file_count: int, total_bytes: int)`, `MaterializedRepo(destination: Path, base_commit: str, head_commit: str, fixture_sha256: str, skill_sha256: str)`, `validate_fixture_tree(fixture_root: Path) -> FixtureStats`, `copy_behavioral_skill(skill_source: Path, destination: Path) -> None`, and `materialize(destination: Path, skill_source: Path) -> MaterializedRepo`. CLI `--check` validates the shipped fixture without writing; `--apply --destination PATH --skill-source PATH` creates the repository and prints the result as JSON.
 
 - [ ] **Step 1: Write failing materializer contract tests**
@@ -124,13 +127,7 @@ git("add", "--all")
 git("commit", "-m", "feat: add metrics export command")
 ```
 
-Hash files in sorted relative-path order with path separators normalized to `/`.
-`copy_behavioral_skill` copies `SKILL.md` plus any `agents/`, `assets/`,
-`references/`, and `scripts/` content, but must exclude top-level `tests/` so the
-hidden harness cannot leak into the worker repository. Reject symlinks,
-`__pycache__`, `.pyc`, binary/NUL-bearing fixture files, and any fixture entry
-outside the size limits. Do not add a remote. On a failed apply, remove only a
-destination that this invocation created; never delete a pre-existing path.
+Hash files in sorted relative-path order with path separators normalized to `/`. `copy_behavioral_skill` copies `SKILL.md` plus any `agents/`, `assets/`, `references/`, and `scripts/` content, but must exclude top-level `tests/` so the hidden harness cannot leak into the worker repository. Reject symlinks, `__pycache__`, `.pyc`, binary/NUL-bearing fixture files, and any fixture entry outside the size limits. Do not add a remote. On a failed apply, remove only a destination that this invocation created; never delete a pre-existing path.
 
 - [ ] **Step 5: Write the maintainer README and hidden rubric**
 
@@ -170,12 +167,15 @@ git commit -m "test: add deeper-smell review fixture"
 ### Task 2: Establish the blinded baseline RED
 
 **Files:**
+
 - Read: `codex-marketplace/plugins/superpowers-plus/skills/receiving-code-review/tests/deeper-smell/README.md`
 - Read after worker completion only: `codex-marketplace/plugins/superpowers-plus/skills/receiving-code-review/tests/deeper-smell/rubric.md`
 - Transient: resolved off-repo scratch directories for the repository and run record
 
 **Interfaces:**
+
 - Consumes: Task 1 materializer, the committed pre-change `receiving-code-review` skill, exact blinded prompt, review comment, rubric, and a fresh subagent selected once for both arms.
+
 - Produces: transient RED record containing fixture digest, baseline behavioral-skill digest, base/head commits, model/profile and reasoning, prompt/rubric digests, worker patch summary, verification commands, and rubric outcome; plus an off-repo baseline behavioral-skill snapshot retained only through Task 4.
 
 - [ ] **Step 1: Freeze treatment-independent identities**
@@ -205,22 +205,19 @@ After the worker finishes, inspect its patch, searches/tool trace available to t
 
 - [ ] **Step 4: Record and report the checkpoint without committing run artifacts**
 
-Update the transient JSON with the rubric decision and concise evidence. Remove
-the materialized repository after evidence capture, but retain the off-repo JSON
-and baseline behavioral-skill snapshot through Task 4. In the execution
-commentary, state whether clean RED was established and the local fix/tests
-observed. Do not commit the repository, transcript, JSON record, or generated
-skill copy. If clean RED is not established, stop implementation and return to
-Task 1 fixture refinement before touching the skill.
+Update the transient JSON with the rubric decision and concise evidence. Remove the materialized repository after evidence capture, but retain the off-repo JSON and baseline behavioral-skill snapshot through Task 4. In the execution commentary, state whether clean RED was established and the local fix/tests observed. Do not commit the repository, transcript, JSON record, or generated skill copy. If clean RED is not established, stop implementation and return to Task 1 fixture refinement before touching the skill.
 
 ### Task 3: Add the bounded deeper-smell behavior to review reception
 
 **Files:**
+
 - Modify: `codex-marketplace/plugins/superpowers-plus/skills/receiving-code-review/SKILL.md`
 - Modify: `tests/test_workflow_contracts.py`
 
 **Interfaces:**
+
 - Consumes: approved three-branch decision and clean RED from Tasks 1-2.
+
 - Produces: response sequence `READ -> UNDERSTAND -> VERIFY -> EVALUATE -> INSPECT -> RESPOND -> IMPLEMENT -> VERIFY`, the competent-implementer smell test, and bounded local/prevention/follow-up branches.
 
 - [ ] **Step 1: Add failing prose-contract tests**
@@ -281,12 +278,15 @@ git commit -m "feat: inspect deeper smells in review feedback"
 ### Task 4: Prove blinded GREEN against the unchanged fixture
 
 **Files:**
+
 - Read: `codex-marketplace/plugins/superpowers-plus/skills/receiving-code-review/tests/deeper-smell/README.md`
 - Read after worker completion only: `codex-marketplace/plugins/superpowers-plus/skills/receiving-code-review/tests/deeper-smell/rubric.md`
 - Transient: new off-repo scratch repository and paired run record
 
 **Interfaces:**
+
 - Consumes: the frozen Task 2 identities and subagent configuration, unchanged fixture/prompt/comment/rubric, and Task 3 candidate skill.
+
 - Produces: paired transient GREEN evidence proving the skill digest is the sole intentional treatment difference.
 
 - [ ] **Step 1: Verify comparison equality before dispatch**
@@ -303,13 +303,7 @@ Require observable evidence for every rubric item: reviewed wrapper fixed; non-z
 
 - [ ] **Step 4: Handle failure without corrupting the comparison**
 
-If the worker fixes only the specimen, make one minimal wording refinement in
-`SKILL.md`, commit it, then rematerialize RED from the retained baseline
-behavioral-skill snapshot and GREEN from the refined candidate and rerun the
-pair. If the worker overreaches, tighten the evidence/authority branches and
-rerun both arms. Never edit the fixture or rubric between paired arms; a
-required fixture change invalidates both prior runs and returns execution to
-Task 2.
+If the worker fixes only the specimen, make one minimal wording refinement in `SKILL.md`, commit it, then rematerialize RED from the retained baseline behavioral-skill snapshot and GREEN from the refined candidate and rerun the pair. If the worker overreaches, tighten the evidence/authority branches and rerun both arms. Never edit the fixture or rubric between paired arms; a required fixture change invalidates both prior runs and returns execution to Task 2.
 
 - [ ] **Step 5: Report and clean transient evidence**
 
@@ -318,6 +312,7 @@ Record the paired verdict and exact passing test commands in the transient JSON,
 ### Task 5: Establish and enforce skill-root test custody
 
 **Files:**
+
 - Modify: `.agents/doctrine/skill-standards-policy.md`
 - Modify: `tests/pressure/README.md`
 - Modify: `tests/pressure/using-playwright-mcp/README.md`
@@ -331,20 +326,14 @@ Record the paired verdict and exact passing test commands in the transient JSON,
 - Modify: `tests/test_refresh_installed_skills.py`
 
 **Interfaces:**
+
 - Consumes: complete canonical skill directories and existing whole-directory installed-skill sync.
+
 - Produces: documented `tests/` meaning, rejection of retired placements, and byte-for-byte nested test-tree installation proof.
 
 - [ ] **Step 1: Add failing doctrine and custody tests**
 
-In `tests/test_workflow_contracts.py`, add a test that checks the policy states
-that skills are code, code ships with tests, and neither code nor skills ship
-test results. It must also name `tests/` as optional maintainer verification;
-say it ships but is not part of ordinary invocation; distinguish `assets/`,
-`references/`, and `scripts/`; keep transcripts, scores, verdicts, generated
-repositories, and other run output off-repo; and name complete lightweight
-fixture trees plus materialization helpers. Assert `tests/pressure/README.md`
-points to skill-root `tests/` and no longer requires
-`assets/pressure-tests.md`.
+In `tests/test_workflow_contracts.py`, add a test that checks the policy states that skills are code, code ships with tests, and neither code nor skills ship test results. It must also name `tests/` as optional maintainer verification; say it ships but is not part of ordinary invocation; distinguish `assets/`, `references/`, and `scripts/`; keep transcripts, scores, verdicts, generated repositories, and other run output off-repo; and name complete lightweight fixture trees plus materialization helpers. Assert `tests/pressure/README.md` points to skill-root `tests/` and no longer requires `assets/pressure-tests.md`.
 
 Add an inventory test over every declared skill directory that rejects `assets/pressure-tests.md`, root `test-*.md`, and root `CREATION-LOG.md`, while explicitly asserting the six new destinations exist. Do not reject existing behavioral paths identified as non-test material in the spec.
 
@@ -363,17 +352,7 @@ Expected: FAIL on the old doctrine/locations and any missing projection assertio
 
 - [ ] **Step 3: Update doctrine and pressure orchestration guidance**
 
-Lead the testing contract with: skills are code; code ships with its tests; code
-does not ship test results; the same boundary applies to skills. Add `tests/`
-to the directory tree and define it as optional only in the sense that a skill
-with no test material need not contain an empty or invented suite. When tests
-exist, their automated checks, evaluation scenarios, complete lightweight
-fixtures, materializers, rubrics, and stable expectations ship in `tests/`.
-State that arbitrary extra directories are permitted but undefined by the
-Agent Skills specification; this is marketplace-local doctrine. State that
-`tests/` ships in canonical/installed skills but ordinary invocation neither
-requires nor directs loading it. Explicitly exclude run-specific transcripts,
-scores, verdicts, generated repositories, and other execution output.
+Lead the testing contract with: skills are code; code ships with its tests; code does not ship test results; the same boundary applies to skills. Add `tests/` to the directory tree and define it as optional only in the sense that a skill with no test material need not contain an empty or invented suite. When tests exist, their automated checks, evaluation scenarios, complete lightweight fixtures, materializers, rubrics, and stable expectations ship in `tests/`. State that arbitrary extra directories are permitted but undefined by the Agent Skills specification; this is marketplace-local doctrine. State that `tests/` ships in canonical/installed skills but ordinary invocation neither requires nor directs loading it. Explicitly exclude run-specific transcripts, scores, verdicts, generated repositories, and other execution output.
 
 Revise repository-root pressure guidance so it owns shared orchestration and generic campaign instructions, while each skill-root `tests/` owns portable prompts, fixture trees, rubrics, and deterministic assertions. GREEN may load `SKILL.md` and behavioral resources only; evaluators/materializers may load the hidden test material. Point the Playwright campaign README at its moved skill-root scenario.
 
@@ -395,6 +374,7 @@ git commit -m "refactor: standardize skill test custody"
 ### Task 6: Regenerate projections, verify the complete slice, and publish review evidence
 
 **Files:**
+
 - Modify generated: `.agents/skills/receiving-code-review/`
 - Modify generated: `.agents/skills/systematic-debugging/`
 - Modify generated: `.agents/skills/using-playwright-mcp/`
@@ -402,7 +382,9 @@ git commit -m "refactor: standardize skill test custody"
 - Modify at completion: `.agents/plans/2026-09-21-receiving-code-review-deeper-smell-and-skill-tests.md`
 
 **Interfaces:**
+
 - Consumes: all canonical source commits and paired RED/GREEN evidence.
+
 - Produces: current generated projections, complete repository verification, a completed-awaiting-retirement plan, self-review evidence, and a reviewable draft PR.
 
 - [ ] **Step 1: Regenerate from canonical sources**
@@ -420,13 +402,7 @@ Inspect generated changes. Confirm no generated file became an authored edit poi
 
 - [ ] **Step 2: Prove canonical-to-installed test-tree equality**
 
-Compare every file and relative path under the changed canonical skill trees with
-`.agents/skills/receiving-code-review/`, `.agents/skills/systematic-debugging/`,
-and `.agents/skills/using-playwright-mcp/` using the repository's tree
-canonicalization rules. Explicitly assert the new receiving-code-review
-fixture, moved systematic-debugging tests, and moved Playwright pressure
-scenario exist byte-for-byte in the installed copies. Confirm ordinary skill
-discovery still keys on `SKILL.md` and does not enumerate or auto-load `tests/`.
+Compare every file and relative path under the changed canonical skill trees with `.agents/skills/receiving-code-review/`, `.agents/skills/systematic-debugging/`, and `.agents/skills/using-playwright-mcp/` using the repository's tree canonicalization rules. Explicitly assert the new receiving-code-review fixture, moved systematic-debugging tests, and moved Playwright pressure scenario exist byte-for-byte in the installed copies. Confirm ordinary skill discovery still keys on `SKILL.md` and does not enumerate or auto-load `tests/`.
 
 - [ ] **Step 3: Run focused and complete validation**
 
@@ -439,9 +415,7 @@ py -3 -m pytest tests/test_refresh_installed_skills.py -q
 py -3 tools/run.py review-preflight --check
 ```
 
-Expected: all focused checks and review preflight pass. Do not run a standalone
-`ci --check` here; the normal commit in Step 4 owns the complete staged-snapshot
-gate.
+Expected: all focused checks and review preflight pass. Do not run a standalone `ci --check` here; the normal commit in Step 4 owns the complete staged-snapshot gate.
 
 - [ ] **Step 4: Complete the in-flight plan and commit the final tree**
 

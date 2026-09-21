@@ -10,13 +10,13 @@ Do not encode "a worker can do anything." Workers remain bounded by issue scope,
 
 Classify before shaping so the issue gets the right size and return contract:
 
-| Issue type | Shape | Default PR posture | Return evidence |
-|---|---|---|---|
-| small worker-ready issue | one bounded Linear issue, compact DOD | one PR | standard worker return |
-| campaign issue | one durable Linear parent issue, Linear documents as lane/subtask packets where a chunky campaign needs multiple seams | one PR unless a split condition triggers | stronger return evidence (see below) |
-| planning/tracker issue | parent/tracker or planning-only issue, no execution yet | no PR expected until children are shaped | planning note, no GREEN |
-| GPT-native skillwork | GPT-native skill author/edit/package work | one PR only when the editable source is repo-backed and the issue explicitly targets that repo | skill-source return evidence |
-| non-repo/manual work | UI, connector, account, research, or manual action | no PR | observable completion note |
+| Issue type               | Shape                                                                                                                  | Default PR posture                                                                             | Return evidence                      |
+| ------------------------ | ---------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ------------------------------------ |
+| small worker-ready issue | one bounded Linear issue, compact DOD                                                                                  | one PR                                                                                         | standard worker return               |
+| campaign issue           | one durable Linear parent issue, Linear documents as lane/subtask packets where a chunky campaign needs multiple seams | one PR unless a split condition triggers                                                       | stronger return evidence (see below) |
+| planning/tracker issue   | parent/tracker or planning-only issue, no execution yet                                                                | no PR expected until children are shaped                                                       | planning note, no GREEN              |
+| GPT-native skillwork     | GPT-native skill author/edit/package work                                                                              | one PR only when the editable source is repo-backed and the issue explicitly targets that repo | skill-source return evidence         |
+| non-repo/manual work     | UI, connector, account, research, or manual action                                                                     | no PR                                                                                          | observable completion note           |
 
 Do not route GPT-native skillwork to a worker merely because it touches skill text. Route it to a worker only when the editable source is repo-backed and the issue explicitly targets that repo.
 
@@ -129,8 +129,8 @@ Then return: branch, PR URL, final head SHA, changed files, validation output, g
 Before claiming a campaign issue or handoff is ready, verify:
 
 1. Campaign shape present: the issue body includes a one-PR preference, a lane-document option, and at least one split condition.
-2. Worktree isolation gate present in the issue body or issue-readiness template.
-3. Worktree isolation gate present in any paste-ready launch handoff.
-4. Worktree isolation gate present in any paste-ready resume nudge, before mutation.
-5. Small worker issue shaping still works and is not overgrown into campaign shape: a small bounded issue keeps the compact DOD and standard return contract.
-6. GPT-native skillwork is not routed to a worker merely because it touches skill text, unless the editable source is repo-backed and the issue explicitly targets that repo.
+1. Worktree isolation gate present in the issue body or issue-readiness template.
+1. Worktree isolation gate present in any paste-ready launch handoff.
+1. Worktree isolation gate present in any paste-ready resume nudge, before mutation.
+1. Small worker issue shaping still works and is not overgrown into campaign shape: a small bounded issue keeps the compact DOD and standard return contract.
+1. GPT-native skillwork is not routed to a worker merely because it touches skill text, unless the editable source is repo-backed and the issue explicitly targets that repo.

@@ -7,8 +7,7 @@ Choose the smallest durable home for each rule or asset.
 - System prompt: tiny boot/routing invariants needed before skills load.
 - cross-runtime doctrine skill: cross-project rules and contracts not owned elsewhere.
 - Specific GPT-native skill: detailed workflow, output contract, checklist, or tool procedure.
-- `.agents/doctrine/*.md`: repo-local operative doctrine that is too large or
-  too dynamic for `AGENTS.md`/`.devin/rules` triggers; loaded by `using-superpowers-plus`.
+- `.agents/doctrine/*.md`: repo-local operative doctrine that is too large or too dynamic for `AGENTS.md`/`.devin/rules` triggers; loaded by `using-superpowers-plus`.
 - Canonical agent asset repo: versioned source truth for GPT-native skill sources, Codex plugin marketplaces, repo overlays, provenance, package evidence, and rollout metadata.
 - Codex plugin marketplace: generic worker capabilities that Codex can install natively, especially GitHub, Linear, review, CI, debugging, planning, and other reusable workflow plugins.
 - Repo overlay / repo-resident skills: project-specific domain anchors, validation lanes, local runtime expectations, and protected surfaces that generic plugins cannot know.
@@ -25,9 +24,9 @@ Installed GPT skills and Codex plugins are deployment targets. Treat them as cur
 A GPT-native skill update should eventually become:
 
 1. edit the canonical repo source;
-2. validate/package through the native skill stack;
-3. install or overwrite the deployed skill;
-4. record source commit, package hash, and rollout evidence.
+1. validate/package through the native skill stack;
+1. install or overwrite the deployed skill;
+1. record source commit, package hash, and rollout evidence.
 
 Until the canonical repo exists for a skill, chat-packaged skill updates can be lawful deployment work, but do not confuse that temporary route with the desired source-of-truth model.
 

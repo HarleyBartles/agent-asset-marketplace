@@ -12,10 +12,7 @@ Use when approved requirements need an executable repository plan.
 
 ## Composition
 
-After refreshing `main` and creating the slice worktree, run the
-`completing-planning-artifacts` successor-slice ingress lane before substantive
-edits. Write the committed, in-flight plan before implementation. Source and
-overlay edits precede regeneration and validation.
+After refreshing `main` and creating the slice worktree, run the `completing-planning-artifacts` successor-slice ingress lane before substantive edits. Write the committed, in-flight plan before implementation. Source and overlay edits precede regeneration and validation.
 
 ## Doctrine and contracts
 
@@ -28,9 +25,7 @@ Plans live under `.agents/plans/`. Use `py -3 tools/run.py mesh --apply` after a
 
 ## Evidence contract
 
-Eligible predecessor artifacts are retired in the first commit of this
-eventual PR. The committed in-flight plan names exact files, test cycles,
-generation, validation, and publication proof.
+Eligible predecessor artifacts are retired in the first commit of this eventual PR. The committed in-flight plan names exact files, test cycles, generation, validation, and publication proof.
 
 ## Prohibited combinations
 

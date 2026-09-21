@@ -3,6 +3,7 @@
 ## When to apply
 
 Use when the requirements-elicitation skill loaded and the question is deeper than a single sentence:
+
 - planning stakeholder interviews,
 - writing user stories and acceptance criteria,
 - validating requirements,

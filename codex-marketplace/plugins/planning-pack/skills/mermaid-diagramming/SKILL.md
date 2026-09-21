@@ -9,14 +9,14 @@ metadata:
   status: active
   owner: Harley Bartles
   use_when:
-  - selecting a diagram type for a process, interaction, data model, or state machine.
-  - writing or reviewing Mermaid syntax in documentation.
+    - selecting a diagram type for a process, interaction, data model, or state machine.
+    - writing or reviewing Mermaid syntax in documentation.
   do_not_use_when:
-  - the audience needs interactive or pixel-perfect visuals that Mermaid cannot provide.
+    - the audience needs interactive or pixel-perfect visuals that Mermaid cannot provide.
   related_skills:
-  - clean-architecture
-  - api-design
-  - writing-with-clarity
+    - clean-architecture
+    - api-design
+    - writing-with-clarity
 license: MIT
 ---
 
@@ -42,10 +42,10 @@ Express technical diagrams as plain text inside docs, ADRs, and READMEs so they 
    - `stateDiagram-v2` for state transitions.
    - `gantt` for schedules.
    - `journey`, `mindmap`, or `timeline` for UX flows, idea maps, or chronology.
-2. Declare the diagram with the type keyword and keep one concept per diagram.
-3. Use descriptive node IDs and quoted labels for special characters; prefer `LR` or `TB` direction.
-4. Group related nodes with `subgraph` and label edges with `-->|"reason"|`.
-5. Provide a basic and a styled version, plus a note about the target renderer such as GitHub, Mermaid Live Editor, or VS Code.
+1. Declare the diagram with the type keyword and keep one concept per diagram.
+1. Use descriptive node IDs and quoted labels for special characters; prefer `LR` or `TB` direction.
+1. Group related nodes with `subgraph` and label edges with `-->|"reason"|`.
+1. Provide a basic and a styled version, plus a note about the target renderer such as GitHub, Mermaid Live Editor, or VS Code.
 
 ## Common Mistakes
 

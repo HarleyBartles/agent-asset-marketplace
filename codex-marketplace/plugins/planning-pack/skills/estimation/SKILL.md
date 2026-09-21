@@ -9,16 +9,16 @@ metadata:
   status: active
   owner: Harley Bartles
   use_when:
-  - planning sprints, milestones, or releases.
-  - comparing candidate approaches by effort and risk.
-  - communicating confidence and buffer to stakeholders.
-  - reviewing estimates against actuals to calibrate.
+    - planning sprints, milestones, or releases.
+    - comparing candidate approaches by effort and risk.
+    - communicating confidence and buffer to stakeholders.
+    - reviewing estimates against actuals to calibrate.
   do_not_use_when:
-  - another more specific skill owns the task.
+    - another more specific skill owns the task.
   related_skills:
-  - requirements-elicitation
-  - risk-gates
-  - writing-with-clarity
+    - requirements-elicitation
+    - risk-gates
+    - writing-with-clarity
 license: MIT
 ---
 
@@ -40,11 +40,11 @@ Do not use when another more specific skill owns the task.
 ## Core Pattern
 
 1. Break work into small, comparable units; prefer historical data over intuition.
-2. Estimate in ranges or confidence intervals, not single points.
-3. Apply risk buffers for unknowns, dependencies, and integration complexity.
-4. Use team-based methods (planning poker, affinity grouping) to reduce individual bias.
-5. Document assumptions and compare actuals; update the team's baseline.
-6. Separate effort from duration: account for availability, interrupts, and dependencies.
+1. Estimate in ranges or confidence intervals, not single points.
+1. Apply risk buffers for unknowns, dependencies, and integration complexity.
+1. Use team-based methods (planning poker, affinity grouping) to reduce individual bias.
+1. Document assumptions and compare actuals; update the team's baseline.
+1. Separate effort from duration: account for availability, interrupts, and dependencies.
 
 ## Common Mistakes
 

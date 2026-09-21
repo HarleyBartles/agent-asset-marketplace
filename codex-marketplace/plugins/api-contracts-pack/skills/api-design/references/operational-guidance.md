@@ -7,11 +7,11 @@ Use this reference when designing a new HTTP API contract, reviewing an existing
 ## Core pattern
 
 1. Anchor the contract with the OpenAPI Object (`openapi: 3.1.0`).
-2. Populate `info` with a stable title and version; use `servers` for base URLs.
-3. Model resources under `paths`; keep operations idempotent where possible and use HTTP methods consistently.
-4. Place reusable schemas, parameters, responses, examples, and security schemes under `components`.
-5. Reference components with `$ref` to avoid duplication and keep names stable.
-6. Declare `security` globally or per operation; define scopes explicitly.
+1. Populate `info` with a stable title and version; use `servers` for base URLs.
+1. Model resources under `paths`; keep operations idempotent where possible and use HTTP methods consistently.
+1. Place reusable schemas, parameters, responses, examples, and security schemes under `components`.
+1. Reference components with `$ref` to avoid duplication and keep names stable.
+1. Declare `security` globally or per operation; define scopes explicitly.
 
 ## Versioning and compatibility
 

@@ -9,16 +9,16 @@ metadata:
   status: active
   owner: Harley Bartles
   use_when:
-  - designing or reviewing CI/CD pipelines.
-  - building, tagging, or promoting container images.
-  - planning blue/green, canary, or rolling deployments.
-  - preparing or rolling back a release.
+    - designing or reviewing CI/CD pipelines.
+    - building, tagging, or promoting container images.
+    - planning blue/green, canary, or rolling deployments.
+    - preparing or rolling back a release.
   do_not_use_when:
-  - another more specific skill owns the task.
+    - another more specific skill owns the task.
   related_skills:
-  - observability
-  - using-github-mcp
-  - secure-development
+    - observability
+    - using-github-mcp
+    - secure-development
 license: MIT
 ---
 
@@ -40,11 +40,11 @@ Do not use when another more specific skill owns the task.
 ## Core Pattern
 
 1. Version everything: tag source, artifact, and deployment manifests with the same release identifier.
-2. Build immutable artifacts in CI and promote them; avoid building per environment.
-3. Use stages (dev, staging, production) with gates: automated tests, security scans, and approvals.
-4. Prefer gradual rollouts (canary or blue/green) over all-at-once deploys; monitor health signals before increasing traffic.
-5. Keep rollback one command away: retain the previous image or manifest and rehearse the rollback path.
-6. Secure the supply chain: pin base images, sign artifacts, and audit runner permissions.
+1. Build immutable artifacts in CI and promote them; avoid building per environment.
+1. Use stages (dev, staging, production) with gates: automated tests, security scans, and approvals.
+1. Prefer gradual rollouts (canary or blue/green) over all-at-once deploys; monitor health signals before increasing traffic.
+1. Keep rollback one command away: retain the previous image or manifest and rehearse the rollback path.
+1. Secure the supply chain: pin base images, sign artifacts, and audit runner permissions.
 
 ## Common Mistakes
 

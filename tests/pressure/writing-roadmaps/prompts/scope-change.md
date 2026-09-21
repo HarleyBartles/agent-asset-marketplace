@@ -11,4 +11,5 @@ The current roadmap file is `.agents/superpowers/roadmaps/2026-07-25-ecommerce-s
 What do you do?
 
 # Expected pass
+
 The agent updates the roadmap inline, adjusts the forward plan sequence, documents the rationale in `Handoff Notes`, and asks the human a focused clarification question only if the wishlist scope is ambiguous. It does not proceed to rewrite plans before updating the roadmap.

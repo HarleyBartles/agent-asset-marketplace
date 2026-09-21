@@ -1,8 +1,6 @@
 ---
 name: linear-issue-shaping
-description: Use when shaping Linear-backed issues, projects, or documents; inspecting
-  Linear state; preparing explicitly requested worker handoffs; or routing pull-request
-  proof after a PR exists.
+description: Use when shaping Linear-backed issues, projects, or documents; inspecting Linear state; preparing explicitly requested worker handoffs; or routing pull-request proof after a PR exists.
 metadata:
   source-id: linear-issue-shaping
   source-path: codex-marketplace/plugins/repo-worker-pack/skills/linear-issue-shaping/SKILL.md
@@ -10,18 +8,14 @@ metadata:
   source-category: first_party
   status: active
   owner: Harley Bartles
-  scope: Linear issue, project, document, worker-packet, and PR-proof shaping without
-    worker dispatch or execution ownership.
+  scope: Linear issue, project, document, worker-packet, and PR-proof shaping without worker dispatch or execution ownership.
   use_when:
-  - 'Linear-backed issue, project, or document shaping is needed: create or update
-    worker-ready Linear issues, inspect Linear comments/attachments/state, prepare
-    paste-ready worker handoffs when explicitly requested, and route GitHub PR proof
-    after a PR exists. Do not launch workers, delegate execution, or assume any execution
-    lane; treat worker-ready as issue-ready only.'
+    - 'Linear-backed issue, project, or document shaping is needed: create or update worker-ready Linear issues, inspect Linear comments/attachments/state, prepare paste-ready worker handoffs when explicitly requested, and route GitHub PR proof after a PR exists. Do not launch workers, delegate execution, or assume any execution lane; treat worker-ready as issue-ready only.'
   do_not_use_when:
-  - another more specific skill owns this task.
+    - another more specific skill owns this task.
 license: MIT
 ---
+
 # Linear Issue Shaping
 
 Use this skill as the GPT-wide control plane for Linear-backed issue, project, and document shaping and Linear event-log handling.
@@ -39,10 +33,10 @@ Material connector blocks are blocked, rejected, safety-filtered, permission-rej
 Linear is the durable issue/control plane. The boring default is:
 
 1. create or update a worker-ready Linear issue;
-2. inspect Linear comments, attachments, assignee, labels, and status when checking progress;
-3. prepare a paste-ready worker handoff only when your human partner explicitly asks for one;
-4. switch to GitHub proof only after a GitHub PR, branch, commit, or URL exists;
-5. never claim execution, publication, merge, or closeout unless the target system proves it.
+1. inspect Linear comments, attachments, assignee, labels, and status when checking progress;
+1. prepare a paste-ready worker handoff only when your human partner explicitly asks for one;
+1. switch to GitHub proof only after a GitHub PR, branch, commit, or URL exists;
+1. never claim execution, publication, merge, or closeout unless the target system proves it.
 
 If a Linear write is blocked, rejected, safety-filtered, permission-rejected, schema-rejected, or validation-rejected, route the recovery into `connector-safety` immediately. Do not paraphrase the payload from memory or retry the same mutation shape from the same surface.
 
@@ -76,10 +70,7 @@ Approved plans live in the repo under `.agents/plans/`. After a plan merges, pla
 
 If the approved plan is stale but the drift is repairable and stays inside the approved scope, repair the repo-resident plan in the execution branch, keep the route-state block current, and include the repaired plan in the execution PR. If the drift changes scope materially, invalidates the approved direction, or makes execution unsafe, stop for human review.
 
-Keep an approved plan current while it governs implementation and review. When
-the PR completes it, follow the consumer's completed-artifact custody rule:
-promote durable decisions and remove the finished planning artifacts from the
-final tracked tree. A disposable scratch copy is optional and proves nothing.
+Keep an approved plan current while it governs implementation and review. When the PR completes it, follow the consumer's completed-artifact custody rule: promote durable decisions and remove the finished planning artifacts from the final tracked tree. A disposable scratch copy is optional and proves nothing.
 
 Return to this skill after those gates to write or update the Linear issue only when the latest instruction authorizes mutation.
 
@@ -152,10 +143,10 @@ Phrases such as `worker ready`, `worker send ready`, `send-ready issue`, `worker
 ## Normal workflow
 
 1. For issue creation or update, read `references/issue-readiness.md` and make the issue boring enough for a future worker. For a campaign-shaped repo issue, also read `references/campaign-shape.md` and include the campaign shape, lane-document option, one-PR preference, split conditions, and worktree isolation gate.
-2. For status pickup, read `references/state-machine.md`, fetch Linear state first, then decide whether GitHub proof is available.
-3. For paste-ready external handoff text, read `references/external-worker-handoff.md` and produce a compact handoff without mutating repo or issue state unless separately authorized. For repo work, include the worktree isolation gate in the launch handoff and resume nudge.
-4. For GitHub PR, branch, commit, merge, or main-state proof, hand off to GitHub verification tooling after the GitHub artifact is known.
-5. Stop when the issue is shaped, the status is reported, or the next proof surface is named. Do not invent an execution lane to continue.
+1. For status pickup, read `references/state-machine.md`, fetch Linear state first, then decide whether GitHub proof is available.
+1. For paste-ready external handoff text, read `references/external-worker-handoff.md` and produce a compact handoff without mutating repo or issue state unless separately authorized. For repo work, include the worktree isolation gate in the launch handoff and resume nudge.
+1. For GitHub PR, branch, commit, merge, or main-state proof, hand off to GitHub verification tooling after the GitHub artifact is known.
+1. Stop when the issue is shaped, the status is reported, or the next proof surface is named. Do not invent an execution lane to continue.
 
 ## Linear as event log
 

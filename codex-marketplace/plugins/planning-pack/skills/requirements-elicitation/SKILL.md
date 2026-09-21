@@ -9,16 +9,16 @@ metadata:
   status: active
   owner: Harley Bartles
   use_when:
-  - starting a feature, project, or iteration.
-  - interviewing stakeholders or domain experts.
-  - translating needs into user stories and acceptance criteria.
-  - reviewing requirements for ambiguity or missing acceptance criteria.
+    - starting a feature, project, or iteration.
+    - interviewing stakeholders or domain experts.
+    - translating needs into user stories and acceptance criteria.
+    - reviewing requirements for ambiguity or missing acceptance criteria.
   do_not_use_when:
-  - another more specific skill owns the task.
+    - another more specific skill owns the task.
   related_skills:
-  - estimation
-  - risk-gates
-  - writing-with-clarity
+    - estimation
+    - risk-gates
+    - writing-with-clarity
 license: MIT
 ---
 
@@ -40,11 +40,11 @@ Do not use when another more specific skill owns the task.
 ## Core Pattern
 
 1. Identify stakeholders and their goals; separate wants from constraints.
-2. Ask open-ended questions, then converge with "what does success look like?"
-3. Record findings as user stories (As a <role>, I want <goal>, so that <why>).
-4. Define acceptance criteria using Given/When/Then or concrete success measures.
-5. Validate with stakeholders and prototypes before committing to implementation.
-6. Trace changes: keep requirements linked to decisions, tests, and releases.
+1. Ask open-ended questions, then converge with "what does success look like?"
+1. Record findings as user stories (As a <role>, I want <goal>, so that <why>).
+1. Define acceptance criteria using Given/When/Then or concrete success measures.
+1. Validate with stakeholders and prototypes before committing to implementation.
+1. Trace changes: keep requirements linked to decisions, tests, and releases.
 
 ## Common Mistakes
 

@@ -5,10 +5,12 @@ This bundle projects first-party source custody into the Codex marketplace.
 ## Bundle contents
 
 ### Documentation
+
 - provenance and source mapping in `SOURCE.md`
 - bundle inventory in `references/bundle-manifest.json`
 
 ## Boundary
+
 - The pack covers Python framework guidance and TypeScript language patterns.
 - Core Python guidance lives in `agent-operating-model`, alongside the command-bus contract it supports.
 - The pack does not absorb unrelated topical homes.

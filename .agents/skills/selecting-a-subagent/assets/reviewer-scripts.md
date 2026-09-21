@@ -32,11 +32,11 @@ Use this section to decide whether `reviewer-scripts` should be dispatched for a
 Use this checklist during `orchestrator-self-review` and as the core of the diff review:
 
 1. **Help and check/apply/sync classification** — `--help` is documented and returns `0`; `--check` / `--apply` / `--sync` are classified as read-only, mutating, or mixed and have correct exit codes.
-2. **Portable invocation** — scripts use portable shebangs and the consumer's canonical interpreter (e.g. `py -3` on Windows, `python3` elsewhere). Bash wrappers prefer `python3` then `python` and do not assume `py` exists.
-3. **Path safety** — scripts resolve output paths to absolute values before `Push-Location` / `cd` and restore the original directory on exit.
-4. **Read-only subagent safety** — read-only subagent prompts do not force the script to recreate missing packages or mutate repo state.
-5. **Cross-skill path existence** — cross-skill script paths in `SKILL.md` and references point to existing installed or source files.
-6. **No ad-hoc shell redirects** — generated or hand-run shell redirects that produce non-UTF-8 or mis-encoded files are avoided; orchestrators use `review-package` or other UTF-8 writers.
+1. **Portable invocation** — scripts use portable shebangs and the consumer's canonical interpreter (e.g. `py -3` on Windows, `python3` elsewhere). Bash wrappers prefer `python3` then `python` and do not assume `py` exists.
+1. **Path safety** — scripts resolve output paths to absolute values before `Push-Location` / `cd` and restore the original directory on exit.
+1. **Read-only subagent safety** — read-only subagent prompts do not force the script to recreate missing packages or mutate repo state.
+1. **Cross-skill path existence** — cross-skill script paths in `SKILL.md` and references point to existing installed or source files.
+1. **No ad-hoc shell redirects** — generated or hand-run shell redirects that produce non-UTF-8 or mis-encoded files are avoided; orchestrators use `review-package` or other UTF-8 writers.
 
 ## Invariants
 
@@ -68,16 +68,17 @@ Write `review-log-scripts.md` in the off-repo scratch. Begin with a brief `## In
 ## Procedure
 
 1. If `<scan_findings>` is provided, read it first and do not duplicate its findings; verify the preflight caught the pattern in the right place.
-2. If `<pr_description>` is provided, read it for scope.
-3. If `<diff_path>` is provided, read it. If it truncates, use the overflow file or re-read with `offset` and `limit`.
-4. Apply the `## Checklist`.
-5. Use `grep` and `find_file_by_name` to confirm the scripts and paths under review exist and are referenced consistently.
-6. Report only script/CLI findings. Cite `file:line`, severity, and remediation.
-7. End with `reviewer-scripts: N issue(s)` or `reviewer-scripts: clean`.
+1. If `<pr_description>` is provided, read it for scope.
+1. If `<diff_path>` is provided, read it. If it truncates, use the overflow file or re-read with `offset` and `limit`.
+1. Apply the `## Checklist`.
+1. Use `grep` and `find_file_by_name` to confirm the scripts and paths under review exist and are referenced consistently.
+1. Report only script/CLI findings. Cite `file:line`, severity, and remediation.
+1. End with `reviewer-scripts: N issue(s)` or `reviewer-scripts: clean`.
 
 ## Output format
 
 For each issue:
+
 - `file:line` reference.
 - Severity: **blocking** / **important** / **minor**.
 - What is wrong and why it matters for the script/CLI surface.
@@ -96,6 +97,7 @@ You are a reviewer, not a ledger. Do not count tool calls. Read the items that y
 - As a hard backstop, do not exceed 50 total tool calls after loading the inputs.
 
 A partial, cited report is better than an infinite loop. Do not announce that you are writing the report — just write it.
+
 ## Final response (hard contract)
 
 After writing the off-repo `review-log-*.md` report, your final response to the orchestrator must be exactly one line in this exact form:

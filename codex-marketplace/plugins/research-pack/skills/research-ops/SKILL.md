@@ -9,15 +9,15 @@ metadata:
   status: active
   owner: Harley Bartles
   use_when:
-  - planning a research task or systematic review.
-  - triaging and recording sources.
-  - synthesizing evidence into a cited conclusion.
+    - planning a research task or systematic review.
+    - triaging and recording sources.
+    - synthesizing evidence into a cited conclusion.
   do_not_use_when:
-  - another more specific skill owns the task.
+    - another more specific skill owns the task.
   related_skills:
-  - agentic-harness
-  - agent-evaluation
-  - estimation
+    - agentic-harness
+    - agent-evaluation
+    - estimation
 license: MIT
 ---
 
@@ -34,10 +34,10 @@ Use this skill when planning research, triaging sources, synthesizing evidence, 
 ## Core Pattern
 
 1. Write the research question and inclusion criteria before searching.
-2. Search broadly, screen sources against the criteria, and record exclusions.
-3. Extract claims and evidence into a synthesis matrix.
-4. Ground every conclusion in a cited source with access date and license.
-5. Report confidence, limitations, and gaps alongside the answer.
+1. Search broadly, screen sources against the criteria, and record exclusions.
+1. Extract claims and evidence into a synthesis matrix.
+1. Ground every conclusion in a cited source with access date and license.
+1. Report confidence, limitations, and gaps alongside the answer.
 
 ## Common Mistakes
 

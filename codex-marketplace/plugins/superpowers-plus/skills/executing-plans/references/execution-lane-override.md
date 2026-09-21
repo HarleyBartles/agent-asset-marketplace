@@ -7,17 +7,12 @@ Use when the execution skill you are in differs from the `Execution Strategy` wr
 When picking an execution lane, follow this order:
 
 1. **Human explicit direction.** The user told you which skill to use, or explicitly chose a lane (for example, by typing `executing-plans`). This wins over all other signals.
-2. **Your own assessment of the plan.** If the user did not direct the lane, read the plan, look at the task shape, and choose the lane that fits best.
-3. **The plan's `Execution Strategy`.** This is a recommendation, not a command. It is one input to your decision.
+1. **Your own assessment of the plan.** If the user did not direct the lane, read the plan, look at the task shape, and choose the lane that fits best.
+1. **The plan's `Execution Strategy`.** This is a recommendation, not a command. It is one input to your decision.
 
 ## One-lane rule
 
-Choose from execution cost as well as task shape. Native execution preserves
-one inline integration context and adds one fresh whole-branch review;
-subagent-driven execution spends fresh implementer and reviewer contexts on
-every task plus the final review. Tightly coupled sequential work normally
-favors Native; genuinely independent tasks can justify the additional SDD
-review cost.
+Choose from execution cost as well as task shape. Native execution preserves one inline integration context and adds one fresh whole-branch review; subagent-driven execution spends fresh implementer and reviewer contexts on every task plus the final review. Tightly coupled sequential work normally favors Native; genuinely independent tasks can justify the additional SDD review cost.
 
 Pick one lane before execution starts. Announce it:
 
@@ -32,5 +27,5 @@ If the plan's `Execution Strategy` does not match the lane you chose, do not ask
 1. Note the mismatch:
    - "Plan recommends `subagent-driven-development`. I am using `executing-plans` because you invoked it."
    - "Plan recommends `executing-plans`. I am using `subagent-driven-development` because the tasks are independent and this is the better fit."
-2. Confirm to yourself that you have human direction or a defensible assessment for the mismatch.
-3. Proceed. If you can give neither human direction nor a clear assessment, raise a focused question to the human.
+1. Confirm to yourself that you have human direction or a defensible assessment for the mismatch.
+1. Proceed. If you can give neither human direction nor a clear assessment, raise a focused question to the human.

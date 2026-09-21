@@ -1,7 +1,6 @@
 # Writing Pack
 
-Compositional, first-party skills for drafting, revising, and reviewing prose
-intended for human readers.
+Compositional, first-party skills for drafting, revising, and reviewing prose intended for human readers.
 
 ## Bundle contents
 
@@ -18,11 +17,11 @@ intended for human readers.
 - bundle inventory in `references/bundle-manifest.json`
 
 ## Boundary
+
 - This is the first-class marketplace home for composed human-facing writing.
 - `unslop-plus` retains generic cross-domain profiles; it does not own this writing product's composition or source custody.
 - The bundle stays first-party only and does not absorb unrelated workflow packs.
 
 ## Install shape
 
-Use `$writing` for ordinary writing work. Invoke `$writing-with-clarity` directly
-only for a clarity-only or final-edit review.
+Use `$writing` for ordinary writing work. Invoke `$writing-with-clarity` directly only for a clarity-only or final-edit review.

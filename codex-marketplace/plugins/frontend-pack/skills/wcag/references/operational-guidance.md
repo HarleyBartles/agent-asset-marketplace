@@ -39,10 +39,10 @@ Testing combines automated scanning, manual keyboard navigation, screen-reader i
 ## Accessibility audit workflow
 
 1. **Define scope and target level**. Confirm the pages, components, states, and conformance level being evaluated.
-2. **Run automated scans**. Use a scanner to find machine-detectable failures, then triage false positives.
-3. **Test manually with a keyboard**. Tab through the page, operate controls, and check focus order and visibility.
-4. **Test with a screen reader**. Move through headings, landmarks, links, forms, and dynamic content. Verify announcements and non-visual alternatives.
-5. **Check visual and zoom behavior**. Verify contrast, text resizing, reflow at 400% zoom, and responsive states.
-6. **Inspect code and ARIA**. Validate HTML, review ARIA usage, and confirm names, roles, and states for custom controls.
-7. **Record findings**. For each issue, list the success criterion, level, observation, evidence, and recommended remediation.
-8. **Prioritize and plan**. Group issues by principle, impact, and effort; map fixes to success criteria and schedule re-testing.
+1. **Run automated scans**. Use a scanner to find machine-detectable failures, then triage false positives.
+1. **Test manually with a keyboard**. Tab through the page, operate controls, and check focus order and visibility.
+1. **Test with a screen reader**. Move through headings, landmarks, links, forms, and dynamic content. Verify announcements and non-visual alternatives.
+1. **Check visual and zoom behavior**. Verify contrast, text resizing, reflow at 400% zoom, and responsive states.
+1. **Inspect code and ARIA**. Validate HTML, review ARIA usage, and confirm names, roles, and states for custom controls.
+1. **Record findings**. For each issue, list the success criterion, level, observation, evidence, and recommended remediation.
+1. **Prioritize and plan**. Group issues by principle, impact, and effort; map fixes to success criteria and schedule re-testing.

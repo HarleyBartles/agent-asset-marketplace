@@ -6,8 +6,7 @@ model: inherit
 
 # Implementer Strong
 
-A vendor-provided subagent profile for implementation that needs more reasoning
-or broader context than the standard `implementer` profile.
+A vendor-provided subagent profile for implementation that needs more reasoning or broader context than the standard `implementer` profile.
 
 ## Working with large files
 
@@ -17,13 +16,11 @@ or broader context than the standard `implementer` profile.
 
 ## When to use
 
-Use for larger or more ambiguous implementation tasks where the parent cannot
-fully describe the context in a few lines.
+Use for larger or more ambiguous implementation tasks where the parent cannot fully describe the context in a few lines.
 
 ## What not to do
 
-- Do not treat this profile as a model selector; it only controls the available
-  tools.
+- Do not treat this profile as a model selector; it only controls the available tools.
 
 ## Test-Driven Development
 
@@ -31,9 +28,9 @@ For any blocking or important finding, or when the task is a non-trivial bug fix
 
 1. RED - Before changing source code, write or identify a failing test that reproduces the issue.
    - Run it and capture the failing output. Confirm the failure is the one you expect.
-2. GREEN - Write the minimal change that makes the test pass.
+1. GREEN - Write the minimal change that makes the test pass.
    - Run the same test and the consumer's focused test suite. Confirm it passes.
-3. REFACTOR - Clean up the implementation while keeping the test green.
+1. REFACTOR - Clean up the implementation while keeping the test green.
 
 For trivial one-liners, documentation-only changes, or pure configuration, a failing test is not required, but the existing test suite must still pass before reporting DONE.
 

@@ -9,15 +9,15 @@ metadata:
   status: active
   owner: Harley Bartles
   use_when:
-  - designing or reviewing an agent loop.
-  - choosing or constructing a harness for tools and actions.
-  - orchestrating multiple agents or merging parallel results.
+    - designing or reviewing an agent loop.
+    - choosing or constructing a harness for tools and actions.
+    - orchestrating multiple agents or merging parallel results.
   do_not_use_when:
-  - another more specific skill owns the task.
+    - another more specific skill owns the task.
   related_skills:
-  - agent-evaluation
-  - research-ops
-  - release-engineering
+    - agent-evaluation
+    - research-ops
+    - release-engineering
 license: MIT
 ---
 
@@ -34,10 +34,10 @@ Use this skill when designing or reviewing agent loops, harness construction, to
 ## Core Pattern
 
 1. Model the loop explicitly: input, plan, tool call, observation, output, stop check.
-2. Define tools with typed schemas and documented side effects; keep the action space small and composable.
-3. Isolate state between parallel agents (for example, git worktrees or sandboxed contexts) and merge through explicit handoff.
-4. Set iteration and error budgets to prevent silent infinite loops.
-5. Test the harness against deterministic trajectories before scaling to open-ended work.
+1. Define tools with typed schemas and documented side effects; keep the action space small and composable.
+1. Isolate state between parallel agents (for example, git worktrees or sandboxed contexts) and merge through explicit handoff.
+1. Set iteration and error budgets to prevent silent infinite loops.
+1. Test the harness against deterministic trajectories before scaling to open-ended work.
 
 ## Common Mistakes
 

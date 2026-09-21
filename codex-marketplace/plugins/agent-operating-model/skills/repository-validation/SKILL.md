@@ -13,14 +13,8 @@ license: MIT
 
 # Repository Validation
 
-Distinguish focused developer checks from the complete repository gate.
-`--apply` may repair owned generated surfaces; the following `--check` must
-converge without mutation. A successful claim names the exact tree it proves.
+Distinguish focused developer checks from the complete repository gate. `--apply` may repair owned generated surfaces; the following `--check` must converge without mutation. A successful claim names the exact tree it proves.
 
-Normal commits rely on the tracked hook's staged-snapshot gate. Run the broad
-check separately only for uncommitted verification, diagnosis, or explicit CI
-parity. Consumer repositories own their command vectors and language stack.
+Normal commits rely on the tracked hook's staged-snapshot gate. Run the broad check separately only for uncommitted verification, diagnosis, or explicit CI parity. Consumer repositories own their command vectors and language stack.
 
-The detailed validation pipeline remains in
-`repo-shape/references/ci-validation-pipeline.md` during the compatibility
-migration; this skill owns changes to that contract.
+The detailed validation pipeline remains in `repo-shape/references/ci-validation-pipeline.md` during the compatibility migration; this skill owns changes to that contract.

@@ -1,13 +1,16 @@
 # node-blocked
 
 ## Purpose
+
 Record an unresolvable blocker and hand the review to a human.
 
 ## Inputs
+
 - Contested or load-bearing finding
 - `review-metrics.json`
 
 ## Recipe
+
 1. Record the blocker, then regenerate the metrics file and commit the `blocked` state:
    ```bash
    py -3 .agents/skills/iterative-review/scripts/record_blocker.py \
@@ -21,13 +24,15 @@ Record an unresolvable blocker and hand the review to a human.
        --propose blocked
    ```
    Then hand to a human.
-2. If the human says "carry on", resume from `metrics-track`.
-3. If `next_node.py` or `resolved_ledger.py` returns a `BLOCKED` result, treat it as a graph error: do not override it, do not dispatch `final-strong` out of order, and resume from the allowed node.
+1. If the human says "carry on", resume from `metrics-track`.
+1. If `next_node.py` or `resolved_ledger.py` returns a `BLOCKED` result, treat it as a graph error: do not override it, do not dispatch `final-strong` out of order, and resume from the allowed node.
 
 ## Outputs
+
 - `<scratch_dir>/review-metrics.json` regenerated from `<scratch_dir>/review-state.json` and the recorded logs
 
 ## Next check
+
 ```bash
 py -3 .agents/skills/iterative-review/scripts/next_node.py \
     --state <scratch_dir>/review-state.json \

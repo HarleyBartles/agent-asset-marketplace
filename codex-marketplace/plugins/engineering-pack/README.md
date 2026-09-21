@@ -5,10 +5,12 @@ This bundle projects first-party source custody into the Codex marketplace.
 ## Bundle contents
 
 ### Documentation
+
 - provenance and source mapping in `SOURCE.md`
 - bundle inventory in `references/bundle-manifest.json`
 
 ## Boundary
+
 - The pack covers implementation flow, release readiness, deployment patterns, and observability.
 - The pack does not absorb unrelated topical homes.
 - The bundle is a marketplace bundle over retained source custody, not a new source of truth.

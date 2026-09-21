@@ -1,12 +1,6 @@
 # Pressure testing with subagents
 
-This repository-root directory owns shared campaign orchestration, generic run
-instructions, and repository-wide validation for first-party skill pressure
-tests. Portable inputs for one skill—prompts, fixture trees, rubrics, and
-deterministic assertions—belong in that skill's `tests/` directory. A run is
-transient evidence for the current handoff; its model output, scores,
-transcripts, verdicts, generated repositories, and result records do not belong
-in Git.
+This repository-root directory owns shared campaign orchestration, generic run instructions, and repository-wide validation for first-party skill pressure tests. Portable inputs for one skill—prompts, fixture trees, rubrics, and deterministic assertions—belong in that skill's `tests/` directory. A run is transient evidence for the current handoff; its model output, scores, transcripts, verdicts, generated repositories, and result records do not belong in Git.
 
 ## When to pressure-test a skill
 
@@ -26,9 +20,7 @@ Write the pressure scenario as a realistic task where an agent is likely to choo
 
 ### 2. Prepare the skill-root test package
 
-Add the reusable scenario under the skill-root `tests/` directory. Tests ship
-with the skill; test results do not. Keep the package small and include only
-the stable material the campaign needs:
+Add the reusable scenario under the skill-root `tests/` directory. Tests ship with the skill; test results do not. Keep the package small and include only the stable material the campaign needs:
 
 - A short task description.
 - A **RED** path: what an agent without the skill is likely to do.
@@ -42,9 +34,7 @@ Example: `codex-marketplace/plugins/mcp-usage-pack/skills/using-playwright-mcp/t
 Launch two `subagent_general` runs in parallel:
 
 - **RED:** The subagent may not read the skill files. It can call MCP tools (e.g., `mcp_list_tools`) and use general reasoning.
-- **GREEN:** The subagent reads the skill's `SKILL.md` and only the ordinary
-  behavioral resources it routes to. The maintainer harness, not the worker,
-  reads the skill-root `tests/` package and hidden rubric.
+- **GREEN:** The subagent reads the skill's `SKILL.md` and only the ordinary behavioral resources it routes to. The maintainer harness, not the worker, reads the skill-root `tests/` package and hidden rubric.
 
 Subagents cannot invoke skills directly, but they can read skill files from disk and act on them. They may also call any tools they have access to, including MCP tools.
 
@@ -66,9 +56,7 @@ Inspect:
 - Reasoning and any rationalizations relevant to the current decision.
 - The final RED/GREEN judgment.
 
-Report that judgment in the current handoff. Do not commit run output or a
-results ledger. Change the reusable prompt, rubric, campaign configuration, or
-deterministic assertion only when the run exposes a contract defect.
+Report that judgment in the current handoff. Do not commit run output or a results ledger. Change the reusable prompt, rubric, campaign configuration, or deterministic assertion only when the run exposes a contract defect.
 
 ### 6. Validate
 

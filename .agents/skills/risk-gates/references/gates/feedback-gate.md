@@ -18,11 +18,11 @@ When feedback proposes more work, do not convert it directly into dispatch scope
 ## Workflow
 
 1. Read all relevant feedback before acting on any item.
-2. Classify each item by source, clarity, authority, risk, current-source evidence needed, and possible protected-surface impact.
-3. Inspect current source, repo state, issue goal, durable Linear/GitHub evidence, and relevant law before accepting technical or closure claims.
-4. Decide for each item: accept, clarify, reject, route, or block.
-5. Keep feedback text, verified evidence, planned correction, implementation, validation, publication proof, issue-goal conformance, and closure posture separate.
-6. Push back with source-grounded reasoning when feedback is wrong, stale, unsafe, out of scope, or conflicts with authority.
+1. Classify each item by source, clarity, authority, risk, current-source evidence needed, and possible protected-surface impact.
+1. Inspect current source, repo state, issue goal, durable Linear/GitHub evidence, and relevant law before accepting technical or closure claims.
+1. Decide for each item: accept, clarify, reject, route, or block.
+1. Keep feedback text, verified evidence, planned correction, implementation, validation, publication proof, issue-goal conformance, and closure posture separate.
+1. Push back with source-grounded reasoning when feedback is wrong, stale, unsafe, out of scope, or conflicts with authority.
 
 Do not apply the easy part of feedback while leaving related ambiguous or authority-sensitive parts unresolved if that would create partial compliance that looks green.
 

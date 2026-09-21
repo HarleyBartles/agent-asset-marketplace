@@ -1,7 +1,6 @@
 ---
 name: frontend-ux
-description: Use when designing, reviewing, or debugging frontend user interfaces
-  and the task calls for accessibility, layout, interaction, or UX guidance.
+description: Use when designing, reviewing, or debugging frontend user interfaces and the task calls for accessibility, layout, interaction, or UX guidance.
 metadata:
   source-id: frontend-ux
   source-path: codex-marketplace/plugins/frontend-pack/skills/frontend-ux/SKILL.md
@@ -10,16 +9,16 @@ metadata:
   status: active
   owner: Harley Bartles
   use_when:
-  - designing or reviewing a frontend layout, component, or interaction.
-  - checking accessibility, color, typography, or responsive behavior.
-  - refining user flows, feedback, and platform-appropriate conventions.
+    - designing or reviewing a frontend layout, component, or interaction.
+    - checking accessibility, color, typography, or responsive behavior.
+    - refining user flows, feedback, and platform-appropriate conventions.
   do_not_use_when:
-  - another more specific skill owns the task.
+    - another more specific skill owns the task.
   related_skills:
-  - playwright-testing
-  - wcag
-  - react
-  - web-styling
+    - playwright-testing
+    - wcag
+    - react
+    - web-styling
 license: MIT
 ---
 
@@ -36,11 +35,11 @@ Use this skill for frontend user-interface guidance covering component and layou
 ## Core Pattern
 
 1. Start with semantic HTML and clear information architecture; avoid unnecessary wrapper elements.
-2. Ensure keyboard navigability and screen-reader support before styling polish.
-3. Use consistent spacing, color, and typography aligned to the design system.
-4. Provide visible focus states, loading feedback, and clear error messaging.
-5. Validate contrast, motion preferences, and touch targets against WCAG and platform guidelines.
-6. Review the whole flow, not just a single screen; load operational guidance for deep patterns.
+1. Ensure keyboard navigability and screen-reader support before styling polish.
+1. Use consistent spacing, color, and typography aligned to the design system.
+1. Provide visible focus states, loading feedback, and clear error messaging.
+1. Validate contrast, motion preferences, and touch targets against WCAG and platform guidelines.
+1. Review the whole flow, not just a single screen; load operational guidance for deep patterns.
 
 ## Common Mistakes
 

@@ -7,20 +7,20 @@ Use when the agent-evaluation skill is loaded and the task requires evaluating a
 ## Benchmark design
 
 1. Choose tasks that match the real deployment distribution, not only easy positives.
-2. Define pass/fail criteria before running the evaluation; avoid moving the goalposts after seeing results.
-3. Use containerized or reproducible environments so scores are comparable across runs.
+1. Define pass/fail criteria before running the evaluation; avoid moving the goalposts after seeing results.
+1. Use containerized or reproducible environments so scores are comparable across runs.
 
 ## Scoring agent outputs
 
 1. Score end outcomes, not intermediate text length or politeness.
-2. Compare outputs against a rubric or reference solution, not just model self-ratings.
-3. Report confidence intervals and failure modes alongside headline metrics.
+1. Compare outputs against a rubric or reference solution, not just model self-ratings.
+1. Report confidence intervals and failure modes alongside headline metrics.
 
 ## Self-evaluation rubrics
 
 1. Rate each dimension separately: correctness, completeness, safety, concision.
-2. Use a 0-1 or 0-4 scale with concrete anchors, not adjectives.
-3. Require the agent to quote evidence for each score and cite sources.
+1. Use a 0-1 or 0-4 scale with concrete anchors, not adjectives.
+1. Require the agent to quote evidence for each score and cite sources.
 
 ## Common mistakes
 

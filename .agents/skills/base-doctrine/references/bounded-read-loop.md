@@ -20,10 +20,10 @@ Reading is useful only when it changes one of these decisions:
 Prefer the smallest authoritative surface that can answer the current question.
 
 1. Current user request and active project bootstrap.
-2. The specific target object when named, such as an issue, PR, file, skill, project, or document.
-3. The most specific owning skill or repo-local instruction.
-4. One adjacent reference only when the owning surface explicitly routes there.
-5. Broader search only when no exact target exists or exact reads contradict each other.
+1. The specific target object when named, such as an issue, PR, file, skill, project, or document.
+1. The most specific owning skill or repo-local instruction.
+1. One adjacent reference only when the owning surface explicitly routes there.
+1. Broader search only when no exact target exists or exact reads contradict each other.
 
 Do not start by reading every installed skill, every repo index, every AGENTS file, every reference in a skill, or every incubation document.
 

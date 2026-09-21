@@ -1,8 +1,6 @@
 ---
 name: context-safety
-description: Use when a text write is expected to exceed the safe threshold for the
-  remaining session context, when a document is very large or context-heavy, or when
-  a normal editor write path would be brittle.
+description: Use when a text write is expected to exceed the safe threshold for the remaining session context, when a document is very large or context-heavy, or when a normal editor write path would be brittle.
 metadata:
   source-id: context-safety
   source-path: codex-marketplace/plugins/repo-worker-pack/skills/context-safety/SKILL.md
@@ -12,32 +10,28 @@ metadata:
   owner: Harley Bartles
   scope: very large text write safety, bounded composition, compaction boundaries, and atomic replacement.
   use_when:
-  - a text write is expected to exceed 2,000 lines or 1 MB of UTF-8 text.
-  - inline composition would risk consuming the remaining session context.
-  - safe staging and atomic replacement are required for a large text write.
-  - deliberate context compaction is needed after durable state has been preserved.
+    - a text write is expected to exceed 2,000 lines or 1 MB of UTF-8 text.
+    - inline composition would risk consuming the remaining session context.
+    - safe staging and atomic replacement are required for a large text write.
+    - deliberate context compaction is needed after durable state has been preserved.
   do_not_use_when:
-  - the change is small and can be written directly.
-  - the task is unrelated to large or context-heavy text writes.
+    - the change is small and can be written directly.
+    - the task is unrelated to large or context-heavy text writes.
   related_skills:
-  - repo-worker-base
-  - connector-safety
+    - repo-worker-base
+    - connector-safety
 license: MIT
 ---
 
 # Context Safety
 
-Use this skill when a text write may be large enough to make a normal editor write path brittle, or when inline composition would risk exhausting the remaining session context.
-Use when a document may exceed the safe threshold or when the main session should not carry the whole composition inline.
-target 2,000 lines per chunk. absolute red limit max 4,000 lines per chunk.
+Use this skill when a text write may be large enough to make a normal editor write path brittle, or when inline composition would risk exhausting the remaining session context. Use when a document may exceed the safe threshold or when the main session should not carry the whole composition inline. target 2,000 lines per chunk. absolute red limit max 4,000 lines per chunk.
 
 ## Core rule
 
 Estimate the write before you write it.
 
-If the payload is small, a normal temp-file write is fine.
-If the payload is large, switch to a chunked temp-file write path before any bytes are written.
-Validate the temp file after the write completes, then atomically replace the target.
+If the payload is small, a normal temp-file write is fine. If the payload is large, switch to a chunked temp-file write path before any bytes are written. Validate the temp file after the write completes, then atomically replace the target.
 
 Do not write the whole payload to the temp file first and decide later.
 
@@ -65,9 +59,9 @@ Treat a write as context-risky when either of these is true:
 When context-risky:
 
 1. Do not compose the whole document as one inline string in the main session.
-2. Prefer a clean-context worker/subagent write with only the required inputs.
-3. Or generate the document in bounded sections with sequential append calls, keeping each section near the 2,000-line target and well below the 4,000-line ceiling.
-4. Still apply the existing chunked/temp-file write mechanics inside the chosen path.
+1. Prefer a clean-context worker/subagent write with only the required inputs.
+1. Or generate the document in bounded sections with sequential append calls, keeping each section near the 2,000-line target and well below the 4,000-line ceiling.
+1. Still apply the existing chunked/temp-file write mechanics inside the chosen path.
 
 If the output is expected to land around 1,500 lines or more, split it into smaller chunks before starting so the chunks stay under the target and comfortably below the limit.
 
@@ -85,11 +79,11 @@ If a write is expected to land around 1,500 lines or more, split it into smaller
 ## Safe sequence
 
 1. Estimate line count and byte size from the content in memory.
-2. Choose the write path before opening the temp file.
-3. For small payloads, write the whole content to a temp file in one shot.
-4. For larger payloads, write the temp file in chunks or append loops.
-5. Re-open and validate the completed temp file.
-6. Atomically replace the target only after validation passes.
+1. Choose the write path before opening the temp file.
+1. For small payloads, write the whole content to a temp file in one shot.
+1. For larger payloads, write the temp file in chunks or append loops.
+1. Re-open and validate the completed temp file.
+1. Atomically replace the target only after validation passes.
 
 ## Python pattern
 
@@ -187,9 +181,9 @@ Use bounded composition when:
 ### Usage pattern
 
 1. Resolve the scratch folder: run `py -3 subagent-workspace/scripts/workspace.py --apply` with no plan file and capture the printed path.
-2. Write large temporary outputs (e.g. the `.tmp` staging file in `write_large_text`) to that scratch folder.
-3. Use the temporary outputs as needed during the session.
-4. Clean up the scratch folder when work is complete (when cleaning up worktree).
+1. Write large temporary outputs (e.g. the `.tmp` staging file in `write_large_text`) to that scratch folder.
+1. Use the temporary outputs as needed during the session.
+1. Clean up the scratch folder when work is complete (when cleaning up worktree).
 
 ### Cleanup guidance
 

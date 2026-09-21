@@ -4,9 +4,7 @@ Scope: `.agents/doctrine/`
 
 This scope covers the repo's canonical repo-local doctrine content surface.
 
-Defer to the repository root `AGENTS.md` for global repo doctrine, to
-`.agents/doctrine/mesh-policy.md` for the canonical mesh statement, and to
-`.devin/rules/*.md` for the conditional rule triggers that route here.
+Defer to the repository root `AGENTS.md` for global repo doctrine, to `.agents/doctrine/mesh-policy.md` for the canonical mesh statement, and to `.devin/rules/*.md` for the conditional rule triggers that route here.
 
 ## Routing pointers
 

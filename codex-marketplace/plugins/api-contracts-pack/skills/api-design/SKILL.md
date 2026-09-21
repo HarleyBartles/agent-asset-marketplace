@@ -1,7 +1,6 @@
 ---
 name: api-design
-description: Use when designing, reviewing, or versioning an HTTP API contract, choosing
-  resource naming, or mapping OpenAPI structures to implementation boundaries.
+description: Use when designing, reviewing, or versioning an HTTP API contract, choosing resource naming, or mapping OpenAPI structures to implementation boundaries.
 metadata:
   source-id: api-design
   source-path: codex-marketplace/plugins/api-contracts-pack/skills/api-design/SKILL.md
@@ -10,15 +9,15 @@ metadata:
   status: active
   owner: Harley Bartles
   use_when:
-  - designing a new API contract.
-  - reviewing an existing API contract for consistency and spec compliance.
-  - versioning paths, schemas, or security schemes.
-  - choosing resource and operation naming conventions.
+    - designing a new API contract.
+    - reviewing an existing API contract for consistency and spec compliance.
+    - versioning paths, schemas, or security schemes.
+    - choosing resource and operation naming conventions.
   do_not_use_when:
-  - the work is implementation framework-specific.
-  - the work is code-generation only.
+    - the work is implementation framework-specific.
+    - the work is code-generation only.
   related_skills:
-  - secure-development
+    - secure-development
 license: MIT
 ---
 
@@ -40,10 +39,10 @@ Do not use when another more specific skill owns the task.
 ## Core Pattern
 
 1. Start with the OpenAPI Object, then fill `info`, `servers`, and `paths`.
-2. Define reusable schemas, parameters, responses, and security schemes under `components`.
-3. Prefer explicit version declarations; keep breaking changes out of patch releases.
-4. Use consistent resource naming and HTTP methods; return structured problem details for errors.
-5. Reference reusable components with `$ref` to keep the contract DRY.
+1. Define reusable schemas, parameters, responses, and security schemes under `components`.
+1. Prefer explicit version declarations; keep breaking changes out of patch releases.
+1. Use consistent resource naming and HTTP methods; return structured problem details for errors.
+1. Reference reusable components with `$ref` to keep the contract DRY.
 
 ## Common Mistakes
 

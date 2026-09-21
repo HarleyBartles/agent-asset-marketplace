@@ -1,7 +1,6 @@
 ---
 name: python
-description: Use when writing, reviewing, or debugging Python code and the task
-  calls for idiomatic language patterns, concurrency, testing, or type-safety guidance.
+description: Use when writing, reviewing, or debugging Python code and the task calls for idiomatic language patterns, concurrency, testing, or type-safety guidance.
 metadata:
   source-id: python
   source-path: codex-marketplace/plugins/agent-operating-model/skills/python/SKILL.md
@@ -10,15 +9,15 @@ metadata:
   status: active
   owner: Harley Bartles
   use_when:
-  - writing or reviewing Python code.
-  - choosing between async and sync patterns.
-  - diagnosing test, type, or performance issues in Python.
+    - writing or reviewing Python code.
+    - choosing between async and sync patterns.
+    - diagnosing test, type, or performance issues in Python.
   do_not_use_when:
-  - another language-specific or framework-specific skill owns the task.
+    - another language-specific or framework-specific skill owns the task.
   related_skills:
-  - python-frameworks
-  - typescript
-  - database-engines
+    - python-frameworks
+    - typescript
+    - database-engines
 license: MIT
 ---
 
@@ -35,10 +34,10 @@ Use this skill for idiomatic Python guidance across language patterns, concurren
 ## Core Pattern
 
 1. Prefer explicit over implicit: write readable code, avoid surprise imports, and document public APIs.
-2. Use `asyncio` for I/O-bound concurrency; use `concurrent.futures` or multiprocessing for CPU-bound work.
-3. Structure tests with `pytest`, fixtures for shared state, and parametrization for data-driven cases.
-4. Add type hints where they clarify contracts; run `mypy` or a type checker in CI.
-5. Profile before optimizing; `cProfile` and `line_profiler` identify real bottlenecks.
+1. Use `asyncio` for I/O-bound concurrency; use `concurrent.futures` or multiprocessing for CPU-bound work.
+1. Structure tests with `pytest`, fixtures for shared state, and parametrization for data-driven cases.
+1. Add type hints where they clarify contracts; run `mypy` or a type checker in CI.
+1. Profile before optimizing; `cProfile` and `line_profiler` identify real bottlenecks.
 
 ## Common Mistakes
 

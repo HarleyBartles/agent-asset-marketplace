@@ -9,15 +9,15 @@ metadata:
   status: active
   owner: Harley Bartles
   use_when:
-  - evaluating an agent's output against a rubric.
-  - designing or running a benchmark.
-  - building a self-evaluation workflow.
+    - evaluating an agent's output against a rubric.
+    - designing or running a benchmark.
+    - building a self-evaluation workflow.
   do_not_use_when:
-  - another more specific skill owns the task.
+    - another more specific skill owns the task.
   related_skills:
-  - agentic-harness
-  - research-ops
-  - observability
+    - agentic-harness
+    - research-ops
+    - observability
 license: MIT
 ---
 
@@ -34,10 +34,10 @@ Use this skill when evaluating agent outputs, designing benchmarks, or building 
 ## Core Pattern
 
 1. Define the evaluation dimension (correctness, completeness, safety, concision) and scoring anchors before scoring.
-2. Build or select benchmark tasks that reflect real deployment conditions and hold out a final test set.
-3. Score outputs against rubrics or reference solutions, not just model self-ratings.
-4. Report per-task and per-dimension results with failure modes and confidence intervals.
-5. Keep the evaluation harness separate from the evaluated agent to avoid leakage.
+1. Build or select benchmark tasks that reflect real deployment conditions and hold out a final test set.
+1. Score outputs against rubrics or reference solutions, not just model self-ratings.
+1. Report per-task and per-dimension results with failure modes and confidence intervals.
+1. Keep the evaluation harness separate from the evaluated agent to avoid leakage.
 
 ## Common Mistakes
 

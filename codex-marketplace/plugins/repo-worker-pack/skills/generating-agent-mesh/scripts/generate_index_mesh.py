@@ -299,6 +299,7 @@ def render_index(path: Path) -> str:
 
     if dirs:
         lines.append("## Directories")
+        lines.append("")
         for child in dirs:
             link = dir_link(path, child)
             if link is not None:
@@ -307,6 +308,7 @@ def render_index(path: Path) -> str:
 
     if files:
         lines.append("## Files")
+        lines.append("")
         for child in files:
             lines.append(f"- {rel_link(path, child)}")
         lines.append("")

@@ -1,7 +1,6 @@
 ---
 name: secure-development
-description: Use when designing, writing, reviewing, or testing code and the task
-  calls for secure coding, security testing, threat modeling, or security review guidance.
+description: Use when designing, writing, reviewing, or testing code and the task calls for secure coding, security testing, threat modeling, or security review guidance.
 metadata:
   source-id: secure-development
   source-path: codex-marketplace/plugins/security-pack/skills/secure-development/SKILL.md
@@ -10,15 +9,15 @@ metadata:
   status: active
   owner: Harley Bartles
   use_when:
-  - designing, writing, or reviewing code that handles sensitive data, trust boundaries, or external input.
-  - selecting or interpreting security tests, threat models, or review checklists.
-  - a task touches OWASP Top 10, CWE, CAPEC, or NIST control categories.
+    - designing, writing, or reviewing code that handles sensitive data, trust boundaries, or external input.
+    - selecting or interpreting security tests, threat models, or review checklists.
+    - a task touches OWASP Top 10, CWE, CAPEC, or NIST control categories.
   do_not_use_when:
-  - the task is purely infrastructure deployment or operations.
-  - another more specific skill owns the task.
+    - the task is purely infrastructure deployment or operations.
+    - another more specific skill owns the task.
   related_skills:
-  - owasp-top-ten
-  - risk-gates
+    - owasp-top-ten
+    - risk-gates
 license: MIT
 ---
 
@@ -36,9 +35,9 @@ Use this skill to build and verify software with security built in: secure codin
 ## Core Pattern
 
 1. **Secure by design**: validate all input, fail safely, apply least privilege, and keep secrets out of code.
-2. **Map threats**: identify assets, trust boundaries, attack surface, and likely attack paths before building.
-3. **Test early and often**: combine static analysis, dynamic scans, dependency checks, and targeted negative tests.
-4. **Review before commit**: use a checklist, check against the OWASP Top 10 and relevant CWEs, and route high-risk findings through `risk-gates`.
+1. **Map threats**: identify assets, trust boundaries, attack surface, and likely attack paths before building.
+1. **Test early and often**: combine static analysis, dynamic scans, dependency checks, and targeted negative tests.
+1. **Review before commit**: use a checklist, check against the OWASP Top 10 and relevant CWEs, and route high-risk findings through `risk-gates`.
 
 ## Common Mistakes
 

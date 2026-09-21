@@ -1,8 +1,6 @@
 # Reviewer Prompt Template (prepared diff)
 
-Use this template when dispatching `reviewer`, `reviewer-strong`, or `reviewer-fixes`
-for a branch or PR diff review. The orchestrator prepares the diff and
-description; the subagent only reads and evaluates.
+Use this template when dispatching `reviewer`, `reviewer-strong`, or `reviewer-fixes` for a branch or PR diff review. The orchestrator prepares the diff and description; the subagent only reads and evaluates.
 
 ```
 Subagent profile: <reviewer-profile>
@@ -77,6 +75,7 @@ prompt: |
 ```
 
 **Placeholders:**
+
 - `<reviewer-profile>` — `reviewer`, `reviewer-strong`, or `reviewer-fixes`, chosen via `selecting-a-subagent`.
 - `<diff_path>` — the prepared diff file.
 - `<pr_description>` — PR title/body and linked context.

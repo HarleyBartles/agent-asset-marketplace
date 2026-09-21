@@ -3,6 +3,7 @@ description: "Source custody rules"
 trigger: glob
 globs: "sources/**"
 ---
+
 ## Scope
 
 For the canonical doctrine behind this rule, read `.agents/doctrine/sources.md`.

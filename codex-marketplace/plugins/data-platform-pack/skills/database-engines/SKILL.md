@@ -1,8 +1,6 @@
 ---
 name: database-engines
-description: Use when choosing, connecting to, querying, or operating a relational
-  database engine. Do not use when the task is database design theory, NoSQL, or
-  engine-agnostic data modeling.
+description: Use when choosing, connecting to, querying, or operating a relational database engine. Do not use when the task is database design theory, NoSQL, or engine-agnostic data modeling.
 metadata:
   source-id: database-engines
   source-path: codex-marketplace/plugins/data-platform-pack/skills/database-engines/SKILL.md
@@ -12,36 +10,31 @@ metadata:
   owner: Harley Bartles
   scope: First-party guidance for PostgreSQL, SQLite, and selective MS-SQL
   use_when:
-  - choosing or operating a relational SQL engine
-  - connecting drivers, managing schemas, writing queries, or tuning indexes
-  - the user names PostgreSQL, SQLite, or MS-SQL
+    - choosing or operating a relational SQL engine
+    - connecting drivers, managing schemas, writing queries, or tuning indexes
+    - the user names PostgreSQL, SQLite, or MS-SQL
   do_not_use_when:
-  - database design theory; prefer database-design-patterns
-  - NoSQL or document databases
-  - cloud-managed operational tasks beyond engine selection
+    - database design theory; prefer database-design-patterns
+    - NoSQL or document databases
+    - cloud-managed operational tasks beyond engine selection
 license: MIT
 ---
 
 # Database Engines
 
-Use this skill when the work is tied to a specific relational engine. Ask which
-engine the user is using, then route to the matching reference files. PostgreSQL
-and SQLite are first-class; MS-SQL is available when the user explicitly selects
-it. MySQL is out of scope.
+Use this skill when the work is tied to a specific relational engine. Ask which engine the user is using, then route to the matching reference files. PostgreSQL and SQLite are first-class; MS-SQL is available when the user explicitly selects it. MySQL is out of scope.
 
 ## Engine selection
 
 1. Ask the user which engine they are using.
-2. If PostgreSQL, load `references/postgresql/*.md`.
-3. If SQLite, load `references/sqlite/*.md`.
-4. If MS-SQL, load `references/mssql/selectable-engine.md`.
-5. If MySQL or another engine, decline and suggest the appropriate source.
+1. If PostgreSQL, load `references/postgresql/*.md`.
+1. If SQLite, load `references/sqlite/*.md`.
+1. If MS-SQL, load `references/mssql/selectable-engine.md`.
+1. If MySQL or another engine, decline and suggest the appropriate source.
 
 ## Shared SQL concepts
 
-Read `references/operational-guidance.md` for cross-engine topics: connection
-management, transactions, indexing principles, and backup strategies. Keep
-engine-specific semantics in the engine-specific references.
+Read `references/operational-guidance.md` for cross-engine topics: connection management, transactions, indexing principles, and backup strategies. Keep engine-specific semantics in the engine-specific references.
 
 ## Common mistakes
 
@@ -50,5 +43,4 @@ engine-specific semantics in the engine-specific references.
 - Optimizing before checking the query plan or schema.
 - Ignoring transaction isolation and locking behavior.
 
-For source-grounded detail, read `assets/authority/CITATIONS.md` and
-`assets/authority/source-map.yaml`.
+For source-grounded detail, read `assets/authority/CITATIONS.md` and `assets/authority/source-map.yaml`.

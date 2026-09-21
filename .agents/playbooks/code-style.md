@@ -21,7 +21,7 @@ Durable coding and architecture invariants belong in doctrine. Reusable language
 
 ## Local commands and paths
 
-Use LF line endings. Use code formatting for literal commands, paths, identifiers, and values rather than emphasis. Skill names are kebab-case. First-party skill source lives under `codex-marketplace/plugins/<plugin>/skills/<name>/`. Prefer `Optional[X]` to `X | None` for Python compatibility; avoid the Python 3.13-only `Path.read_text(newline=...)` in Python 3.12-compatible scripts. Edit canonical plugin source before regeneration.
+Use LF line endings. Markdown prose uses semantic paragraphs without hard wrapping; `py -3 tools/run.py lint --apply` normalizes every tracked authored Markdown file with the pinned mdformat toolchain, and lint check mode rejects drift. Authority evidence under `assets/authority/` remains byte-preserved, and the unrendered writing-skills scaffold template is excluded because its `{metadata}` insertion token is not valid YAML until materialization. Use code formatting for literal commands, paths, identifiers, and values rather than emphasis. Skill names are kebab-case. First-party skill source lives under `codex-marketplace/plugins/<plugin>/skills/<name>/`. Prefer `Optional[X]` to `X | None` for Python compatibility; avoid the Python 3.13-only `Path.read_text(newline=...)` in Python 3.12-compatible scripts. Edit canonical plugin source before regeneration.
 
 ## Evidence contract
 

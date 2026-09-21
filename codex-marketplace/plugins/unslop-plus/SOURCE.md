@@ -16,9 +16,9 @@ This plugin contains the first-party `unslop-engine` skill and the first-party `
 The upstream `unslop.py` is a Claude Code CLI tool. It cannot ship verbatim as a Codex/GPT skill package because:
 
 1. **Claude Code CLI dependency**: The upstream script requires the `claude` binary and spawns `claude -p` as a subprocess for sample generation. This runtime assumption is inappropriate for a Codex/GPT skill package.
-2. **Interactive TerminalUI**: The upstream script includes an interactive terminal UI with spinners, progress bars, TTY detection, ANSI color codes, and live-updating display. These are not appropriate for a non-interactive skill package.
-3. **Process signal handling**: The upstream uses `signal`, `os`, and `time` modules for subprocess management and timeout handling tied to the Claude Code CLI process model.
-4. **Claude Code permission denial handling**: The upstream includes Claude Code-specific permission denial detection and error messages.
+1. **Interactive TerminalUI**: The upstream script includes an interactive terminal UI with spinners, progress bars, TTY detection, ANSI color codes, and live-updating display. These are not appropriate for a non-interactive skill package.
+1. **Process signal handling**: The upstream uses `signal`, `os`, and `time` modules for subprocess management and timeout handling tied to the Claude Code CLI process model.
+1. **Claude Code permission denial handling**: The upstream includes Claude Code-specific permission denial detection and error messages.
 
 The `unslop-engine` skill adapts the upstream idea (sample collection, pattern detection, profile generation) to use Python standard library text analysis, local sample files, and optional Playwright for visual evidence. The upstream MIT license and copyright are preserved in `skills/unslop-engine/LICENSE.upstream`.
 

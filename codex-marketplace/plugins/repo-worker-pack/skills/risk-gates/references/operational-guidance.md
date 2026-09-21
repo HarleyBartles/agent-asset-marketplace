@@ -7,10 +7,10 @@ Use when the risk-gates skill loaded and the proposed action needs more detail t
 ## Risk gate usage
 
 1. Name the exact next action and the durable surface it would affect.
-2. Use the routing table in `SKILL.md` to select only the gates that match.
-3. Read the matching gate references; do not read all gate references by default.
-4. Classify the result as `green`, `amber`, `red`, or `blocked`.
-5. Resolve forced decisions internally; surface only real, unresolved choices.
+1. Use the routing table in `SKILL.md` to select only the gates that match.
+1. Read the matching gate references; do not read all gate references by default.
+1. Classify the result as `green`, `amber`, `red`, or `blocked`.
+1. Resolve forced decisions internally; surface only real, unresolved choices.
 
 ## Safety gate
 
