@@ -20,16 +20,22 @@ CONTRACT_PATH = Path(".agents/contracts/markdown-formatting.json")
 CONFIG_PATH = Path(".mdformat.toml")
 MAX_COMMAND_CHARS = 28_000
 REQUIREMENTS_PATH = Path(__file__).resolve().parents[1] / "requirements.txt"
+REQUIRED_DISTRIBUTION_NAMES = frozenset({"mdformat", "mdformat-frontmatter", "mdformat-gfm"})
 
 
 def _required_distributions() -> dict[str, str]:
     pins: dict[str, str] = {}
-    for line in REQUIREMENTS_PATH.read_text(encoding="utf-8").splitlines():
+    try:
+        lines = REQUIREMENTS_PATH.read_text(encoding="utf-8").splitlines()
+    except OSError as exc:
+        raise ToolchainError(f"cannot read {REQUIREMENTS_PATH}: {exc}") from exc
+    for line in lines:
         match = re.fullmatch(r"([A-Za-z0-9_.-]+)==([^\s]+)", line.strip())
         if match:
             pins[match.group(1)] = match.group(2)
-    if not pins:
-        raise RuntimeError(f"{REQUIREMENTS_PATH}: no exact dependency pins found")
+    missing = REQUIRED_DISTRIBUTION_NAMES - pins.keys()
+    if missing:
+        raise ToolchainError(f"{REQUIREMENTS_PATH}: missing exact pins for {', '.join(sorted(missing))}")
     return pins
 
 

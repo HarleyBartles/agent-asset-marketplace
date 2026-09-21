@@ -23,6 +23,12 @@ _SPEC = importlib.util.spec_from_file_location("repo_standards_under_test", REPO
 repo_standards = importlib.util.module_from_spec(_SPEC)
 assert _SPEC.loader is not None
 _SPEC.loader.exec_module(repo_standards)
+_MARKDOWN_SPEC = importlib.util.spec_from_file_location(
+    "scaffold_markdown_formatting_under_test", SCAFFOLD_MARKDOWN_FORMATTING
+)
+scaffold_markdown_formatting = importlib.util.module_from_spec(_MARKDOWN_SPEC)
+assert _MARKDOWN_SPEC.loader is not None
+_MARKDOWN_SPEC.loader.exec_module(scaffold_markdown_formatting)
 
 
 def _stripped_env():
@@ -150,14 +156,20 @@ def test_markdown_surface_adoption_and_enforcement_are_separate(tmp_path: Path) 
     assert markdown.read_text(encoding="utf-8") == "# Title\n"
 
 
-def test_markdown_enforcement_failure_restores_markdown(tmp_path: Path) -> None:
+def test_markdown_enforcement_failure_restores_markdown(tmp_path: Path, monkeypatch) -> None:
     repo = tmp_path / "consumer"
     repo.mkdir()
     _init_git_repo(repo)
     (repo / ".agents/contracts").mkdir(parents=True)
     declaration_path = repo / ".agents/contracts/repo-standards-commands.json"
     declaration_path.write_text(
-        json.dumps({"apply": [], "check": [], "generated_paths": ["generated/**"]}),
+        json.dumps(
+            {
+                "apply": ["@python", "tools/run.py", "ci", "--apply"],
+                "check": ["@python", "tools/run.py", "ci", "--check"],
+                "generated_paths": ["generated/**"],
+            }
+        ),
         encoding="utf-8",
     )
     markdown = repo / "README.md"
@@ -166,14 +178,30 @@ def test_markdown_enforcement_failure_restores_markdown(tmp_path: Path) -> None:
     subprocess.run(["git", "commit", "-m", "fixture"], cwd=repo, check=True, capture_output=True)
     before = markdown.read_bytes()
 
-    result = subprocess.run(
-        [sys.executable, str(SCAFFOLD_MARKDOWN_FORMATTING), "--apply", "--state", "enforced"],
-        cwd=repo,
-        text=True,
-        capture_output=True,
+    class FailingFormatter:
+        @staticmethod
+        def load_contract(_root):
+            return object()
+
+        @staticmethod
+        def eligible_markdown(_root, _contract):
+            return (markdown,)
+
+        @staticmethod
+        def main(args):
+            if args == ["--apply"]:
+                markdown.write_text("# Title\n", encoding="utf-8")
+                return 0
+            return 1
+
+    monkeypatch.setattr(
+        scaffold_markdown_formatting,
+        "_formatter",
+        lambda _root: (FailingFormatter, Path("formatter.py")),
     )
 
-    assert result.returncode == 1
+    with pytest.raises(RuntimeError, match="check failed"):
+        scaffold_markdown_formatting._enforce(repo)
     assert markdown.read_bytes() == before
 
 

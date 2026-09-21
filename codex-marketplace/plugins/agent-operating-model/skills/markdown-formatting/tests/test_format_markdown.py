@@ -151,6 +151,16 @@ def test_verify_toolchain_reports_missing_and_mismatched_packages(monkeypatch):
         module.verify_toolchain()
 
 
+def test_requirements_must_pin_every_required_distribution(tmp_path: Path, monkeypatch):
+    module = load_module()
+    requirements = tmp_path / "requirements.txt"
+    requirements.write_text("mdformat==1.0.0\n", encoding="utf-8")
+    monkeypatch.setattr(module, "REQUIREMENTS_PATH", requirements)
+
+    with pytest.raises(module.ToolchainError, match="mdformat-frontmatter"):
+        module._required_distributions()
+
+
 def test_apply_restores_every_original_byte_when_later_batch_fails(tmp_path: Path, monkeypatch):
     module = load_module()
     repo = make_repo(tmp_path)
