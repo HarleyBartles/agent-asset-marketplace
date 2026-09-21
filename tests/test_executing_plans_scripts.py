@@ -134,7 +134,7 @@ def test_wsl_bash_rejects_a_windows_managed_worktree_before_running_python():
         [
             str(system_bash),
             _wsl_path(EXECUTING / "scripts" / "task-start"),
-            ".agents/plans/2026-09-21-receiving-code-review-deeper-smell-and-skill-tests.md",
+            ".agents/plans/2026-09-21-receiving-code-review-deeper-smell.md",
             "5",
         ],
         cwd=ROOT,
