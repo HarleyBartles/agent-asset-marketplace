@@ -15,14 +15,12 @@ FORMATTER_VECTOR = [
     "@python",
     ".agents/skills/markdown-formatting/scripts/format_markdown.py",
 ]
-GUIDANCE = """
-
-## Markdown formatting
-
-When `.agents/contracts/markdown-formatting.json` is present, use the installed
-`markdown-formatting` skill command for repository-wide check/apply and for
-producer-scoped checks. Generated Markdown must be formatter-clean at its producer.
-""".lstrip()
+GUIDANCE = (
+    "## Markdown formatting\n\n"
+    "When `.agents/contracts/markdown-formatting.json` is present, use the installed "
+    "`markdown-formatting` skill command for repository-wide check/apply and for producer-scoped checks. "
+    "Generated Markdown must be formatter-clean at its producer.\n"
+)
 
 
 def _root() -> Path:

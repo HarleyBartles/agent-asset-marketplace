@@ -23,7 +23,6 @@ SCRIPT_NAME = "tools/run"
 PLUGIN_ROOTS_PATH = ROOT / "codex-marketplace" / "plugins"
 PLUGIN_ROOT_INVENTORY_PATH = ROOT / "codex-marketplace" / "plugin-roots.json"
 _MAX_CMD_CHARS = 28000
-_MARKDOWN_TEMPLATE_SUFFIXES = ("writing-skills/templates/skill/SKILL.md",)
 
 
 @dataclass(frozen=True)
@@ -113,25 +112,6 @@ def _all_tracked_python_files() -> list[Path]:
     return [Path(p) for p in result.stdout.splitlines() if (ROOT / p).is_file()]
 
 
-def _all_tracked_markdown_files() -> list[Path]:
-    result = subprocess.run(
-        ["git", "ls-files", "--", "*.md"],
-        cwd=ROOT,
-        capture_output=True,
-        text=True,
-        check=True,
-    )
-    files = []
-    for value in result.stdout.splitlines():
-        normalized = value.replace("\\", "/")
-        if not (ROOT / value).is_file():
-            continue
-        if "/assets/authority/" in f"/{normalized}" or normalized.endswith(_MARKDOWN_TEMPLATE_SUFFIXES):
-            continue
-        files.append(Path(value))
-    return files
-
-
 def _run_ruff(files: list[Path], ctx: Ctx, *, fix: bool = False) -> None:
     if not files:
         return
@@ -146,25 +126,6 @@ def _run_ruff(files: list[Path], ctx: Ctx, *, fix: bool = False) -> None:
         fmt_cmd.append("--check")
     fmt_cmd.extend(file_args)
     _run(fmt_cmd, ctx)
-
-
-def _run_mdformat(files: list[Path], ctx: Ctx, *, fix: bool = False) -> None:
-    prefix = [sys.executable, "-m", "mdformat"]
-    if not fix:
-        prefix.append("--check")
-    batch: list[str] = []
-    batch_len = sum(len(part) + 1 for part in prefix)
-    for path in files:
-        value = str(path)
-        value_len = len(value) + 3
-        if batch and batch_len + value_len > _MAX_CMD_CHARS:
-            _run([*prefix, *batch], ctx)
-            batch = []
-            batch_len = sum(len(part) + 1 for part in prefix)
-        batch.append(value)
-        batch_len += value_len
-    if batch:
-        _run([*prefix, *batch], ctx)
 
 
 def _load_active_plugin_root_names() -> set[str]:
@@ -383,14 +344,12 @@ def _run_lint(ctx: Ctx) -> None:
                 file=sys.stderr,
             )
             _run_ruff(_all_tracked_python_files(), ctx)
-        _run_mdformat(_all_tracked_markdown_files(), ctx)
     else:
         files = _changed_python_files(ctx.base_ref)
         if not files:
             print("No changed Python files to lint.")
         else:
             _run_ruff(files, ctx, fix=True)
-        _run_mdformat(_all_tracked_markdown_files(), ctx, fix=True)
 
 
 def _validate_skill_scripts(ctx: Ctx) -> None:

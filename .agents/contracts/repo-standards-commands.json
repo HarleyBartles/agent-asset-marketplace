@@ -1,6 +1,12 @@
 {
-  "apply": ["@python", "tools/run.py", "ci", "--apply", "--allow-shared-checkout"],
-  "check": ["@python", "tools/run.py", "ci", "--check", "--diagnostics"],
+  "apply": [
+    ["@python", ".agents/skills/markdown-formatting/scripts/format_markdown.py", "--apply"],
+    ["@python", "tools/run.py", "ci", "--apply", "--allow-shared-checkout"]
+  ],
+  "check": [
+    ["@python", ".agents/skills/markdown-formatting/scripts/format_markdown.py", "--check"],
+    ["@python", "tools/run.py", "ci", "--check", "--diagnostics"]
+  ],
   "generated_paths": [
     ".agents/skills/**",
     "**/INDEX.md",

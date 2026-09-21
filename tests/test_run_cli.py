@@ -35,36 +35,6 @@ def test_changed_python_files_use_staged_snapshot_when_hook_marks_it(tmp_path: P
     assert module._changed_python_files("HEAD") == [Path("sample.py")]
 
 
-def test_all_tracked_markdown_files_come_from_git(tmp_path: Path, monkeypatch) -> None:
-    repo = tmp_path / "markdown-repo"
-    repo.mkdir()
-    subprocess.run(["git", "init"], cwd=repo, check=True, capture_output=True)
-    tracked = repo / "tracked.md"
-    ignored = repo / "ignored.md"
-    authority = repo / "plugin/skill/assets/authority/CITATIONS.md"
-    template = repo / "codex-marketplace/plugins/superpowers-plus/skills/writing-skills/templates/skill/SKILL.md"
-    tracked.write_text("# Tracked\n", encoding="utf-8")
-    ignored.write_text("# Ignored\n", encoding="utf-8")
-    authority.parent.mkdir(parents=True)
-    authority.write_text("# Immutable evidence\n", encoding="utf-8")
-    template.parent.mkdir(parents=True)
-    template.write_text("---\nmetadata:\n{metadata}\n---\n", encoding="utf-8")
-    subprocess.run(
-        ["git", "add", "tracked.md", authority.relative_to(repo).as_posix(), template.relative_to(repo).as_posix()],
-        cwd=repo,
-        check=True,
-    )
-
-    spec = importlib.util.spec_from_file_location("run_markdown_under_test", ROOT / "tools" / "run.py")
-    module = importlib.util.module_from_spec(spec)
-    assert spec.loader is not None
-    sys.modules[spec.name] = module
-    spec.loader.exec_module(module)
-    monkeypatch.setattr(module, "ROOT", repo)
-
-    assert module._all_tracked_markdown_files() == [Path("tracked.md")]
-
-
 sys.path.insert(0, str(ROOT / "tools"))
 import run  # noqa: E402
 
@@ -181,7 +151,6 @@ def test_failure_prints_fix(monkeypatch):
 def test_lint_fix_command_used_in_apply(monkeypatch):
     files = [Path("tools/run.py")]
     monkeypatch.setattr(run, "_changed_python_files", lambda base: files)
-    monkeypatch.setattr(run, "_all_tracked_markdown_files", lambda: [Path("README.md")])
 
     calls = []
 
@@ -198,16 +167,12 @@ def test_lint_fix_command_used_in_apply(monkeypatch):
     assert "--fix" in check_cmd[0]
     fmt_cmd = [c for c in calls if c[1:4] == ["-m", "ruff", "format"]]
     assert fmt_cmd
-    markdown_cmd = [c for c in calls if c[1:3] == ["-m", "mdformat"]]
-    assert markdown_cmd
-    assert "--check" not in markdown_cmd[0]
-    assert "README.md" in markdown_cmd[0]
+    assert not [c for c in calls if c[1:3] == ["-m", "mdformat"]]
 
 
 def test_lint_check_mode_does_not_format_files(monkeypatch):
     files = [Path("tools/run.py")]
     monkeypatch.setattr(run, "_all_tracked_python_files", lambda: files)
-    monkeypatch.setattr(run, "_all_tracked_markdown_files", lambda: [Path("README.md")])
 
     calls = []
 
@@ -222,9 +187,7 @@ def test_lint_check_mode_does_not_format_files(monkeypatch):
     fmt_cmd = [c for c in calls if c[1:4] == ["-m", "ruff", "format"]]
     assert fmt_cmd
     assert "--check" in fmt_cmd[0]
-    markdown_cmd = [c for c in calls if c[1:3] == ["-m", "mdformat"]]
-    assert markdown_cmd
-    assert "--check" in markdown_cmd[0]
+    assert not [c for c in calls if c[1:3] == ["-m", "mdformat"]]
 
 
 def test_base_ref_forwards_to_ruff_diff(monkeypatch):
@@ -250,7 +213,8 @@ def test_base_ref_forwards_to_ruff_diff(monkeypatch):
 @pytest.mark.skipif(shutil.which("bash") is None, reason="bash not available")
 def test_bash_wrapper_delegates_to_runpy():
     result = subprocess.run(
-        ["bash", str(ROOT / "tools" / "run"), "--help"],
+        ["bash", "-lc", "./tools/run --help"],
+        cwd=ROOT,
         capture_output=True,
         text=True,
     )

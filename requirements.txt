@@ -1,6 +1,4 @@
 PyYAML>=6.0
 Pillow>=10.0
-mdformat==1.0.0
-mdformat-frontmatter==2.1.2
-mdformat-gfm==1.0.0
+-r .agents/skills/markdown-formatting/requirements.txt
 ruff==0.9.0
