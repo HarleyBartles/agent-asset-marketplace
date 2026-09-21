@@ -15,6 +15,7 @@ import argparse
 import json
 from pathlib import Path
 import shutil
+import subprocess
 import sys
 from typing import Any, Final
 
@@ -27,6 +28,15 @@ PLUGINS_DIR: Final[Path] = REPO_ROOT / "codex-marketplace" / "plugins"
 PLUGIN_ROOTS: Final[Path] = REPO_ROOT / "codex-marketplace" / "plugin-roots.json"
 TEMPLATE_PACK: Final[str] = "repo-worker-pack"
 DISPLAY_PREFIX: Final[str] = " ".join(part.capitalize() for part in TEMPLATE_PACK.split("-"))
+
+
+def _check_markdown_outputs(paths: list[Path]) -> None:
+    formatter = REPO_ROOT / ".agents/skills/markdown-formatting/scripts/format_markdown.py"
+    contract = REPO_ROOT / ".agents/contracts/markdown-formatting.json"
+    if not formatter.is_file() or not contract.is_file() or not paths:
+        return
+    relative = [path.relative_to(REPO_ROOT).as_posix() for path in paths]
+    subprocess.run([sys.executable, str(formatter), "--check-files", *relative], cwd=REPO_ROOT, check=True)
 
 
 def _title_case(name: str) -> str:
@@ -407,6 +417,7 @@ def main(argv: list[str] | None = None) -> int:
     pack_dir, _ = result
     _scaffold(pack_dir, args.name)
     _register_root(args.name)
+    _check_markdown_outputs([pack_dir / "README.md", pack_dir / "SOURCE.md"])
     print(f"Created pack at {pack_dir}")
     return 0
 

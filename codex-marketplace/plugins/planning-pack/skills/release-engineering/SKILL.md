@@ -9,16 +9,16 @@ metadata:
   status: active
   owner: Harley Bartles
   use_when:
-  - designing or reviewing CI/CD pipelines.
-  - building, tagging, or promoting container images.
-  - planning blue/green, canary, or rolling deployments.
-  - preparing or rolling back a release.
+    - designing or reviewing CI/CD pipelines.
+    - building, tagging, or promoting container images.
+    - planning blue/green, canary, or rolling deployments.
+    - preparing or rolling back a release.
   do_not_use_when:
-  - another more specific skill owns the task.
+    - another more specific skill owns the task.
   related_skills:
-  - observability
-  - using-github-mcp
-  - secure-development
+    - observability
+    - using-github-mcp
+    - secure-development
 license: MIT
 ---
 

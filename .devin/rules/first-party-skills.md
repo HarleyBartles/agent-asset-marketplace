@@ -3,6 +3,7 @@ description: "First-party skill format"
 trigger: glob
 globs: "codex-marketplace/plugins/*/skills/**"
 ---
+
 ## Scope
 
 For the canonical doctrine behind this rule, read `.agents/doctrine/first-party-skills.md`.

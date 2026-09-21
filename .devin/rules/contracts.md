@@ -3,6 +3,7 @@ description: "Contract doc routing"
 trigger: glob
 globs: ".agents/contracts/**"
 ---
+
 ## Scope
 
 For the canonical doctrine behind this rule, read `.agents/doctrine/contracts.md`.

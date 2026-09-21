@@ -39,6 +39,27 @@ def _repo_root() -> Path:
     return Path(result.stdout.strip())
 
 
+def _markdown_snapshot(repo_root: Path) -> dict[Path, bytes]:
+    return {
+        path: path.read_bytes()
+        for path in repo_root.rglob("*.md")
+        if ".git" not in path.relative_to(repo_root).parts and path.is_file()
+    }
+
+
+def _check_markdown_outputs(repo_root: Path, before: dict[Path, bytes]) -> None:
+    formatter = repo_root / ".agents/skills/markdown-formatting/scripts/format_markdown.py"
+    contract = repo_root / ".agents/contracts/markdown-formatting.json"
+    if not formatter.is_file() or not contract.is_file():
+        return
+    after = _markdown_snapshot(repo_root)
+    changed = sorted(path for path, content in after.items() if before.get(path) != content)
+    if not changed:
+        return
+    relative = [path.relative_to(repo_root).as_posix() for path in changed]
+    subprocess.run([sys.executable, str(formatter), "--check-files", *relative], cwd=repo_root, check=True)
+
+
 # Allow importing the shared checkout helper from the script directory (so the
 # skill is self-contained when installed/bundled) or from tools/ when running
 # from source.
@@ -63,8 +84,8 @@ _COMMAND_DECLARATION = Path(".agents/contracts/repo-standards-commands.json")
 
 
 class CommandDeclaration(NamedTuple):
-    apply: tuple[str, ...]
-    check: tuple[str, ...]
+    apply: tuple[tuple[str, ...], ...]
+    check: tuple[tuple[str, ...], ...]
     generated_paths: tuple[str, ...]
 
 
@@ -261,16 +282,27 @@ def _check_declared_commands(repo_root: Path) -> tuple[CommandDeclaration | None
     if not isinstance(data, dict):
         return None, ["consumer command declaration must be a JSON object"]
     findings: list[str] = []
-    commands: dict[str, tuple[str, ...]] = {}
+    commands: dict[str, tuple[tuple[str, ...], ...]] = {}
     for capability, switch in (("apply", "--apply"), ("check", "--check")):
-        command = data.get(capability)
-        if not isinstance(command, list) or not command or not all(isinstance(item, str) for item in command):
+        raw = data.get(capability)
+        if isinstance(raw, list) and raw and all(isinstance(item, str) for item in raw):
+            vectors = [raw]
+        elif (
+            isinstance(raw, list)
+            and raw
+            and all(
+                isinstance(vector, list) and len(vector) >= 2 and all(isinstance(item, str) and item for item in vector)
+                for vector in raw
+            )
+        ):
+            vectors = raw
+        else:
             findings.append(f"consumer command declaration has invalid {capability} command")
             continue
-        if switch not in command:
+        if any(switch not in vector for vector in vectors):
             findings.append(f"declared {capability} command is missing {switch}")
             continue
-        commands[capability] = tuple(command)
+        commands[capability] = tuple(tuple(vector) for vector in vectors)
     generated_paths = data.get("generated_paths")
     valid_generated_paths: list[str] = []
     if not isinstance(generated_paths, list) or not generated_paths:
@@ -907,6 +939,8 @@ while the contract is absent."""
     if not shared_checkout.approve_mutation(repo_root, _SCRIPT_NAME, args.allow_shared_checkout):
         return 1
 
+    markdown_before = _markdown_snapshot(repo_root)
+
     _, declaration_findings = _check_declared_commands(repo_root)
     if "repo-standards-commands" in enabled_surface_ids and declaration_findings:
         for finding in declaration_findings:
@@ -953,6 +987,7 @@ while the contract is absent."""
         print("error: repo-standards apply did not converge", file=sys.stderr)
         return 1
 
+    _check_markdown_outputs(repo_root, markdown_before)
     print(f"OK repo-standards: applied {applied} surface(s)")
     return 0
 

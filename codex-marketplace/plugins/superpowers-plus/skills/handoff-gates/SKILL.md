@@ -10,25 +10,25 @@ metadata:
   owner: Harley Bartles
   scope: Readiness gates for planning-to-execution and execution-to-code-review handoffs.
   use_when:
-  - a plan is ready to move from writing-plans to execution.
-  - completed work is ready to move from executing-plans to code review.
+    - a plan is ready to move from writing-plans to execution.
+    - completed work is ready to move from executing-plans to code review.
   do_not_use_when:
-  - the artifact is not clearly at a stage boundary (see references/scope-notes.md for boundary cases)
-  - a substitute for risk-gates when the question is pre-action risk.
+    - the artifact is not clearly at a stage boundary (see references/scope-notes.md for boundary cases)
+    - a substitute for risk-gates when the question is pre-action risk.
   related_skills:
-  - risk-gates
-  - writing-plans
-  - executing-plans
-  - subagent-driven-development
-  - writing-roadmaps
+    - risk-gates
+    - writing-plans
+    - executing-plans
+    - subagent-driven-development
+    - writing-roadmaps
   use_after:
-  - writing-plans
-  - executing-plans
+    - writing-plans
+    - executing-plans
   use_before:
-  - executing-plans
-  - subagent-driven-development
-  - finishing-a-development-branch
-  - requesting-code-review
+    - executing-plans
+    - subagent-driven-development
+    - finishing-a-development-branch
+    - requesting-code-review
 license: MIT
 ---
 
@@ -36,9 +36,7 @@ license: MIT
 
 ## Overview
 
-Rate stage-boundary artifacts for execution confidence. Never hand off below
-8/10. Target 9/10+. The score is a behavioral forcing function used during the
-handoff; do not persist it in a roadmap, ledger, PR, or other durable record.
+Rate stage-boundary artifacts for execution confidence. Never hand off below 8/10. Target 9/10+. The score is a behavioral forcing function used during the handoff; do not persist it in a roadmap, ledger, PR, or other durable record.
 
 ## Lanes
 
@@ -51,8 +49,7 @@ Use a 1–10 execution-confidence scale.
 
 - **< 8:** Identify gaps, strengthen, and re-rate. Never proceed below 8.
 - **8–8.9:** Try one bounded strengthening pass to reach 9+.
-- **≥ 9:** Proceed to handoff and report the final rating in the current
-  conversation only.
+- **≥ 9:** Proceed to handoff and report the final rating in the current conversation only.
 
 ## How to Use
 
@@ -60,8 +57,7 @@ Use a 1–10 execution-confidence scale.
 2. Pick the lane matching the boundary.
 3. Score the artifact against the lane question and checklist.
 4. Strengthen gaps until the score is at least 8, targeting 9+.
-5. Report the rating in the current handoff and proceed, or return `blocked`
-   with the unresolved gaps.
+5. Report the rating in the current handoff and proceed, or return `blocked` with the unresolved gaps.
 
 ## Plan-Readiness Checklist
 

@@ -2,9 +2,7 @@
 
 Official Feature-Sliced Design (FSD) v2.1 skill for AI coding agents.
 
-Teaches the FSD methodology for structuring frontend projects using standardized
-layers (app, pages, widgets, features, entities, shared), import rules, decision
-frameworks for code placement, and common architectural patterns.
+Teaches the FSD methodology for structuring frontend projects using standardized layers (app, pages, widgets, features, entities, shared), import rules, decision frameworks for code placement, and common architectural patterns.
 
 ## Upstream
 

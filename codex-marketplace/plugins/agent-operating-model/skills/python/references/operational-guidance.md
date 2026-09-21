@@ -3,6 +3,7 @@
 ## When to apply
 
 Use when the Python skill loaded and the question is deeper than a single sentence:
+
 - choosing concurrency primitives,
 - structuring pytest suites,
 - applying type annotations,

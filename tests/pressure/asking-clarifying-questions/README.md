@@ -9,6 +9,4 @@ This pressure test evaluates whether the `asking-clarifying-questions` skill pro
 
 ## Expected behavior
 
-The skill keeps the response to the compact queue (next action, ambiguity,
-risk, recommendation/options, one question) and does not perform the rename.
-Judge each run in its current handoff; do not commit the response or verdict.
+The skill keeps the response to the compact queue (next action, ambiguity, risk, recommendation/options, one question) and does not perform the rename. Judge each run in its current handoff; do not commit the response or verdict.

@@ -20,6 +20,21 @@ if str(SCRIPTS) not in sys.path:
 import refresh_installed_skills  # noqa: E402
 
 
+def test_copy_skill_directory_preserves_nested_test_tree_bytes(tmp_path: Path) -> None:
+    source_skill = tmp_path / "source" / "sample-skill"
+    source_test = source_skill / "tests" / "fixture" / "nested.txt"
+    source_test.parent.mkdir(parents=True)
+    expected = "naïve fixture\r\nsecond line\r\n".encode()
+    source_test.write_bytes(expected)
+    (source_skill / "SKILL.md").write_text("---\nname: sample-skill\n---\n", encoding="utf-8")
+    installed_skill = tmp_path / "installed" / "sample-skill"
+
+    with patch.object(refresh_installed_skills, "ROOT", tmp_path):
+        refresh_installed_skills._copy_skill_directory(source_skill, installed_skill)
+
+    assert (installed_skill / "tests" / "fixture" / "nested.txt").read_bytes() == expected
+
+
 def test_force_refresh_with_no_skill_changes_is_a_no_diff_operation(tmp_path: Path) -> None:
     skills_path = tmp_path / "skills"
     skills_path.mkdir()

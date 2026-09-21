@@ -348,8 +348,8 @@ def _run_lint(ctx: Ctx) -> None:
         files = _changed_python_files(ctx.base_ref)
         if not files:
             print("No changed Python files to lint.")
-            return
-        _run_ruff(files, ctx, fix=True)
+        else:
+            _run_ruff(files, ctx, fix=True)
 
 
 def _validate_skill_scripts(ctx: Ctx) -> None:

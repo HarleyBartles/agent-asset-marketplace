@@ -2,18 +2,18 @@
 
 ## Top 10 risks
 
-| ID | Risk | Concise description | Prevention controls |
-|---|---|---|---|
-| A01:2025 | Broken Access Control | Users can act outside intended permissions. | Enforce least privilege, deny by default, server-side access checks, use mature frameworks, log access decisions. |
-| A02:2025 | Security Misconfiguration | Unnecessary features, default accounts, verbose errors, missing patches. | Hardened images, minimal install, automated patch and inventory, disable unnecessary features, consistent environment config. |
-| A03:2025 | Software Supply Chain Failures | Vulnerable, outdated, or malicious dependencies or build steps. | SBOM, dependency scanning, signed artifacts, private registries, lock files, vendor assessment. |
-| A04:2025 | Cryptographic Failures | Sensitive data exposed or weak/inadequate cryptography. | Classify data, encrypt in transit and at rest, use current algorithms and key management, avoid custom crypto. |
-| A05:2025 | Injection | Untrusted data sent to interpreters as command or query. | Parameterized queries, input validation, output encoding, limit interpreters, least privilege database accounts. |
-| A06:2025 | Insecure Design | Missing or ineffective security controls by design. | Threat modeling, secure design patterns, positive access controls, integrity checks by design. |
-| A07:2025 | Authentication Failures | Weak credential management or session handling. | Multi-factor authentication, strong password policy, secure session tokens, rate limiting, use identity providers. |
-| A08:2025 | Software or Data Integrity Failures | Insecure deserialization, untrusted CI/CD, unsigned updates. | Sign and verify updates/deserialized data, integrity checks, trusted CI/CD pipelines, avoid unsafe deserialization. |
-| A09:2025 | Security Logging and Alerting Failures | Insufficient logging, monitoring, and incident response. | Centralized structured logging, log integrity, alerting, retention, privacy-aware logging, incident playbooks. |
-| A10:2025 | Mishandling of Exceptional Conditions | Errors, edge cases, or resource failures leak data or enable crashes. | Safe error handling, fail securely, resource limits, fuzz testing, no sensitive data in error messages. |
+| ID       | Risk                                   | Concise description                                                      | Prevention controls                                                                                                           |
+| -------- | -------------------------------------- | ------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------- |
+| A01:2025 | Broken Access Control                  | Users can act outside intended permissions.                              | Enforce least privilege, deny by default, server-side access checks, use mature frameworks, log access decisions.             |
+| A02:2025 | Security Misconfiguration              | Unnecessary features, default accounts, verbose errors, missing patches. | Hardened images, minimal install, automated patch and inventory, disable unnecessary features, consistent environment config. |
+| A03:2025 | Software Supply Chain Failures         | Vulnerable, outdated, or malicious dependencies or build steps.          | SBOM, dependency scanning, signed artifacts, private registries, lock files, vendor assessment.                               |
+| A04:2025 | Cryptographic Failures                 | Sensitive data exposed or weak/inadequate cryptography.                  | Classify data, encrypt in transit and at rest, use current algorithms and key management, avoid custom crypto.                |
+| A05:2025 | Injection                              | Untrusted data sent to interpreters as command or query.                 | Parameterized queries, input validation, output encoding, limit interpreters, least privilege database accounts.              |
+| A06:2025 | Insecure Design                        | Missing or ineffective security controls by design.                      | Threat modeling, secure design patterns, positive access controls, integrity checks by design.                                |
+| A07:2025 | Authentication Failures                | Weak credential management or session handling.                          | Multi-factor authentication, strong password policy, secure session tokens, rate limiting, use identity providers.            |
+| A08:2025 | Software or Data Integrity Failures    | Insecure deserialization, untrusted CI/CD, unsigned updates.             | Sign and verify updates/deserialized data, integrity checks, trusted CI/CD pipelines, avoid unsafe deserialization.           |
+| A09:2025 | Security Logging and Alerting Failures | Insufficient logging, monitoring, and incident response.                 | Centralized structured logging, log integrity, alerting, retention, privacy-aware logging, incident playbooks.                |
+| A10:2025 | Mishandling of Exceptional Conditions  | Errors, edge cases, or resource failures leak data or enable crashes.    | Safe error handling, fail securely, resource limits, fuzz testing, no sensitive data in error messages.                       |
 
 ## ASVS verification route
 

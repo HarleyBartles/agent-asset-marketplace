@@ -9,19 +9,19 @@ metadata:
   status: active
   owner: Harley Bartles
   use_when:
-  - starting feature work that needs isolation from the current workspace.
-  - an implementation plan is ready but no isolated workspace exists.
-  - the repo declares or expects a canonical sibling-folder worktree root.
+    - starting feature work that needs isolation from the current workspace.
+    - an implementation plan is ready but no isolated workspace exists.
+    - the repo declares or expects a canonical sibling-folder worktree root.
   do_not_use_when:
-  - already in an isolated workspace.
-  - the user declines a worktree.
-  - native tools already manage isolation.
+    - already in an isolated workspace.
+    - the user declines a worktree.
+    - native tools already manage isolation.
   related_skills:
-  - using-superpowers-plus
-  - refreshing-installed-skills
-  - executing-plans
-  - subagent-driven-development
-  - finishing-a-development-branch
+    - using-superpowers-plus
+    - refreshing-installed-skills
+    - executing-plans
+    - subagent-driven-development
+    - finishing-a-development-branch
 license: MIT
 ---
 
@@ -63,6 +63,7 @@ git rev-parse --show-superproject-working-tree 2>/dev/null
 **If `GIT_DIR != GIT_COMMON` (and not a submodule):** You are already in a linked worktree. Skip to Step 2 (Project Setup). Do NOT create another worktree.
 
 Report with branch state:
+
 - On a branch: "Already in isolated workspace at `<path>` on branch `<name>`."
 - Detached HEAD: "Already in isolated workspace at `<path>` (detached HEAD, externally managed). Branch creation needed at finish time."
 
@@ -103,10 +104,12 @@ Follow this priority order. Explicit user preference always beats observed files
 2. **If the repo instructions declare a canonical sibling-folder worktree root, use that location.** For example, use `../_agent-worktrees/<repo-name>` when the repo's AGENTS file names that path.
 
 3. **Otherwise, check for an existing project-local worktree directory:**
+
    ```bash
    ls -d .worktrees 2>/dev/null     # Preferred (hidden)
    ls -d worktrees 2>/dev/null      # Alternative
    ```
+
    If found, use it. If both exist, `.worktrees` wins.
 
 4. **If there is no other guidance available**, default to `.worktrees/` at the project root.
@@ -142,23 +145,17 @@ The dependency step depends on how the worktree was created:
 - **If you used `scripts/new_worktree.py --apply <branch>`:** dependencies were already installed while the worktree was being created. Do not run a separate install step.
 - **If you used `git worktree add` or any native/manual route:** dependencies have not been installed yet. Run them now before the baseline checks.
 
-For a manually created worktree, inspect the consumer repository's local
-guidance for its canonical dependency-install capability and use it when one
-exists. If the repository does not own such a capability, use the bundled
-fallback by detecting the package-manager manifest and running the matching
-command:
+For a manually created worktree, inspect the consumer repository's local guidance for its canonical dependency-install capability and use it when one exists. If the repository does not own such a capability, use the bundled fallback by detecting the package-manager manifest and running the matching command:
 
-| manifest            | command                                        |
-| ------------------- | ---------------------------------------------- |
-| `package-lock.json` | `npm ci`                                       |
-| `yarn.lock`         | `yarn install --frozen-lockfile`               |
-| `pnpm-lock.yaml`    | `pnpm install --frozen-lockfile`               |
-| `package.json`      | `npm install`                                  |
-| `requirements.txt`  | `pip install -r requirements.txt`              |
+| manifest            | command                           |
+| ------------------- | --------------------------------- |
+| `package-lock.json` | `npm ci`                          |
+| `yarn.lock`         | `yarn install --frozen-lockfile`  |
+| `pnpm-lock.yaml`    | `pnpm install --frozen-lockfile`  |
+| `package.json`      | `npm install`                     |
+| `requirements.txt`  | `pip install -r requirements.txt` |
 
-If a recognised manifest is present but its required installer is missing, fail
-closed and do not claim the workspace is ready. The portable skill does not
-prescribe the consumer's command-bus name or target.
+If a recognised manifest is present but its required installer is missing, fail closed and do not claim the workspace is ready. The portable skill does not prescribe the consumer's command-bus name or target.
 
 ## Step 3: Verify Clean Baseline
 
@@ -183,45 +180,43 @@ Ready to implement <feature-name>
 
 ## Bundled scripts
 
-| Script | Purpose | Safe invocation |
-|---|---|---|
+| Script                    | Purpose                                                | Safe invocation                                                                                        |
+| ------------------------- | ------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ |
 | `scripts/new_worktree.py` | Create a linked worktree at the canonical sibling root | `py -3 scripts/new_worktree.py --check <branch>` then `py -3 scripts/new_worktree.py --apply <branch>` |
 
 All scripts support `--help` and classify each flag as `read-only` or `mutating`. `--check` is the default; `--apply` is required for any filesystem or git mutation.
 
 ## Quick Reference
 
-| Situation | Action |
-|-----------|--------|
-| Already in linked worktree | Skip creation (Step 0) |
-| In a submodule | Treat as normal repo (Step 0 guard) |
-| Native worktree tool available | Use it (Step 1a) |
-| No native tool | Git worktree fallback (Step 1b) |
-| Repo declares canonical sibling-folder root | Use `../_agent-worktrees/<repo-name>` |
-| `.worktrees/` exists | Use it (verify ignored) |
-| `worktrees/` exists | Use it (verify ignored) |
-| Both exist | Use `.worktrees/` |
-| Neither exists | Check instruction file, then default `.worktrees/` |
-| Directory not ignored | Add to .gitignore + commit |
-| Permission error on create | Sandbox fallback, work in place |
-| Tests fail during baseline | Report failures + ask |
-| No supported manifest | Skip dependency install |
-| Bundled `new-worktree` script | Use it instead of `git worktree add` |
-| Completed branch/worktree | Use `finishing-a-development-branch` for verified retirement |
-| Skills need refresh after creation | `new-worktree` auto-runs `refreshing-installed-skills` |
+| Situation                                   | Action                                                       |
+| ------------------------------------------- | ------------------------------------------------------------ |
+| Already in linked worktree                  | Skip creation (Step 0)                                       |
+| In a submodule                              | Treat as normal repo (Step 0 guard)                          |
+| Native worktree tool available              | Use it (Step 1a)                                             |
+| No native tool                              | Git worktree fallback (Step 1b)                              |
+| Repo declares canonical sibling-folder root | Use `../_agent-worktrees/<repo-name>`                        |
+| `.worktrees/` exists                        | Use it (verify ignored)                                      |
+| `worktrees/` exists                         | Use it (verify ignored)                                      |
+| Both exist                                  | Use `.worktrees/`                                            |
+| Neither exists                              | Check instruction file, then default `.worktrees/`           |
+| Directory not ignored                       | Add to .gitignore + commit                                   |
+| Permission error on create                  | Sandbox fallback, work in place                              |
+| Tests fail during baseline                  | Report failures + ask                                        |
+| No supported manifest                       | Skip dependency install                                      |
+| Bundled `new-worktree` script               | Use it instead of `git worktree add`                         |
+| Completed branch/worktree                   | Use `finishing-a-development-branch` for verified retirement |
+| Skills need refresh after creation          | `new-worktree` auto-runs `refreshing-installed-skills`       |
 
 ## Common Rationalizations
 
-| Excuse | Reality |
-|--------|---------|
-| "I'm obviously not in a worktree — no need to check" | Run Step 0. Harness-created isolation and submodules both fool eyeballing; the detection commands settle it. |
+| Excuse                                                         | Reality                                                                                                                                                                  |
+| -------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| "I'm obviously not in a worktree — no need to check"           | Run Step 0. Harness-created isolation and submodules both fool eyeballing; the detection commands settle it.                                                             |
 | "`git worktree add` is quicker than hunting for a native tool" | A native tool (e.g. `EnterWorktree`) owns placement, branching, and cleanup. Bypassing it is the #1 mistake — it creates phantom state your harness can't see or manage. |
-| "The worktree directory is surely ignored already" | Run `git check-ignore`. An unignored worktree directory commits the whole tree into the repo. |
-| "Any directory name works" | Explicit instructions beat an existing project-local directory, which beats the `.worktrees/` default. |
-| "The workspace is fresh — baseline tests can wait" | A dirty baseline makes every later failure ambiguous. Run the tests now; proceeding past failures is your human partner's call. |
+| "The worktree directory is surely ignored already"             | Run `git check-ignore`. An unignored worktree directory commits the whole tree into the repo.                                                                            |
+| "Any directory name works"                                     | Explicit instructions beat an existing project-local directory, which beats the `.worktrees/` default.                                                                   |
+| "The workspace is fresh — baseline tests can wait"             | A dirty baseline makes every later failure ambiguous. Run the tests now; proceeding past failures is your human partner's call.                                          |
 
 ## Retirement handoff
 
-When the feature is complete or a published PR has merged, use
-`finishing-a-development-branch`. That skill owns integration proof, branch
-retirement, worktree removal, submodule teardown, and locked-directory stops.
+When the feature is complete or a published PR has merged, use `finishing-a-development-branch`. That skill owns integration proof, branch retirement, worktree removal, submodule teardown, and locked-directory stops.

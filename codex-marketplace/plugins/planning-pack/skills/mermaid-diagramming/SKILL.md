@@ -9,14 +9,14 @@ metadata:
   status: active
   owner: Harley Bartles
   use_when:
-  - selecting a diagram type for a process, interaction, data model, or state machine.
-  - writing or reviewing Mermaid syntax in documentation.
+    - selecting a diagram type for a process, interaction, data model, or state machine.
+    - writing or reviewing Mermaid syntax in documentation.
   do_not_use_when:
-  - the audience needs interactive or pixel-perfect visuals that Mermaid cannot provide.
+    - the audience needs interactive or pixel-perfect visuals that Mermaid cannot provide.
   related_skills:
-  - clean-architecture
-  - api-design
-  - writing-with-clarity
+    - clean-architecture
+    - api-design
+    - writing-with-clarity
 license: MIT
 ---
 

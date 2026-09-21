@@ -9,16 +9,16 @@ metadata:
   status: active
   owner: Harley Bartles
   use_when:
-  - starting a feature, project, or iteration.
-  - interviewing stakeholders or domain experts.
-  - translating needs into user stories and acceptance criteria.
-  - reviewing requirements for ambiguity or missing acceptance criteria.
+    - starting a feature, project, or iteration.
+    - interviewing stakeholders or domain experts.
+    - translating needs into user stories and acceptance criteria.
+    - reviewing requirements for ambiguity or missing acceptance criteria.
   do_not_use_when:
-  - another more specific skill owns the task.
+    - another more specific skill owns the task.
   related_skills:
-  - estimation
-  - risk-gates
-  - writing-with-clarity
+    - estimation
+    - risk-gates
+    - writing-with-clarity
 license: MIT
 ---
 

@@ -3,6 +3,7 @@
 ## When to apply
 
 Use when the release-engineering skill loaded and the question is deeper than a single sentence:
+
 - designing CI/CD pipelines,
 - containerizing and promoting images,
 - choosing deployment patterns,

@@ -136,15 +136,31 @@ import sys
 declaration_path, capability, repo_root = sys.argv[1:]
 with open(declaration_path, encoding="utf-8") as stream:
     declaration = json.load(stream)
-command = declaration.get(capability)
-if not isinstance(command, list) or not command or not all(isinstance(item, str) for item in command):
+raw = declaration.get(capability)
+if isinstance(raw, list) and raw and all(isinstance(item, str) for item in raw):
+    commands = [raw]
+elif (
+    isinstance(raw, list)
+    and raw
+    and all(
+        isinstance(command, list)
+        and len(command) >= 2
+        and all(isinstance(item, str) and item for item in command)
+        for command in raw
+    )
+):
+    commands = raw
+else:
     raise SystemExit(f"invalid declared {capability} command")
-if command[0] == "@python":
-    command = [sys.executable, *command[1:]]
 required_switch = "--apply" if capability == "apply" else "--check"
-if required_switch not in command:
-    raise SystemExit(f"declared {capability} command is missing {required_switch}")
-raise SystemExit(subprocess.run(command, cwd=repo_root).returncode)
+for command in commands:
+    if required_switch not in command:
+        raise SystemExit(f"declared {capability} command is missing {required_switch}")
+    if command[0] == "@python":
+        command = [sys.executable, *command[1:]]
+    result = subprocess.run(command, cwd=repo_root)
+    if result.returncode:
+        raise SystemExit(result.returncode)
 PY
 }
 

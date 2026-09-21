@@ -107,16 +107,16 @@ The top-level object retains the prior spec's shape with witness substitutions. 
 
 `status` is `active`, `blocked`, or `reviewed-with-exceptions`. `stage` is derived, never asserted. `calibration` holds the rolling frontier-feedback state (below). All prior record requirements, projection allowlists, epoch/fingerprint binding rules, unique-ID rules, and the strict `additionalProperties: false` contract carry over unchanged except that every field formerly named `*_receipt_id`, `challenge_id`, `execution_id`, or `envelope_evidence_id` is replaced by the corresponding `*_witness_id` or `witness` fields defined per record below:
 
-| Record | Changed fields (vs prior spec) |
-|---|---|
-| Authority manifest | `discovery_witness_id` replaces `discovery_receipt_id` |
-| Dispatch | drops `launch_challenge_id`, `launch_receipt_id`; adds `launch_witness_id`, `completion_witness_id` (nullable until reported), `agent_id`, `tool_use_id`, `transcript_sha256` |
-| Review | `completion_witness_id` replaces `completion_receipt_id`; adds `audit_result` (`clean`, `contaminated`, `incomplete`) |
-| Witness record | new record type as defined above |
-| Local check | `execution_witness_id` replaces `execution_receipt_id` |
-| Hosted check | `remote_observation_witness_id` replaces `remote_observation_receipt_id` |
-| Ready transition | `transition_witness_id` replaces `transition_receipt_id`; drops `challenge_id`/`execution_id` |
-| Calibration | new: `frontier_runs` counter, `misses` by taxonomy class, `last_sample_sha`, `last_sample_at`, `sample_ids` |
+| Record             | Changed fields (vs prior spec)                                                                                                                                                |
+| ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Authority manifest | `discovery_witness_id` replaces `discovery_receipt_id`                                                                                                                        |
+| Dispatch           | drops `launch_challenge_id`, `launch_receipt_id`; adds `launch_witness_id`, `completion_witness_id` (nullable until reported), `agent_id`, `tool_use_id`, `transcript_sha256` |
+| Review             | `completion_witness_id` replaces `completion_receipt_id`; adds `audit_result` (`clean`, `contaminated`, `incomplete`)                                                         |
+| Witness record     | new record type as defined above                                                                                                                                              |
+| Local check        | `execution_witness_id` replaces `execution_receipt_id`                                                                                                                        |
+| Hosted check       | `remote_observation_witness_id` replaces `remote_observation_receipt_id`                                                                                                      |
+| Ready transition   | `transition_witness_id` replaces `transition_receipt_id`; drops `challenge_id`/`execution_id`                                                                                 |
+| Calibration        | new: `frontier_runs` counter, `misses` by taxonomy class, `last_sample_sha`, `last_sample_at`, `sample_ids`                                                                   |
 
 No field may carry caller-minted identity where the harness assigns one (`tool_use_id`, `agent_id`, check-run ids): the verifier requires the harness-side value.
 
@@ -193,78 +193,18 @@ Identical topology to the prior spec's mermaid graph with these substitutions: "
 
 ### Plan 2 (snapshot authority)
 
-- Freeze/refresh payloads carry a `witnesses` key: the `authority-discovery`
-  witness records bind the candidate snapshot being installed, so the handler
-  installs them inside `complete_action`'s single validated transition rather
-  than before it. Other source actions keep witness-first ordering because
-  their payload records reference witness ids.
-- `SNAPSHOT_SUBJECT_FIELDS` includes `epoch`; the `no-drift` refusal compares
-  the subject projection with `epoch` excluded, otherwise a byte-identical
-  refresh could never be detected.
-- `enumeration.json` carries an `inputs` record (repo root, PR number,
-  base/head SHAs, epoch). The `reviewctl freeze`/`refresh` convenience aliases
-  refuse unless a prior `enumerate` exists for the exact current inputs and
-  re-check `git rev-parse HEAD` before completing.
-- `PolicyBundle.discovery_policy_origin` defaults to `reviewed-head`, under
-  which `authority_manifest_complete` never holds; the live Devin composition
-  root resolves the discovery policy at the base revision and declares
-  `base-revision`.
-- The produced acquisition dir is advisory, not trusted: `acquire` reconciles
-  every authority record's sha256 against the subject-bound manifest entries
-  and its `@alias` evidence digest, and re-derives feedback findings from the
-  digest-verified `feedback-*` evidence (cross-checked against the witnessed
-  snapshot's `feedback_history_sha256`/`unresolved_feedback_sha256`).
-  `data["findings"]` is never installed verbatim; divergence fails closed
-  with `AcquisitionError("tampered-source")`.
-- Transcript binding matches PostToolUse records carrying the enumeration-id
-  marker whose tool_input contains "enumerate"; the acquire directory path is
-  not required in argv because real `reviewctl enumerate` invocations derive
-  it internally. Transcript I/O failure is tamper evidence, not absence: an
-  unreadable transcript root or a `*.jsonl` segment that fails stat/read
-  classifies as `tampered-source` (`AcquisitionError` at the scan layer,
-  `WitnessVerificationError` at ingest); only a genuinely absent enumerate
-  segment remains `missing-source`.
-- Authority-record reconciliation keys by `authority_id` (locators can
-  collide across kinds), covers `availability` + `sha256` (loaded) +
-  `failure_class`/`failure_sha256` (unavailable), requires the `evidence_id`
-  (loaded) or `failure_evidence_id` (unavailable) field to be an `@alias`
-  whose digest matches, and requires surjectivity between the record set and
-  the witnessed manifest entries. `authorities_complete` mirrors the
-  availability + sha256/failure-field check at the kernel layer.
-- `WitnessLog` caches the verified tail but re-verifies whenever the file
-  stamp changed since the last append, so a concurrent append mid-process
-  invalidates the cache instead of silently forking the chain.
-- The path gate fails closed on a missing or corrupt `hook-env.json`; an env
-  that loads with an empty `deny_roots` stays open. `hooks.v1.json` renders
-  `{{IR_PY}}` as `py -3` on Windows and `python3` elsewhere.
-- `reviewctl main` maps `WitnessLogError` and `WitnessVerificationError` to a
-  clean `witness-error:` failure line rather than a traceback; the state lock
-  already prevents partial writes.
-- Enumerate clears a pre-existing `acquire/latest` before emission under a
-  strict guard: a symlinked directory, a resolved path outside the scratch
-  root, or a wrong name shape refuses with `tool-blocked`; a non-directory or
-  an `shutil.rmtree` `OSError` classifies as `tampered-source` (tamper
-  evidence), never `io-error`.
-- The discovery-traversal `load_text` callback (`_gh_text`) re-raises any
-  `AcquisitionError` whose blocker class is not `authority-missing`: a
-  systemic tool failure blocks the whole acquisition instead of degrading
-  to an inaccessible record. Only `authority-missing` degrades; this is
-  stricter than the seed-materialization loop, which degrades non-required
-  authorities regardless of failure class.
-- `authorities_complete` additionally cross-checks that each authority
-  record's bound evidence resolves to a content object whose digest equals
-  the recorded `sha256` (loaded) or `failure_sha256` (unavailable); content
-  registered from a file swapped after `_load_dir` verification fails
-  closed even though the manifest records still agree.
-- Review-scope clarification shipped after the PR's adversarial review
-  loop: the finding bar is bounded by the declared threat model (see the
-  closing paragraph of "Threat model"). Reviewer-proposed hardening that
-  presumes an active adversary is out of scope; "no findings" is a valid
-  converged round.
-- Discovery-policy overrides are structurally validated at resolution:
-  `repo_law_roots`/`pr_roots`/`edge_kinds` must be string lists, `pr_roots`
-  is checked against the known root vocabulary (an unrecognized root would
-  otherwise silently narrow the enumerated authority set), and each
-  `structural_edges` rule must carry string `from`/`edge` and a string-list
-  `to`. Malformed overrides refuse with `DiscoveryPolicyError` rather than
-  crashing during traversal.
+- Freeze/refresh payloads carry a `witnesses` key: the `authority-discovery` witness records bind the candidate snapshot being installed, so the handler installs them inside `complete_action`'s single validated transition rather than before it. Other source actions keep witness-first ordering because their payload records reference witness ids.
+- `SNAPSHOT_SUBJECT_FIELDS` includes `epoch`; the `no-drift` refusal compares the subject projection with `epoch` excluded, otherwise a byte-identical refresh could never be detected.
+- `enumeration.json` carries an `inputs` record (repo root, PR number, base/head SHAs, epoch). The `reviewctl freeze`/`refresh` convenience aliases refuse unless a prior `enumerate` exists for the exact current inputs and re-check `git rev-parse HEAD` before completing.
+- `PolicyBundle.discovery_policy_origin` defaults to `reviewed-head`, under which `authority_manifest_complete` never holds; the live Devin composition root resolves the discovery policy at the base revision and declares `base-revision`.
+- The produced acquisition dir is advisory, not trusted: `acquire` reconciles every authority record's sha256 against the subject-bound manifest entries and its `@alias` evidence digest, and re-derives feedback findings from the digest-verified `feedback-*` evidence (cross-checked against the witnessed snapshot's `feedback_history_sha256`/`unresolved_feedback_sha256`). `data["findings"]` is never installed verbatim; divergence fails closed with `AcquisitionError("tampered-source")`.
+- Transcript binding matches PostToolUse records carrying the enumeration-id marker whose tool_input contains "enumerate"; the acquire directory path is not required in argv because real `reviewctl enumerate` invocations derive it internally. Transcript I/O failure is tamper evidence, not absence: an unreadable transcript root or a `*.jsonl` segment that fails stat/read classifies as `tampered-source` (`AcquisitionError` at the scan layer, `WitnessVerificationError` at ingest); only a genuinely absent enumerate segment remains `missing-source`.
+- Authority-record reconciliation keys by `authority_id` (locators can collide across kinds), covers `availability` + `sha256` (loaded) + `failure_class`/`failure_sha256` (unavailable), requires the `evidence_id` (loaded) or `failure_evidence_id` (unavailable) field to be an `@alias` whose digest matches, and requires surjectivity between the record set and the witnessed manifest entries. `authorities_complete` mirrors the availability + sha256/failure-field check at the kernel layer.
+- `WitnessLog` caches the verified tail but re-verifies whenever the file stamp changed since the last append, so a concurrent append mid-process invalidates the cache instead of silently forking the chain.
+- The path gate fails closed on a missing or corrupt `hook-env.json`; an env that loads with an empty `deny_roots` stays open. `hooks.v1.json` renders `{{IR_PY}}` as `py -3` on Windows and `python3` elsewhere.
+- `reviewctl main` maps `WitnessLogError` and `WitnessVerificationError` to a clean `witness-error:` failure line rather than a traceback; the state lock already prevents partial writes.
+- Enumerate clears a pre-existing `acquire/latest` before emission under a strict guard: a symlinked directory, a resolved path outside the scratch root, or a wrong name shape refuses with `tool-blocked`; a non-directory or an `shutil.rmtree` `OSError` classifies as `tampered-source` (tamper evidence), never `io-error`.
+- The discovery-traversal `load_text` callback (`_gh_text`) re-raises any `AcquisitionError` whose blocker class is not `authority-missing`: a systemic tool failure blocks the whole acquisition instead of degrading to an inaccessible record. Only `authority-missing` degrades; this is stricter than the seed-materialization loop, which degrades non-required authorities regardless of failure class.
+- `authorities_complete` additionally cross-checks that each authority record's bound evidence resolves to a content object whose digest equals the recorded `sha256` (loaded) or `failure_sha256` (unavailable); content registered from a file swapped after `_load_dir` verification fails closed even though the manifest records still agree.
+- Review-scope clarification shipped after the PR's adversarial review loop: the finding bar is bounded by the declared threat model (see the closing paragraph of "Threat model"). Reviewer-proposed hardening that presumes an active adversary is out of scope; "no findings" is a valid converged round.
+- Discovery-policy overrides are structurally validated at resolution: `repo_law_roots`/`pr_roots`/`edge_kinds` must be string lists, `pr_roots` is checked against the known root vocabulary (an unrecognized root would otherwise silently narrow the enumerated authority set), and each `structural_edges` rule must carry string `from`/`edge` and a string-list `to`. Malformed overrides refuse with `DiscoveryPolicyError` rather than crashing during traversal.

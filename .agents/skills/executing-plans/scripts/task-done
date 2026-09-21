@@ -13,9 +13,10 @@ base=$3
 shift 4
 script_dir=$(cd "$(dirname "$0")" && pwd)
 workspace_scripts=$(cd "$script_dir/../../subagent-workspace/scripts" && pwd)
+python_executable=$(bash "$script_dir/resolve-runtime")
 
 git rev-parse --verify --quiet "$base" >/dev/null || { echo "bad BASE: $base" >&2; exit 2; }
-dir=$(py -3 "$workspace_scripts/workspace.py" --apply "$plan")
+dir=$("$python_executable" "$workspace_scripts/workspace.py" --apply "$plan")
 log="$dir/task-${n}-tests.log"
 ledger="$dir/progress.md"
 

@@ -15,9 +15,7 @@ Starting a substantive repository slice or converting approved requirements into
 
 ## Composition
 
-After refreshing `main` and creating the slice branch/worktree, run the
-`completing-planning-artifacts` successor-slice ingress lane before substantive
-edits. Then write and commit the new in-flight plan.
+After refreshing `main` and creating the slice branch/worktree, run the `completing-planning-artifacts` successor-slice ingress lane before substantive edits. Then write and commit the new in-flight plan.
 
 ## Doctrine and contracts
 
@@ -30,8 +28,7 @@ edits. Then write and commit the new in-flight plan.
 
 ## Evidence contract
 
-Eligible predecessor artifacts are retired in the first commit of this eventual
-PR, and the new committed plan identifies exact validation and publication proof.
+Eligible predecessor artifacts are retired in the first commit of this eventual PR, and the new committed plan identifies exact validation and publication proof.
 
 ## Prohibited combinations
 

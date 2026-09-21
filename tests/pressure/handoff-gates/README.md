@@ -13,6 +13,4 @@ Run the reusable prompts in isolated contexts:
 - **RED (baseline):** No access to the `handoff-gates` skill; had to decide from general principles only.
 - **GREEN (with skill):** Could read `.agents/skills/handoff-gates/SKILL.md` and `references/scope-notes.md` before answering.
 
-Retain the prompts and deterministic expected behaviors. Raw model responses,
-scores, and run narratives are disposable evaluation output and do not belong
-in the repository.
+Retain the prompts and deterministic expected behaviors. Raw model responses, scores, and run narratives are disposable evaluation output and do not belong in the repository.

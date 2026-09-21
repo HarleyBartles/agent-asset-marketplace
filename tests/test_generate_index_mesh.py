@@ -47,6 +47,7 @@ def _commit_file(repo: Path, path: str) -> None:
 
 def test_source_repo_generates_index_mesh(tmp_path: Path) -> None:
     repo = _make_repo(tmp_path, "source-repo")
+    _commit_file(repo, "README.md")
     _commit_file(repo, "docs/guide.md")
     result = subprocess.run(
         [sys.executable, str(CORE), "--apply", "--allow-shared-checkout"],
@@ -59,6 +60,9 @@ def test_source_repo_generates_index_mesh(tmp_path: Path) -> None:
     assert "Wrote index mesh" in result.stdout
     assert (repo / "INDEX.md").is_file()
     assert (repo / "docs" / "INDEX.md").is_file()
+    root_index = (repo / "INDEX.md").read_text(encoding="utf-8")
+    assert "## Directories\n\n- " in root_index
+    assert "## Files\n\n- " in root_index
 
 
 def test_check_mode_passes_when_current(tmp_path: Path) -> None:

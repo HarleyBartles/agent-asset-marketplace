@@ -15,17 +15,14 @@ license: MIT
 
 Route the request to the smallest owning capability:
 
-| Concern | Skill |
-| --- | --- |
-| Required repository surfaces and structural checks | `repo-shape` |
-| Runbooks, playbooks, and their composition graph | `repo-composition` |
-| Named command targets and dispatch semantics | `command-bus` |
-| Focused checks, complete gates, and evidence | `repository-validation` |
-| Tracked pre-commit and hosted-CI parity | `tracked-repo-hooks` |
-| Plugin subscriptions, local skills, and installed projections | `repo-agent-assets` |
-| Python implementation patterns | `python` |
+| Concern                                                       | Skill                   |
+| ------------------------------------------------------------- | ----------------------- |
+| Required repository surfaces and structural checks            | `repo-shape`            |
+| Runbooks, playbooks, and their composition graph              | `repo-composition`      |
+| Named command targets and dispatch semantics                  | `command-bus`           |
+| Focused checks, complete gates, and evidence                  | `repository-validation` |
+| Tracked pre-commit and hosted-CI parity                       | `tracked-repo-hooks`    |
+| Plugin subscriptions, local skills, and installed projections | `repo-agent-assets`     |
+| Python implementation patterns                                | `python`                |
 
-Read the consumer repository's local policy after selecting the owner. Compose
-multiple skills only for a migration that genuinely crosses their boundaries.
-Generic worker hygiene, worktrees, risk, publication, and closeout remain owned
-by `repo-worker-base` and are not part of this router.
+Read the consumer repository's local policy after selecting the owner. Compose multiple skills only for a migration that genuinely crosses their boundaries. Generic worker hygiene, worktrees, risk, publication, and closeout remain owned by `repo-worker-base` and are not part of this router.

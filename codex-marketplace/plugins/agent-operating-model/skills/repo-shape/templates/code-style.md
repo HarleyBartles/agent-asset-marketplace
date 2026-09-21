@@ -2,6 +2,10 @@
 
 This topical workflow is available whenever code or human-facing technical prose changes.
 
+## Markdown formatting
+
+When `.agents/contracts/markdown-formatting.json` is present, use the installed `markdown-formatting` skill command for repository-wide check/apply and producer-scoped checks. Generated Markdown must be formatter-clean at its producer.
+
 ## When
 
 <!-- Name the languages, frameworks, paths, or change classes that activate this playbook. -->

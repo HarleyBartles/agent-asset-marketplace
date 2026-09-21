@@ -3,6 +3,7 @@ description: "Marketplace marketplace bundle law"
 trigger: glob
 globs: "codex-marketplace/**"
 ---
+
 ## Scope
 
 For the canonical doctrine behind this rule, read `.agents/doctrine/codex-marketplace.md`.

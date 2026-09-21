@@ -167,6 +167,7 @@ def test_lint_fix_command_used_in_apply(monkeypatch):
     assert "--fix" in check_cmd[0]
     fmt_cmd = [c for c in calls if c[1:4] == ["-m", "ruff", "format"]]
     assert fmt_cmd
+    assert not [c for c in calls if c[1:3] == ["-m", "mdformat"]]
 
 
 def test_lint_check_mode_does_not_format_files(monkeypatch):
@@ -186,6 +187,7 @@ def test_lint_check_mode_does_not_format_files(monkeypatch):
     fmt_cmd = [c for c in calls if c[1:4] == ["-m", "ruff", "format"]]
     assert fmt_cmd
     assert "--check" in fmt_cmd[0]
+    assert not [c for c in calls if c[1:3] == ["-m", "mdformat"]]
 
 
 def test_base_ref_forwards_to_ruff_diff(monkeypatch):
@@ -211,7 +213,8 @@ def test_base_ref_forwards_to_ruff_diff(monkeypatch):
 @pytest.mark.skipif(shutil.which("bash") is None, reason="bash not available")
 def test_bash_wrapper_delegates_to_runpy():
     result = subprocess.run(
-        ["bash", str(ROOT / "tools" / "run"), "--help"],
+        ["bash", "-lc", "./tools/run --help"],
+        cwd=ROOT,
         capture_output=True,
         text=True,
     )

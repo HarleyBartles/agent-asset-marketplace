@@ -10,16 +10,16 @@ metadata:
   status: active
   owner: Harley Bartles
   use_when:
-  - a subagent task needs an off-repo scratch directory.
-  - materializing inputs (diffs, PR descriptions, issues) for subagents to read.
-  - routing subagent briefs, reports, review packages, or review logs to a disposable location.
+    - a subagent task needs an off-repo scratch directory.
+    - materializing inputs (diffs, PR descriptions, issues) for subagents to read.
+    - routing subagent briefs, reports, review packages, or review logs to a disposable location.
   do_not_use_when:
-  - durable custody, canonical source, provenance, or publication proof.
-  - the artifact must survive beyond the current task.
+    - durable custody, canonical source, provenance, or publication proof.
+    - the artifact must survive beyond the current task.
   related_skills:
-  - subagent-driven-development
-  - iterative-review
-  - selecting-a-subagent
+    - subagent-driven-development
+    - iterative-review
+    - selecting-a-subagent
 ---
 
 ## Provenance
@@ -32,11 +32,7 @@ Resolve the canonical off-repo scratch workspace and place short-lived subagent 
 
 ## Workspace location
 
-The workspace lives outside the repository at the host-resolved sibling scratch
-root, conventionally
-`<main-checkout>/../_agent-scratch/<repo-name>/<branch>/<plan-basename>/`.
-Use the resolver scripts below rather than inventing a machine drive or absolute
-path. The workspace is never committed and survives `git clean`.
+The workspace lives outside the repository at the host-resolved sibling scratch root, conventionally `<main-checkout>/../_agent-scratch/<repo-name>/<branch>/<plan-basename>/`. Use the resolver scripts below rather than inventing a machine drive or absolute path. The workspace is never committed and survives `git clean`.
 
 ## Scripts
 
@@ -44,9 +40,7 @@ path. The workspace is never committed and survives `git clean`.
 - `py -3 scripts/task_brief.py --apply PLAN_FILE TASK_NUMBER [OUTFILE]` — task-brief extractor.
 - `py -3 scripts/review_package.py --apply PLAN_FILE BASE HEAD [OUTFILE]` — review-package builder; `PLAN_FILE` can be `-` for no plan.
 
-All helpers are Python 3 CLIs. They default to read-only `--check` behavior;
-filesystem writes require `--apply`. They print the absolute output path and
-write UTF-8 without a BOM so subagent `read` can open the files.
+All helpers are Python 3 CLIs. They default to read-only `--check` behavior; filesystem writes require `--apply`. They print the absolute output path and write UTF-8 without a BOM so subagent `read` can open the files.
 
 ## Usage
 

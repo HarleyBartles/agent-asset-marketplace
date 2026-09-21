@@ -1,7 +1,7 @@
 [
   {
     "path": "codex-marketplace/plugins/superpowers-plus/skills/dispatching-parallel-agents/SKILL.md",
-    "line": 42,
+    "line": 41,
     "pattern": "must-read",
     "context": "If you are invoking this skill from a plan, read the `Execution Strategy` in the plan header and **MUST READ:** `references/execution-lane-override.md` before dispatching. Announce that you are using `dispatching-parallel-agents` and see it through unless the human asks to change.",
     "classification": "repo-local",
@@ -10,7 +10,7 @@
   },
   {
     "path": "codex-marketplace/plugins/superpowers-plus/skills/dispatching-parallel-agents/SKILL.md",
-    "line": 114,
+    "line": 118,
     "pattern": "full-test-suite",
     "context": "- Run full test suite",
     "classification": "repo-local",
@@ -19,7 +19,7 @@
   },
   {
     "path": "codex-marketplace/plugins/superpowers-plus/skills/dispatching-parallel-agents/SKILL.md",
-    "line": 189,
+    "line": 190,
     "pattern": "full-test-suite",
     "context": "**Integration:** All fixes independent, no conflicts, full suite green",
     "classification": "repo-local",
@@ -28,34 +28,34 @@
   },
   {
     "path": "codex-marketplace/plugins/superpowers-plus/skills/dispatching-parallel-agents/SKILL.md",
-    "line": 196,
+    "line": 198,
     "pattern": "full-test-suite",
-    "context": "3. **Run full suite** - Verify all fixes work together",
+    "context": "1. **Run full suite** - Verify all fixes work together",
     "classification": "repo-local",
     "owner": "runbook-playbook contract",
     "reason": "Repository-local composition guidance required by the approved runbook and playbook contract."
   },
   {
     "path": "codex-marketplace/plugins/superpowers-plus/skills/executing-plans/SKILL.md",
-    "line": 93,
+    "line": 76,
     "pattern": "full-test-suite",
-    "context": "On Windows, invoke it through Git Bash. The helper stores the full test log,",
+    "context": "1. Run `bash scripts/task-done PLAN_FILE N BASE -- TEST_COMMAND [ARGS...]` through the same verified Bash. The helper stores the full test log, prints its tail, and appends completion only after a passing command.",
     "classification": "repo-local",
     "owner": "runbook-playbook contract",
     "reason": "Repository-local composition guidance required by the approved runbook and playbook contract."
   },
   {
     "path": "codex-marketplace/plugins/superpowers-plus/skills/subagent-driven-development/SKILL.md",
-    "line": 213,
+    "line": 158,
     "pattern": "must-read",
-    "context": "`Execution Strategy` in the plan header. **MUST READ:**",
+    "context": "Read the plan once, note its context and Global Constraints, and create a todo per task. If the plan names a Spec, read that too: the spec is the authority the plan argues from, and conflicts inside the plan resolve against it. A plan with no reachable spec gets a ledger note saying so \u2014 rulings made without one are provisional. Before Task 1, note the `Execution Strategy` in the plan header. **MUST READ:** `references/execution-lane-override.md` to confirm `subagent-driven-development` is the right lane. If the plan recommends a different lane but you are using this one because the tasks are independent or the human directed it here, state that at the start of execution and do not re-litigate.",
     "classification": "repo-local",
     "owner": "runbook-playbook contract",
     "reason": "Repository-local composition guidance required by the approved runbook and playbook contract."
   },
   {
     "path": "codex-marketplace/plugins/superpowers-plus/skills/using-superpowers-plus/SKILL.md",
-    "line": 69,
+    "line": 67,
     "pattern": "universal-startup-read",
     "context": "At the start of every conversation, use `using-superpowers-plus` as the sole",
     "classification": "repo-local",
@@ -63,8 +63,17 @@
     "reason": "Repository-local composition guidance required by the approved runbook and playbook contract."
   },
   {
+    "path": "codex-marketplace/plugins/superpowers-plus/skills/using-superpowers-plus/SKILL.md",
+    "line": 139,
+    "pattern": "unconditional-connector",
+    "context": "1. **Inspect only route-changing environment dimensions.** Invoke `inspecting-the-environment` when shell, repository, branch, worktree, or connector facts can change the selected route or immediate action. Do not perform a broad inventory merely because the skill is available.",
+    "classification": "repo-local",
+    "owner": "runbook-playbook contract",
+    "reason": "Repository-local composition guidance required by the approved runbook and playbook contract."
+  },
+  {
     "path": "codex-marketplace/plugins/superpowers-plus/skills/writing-plans/SKILL.md",
-    "line": 110,
+    "line": 94,
     "pattern": "must-read",
     "context": "If you think \"this is a lot\" or \"the plan is huge\" while writing, you are at a scope sizing decision point. **MUST READ:** `references/plan-scope-sizing.md` and follow one of the three escape hatches before continuing.",
     "classification": "repo-local",
@@ -73,7 +82,7 @@
   },
   {
     "path": "codex-marketplace/plugins/superpowers-plus/skills/writing-roadmaps/SKILL.md",
-    "line": 71,
+    "line": 67,
     "pattern": "must-read",
     "context": "If a plan in progress grows beyond one deliverable, stop writing. **MUST READ:** `references/plan-scope-sizing.md` and use escape hatch 3:",
     "classification": "repo-local",
@@ -109,18 +118,18 @@
   },
   {
     "path": "codex-marketplace/plugins/repo-worker-pack/skills/repo-worker-base/references/repository-validation-contract.md",
-    "line": 40,
+    "line": 22,
     "pattern": "every-function",
-    "context": "not require a ceremonial direct test for every function or method.",
+    "context": "Preserve meaningful RED/GREEN behavior where it adds evidence. A helper with no independent behavior may be covered transitively through its caller; do not require a ceremonial direct test for every function or method.",
     "classification": "repo-local",
     "owner": "runbook-playbook contract",
     "reason": "Repository-local composition guidance required by the approved runbook and playbook contract."
   },
   {
     "path": "codex-marketplace/plugins/agent-operating-model/skills/repo-shape/references/ci-validation-pipeline.md",
-    "line": 87,
+    "line": 61,
     "pattern": "must-read",
-    "context": "hook sequence, and any platform-specific wrappers. Portable workers must read",
+    "context": "The consuming repository documents the exact apply/check commands, target names, hook sequence, and any platform-specific wrappers. Portable workers must read that local command map rather than assuming a path, interpreter, command bus, or target name.",
     "classification": "repo-local",
     "owner": "runbook-playbook contract",
     "reason": "Repository-local composition guidance required by the approved runbook and playbook contract."
@@ -154,7 +163,7 @@
   },
   {
     "path": ".agents/runbooks/planning.md",
-    "line": 27,
+    "line": 24,
     "pattern": "portable-repo-command",
     "context": "Plans live under `.agents/plans/`. Use `py -3 tools/run.py mesh --apply` after adding one.",
     "classification": "repo-local",

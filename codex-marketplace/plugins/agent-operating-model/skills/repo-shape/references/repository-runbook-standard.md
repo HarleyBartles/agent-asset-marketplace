@@ -4,14 +4,14 @@ This is the portable standard for repository lifecycle routing and available top
 
 ## Artifact taxonomy
 
-| Question | Owning surface |
-| --- | --- |
-| What must remain true? | doctrine (`.agents/doctrine/`) |
-| What exact shape must participants exchange? | contract (`.agents/contracts/`) |
-| How do I perform one focused judgment or action? | capability skill |
-| How does this repository execute a lifecycle stage? | runbook (`.agents/runbooks/`) |
+| Question                                               | Owning surface                  |
+| ------------------------------------------------------ | ------------------------------- |
+| What must remain true?                                 | doctrine (`.agents/doctrine/`)  |
+| What exact shape must participants exchange?           | contract (`.agents/contracts/`) |
+| How do I perform one focused judgment or action?       | capability skill                |
+| How does this repository execute a lifecycle stage?    | runbook (`.agents/runbooks/`)   |
 | How does this repository handle a conditional concern? | playbook (`.agents/playbooks/`) |
-| Can a machine enforce it cheaply? | code or configuration |
+| Can a machine enforce it cheaply?                      | code or configuration           |
 
 Runbooks and playbooks are different artifacts, not interchangeable names.
 

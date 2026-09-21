@@ -36,6 +36,7 @@ REGISTERED_VALIDATORS = frozenset(
         "gitignore-contract",
         "hook-contract",
         "marketplace-json-contract",
+        "markdown-formatting-contract",
         "operating-model-contract",
         "must-be-absent",
         "optional-agents-router-contract",

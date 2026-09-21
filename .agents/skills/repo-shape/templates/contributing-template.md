@@ -10,8 +10,7 @@ This file is the repo's contributor entry point.
 
 ## Workflow routing
 
-Invoke `using-superpowers-plus` once. Follow its handoff to the applicable
-owners; those owners read the matching local runbook.
+Invoke `using-superpowers-plus` once. Follow its handoff to the applicable owners; those owners read the matching local runbook.
 
 ## Repo-specific contribution notes
 

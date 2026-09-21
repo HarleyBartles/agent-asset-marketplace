@@ -13,13 +13,8 @@ license: MIT
 
 # Repo Agent Assets
 
-Canonical marketplace skills live in their plugin source trees. Repository
-installed skills are generated projections, never a second authoring home.
+Canonical marketplace skills live in their plugin source trees. Repository installed skills are generated projections, never a second authoring home.
 
-The repository declares installed plugins and exact local skills, refreshes
-through its canonical installer, records source provenance, and removes
-orphans. A move changes canonical custody first, then bundle manifests,
-marketplace exports, installed projections, indexes, and mesh surfaces.
+The repository declares installed plugins and exact local skills, refreshes through its canonical installer, records source provenance, and removes orphans. A move changes canonical custody first, then bundle manifests, marketplace exports, installed projections, indexes, and mesh surfaces.
 
-Marketplace publication remains outside this skill. This skill owns only the
-consumer repository's capability subscription and projection boundary.
+Marketplace publication remains outside this skill. This skill owns only the consumer repository's capability subscription and projection boundary.

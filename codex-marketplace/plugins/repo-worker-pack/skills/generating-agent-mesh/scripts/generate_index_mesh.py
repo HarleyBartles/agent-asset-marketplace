@@ -299,6 +299,7 @@ def render_index(path: Path) -> str:
 
     if dirs:
         lines.append("## Directories")
+        lines.append("")
         for child in dirs:
             link = dir_link(path, child)
             if link is not None:
@@ -307,6 +308,7 @@ def render_index(path: Path) -> str:
 
     if files:
         lines.append("## Files")
+        lines.append("")
         for child in files:
             lines.append(f"- {rel_link(path, child)}")
         lines.append("")
@@ -401,6 +403,15 @@ def configure_root(repo_root: Path) -> None:
     NON_CANONICAL_GUARD_ROOTS = {ROOT / ".agents" / "docs" / "superpowers"}
     TRACKED_DIRS, TRACKED_FILES, CONTENT_DIRS = _load_tracked()
     IGNORED_INDEX_PATHS = _load_ignored_index_paths(TRACKED_DIRS)
+
+
+def _check_markdown_outputs(repo_root: Path, paths: list[Path]) -> None:
+    formatter = repo_root / ".agents/skills/markdown-formatting/scripts/format_markdown.py"
+    contract = repo_root / ".agents/contracts/markdown-formatting.json"
+    if not formatter.is_file() or not contract.is_file() or not paths:
+        return
+    relative = [path.relative_to(repo_root).as_posix() for path in paths]
+    subprocess.run([sys.executable, str(formatter), "--check-files", *relative], cwd=repo_root, check=True)
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -520,6 +531,7 @@ def main(argv: list[str] | None = None) -> int:
         link_failures.extend(validate_rendered_links(target.path, current))
     if link_failures:
         raise ValueError("INDEX mesh produced broken links:\n" + "\n".join(link_failures))
+    _check_markdown_outputs(ROOT, [target.path for target in targets])
     print(f"Wrote index mesh: {written} files")
     return 0
 

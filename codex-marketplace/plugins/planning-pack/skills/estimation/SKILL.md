@@ -9,16 +9,16 @@ metadata:
   status: active
   owner: Harley Bartles
   use_when:
-  - planning sprints, milestones, or releases.
-  - comparing candidate approaches by effort and risk.
-  - communicating confidence and buffer to stakeholders.
-  - reviewing estimates against actuals to calibrate.
+    - planning sprints, milestones, or releases.
+    - comparing candidate approaches by effort and risk.
+    - communicating confidence and buffer to stakeholders.
+    - reviewing estimates against actuals to calibrate.
   do_not_use_when:
-  - another more specific skill owns the task.
+    - another more specific skill owns the task.
   related_skills:
-  - requirements-elicitation
-  - risk-gates
-  - writing-with-clarity
+    - requirements-elicitation
+    - risk-gates
+    - writing-with-clarity
 license: MIT
 ---
 

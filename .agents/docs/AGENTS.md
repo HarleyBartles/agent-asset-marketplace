@@ -2,14 +2,11 @@
 
 Scope: `.agents/docs/`
 
-This scope covers repo docs, contract docs, and the unslop profile under
-`.agents/docs/`.
+This scope covers repo docs, contract docs, and the unslop profile under `.agents/docs/`.
 
-Defer to the repository root `AGENTS.md` for global repo doctrine and to
-`.agents/doctrine/mesh-policy.md` for the canonical mesh statement.
+Defer to the repository root `AGENTS.md` for global repo doctrine and to `.agents/doctrine/mesh-policy.md` for the canonical mesh statement.
 
-Keep these docs compact. They should describe scoped guidance, not directory
-navigation.
+Keep these docs compact. They should describe scoped guidance, not directory navigation.
 
 ## Routing pointers
 

@@ -3,6 +3,7 @@ description: "Subagent script selection"
 trigger: glob
 globs: "**/scripts/**"
 ---
+
 ## Scope
 
 For the canonical doctrine behind this rule, read `.agents/doctrine/sdd-scripts.md`.
