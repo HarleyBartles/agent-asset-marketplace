@@ -208,7 +208,7 @@ def _repo_root() -> Path:
 
 
 def _parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(description=__doc__)
+    parser = argparse.ArgumentParser(description=f"{__doc__} (mixed: --check is read-only; --apply mutates)")
     modes = parser.add_mutually_exclusive_group()
     modes.add_argument("--check", action="store_true", help="check all eligible tracked Markdown")
     modes.add_argument("--apply", action="store_true", help="format all eligible tracked Markdown")

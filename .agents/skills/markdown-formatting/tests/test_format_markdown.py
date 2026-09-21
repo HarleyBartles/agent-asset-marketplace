@@ -176,3 +176,8 @@ def test_check_files_rejects_untracked_non_markdown_and_escape(tmp_path: Path):
     ):
         with pytest.raises(module.ContractError, match=message):
             module.validate_requested_files(repo, [candidate])
+
+
+def test_help_classifies_the_cli_as_mixed():
+    result = subprocess.run([sys.executable, str(SCRIPT), "--help"], text=True, capture_output=True, check=True)
+    assert "mixed" in result.stdout.lower()
