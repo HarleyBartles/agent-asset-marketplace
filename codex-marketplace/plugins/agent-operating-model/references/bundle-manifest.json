@@ -26,6 +26,17 @@
       "provenance_note": "Canonical first-party command-bus skill. (Command Bus first-party skill)"
     },
     {
+      "canonical_name": "markdown-formatting",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "canonical_source_path": "codex-marketplace/plugins/agent-operating-model/skills/markdown-formatting",
+      "local_path": "skills/markdown-formatting",
+      "source_path": "codex-marketplace/plugins/agent-operating-model/skills/markdown-formatting/SKILL.md",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Canonical first-party markdown-formatting skill. (Markdown Formatting first-party skill)"
+    },
+    {
       "canonical_name": "python",
       "source_category": "first_party",
       "content_mode": "verbatim",

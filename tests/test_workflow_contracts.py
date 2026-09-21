@@ -580,7 +580,7 @@ class TestRepositoryCallersAndPressure:
             "codex-marketplace/plugins/superpowers-plus/skills/systematic-debugging/tests/scenarios/pressure-1.md",
             "codex-marketplace/plugins/superpowers-plus/skills/systematic-debugging/tests/scenarios/pressure-2.md",
             "codex-marketplace/plugins/superpowers-plus/skills/systematic-debugging/tests/scenarios/pressure-3.md",
-            "codex-marketplace/plugins/superpowers-plus/skills/systematic-debugging/tests/evidence/creation-log.md",
+            "codex-marketplace/plugins/superpowers-plus/skills/systematic-debugging/tests/references/design-rationale.md",
         )
         assert all((ROOT / path).is_file() for path in expected)
 

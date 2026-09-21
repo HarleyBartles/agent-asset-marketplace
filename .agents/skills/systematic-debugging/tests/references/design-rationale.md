@@ -1,4 +1,4 @@
-# Creation Log: Systematic Debugging Skill
+# Systematic Debugging Test Design Rationale
 
 Reference example of extracting, structuring, and bulletproofing a critical skill.
 
@@ -58,31 +58,29 @@ Framework designed to resist rationalization under pressure:
 - "NEVER fix symptom" appears 4 times in different contexts
 - Each phase has explicit "don't skip" guidance
 
-## Testing Approach
+## Evaluation Scenarios
 
-Created 4 validation tests following skills/meta/testing-skills-with-subagents:
+The test package defines four validation scenarios following skills/meta/testing-skills-with-subagents:
 
 ### Test 1: Academic Context (No Pressure)
 
 - Simple bug, no time pressure
-- **Result:** Perfect compliance, complete investigation
+- Expected behavior: complete investigation without skipping to a fix
 
 ### Test 2: Time Pressure + Obvious Quick Fix
 
 - User "in a hurry", symptom fix looks easy
-- **Result:** Resisted shortcut, followed full process, found real root cause
+- Expected behavior: resist the shortcut and trace the root cause
 
 ### Test 3: Complex System + Uncertainty
 
 - Multi-layer failure, unclear if can find root cause
-- **Result:** Systematic investigation, traced through all layers, found source
+- Expected behavior: trace the failure across layers without guessing
 
 ### Test 4: Failed First Fix
 
 - Hypothesis doesn't work, temptation to add more fixes
-- **Result:** Stopped, re-analyzed, formed new hypothesis (no shotgun)
-
-**All tests passed.** No rationalizations found.
+- Expected behavior: stop, re-analyze, and form a new hypothesis rather than stacking fixes
 
 ## Iterations
 
@@ -98,7 +96,7 @@ Created 4 validation tests following skills/meta/testing-skills-with-subagents:
 - Note explaining TDD's "simplest code" ≠ debugging's "root cause"
 - Prevents confusion between methodologies
 
-## Final Outcome
+## Intended Outcome
 
 Bulletproof skill that:
 
@@ -106,7 +104,7 @@ Bulletproof skill that:
 - ✅ Resists time pressure rationalization
 - ✅ Provides concrete steps for each phase
 - ✅ Shows anti-patterns explicitly
-- ✅ Tested under multiple pressure scenarios
+- ✅ Testable under multiple pressure scenarios
 - ✅ Clarifies relationship to TDD
 - ✅ Ready for use
 

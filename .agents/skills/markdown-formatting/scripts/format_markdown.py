@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import re
 import subprocess
 import sys
 import tomllib
@@ -18,11 +19,18 @@ from typing import Literal, Sequence
 CONTRACT_PATH = Path(".agents/contracts/markdown-formatting.json")
 CONFIG_PATH = Path(".mdformat.toml")
 MAX_COMMAND_CHARS = 28_000
-REQUIRED_DISTRIBUTIONS = {
-    "mdformat": "1.0.0",
-    "mdformat-frontmatter": "2.1.2",
-    "mdformat-gfm": "1.0.0",
-}
+REQUIREMENTS_PATH = Path(__file__).resolve().parents[1] / "requirements.txt"
+
+
+def _required_distributions() -> dict[str, str]:
+    pins: dict[str, str] = {}
+    for line in REQUIREMENTS_PATH.read_text(encoding="utf-8").splitlines():
+        match = re.fullmatch(r"([A-Za-z0-9_.-]+)==([^\s]+)", line.strip())
+        if match:
+            pins[match.group(1)] = match.group(2)
+    if not pins:
+        raise RuntimeError(f"{REQUIREMENTS_PATH}: no exact dependency pins found")
+    return pins
 
 
 class MarkdownFormattingError(RuntimeError):
@@ -172,7 +180,7 @@ def verify_configuration(repo_root: Path) -> None:
 
 
 def verify_toolchain() -> None:
-    for distribution, expected in REQUIRED_DISTRIBUTIONS.items():
+    for distribution, expected in _required_distributions().items():
         try:
             actual = importlib_metadata.version(distribution)
         except importlib_metadata.PackageNotFoundError as exc:

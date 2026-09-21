@@ -150,6 +150,33 @@ def test_markdown_surface_adoption_and_enforcement_are_separate(tmp_path: Path) 
     assert markdown.read_text(encoding="utf-8") == "# Title\n"
 
 
+def test_markdown_enforcement_failure_restores_markdown(tmp_path: Path) -> None:
+    repo = tmp_path / "consumer"
+    repo.mkdir()
+    _init_git_repo(repo)
+    (repo / ".agents/contracts").mkdir(parents=True)
+    declaration_path = repo / ".agents/contracts/repo-standards-commands.json"
+    declaration_path.write_text(
+        json.dumps({"apply": [], "check": [], "generated_paths": ["generated/**"]}),
+        encoding="utf-8",
+    )
+    markdown = repo / "README.md"
+    markdown.write_text("#  Title   \n", encoding="utf-8")
+    subprocess.run(["git", "add", "--all"], cwd=repo, check=True)
+    subprocess.run(["git", "commit", "-m", "fixture"], cwd=repo, check=True, capture_output=True)
+    before = markdown.read_bytes()
+
+    result = subprocess.run(
+        [sys.executable, str(SCAFFOLD_MARKDOWN_FORMATTING), "--apply", "--state", "enforced"],
+        cwd=repo,
+        text=True,
+        capture_output=True,
+    )
+
+    assert result.returncode == 1
+    assert markdown.read_bytes() == before
+
+
 def test_absent_surface_reports_tracked_completed_artifact_directory(tmp_path: Path) -> None:
     """A completed-artifact directory must be drift rather than a supported repo surface."""
     completed = tmp_path / ".agents" / "specs" / "completed"

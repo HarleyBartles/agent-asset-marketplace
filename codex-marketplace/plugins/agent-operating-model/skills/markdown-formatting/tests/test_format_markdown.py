@@ -130,7 +130,7 @@ def test_only_adopted_and_enforced_states_are_valid(tmp_path: Path, state: str):
 
 def test_verify_toolchain_reports_missing_and_mismatched_packages(monkeypatch):
     module = load_module()
-    versions = dict(module.REQUIRED_DISTRIBUTIONS)
+    versions = module._required_distributions()
     missing = next(iter(versions))
 
     def missing_version(name: str) -> str:

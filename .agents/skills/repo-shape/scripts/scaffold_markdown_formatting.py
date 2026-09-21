@@ -117,6 +117,12 @@ def _enforce(root: Path) -> None:
     declaration_path = root / ".agents/contracts/repo-standards-commands.json"
     contract_before = contract_path.read_bytes()
     declaration_before = declaration_path.read_bytes()
+    declaration = json.loads(declaration_path.read_text(encoding="utf-8"))
+    apply = _vectors(declaration.get("apply"))
+    check = _vectors(declaration.get("check"))
+    contract_model = formatter.load_contract(root)
+    formatted_files = formatter.eligible_markdown(root, contract_model)
+    markdown_before = {path: path.read_bytes() for path in formatted_files}
     try:
         if formatter.main(["--apply"]):
             raise RuntimeError("Markdown formatting apply failed")
@@ -124,9 +130,6 @@ def _enforce(root: Path) -> None:
             raise RuntimeError("Markdown formatting check failed after apply")
         contract = json.loads(contract_path.read_text(encoding="utf-8"))
         contract["state"] = "enforced"
-        declaration = json.loads(declaration_path.read_text(encoding="utf-8"))
-        apply = _vectors(declaration.get("apply"))
-        check = _vectors(declaration.get("check"))
         apply_vector = [*FORMATTER_VECTOR, "--apply"]
         check_vector = [*FORMATTER_VECTOR, "--check"]
         if apply_vector not in apply:
@@ -138,6 +141,8 @@ def _enforce(root: Path) -> None:
         declaration["check"] = check
         declaration_path.write_text(json.dumps(declaration, indent=2) + "\n", encoding="utf-8", newline="\n")
     except BaseException:
+        for path, content in markdown_before.items():
+            path.write_bytes(content)
         contract_path.write_bytes(contract_before)
         declaration_path.write_bytes(declaration_before)
         raise
