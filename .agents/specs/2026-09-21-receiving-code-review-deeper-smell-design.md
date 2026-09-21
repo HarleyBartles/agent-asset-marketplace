@@ -1,6 +1,6 @@
 # Receiving Code Review Deeper-Smell Design
 
-> **Status:** Approved for implementation on 2026-09-21. Deferred to a fresh PR after draft PR #328.
+> **Status:** Approved for implementation. Refreshed against merged PR #328 and current `main` on 2026-09-21.
 
 ## Problem
 
@@ -69,15 +69,15 @@ The skill will ship the complete lightweight fixture source tree at `codex-marke
 
 `materialize.py` will default to a read-only check and require an explicit apply mode, empty destination, and skill-source path before it writes. It will copy the fixture unchanged into a neutral project, initialize Git, commit the complete base state on `main`, install the selected `receiving-code-review` behavioural surface, create a feature branch, apply and commit the feature patch, and leave a clean PR-head working tree. The installed copy excludes the skill's `tests/` tree so the fixture recipe, hidden rubric, and expected result cannot leak into the blinded worker context. `git diff main...HEAD` will show only the implementation under review.
 
-The materializer must be deterministic apart from irrelevant Git timestamps, fail closed on a non-empty destination, avoid remote configuration, and expose no network or external connector surface. Generated repositories and run output live under the repository's resolved off-repo scratch root and are removed after the campaign.
+The complete shipped `tests/deeper-smell/` package is capped at 24 files and 65,536 bytes, excluding only the behavioral skill copied into a materialized repository. The materializer must fail closed on a non-empty destination, avoid remote configuration, and expose no network or external connector surface. It will set repository-local Git identity, line-ending settings, and fixed commit timestamps so the base and PR-head commit identities are equal across paired runs. The installed skill lives under `.agents/skills/receiving-code-review/`, is excluded through `.git/info/exclude`, and is copied only after the fixture's base commit; its differing bytes therefore cannot alter the review diff or Git identities. The materializer copies only the review comment into an ignored neutral `.review/review-comment.md` path. The worker receives that path, never a path into the parent skill test tree, and cannot discover the rubric or recipe from the materialized repository. Generated repositories and run output live under the repository's resolved off-repo scratch root and are removed after the campaign.
 
-The subagent receives a fresh context, the fixture repository as its working directory, an instruction to read the installed `receiving-code-review` skill, and one blocking inline-review comment naming the changed file and line. It is not shown the fixture recipe, rubric, RED/GREEN terminology, prior conversation, or expected deeper smell.
+The subagent receives a fresh context, the fixture repository as its working directory, an instruction to read the installed `receiving-code-review` skill, and one blocking review comment naming the changed file and function. It is not shown the fixture recipe, rubric, RED/GREEN terminology, prior conversation, or expected deeper smell.
 
 ### 5. Compare the existing and candidate skills on the same recipe
 
 The RED repository is materialized from the current skill before the behavioural addition. Its subagent patch, test output, searches, and final report are kept only as transient scratch evidence for the current change. The run record names the fixture-recipe digest, baseline-skill digest, base commit, PR-head commit, model/profile selection, and rubric version without retaining a full transcript.
 
-After RED is confirmed, the minimal skill addition is authored. GREEN uses a newly materialized repository from the same fixture tree and feature patch, with only the installed skill content changed to the candidate version. Model, reasoning, prompt, tools, repository shape, review comment, and scoring rubric stay equal.
+After RED is confirmed, the minimal skill addition is authored. GREEN uses a newly materialized repository from the same fixture tree and feature patch, with only the installed skill content changed to the candidate version. Model, reasoning, fresh-context mode, prompt, tools, repository shape, base/head commits, review comment, and scoring rubric stay equal. The comparison uses separate canonical digests for the fixture recipe, worker prompt, review comment, rubric, and behavioral skill tree; the first four must match and only the behavioral-skill digest may differ.
 
 GREEN requires observable evidence that the agent:
 
@@ -118,4 +118,4 @@ Validation will include deterministic tests of the fixture materializer's branch
 
 ## Planning handoff
 
-The existing implementation plan remains the execution artifact for this work. Its already-completed test-custody tasks are historical prerequisites supplied by draft PR #328; the fresh deeper-smell PR begins at the fixture and observed-RED work. Execution must establish a competent RED before changing the skill, make the minimal behavioural addition, prove GREEN on a newly materialized equivalent repository, regenerate projections, and pass the repository gate.
+The matching implementation plan is the execution artifact for this work. PR #328 supplied the skill-test custody prerequisite; the deeper-smell PR begins at the fixture and observed-RED work. Execution must establish a competent RED before changing the skill, make the minimal behavioural addition, prove GREEN on a newly materialized equivalent repository, regenerate projections, and pass the repository gate.
