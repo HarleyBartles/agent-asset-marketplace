@@ -1,6 +1,6 @@
 # Receiving Code Review Deeper-Smell and Skill Tests Design
 
-> **Status:** Proposed for human review.
+> **Status:** Approved for implementation on 2026-09-21.
 
 ## Problem
 
@@ -46,6 +46,9 @@ into that lane, and prevent new pressure-test material from returning to
 - Skill-owned tests, fixtures, rubrics, and stable evaluation inputs live under
   `<skill>/tests/`, ship with the skill, and remain outside ordinary skill
   invocation.
+- The standards contract states the repository's governing position: skills
+  are code, code ships with tests, and neither code nor skills ship test
+  results.
 - Existing misplaced skill test material is relocated without reclassifying
   behavioural references or operational assets as tests.
 
@@ -154,10 +157,14 @@ codex-marketplace/plugins/superpowers-plus/skills/receiving-code-review/
 apply mode, empty destination, and skill-source path before it writes. It will
 copy `fixture/` unchanged into a neutral, ordinary-looking project such as
 `signal-exporter`, initialize Git, commit that complete base state on `main`,
-install the selected `receiving-code-review` skill into the repository, create
-a feature branch, apply and commit `feature.patch`, and leave a clean PR-head
-working tree. The installed skill is part of both base and feature history, so
-`git diff main...HEAD` shows only the implementation under review.
+install the selected `receiving-code-review` behavioral surface into the
+repository, create a feature branch, apply and commit `feature.patch`, and leave
+a clean PR-head working tree. The installed copy excludes the skill's `tests/`
+tree so the fixture recipe, hidden rubric, and expected result cannot leak into
+the blinded worker context. It includes `SKILL.md` and any ordinary behavioral
+resources the skill uses. That installed surface is part of both base and
+feature history, so `git diff main...HEAD` shows only the implementation under
+review.
 
 Keeping the repository-shaped fixture directly inspectable is preferable to a
 clever generator. The fixture must therefore stay deliberately small: source,
@@ -223,6 +230,10 @@ tests/  # Optional: maintainer verification, fixtures, rubrics, and evaluations
 
 The policy will state:
 
+- Skills are code. Code ships with its tests, so skill-owned tests ship with
+  the skill. Code does not ship test results, so run-specific transcripts,
+  scores, verdicts, generated repositories, and other execution output do not
+  ship with the skill.
 - `tests/` is permitted but undefined by the Agent Skills specification; this
   repository defines its meaning locally.
 - It contains verification of the skill itself, including automated tests,
@@ -232,6 +243,8 @@ The policy will state:
   can test the skill in the environment where it is installed.
 - It is not part of the skill's behavioural interface. Ordinary invocation
   must not require or direct the agent to load `tests/`.
+- A skill may have no `tests/` directory when it has no test material yet;
+  opportunistic backfill remains preferable to inventing low-value tests.
 - Transient run outputs and generated test repositories remain off-repo.
 - `assets/` remains for resources used during ordinary skill execution;
   `references/` remains on-demand behavioural knowledge; `scripts/` remains
