@@ -12,7 +12,7 @@
 
 **Execution Strategy:** `executing-plans` — the user selected inline implementation, the remaining tasks share command-contract and consumer-migration state, and one fresh whole-branch review will gate completion.
 
-**State:** active mid-flight in draft PR #328
+**State:** completed-awaiting-retirement
 
 ## Global Constraints
 
@@ -119,15 +119,15 @@ Expected: the tracked hook passes; this plan becomes the only active plan for PR
 
 - `--check-files` is non-mutating, accepts explicit repository-relative Markdown outputs, rejects paths outside the repository, and uses the same configuration and pins as repository-wide modes.
 
-- [ ] **Step 1: Write failing contract and selection tests**
+- [x] **Step 1: Write failing contract and selection tests**
 
 Use a neutral temporary Git repository. Test tracked versus untracked Markdown, authored plus generated files, frontmatter/GFM, file/tree exclusions, independent reasons, no glob syntax, repository escapes, kind mismatch, zero-match entries, and deterministic relative-path diagnostics. Assert `adopted` and `enforced` are the only states.
 
-- [ ] **Step 2: Write failing runtime and mutation-safety tests**
+- [x] **Step 2: Write failing runtime and mutation-safety tests**
 
 Monkeypatch installed distribution versions to cover missing/mismatched pins. Force a formatter failure in a later command-length batch and assert every original byte is restored. Test a path containing spaces, batching below 28,000 command characters, default read-only behavior, explicit modes, and producer-scoped rejection of untracked/non-Markdown inputs.
 
-- [ ] **Step 3: Run focused tests and verify RED**
+- [x] **Step 3: Run focused tests and verify RED**
 
 ```powershell
 py -3 -m pytest codex-marketplace/plugins/agent-operating-model/skills/markdown-formatting/tests/test_format_markdown.py -q
@@ -135,11 +135,11 @@ py -3 -m pytest codex-marketplace/plugins/agent-operating-model/skills/markdown-
 
 Expected: FAIL because the skill implementation does not exist.
 
-- [ ] **Step 4: Implement the minimal command**
+- [x] **Step 4: Implement the minimal command**
 
 Parse JSON and TOML with the standard library, validate the schema semantics before any mutation, enumerate `git ls-files -- '*.md'`, and compare `importlib.metadata.version()` with the three exact pins. Invoke `[sys.executable, "-m", "mdformat"]` in bounded batches. For apply, snapshot eligible file bytes before the first invocation and restore all snapshots on any non-zero batch; check mode never writes. Emit one concise diagnostic per invalid contract entry and preserve stable path order.
 
-- [ ] **Step 5: Document the skill boundary and pins**
+- [x] **Step 5: Document the skill boundary and pins**
 
 State that the command owns mechanics while the consumer owns adoption, state, exclusions, dependency integration, and command composition. The requirements file contains exactly:
 
@@ -149,7 +149,7 @@ mdformat-frontmatter==2.1.2
 mdformat-gfm==1.0.0
 ```
 
-- [ ] **Step 6: Prove GREEN and commit canonical source**
+- [x] **Step 6: Prove GREEN and commit canonical source**
 
 Run the focused tests plus frontmatter semantic round-trip coverage. Commit with `feat: add portable markdown formatting skill`. Do not regenerate installed projections yet; Task 8 owns the migration and coherent generated refresh.
 
@@ -177,15 +177,15 @@ Run the focused tests plus frontmatter semantic round-trip coverage. Commit with
 
 - The enforced formatter vectors are `[@python, .agents/skills/markdown-formatting/scripts/format_markdown.py, --apply]` and the matching `--check`; the scaffold prepends them once and never duplicates or reorders the consumer's existing command.
 
-- [ ] **Step 1: Write failing command-declaration tests**
+- [x] **Step 1: Write failing command-declaration tests**
 
 Cover legacy vectors, ordered vectors, empty/nested-invalid vectors, `@python` resolution for each command, sequential apply-before-check hook execution, failure propagation, and hosted parity through the same tracked hook template.
 
-- [ ] **Step 2: Write failing adoption/enforcement tests**
+- [x] **Step 2: Write failing adoption/enforcement tests**
 
 In neutral repos, assert adoption creates valid config, `state: adopted` contract, code-style guidance, and callable command without changing Markdown or existing command vectors. Assert enforcement first runs formatter apply/check, then changes state and command composition; formatter failure leaves state, commands, and Markdown unchanged. Assert plugin refresh alone creates nothing.
 
-- [ ] **Step 3: Run focused tests and verify RED**
+- [x] **Step 3: Run focused tests and verify RED**
 
 ```powershell
 py -3 -m pytest tests/test_repo_standards.py -q
@@ -193,11 +193,11 @@ py -3 -m pytest tests/test_repo_standards.py -q
 
 Expected: new tests FAIL because the surface, state transition, and ordered vectors are unsupported.
 
-- [ ] **Step 4: Implement the manifest, validator, scaffold, and hook support**
+- [x] **Step 4: Implement the manifest, validator, scaffold, and hook support**
 
 Add the optional surface with its validator/scaffold. Reuse Task 6 contract validation. Adoption writes only absent/migratable surface files and dependency instructions; it does not touch Markdown or gate vectors. Enforcement snapshots contract/declaration/Markdown, runs portable apply then check, writes `enforced`, prepends missing formatter vectors atomically, and restores snapshots on failure. The hook and template execute every declared apply vector in order, stage declared generated paths, then execute every check vector in order; retain legacy flat-vector behavior.
 
-- [ ] **Step 5: Prove GREEN and commit**
+- [x] **Step 5: Prove GREEN and commit**
 
 Run focused repo-standard tests, tracked-hook behavioral tests, and schema validation. Confirm `repo-standards --apply` does not auto-adopt the optional surface. Commit with `feat: add markdown formatting repo standard`.
 
@@ -221,15 +221,15 @@ Run focused repo-standard tests, tracked-hook behavioral tests, and schema valid
 
 - Produces: this consumer's `state: enforced` contract, explicit custody exclusions, skill-owned requirement inclusion, and canonical ordered formatter plus CI command vectors.
 
-- [ ] **Step 1: Write failing local-wiring tests**
+- [x] **Step 1: Write failing local-wiring tests**
 
 Assert root `requirements.txt` includes `-r .agents/skills/markdown-formatting/requirements.txt` and no duplicate mdformat pins; `tools/run.py` contains no local Markdown enumeration/batching implementation; the declaration invokes portable apply before existing CI apply and portable check before existing CI check; code-style guidance names the portable command; installed skill equals canonical source.
 
-- [ ] **Step 2: Author the consumer contract explicitly**
+- [x] **Step 2: Author the consumer contract explicitly**
 
 Set version `1`, state `enforced`, and one independent entry for every current byte-governed `assets/authority` tree plus the unrendered `codex-marketplace/plugins/writing-pack/skills/writing-skills/templates/skill/SKILL.md` file. Each entry names `kind`, literal repository-relative `path`, and a custody-specific `reason`; use no glob or blanket generated-Markdown exclusion.
 
-- [ ] **Step 3: Regenerate the installed skill before rewiring commands**
+- [x] **Step 3: Regenerate the installed skill before rewiring commands**
 
 Run:
 
@@ -240,15 +240,15 @@ py -3 tools/run.py installed-skills --apply
 
 Then integrate the skill-owned requirements into the root environment and prove installed package versions match.
 
-- [ ] **Step 4: Replace local mechanics with portable wiring**
+- [x] **Step 4: Replace local mechanics with portable wiring**
 
 Remove `_MARKDOWN_TEMPLATE_SUFFIXES`, `_all_tracked_markdown_files`, and `_run_mdformat` plus their direct lint calls from `tools/run.py`. Preserve the existing CI command as the second ordered vector and add the portable formatter as the first. Update local tests to validate wiring/contract semantics instead of re-testing skill internals.
 
-- [ ] **Step 5: Prove the repository migration is already normalized**
+- [x] **Step 5: Prove the repository migration is already normalized**
 
 Run portable `--apply`, inspect that it produces no unexpected diff beyond contract/wiring work, then run portable `--check`. Run root Markdown and CLI tests. Any excluded entry that no longer needs byte custody must be made compliant and removed instead of retained for convenience.
 
-- [ ] **Step 6: Commit the migration through the new hook path**
+- [x] **Step 6: Commit the migration through the new hook path**
 
 Stage canonical source, installed projections, consumer contract, commands, requirements, docs, and tests. Commit with `refactor: adopt portable markdown formatting`. The hook must exercise both ordered vectors and leave the tree clean.
 
@@ -270,23 +270,23 @@ Stage canonical source, installed projections, consumer contract, commands, requ
 
 - Produces: each aggregate producer owner invokes the shared command against the explicit Markdown files it wrote before reporting success; check only, never cleanup.
 
-- [ ] **Step 1: Inventory producer ownership in tests**
+- [x] **Step 1: Inventory producer ownership in tests**
 
 Pin the four aggregate owners above and assert every tracked Python writer of `.md` is either covered by one owner or named by a test as non-generator/static-template behavior. Fail the inventory when a new unclassified writer appears.
 
-- [ ] **Step 2: Write failing producer-boundary tests**
+- [x] **Step 2: Write failing producer-boundary tests**
 
 For each owner, monkeypatch the portable checker and assert it receives only that operation's repository-relative Markdown outputs. Make one emitted file drift and assert the producer fails without silently formatting it. Assert non-Markdown outputs are not sent.
 
-- [ ] **Step 3: Implement producer-scoped checks**
+- [x] **Step 3: Implement producer-scoped checks**
 
 Collect written Markdown paths during each operation and invoke the installed `format_markdown.py --check-files ...` with the current interpreter before success. `repo_standards.py` aggregates outputs from its scaffold operations; nested scaffold scripts do not double-run the checker.
 
-- [ ] **Step 4: Prove generator convergence**
+- [x] **Step 4: Prove generator convergence**
 
 For the index mesh, repo-shape scaffolding, plugin scaffolding, and shared-reference sync, test generation followed immediately by producer check and a second generation with no Markdown diff. Repair producer templates/rendering when drift appears; do not add exclusions.
 
-- [ ] **Step 5: Run focused tests and commit**
+- [x] **Step 5: Run focused tests and commit**
 
 Run all producer-specific tests plus portable formatter tests. Commit with `fix: validate generated markdown at producer boundaries`.
 
@@ -303,7 +303,7 @@ Run all producer-specific tests plus portable formatter tests. Commit with `fix:
 
 - Produces: clean generated state, hooked-gate evidence, a whole-branch review, and updated draft PR #328.
 
-- [ ] **Step 1: Regenerate all owned outputs**
+- [x] **Step 1: Regenerate all owned outputs**
 
 Run:
 
@@ -316,18 +316,18 @@ py -3 tools/run.py mesh --apply
 
 Inspect the diff for authored/generated custody and confirm every generator-owned Markdown file passes its producer check without formatter changes.
 
-- [ ] **Step 2: Run focused uncommitted preflight**
+- [x] **Step 2: Run focused uncommitted preflight**
 
 Run portable skill tests, repo-standard tests, Markdown/frontmatter tests, command-runner tests, producer tests, installed-skill refresh tests, and `py -3 tools/run.py review-preflight --check`. Run `ci --check` only if diagnosing a failure; the hooked commit owns the complete gate.
 
-- [ ] **Step 3: Complete the in-flight plan and make the final hooked commit**
+- [x] **Step 3: Complete the in-flight plan and make the final hooked commit**
 
 Use `completing-planning-artifacts`, promote any enduring decision not already in the approved spec/contracts, set this plan to `completed-awaiting-retirement`, regenerate mesh, stage all intended files, and commit with `chore: finalize portable markdown formatting`. Record the commit SHA and clean status; never bypass the hook.
 
-- [ ] **Step 4: Self-review and obtain one fresh whole-branch review**
+- [x] **Step 4: Self-review and obtain one fresh whole-branch review**
 
 Review `git diff origin/main...HEAD` for accidental deeper-smell work, implicit adoption, command-order regressions, unjustified exclusions, dependency duplication, mutation on failure, generator/formatter oscillation, stale local formatter code, and generated projection honesty. Resolve findings in hooked commits and repeat affected focused tests.
 
-- [ ] **Step 5: Push and update draft PR #328**
+- [x] **Step 5: Push and update draft PR #328**
 
 Push the branch, keep the PR draft, and update its body to link this spec and plan; distinguish completed foundation work from portable capability work; list focused commands and final hooked-gate evidence; explain adopted versus enforced behavior and this repository's explicit exclusions. Return the PR URL as publication proof. Ready and merge remain human decisions.
