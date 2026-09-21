@@ -130,9 +130,10 @@ This scenario proves transfer because the skill may use manifest drift as an
 explanatory example while the examination requires recognition of duplicated
 process-result semantics.
 
-### 4. Materialize an ordinary local PR repository
+### 4. Ship and materialize an ordinary local PR fixture
 
-The committed fixture is a recipe, not a nested repository. It will live at:
+The skill will ship the complete lightweight fixture source tree, not code that
+reconstructs the fixture file by file. It will live at:
 
 ```text
 codex-marketplace/plugins/superpowers-plus/skills/receiving-code-review/
@@ -143,17 +144,27 @@ codex-marketplace/plugins/superpowers-plus/skills/receiving-code-review/
         ├── review-comment.md
         ├── rubric.md
         ├── feature.patch
-        └── seed/
+        └── fixture/
+            ├── pyproject.toml
+            ├── src/
+            └── tests/
 ```
 
 `materialize.py` will default to a read-only check and require an explicit
 apply mode, empty destination, and skill-source path before it writes. It will
-create a neutral, ordinary-looking project such as
-`signal-exporter`, initialize Git, commit the base state on `main`, install the
-selected `receiving-code-review` skill into the fixture's base tree, create a
-feature branch, apply and commit `feature.patch`, and leave a clean PR-head
+copy `fixture/` unchanged into a neutral, ordinary-looking project such as
+`signal-exporter`, initialize Git, commit that complete base state on `main`,
+install the selected `receiving-code-review` skill into the repository, create
+a feature branch, apply and commit `feature.patch`, and leave a clean PR-head
 working tree. The installed skill is part of both base and feature history, so
 `git diff main...HEAD` shows only the implementation under review.
+
+Keeping the repository-shaped fixture directly inspectable is preferable to a
+clever generator. The fixture must therefore stay deliberately small: source,
+tests, and minimum project metadata only; no dependency trees, build output,
+binaries, caches, or captured run artifacts. A focused check will cap its file
+count and byte size so test growth cannot silently make the shipped skill
+materially heavy.
 
 The materializer is maintainer test code. It must be deterministic apart from
 irrelevant Git timestamps, fail closed on a non-empty destination, avoid remote
@@ -176,8 +187,8 @@ the fixture-recipe digest, baseline-skill digest, base commit, PR-head commit,
 model/profile selection, and rubric version without retaining a full transcript.
 
 After the RED is confirmed, the minimal skill addition is authored. GREEN uses
-a newly materialized repository from the same seed and feature patch, with only
-the installed skill content changed to the candidate version. Model, reasoning,
+a newly materialized repository from the same fixture tree and feature patch,
+with only the installed skill content changed to the candidate version. Model, reasoning,
 prompt, tools, repository shape, review comment, and scoring rubric stay equal.
 Its run record captures the corresponding candidate-skill digest and fixture
 identities so the comparison can prove that the skill content was the sole
@@ -215,7 +226,8 @@ The policy will state:
 - `tests/` is permitted but undefined by the Agent Skills specification; this
   repository defines its meaning locally.
 - It contains verification of the skill itself, including automated tests,
-  evaluation scenarios, fixture recipes, rubrics, and stable expected results.
+  evaluation scenarios, complete lightweight fixture trees, materialization
+  helpers, rubrics, and stable expected results.
 - It is shipped with canonical and installed skill directories so maintainers
   can test the skill in the environment where it is installed.
 - It is not part of the skill's behavioural interface. Ordinary invocation
@@ -234,7 +246,7 @@ skill-root test recipe and rubric.
 Repository-root `tests/pressure/` remains the home for shared campaign
 orchestration, generic run instructions, and repository-wide validation of
 pressure artifacts. Skill-root `tests/` is the portable source of a particular
-skill's fixture, prompt inputs, rubric, and deterministic assertions. A
+skill's fixture tree, prompt inputs, rubric, and deterministic assertions. A
 repo-root campaign adapter may point to those skill-owned files, but it must not
 duplicate or become a second source of truth for them.
 
@@ -318,6 +330,7 @@ Validation will include:
 
 - deterministic tests of the fixture materializer's branch, commit, diff,
   cleanliness, and refusal of non-empty destinations;
+- a focused fixture weight check covering both file count and total bytes;
 - a clean RED recorded before editing the skill;
 - one bounded clean GREEN after the minimal skill edit;
 - focused repository assertions for the `tests/` doctrine and retirement of
