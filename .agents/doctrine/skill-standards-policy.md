@@ -15,6 +15,7 @@ The first-party [`writing-skills`](../../codex-marketplace/plugins/superpowers-p
 - `superpowers-plus:writing-skills`
 - `.agents/contracts/skill-frontmatter.md`
 - `.agents/contracts/openai-agent-yaml.md`
+- `.agents/contracts/skill-tests.md`
 - `custody-and-marketplace-doctrine.md`
 
 ## Directory structure
@@ -32,11 +33,16 @@ codex-marketplace/plugins/<plugin-pack>/skills/<skill-name>/
 The skill directory name must match the `name` field in `SKILL.md` frontmatter.
 
 The Agent Skills specification permits additional directories but does not
-define `tests/`; this repository defines that directory locally.
+define `tests/`; this repository defines that directory in
+`.agents/contracts/skill-tests.md`.
 
 ## Local skills
 
-Local `.agents/skills/mark-*` skills are tracked local custody. They require normal local skill frontmatter and are excluded from marketplace provenance; their authoring method is owned by `writing-skills`.
+Local `.agents/skills/<name>/` skills are tracked local custody when their exact
+names appear in `repo.local_skills` in `.agents/plugins/marketplace.json`.
+Prefixes are optional naming choices, not custody requirements. Local skills
+require normal local skill frontmatter and are excluded from marketplace
+provenance; their authoring method is owned by `writing-skills`.
 
 ## Authority and source custody
 
@@ -108,24 +114,9 @@ Files in a skill's `scripts/` directory that are not executed directly (they hav
 
 Skills are code, and code ships with its tests. Skill-owned tests therefore
 ship in the canonical skill directory and every installed projection. Code
-does not ship test results, and skills do not ship test results: run-specific
-transcripts, scores, verdicts, generated repositories, and other execution
-output remain transient and off-repo.
-
-`tests/` is the maintainer-verification surface for automated checks,
-evaluation scenarios, complete lightweight fixture trees, materialization
-helpers, rubrics, and stable expected results. It is not part of ordinary skill
-invocation: an invoked skill neither requires nor directs the agent to load
-`tests/`. A skill with no test material yet need not contain an empty directory
-or invented low-value tests; backfill useful tests opportunistically.
-
-Keep directory roles distinct:
-
-- `assets/` contains templates, authority evidence, and other resources used
-  during ordinary skill execution.
-- `references/` contains behavioral knowledge loaded on demand.
-- `scripts/` contains runtime capability code.
-- `tests/` verifies the skill itself and ships with it for maintainers.
+does not ship test results, and skills do not ship test results. Follow
+`.agents/contracts/skill-tests.md` for test-material custody, distribution,
+invocation boundaries, and directory roles.
 
 Before deploying a skill, verify:
 

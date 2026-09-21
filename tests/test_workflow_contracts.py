@@ -526,13 +526,16 @@ class TestPlanningDelegationReview:
 class TestRepositoryCallersAndPressure:
     def test_skill_tests_ship_with_skills_but_test_results_do_not(self):
         policy = " ".join(_read(ROOT / ".agents" / "doctrine" / "skill-standards-policy.md").lower().split())
+        contract = " ".join(_read(ROOT / ".agents" / "contracts" / "skill-tests.md").lower().split())
+        skills_doctrine = " ".join(_read(ROOT / ".agents" / "doctrine" / "skills.md").lower().split())
         pressure = _read(ROOT / "tests" / "pressure" / "README.md").lower()
 
-        assert "skills are code" in policy
-        assert "code ships with its tests" in policy
-        assert "skills do not ship test results" in policy
-        assert "tests/" in policy and "maintainer" in policy
-        assert "ordinary skill invocation" in policy
+        assert ".agents/contracts/skill-tests.md" in policy
+        assert "skills are code" in contract
+        assert "code ships with its tests" in contract
+        assert "skills do not ship test results" in contract
+        assert "tests/" in contract and "maintainer" in contract
+        assert "ordinary skill invocation" in contract
         for responsibility in (
             "complete lightweight fixture trees",
             "materialization helpers",
@@ -544,7 +547,12 @@ class TestRepositoryCallersAndPressure:
             "verdicts",
             "generated repositories",
         ):
-            assert responsibility in policy
+            assert responsibility in contract
+
+        for local_skill_policy in (policy, skills_doctrine):
+            assert "repo.local_skills" in local_skill_policy
+            assert "prefixes are optional" in local_skill_policy
+            assert ".agents/skills/mark-*" not in local_skill_policy
 
         assert "skill-root `tests/`" in pressure
         assert "assets/pressure-tests.md" not in pressure
