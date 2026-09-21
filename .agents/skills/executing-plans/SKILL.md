@@ -74,11 +74,23 @@ plan, repository evidence, and tests. Record each decision as `Ruling: <what>
 
 ## Task Loop
 
+Before the first helper invocation, resolve `bash` in the agent's host shell
+and identify its environment (`Get-Command bash` on Windows; `command -v bash`
+elsewhere; then `bash -lc 'uname -s; command -v git'`). Confirm Bash and Git
+belong to the same host environment as the active checkout. A Windows-hosted
+agent must not cross implicitly into WSL. Stop and repair host command
+resolution instead of searching for an alternate Bash ad hoc.
+
+The helpers revalidate this boundary through `scripts/resolve-runtime`. They
+also resolve one concrete, same-host Python 3 executable in this order:
+`PYTHON_EXECUTABLE`, `python3`, `python`, then the Windows `py -3` launcher as
+a locator of last resort. They invoke the resolved executable, never the
+launcher. Environment mismatch is a hard stop before task work.
+
 For each incomplete task:
 
-1. Mark it in progress. Run `bash scripts/task-start PLAN_FILE N`. On Windows,
-   run this upstream-owned shell helper in Git Bash. Do not create or request a
-   PowerShell translation.
+1. Mark it in progress. Run `bash scripts/task-start PLAN_FILE N` through the
+   verified same-host Bash. Do not create or request a PowerShell translation.
 2. Read the emitted brief even when you remember the plan. `task-start` uses
    the shared Python `task_brief.py` helper; the brief carries exact paths,
    values, interfaces, and expected outputs.
@@ -89,9 +101,9 @@ For each incomplete task:
    the smallest evidence-backed ruling that preserves the spec.
 5. Commit as the task specifies. Multi-commit tasks keep the BASE printed by
    `task-start`; never substitute `HEAD~1`.
-6. Run `bash scripts/task-done PLAN_FILE N BASE -- TEST_COMMAND [ARGS...]`.
-   On Windows, invoke it through Git Bash. The helper stores the full test log,
-   prints its tail, and appends completion only after a passing command.
+6. Run `bash scripts/task-done PLAN_FILE N BASE -- TEST_COMMAND [ARGS...]`
+   through the same verified Bash. The helper stores the full test log, prints
+   its tail, and appends completion only after a passing command.
 7. Mark the task complete and continue without a ceremonial check-in.
 
 ## Per-Task Completion Contract
@@ -147,4 +159,5 @@ After all tasks:
 | "Focused tests passed, so the project is green." | Run the consumer's declared complete gate before the completion claim. |
 | "I should ask whether to continue." | The approved plan already authorizes the next task; stop only at the named human/safety boundary. |
 | "Inline means no independent review." | Native removes per-task review, not the one fresh whole-branch review. |
-| "Windows needs a PowerShell copy." | Upstream Bash runs in Git Bash; Plus-owned helpers are Python. |
+| "Any Bash is close enough." | Bash must share the agent and checkout's host environment; WSL is not an implicit substitute for Windows-hosted Bash. |
+| "Windows needs a PowerShell copy." | The Bash helpers resolve a concrete same-host Python interpreter; do not fork their workflow semantics. |
