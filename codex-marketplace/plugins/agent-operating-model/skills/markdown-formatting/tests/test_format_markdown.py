@@ -80,6 +80,20 @@ def test_eligible_markdown_is_tracked_sorted_and_honors_file_and_tree(tmp_path: 
     assert [path.relative_to(repo).as_posix() for path in module.eligible_markdown(repo, contract)] == ["a.md"]
 
 
+def test_hook_snapshot_checks_only_staged_markdown(tmp_path: Path, monkeypatch):
+    module = load_module()
+    repo = make_repo(tmp_path)
+    for relative in ("changed.md", "unchanged.md"):
+        (repo / relative).write_text("# title\n", encoding="utf-8")
+    commit_all(repo)
+    (repo / "changed.md").write_text("# changed\n", encoding="utf-8")
+    git(repo, "add", "changed.md")
+    monkeypatch.setenv("REPO_STANDARDS_STAGED_SNAPSHOT", "1")
+
+    contract = module.load_contract(repo)
+    assert module.eligible_markdown(repo, contract) == (repo / "changed.md",)
+
+
 @pytest.mark.parametrize(
     ("entry", "message"),
     [
@@ -162,15 +176,16 @@ def test_apply_restores_every_original_byte_when_later_batch_fails(tmp_path: Pat
     assert {path: path.read_bytes() for path in originals} == originals
 
 
-def test_check_files_rejects_untracked_non_markdown_and_escape(tmp_path: Path):
+def test_check_files_accepts_untracked_producer_output_and_rejects_invalid_paths(tmp_path: Path):
     module = load_module()
     repo = make_repo(tmp_path)
     (repo / "tracked.md").write_text("# tracked\n", encoding="utf-8")
     (repo / "tracked.txt").write_text("text\n", encoding="utf-8")
     commit_all(repo)
     (repo / "untracked.md").write_text("# untracked\n", encoding="utf-8")
+    assert module.validate_requested_files(repo, ["untracked.md"]) == (repo / "untracked.md",)
     for candidate, message in (
-        ("untracked.md", "tracked"),
+        ("missing.md", "does not exist"),
         ("tracked.txt", "Markdown"),
         ("../escape.md", "repository-relative"),
     ):

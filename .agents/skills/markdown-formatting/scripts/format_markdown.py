@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import subprocess
 import sys
 import tomllib
@@ -63,6 +64,15 @@ def _git(repo_root: Path, *args: str) -> str:
 def _tracked_markdown(repo_root: Path) -> tuple[PurePosixPath, ...]:
     output = _git(repo_root, "ls-files", "--", "*.md")
     return tuple(sorted(PurePosixPath(line) for line in output.splitlines() if line))
+
+
+def _staged_markdown(repo_root: Path) -> tuple[PurePosixPath, ...]:
+    output = _git(repo_root, "diff", "--cached", "--name-only", "--diff-filter=ACMR", "--", "*.md")
+    return tuple(
+        sorted(
+            PurePosixPath(line) for line in output.splitlines() if line and (repo_root / PurePosixPath(line)).is_file()
+        )
+    )
 
 
 def _safe_relative_path(value: object, *, label: str) -> PurePosixPath:
@@ -125,19 +135,24 @@ def eligible_markdown(repo_root: Path, contract: MarkdownContract) -> tuple[Path
             for item in contract.exclusions
         )
 
-    return tuple(repo_root / path for path in _tracked_markdown(repo_root) if not excluded(path))
+    candidates = (
+        _staged_markdown(repo_root)
+        if os.environ.get("REPO_STANDARDS_STAGED_SNAPSHOT") == "1"
+        else _tracked_markdown(repo_root)
+    )
+    return tuple(repo_root / path for path in candidates if not excluded(path))
 
 
 def validate_requested_files(repo_root: Path, values: Sequence[str]) -> tuple[Path, ...]:
-    tracked = set(_tracked_markdown(repo_root))
     selected: list[Path] = []
     for index, value in enumerate(values):
         relative = _safe_relative_path(value, label=f"--check-files[{index}]")
         if relative.suffix.lower() != ".md":
             raise ContractError(f"{relative.as_posix()}: requested output is not Markdown")
-        if relative not in tracked:
-            raise ContractError(f"{relative.as_posix()}: requested Markdown must be tracked")
-        selected.append(repo_root / relative)
+        target = repo_root / relative
+        if not target.is_file():
+            raise ContractError(f"{relative.as_posix()}: requested Markdown does not exist")
+        selected.append(target)
     return tuple(sorted(set(selected), key=lambda path: path.relative_to(repo_root).as_posix()))
 
 

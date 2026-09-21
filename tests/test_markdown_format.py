@@ -49,6 +49,20 @@ def test_installed_markdown_formatter_matches_canonical_source() -> None:
         assert (installed / relative).read_bytes() == (canonical / relative).read_bytes()
 
 
+def test_aggregate_markdown_producers_use_scoped_checks() -> None:
+    owners = [
+        ROOT / "codex-marketplace/plugins/repo-worker-pack/skills/generating-agent-mesh/scripts/generate_index_mesh.py",
+        ROOT / "tools/new_plugin.py",
+        ROOT / "codex-marketplace/plugins/agent-operating-model/skills/repo-shape/scripts/repo_standards.py",
+        ROOT / "tools/sync_skill_shared_references.py",
+    ]
+
+    for owner in owners:
+        source = owner.read_text(encoding="utf-8")
+        assert "_check_markdown_outputs" in source
+        assert '"--check-files"' in source
+
+
 def test_formatter_preserves_yaml_frontmatter_semantics_and_delimiters() -> None:
     source = """---
 name: example-skill
