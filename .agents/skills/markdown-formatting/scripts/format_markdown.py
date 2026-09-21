@@ -176,7 +176,7 @@ def verify_configuration(repo_root: Path) -> None:
         config = tomllib.loads(path.read_text(encoding="utf-8"))
     except (OSError, tomllib.TOMLDecodeError) as exc:
         raise ContractError(f"{CONFIG_PATH.as_posix()}: {exc}") from exc
-    expected = {"wrap": "no", "end_of_line": "lf", "validate": True}
+    expected = {"wrap": "no", "end_of_line": "lf", "validate": True, "number": True}
     for key, value in expected.items():
         if config.get(key) != value:
             raise ContractError(f"{CONFIG_PATH.as_posix()}: {key} must be {value!r}")

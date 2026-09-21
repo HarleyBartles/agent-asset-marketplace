@@ -16,7 +16,7 @@ Verify and fix a single `blocking/important` lens finding.
 ## Recipe
 
 1. Use `receiving-code-review` to verify the finding.
-1. Choose the fix path using the decision table below.
+2. Choose the fix path using the decision table below.
 
 | Path                   | Use when...                                                                                                                                                                            |
 | ---------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -28,15 +28,15 @@ Verify and fix a single `blocking/important` lens finding.
    - Fill in the `## Finding`, `## Fix instructions`, `## Out of scope`, `## Verification`, and `## Outputs` sections.
    - Dispatch an `implementer` subagent with the brief and the consumer's preflight command.
    - Verify the resulting `review-log-implementer-report.md` and the fix commit.
-1. If inline/orchestrator is chosen:
+4. If inline/orchestrator is chosen:
    - Apply the minimal change to the affected file(s).
    - Run the consumer's canonical preflight and confirm it passes.
-1. If the finding severity is `blocking` or `important`, or if `non_trivial_fix` is `true`, the fix must be proven with a failing-then-passing test:
+5. If the finding severity is `blocking` or `important`, or if `non_trivial_fix` is `true`, the fix must be proven with a failing-then-passing test:
    - **RED:** Create or identify a test that reproduces the bug. Run it and capture the failing output in the implementer report or inline log.
    - **GREEN:** Apply the minimal fix. Re-run the same test until it passes.
    - The test must be added or updated in the permanent test suite. `compile_metrics.py` and the consumer's preflight must pass.
    - For inline/orchestrator fixes, record the RED/GREEN commands and output in `review-log-finding-fix.md`.
-1. After the fix is committed, do not hand-edit `review-metrics.json`. Regenerate the metrics file and authorize `re-preflight`:
+6. After the fix is committed, do not hand-edit `review-metrics.json`. Regenerate the metrics file and authorize `re-preflight`:
    ```bash
    py -3 .agents/skills/iterative-review/scripts/compile_metrics.py \
        --state <scratch_dir>/review-state.json \
@@ -45,8 +45,8 @@ Verify and fix a single `blocking/important` lens finding.
        --state <scratch_dir>/review-state.json \
        --propose re-preflight
    ```
-1. Move to `re-preflight`.
-1. Round cap: the fix round for a finding is `round - discovered_at_round + 1` from `<scratch_dir>/review-state.json`. When that reaches `max_fix_rounds`, escalate to `implementer-strong`; if it still fails at the cap, route to `blocked`.
+7. Move to `re-preflight`.
+8. Round cap: the fix round for a finding is `round - discovered_at_round + 1` from `<scratch_dir>/review-state.json`. When that reaches `max_fix_rounds`, escalate to `implementer-strong`; if it still fails at the cap, route to `blocked`.
 
 ## Outputs
 

@@ -78,8 +78,8 @@ These rules are part of this router. Apply them directly from the request; do no
 For one fully specified, local, reversible edit with one obvious target and no product, taste, authority, safety, publication, or architectural decision:
 
 1. Do not invoke `inspecting-the-environment` or narrate skill selection.
-1. Give at most one short action update.
-1. Make the edit, run one focused check, and report the result.
+2. Give at most one short action update.
+3. Make the edit, run one focused check, and report the result.
 
 ### Taste ambiguity stop
 
@@ -136,10 +136,10 @@ These thoughts mean STOP—you're rationalizing:
 This skill is the generic workflow router for any repo that installs the superpowers-plus skill pack. At session start, resume, or when the next action is unclear, run these steps in order and then hand off.
 
 1. **Classify the request.** Pick the smallest sufficient mode from [`references/bootstrap-routing.md`](references/bootstrap-routing.md) using user intent and immediately available context. Announce the route so the human can override it.
-1. **Inspect only route-changing environment dimensions.** Invoke `inspecting-the-environment` when shell, repository, branch, worktree, or connector facts can change the selected route or immediate action. Do not perform a broad inventory merely because the skill is available.
-1. **Discover repository composition.** For repo-backed modes, follow [`references/bootstrap-routing.md`](references/bootstrap-routing.md) to consult the repository's playbook inventory independently of runbook selection and resolve its runbook inventory when the stage is not explicit. Repeat this bounded discovery on resume and when the active concern changes.
-1. **Load only selected doctrine.** Invoke `base-doctrine` for cross-runtime invariants, then read only the repo-local doctrine and owning references required by the selected route. For local-doctrine and user-instruction priority rules, see [`references/repo-doctrine.md`](references/repo-doctrine.md).
-1. **Route and stop.** Hand off to the owning skill and stop reading once the next lawful action is known. Do not load additional skills unless the current skill leaves a decision unresolved and the candidate skill directly owns it.
+2. **Inspect only route-changing environment dimensions.** Invoke `inspecting-the-environment` when shell, repository, branch, worktree, or connector facts can change the selected route or immediate action. Do not perform a broad inventory merely because the skill is available.
+3. **Discover repository composition.** For repo-backed modes, follow [`references/bootstrap-routing.md`](references/bootstrap-routing.md) to consult the repository's playbook inventory independently of runbook selection and resolve its runbook inventory when the stage is not explicit. Repeat this bounded discovery on resume and when the active concern changes.
+4. **Load only selected doctrine.** Invoke `base-doctrine` for cross-runtime invariants, then read only the repo-local doctrine and owning references required by the selected route. For local-doctrine and user-instruction priority rules, see [`references/repo-doctrine.md`](references/repo-doctrine.md).
+5. **Route and stop.** Hand off to the owning skill and stop reading once the next lawful action is known. Do not load additional skills unless the current skill leaves a decision unresolved and the candidate skill directly owns it.
 
 Further inspection, skill loading, reviewers, preflights, wrappers, and alternate modes require a concrete unresolved question that could change the next lawful action. "Might be useful" is not sufficient. Do not turn bootstrap thoroughness into permission to embellish an already-defined workflow.
 

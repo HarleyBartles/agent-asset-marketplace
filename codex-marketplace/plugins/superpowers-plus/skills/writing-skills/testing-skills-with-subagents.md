@@ -151,10 +151,10 @@ Multiple pressures: sunk cost + time + exhaustion + consequences. Forces explici
 ### Key Elements of Good Scenarios
 
 1. **Concrete options** - Force A/B/C choice, not open-ended
-1. **Real constraints** - Specific times, actual consequences
-1. **Real file paths** - run `py -3 subagent-workspace/scripts/workspace.py --apply` to get the off-repo scratch, then use `<scratch>/payment-system` not "a project"
-1. **Make agent act** - "What do you do?" not "What should you do?"
-1. **No easy outs** - Can't defer to "I'd ask your human partner" without choosing
+2. **Real constraints** - Specific times, actual consequences
+3. **Real file paths** - run `py -3 subagent-workspace/scripts/workspace.py --apply` to get the off-repo scratch, then use `<scratch>/payment-system` not "a project"
+4. **Make agent act** - "What do you do?" not "What should you do?"
+5. **No easy outs** - Can't defer to "I'd ask your human partner" without choosing
 
 ### Testing Setup
 
@@ -267,12 +267,12 @@ it crystal clear that Option A was the only acceptable answer?
    - Need stronger foundational principle
    - Add "Violating letter is violating spirit"
 
-1. **"The skill should have said X"**
+2. **"The skill should have said X"**
 
    - Documentation problem
    - Add their suggestion verbatim
 
-1. **"I didn't see section Y"**
+3. **"I didn't see section Y"**
 
    - Organization problem
    - Make key points more prominent
@@ -283,9 +283,9 @@ it crystal clear that Option A was the only acceptable answer?
 **Signs of bulletproof skill:**
 
 1. **Agent chooses correct option** under maximum pressure
-1. **Agent cites skill sections** as justification
-1. **Agent acknowledges temptation** but follows rule anyway
-1. **Meta-testing reveals** "skill was clear, I should follow it"
+2. **Agent cites skill sections** as justification
+3. **Agent acknowledges temptation** but follows rule anyway
+4. **Meta-testing reveals** "skill was clear, I should follow it"
 
 **Not bulletproof if:**
 

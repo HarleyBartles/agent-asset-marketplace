@@ -33,9 +33,9 @@ CQRS separates read and write models so each side can evolve, scale, and be opti
 ## Core Pattern
 
 1. Split commands (intent + validation) from queries (read-optimized DTOs/views).
-1. Design separate models: a write model for business rules, read models for consumers.
-1. Choose a synchronization strategy: same database with separate schemas, materialized views, or event-driven projections.
-1. Decide consistency boundaries: eventual consistency is acceptable for most reads; strong consistency only where required.
+2. Design separate models: a write model for business rules, read models for consumers.
+3. Choose a synchronization strategy: same database with separate schemas, materialized views, or event-driven projections.
+4. Decide consistency boundaries: eventual consistency is acceptable for most reads; strong consistency only where required.
 
 ## Common Mistakes
 

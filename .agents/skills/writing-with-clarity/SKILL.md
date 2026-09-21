@@ -24,10 +24,10 @@ Use this skill for all prose intended for human readers. Preserve the author's m
 ## Read in bounded layers
 
 1. Identify the artifact and the writing problem.
-1. Read `references/routing.md` and select one primary reference.
-1. Read at most one secondary reference when the task crosses boundaries.
-1. Draft or revise using verified facts and the user's intended meaning.
-1. Read `references/final-edit.md` for a final review pass. This is a separate bounded pass and does not count as a secondary topical reference.
+2. Read `references/routing.md` and select one primary reference.
+3. Read at most one secondary reference when the task crosses boundaries.
+4. Draft or revise using verified facts and the user's intended meaning.
+5. Read `references/final-edit.md` for a final review pass. This is a separate bounded pass and does not count as a secondary topical reference.
 
 Do not load every reference by default. The short references are the normal operational guidance and include source-basis pointers for the historical material.
 

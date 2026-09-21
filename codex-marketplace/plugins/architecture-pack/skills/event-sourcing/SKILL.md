@@ -33,9 +33,9 @@ Event sourcing persists the state of a system as a sequence of immutable events,
 ## Core Pattern
 
 1. Record every state change as an append-only event with identity, type, payload, and timestamp.
-1. Organize events into streams keyed by aggregate or entity.
-1. Build projections (read models) by folding events into views; use snapshots to speed replay.
-1. Version events carefully and evolve schemas without breaking historical streams.
+2. Organize events into streams keyed by aggregate or entity.
+3. Build projections (read models) by folding events into views; use snapshots to speed replay.
+4. Version events carefully and evolve schemas without breaking historical streams.
 
 ## Common Mistakes
 

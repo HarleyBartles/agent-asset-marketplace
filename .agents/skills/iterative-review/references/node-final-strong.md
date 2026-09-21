@@ -22,8 +22,8 @@ Run one whole-branch `reviewer-strong` pass after all `blocking/important` findi
        --state <scratch_dir>/review-state.json \
        --propose final-strong
    ```
-1. Build the input package and `run_subagent` `reviewer-strong` to the `<log_path>`.
-1. If `reviewer-strong: clean` and the preflight is clean, authorize `closeout`:
+2. Build the input package and `run_subagent` `reviewer-strong` to the `<log_path>`.
+3. If `reviewer-strong: clean` and the preflight is clean, authorize `closeout`:
    ```bash
    py -3 .agents/skills/iterative-review/scripts/compile_metrics.py \
        --state <scratch_dir>/review-state.json \
@@ -32,7 +32,7 @@ Run one whole-branch `reviewer-strong` pass after all `blocking/important` findi
        --state <scratch_dir>/review-state.json \
        --propose closeout
    ```
-1. If findings are reported, record each new finding, then regenerate the metrics file and go to `metrics-track` to start a new fix loop:
+4. If findings are reported, record each new finding, then regenerate the metrics file and go to `metrics-track` to start a new fix loop:
    ```bash
    py -3 .agents/skills/iterative-review/scripts/record_finding.py \
        --state <scratch_dir>/review-state.json \
@@ -44,7 +44,7 @@ Run one whole-branch `reviewer-strong` pass after all `blocking/important` findi
        --state <scratch_dir>/review-state.json \
        --propose metrics-track
    ```
-1. If a `contested` or `load-bearing` finding is reported, record the finding and the blocker, then regenerate the metrics file and go to `blocked`:
+5. If a `contested` or `load-bearing` finding is reported, record the finding and the blocker, then regenerate the metrics file and go to `blocked`:
    ```bash
    py -3 .agents/skills/iterative-review/scripts/record_finding.py \
        --state <scratch_dir>/review-state.json \

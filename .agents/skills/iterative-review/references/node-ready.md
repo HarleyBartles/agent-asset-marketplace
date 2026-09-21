@@ -13,10 +13,10 @@ Flip the PR from draft to ready after the review loop is complete.
 ## Recipe
 
 1. Run the consumer's canonical CI check; do not proceed if it fails.
-1. Flip the PR from draft to ready with `gh pr ready <pr_number>`.
-1. Wait for remote CI to pass using `gh pr checks <pr_number> --watch` or the equivalent consumer command.
-1. Do not merge until the PR is green.
-1. Regenerate the final metrics file and commit the `ready` state:
+2. Flip the PR from draft to ready with `gh pr ready <pr_number>`.
+3. Wait for remote CI to pass using `gh pr checks <pr_number> --watch` or the equivalent consumer command.
+4. Do not merge until the PR is green.
+5. Regenerate the final metrics file and commit the `ready` state:
    ```bash
    py -3 .agents/skills/iterative-review/scripts/compile_metrics.py \
        --state <scratch_dir>/review-state.json \

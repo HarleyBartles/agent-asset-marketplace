@@ -28,9 +28,9 @@ Compare the branch diff to the plan, spec, PR body, and linked issues and reconc
        --spec <spec_path> \
        --apply
    ```
-1. The script writes `review-log-scope-honesty.md` and exits `0` for `scope-honesty: clean`.
-1. If it exits `1` with `scope-honesty: drift`, read `review-log-scope-honesty.md`, fix the diff to match the declared scope (or update the PR body/plan/spec), and rerun the script.
-1. Do not advance to `lens-dispatch` until `scope-honesty: clean`.
+2. The script writes `review-log-scope-honesty.md` and exits `0` for `scope-honesty: clean`.
+3. If it exits `1` with `scope-honesty: drift`, read `review-log-scope-honesty.md`, fix the diff to match the declared scope (or update the PR body/plan/spec), and rerun the script.
+4. Do not advance to `lens-dispatch` until `scope-honesty: clean`.
 
 ## Outputs
 

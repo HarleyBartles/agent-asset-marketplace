@@ -390,6 +390,6 @@ Let the integration handle its own routing and rendering, while FSD layers manag
 ## Key Reminders for All Frameworks
 
 1. **FSD lives in `src/`**: root-level `app/` and `pages/` belong to the framework's routing, not FSD.
-1. **Framework route files are thin wrappers**: they import and render FSD page components. Business logic stays in FSD pages.
-1. **Path aliases are required**: configure both the bundler and `tsconfig.json`.
-1. **Pages First still applies**: regardless of framework, start with code in FSD `pages/` and extract only when needed.
+2. **Framework route files are thin wrappers**: they import and render FSD page components. Business logic stays in FSD pages.
+3. **Path aliases are required**: configure both the bundler and `tsconfig.json`.
+4. **Pages First still applies**: regardless of framework, start with code in FSD `pages/` and extract only when needed.

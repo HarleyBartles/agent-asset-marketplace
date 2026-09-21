@@ -191,10 +191,10 @@ Place code in `pages/` first. Extract to lower layers only when truly needed. Ex
 The entities layer is highly accessible (almost every other layer can import from it), so changes propagate widely.
 
 1. **Start without entities.** `shared/` + `pages/` + `app/` is valid FSD. Thin-client apps rarely need entities.
-1. **Do not split slices prematurely.** Keep code in pages. Extract to entities only when the same code is currently used by multiple consumers and the boundary is stable.
-1. **Business logic does not automatically require an entity.** Keeping types in `shared/api` and logic in the current slice's `model/` segment may be sufficient.
-1. **Place CRUD in `shared/api/`.** CRUD is infrastructure, not entities.
-1. **Place auth data in `shared/auth/` or `shared/api/`.** Tokens and login DTOs are auth-context-dependent and rarely reused outside authentication.
+2. **Do not split slices prematurely.** Keep code in pages. Extract to entities only when the same code is currently used by multiple consumers and the boundary is stable.
+3. **Business logic does not automatically require an entity.** Keeping types in `shared/api` and logic in the current slice's `model/` segment may be sufficient.
+4. **Place CRUD in `shared/api/`.** CRUD is infrastructure, not entities.
+5. **Place auth data in `shared/auth/` or `shared/api/`.** Tokens and login DTOs are auth-context-dependent and rarely reused outside authentication.
 
 For detailed guidance on keeping the entities layer clean (when to skip it entirely, how to isolate business contexts, why CRUD belongs in `shared/api`), see `references/excessive-entities.md`.
 

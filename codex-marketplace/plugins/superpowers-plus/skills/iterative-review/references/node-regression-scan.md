@@ -14,7 +14,7 @@ Widen review to the touched area for non-trivial or cross-cutting fixes to catch
 ## Recipe
 
 1. Dispatch `reviewer-strong` on the touched area with `<log_path>` set to `$scratch/review-log-strong.md`.
-1. If the scan is clean, regenerate the metrics file and go to `resolved-ledger`:
+2. If the scan is clean, regenerate the metrics file and go to `resolved-ledger`:
    ```bash
    py -3 .agents/skills/iterative-review/scripts/compile_metrics.py \
        --state <scratch_dir>/review-state.json \
@@ -23,11 +23,11 @@ Widen review to the touched area for non-trivial or cross-cutting fixes to catch
        --state <scratch_dir>/review-state.json \
        --propose resolved-ledger
    ```
-1. If it finds a new issue, classify it:
+3. If it finds a new issue, classify it:
    - `same-lens-blast-radius` if in the same lens and blast radius
    - `cross-lens-blast-radius` if in a different lens and blast radius
    - `outside-blast-radius` if outside the blast radius
-1. Record the new finding and its regression relationship:
+4. Record the new finding and its regression relationship:
    ```bash
    py -3 .agents/skills/iterative-review/scripts/record_finding.py \
        --state <scratch_dir>/review-state.json \
@@ -36,7 +36,7 @@ Widen review to the touched area for non-trivial or cross-cutting fixes to catch
        --state <scratch_dir>/review-state.json \
        --data '{"fix_for": "<original_finding_id>", "new_finding": "<new_finding_id>", "discovered_at_node": "regression-scan", "discovered_at_round": <round>, "regression_class": "<regression_class>", "severity": "<severity>"}'
    ```
-1. Regenerate the metrics file and return to `metrics-track`:
+5. Regenerate the metrics file and return to `metrics-track`:
    ```bash
    py -3 .agents/skills/iterative-review/scripts/compile_metrics.py \
        --state <scratch_dir>/review-state.json \

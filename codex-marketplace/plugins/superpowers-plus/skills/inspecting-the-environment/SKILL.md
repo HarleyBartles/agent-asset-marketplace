@@ -24,8 +24,8 @@ Use this skill when about to take action and the operating environment could cha
 Before action, select and record the operating surface:
 
 1. which environment constraints matter for this task;
-1. what the current state of each constraint is;
-1. whether any constraint changes the next action.
+2. what the current state of each constraint is;
+3. whether any constraint changes the next action.
 
 If no constraint changes the next action, say so and proceed. Do not stall on environment inspection when the environment is already known and stable.
 

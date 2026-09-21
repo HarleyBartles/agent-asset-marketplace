@@ -38,10 +38,10 @@ Owns the source-publication decision tree for this repo: pick the smallest suffi
 Run these in order. Stop at the first row that matches the change.
 
 1. **Validated?** If the committed tree would not pass the pre-commit hook (materialize staged snapshot, `ci --apply`, stage owned generated surfaces, `ci --check --diagnostics`), stop and finish `verification-before-completion` first. Do not run `ci --check` immediately before a normal commit. Publication is not a substitute for validation.
-1. **Marketplace source edited?** If the consumer's canonical marketplace source, inventory, provenance, or bundle manifest changed, regenerate with the consumer repository's canonical marketplace-generation command before publishing. Do not assume a particular repository layout or command name.
-1. **Pick the surface.** Choose the smallest sufficient surface from [`references/publishing-decisions.md`](references/publishing-decisions.md).
-1. **Publish.** Hand off to the owning skill for the mechanics (`using-github-mcp` for GitHub surfaces, `release-engineering` for release pipelines, `finishing-a-development-branch` for branch closeout).
-1. **Record proof.** Capture the PR URL or direct-main commit SHA as the publication proof required by the repo root `AGENTS.md`.
+2. **Marketplace source edited?** If the consumer's canonical marketplace source, inventory, provenance, or bundle manifest changed, regenerate with the consumer repository's canonical marketplace-generation command before publishing. Do not assume a particular repository layout or command name.
+3. **Pick the surface.** Choose the smallest sufficient surface from [`references/publishing-decisions.md`](references/publishing-decisions.md).
+4. **Publish.** Hand off to the owning skill for the mechanics (`using-github-mcp` for GitHub surfaces, `release-engineering` for release pipelines, `finishing-a-development-branch` for branch closeout).
+5. **Record proof.** Capture the PR URL or direct-main commit SHA as the publication proof required by the repo root `AGENTS.md`.
 
 ## Canonical sequences
 

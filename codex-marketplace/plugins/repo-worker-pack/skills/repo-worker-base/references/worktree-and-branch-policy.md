@@ -33,10 +33,10 @@ When `checkout-git` and `common-git` resolve to the same path, the worker is in 
 Before editing files:
 
 1. Fetch the required remote base, normally current `origin/main`.
-1. Record the starting main SHA.
-1. Create the task branch from that SHA, or update the existing task branch onto that SHA before continuing.
-1. Do not implement from a stale base.
-1. If the base cannot be fetched or the branch cannot be updated safely, stop with the exact blocker.
+2. Record the starting main SHA.
+3. Create the task branch from that SHA, or update the existing task branch onto that SHA before continuing.
+4. Do not implement from a stale base.
+5. If the base cannot be fetched or the branch cannot be updated safely, stop with the exact blocker.
 
 ## Worktree isolation and verification gate
 

@@ -40,11 +40,11 @@ Do not use when another more specific skill owns the task.
 ## Core Pattern
 
 1. Break work into small, comparable units; prefer historical data over intuition.
-1. Estimate in ranges or confidence intervals, not single points.
-1. Apply risk buffers for unknowns, dependencies, and integration complexity.
-1. Use team-based methods (planning poker, affinity grouping) to reduce individual bias.
-1. Document assumptions and compare actuals; update the team's baseline.
-1. Separate effort from duration: account for availability, interrupts, and dependencies.
+2. Estimate in ranges or confidence intervals, not single points.
+3. Apply risk buffers for unknowns, dependencies, and integration complexity.
+4. Use team-based methods (planning poker, affinity grouping) to reduce individual bias.
+5. Document assumptions and compare actuals; update the team's baseline.
+6. Separate effort from duration: account for availability, interrupts, and dependencies.
 
 ## Common Mistakes
 

@@ -13,5 +13,5 @@ Use these `mcp-playwright` tools to examine page state, JavaScript, console logs
 ## Fast rules
 
 1. **Use `browser_evaluate` for custom assertions.** It is the escape hatch when the accessibility snapshot is not enough.
-1. **Use `level: error` for console checks first.** Escalate to `info` only when needed.
-1. **Screenshots are for evidence, not primary verification.** Prefer text-based tools for deterministic checks.
+2. **Use `level: error` for console checks first.** Escalate to `info` only when needed.
+3. **Screenshots are for evidence, not primary verification.** Prefer text-based tools for deterministic checks.

@@ -21,8 +21,8 @@ Deterministic pack rule: the editable pack metadata is `codex-marketplace/plugin
 When a skill needs to move between packs, be added to a pack, or be removed from a pack, the editable source of truth is the `references/bundle-manifest.json` `entries` array inside each plugin. Each entry has a `canonical_name`, `canonical_source_path`, `local_path`, `content_mode`, and `provenance_note`. The chain from edit to published plugin is:
 
 1. **Edit the plugin bundle** — add, remove, or move the entry in `codex-marketplace/plugins/<pack>/references/bundle-manifest.json`. Update `content_mode` and `provenance_note` to reflect the new pack context.
-1. **Run `py -3 tools/run.py marketplace --apply`** — this regenerates all derived surfaces: plugin skill trees under `codex-marketplace/plugins/<pack>/skills/`, bundle manifests, the marketplace manifest, repo index, and the index mesh.
-1. **Run `py -3 tools/run.py ci --check`** — CI gate proves all surfaces are current.
+2. **Run `py -3 tools/run.py marketplace --apply`** — this regenerates all derived surfaces: plugin skill trees under `codex-marketplace/plugins/<pack>/skills/`, bundle manifests, the marketplace manifest, repo index, and the index mesh.
+3. **Run `py -3 tools/run.py ci --check`** — CI gate proves all surfaces are current.
 
 Do not hand-edit the derived surfaces (`bundle-manifest.json`, installed skill trees under `.agents/skills/`, repo index, index mesh). They are regenerated from the canonical plugin source by the rebuild pipeline.
 

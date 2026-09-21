@@ -32,11 +32,11 @@ Use this skill when auditing web content accessibility against WCAG 2.2 or mappi
 ## Core Pattern
 
 1. **Scope the audit**. Identify the target pages, components, user tasks, and the conformance level to evaluate (A, AA, or AAA).
-1. **Apply the POUR principles**. For each Perceivable, Operable, Understandable, and Robust principle, identify the relevant success criteria.
-1. **Select success criteria**. Reference the common WCAG 2.2 success criteria for the scoped content, such as text alternatives, keyboard access, contrast, resizing, focus indication, and error prevention.
-1. **Choose testing methods**. Combine automated scanning with manual checks such as keyboard navigation, screen-reader interaction, color-contrast measurement, zoom and reflow tests, and code inspection.
-1. **Record findings**. Note the success criterion, level, observed result, evidence, and remediation needed.
-1. **Build a verification plan**. Group findings by principle and priority; assign fixes and re-test steps.
+2. **Apply the POUR principles**. For each Perceivable, Operable, Understandable, and Robust principle, identify the relevant success criteria.
+3. **Select success criteria**. Reference the common WCAG 2.2 success criteria for the scoped content, such as text alternatives, keyboard access, contrast, resizing, focus indication, and error prevention.
+4. **Choose testing methods**. Combine automated scanning with manual checks such as keyboard navigation, screen-reader interaction, color-contrast measurement, zoom and reflow tests, and code inspection.
+5. **Record findings**. Note the success criterion, level, observed result, evidence, and remediation needed.
+6. **Build a verification plan**. Group findings by principle and priority; assign fixes and re-test steps.
 
 ## Common Mistakes
 

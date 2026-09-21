@@ -9,14 +9,14 @@ The kernel enforces **process completeness**. It cannot enforce omniscience. A g
 `evaluate_green` re-derives every predicate over validated state plus witness records; a stored `green_seal` value is output, never input. The design spec's nine predicates map to the kernel's finer-grained checks as follows:
 
 1. **authorities_complete** - the expected authority manifest is loaded, and every required authority is either bound by content hash or explicitly recorded unavailable under its class.
-1. **impact_maps_current** - both the semantic and contract impact maps exist for the current snapshot epoch.
-1. **coverage_complete** - the challenged coverage inventory spans the union of both maps, and every obligation is assigned and closed or lawfully exempted.
-1. **challenge_current** - the independent scope challenge for the epoch completed clean; an incomplete challenge blocks rather than degrades.
-1. **checks_current** - required local checks are witnessed successful on the epoch; hosted checks are remotely verified on the exact reviewed SHA.
-1. **reviews_current** - every required review carries launch and completion witnesses matching the dispatch's `agent_id` and scope, with `audit_result: clean` and a known verdict. Plan 1 accepts the `audit_result` the completing attestation carries; independently deriving contamination from the ingested `tool-transcript` evidence is deferred to a later plan, so the audit claim today is attested, not transcript-verified. A reviewer that touched out-of-scope paths could therefore still self-attest clean; transcript-derived verification is tracked in the roadmap's later plans and until it lands this predicate trusts reviewer self-attestation.
-1. **findings_clear** - every finding, all severities including `minor`, sits in a closed disposition; nothing remains `open`, `fixing`, `review-repairing`, `contested`, `deferred`, or `unassessed`.
-1. **final_current** - the blind final review and the closure audit are witnessed clean on the current epoch.
-1. **remote_verified** - a fresh remote observation matches repository, PR, head SHA, authority, and feedback identity at evaluation time.
+2. **impact_maps_current** - both the semantic and contract impact maps exist for the current snapshot epoch.
+3. **coverage_complete** - the challenged coverage inventory spans the union of both maps, and every obligation is assigned and closed or lawfully exempted.
+4. **challenge_current** - the independent scope challenge for the epoch completed clean; an incomplete challenge blocks rather than degrades.
+5. **checks_current** - required local checks are witnessed successful on the epoch; hosted checks are remotely verified on the exact reviewed SHA.
+6. **reviews_current** - every required review carries launch and completion witnesses matching the dispatch's `agent_id` and scope, with `audit_result: clean` and a known verdict. Plan 1 accepts the `audit_result` the completing attestation carries; independently deriving contamination from the ingested `tool-transcript` evidence is deferred to a later plan, so the audit claim today is attested, not transcript-verified. A reviewer that touched out-of-scope paths could therefore still self-attest clean; transcript-derived verification is tracked in the roadmap's later plans and until it lands this predicate trusts reviewer self-attestation.
+7. **findings_clear** - every finding, all severities including `minor`, sits in a closed disposition; nothing remains `open`, `fixing`, `review-repairing`, `contested`, `deferred`, or `unassessed`.
+8. **final_current** - the blind final review and the closure audit are witnessed clean on the current epoch.
+9. **remote_verified** - a fresh remote observation matches repository, PR, head SHA, authority, and feedback identity at evaluation time.
 
 All nine must hold for one snapshot epoch at once. `accepted-risk` findings contribute only to `reviewed-with-exceptions`, never to green.
 

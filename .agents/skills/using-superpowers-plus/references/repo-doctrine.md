@@ -10,9 +10,9 @@ User instructions (explicit requests), repo-local doctrine, and the active skill
 If they explicitly conflict, follow this priority:
 
 1. Explicit human instruction.
-1. Root `AGENTS.md` and `.agents/doctrine/mesh-policy.md`.
-1. Repo-local doctrine in `.agents/doctrine/`.
-1. Conditional rule triggers (`.devin/rules/*.md`) and the active skill.
-1. Default behavior.
+2. Root `AGENTS.md` and `.agents/doctrine/mesh-policy.md`.
+3. Repo-local doctrine in `.agents/doctrine/`.
+4. Conditional rule triggers (`.devin/rules/*.md`) and the active skill.
+5. Default behavior.
 
 Only skip a skill workflow when your human partner has explicitly told you to.

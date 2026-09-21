@@ -36,11 +36,11 @@ Preserve verified facts, safety, legal requirements, accessibility, explicit use
 ## Bounded workflow
 
 1. Establish the draft, audience, purpose, context, and hard constraints.
-1. If the user supplied current-task text or explicit preferences, load `references/voice-card.md`; otherwise do not derive a personal voice card.
-1. Load only the relevant profile. For general prose-fatigue review, use `references/profiles/fatigue/ai-prose-fatigue/profile.md`.
-1. Check pattern clusters against their contextual thresholds and preserve conditions. A phrase occurrence alone never licenses repair.
-1. Return the smallest supported guidance, with one of these finding types: `observed`, `candidate`, `preserve`, `repair`, or `abstain`.
-1. Recheck every proposed change through writing-with-clarity so meaning, qualification, readability, and deliberate voice survive.
+2. If the user supplied current-task text or explicit preferences, load `references/voice-card.md`; otherwise do not derive a personal voice card.
+3. Load only the relevant profile. For general prose-fatigue review, use `references/profiles/fatigue/ai-prose-fatigue/profile.md`.
+4. Check pattern clusters against their contextual thresholds and preserve conditions. A phrase occurrence alone never licenses repair.
+5. Return the smallest supported guidance, with one of these finding types: `observed`, `candidate`, `preserve`, `repair`, or `abstain`.
+6. Recheck every proposed change through writing-with-clarity so meaning, qualification, readability, and deliberate voice survive.
 
 Use `references/profile-contract.md` when maintaining profile data or when the finding boundary is unclear. Do not load the research package for an ordinary review.
 

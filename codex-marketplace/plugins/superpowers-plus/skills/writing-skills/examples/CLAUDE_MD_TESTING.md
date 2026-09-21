@@ -150,18 +150,18 @@ For each variant:
    - Record which option agent chooses
    - Capture exact rationalizations
 
-1. **Run variant** with same scenario
+2. **Run variant** with same scenario
 
    - Does agent check for skills?
    - Does agent use skills if found?
    - Capture rationalizations if violated
 
-1. **Pressure test** - Add time/sunk cost/authority
+3. **Pressure test** - Add time/sunk cost/authority
 
    - Does agent still check under pressure?
    - Document when compliance breaks down
 
-1. **Meta-test** - Ask agent how to improve doc
+4. **Meta-test** - Ask agent how to improve doc
 
    - "You had the doc but didn't check. Why?"
    - "How could doc be clearer?"
@@ -197,8 +197,8 @@ For each variant:
 ## Next Steps
 
 1. Create subagent test harness
-1. Run NULL baseline on all 4 scenarios
-1. Test each variant on same scenarios
-1. Compare compliance rates
-1. Identify which rationalizations break through
-1. Iterate on winning variant to close holes
+2. Run NULL baseline on all 4 scenarios
+3. Test each variant on same scenarios
+4. Compare compliance rates
+5. Identify which rationalizations break through
+6. Iterate on winning variant to close holes

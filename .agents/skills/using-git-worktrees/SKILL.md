@@ -101,9 +101,9 @@ Follow this priority order. Explicit user preference always beats observed files
 
 1. **Check your instructions for a declared worktree directory preference.** If the user has already specified one, use it without asking.
 
-1. **If the repo instructions declare a canonical sibling-folder worktree root, use that location.** For example, use `../_agent-worktrees/<repo-name>` when the repo's AGENTS file names that path.
+2. **If the repo instructions declare a canonical sibling-folder worktree root, use that location.** For example, use `../_agent-worktrees/<repo-name>` when the repo's AGENTS file names that path.
 
-1. **Otherwise, check for an existing project-local worktree directory:**
+3. **Otherwise, check for an existing project-local worktree directory:**
 
    ```bash
    ls -d .worktrees 2>/dev/null     # Preferred (hidden)
@@ -112,7 +112,7 @@ Follow this priority order. Explicit user preference always beats observed files
 
    If found, use it. If both exist, `.worktrees` wins.
 
-1. **If there is no other guidance available**, default to `.worktrees/` at the project root.
+4. **If there is no other guidance available**, default to `.worktrees/` at the project root.
 
 #### Safety Verification (project-local directories only)
 

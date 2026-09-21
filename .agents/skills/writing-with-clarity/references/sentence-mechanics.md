@@ -15,8 +15,8 @@ Use this reference for sentence-level grammar and punctuation. Correct the reade
 ## Review questions
 
 1. Can the reader tell who did what?
-1. Are clauses joined with the mark or conjunction their relationship needs?
-1. Does every opening phrase modify the intended subject?
-1. Would a full stop improve a sentence carrying too many relationships?
+2. Are clauses joined with the mark or conjunction their relationship needs?
+3. Does every opening phrase modify the intended subject?
+4. Would a full stop improve a sentence carrying too many relationships?
 
 **Source basis:** The historical source, Rules 1-7. The historical source is context for edge cases, not default operational guidance.

@@ -44,21 +44,21 @@ The brief is the task contract, the off-repo ledger survives compaction, TDD is 
 
 1. Read `references/implementation-baseline.md` and the repository's `.agents/runbooks/implementing.md`.
 
-1. Verify the existing linked worktree with `using-git-worktrees`; never begin implementation on `main` or `master` without explicit authority.
+2. Verify the existing linked worktree with `using-git-worktrees`; never begin implementation on `main` or `master` without explicit authority.
 
-1. Read the committed plan and its spec. On resume, read the committed in-flight checkpoint before live repository inspection, then reconcile its claims against Git.
+3. Read the committed plan and its spec. On resume, read the committed in-flight checkpoint before live repository inspection, then reconcile its claims against Git.
 
-1. Read `references/execution-lane-override.md`. Human direction wins, then the executor's assessment, then the plan recommendation. Announce one lane and keep it unless the human changes it.
+4. Read `references/execution-lane-override.md`. Human direction wins, then the executor's assessment, then the plan recommendation. Announce one lane and keep it unless the human changes it.
 
-1. Load `test-driven-development` before the first task.
+5. Load `test-driven-development` before the first task.
 
-1. Resolve the shared off-repo workspace with:
+6. Resolve the shared off-repo workspace with:
 
    `py -3 ../subagent-workspace/scripts/workspace.py --apply PLAN_FILE`
 
    The workspace and ledger format are shared with `subagent-driven-development`. Never move them into the tracked tree.
 
-1. Scan producer/consumer interfaces and Global Constraints. Ledger any conflict and its ruling before Task 1.
+7. Scan producer/consumer interfaces and Global Constraints. Ledger any conflict and its ruling before Task 1.
 
 ## Task Loop
 
@@ -69,12 +69,12 @@ The helpers revalidate this boundary through `scripts/resolve-runtime`. They als
 For each incomplete task:
 
 1. Mark it in progress. Run `bash scripts/task-start PLAN_FILE N` through the verified same-host Bash. Do not create or request a PowerShell translation.
-1. Read the emitted brief even when you remember the plan. `task-start` uses the shared Python `task_brief.py` helper; the brief carries exact paths, values, interfaces, and expected outputs.
-1. Follow every step in order under TDD: write the test, witness the intended RED, implement the minimum GREEN, then refactor without adding behavior.
-1. Run every specified command and compare its real output with `Expected:`. If code is wrong, use `systematic-debugging`; if the plan is wrong, ledger the smallest evidence-backed ruling that preserves the spec.
-1. Commit as the task specifies. Multi-commit tasks keep the BASE printed by `task-start`; never substitute `HEAD~1`.
-1. Run `bash scripts/task-done PLAN_FILE N BASE -- TEST_COMMAND [ARGS...]` through the same verified Bash. The helper stores the full test log, prints its tail, and appends completion only after a passing command.
-1. Mark the task complete and continue without a ceremonial check-in.
+2. Read the emitted brief even when you remember the plan. `task-start` uses the shared Python `task_brief.py` helper; the brief carries exact paths, values, interfaces, and expected outputs.
+3. Follow every step in order under TDD: write the test, witness the intended RED, implement the minimum GREEN, then refactor without adding behavior.
+4. Run every specified command and compare its real output with `Expected:`. If code is wrong, use `systematic-debugging`; if the plan is wrong, ledger the smallest evidence-backed ruling that preserves the spec.
+5. Commit as the task specifies. Multi-commit tasks keep the BASE printed by `task-start`; never substitute `HEAD~1`.
+6. Run `bash scripts/task-done PLAN_FILE N BASE -- TEST_COMMAND [ARGS...]` through the same verified Bash. The helper stores the full test log, prints its tail, and appends completion only after a passing command.
+7. Mark the task complete and continue without a ceremonial check-in.
 
 ## Per-Task Completion Contract
 
@@ -94,17 +94,17 @@ A task is complete only when:
 After all tasks:
 
 1. Run `handoff-gates` completion-readiness against the plan and repository code-review guide. Do not hand off below its readiness floor.
-1. Build the range with `py -3 ../subagent-workspace/scripts/review_package.py --apply PLAN_FILE MERGE_BASE HEAD`.
-1. Invoke `requesting-code-review` with a fresh whole-branch reviewer. Supply the review package, plan and spec, the plan's `Review Focus`, and every ledgered ruling. Model selection does not grant delegation authority; when runtime policy forbids a child, disclose the weaker self-review fallback.
-1. Re-grade findings by effect on a reasonable user. Every `Declined to judge` line receives an explicit ruling rather than disappearing.
-1. Fix Critical and Important findings in one pass, each with a witnessed RED/GREEN cycle, then run the complete repository gate. Ledger Minor findings as deferred rather than broadening the slice.
+2. Build the range with `py -3 ../subagent-workspace/scripts/review_package.py --apply PLAN_FILE MERGE_BASE HEAD`.
+3. Invoke `requesting-code-review` with a fresh whole-branch reviewer. Supply the review package, plan and spec, the plan's `Review Focus`, and every ledgered ruling. Model selection does not grant delegation authority; when runtime policy forbids a child, disclose the weaker self-review fallback.
+4. Re-grade findings by effect on a reasonable user. Every `Declined to judge` line receives an explicit ruling rather than disappearing.
+5. Fix Critical and Important findings in one pass, each with a witnessed RED/GREEN cycle, then run the complete repository gate. Ledger Minor findings as deferred rather than broadening the slice.
 
 ## Complete Development
 
 1. Use `completing-planning-artifacts` in its completing-slice lane: promote durable decisions, mark the plan `completed-awaiting-retirement`, and retain it through the completing PR.
-1. Use `finishing-a-development-branch` for final validation, publication proof, and the user's integration choice.
-1. Keep a Draft PR draft until self-review and the latest committed tree pass the repository's required gate.
-1. Before deleting scratch, report every ledgered ruling and deferred minor. Delete only this plan's workspace after the final review is clean.
+2. Use `finishing-a-development-branch` for final validation, publication proof, and the user's integration choice.
+3. Keep a Draft PR draft until self-review and the latest committed tree pass the repository's required gate.
+4. Before deleting scratch, report every ledgered ruling and deferred minor. Delete only this plan's workspace after the final review is clean.
 
 ## Common Rationalizations
 

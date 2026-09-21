@@ -21,12 +21,12 @@ py -3 .agents/skills/iterative-review/scripts/start_review.py --pr <pr_number> -
 `start_review.py` does the following and then advances the graph to `normalize-inputs`:
 
 1. Resolves the off-repo scratch workspace under `_agent-scratch/<repo>/<branch>/iterative-review-<pr_number>/`.
-1. Fetches the PR title, body, base/head refs, and head SHA from `gh`.
-1. Writes `pr_description.txt` into the scratch directory.
-1. Generates the full branch diff as `review-<base7>..<head7>.diff`.
-1. Creates `review-state.json` with the PR and scratch metadata.
-1. Proposes `normalize-inputs` to the graph and runs `normalize_review_inputs.py --apply` on the scratch.
-1. Prints the allowed next node, its recipe file, and the `next_node.py` command to authorize it.
+2. Fetches the PR title, body, base/head refs, and head SHA from `gh`.
+3. Writes `pr_description.txt` into the scratch directory.
+4. Generates the full branch diff as `review-<base7>..<head7>.diff`.
+5. Creates `review-state.json` with the PR and scratch metadata.
+6. Proposes `normalize-inputs` to the graph and runs `normalize_review_inputs.py --apply` on the scratch.
+7. Prints the allowed next node, its recipe file, and the `next_node.py` command to authorize it.
 
 ## Outputs
 

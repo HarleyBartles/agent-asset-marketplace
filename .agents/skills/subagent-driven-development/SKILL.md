@@ -209,9 +209,9 @@ Implementer subagents report one of four statuses. Handle each appropriately:
 **BLOCKED:** The implementer cannot complete the task. Assess the blocker:
 
 1. If it's a context problem, provide more context and re-dispatch with the same profile
-1. If the task requires more reasoning, re-dispatch with a more capable profile by invoking `selecting-a-subagent` to pick one (e.g. `implementer-strong` or `reviewer-strong`).
-1. If the task is too large, break it into smaller pieces
-1. If the plan itself is wrong, rule on the correction, ledger it, and re-dispatch with the ruling carried in the dispatch
+2. If the task requires more reasoning, re-dispatch with a more capable profile by invoking `selecting-a-subagent` to pick one (e.g. `implementer-strong` or `reviewer-strong`).
+3. If the task is too large, break it into smaller pieces
+4. If the plan itself is wrong, rule on the correction, ledger it, and re-dispatch with the ruling carried in the dispatch
 
 **Never** ignore an escalation or force the same profile to retry without changes. If the implementer said it's stuck, something needs to change.
 

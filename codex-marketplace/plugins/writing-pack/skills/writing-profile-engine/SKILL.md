@@ -23,10 +23,10 @@ Use this engine only for writing-specific profiles below lawful `references/prof
 ## Workflow
 
 1. Run `scripts/discover_profiles.py --json` to list profiles.
-1. Run `scripts/validate_profiles.py --json` before evaluation. Treat errors as blocking. Treat expired review dates as a downgrade warning.
-1. Run `scripts/evaluate_profile.py --profile PATH --input PATH --json`.
-1. Read evidence, spans, rationale, preservation conditions, and the smallest repair. A `candidate` needs contextual review; `abstain` is a valid result.
-1. Apply any accepted repair through `writing-style`, then run the final `writing-with-clarity` gate.
+2. Run `scripts/validate_profiles.py --json` before evaluation. Treat errors as blocking. Treat expired review dates as a downgrade warning.
+3. Run `scripts/evaluate_profile.py --profile PATH --input PATH --json`.
+4. Read evidence, spans, rationale, preservation conditions, and the smallest repair. A `candidate` needs contextual review; `abstain` is a valid result.
+5. Apply any accepted repair through `writing-style`, then run the final `writing-with-clarity` gate.
 
 The commands are read-only. Run each command with `--help` for its bounded interface. Profiles carry their executable rules and preserve predicates; the engine does not select behavior by pattern ID. The profile schema is in `assets/schemas/writing-profile.schema.json`, bundled durable source IDs are in `references/source-authority.json`, and the result contract is in `references/result-contract.md`.
 

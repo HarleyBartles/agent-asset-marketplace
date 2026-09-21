@@ -33,12 +33,12 @@ Use this skill before choosing a child subagent route. Detect the live dispatch 
 ## Runtime contract
 
 1. Detect the active child-dispatch contract.
-1. Inventory the models, reasoning values, context controls, and capacity actually exposed.
-1. Load `references/shared-policy.md` and exactly one matching profile.
-1. Treat current runtime inventory as authoritative over stale profile metadata.
-1. Choose the least escalated adequate exposed route; do not infer price or entitlement.
-1. Record the profile, model or inheritance, reasoning or inheritance, context mode, rationale, and material limitation.
-1. State explicitly when a desired route could not be enforced.
+2. Inventory the models, reasoning values, context controls, and capacity actually exposed.
+3. Load `references/shared-policy.md` and exactly one matching profile.
+4. Treat current runtime inventory as authoritative over stale profile metadata.
+5. Choose the least escalated adequate exposed route; do not infer price or entitlement.
+6. Record the profile, model or inheritance, reasoning or inheritance, context mode, rationale, and material limitation.
+7. State explicitly when a desired route could not be enforced.
 
 Routing chooses a route; it does not authorize delegation. Follow the current task, environment, and repository rules before calling a child-dispatch tool.
 
@@ -101,9 +101,9 @@ Every lens profile in `reviewer-*.md` profiles in the Devin Desktop agents searc
 When selecting one or more lenses for a PR or a branch diff, read the relevant profile files and match them in this order:
 
 1. Input match: if the orchestrator provides an input listed under `## Applies to` for that lens (e.g. `<plan_path>` for `reviewer-plans`), the lens applies.
-1. Glob match: if any changed file matches a glob, the lens applies.
-1. Keyword match: if the PR title/body or diff summary contains a keyword, the lens applies.
-1. Default dispatch: if none of the above triggers a lens, dispatch `reviewer-strong` for the whole-branch pass.
+2. Glob match: if any changed file matches a glob, the lens applies.
+3. Keyword match: if the PR title/body or diff summary contains a keyword, the lens applies.
+4. Default dispatch: if none of the above triggers a lens, dispatch `reviewer-strong` for the whole-branch pass.
 
 Prefer the least escalated lens that covers the diff. For broad, multi-surface branches, include all matching lenses rather than a single generalist.
 
@@ -122,9 +122,9 @@ This skill ships first-party portable subagent `.md` profiles under `codex-marke
 When choosing a profile, apply the Devin Desktop agents search path; later directories in this list override earlier ones:
 
 1. Built-in profiles documented in `references/devin-desktop-profile.md`.
-1. User-global profiles (`~/.config/devin/agents/` or `%APPDATA%\devin\agents\` on Windows).
-1. `.devin/agents/<name>.md` user- or repo-local hand-authored overrides.
-1. `.agents/agents/<name>.md` plugin-local or vendor profiles.
+2. User-global profiles (`~/.config/devin/agents/` or `%APPDATA%\devin\agents\` on Windows).
+3. `.devin/agents/<name>.md` user- or repo-local hand-authored overrides.
+4. `.agents/agents/<name>.md` plugin-local or vendor profiles.
 
 No skill should create or pressure the consumer to create `.devin/agents/`. `.agents/agents/` remains available for plugin-local or vendor profiles staged by other marketplace tooling.
 

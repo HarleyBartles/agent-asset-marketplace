@@ -28,11 +28,11 @@ Extracted debugging framework from `~/.claude/CLAUDE.md`:
 ## Structure Following skill-creation/SKILL.md
 
 1. **Rich when_to_use** - Included symptoms and anti-patterns
-1. **Type: technique** - Concrete process with steps
-1. **Keywords** - "root cause", "symptom", "workaround", "debugging", "investigation"
-1. **Flowchart** - Decision point for "fix failed" → re-analyze vs add more fixes
-1. **Phase-by-phase breakdown** - Scannable checklist format
-1. **Anti-patterns section** - What NOT to do (critical for this skill)
+2. **Type: technique** - Concrete process with steps
+3. **Keywords** - "root cause", "symptom", "workaround", "debugging", "investigation"
+4. **Flowchart** - Decision point for "fix failed" → re-analyze vs add more fixes
+5. **Phase-by-phase breakdown** - Scannable checklist format
+6. **Anti-patterns section** - What NOT to do (critical for this skill)
 
 ## Bulletproofing Elements
 
@@ -117,10 +117,10 @@ Bulletproof skill that:
 When encountering a bug:
 
 1. Load skill: skills/debugging/systematic-debugging
-1. Read overview (10 sec) - reminded of mandate
-1. Follow Phase 1 checklist - forced investigation
-1. If tempted to skip - see anti-pattern, stop
-1. Complete all phases - root cause found
+2. Read overview (10 sec) - reminded of mandate
+3. Follow Phase 1 checklist - forced investigation
+4. If tempted to skip - see anti-pattern, stop
+5. Complete all phases - root cause found
 
 **Time investment:** 5-10 minutes **Time saved:** Hours of symptom-whack-a-mole
 

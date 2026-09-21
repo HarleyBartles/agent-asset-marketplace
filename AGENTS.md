@@ -29,8 +29,8 @@ Do not treat `.agents/skills/` as additional or duplicate vendored assets. Those
 If repo files changed, a valid repo-work return must include one of:
 
 1. an open PR URL (GitHub supplies its branch and head identity);
-1. a verified direct-main commit SHA when direct-main work was explicitly authorized;
-1. a concrete publication blocker explaining why the local changes could not be pushed or turned into a PR.
+2. a verified direct-main commit SHA when direct-main work was explicitly authorized;
+3. a concrete publication blocker explaining why the local changes could not be pushed or turned into a PR.
 
 For ordinary worker execution, prefer a PR into `main`. The portable publication method belongs to `publishing-source` and `repo-worker-base`.
 

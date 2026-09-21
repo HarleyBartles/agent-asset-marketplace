@@ -32,9 +32,9 @@ Structure an application so that domain logic sits at the center and every depen
 Organize code into concentric layers:
 
 1. **Entities** — enterprise-wide business rules and domain objects.
-1. **Use cases** — application-specific workflows that orchestrate entities.
-1. **Interface adapters** — controllers, presenters, and gateways that translate data for use cases.
-1. **Frameworks and drivers** — databases, web frameworks, and external services.
+2. **Use cases** — application-specific workflows that orchestrate entities.
+3. **Interface adapters** — controllers, presenters, and gateways that translate data for use cases.
+4. **Frameworks and drivers** — databases, web frameworks, and external services.
 
 The Dependency Rule: source code dependencies may only point inward. Inner layers define interfaces; outer layers implement them. Keep framework code in the outermost ring so a change to a database or UI library does not ripple into the domain.
 

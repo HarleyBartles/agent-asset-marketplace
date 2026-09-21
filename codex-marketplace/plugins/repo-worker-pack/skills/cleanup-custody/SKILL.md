@@ -28,10 +28,10 @@ If older `No Shit` or profanity-bearing naming appears in provenance, treat it a
 Use this ladder in order:
 
 1. `keep_live` — current source, active doctrine, active code, required index, publication proof, protected evidence, or authoritative operating material.
-1. `move_to_cold_store` — retained but inactive material with lawful custody and discoverability.
-1. `move_to_governed_trash` — reversible deletion-staging custody with a repo-visible sentinel.
-1. `delete_now` — exact disposable residue with no provenance, authority, or future retrieval value.
-1. `block_and_route` — protected, ambiguous, actor-owned, source-law-sensitive, or authority-sensitive surfaces.
+2. `move_to_cold_store` — retained but inactive material with lawful custody and discoverability.
+3. `move_to_governed_trash` — reversible deletion-staging custody with a repo-visible sentinel.
+4. `delete_now` — exact disposable residue with no provenance, authority, or future retrieval value.
+5. `block_and_route` — protected, ambiguous, actor-owned, source-law-sensitive, or authority-sensitive surfaces.
 
 ## Promotion before removal
 

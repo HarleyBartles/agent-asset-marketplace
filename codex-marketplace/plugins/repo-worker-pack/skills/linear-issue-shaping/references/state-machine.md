@@ -44,10 +44,10 @@ A campaign issue is a chunky repo campaign shaped as one durable Linear parent i
 For status checks, inspect Linear before GitHub:
 
 1. issue fields: state, assignee, project, labels, links, attachments;
-1. child issue state when judging parent/tracker state;
-1. comments: worker reports, validation notes, PR links, blockers;
-1. PR attachment/URL, if present;
-1. GitHub PR only after a PR URL/number/branch/commit exists.
+2. child issue state when judging parent/tracker state;
+3. comments: worker reports, validation notes, PR links, blockers;
+4. PR attachment/URL, if present;
+5. GitHub PR only after a PR URL/number/branch/commit exists.
 
 ## Report shape
 

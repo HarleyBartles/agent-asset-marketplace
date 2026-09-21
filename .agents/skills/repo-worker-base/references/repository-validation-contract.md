@@ -5,11 +5,11 @@ This is portable choreography. The consuming repository supplies its focused val
 ## Sequence
 
 1. While editing, run the smallest focused slice that can falsify the current implementation claim.
-1. Stage the intended final tree and make a normal commit. The tracked pre-commit hook is the hooked canonical gate and runs once over that staged state.
-1. Reuse successful proof while the tested tree/head/staged state, relevant environment, command scope, and claim remain unchanged.
-1. Keep the implementation PR Draft during local review and repair.
-1. Promote to Ready only after current local canonical proof and local review are complete.
-1. Let hosted CI provide remote confirmation. If it finds a failure the local gate should have caught, treat that as hook/hosted parity drift.
+2. Stage the intended final tree and make a normal commit. The tracked pre-commit hook is the hooked canonical gate and runs once over that staged state.
+3. Reuse successful proof while the tested tree/head/staged state, relevant environment, command scope, and claim remain unchanged.
+4. Keep the implementation PR Draft during local review and repair.
+5. Promote to Ready only after current local canonical proof and local review are complete.
+6. Let hosted CI provide remote confirmation. If it finds a failure the local gate should have caught, treat that as hook/hosted parity drift.
 
 The normal repair loop is: focused repair proof, normal hooked commit, fix every reported failure, retry the normal hooked commit, push, then obtain hosted confirmation. The hook may aggregate independent failures internally, but that does not create a second human-facing validation path. Do not add duplicate broad gates around an unchanged successful hooked commit.
 

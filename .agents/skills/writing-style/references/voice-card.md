@@ -5,10 +5,10 @@ Use a voice card only when the user supplies text for the current task or states
 ## Derivation boundary
 
 1. Confirm the supplied text or preferences are authorised for the current task and record that basis.
-1. Observe tendencies only across the supplied sample: sentence range, directness, vocabulary register, tolerated fragments, rhetorical devices, formatting norms, and explicit prefer/avoid choices.
-1. State represented genres, audiences, sample count, derivation date, and limitations. Small or narrow samples warrant narrow claims.
-1. Store the tendencies, not sentences or excerpts. Set `source_retained` to `false`; do not copy the sample into cards, logs, fixtures, or repository assets.
-1. Apply the card only inside its declared task, storage, and distribution boundary. Public availability alone is not permission to ship an imitation profile.
+2. Observe tendencies only across the supplied sample: sentence range, directness, vocabulary register, tolerated fragments, rhetorical devices, formatting norms, and explicit prefer/avoid choices.
+3. State represented genres, audiences, sample count, derivation date, and limitations. Small or narrow samples warrant narrow claims.
+4. Store the tendencies, not sentences or excerpts. Set `source_retained` to `false`; do not copy the sample into cards, logs, fixtures, or repository assets.
+5. Apply the card only inside its declared task, storage, and distribution boundary. Public availability alone is not permission to ship an imitation profile.
 
 Keep provenance fields coupled:
 

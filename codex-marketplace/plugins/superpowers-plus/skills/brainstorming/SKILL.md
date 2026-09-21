@@ -38,8 +38,8 @@ Start by classifying how much process the request needs, then work through your 
 The outcome of brainstorming is an understanding your human partner can recognize and correct, grounded in what they want to accomplish.
 
 1. **Discover intent.** Use the request and available context to identify the intended outcome, who it is for, and what success looks like. When that information is missing and materially changes the design, ask one focused question about purpose or intended use before proposing an approach.
-1. **Write back your understanding.** Briefly reflect the intended outcome, relevant constraints, and success criteria. Separate supplied facts from assumptions so the human can correct the design basis.
-1. **Carry intent into the selected path.** Preserve that understanding in the architectural spec, bounded in-chat design, or spike question. Check technical choices against it.
+2. **Write back your understanding.** Briefly reflect the intended outcome, relevant constraints, and success criteria. Separate supplied facts from assumptions so the human can correct the design basis.
+3. **Carry intent into the selected path.** Preserve that understanding in the architectural spec, bounded in-chat design, or spike question. Check technical choices against it.
 
 When the request already supplies purpose, audience, constraints, and success, reflect them and do not ask the same questions again. For already-authorized bounded work, this reflection is part of the short design, not a new approval pause.
 
@@ -89,29 +89,29 @@ Classify first, announce the path, then create a task for each item on your path
 **Spike:**
 
 1. **Explore project context** — enough to frame the probe
-1. **Present question + probe plan** — 2-3 sentences
-1. **Investigate** — as cheaply as correctness allows
-1. **Report findings** — a recommendation; label anything built as throwaway
+2. **Present question + probe plan** — 2-3 sentences
+3. **Investigate** — as cheaply as correctness allows
+4. **Report findings** — a recommendation; label anything built as throwaway
 
 **Bounded:**
 
 1. **Explore project context** — check files, docs, recent commits
-1. **Ask clarifying questions** — one at a time, the ones that matter
-1. **Present short design in chat** — approach, files touched, testing
-1. **Resolve the gate if needed** — stop only for a human-owned decision or unresolved consequential choice
-1. **Implement** — proceed with the normal development workflow (TDD applies); no plan document
+2. **Ask clarifying questions** — one at a time, the ones that matter
+3. **Present short design in chat** — approach, files touched, testing
+4. **Resolve the gate if needed** — stop only for a human-owned decision or unresolved consequential choice
+5. **Implement** — proceed with the normal development workflow (TDD applies); no plan document
 
 **Architectural:**
 
 1. **Load baseline and local guide** — read this skill's baseline (`references/design-baseline.md`) and the repo's `.agents/runbooks/design.md` before executing the stage checklist.
-1. **Explore project context** — check files, docs, recent commits
-1. **Ask clarifying questions** — one at a time, understand purpose/constraints/success criteria
-1. **Propose 2-3 approaches** — with trade-offs and your recommendation
-1. **Present design** — in sections scaled to their complexity, get user approval after each section
-1. **Write design doc** — save to `.agents/specs/YYYY-MM-DD-<topic>-design.md` and commit
-1. **Planning-handoff review** — simulate the next planning stage, rate and inventory its burdens, and take the required bounded branch (see below)
-1. **User reviews written spec** — ask the user to review the selected spec before proceeding; keep private review diagnostics private.
-1. **Transition to implementation** — invoke writing-plans skill to create implementation plan
+2. **Explore project context** — check files, docs, recent commits
+3. **Ask clarifying questions** — one at a time, understand purpose/constraints/success criteria
+4. **Propose 2-3 approaches** — with trade-offs and your recommendation
+5. **Present design** — in sections scaled to their complexity, get user approval after each section
+6. **Write design doc** — save to `.agents/specs/YYYY-MM-DD-<topic>-design.md` and commit
+7. **Planning-handoff review** — simulate the next planning stage, rate and inventory its burdens, and take the required bounded branch (see below)
+8. **User reviews written spec** — ask the user to review the selected spec before proceeding; keep private review diagnostics private.
+9. **Transition to implementation** — invoke writing-plans skill to create implementation plan
 
 ## Process Flow
 

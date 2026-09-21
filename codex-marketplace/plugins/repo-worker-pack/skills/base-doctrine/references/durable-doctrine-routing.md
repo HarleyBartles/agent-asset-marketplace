@@ -24,9 +24,9 @@ Installed GPT skills and Codex plugins are deployment targets. Treat them as cur
 A GPT-native skill update should eventually become:
 
 1. edit the canonical repo source;
-1. validate/package through the native skill stack;
-1. install or overwrite the deployed skill;
-1. record source commit, package hash, and rollout evidence.
+2. validate/package through the native skill stack;
+3. install or overwrite the deployed skill;
+4. record source commit, package hash, and rollout evidence.
 
 Until the canonical repo exists for a skill, chat-packaged skill updates can be lawful deployment work, but do not confuse that temporary route with the desired source-of-truth model.
 

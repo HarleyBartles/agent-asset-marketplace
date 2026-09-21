@@ -24,8 +24,8 @@ Record an unresolvable blocker and hand the review to a human.
        --propose blocked
    ```
    Then hand to a human.
-1. If the human says "carry on", resume from `metrics-track`.
-1. If `next_node.py` or `resolved_ledger.py` returns a `BLOCKED` result, treat it as a graph error: do not override it, do not dispatch `final-strong` out of order, and resume from the allowed node.
+2. If the human says "carry on", resume from `metrics-track`.
+3. If `next_node.py` or `resolved_ledger.py` returns a `BLOCKED` result, treat it as a graph error: do not override it, do not dispatch `final-strong` out of order, and resume from the allowed node.
 
 ## Outputs
 

@@ -53,17 +53,17 @@ Default mutation law:
    - Find the team, project, repository, folder, calendar, draft, issue, PR, document, or parent object using the narrowest available filters.
    - Prefer exact slugs, keys, IDs, team filters, project filters, owner filters, and limits.
    - Do not jump from session memory or chat knowledge straight to a write when a connector read can cheaply confirm the target.
-1. Read the exact target object using the discovered stable identifier.
+2. Read the exact target object using the discovered stable identifier.
    - Read the exact issue, document, PR, draft, event, file, or record that will be mutated.
    - Confirm current state, relations, attachments, documents, comments, or equivalent context where relevant.
-1. Write one bounded mutation using the discovered identifier.
+3. Write one bounded mutation using the discovered identifier.
    - Use one side effect per call.
    - Use narrow payloads.
    - Do not bundle status, assignment, body rewrite, comments, relations, or document creation unless the connector requires it.
-1. Rediscover the mutated thing from the parent identifier or a bounded search.
+4. Rediscover the mutated thing from the parent identifier or a bounded search.
    - Treat the mutation as incomplete until the changed object is found again from durable connector state.
    - Use the parent surface, exact IDs, or bounded search to find the fresh target state.
-1. Read back the freshly discovered target.
+5. Read back the freshly discovered target.
    - Confirm the post-mutation state before the next write.
    - Claim success only from the mutation result or readback.
 
@@ -87,13 +87,13 @@ Do not use this skill for ordinary read-only lookup unless the read is part of a
 ## Safe action ladder
 
 1. Confirm current authority from the latest user request and the relevant durable surface.
-1. Inspect the smallest relevant current state before writing when practical, including a discover/read chain when the target can be confirmed cheaply.
-1. Prefer one side effect per call: create, update body, rename, relate, move, assign, or close as separate steps.
-1. Keep payloads narrow and specific. Avoid bundling broad tool-control instructions, unrelated doctrine, and multiple mutations in one call.
-1. If a call is blocked, do not claim success. Read back current state when safe to determine whether anything changed.
-1. Retry only with a materially safer shape, such as smaller content, fewer fields, a non-destructive read probe, an ID instead of a name, or separate create-then-enrich steps.
-1. Stop after repeated narrow failures, destructive ambiguity, unsupported schema errors, or unclear authority.
-1. Report the blocker with enough detail for the user or next actor to continue safely.
+2. Inspect the smallest relevant current state before writing when practical, including a discover/read chain when the target can be confirmed cheaply.
+3. Prefer one side effect per call: create, update body, rename, relate, move, assign, or close as separate steps.
+4. Keep payloads narrow and specific. Avoid bundling broad tool-control instructions, unrelated doctrine, and multiple mutations in one call.
+5. If a call is blocked, do not claim success. Read back current state when safe to determine whether anything changed.
+6. Retry only with a materially safer shape, such as smaller content, fewer fields, a non-destructive read probe, an ID instead of a name, or separate create-then-enrich steps.
+7. Stop after repeated narrow failures, destructive ambiguity, unsupported schema errors, or unclear authority.
+8. Report the blocker with enough detail for the user or next actor to continue safely.
 
 ## Post-create read-chain requirement
 
@@ -104,11 +104,11 @@ When a workflow creates a parent object and then needs to add child objects, att
 Example pattern:
 
 1. Create the parent object with a narrow payload.
-1. Discover the parent through the connector using bounded filters, such as team, project, folder, repository, owner, title, or issue key.
-1. Read the exact parent object with its stable ID.
-1. Confirm the parent is on the expected durable surface and has the expected current state.
-1. Create or update one child object using the stable parent ID.
-1. Read back the parent or child object before claiming success.
+2. Discover the parent through the connector using bounded filters, such as team, project, folder, repository, owner, title, or issue key.
+3. Read the exact parent object with its stable ID.
+4. Confirm the parent is on the expected durable surface and has the expected current state.
+5. Create or update one child object using the stable parent ID.
+6. Read back the parent or child object before claiming success.
 
 This matters even when the create response includes the new object ID. The read-only discovery path proves that the target exists in the current durable connector surface before the agent switches back into write mode.
 
@@ -130,12 +130,12 @@ This is safer than creating a large fully populated child object in one call bec
 When a connector write is blocked, do not claim success. Follow this explicit recovery ladder:
 
 1. Acknowledge that the mutation did not happen.
-1. Step back to bounded parent discovery before any retry.
-1. Discover the target from that parent surface and read the exact target.
-1. Read dependent connector vocabulary before writing: labels, statuses, projects, folders, users, branches, milestones, or other connector-owned values.
-1. Retry once only with one narrower safer mutation using the discovered stable values.
-1. Read back from the mutated target.
-1. Stop after repeated parent-discovered failure and report observed state.
+2. Step back to bounded parent discovery before any retry.
+3. Discover the target from that parent surface and read the exact target.
+4. Read dependent connector vocabulary before writing: labels, statuses, projects, folders, users, branches, milestones, or other connector-owned values.
+5. Retry once only with one narrower safer mutation using the discovered stable values.
+6. Read back from the mutated target.
+7. Stop after repeated parent-discovered failure and report observed state.
 
 Include a shortcut guard: a retry from memory or a stale target reference does not count as full recovery. Full recovery means parent discovery -> target discovery -> exact target read -> dependent vocabulary read if needed -> one narrower safer mutation -> rediscover mutated thing -> readback.
 
@@ -187,19 +187,19 @@ For high-risk connector writes such as merge, close, delete, publish, send, arch
 Use this ladder:
 
 1. Confirm current user authority from the latest message.
-1. Read the target object immediately before the write.
-1. Extract the exact current-state guard where available, such as:
+2. Read the target object immediately before the write.
+3. Extract the exact current-state guard where available, such as:
    - PR head SHA for merge;
    - current draft or message ID for send;
    - current file blob SHA for update or delete;
    - current issue, event, or comment ID for status or comment mutation.
-1. Make one narrow write call containing only:
+4. Make one narrow write call containing only:
    - stable target identifier;
    - requested action;
    - exact-state guard, if available;
    - no optional prose, status summaries, labels, unrelated comments, or bundled mutations unless the connector requires them.
-1. Read back the target object after the write.
-1. Report success only from the mutation result or readback.
+5. Read back the target object after the write.
+6. Report success only from the mutation result or readback.
 
 If the first write is blocked, retry only when the next attempt is materially safer. Adding an exact-state guard, replacing a fuzzy target with a stable ID, removing optional fields, or splitting bundled mutations are safer shapes. Repeating the same payload is not.
 
@@ -214,10 +214,10 @@ Do not use an invalid attempt as evidence that the connector or safety layer rej
 After a high-risk external mutation succeeds, treat tracking closeout as a separate mutation.
 
 1. Verify the high-risk mutation in the target system.
-1. Prepare the narrowest durable update, such as issue status only or a compact evidence comment only.
-1. If a status update blocks, do not weaken the primary proof. Report that the primary mutation succeeded and the closeout mutation blocked.
-1. Prefer a compact evidence comment only when it is lower-risk, explicitly useful, and authorized by the current context.
-1. Never claim an issue was closed, marked done, or updated unless that write is verified.
+2. Prepare the narrowest durable update, such as issue status only or a compact evidence comment only.
+3. If a status update blocks, do not weaken the primary proof. Report that the primary mutation succeeded and the closeout mutation blocked.
+4. Prefer a compact evidence comment only when it is lower-risk, explicitly useful, and authorized by the current context.
+5. Never claim an issue was closed, marked done, or updated unless that write is verified.
 
 ## Documentation and safety internals
 

@@ -43,10 +43,10 @@ This skill is a first-party skill authored for this repository. It is not derive
 Run this gate before reading graph recipes, creating review state, dispatching a subagent, or invoking any script in this skill.
 
 1. If this session is not running in a Devin harness, **stop and do not use this skill**. The graph assumes Devin's transcript, subagent, and scratch surfaces; outside them it is inert.
-1. Determine the orchestrator's effective model classification from trusted harness context. Do not infer strength from marketing language or a profile name.
-1. If the orchestrator is a harness-designated frontier model (currently `gpt-5.6-sol`, `gpt-6-astra`, `claude-fable`, or `claude-opus`) or another model the harness explicitly designates as frontier-capable, **stop and do not use this skill**. Perform ordinary whole-change self-review and the repository's canonical validation.
-1. If the orchestrator is non-frontier or its classification is unknown, tell the human that this is the legacy review-assistance graph: it can add useful review coverage, but it is not proof of exhaustive review or trustworthy green. Ask whether they want it used for this PR.
-1. Continue only after a new affirmative answer for this PR. Silence, prior use on another PR, general autonomy, or merely discovering this skill is not approval. If approval is declined or unavailable, use ordinary self-review and canonical validation instead.
+2. Determine the orchestrator's effective model classification from trusted harness context. Do not infer strength from marketing language or a profile name.
+3. If the orchestrator is a harness-designated frontier model (currently `gpt-5.6-sol`, `gpt-6-astra`, `claude-fable`, or `claude-opus`) or another model the harness explicitly designates as frontier-capable, **stop and do not use this skill**. Perform ordinary whole-change self-review and the repository's canonical validation.
+4. If the orchestrator is non-frontier or its classification is unknown, tell the human that this is the legacy review-assistance graph: it can add useful review coverage, but it is not proof of exhaustive review or trustworthy green. Ask whether they want it used for this PR.
+5. Continue only after a new affirmative answer for this PR. Silence, prior use on another PR, general autonomy, or merely discovering this skill is not approval. If approval is declined or unavailable, use ordinary self-review and canonical validation instead.
 
 The graph's terminal `ready` value means only that the legacy sequence completed. It does not authorize a `reviewed-green` claim or independently authorize moving the PR out of draft.
 
@@ -55,14 +55,14 @@ The graph's terminal `ready` value means only that the legacy sequence completed
 After the entry gate permits use, do not read the whole graph reference before starting. `next_node.py` constrains graph sequencing, but it does not prove that the review was complete or that every issue was found.
 
 1. Identify the PR number.
-1. From the branch worktree, run:
+2. From the branch worktree, run:
    ```
    py -3 .agents/skills/iterative-review/scripts/start_review.py --pr <pr_number> --apply
    ```
-1. The script prints the one allowed next node, the recipe file to read, and the command to authorize it.
-1. Open that one `references/node-<node>.md` file and follow it.
-1. When the recipe says "next check", run `next_node.py` again. It will tell you the next node.
-1. Continue until `next_node.py` prints `ready` or `blocked`. Treat `ready` as legacy-loop completion only.
+3. The script prints the one allowed next node, the recipe file to read, and the command to authorize it.
+4. Open that one `references/node-<node>.md` file and follow it.
+5. When the recipe says "next check", run `next_node.py` again. It will tell you the next node.
+6. Continue until `next_node.py` prints `ready` or `blocked`. Treat `ready` as legacy-loop completion only.
 
 `start_review.py` performs the `setup` and `normalize-inputs` nodes and leaves the graph pointing at `preflight`.
 
@@ -92,18 +92,18 @@ The Devin Desktop agents search path is: user-global `~/.config/devin/agents/` (
 ## Following the graph
 
 1. Run `start_review.py --pr <pr_number> --apply` from the branch worktree. It creates the off-repo scratch workspace, materializes the diff and PR context, runs `normalize-inputs`, and advances `review-state.json` to `normalize-inputs`.
-1. Run `next_node.py` to discover the single allowed next node:
+2. Run `next_node.py` to discover the single allowed next node:
    ```
    py -3 .agents/skills/iterative-review/scripts/next_node.py --state <scratch_dir>/review-state.json
    ```
    Capture the first line of output as `<node>`.
-1. Open `references/node-<node>.md` and follow that one recipe.
-1. When the recipe says "next check", run `next_node.py` again.
-1. Validate and advance the router to the discovered node before running its recipe:
+3. Open `references/node-<node>.md` and follow that one recipe.
+4. When the recipe says "next check", run `next_node.py` again.
+5. Validate and advance the router to the discovered node before running its recipe:
    ```
    py -3 .agents/skills/iterative-review/scripts/next_node.py --propose <node> --state <scratch_dir>/review-state.json
    ```
-1. Stop when `next_node.py` prints `ready` or `blocked`; neither value proves exhaustive review, and `ready` does not itself authorize a green claim.
+6. Stop when `next_node.py` prints `ready` or `blocked`; neither value proves exhaustive review, and `ready` does not itself authorize a green claim.
 
 ## Recording `review-metrics.json`
 

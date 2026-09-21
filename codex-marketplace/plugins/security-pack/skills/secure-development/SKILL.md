@@ -35,9 +35,9 @@ Use this skill to build and verify software with security built in: secure codin
 ## Core Pattern
 
 1. **Secure by design**: validate all input, fail safely, apply least privilege, and keep secrets out of code.
-1. **Map threats**: identify assets, trust boundaries, attack surface, and likely attack paths before building.
-1. **Test early and often**: combine static analysis, dynamic scans, dependency checks, and targeted negative tests.
-1. **Review before commit**: use a checklist, check against the OWASP Top 10 and relevant CWEs, and route high-risk findings through `risk-gates`.
+2. **Map threats**: identify assets, trust boundaries, attack surface, and likely attack paths before building.
+3. **Test early and often**: combine static analysis, dynamic scans, dependency checks, and targeted negative tests.
+4. **Review before commit**: use a checklist, check against the OWASP Top 10 and relevant CWEs, and route high-risk findings through `risk-gates`.
 
 ## Common Mistakes
 

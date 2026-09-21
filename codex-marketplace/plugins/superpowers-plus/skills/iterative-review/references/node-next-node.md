@@ -13,13 +13,13 @@ Validate the proposed graph node against the current state before dispatching a 
 ## Recipe
 
 1. Call `next_node.py` without `--propose` at the start of each turn to discover the single allowed next node. Discovery is read-only and does not modify `review-state.json` or `review-metrics.json`.
-1. Validate the discovered `<node>` and advance the router before running that node's recipe:
+2. Validate the discovered `<node>` and advance the router before running that node's recipe:
    ```
    py -3 .agents/skills/iterative-review/scripts/next_node.py --state <scratch_dir>/review-state.json --propose <node>
    ```
-1. If exit 0, the node is authorized; `next_node.py` advances `current_node` and `previous_node` to the dispatched node.
-1. If exit 1, do not run the node recipe; route to the allowed node printed in the output.
-1. `--propose ready` is always refused: version-1 review state cannot produce a trustworthy-green seal. `--metrics` cannot be combined with `--propose`; metrics-mode calls are read-only discovery only.
+3. If exit 0, the node is authorized; `next_node.py` advances `current_node` and `previous_node` to the dispatched node.
+4. If exit 1, do not run the node recipe; route to the allowed node printed in the output.
+5. `--propose ready` is always refused: version-1 review state cannot produce a trustworthy-green seal. `--metrics` cannot be combined with `--propose`; metrics-mode calls are read-only discovery only.
 
 ## Outputs
 

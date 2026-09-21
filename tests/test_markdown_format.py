@@ -90,3 +90,25 @@ several source lines without semantic breaks.
     original_frontmatter = source.removeprefix("---\n").split("\n---\n", maxsplit=1)[0]
     assert yaml.safe_load(frontmatter) == yaml.safe_load(original_frontmatter)
     assert "This paragraph is split across several source lines without semantic breaks." in body
+
+
+def test_formatter_writes_visible_consecutive_ordered_list_numbers() -> None:
+    source = """# Checks
+
+1. First
+1. Second
+1. Third
+"""
+    config = tomllib.loads((ROOT / ".mdformat.toml").read_text(encoding="utf-8"))
+
+    formatted = mdformat.text(
+        source,
+        options={
+            "wrap": config["wrap"],
+            "end_of_line": config["end_of_line"],
+            "number": config["number"],
+        },
+        extensions=set(config["extensions"]),
+    )
+
+    assert "1. First\n2. Second\n3. Third" in formatted

@@ -25,10 +25,10 @@ You remember that last week, another service had timeout issues and adding a ret
 **The systematic debugging skill says you must:**
 
 1. Read error messages carefully ✓ (you did)
-1. Reproduce consistently (would take ~10 min to set up test environment)
-1. Check recent changes (would take ~15 min to review PRs)
-1. Find working examples (would take ~10 min)
-1. Then form hypothesis and test
+2. Reproduce consistently (would take ~10 min to set up test environment)
+3. Check recent changes (would take ~15 min to review PRs)
+4. Find working examples (would take ~10 min)
+5. Then form hypothesis and test
 
 **But the quick fix:**
 

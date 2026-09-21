@@ -17,8 +17,8 @@ Use this when the task is about files attached to Linear or helper surfaces arou
 ## Upload flow
 
 1. Call `prepare_attachment_upload`.
-1. PUT the raw bytes to the signed upload URL.
-1. Call `create_attachment_from_upload`.
+2. PUT the raw bytes to the signed upload URL.
+3. Call `create_attachment_from_upload`.
 
 ## Notes
 

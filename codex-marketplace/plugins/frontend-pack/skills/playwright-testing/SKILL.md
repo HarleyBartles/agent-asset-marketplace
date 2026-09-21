@@ -34,11 +34,11 @@ Use this skill for end-to-end web testing with Playwright: selectors, fixtures, 
 ## Core Pattern
 
 1. Favor user-facing locators: `getByRole`, `getByText`, `getByLabel` before CSS/XPath.
-1. Use page object models or fixtures to centralize selectors and setup.
-1. Keep tests independent; reset state with `test.use` or fixture-scoped setup.
-1. Configure retries for flaky suites and shard jobs in CI for parallelism.
-1. Use built-in reporters and traces; inspect `trace.zip` on failure.
-1. Avoid sleeps; rely on auto-waiting assertions and explicit expectations.
+2. Use page object models or fixtures to centralize selectors and setup.
+3. Keep tests independent; reset state with `test.use` or fixture-scoped setup.
+4. Configure retries for flaky suites and shard jobs in CI for parallelism.
+5. Use built-in reporters and traces; inspect `trace.zip` on failure.
+6. Avoid sleeps; rely on auto-waiting assertions and explicit expectations.
 
 ## Common Mistakes
 

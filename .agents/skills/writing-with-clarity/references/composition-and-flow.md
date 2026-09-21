@@ -16,8 +16,8 @@ Use this reference when a document, paragraph, explanation, or report is hard to
 ## Review questions
 
 1. Can each paragraph be summarized in one sentence?
-1. Does each heading promise what the following text delivers?
-1. Does the order match the reader's decision or task?
-1. Are transitions explicit where the relationship is not obvious?
+2. Does each heading promise what the following text delivers?
+3. Does the order match the reader's decision or task?
+4. Are transitions explicit where the relationship is not obvious?
 
 **Source basis:** The historical source, Rules 8-9 and 14-18. The historical source is context for edge cases, not default operational guidance.

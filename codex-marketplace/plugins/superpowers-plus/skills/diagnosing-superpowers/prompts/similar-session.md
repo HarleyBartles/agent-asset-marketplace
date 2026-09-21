@@ -16,8 +16,8 @@ Inputs:
 Procedure:
 
 1. Apply `references/context-safety.md` to CANDIDATE. Extract its identity with the commands recorded in CASE: session id, cwd, first human prompt, first timestamp, harness version, and models.
-1. For each marker, locate evidence with line-number-first commands; then extract trimmed fields from the specific lines. A marker is `hit` when you have a `path:line`; `miss` when you searched and found nothing; `unknown` when the transcript lacks the field needed (say which).
-1. Return exactly:
+2. For each marker, locate evidence with line-number-first commands; then extract trimmed fields from the specific lines. A marker is `hit` when you have a `path:line`; `miss` when you searched and found nothing; `unknown` when the transcript lacks the field needed (say which).
+3. Return exactly:
 
 ```
 candidate: <session id> — <absolute path>

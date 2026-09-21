@@ -84,21 +84,21 @@ You MUST complete each phase before proceeding to the next.
    - Read stack traces completely
    - Note line numbers, file paths, error codes
 
-1. **Reproduce Consistently**
+2. **Reproduce Consistently**
 
    - Can you trigger it reliably?
    - What are the exact steps?
    - Does it happen every time?
    - If not reproducible → gather more data, don't guess
 
-1. **Check Recent Changes**
+3. **Check Recent Changes**
 
    - What changed that could cause this?
    - Git diff, recent commits
    - New dependencies, config changes
    - Environmental differences
 
-1. **Gather Evidence in Multi-Component Systems**
+4. **Gather Evidence in Multi-Component Systems**
 
    **WHEN system has multiple components (CI → build → signing, API → service → database):**
 
@@ -138,7 +138,7 @@ You MUST complete each phase before proceeding to the next.
 
    **This reveals:** Which layer fails (secrets → workflow ✓, workflow → build ✗)
 
-1. **Trace Data Flow**
+5. **Trace Data Flow**
 
    **WHEN error is deep in call stack:**
 
@@ -160,19 +160,19 @@ You MUST complete each phase before proceeding to the next.
    - Locate similar working code in same codebase
    - What works that's similar to what's broken?
 
-1. **Compare Against References**
+2. **Compare Against References**
 
    - If implementing pattern, read reference implementation COMPLETELY
    - Don't skim - read every line
    - Understand the pattern fully before applying
 
-1. **Identify Differences**
+3. **Identify Differences**
 
    - What's different between working and broken?
    - List every difference, however small
    - Don't assume "that can't matter"
 
-1. **Understand Dependencies**
+4. **Understand Dependencies**
 
    - What other components does this need?
    - What settings, config, environment?
@@ -188,19 +188,19 @@ You MUST complete each phase before proceeding to the next.
    - Write it down
    - Be specific, not vague
 
-1. **Test Minimally**
+2. **Test Minimally**
 
    - Make the SMALLEST possible change to test hypothesis
    - One variable at a time
    - Don't fix multiple things at once
 
-1. **Verify Before Continuing**
+3. **Verify Before Continuing**
 
    - Did it work? Yes → Phase 4
    - Didn't work? Form NEW hypothesis
    - DON'T add more fixes on top
 
-1. **When You Don't Know**
+4. **When You Don't Know**
 
    - Say "I don't understand X"
    - Don't pretend to know
@@ -219,21 +219,21 @@ You MUST complete each phase before proceeding to the next.
    - MUST have before fixing
    - Use the `test-driven-development` skill for writing proper failing tests
 
-1. **Implement Single Fix**
+2. **Implement Single Fix**
 
    - Address the root cause identified
    - ONE change at a time
    - No "while I'm here" improvements
    - No bundled refactoring
 
-1. **Verify Fix**
+3. **Verify Fix**
 
    - Test passes now?
    - No other tests broken?
    - Issue actually resolved?
    - Use the `verification-before-completion` skill before claiming success
 
-1. **If Fix Doesn't Work**
+4. **If Fix Doesn't Work**
 
    - STOP
    - Count: How many fixes have you tried?
@@ -241,7 +241,7 @@ You MUST complete each phase before proceeding to the next.
    - **If ≥ 3: STOP and question the architecture (step 5 below)**
    - DON'T attempt Fix #4 without architectural discussion
 
-1. **If 3+ Fixes Failed: Question Architecture**
+5. **If 3+ Fixes Failed: Question Architecture**
 
    **Pattern indicating architectural problem:**
 
@@ -321,9 +321,9 @@ If a proposed fix changes workflow meaning, stop and identify its authority. A r
 If systematic investigation reveals issue is truly environmental, timing-dependent, or external:
 
 1. You've completed the process
-1. Document what you investigated
-1. Implement appropriate handling (retry, timeout, error message)
-1. Add monitoring/logging for future investigation
+2. Document what you investigated
+3. Implement appropriate handling (retry, timeout, error message)
+4. Add monitoring/logging for future investigation
 
 **But:** 95% of "no root cause" cases are incomplete investigation.
 

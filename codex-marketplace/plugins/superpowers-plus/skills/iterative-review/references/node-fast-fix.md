@@ -13,10 +13,10 @@ Fix deterministic preflight findings and return to the `preflight` node.
 ## Recipe
 
 1. Read the deterministic findings from `<scan_findings>`.
-1. Choose the cheapest fix for the top finding.
-1. If the top finding has an existing test, run that test and confirm it fails (RED). If there is no test, write the minimal test that reproduces the finding.
-1. Apply the minimal fix and re-run the test until it passes (GREEN).
-1. Return to `preflight` to re-run the consumer's canonical preflight.
+2. Choose the cheapest fix for the top finding.
+3. If the top finding has an existing test, run that test and confirm it fails (RED). If there is no test, write the minimal test that reproduces the finding.
+4. Apply the minimal fix and re-run the test until it passes (GREEN).
+5. Return to `preflight` to re-run the consumer's canonical preflight.
 
 ## Outputs
 

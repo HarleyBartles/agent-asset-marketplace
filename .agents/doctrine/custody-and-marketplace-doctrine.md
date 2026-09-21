@@ -38,8 +38,8 @@ The `house-skills` mega-pack, `is_mega_pack` registry field, and `tools/generate
 The flow is:
 
 1. **Source custody** — `codex-marketplace/plugins/<plugin>/`.
-1. **Bundle** — `codex-marketplace/plugins/` vendored bundles, generated from custody plus manifest entries.
-1. **Install / export** — `codex-marketplace/plugins/` is the canonical install surface.
+2. **Bundle** — `codex-marketplace/plugins/` vendored bundles, generated from custody plus manifest entries.
+3. **Install / export** — `codex-marketplace/plugins/` is the canonical install surface.
 
 The bundle tree is generated, not hand-edited. The manifest is the edit surface that drives the bundle.
 
@@ -52,9 +52,9 @@ When a change touches multiple generated surfaces, prefer regenerating the full 
 The business-as-usual target for adding or updating a skill is:
 
 1. **Write source** — add or edit the skill under `codex-marketplace/plugins/<plugin>/skills/` and record any third-party provenance in `codex-marketplace/plugins/<plugin>/SOURCE.md`.
-1. **Add bundle entry** — declare the entry in the pack's `references/bundle-manifest.json` `entries` with `canonical_name`, `source_category`, `content_mode`, `source_family`, `canonical_source_path` (directory-level), and `local_path`.
-1. **Regenerate plugin** — run `py -3 tools/run.py marketplace --apply` to update bundle manifests, plugin manifests, installed skill trees, and marketplace exports.
-1. **Validate** — run `tools/run ci --check` to prove all surfaces are current.
+2. **Add bundle entry** — declare the entry in the pack's `references/bundle-manifest.json` `entries` with `canonical_name`, `source_category`, `content_mode`, `source_family`, `canonical_source_path` (directory-level), and `local_path`.
+3. **Regenerate plugin** — run `py -3 tools/run.py marketplace --apply` to update bundle manifests, plugin manifests, installed skill trees, and marketplace exports.
+4. **Validate** — run `tools/run ci --check` to prove all surfaces are current.
 
 If a first-party skill is removed from a project pack but remains in source custody, keep the source and regenerate the bundles so only the pack loses the exposure. Retire a skill to provenance only when it is no longer supported.
 

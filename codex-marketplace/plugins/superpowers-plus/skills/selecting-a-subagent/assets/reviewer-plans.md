@@ -33,14 +33,14 @@ Use this section to decide whether `reviewer-plans` should be dispatched for a P
 Use this checklist during `orchestrator-self-review` and as the core of the diff review:
 
 1. **Completeness** — no TODOs, TBD, placeholders, or incomplete sections in the plan/spec.
-1. **Consistency** — no internal contradictions.
-1. **Clarity** — requirements are concrete enough that an implementer would not build the wrong thing.
-1. **Scope** — fits in one plan; no YAGNI or speculative features.
-1. **Buildability** — tasks are actionable and independently verifiable.
-1. **PR scope fidelity** — the implemented scope in the diff matches the declared plan/spec.
-1. **Surface drift** — new packs, renamed surfaces, or dropped features that are not in the plan are flagged.
-1. **Roadmap order** — later-phase items are not implemented before their prerequisites.
-1. **Traceability** — every changed surface can be mapped to a governing document item.
+2. **Consistency** — no internal contradictions.
+3. **Clarity** — requirements are concrete enough that an implementer would not build the wrong thing.
+4. **Scope** — fits in one plan; no YAGNI or speculative features.
+5. **Buildability** — tasks are actionable and independently verifiable.
+6. **PR scope fidelity** — the implemented scope in the diff matches the declared plan/spec.
+7. **Surface drift** — new packs, renamed surfaces, or dropped features that are not in the plan are flagged.
+8. **Roadmap order** — later-phase items are not implemented before their prerequisites.
+9. **Traceability** — every changed surface can be mapped to a governing document item.
 
 ## Invariants
 
@@ -78,13 +78,13 @@ Write `review-log-plans.md` in the off-repo scratch. Begin with a brief `## Inpu
 ## Procedure
 
 1. If `<scan_findings>` is provided, read it first and do not duplicate its findings; verify the preflight caught the pattern in the right place.
-1. If `<pr_description>` is provided, read it for scope.
-1. If any of `<plan_path>`, `<spec_path>`, or `<roadmap_path>` is provided, read them in that order and keep them as the governing scope. The authoritative plan/spec/roadmap is the version in the branch being reviewed, not the version committed to the upstream base. If the PR changes the governing document, the branch head state wins over `origin/main`.
-1. If `<diff_path>` is provided, read it. If it truncates, use the overflow file or re-read with `offset` and `limit`.
-1. Apply the `## Checklist`.
-1. Use `grep` and `find_file_by_name` to confirm canonical paths and traceability claims.
-1. Report only plan/spec/roadmap or scope issues. Cite `file:line`, severity, and remediation.
-1. End with `reviewer-plans: N issue(s)` or `reviewer-plans: clean`.
+2. If `<pr_description>` is provided, read it for scope.
+3. If any of `<plan_path>`, `<spec_path>`, or `<roadmap_path>` is provided, read them in that order and keep them as the governing scope. The authoritative plan/spec/roadmap is the version in the branch being reviewed, not the version committed to the upstream base. If the PR changes the governing document, the branch head state wins over `origin/main`.
+4. If `<diff_path>` is provided, read it. If it truncates, use the overflow file or re-read with `offset` and `limit`.
+5. Apply the `## Checklist`.
+6. Use `grep` and `find_file_by_name` to confirm canonical paths and traceability claims.
+7. Report only plan/spec/roadmap or scope issues. Cite `file:line`, severity, and remediation.
+8. End with `reviewer-plans: N issue(s)` or `reviewer-plans: clean`.
 
 ## Output format
 

@@ -39,10 +39,10 @@ Do not use for runtime behavior, build tooling unrelated to types, or framework-
 ## Core Pattern
 
 1. Model data with `interface` or `type` before writing logic.
-1. Use generics only when the function or type must work across multiple concrete types; add constraints.
-1. Let inference do the work; add annotations at module boundaries and public APIs.
-1. Prefer `unknown` over `any`; narrow with type guards before use.
-1. Keep `strict` and `noImplicitAny` enabled; align `module`, `moduleResolution`, and `target` with the runtime.
+2. Use generics only when the function or type must work across multiple concrete types; add constraints.
+3. Let inference do the work; add annotations at module boundaries and public APIs.
+4. Prefer `unknown` over `any`; narrow with type guards before use.
+5. Keep `strict` and `noImplicitAny` enabled; align `module`, `moduleResolution`, and `target` with the runtime.
 
 ## Common Mistakes
 

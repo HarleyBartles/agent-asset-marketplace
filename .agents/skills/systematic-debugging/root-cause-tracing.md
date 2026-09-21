@@ -124,10 +124,10 @@ Runs tests one-by-one, stops at first polluter. See script for usage.
 **Trace chain:**
 
 1. `git init` runs in `process.cwd()` ← empty cwd parameter
-1. WorktreeManager called with empty projectDir
-1. Session.create() passed empty string
-1. Test accessed `context.tempDir` before beforeEach
-1. setupCoreTest() returns `{ tempDir: '' }` initially
+2. WorktreeManager called with empty projectDir
+3. Session.create() passed empty string
+4. Test accessed `context.tempDir` before beforeEach
+5. setupCoreTest() returns `{ tempDir: '' }` initially
 
 **Root cause:** Top-level variable initialization accessing empty value
 

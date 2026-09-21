@@ -13,14 +13,14 @@ Run the consumer's canonical preflight on the branch and gate on a clean result.
 ## Recipe
 
 1. Run the consumer's canonical preflight on the branch.
-1. For each deterministic finding, record it:
+2. For each deterministic finding, record it:
    ```bash
    py -3 .agents/skills/iterative-review/scripts/record_finding.py \
        --state <scratch_dir>/review-state.json \
        --data '{"finding_id": "<finding_id>", "lens": "preflight", "discovered_at_node": "preflight", "discovered_at_round": <round>, "severity": "<severity>"}'
    ```
    If the preflight is clean, no new finding is recorded.
-1. Regenerate the metrics file and authorize the next node:
+3. Regenerate the metrics file and authorize the next node:
    ```bash
    py -3 .agents/skills/iterative-review/scripts/compile_metrics.py \
        --state <scratch_dir>/review-state.json \
@@ -29,7 +29,7 @@ Run the consumer's canonical preflight on the branch and gate on a clean result.
        --state <scratch_dir>/review-state.json \
        --propose <next-node>
    ```
-1. Do not proceed until the preflight is clean or its findings are converted to a `fast-fix` and re-checked.
+4. Do not proceed until the preflight is clean or its findings are converted to a `fast-fix` and re-checked.
 
 ## Outputs
 

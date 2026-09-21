@@ -3,8 +3,8 @@
 ## Scenarios
 
 1. **Baseline (no skill):** An agent is given an under-specified implementation plan and must decide whether to start executing it.
-1. **With `handoff-gates` — plan-readiness:** An agent uses the skill to judge the same under-specified plan before execution.
-1. **With `handoff-gates` — completion-readiness:** An agent judges work that is nominally complete but contains two TODO comments not covered by the plan.
+2. **With `handoff-gates` — plan-readiness:** An agent uses the skill to judge the same under-specified plan before execution.
+3. **With `handoff-gates` — completion-readiness:** An agent judges work that is nominally complete but contains two TODO comments not covered by the plan.
 
 ## Method
 

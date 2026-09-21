@@ -7,13 +7,13 @@ Read before delegating a Linear issue to a repo worker, nudging a worker, or tre
 Delegate to a repo worker only when all answers are yes:
 
 1. The latest user message authorizes execution or dispatch, not just discussion.
-1. The target is a repo-backed coding/docs/config surface that the worker can clone, edit, validate, and publish as a PR.
-1. The Linear issue identifies the repo or implementation surface clearly enough for a worker.
-1. The task can be completed inside the worker environment without private ChatGPT skill-library mutation, manual UI-only actions, unavailable local resources, or hidden credentials.
-1. The expected output can return through Linear comments plus a GitHub PR publication path.
-1. The issue body is bounded enough that the worker is executing, not deciding product strategy or architecture from scratch.
-1. Any required human gate is explicit.
-1. For repo work that needs a campaign shape, the issue body or handoff includes the worktree isolation gate (see `campaign-shape.md`).
+2. The target is a repo-backed coding/docs/config surface that the worker can clone, edit, validate, and publish as a PR.
+3. The Linear issue identifies the repo or implementation surface clearly enough for a worker.
+4. The task can be completed inside the worker environment without private ChatGPT skill-library mutation, manual UI-only actions, unavailable local resources, or hidden credentials.
+5. The expected output can return through Linear comments plus a GitHub PR publication path.
+6. The issue body is bounded enough that the worker is executing, not deciding product strategy or architecture from scratch.
+7. Any required human gate is explicit.
+8. For repo work that needs a campaign shape, the issue body or handoff includes the worktree isolation gate (see `campaign-shape.md`).
 
 If any answer is no, do not delegate. Route to planning, native skill maintenance, connector setup, UI instructions, research, or a legacy fallback as appropriate.
 

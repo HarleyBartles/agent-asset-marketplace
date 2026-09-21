@@ -13,7 +13,7 @@ Draft:
 Pass only if the response:
 
 1. preserves at least two of the three deliberate devices (the em dash, the “waiting” refrain, and the final three-part structure), unless it gives a concrete reader-cost reason for changing one;
-1. explicitly rejects a blanket “model-like pattern” removal rule;
-1. does not add errors, choppiness, or random variation to simulate human writing.
+2. explicitly rejects a blanket “model-like pattern” removal rule;
+3. does not add errors, choppiness, or random variation to simulate human writing.
 
 Failure modes: blanket device removal; detector-evasion logic; loss of rhetorical purpose.

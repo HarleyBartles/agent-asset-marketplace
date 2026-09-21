@@ -15,8 +15,8 @@ Use this reference when a word, phrase, or term may confuse the reader or make t
 ## Review questions
 
 1. Could a reasonable reader interpret this word in two materially different ways?
-1. Is the chosen term precise for this audience?
-1. Does the wording claim more than the evidence supports?
-1. Would a concrete example make the intended meaning safer?
+2. Is the chosen term precise for this audience?
+3. Does the wording claim more than the evidence supports?
+4. Would a concrete example make the intended meaning safer?
 
 **Source basis:** The historical source, Chapter V. The historical source is context for usage questions, not a complete or current dictionary.

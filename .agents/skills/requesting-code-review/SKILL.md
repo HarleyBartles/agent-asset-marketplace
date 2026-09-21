@@ -83,9 +83,9 @@ Dispatch a `general-purpose` subagent, filling the template at [code-reviewer.md
 When the code-review request is about a branch or PR diff, the orchestrator (this session) prepares the review inputs; the reviewer subagent only reads the prepared diff and description.
 
 1. Determine the base ref (`<base>`) and branch (`<branch>`).
-1. Generate the review package as UTF-8 without a BOM with `py -3 .agents/skills/subagent-workspace/scripts/review_package.py --apply - <base> <branch> <diff_path>`. Use `-` for no plan file; `diff_path` is optional and the script prints the path it wrote.
-1. If the review object is a PR, capture the PR title and body into `<pr_description>` (e.g. with `gh pr view <number> --json title,body` or `mcp_call_tool`).
-1. Dispatch the reviewer subagent with the prepared inputs:
+2. Generate the review package as UTF-8 without a BOM with `py -3 .agents/skills/subagent-workspace/scripts/review_package.py --apply - <base> <branch> <diff_path>`. Use `-` for no plan file; `diff_path` is optional and the script prints the path it wrote.
+3. If the review object is a PR, capture the PR title and body into `<pr_description>` (e.g. with `gh pr view <number> --json title,body` or `mcp_call_tool`).
+4. Dispatch the reviewer subagent with the prepared inputs:
    - `reviewer` for most reviews.
    - `reviewer-strong` for full branch/PR reviews where the whole diff is in scope.
    - `reviewer-fixes` for small, tightly focused re-reviews of a single fix or a small coherent diff.

@@ -12,5 +12,5 @@ Use these `mcp-playwright` tools to manage the browser session, tabs, and viewpo
 ## Fast rules
 
 1. **Close at the end.** Run `browser_close` when the browser task is done.
-1. **Avoid arbitrary waits.** Use `browser_wait_for` with a concrete `selector` whenever possible.
-1. **Resize to a desktop/mobile size only when the task requires it.**
+2. **Avoid arbitrary waits.** Use `browser_wait_for` with a concrete `selector` whenever possible.
+3. **Resize to a desktop/mobile size only when the task requires it.**

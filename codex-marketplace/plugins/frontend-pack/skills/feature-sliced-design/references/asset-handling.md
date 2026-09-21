@@ -9,9 +9,9 @@ ______________________________________________________________________
 ## Decision Tree
 
 1. **Used by exactly one slice?** Keep the asset inside that slice, usually in the `ui/` segment, or in `model/` if it is part of business logic.
-1. **Reused across the app (icons, placeholder images)?** Move to `shared/ui/`.
-1. **Global stylesheet, font, or app-level resource?** Place in the `app/` layer (`app/styles/`, `app/fonts/`).
-1. **Served as-is by the bundler (favicon, robots.txt)?** Use the framework's `public/` folder. The `public/` folder is not part of FSD and does not conflict with FSD layers.
+2. **Reused across the app (icons, placeholder images)?** Move to `shared/ui/`.
+3. **Global stylesheet, font, or app-level resource?** Place in the `app/` layer (`app/styles/`, `app/fonts/`).
+4. **Served as-is by the bundler (favicon, robots.txt)?** Use the framework's `public/` folder. The `public/` folder is not part of FSD and does not conflict with FSD layers.
 
 ______________________________________________________________________
 

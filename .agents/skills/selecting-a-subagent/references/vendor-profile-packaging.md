@@ -31,9 +31,9 @@ The default target is `~/.config/devin/agents/` on macOS/Linux and `%APPDATA%\de
 Devin Desktop searches the following locations; a later path in this list overrides an earlier one:
 
 1. Built-in profiles documented in `devin-desktop-profile.md`.
-1. User-global: `~/.config/devin/agents/` (or `%APPDATA%\devin\agents\` on Windows).
-1. `.devin/agents/` — user- or repo-local hand-authored overrides.
-1. `.agents/agents/` — plugin-local or third-party vendor profiles.
+2. User-global: `~/.config/devin/agents/` (or `%APPDATA%\devin\agents\` on Windows).
+3. `.devin/agents/` — user- or repo-local hand-authored overrides.
+4. `.agents/agents/` — plugin-local or third-party vendor profiles.
 
 No skill should create or pressure a consumer to create `.devin/agents/`.
 

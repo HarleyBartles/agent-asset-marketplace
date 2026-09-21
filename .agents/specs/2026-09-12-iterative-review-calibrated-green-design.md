@@ -13,11 +13,11 @@ Target harness: Devin Desktop only. The skill is **inert on every other harness*
 Agents are assumed honest-but-fallible, not malicious. The failure modes defended against are accidents and blind spots:
 
 1. **Recall failure** - a weaker reviewer reports clean without covering a risky surface.
-1. **Bookkeeping rot** - ledger/metrics/graph state drifts from what actually happened.
-1. **Hollow claims** - "ran checks," "reviewed file," "resolved" asserted without the work occurring.
-1. **Contamination** - a blind or independent role consuming prior conclusions instead of forming its own.
-1. **Staleness** - green asserted on a snapshot other than what ships.
-1. **Audit-trail erosion** - evidence that quietly rewrites itself after the fact.
+2. **Bookkeeping rot** - ledger/metrics/graph state drifts from what actually happened.
+3. **Hollow claims** - "ran checks," "reviewed file," "resolved" asserted without the work occurring.
+4. **Contamination** - a blind or independent role consuming prior conclusions instead of forming its own.
+5. **Staleness** - green asserted on a snapshot other than what ships.
+6. **Audit-trail erosion** - evidence that quietly rewrites itself after the fact.
 
 The defense is **witnessed evidence**: every load-bearing action must leave a record emitted by the harness outside the model's control (the lifecycle-hook transcript), plus genuinely external records where they exist (GitHub check-runs, workflow runs, PR lifecycle). Forgery is possible only by editing a hash-chained log whose head is anchored into the pushed commit; it is **tamper-evident, not tamper-proof**. The honest claim: "complete, witnessed, independently checkable."
 
@@ -59,10 +59,10 @@ For the seal to actually be anchored, `seal-green` writes the seal record to a p
 `reviewctl doctor` (the harness capability check, replacing the old capability gate) must pass before a review may start. The shipped doctor verifies live rows for hooks-installed, transcript-dir-writable, witness-log-roundtrip, git-present, repo-non-shallow, and gh-authenticated. The full capability floor this converges toward:
 
 1. The review session's hooks pack (`.devin/hooks.v1.json` project-level or user-level) is installed and emitting records for orchestrator **and** subagent calls, and subagent records are discoverable for ingestion - either sharing the parent `session_id` or correlating through the dispatch's `agent_id`/`prompt_id`.
-1. A smoke dispatch proves `allowed-tools` confinement: a probe profile must be denied a canary read by the policy hook and/or permission deny, and its tool list must match its frontmatter.
-1. `gh` auth and remote-observation endpoints are reachable.
-1. Required subagent profiles exist with pinned `model:` and correct `allowed-tools`.
-1. The review-owned store and witness log can be created with private permissions.
+2. A smoke dispatch proves `allowed-tools` confinement: a probe profile must be denied a canary read by the policy hook and/or permission deny, and its tool list must match its frontmatter.
+3. `gh` auth and remote-observation endpoints are reachable.
+4. Required subagent profiles exist with pinned `model:` and correct `allowed-tools`.
+5. The review-owned store and witness log can be created with private permissions.
 
 Items 2 and 4 (smoke dispatch and subagent-profile pinning), the record-emission part of item 1, the remote-observation reachability part of item 3, and the permission-mode part of item 5 are roadmap checks not yet shipped as live doctor rows.
 
@@ -162,14 +162,14 @@ Calibration is the product's honest-confidence surface, not a gate on green:
 `green-candidate` requires all of the following for one snapshot epoch; each is a pure function over validated state plus the witness log:
 
 1. `authorities_complete` - expected manifest loaded or required-unavailable-blocked.
-1. `impact_maps_current` - both maps present for the current epoch.
-1. `coverage_complete` - challenged inventory covers the map union; every obligation assigned.
-1. `challenge_current` - scope challenge clean for the epoch.
-1. `checks_current` - required local checks witnessed successful; hosted checks remotely verified on the SHA.
-1. `reviews_current` - every required review has launch + completion witnesses, matching `agent_id`/scope, `audit_result: clean`, verdict known.
-1. `findings_clear` - every finding in a closed disposition; none open/fixing/repairing/contested/deferred.
-1. `final_current` - blind-final and closure witnesses clean on the epoch.
-1. `remote_verified` - remote observation matches repository/PR/head/authority/feedback identity at seal time.
+2. `impact_maps_current` - both maps present for the current epoch.
+3. `coverage_complete` - challenged inventory covers the map union; every obligation assigned.
+4. `challenge_current` - scope challenge clean for the epoch.
+5. `checks_current` - required local checks witnessed successful; hosted checks remotely verified on the SHA.
+6. `reviews_current` - every required review has launch + completion witnesses, matching `agent_id`/scope, `audit_result: clean`, verdict known.
+7. `findings_clear` - every finding in a closed disposition; none open/fixing/repairing/contested/deferred.
+8. `final_current` - blind-final and closure witnesses clean on the epoch.
+9. `remote_verified` - remote observation matches repository/PR/head/authority/feedback identity at seal time.
 
 `accepted-risk` findings contribute to `reviewed-with-exceptions` only. `reviewed-green` remains transient-present-time only.
 

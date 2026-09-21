@@ -39,8 +39,8 @@ Use this skill to decide when and how to call the `deepwiki` MCP server for a Gi
 ## Current-repo flow
 
 1. If the user does not name a repo, derive `owner/repo` from the current git remote. See [`references/current-repo-detection.md`](references/current-repo-detection.md).
-1. Call `read_wiki_structure` to orient yourself on the available topics.
-1. Call `ask_question` for targeted specifics, or `read_wiki_contents` if you genuinely need the full generated wiki.
+2. Call `read_wiki_structure` to orient yourself on the available topics.
+3. Call `ask_question` for targeted specifics, or `read_wiki_contents` if you genuinely need the full generated wiki.
 
 ## Tool selection
 

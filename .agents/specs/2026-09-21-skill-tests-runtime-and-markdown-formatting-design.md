@@ -96,7 +96,7 @@ The operating model does not silently install packages or assume every consumer 
 Rollout has two explicit states and two separate human decisions:
 
 1. **Adopted:** the named surface, skill-owned dependencies, formatter configuration, exclusion contract, code-style guidance, and callable formatter command are present and valid. Adoption does not add formatter apply/check to the repository gate, reformat Markdown, or make formatting drift binding.
-1. **Enforced:** a separate authorized transition runs apply mode across every eligible tracked Markdown file, exposes that repository-wide migration as a reviewable diff, and enables check mode in the canonical local hook and hosted validation path.
+2. **Enforced:** a separate authorized transition runs apply mode across every eligible tracked Markdown file, exposes that repository-wide migration as a reviewable diff, and enables check mode in the canonical local hook and hosted validation path.
 
 The enforcement transition must not claim success unless normalization completes and the resulting tree passes formatter check mode. The migration baseline is committed with the enabling change; enforcement cannot point at an unformatted repository and defer cleanup. Later plugin refreshes update the portable implementation without re-authorizing adoption, enforcement, or new consumer policy.
 

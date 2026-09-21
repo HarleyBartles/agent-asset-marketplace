@@ -7,26 +7,26 @@ Use when the agentic-harness skill is loaded and the task involves designing, re
 ## Agent loop design
 
 1. Keep the loop state explicit: input, plan, tool calls, observations, output.
-1. Terminate on completion, error budget, or user interruption; never loop silently.
-1. Log every iteration with tool inputs and outputs for replay and debugging.
+2. Terminate on completion, error budget, or user interruption; never loop silently.
+3. Log every iteration with tool inputs and outputs for replay and debugging.
 
 ## Tool and action spaces
 
 1. Define tools as typed functions with input schemas and documented side effects.
-1. Keep the action space small enough to be predictable; compose complex actions from primitives.
-1. Validate tool outputs and surface failures as structured observations, not hidden retries.
+2. Keep the action space small enough to be predictable; compose complex actions from primitives.
+3. Validate tool outputs and surface failures as structured observations, not hidden retries.
 
 ## Multi-agent orchestration
 
 1. Partition work by role or sub-task; assign one goal per agent.
-1. Use a dispatcher or supervisor to route tasks and merge results.
-1. Isolate state between agents (for example, git worktrees or sandboxed contexts) and merge through explicit handoff.
+2. Use a dispatcher or supervisor to route tasks and merge results.
+3. Isolate state between agents (for example, git worktrees or sandboxed contexts) and merge through explicit handoff.
 
 ## Harness construction
 
 1. Start with a minimal loop: planner -> executor -> observer -> stop check.
-1. Add concurrency only after the sequential loop is reliable.
-1. Test harnesses against deterministic trajectories before scaling to open-ended tasks.
+2. Add concurrency only after the sequential loop is reliable.
+3. Test harnesses against deterministic trajectories before scaling to open-ended tasks.
 
 ## Common mistakes
 

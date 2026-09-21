@@ -27,12 +27,12 @@ Use this skill for engine-agnostic relational design: data modeling, normalizati
 ## Core topics
 
 1. Start with `references/data-modeling.md` for conceptual, logical, and physical models.
-1. Use `references/normalization.md` for normal forms and functional dependencies.
-1. Read `references/keys-and-constraints.md` for keys, uniqueness, and domains.
-1. Use `references/views-and-programmability.md` for views, procedures, functions, and triggers.
-1. Read `references/transactions-and-concurrency.md` for isolation, locking, and deadlocks.
-1. Use `references/indexing-and-query-tuning.md` for index strategy and plan fundamentals.
-1. Read `references/partitioning-and-sharding.md` for scale-out basics.
+2. Use `references/normalization.md` for normal forms and functional dependencies.
+3. Read `references/keys-and-constraints.md` for keys, uniqueness, and domains.
+4. Use `references/views-and-programmability.md` for views, procedures, functions, and triggers.
+5. Read `references/transactions-and-concurrency.md` for isolation, locking, and deadlocks.
+6. Use `references/indexing-and-query-tuning.md` for index strategy and plan fundamentals.
+7. Read `references/partitioning-and-sharding.md` for scale-out basics.
 
 ## Common mistakes
 

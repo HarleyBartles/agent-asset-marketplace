@@ -17,5 +17,5 @@ Use these `mcp-playwright` tools to click, type, fill, upload, drag/drop, and ha
 ## Fast rules
 
 1. **Get a ref or selector first.** Use `browser_find` or `browser_snapshot` to obtain `target`.
-1. **Prefer `browser_fill_form` for multi-field forms.** It is more stable than many separate `browser_type` calls.
-1. **Ask before destructive dialogs.** If `accept: true` and the dialog is a confirmation, treat it as destructive; confirm with the human partner when in doubt.
+2. **Prefer `browser_fill_form` for multi-field forms.** It is more stable than many separate `browser_type` calls.
+3. **Ask before destructive dialogs.** If `accept: true` and the dialog is a confirmation, treat it as destructive; confirm with the human partner when in doubt.

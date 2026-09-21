@@ -68,11 +68,11 @@ Do not generate the diff yourself. The orchestrator owns diff preparation so you
 ## Procedure
 
 1. Determine the mode. If this is a fix re-review, read the original finding at `<original_finding>`, then the prepared fix diff at `<fix_diff_path>` and the relevant full-branch slices at `<full_diff_slice_path>`; skip `<diff_path>`. If this is a general small re-review, read the prepared diff at `<diff_path>`.
-1. If `<pr_description>` is provided, read it first to understand intent and scope. If it references a design spec, implementation plan, or epic roadmap, read those before the diff. Do not invent expectations that contradict the provided description.
-1. Focus on the changed lines and their immediate context. Check for obvious correctness, style, and consistency issues.
-1. If this is a fix re-review and `<lens_checklist>` is provided, follow `## Lens-aware re-review scope` below. If `<lens_checklist>` is not provided, follow `## Fix re-review scope` below. If this is a general small re-review, do a lighter scan across the rest of the diff for regressions; do not deep-dive unless something looks off.
-1. Cite specific files and line numbers for findings.
-1. If the diff is clean within its stated scope, say so explicitly.
+2. If `<pr_description>` is provided, read it first to understand intent and scope. If it references a design spec, implementation plan, or epic roadmap, read those before the diff. Do not invent expectations that contradict the provided description.
+3. Focus on the changed lines and their immediate context. Check for obvious correctness, style, and consistency issues.
+4. If this is a fix re-review and `<lens_checklist>` is provided, follow `## Lens-aware re-review scope` below. If `<lens_checklist>` is not provided, follow `## Fix re-review scope` below. If this is a general small re-review, do a lighter scan across the rest of the diff for regressions; do not deep-dive unless something looks off.
+5. Cite specific files and line numbers for findings.
+6. If the diff is clean within its stated scope, say so explicitly.
 
 ## Fix re-review scope
 
@@ -81,8 +81,8 @@ When this profile is used for a fix re-review, the orchestrator will provide the
 Evaluate **only**:
 
 1. whether the fix diff resolves the listed finding,
-1. whether the fix introduces any obvious regressions in the code it touches,
-1. whether the fix is consistent with the immediate surrounding context.
+2. whether the fix introduces any obvious regressions in the code it touches,
+3. whether the fix is consistent with the immediate surrounding context.
 
 Do not broaden the review to the whole branch. Do not re-evaluate parts of the branch the fix does not touch. Keep findings brief, concrete, and actionable, with specific file and line citations.
 
@@ -93,8 +93,8 @@ When `<lens>` and `<lens_checklist>` are provided, this is a lens-aware re-revie
 Evaluate **only**:
 
 1. whether the fix diff resolves the listed original finding,
-1. whether the fix introduces any new issues that the `## Checklist` would have caught, within the files the fix touched,
-1. whether the fix is consistent with the immediate surrounding context and the lens's checklist.
+2. whether the fix introduces any new issues that the `## Checklist` would have caught, within the files the fix touched,
+3. whether the fix is consistent with the immediate surrounding context and the lens's checklist.
 
 Use the provided `## Checklist` mechanically. Do not broaden the review to the whole branch. Do not re-evaluate parts of the branch the fix does not touch. Report out-of-scope observations separately and do not let them block the fix. Keep findings brief, concrete, and actionable, with specific file and line citations.
 

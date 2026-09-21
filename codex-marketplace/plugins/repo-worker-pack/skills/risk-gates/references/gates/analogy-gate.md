@@ -20,11 +20,11 @@ Check whether the analogy:
 ## Workflow
 
 1. Name the analogy and the decision or explanation it is being used to support.
-1. Identify what the analogy clarifies.
-1. Identify what the analogy does not prove.
-1. Check for distortion, overreach, or source/authority laundering.
-1. Keep, limit, revise, or drop the analogy.
-1. If the work needs proof, route to the actual source or validation surface.
+2. Identify what the analogy clarifies.
+3. Identify what the analogy does not prove.
+4. Check for distortion, overreach, or source/authority laundering.
+5. Keep, limit, revise, or drop the analogy.
+6. If the work needs proof, route to the actual source or validation surface.
 
 ## Common red flags
 

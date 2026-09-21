@@ -34,7 +34,7 @@ def make_repo(tmp_path: Path, *, state: str = "adopted") -> Path:
     git(repo, "config", "user.email", "formatter@example.invalid")
     (repo / ".agents/contracts").mkdir(parents=True)
     (repo / ".mdformat.toml").write_text(
-        'wrap = "no"\nend_of_line = "lf"\nvalidate = true\nextensions = ["gfm", "frontmatter"]\n',
+        'wrap = "no"\nend_of_line = "lf"\nvalidate = true\nnumber = true\nextensions = ["gfm", "frontmatter"]\n',
         encoding="utf-8",
     )
     (repo / ".agents/contracts/markdown-formatting.json").write_text(
@@ -126,6 +126,16 @@ def test_only_adopted_and_enforced_states_are_valid(tmp_path: Path, state: str):
     commit_all(repo)
     with pytest.raises(module.ContractError, match="state"):
         module.load_contract(repo)
+
+
+def test_configuration_requires_visible_consecutive_list_numbering(tmp_path: Path):
+    module = load_module()
+    repo = make_repo(tmp_path)
+    config = repo / ".mdformat.toml"
+    config.write_text(config.read_text(encoding="utf-8").replace("number = true\n", ""), encoding="utf-8")
+
+    with pytest.raises(module.ContractError, match="number must be True"):
+        module.verify_configuration(repo)
 
 
 def test_verify_toolchain_reports_missing_and_mismatched_packages(monkeypatch):

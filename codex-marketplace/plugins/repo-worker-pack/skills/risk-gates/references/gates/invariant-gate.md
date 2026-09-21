@@ -20,11 +20,11 @@ Check only families materially implicated by the proposed move:
 ## Workflow
 
 1. Name the proposed move.
-1. List the binding invariants that could be affected.
-1. Identify the source of each invariant when material.
-1. Repair internally when the invariant forces one lawful route.
-1. Surface only real authority choices.
-1. Return green only when the move preserves all material invariants or explicitly routes unresolved ones.
+2. List the binding invariants that could be affected.
+3. Identify the source of each invariant when material.
+4. Repair internally when the invariant forces one lawful route.
+5. Surface only real authority choices.
+6. Return green only when the move preserves all material invariants or explicitly routes unresolved ones.
 
 ## Internal repair examples
 

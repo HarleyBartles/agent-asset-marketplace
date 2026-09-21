@@ -27,10 +27,10 @@ Use this skill when the work is tied to a specific relational engine. Ask which 
 ## Engine selection
 
 1. Ask the user which engine they are using.
-1. If PostgreSQL, load `references/postgresql/*.md`.
-1. If SQLite, load `references/sqlite/*.md`.
-1. If MS-SQL, load `references/mssql/selectable-engine.md`.
-1. If MySQL or another engine, decline and suggest the appropriate source.
+2. If PostgreSQL, load `references/postgresql/*.md`.
+3. If SQLite, load `references/sqlite/*.md`.
+4. If MS-SQL, load `references/mssql/selectable-engine.md`.
+5. If MySQL or another engine, decline and suggest the appropriate source.
 
 ## Shared SQL concepts
 

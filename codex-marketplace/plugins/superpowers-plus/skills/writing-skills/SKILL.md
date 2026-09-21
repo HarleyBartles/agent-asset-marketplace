@@ -115,7 +115,7 @@ skills/
 **Separate files for:**
 
 1. **Heavy reference** (100+ lines) - API docs, comprehensive syntax
-1. **Reusable tools** - Scripts, utilities, templates
+2. **Reusable tools** - Scripts, utilities, templates
 
 **Keep inline:**
 
@@ -646,10 +646,10 @@ Agent found new rationalization? Add explicit counter. Re-test until bulletproof
 Full pressure-scenario runs are the final gate, but they are slow and expensive per iteration. Verify the wording itself first with micro-tests:
 
 1. **One fresh-context sample per call** — a raw API call, or a single-shot subagent if you don't have API access. System prompt = the realistic context the guidance will live in (the full skill or prompt template, not the guidance in isolation); user message = a task that tempts the failure.
-1. **Always include a no-guidance control.** If the control doesn't exhibit the failure, there is nothing to fix — stop, don't author the guidance.
-1. **5+ reps per variant.** Single samples lie.
-1. **Manually read every flagged match.** Score programmatically if you like, but template echoes and quoted counter-examples masquerade as hits; automated counts alone overstate both failure and success.
-1. **Variance is a metric.** When guidance lands, reps converge on the same shape. Five different interpretations across five reps means the wording isn't binding — tighten the form before adding words.
+2. **Always include a no-guidance control.** If the control doesn't exhibit the failure, there is nothing to fix — stop, don't author the guidance.
+3. **5+ reps per variant.** Single samples lie.
+4. **Manually read every flagged match.** Score programmatically if you like, but template echoes and quoted counter-examples masquerade as hits; automated counts alone overstate both failure and success.
+5. **Variance is a metric.** When guidance lands, reps converge on the same shape. Five different interpretations across five reps means the wording isn't binding — tighten the form before adding words.
 
 Micro-tests verify wording; they do not replace pressure scenarios for discipline skills.
 
@@ -748,10 +748,10 @@ Deploying untested skills = deploying untested code. It's a violation of quality
 How future agents find your skill:
 
 1. **Encounters problem** ("tests are flaky")
-1. **Searches skills** (greps descriptions, browses categories)
-1. **Finds SKILL** (description matches)
-1. **Scans overview** (is this relevant?)
-1. **Reads patterns** (quick reference table)
-1. **Loads example** (only when implementing)
+2. **Searches skills** (greps descriptions, browses categories)
+3. **Finds SKILL** (description matches)
+4. **Scans overview** (is this relevant?)
+5. **Reads patterns** (quick reference table)
+6. **Loads example** (only when implementing)
 
 **Optimize for this flow** - put searchable terms early and often.

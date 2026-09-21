@@ -44,32 +44,32 @@ Break large goals into a roadmap of consecutive plans and keep it as a committed
 ## Lane 1 — Start an Epic
 
 1. Read the spec from brainstorming or the human.
-1. Verify that `brainstorming` completed its planning-handoff review, or treat a human-supplied approved spec as the design authority.
-1. Create `.agents/plans/<epic-name>/roadmap.md` with a plan sequence table.
-1. Use `writing-plans` to write Plan 1 with roadmap context and Review Focus.
-1. Run `handoff-gates` plan-readiness.
-1. Ask the human to review the saved plan before execution, preserving any execution method they already supplied.
-1. Hand off to `executing-plans` or `subagent-driven-development`.
+2. Verify that `brainstorming` completed its planning-handoff review, or treat a human-supplied approved spec as the design authority.
+3. Create `.agents/plans/<epic-name>/roadmap.md` with a plan sequence table.
+4. Use `writing-plans` to write Plan 1 with roadmap context and Review Focus.
+5. Run `handoff-gates` plan-readiness.
+6. Ask the human to review the saved plan before execution, preserving any execution method they already supplied.
+7. Hand off to `executing-plans` or `subagent-driven-development`.
 
 ## Lane 2 — Continue an Epic
 
 1. Read the roadmap.
-1. Pick the next pending or blocked item.
-1. Use `writing-plans` to write the next plan just-in-time, including all prior commits, PRs, worktree state, and learnings.
-1. Run `handoff-gates` plan-readiness.
-1. Ask the human to review the saved plan before execution, preserving any execution method they already supplied.
-1. Execute the plan.
-1. Update the roadmap only when the remaining sequence, scope, or blockers changed.
-1. Repeat until done. Run `handoff-gates` completion-readiness before code review.
+2. Pick the next pending or blocked item.
+3. Use `writing-plans` to write the next plan just-in-time, including all prior commits, PRs, worktree state, and learnings.
+4. Run `handoff-gates` plan-readiness.
+5. Ask the human to review the saved plan before execution, preserving any execution method they already supplied.
+6. Execute the plan.
+7. Update the roadmap only when the remaining sequence, scope, or blockers changed.
+8. Repeat until done. Run `handoff-gates` completion-readiness before code review.
 
 ## Lane 3 — Split an Oversized Plan
 
 If a plan in progress grows beyond one deliverable, stop writing. **MUST READ:** `references/plan-scope-sizing.md` and use escape hatch 3:
 
 1. Close the current plan file at a clean boundary (end of the last fully scoped task).
-1. Create a new plan file for the remaining scope in the same epic directory.
-1. Update the epic roadmap table with the new plan, its place in the sequence, and a `Handoff Notes` entry explaining why the split happened.
-1. Mark the original plan as `blocked` or `replan` in the roadmap if it cannot continue as written.
+2. Create a new plan file for the remaining scope in the same epic directory.
+3. Update the epic roadmap table with the new plan, its place in the sequence, and a `Handoff Notes` entry explaining why the split happened.
+4. Mark the original plan as `blocked` or `replan` in the roadmap if it cannot continue as written.
 
 This is a fallback for legitimately over-scoped plans. It is not an excuse to create endless epics of tiny plans.
 

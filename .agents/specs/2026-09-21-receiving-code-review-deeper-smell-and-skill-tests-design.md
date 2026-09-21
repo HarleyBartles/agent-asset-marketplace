@@ -35,8 +35,8 @@ READ -> UNDERSTAND -> VERIFY -> EVALUATE -> INSPECT -> RESPOND -> IMPLEMENT -> V
 The skill will define three branches:
 
 1. **No credible deeper smell:** correct and verify the reported instance.
-1. **Credible, small, in-scope prevention:** correct the instance, add the smallest durable prevention, and prove the prevention addresses the defect class rather than only the reported specimen.
-1. **Credible but consequential or out of scope:** make the independently safe local correction, report the evidenced mechanism, and propose a concrete follow-up instead of silently expanding authority.
+2. **Credible, small, in-scope prevention:** correct the instance, add the smallest durable prevention, and prove the prevention addresses the defect class rather than only the reported specimen.
+3. **Credible but consequential or out of scope:** make the independently safe local correction, report the evidenced mechanism, and propose a concrete follow-up instead of silently expanding authority.
 
 The smell must be a causal mechanism supported by repository evidence, not an imagined future risk. Representative indicators include duplicated truth, unenforced invariants, incomplete multi-surface operations, unsafe interfaces, unclear ownership, and missing boundary or postcondition checks. Preferred prevention removes the opportunity, mechanically detects the class, or makes the correct action the easy action. Prose reminders are the fallback when the rule genuinely requires judgment.
 
@@ -47,11 +47,11 @@ The skill's common-mistakes table will name the existing failure directly: fixin
 The clean RED is not a generally poor review response. It is competent literal review satisfaction:
 
 1. The feedback is correct and understood.
-1. The agent verifies it against the repository.
-1. The agent makes a technically sound local correction.
-1. The agent adds or runs focused verification for that correction.
-1. The repository contains reasonably discoverable evidence of a repeatable mechanism behind the defect.
-1. The agent stops without investigating or naming that mechanism.
+2. The agent verifies it against the repository.
+3. The agent makes a technically sound local correction.
+4. The agent adds or runs focused verification for that correction.
+5. The repository contains reasonably discoverable evidence of a repeatable mechanism behind the defect.
+6. The agent stops without investigating or naming that mechanism.
 
 A run is not a valid RED if the agent misunderstands the reviewer, applies an incorrect patch, omits ordinary verification, cannot reasonably discover the mechanism, or notices the smell but lawfully declines a consequential redesign. If the unmodified skill already produces the desired deeper-smell behaviour, the fixture has not established RED and must not be used to justify the change.
 

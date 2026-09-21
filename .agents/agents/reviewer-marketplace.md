@@ -33,13 +33,13 @@ Use this section to decide whether `reviewer-marketplace` should be dispatched f
 Use this checklist during `orchestrator-self-review` and as the core of the diff review:
 
 1. **`tools/new_plugin.py` contract** — error paths return non-zero; `--check` returns zero on success; new packs are not default-enabled unless the PR explicitly says so.
-1. **`--sync` / `--check` safety** — `--sync` does not refuse to run in a normal clone; manifest regeneration preserves top-level author, license, notes, and provenance fields.
-1. **`tools/run.py` task semantics** — target wiring is correct; `mutating` tags are accurate; `ci` dependency graph is correct.
-1. **Generated index hygiene** — `plugin-roots.json`, `bundle-manifest.json`, `repo-index.json`, `codex-marketplace/manifest.json`, `.agents/plugins/marketplace.json` are internally consistent.
-1. **`--check` vs `--apply` semantics** — commands are classified read-only, mutating, or mixed and behave accordingly.
-1. **Cross-skill script paths** — `SKILL.md` and references use the canonical `subagent-workspace/scripts/` or `.agents/skills/` path list.
-1. **Git index flags** — no `assume-unchanged` or `skip-worktree` flags on generated surfaces.
-1. **`repo-local-marketplace-policy.json` install defaults** — match the PR intent.
+2. **`--sync` / `--check` safety** — `--sync` does not refuse to run in a normal clone; manifest regeneration preserves top-level author, license, notes, and provenance fields.
+3. **`tools/run.py` task semantics** — target wiring is correct; `mutating` tags are accurate; `ci` dependency graph is correct.
+4. **Generated index hygiene** — `plugin-roots.json`, `bundle-manifest.json`, `repo-index.json`, `codex-marketplace/manifest.json`, `.agents/plugins/marketplace.json` are internally consistent.
+5. **`--check` vs `--apply` semantics** — commands are classified read-only, mutating, or mixed and behave accordingly.
+6. **Cross-skill script paths** — `SKILL.md` and references use the canonical `subagent-workspace/scripts/` or `.agents/skills/` path list.
+7. **Git index flags** — no `assume-unchanged` or `skip-worktree` flags on generated surfaces.
+8. **`repo-local-marketplace-policy.json` install defaults** — match the PR intent.
 
 ## Invariants
 
@@ -71,9 +71,9 @@ Write `review-log-marketplace.md` in the off-repo scratch. Begin with a brief `#
 ## Procedure
 
 1. If `<scan_findings>` is provided, read it first.
-1. If `<pr_description>` is provided, read it for scope.
-1. Read `<diff_path>`.
-1. Inspect the diff for:
+2. If `<pr_description>` is provided, read it for scope.
+3. Read `<diff_path>`.
+4. Inspect the diff for:
    - `tools/new_plugin.py` exit-code and default-enablement logic.
    - `tools/run.py` target wiring, `mutating` tags, and `ci` dependency correctness.
    - `plugin-roots.json`, `bundle-manifest.json`, `repo-index.json`, `codex-marketplace/manifest.json`, and `.agents/plugins/marketplace.json` changes.
@@ -81,9 +81,9 @@ Write `review-log-marketplace.md` in the off-repo scratch. Begin with a brief `#
    - `--check` vs `--apply` semantics and read-only/mutating command classification.
    - Stale or wrong cross-skill script paths in `SKILL.md` or reference files that use this repo's canonical `subagent-workspace/scripts/` or `.agents/skills/` path list. Verify the path exists; if not, the preflight should catch it and you should confirm it did.
    - `repo-local-marketplace-policy.json` `install_defaults` drift against the PR intent.
-1. Run `grep` and `find_file_by_name` to cross-check that scaffolder output and generator output stay in sync.
-1. Report only marketplace/tooling issues. Cite `file:line`, severity, and remediation.
-1. End with `reviewer-marketplace: N issue(s)` or `reviewer-marketplace: clean`.
+5. Run `grep` and `find_file_by_name` to cross-check that scaffolder output and generator output stay in sync.
+6. Report only marketplace/tooling issues. Cite `file:line`, severity, and remediation.
+7. End with `reviewer-marketplace: N issue(s)` or `reviewer-marketplace: clean`.
 
 ## Output format
 

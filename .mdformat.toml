@@ -1,4 +1,5 @@
 wrap = "no"
 end_of_line = "lf"
 validate = true
+number = true
 extensions = ["gfm", "frontmatter"]

@@ -40,11 +40,11 @@ Do not use when another more specific skill owns the task.
 ## Core Pattern
 
 1. Identify stakeholders and their goals; separate wants from constraints.
-1. Ask open-ended questions, then converge with "what does success look like?"
-1. Record findings as user stories (As a <role>, I want <goal>, so that <why>).
-1. Define acceptance criteria using Given/When/Then or concrete success measures.
-1. Validate with stakeholders and prototypes before committing to implementation.
-1. Trace changes: keep requirements linked to decisions, tests, and releases.
+2. Ask open-ended questions, then converge with "what does success look like?"
+3. Record findings as user stories (As a <role>, I want <goal>, so that <why>).
+4. Define acceptance criteria using Given/When/Then or concrete success measures.
+5. Validate with stakeholders and prototypes before committing to implementation.
+6. Trace changes: keep requirements linked to decisions, tests, and releases.
 
 ## Common Mistakes
 

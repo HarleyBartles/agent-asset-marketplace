@@ -14,9 +14,9 @@ Verify a fix against the originating lens's checklist, tightly scoped to the bla
 ## Recipe
 
 1. From `findings.jsonl` and `resolutions.jsonl`, determine the finding being re-reviewed and its originating `lens`.
-1. Read the originating `review-log-<lens>.md` and extract the `## Checklist` section into a temporary `<scratch_dir>/lens-<lens>-checklist.txt` file.
-1. Prepare a fix diff scoped to the blast radius of the fix. Do not include the whole branch.
-1. Dispatch the `reviewer-fixes` subagent (do not re-dispatch the original lens directly). Provide:
+2. Read the originating `review-log-<lens>.md` and extract the `## Checklist` section into a temporary `<scratch_dir>/lens-<lens>-checklist.txt` file.
+3. Prepare a fix diff scoped to the blast radius of the fix. Do not include the whole branch.
+4. Dispatch the `reviewer-fixes` subagent (do not re-dispatch the original lens directly). Provide:
    - `<diff_path>` - the scoped fix diff
    - `<log_path>` - `<scratch_dir>/review-log-reviewer-fixes.md`
    - `<pr_description>` - the PR title/body
@@ -25,11 +25,11 @@ Verify a fix against the originating lens's checklist, tightly scoped to the bla
    - `<full_diff_slice_path>` - the relevant slice of the full branch diff
    - `<lens>` - the originating lens, e.g. `reviewer-plans`
    - `<lens_checklist>` - the prepared `lens-<lens>-checklist.txt` file
-1. Wait for the subagent. Its final response must be exactly one line:
+5. Wait for the subagent. Its final response must be exactly one line:
    - `reviewer-fixes: clean`
    - `reviewer-fixes: N issue(s)`
-1. Read `review-log-reviewer-fixes.md`.
-1. On `reviewer-fixes: clean`:
+6. Read `review-log-reviewer-fixes.md`.
+7. On `reviewer-fixes: clean`:
    - Do not record the resolution here; `resolved-ledger` is the single authority that records resolutions. Regenerate the metrics file:
      ```bash
      py -3 .agents/skills/iterative-review/scripts/compile_metrics.py \
@@ -49,7 +49,7 @@ Verify a fix against the originating lens's checklist, tightly scoped to the bla
          --state <scratch_dir>/review-state.json \
          --propose resolved-ledger
      ```
-1. On `reviewer-fixes: N issue(s)`:
+8. On `reviewer-fixes: N issue(s)`:
    - Do **not** increment `fix_round` (`finding-fix` owns that on the next pass).
    - If the report shows the original finding is still unresolved, no new record is needed. Regenerate the metrics file and route back to `finding-fix`:
      ```bash

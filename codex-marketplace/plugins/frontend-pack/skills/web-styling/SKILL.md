@@ -33,8 +33,8 @@ Pick the styling approach that matches team size, build pipeline, and runtime co
 ## Core Pattern
 
 1. Default to plain CSS or CSS Modules for static, build-time scoped styles.
-1. Add a preprocessor when shared variables, mixins, or nested syntax reduce duplication.
-1. Reach for CSS-in-JS only when dynamic theming or runtime prop-based styles justify the bundle cost.
+2. Add a preprocessor when shared variables, mixins, or nested syntax reduce duplication.
+3. Reach for CSS-in-JS only when dynamic theming or runtime prop-based styles justify the bundle cost.
 
 ## Common Mistakes
 

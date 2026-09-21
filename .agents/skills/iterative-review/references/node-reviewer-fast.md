@@ -19,14 +19,14 @@ Run the cheap `reviewer-fast` pre-lens before any deep lens is dispatched. Catch
        --state <scratch_dir>/review-state.json \
        --propose reviewer-fast
    ```
-1. `run_subagent` `reviewer-fast` with `<diff_path>`, `<pr_description>`, and `output_path` `<scratch_dir>/review-log-reviewer-fast.md`.
-1. Extract the terminal line from `review-log-reviewer-fast.md`. If it is `reviewer-fast: clean`, authorize `lens-dispatch`:
+2. `run_subagent` `reviewer-fast` with `<diff_path>`, `<pr_description>`, and `output_path` `<scratch_dir>/review-log-reviewer-fast.md`.
+3. Extract the terminal line from `review-log-reviewer-fast.md`. If it is `reviewer-fast: clean`, authorize `lens-dispatch`:
    ```
    py -3 .agents/skills/iterative-review/scripts/next_node.py \
        --state <scratch_dir>/review-state.json \
        --propose lens-dispatch
    ```
-1. If `reviewer-fast` reported `N issue(s)`, record each finding, then run `compile_metrics.py` and route to `lens-triage`:
+4. If `reviewer-fast` reported `N issue(s)`, record each finding, then run `compile_metrics.py` and route to `lens-triage`:
    ```
    py -3 .agents/skills/iterative-review/scripts/record_finding.py \
        --state <scratch_dir>/review-state.json \

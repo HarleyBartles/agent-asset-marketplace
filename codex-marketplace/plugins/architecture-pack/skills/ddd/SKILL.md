@@ -35,11 +35,11 @@ Do not use when the domain is a thin data layer or simple CRUD. Do not use when 
 ## Core Pattern
 
 1. Explore the domain with experts and capture the ubiquitous language.
-1. Define bounded contexts where a single coherent model applies.
-1. Map relationships between contexts (partnership, customer-supplier, conformist, anti-corruption layer, separate ways, shared kernel).
-1. Classify subdomains into core, supporting, and generic.
-1. Model inside a context with tactical building blocks aligned to the language.
-1. Keep aggregates small, consistent, and transaction-safe.
+2. Define bounded contexts where a single coherent model applies.
+3. Map relationships between contexts (partnership, customer-supplier, conformist, anti-corruption layer, separate ways, shared kernel).
+4. Classify subdomains into core, supporting, and generic.
+5. Model inside a context with tactical building blocks aligned to the language.
+6. Keep aggregates small, consistent, and transaction-safe.
 
 ## Common Mistakes
 

@@ -20,11 +20,11 @@ Check only families that materially affect the next action:
 ## Workflow
 
 1. State the next action that depends on interpretation.
-1. Identify material ambiguous terms, sources, boundaries, or choices.
-1. Resolve forced or harmless ambiguity internally when current context, source hierarchy, or user instruction leaves one safe route.
-1. If using an assumption, label it and keep the next step reversible.
-1. Ask only for decisions that remain genuinely open and material.
-1. Block rather than invent when the ambiguity affects irreversible mutation, source truth, canon, publication, dispatch, money/time commitments, or user intent.
+2. Identify material ambiguous terms, sources, boundaries, or choices.
+3. Resolve forced or harmless ambiguity internally when current context, source hierarchy, or user instruction leaves one safe route.
+4. If using an assumption, label it and keep the next step reversible.
+5. Ask only for decisions that remain genuinely open and material.
+6. Block rather than invent when the ambiguity affects irreversible mutation, source truth, canon, publication, dispatch, money/time commitments, or user intent.
 
 ## Safe internal resolution
 

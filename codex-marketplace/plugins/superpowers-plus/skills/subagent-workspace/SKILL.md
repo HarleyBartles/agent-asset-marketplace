@@ -47,16 +47,16 @@ All helpers are Python 3 CLIs. They default to read-only `--check` behavior; fil
 For subagent-driven plans:
 
 1. Run `py -3 scripts/workspace.py --apply PLAN_FILE` and capture the printed path.
-1. Run `py -3 scripts/task_brief.py --apply PLAN_FILE <task-number>` to produce the task brief.
-1. Run `py -3 scripts/review_package.py --apply PLAN_FILE BASE HEAD` to produce the review package.
-1. Write the subagent prompt and report under the same workspace.
-1. When the task is done, the scratch directory can be discarded.
+2. Run `py -3 scripts/task_brief.py --apply PLAN_FILE <task-number>` to produce the task brief.
+3. Run `py -3 scripts/review_package.py --apply PLAN_FILE BASE HEAD` to produce the review package.
+4. Write the subagent prompt and report under the same workspace.
+5. When the task is done, the scratch directory can be discarded.
 
 For iterative review:
 
 1. Run `py -3 scripts/workspace.py --apply` with no plan file and capture the workspace path.
-1. Run `py -3 scripts/review_package.py --apply - <base> <head> <output-path>` to produce the UTF-8 diff package.
-1. Write `pr.json` and `review-log.md` under the same `iterative-review-<pr_number>` directory.
+2. Run `py -3 scripts/review_package.py --apply - <base> <head> <output-path>` to produce the UTF-8 diff package.
+3. Write `pr.json` and `review-log.md` under the same `iterative-review-<pr_number>` directory.
 
 ## Rules
 

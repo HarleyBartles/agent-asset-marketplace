@@ -214,7 +214,7 @@ LLMs respond to the same persuasion principles as humans. Understanding this psy
 When designing a skill, ask:
 
 1. **What type is it?** (Discipline vs. guidance vs. reference)
-1. **What behavior am I trying to change?**
-1. **Which principle(s) apply?** (Usually authority + commitment for discipline)
-1. **Am I combining too many?** (Don't use all seven)
-1. **Is this ethical?** (Serves user's genuine interests?)
+2. **What behavior am I trying to change?**
+3. **Which principle(s) apply?** (Usually authority + commitment for discipline)
+4. **Am I combining too many?** (Don't use all seven)
+5. **Is this ethical?** (Serves user's genuine interests?)

@@ -107,12 +107,12 @@ Skills are code, and code ships with its tests. Skill-owned tests therefore ship
 Before deploying a skill, verify:
 
 1. Frontmatter validates against the contract.
-1. The description is discoverable with explicit `use_when` and `do_not_use_when` triggers.
-1. Canonical identity metadata is stable and correct.
-1. The body is under 500 words excluding frontmatter.
-1. Content is accurate, actionable, and scoped.
-1. The skill installs via `py -3 tools/run.py marketplace --apply`.
-1. The skill triggers on the right conditions and provides the expected guidance.
+2. The description is discoverable with explicit `use_when` and `do_not_use_when` triggers.
+3. Canonical identity metadata is stable and correct.
+4. The body is under 500 words excluding frontmatter.
+5. Content is accurate, actionable, and scoped.
+6. The skill installs via `py -3 tools/run.py marketplace --apply`.
+7. The skill triggers on the right conditions and provides the expected guidance.
 
 ## Pressure testing
 
@@ -129,9 +129,9 @@ Pure reference skills (syntax guides, API docs) and skills without a concrete fa
 ### Required artifacts when pressure testing
 
 1. **Test package in the skill:** Keep reusable prompts, evaluation scenarios, complete lightweight fixture trees, materializers, rubrics, and deterministic assertions under the skill's `tests/` directory. These ship with the skill; run outputs do not.
-1. **RED/GREEN comparison:** When the acceptance claim depends on behavior, compare the scenario without and with the skill. Keep reusable prompts and deterministic assertions; do not retain run-by-run transcripts, score folders, or copied model metadata as permanent repository proof.
-1. **Tool-calling fidelity:** Subagents cannot invoke skills, but they can read the skill files from disk and call available MCP or other tools directly. Do not pre-truncate or fabricate tool-list fixtures; let the subagent call the actual MCP server (e.g., `mcp_list_tools`) and experience the same truncation or discovery cost a real agent would.
-1. **Blinding:** The maintainer orchestration may read the skill-root test package. The GREEN worker reads `SKILL.md` and its ordinary behavioral resources, never the hidden rubric or expected result.
+2. **RED/GREEN comparison:** When the acceptance claim depends on behavior, compare the scenario without and with the skill. Keep reusable prompts and deterministic assertions; do not retain run-by-run transcripts, score folders, or copied model metadata as permanent repository proof.
+3. **Tool-calling fidelity:** Subagents cannot invoke skills, but they can read the skill files from disk and call available MCP or other tools directly. Do not pre-truncate or fabricate tool-list fixtures; let the subagent call the actual MCP server (e.g., `mcp_list_tools`) and experience the same truncation or discovery cost a real agent would.
+4. **Blinding:** The maintainer orchestration may read the skill-root test package. The GREEN worker reads `SKILL.md` and its ordinary behavioral resources, never the hidden rubric or expected result.
 
 ### Policy expectations
 

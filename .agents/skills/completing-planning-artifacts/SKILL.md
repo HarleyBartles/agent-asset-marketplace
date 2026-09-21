@@ -27,11 +27,11 @@ Plans, specifications, roadmaps, checkpoints, and similar files are **committed,
 Before handing off a substantially complete PR, whether it remains Draft or is made Ready:
 
 1. Verify implementation and review are complete.
-1. Promote enduring architecture decisions to the repository's ADR home and operating rules to current doctrine, runbooks, or playbooks.
-1. Mark every governed artifact with the exact state `completed-awaiting-retirement`.
-1. Keep those artifacts tracked in the completing PR. Do not delete them before merge: a squash merge cannot preserve a file absent from the final PR tree.
-1. Verify the published PR contains the completion-marked artifacts.
-1. Make the plan fully checked for every agent-owned obligation. Human-owned Ready or merge actions belong in the handoff or PR state, not as unchecked plan work. Draft is a commercial and CI posture unless the PR is explicitly declared incomplete; a fully reviewable Draft completes the agent's slice.
+2. Promote enduring architecture decisions to the repository's ADR home and operating rules to current doctrine, runbooks, or playbooks.
+3. Mark every governed artifact with the exact state `completed-awaiting-retirement`.
+4. Keep those artifacts tracked in the completing PR. Do not delete them before merge: a squash merge cannot preserve a file absent from the final PR tree.
+5. Verify the published PR contains the completion-marked artifacts.
+6. Make the plan fully checked for every agent-owned obligation. Human-owned Ready or merge actions belong in the handoff or PR state, not as unchecked plan work. Draft is a commercial and CI posture unless the PR is explicitly declared incomplete; a fully reviewable Draft completes the agent's slice.
 
 The agent's completing slice ends at the verified, fully reviewable PR handoff. The artifact lifecycle then leaves the completion-marked files in that PR and on `main` after merge. They are no longer active authority even while tracked temporarily.
 
@@ -40,11 +40,11 @@ The agent's completing slice ends at the verified, fully reviewable PR handoff. 
 After refreshing `main` and creating the next substantive branch/worktree, but before its substantive edits:
 
 1. Discover artifacts marked `completed-awaiting-retirement` in the branch's base tree.
-1. Verify that base is current `main`; branch-only residue is not retirement proof.
-1. Verify enduring content was promoted. Use **REQUIRED SUB-SKILL:** `cleanup-custody` if completion or promotion is ambiguous.
-1. If the consumer permits a completed-artifact convenience copy, resolve its off-repo scratch root from host or repository policy; do not invent a drive or fixed absolute path. Keep repositories segregated beneath that root as `<scratch-root>/<repo-name>/completed/<artifact-type>/`, where `<repo-name>` is the canonical repository identity rather than a feature-worktree leaf. Copy the files there as disposable, non-evidentiary convenience copies. A consumer-declared resolver or more specific repo-segregated layout takes precedence over this conventional shape; never flatten artifacts from multiple repositories into one shared `completed/` directory.
-1. Remove the tracked artifacts and stale links or generated indexes, then run the consumer's owning regeneration command.
-1. Commit retirement as the first commit in the next substantive slice's eventual PR. Never open a cleanup-only PR merely to remove them.
+2. Verify that base is current `main`; branch-only residue is not retirement proof.
+3. Verify enduring content was promoted. Use **REQUIRED SUB-SKILL:** `cleanup-custody` if completion or promotion is ambiguous.
+4. If the consumer permits a completed-artifact convenience copy, resolve its off-repo scratch root from host or repository policy; do not invent a drive or fixed absolute path. Keep repositories segregated beneath that root as `<scratch-root>/<repo-name>/completed/<artifact-type>/`, where `<repo-name>` is the canonical repository identity rather than a feature-worktree leaf. Copy the files there as disposable, non-evidentiary convenience copies. A consumer-declared resolver or more specific repo-segregated layout takes precedence over this conventional shape; never flatten artifacts from multiple repositories into one shared `completed/` directory.
+5. Remove the tracked artifacts and stale links or generated indexes, then run the consumer's owning regeneration command.
+6. Commit retirement as the first commit in the next substantive slice's eventual PR. Never open a cleanup-only PR merely to remove them.
 
 If no later substantive slice occurs, the marked artifacts remain on `main`. If concurrent successor slices target the same artifacts, the first merged PR retires them; later slices refresh their base and drop redundant deletions.
 

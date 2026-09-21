@@ -9,9 +9,9 @@
 ## How it works
 
 1. Read `.agents/plugins/marketplace.json`.
-1. For every plugin with `policy.installation == "INSTALLED_BY_DEFAULT"`, find `assets/profiles/*.md` (skipping `INDEX.md`).
-1. Compare those expected files with the current contents of `.agents/agents/`.
-1. In `--apply` mode: copy any missing profiles and remove any orphan profiles not contributed by an installed plugin. In `--check` mode: only report what would change.
+2. For every plugin with `policy.installation == "INSTALLED_BY_DEFAULT"`, find `assets/profiles/*.md` (skipping `INDEX.md`).
+3. Compare those expected files with the current contents of `.agents/agents/`.
+4. In `--apply` mode: copy any missing profiles and remove any orphan profiles not contributed by an installed plugin. In `--check` mode: only report what would change.
 
 ## Safe invocation
 

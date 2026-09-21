@@ -28,12 +28,12 @@ Do not use this skill when applying an existing anti-slop profile; use `unslop-p
 ## Core Pattern
 
 1. Identify the domain and whether you are analyzing text or visual samples.
-1. Collect representative samples (inline, fixture files, or a sample directory).
-1. Run the engine:
+2. Collect representative samples (inline, fixture files, or a sample directory).
+3. Run the engine:
    ```bash
    py -3 scripts/unslop.py --apply --domain "..." [--type visual --count N]
    ```
-1. Review the generated artifacts in `unslop-output/`:
+4. Review the generated artifacts in `unslop-output/`:
    - `analysis.md` — counted repeated patterns
    - `skill.md` — generated anti-slop profile
-1. Return the profile name, the dominant repeated patterns, and how to use the profile.
+5. Return the profile name, the dominant repeated patterns, and how to use the profile.

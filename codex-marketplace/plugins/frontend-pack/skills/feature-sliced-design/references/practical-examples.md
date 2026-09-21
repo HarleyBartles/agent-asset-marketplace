@@ -314,7 +314,7 @@ Do not mix mutations with queries. Two patterns are accepted:
    };
    ```
 
-1. **A `mutationFn` defined in `shared/` or `entities/`** and called from `useMutation` in the component.
+2. **A `mutationFn` defined in `shared/` or `entities/`** and called from `useMutation` in the component.
 
 ### Query factory pattern
 

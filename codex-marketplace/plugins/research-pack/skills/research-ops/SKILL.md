@@ -34,10 +34,10 @@ Use this skill when planning research, triaging sources, synthesizing evidence, 
 ## Core Pattern
 
 1. Write the research question and inclusion criteria before searching.
-1. Search broadly, screen sources against the criteria, and record exclusions.
-1. Extract claims and evidence into a synthesis matrix.
-1. Ground every conclusion in a cited source with access date and license.
-1. Report confidence, limitations, and gaps alongside the answer.
+2. Search broadly, screen sources against the criteria, and record exclusions.
+3. Extract claims and evidence into a synthesis matrix.
+4. Ground every conclusion in a cited source with access date and license.
+5. Report confidence, limitations, and gaps alongside the answer.
 
 ## Common Mistakes
 

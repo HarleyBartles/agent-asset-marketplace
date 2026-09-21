@@ -12,13 +12,13 @@ Ensure `review-metrics.json` is generated from the recorded logs and current sta
 ## Recipe
 
 1. Confirm the upstream node has already recorded any new finding, resolution, regression, or blocker events with the appropriate `record_*.py` scripts.
-1. Regenerate the metrics file:
+2. Regenerate the metrics file:
    ```bash
    py -3 .agents/skills/iterative-review/scripts/compile_metrics.py \
        --state <scratch_dir>/review-state.json \
        --metrics <scratch_dir>/review-metrics.json
    ```
-1. Authorize the next node:
+3. Authorize the next node:
    ```bash
    py -3 .agents/skills/iterative-review/scripts/next_node.py \
        --state <scratch_dir>/review-state.json \

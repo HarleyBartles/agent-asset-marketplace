@@ -19,16 +19,16 @@ Use this section to decide whether `reviewer-fast` should be dispatched for a PR
 
 ## Checklist
 
-1. **Dead code and dead branches** - unused CLI flags, unreachable `if`/`else` branches, stale references.
-1. **CLI contract drift** - script `--help` text does not match actual flags, missing `--check` self-check, wrong epilog.
-1. **Stale agent instructions** - `openai.yaml` or `SKILL.md` still referencing removed tools, old flags, or deprecated nodes.
-1. **Inconsistent status lines** - lens reports that do not end with `reviewer-<lens>: clean` or `reviewer-<lens>: N issue(s)`.
-1. **Missing error handling** - `FileNotFoundError`, `KeyError`, `json.JSONDecodeError` not guarded where the file is user-supplied.
-1. **Inconsistent exit codes** - a CLI script returning `1` for usage errors when it should return `2`, or vice-versa.
-1. **Mechanical scope drift** - changed file surfaces that are not mentioned in the PR body, plan, or spec (only flag if obviously outside scope).
-1. **Bans and style** - emojis, em-dashes, or other repo-banned copy introduced into skill files or docs.
-1. **Placeholder leakage** - `TODO`, `TBD`, `FIXME`, or `XXX` left in committed code or docs.
-1. **Path hard-coding** - new code assuming Windows or \*nix paths instead of `pathlib`/`os.path`.
+01. **Dead code and dead branches** - unused CLI flags, unreachable `if`/`else` branches, stale references.
+02. **CLI contract drift** - script `--help` text does not match actual flags, missing `--check` self-check, wrong epilog.
+03. **Stale agent instructions** - `openai.yaml` or `SKILL.md` still referencing removed tools, old flags, or deprecated nodes.
+04. **Inconsistent status lines** - lens reports that do not end with `reviewer-<lens>: clean` or `reviewer-<lens>: N issue(s)`.
+05. **Missing error handling** - `FileNotFoundError`, `KeyError`, `json.JSONDecodeError` not guarded where the file is user-supplied.
+06. **Inconsistent exit codes** - a CLI script returning `1` for usage errors when it should return `2`, or vice-versa.
+07. **Mechanical scope drift** - changed file surfaces that are not mentioned in the PR body, plan, or spec (only flag if obviously outside scope).
+08. **Bans and style** - emojis, em-dashes, or other repo-banned copy introduced into skill files or docs.
+09. **Placeholder leakage** - `TODO`, `TBD`, `FIXME`, or `XXX` left in committed code or docs.
+10. **Path hard-coding** - new code assuming Windows or \*nix paths instead of `pathlib`/`os.path`.
 
 ## Invariants
 

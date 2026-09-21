@@ -54,10 +54,10 @@ Use a 1–10 execution-confidence scale.
 ## How to Use
 
 1. Read the artifact produced by the previous stage.
-1. Pick the lane matching the boundary.
-1. Score the artifact against the lane question and checklist.
-1. Strengthen gaps until the score is at least 8, targeting 9+.
-1. Report the rating in the current handoff and proceed, or return `blocked` with the unresolved gaps.
+2. Pick the lane matching the boundary.
+3. Score the artifact against the lane question and checklist.
+4. Strengthen gaps until the score is at least 8, targeting 9+.
+5. Report the rating in the current handoff and proceed, or return `blocked` with the unresolved gaps.
 
 ## Plan-Readiness Checklist
 

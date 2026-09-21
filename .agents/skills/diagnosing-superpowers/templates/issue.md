@@ -26,8 +26,8 @@ The reporter has not tried reproducing without superpowers. Evidence for involve
 ## Steps to reproduce
 
 1. \<first human prompt, scrubbed>
-1. \<the turns leading to the problem, one line each>
-1. <the observable>
+2. \<the turns leading to the problem, one line each>
+3. <the observable>
 
 ## Expected behavior
 

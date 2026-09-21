@@ -26,13 +26,13 @@ Use this section to decide whether `reviewer-skills` should be dispatched for a 
 Use this checklist during `orchestrator-self-review` and as the core of the diff review:
 
 1. **SKILL.md frontmatter schema** — `license`, `name`, `description` are top-level; `license` is not under `metadata`; `metadata` only contains permitted skill-policy keys: `source-id`, `source-path`, `provenance-name`, `source-category`, `status`, `owner`, `scope`, `use_when`, `do_not_use_when`, `related_skills`.
-1. **SKILL.md metadata block** — a missing `metadata:` key is allowed; reject present `metadata: `, `metadata: null`, `metadata: ~`, `metadata: {}`, and any unexpected keys.
-1. **Markdown table hygiene** — every table row containing `|` must end with `|`.
-1. **`py -3` convention** — runnable examples use `py -3 -m <module>`; do not omit the `-3` qualifier.
-1. **Script path safety** — scripts that `Push-Location` or `cd` resolve output paths to absolute before changing directory; PowerShell/Bash writing UTF-8 for `read` do not emit a BOM.
-1. **Prompt robustness** — read-only subagent prompts do not instruct `git`, `exec`, or `find_file_by_name` to recreate missing packages or mutate files.
-1. **Generated skill hygiene** — in consumer repos, no hand-edits to installed `.agents/skills/` files.
-1. **Cross-repo portability** — portable skill `SKILL.md` and `references` do not embed consumer-repo specifics (named repo aliases like `<repo_alias_1>` or `<repo_alias_2>`, Windows drive letters, `Z:/`, `C:/`, `<user>` handles, user home paths, branch/PR slugs, or other repo/tenant/persona references). Generic placeholders (`<worktree>`, `<consumer_repo>`, `<workspace>`, `<repo_name>`, `<repo_alias>`) are fine; named repo examples and absolute local paths are not.
+2. **SKILL.md metadata block** — a missing `metadata:` key is allowed; reject present `metadata: `, `metadata: null`, `metadata: ~`, `metadata: {}`, and any unexpected keys.
+3. **Markdown table hygiene** — every table row containing `|` must end with `|`.
+4. **`py -3` convention** — runnable examples use `py -3 -m <module>`; do not omit the `-3` qualifier.
+5. **Script path safety** — scripts that `Push-Location` or `cd` resolve output paths to absolute before changing directory; PowerShell/Bash writing UTF-8 for `read` do not emit a BOM.
+6. **Prompt robustness** — read-only subagent prompts do not instruct `git`, `exec`, or `find_file_by_name` to recreate missing packages or mutate files.
+7. **Generated skill hygiene** — in consumer repos, no hand-edits to installed `.agents/skills/` files.
+8. **Cross-repo portability** — portable skill `SKILL.md` and `references` do not embed consumer-repo specifics (named repo aliases like `<repo_alias_1>` or `<repo_alias_2>`, Windows drive letters, `Z:/`, `C:/`, `<user>` handles, user home paths, branch/PR slugs, or other repo/tenant/persona references). Generic placeholders (`<worktree>`, `<consumer_repo>`, `<workspace>`, `<repo_name>`, `<repo_alias>`) are fine; named repo examples and absolute local paths are not.
 
 ## Invariants
 
@@ -65,9 +65,9 @@ Write `review-log-skills.md` in the off-repo scratch. Begin with a brief `## Inp
 ## Procedure
 
 1. If `<scan_findings>` is provided, read it first and do not duplicate its findings; instead, verify the preflight caught the pattern in the right place.
-1. If `<pr_description>` is provided, read it for scope.
-1. Read `<diff_path>`.
-1. Inspect the diff for:
+2. If `<pr_description>` is provided, read it for scope.
+3. Read `<diff_path>`.
+4. Inspect the diff for:
    - Changed `SKILL.md` files:
      - `license`, `name`, and `description` must be top-level keys; `license` must not be nested under `metadata`.
      - `metadata` block hygiene: a missing `metadata:` key is allowed; reject present `metadata: `, `metadata: null`, `metadata: ~`, and `metadata: {}` values, and any unexpected keys; only the permitted skill-policy keys (`source-id`, `source-path`, `provenance-name`, `source-category`, `status`, `owner`, `scope`, `use_when`, `do_not_use_when`, `related_skills`) are permitted.
@@ -76,9 +76,9 @@ Write `review-log-skills.md` in the off-repo scratch. Begin with a brief `## Inp
    - PowerShell/Bash scripts that `Push-Location` or `cd` and then write to a relative path without resolving it first.
    - Read-only subagent prompts that force the subagent to run `git` or `exec` to recreate a missing diff, or to mutate files.
    - Portable `SKILL.md` or `references` that embed consumer-repo specifics such as named repo aliases (`<repo_alias_1>`, `<repo_alias_2>`), Windows drive letters (`Z:/`, `C:/`), user paths, branch names, or PR slugs.
-1. Use `grep` and `find_file_by_name` to confirm canonical paths and patterns.
-1. Report only skill/reference/prose issues. Cite `file:line`, severity, and remediation.
-1. End with `reviewer-skills: N issue(s)` or `reviewer-skills: clean`.
+5. Use `grep` and `find_file_by_name` to confirm canonical paths and patterns.
+6. Report only skill/reference/prose issues. Cite `file:line`, severity, and remediation.
+7. End with `reviewer-skills: N issue(s)` or `reviewer-skills: clean`.
 
 ## Output format
 

@@ -37,14 +37,14 @@ Design systems where services react to immutable events through a broker, favori
 ## Core Pattern
 
 1. Model events as immutable facts in past tense (for example, `OrderCreated`, `PaymentProcessed`) and include correlation IDs.
-1. Distinguish events (facts for many subscribers) from commands (requests to a single target) and messages (transport envelope).
-1. Choose a broker for the workload:
+2. Distinguish events (facts for many subscribers) from commands (requests to a single target) and messages (transport envelope).
+3. Choose a broker for the workload:
    - Kafka for high-throughput, replayable event streams.
    - RabbitMQ for flexible routing and request/reply patterns.
    - Managed queues when operational overhead should be minimized.
-1. Coordinate workflows with choreography for simple, autonomous steps, and orchestration for complex, sequential processes.
-1. Use sagas with compensating transactions when a long-lived workflow spans multiple services.
-1. Make consumers idempotent, monitor lag, and version event schemas with a registry.
+4. Coordinate workflows with choreography for simple, autonomous steps, and orchestration for complex, sequential processes.
+5. Use sagas with compensating transactions when a long-lived workflow spans multiple services.
+6. Make consumers idempotent, monitor lag, and version event schemas with a registry.
 
 ## Common Mistakes
 

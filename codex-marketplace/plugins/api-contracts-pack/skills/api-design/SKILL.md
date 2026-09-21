@@ -39,10 +39,10 @@ Do not use when another more specific skill owns the task.
 ## Core Pattern
 
 1. Start with the OpenAPI Object, then fill `info`, `servers`, and `paths`.
-1. Define reusable schemas, parameters, responses, and security schemes under `components`.
-1. Prefer explicit version declarations; keep breaking changes out of patch releases.
-1. Use consistent resource naming and HTTP methods; return structured problem details for errors.
-1. Reference reusable components with `$ref` to keep the contract DRY.
+2. Define reusable schemas, parameters, responses, and security schemes under `components`.
+3. Prefer explicit version declarations; keep breaking changes out of patch releases.
+4. Use consistent resource naming and HTTP methods; return structured problem details for errors.
+5. Reference reusable components with `$ref` to keep the contract DRY.
 
 ## Common Mistakes
 

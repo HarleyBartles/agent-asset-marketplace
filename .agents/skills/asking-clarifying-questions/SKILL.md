@@ -38,13 +38,13 @@ This is an anytime escape hatch. If a single missing fact blocks the next step o
 ## Core pattern
 
 1. State the immediate next action that depends on the answer.
-1. State the ambiguity concisely (one missing fact, term, scope, boundary, or output shape).
-1. State the risk of guessing.
-1. Give a concrete recommendation and the available options.
-1. Ask one question.
-1. Record the answer. The decision remains human-owned. Stop when the human explicitly defers the decision or asks to pause. A request to decide together invites collaboration: offer a bounded recommendation or ask the next useful question, without implementing an unresolved choice.
-1. Continue only when the answer resolves the immediate ambiguity.
-1. If another missing fact still blocks the next step, repeat from step 1 in the next turn.
+2. State the ambiguity concisely (one missing fact, term, scope, boundary, or output shape).
+3. State the risk of guessing.
+4. Give a concrete recommendation and the available options.
+5. Ask one question.
+6. Record the answer. The decision remains human-owned. Stop when the human explicitly defers the decision or asks to pause. A request to decide together invites collaboration: offer a bounded recommendation or ask the next useful question, without implementing an unresolved choice.
+7. Continue only when the answer resolves the immediate ambiguity.
+8. If another missing fact still blocks the next step, repeat from step 1 in the next turn.
 
 ## When to use
 

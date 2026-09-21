@@ -38,12 +38,12 @@ Do not use for pen-testing execution or vendor tool selection.
 ## Core pattern
 
 1. Identify the OWASP Top 10 categories that apply to the application or change.
-1. Pick prevention controls for each risk from the reference guide: least privilege, input validation, secure defaults, centralized authentication, output encoding, dependency verification, structured logging, and cryptographic hygiene.
-1. Map controls to the right ASVS verification level:
+2. Pick prevention controls for each risk from the reference guide: least privilege, input validation, secure defaults, centralized authentication, output encoding, dependency verification, structured logging, and cryptographic hygiene.
+3. Map controls to the right ASVS verification level:
    - Level 1 — all applications; verified by design review and automated checks.
    - Level 2 — applications with sensitive data; adds manual testing and positive controls.
    - Level 3 — high-value, high-assurance applications; requires architecture review, threat modeling, and deep verification.
-1. Record secure defaults and common misconfigurations to address before verification.
+4. Record secure defaults and common misconfigurations to address before verification.
 
 ## Common mistakes
 

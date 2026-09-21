@@ -35,11 +35,11 @@ Use this skill for frontend user-interface guidance covering component and layou
 ## Core Pattern
 
 1. Start with semantic HTML and clear information architecture; avoid unnecessary wrapper elements.
-1. Ensure keyboard navigability and screen-reader support before styling polish.
-1. Use consistent spacing, color, and typography aligned to the design system.
-1. Provide visible focus states, loading feedback, and clear error messaging.
-1. Validate contrast, motion preferences, and touch targets against WCAG and platform guidelines.
-1. Review the whole flow, not just a single screen; load operational guidance for deep patterns.
+2. Ensure keyboard navigability and screen-reader support before styling polish.
+3. Use consistent spacing, color, and typography aligned to the design system.
+4. Provide visible focus states, loading feedback, and clear error messaging.
+5. Validate contrast, motion preferences, and touch targets against WCAG and platform guidelines.
+6. Review the whole flow, not just a single screen; load operational guidance for deep patterns.
 
 ## Common Mistakes
 

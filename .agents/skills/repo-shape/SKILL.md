@@ -50,8 +50,8 @@ After the owning workflow has routed you, invoke `repo-shape` when:
 After routing, the `repo-shape` workflow is:
 
 1. Read `references/repository-runbook-standard.md` and `references/repository-shape-standard.md`.
-1. Read the repo's `.agents/doctrine/repo-runbook-policy.md`.
-1. Apply or check the surfaces the routed owner needs.
+2. Read the repo's `.agents/doctrine/repo-runbook-policy.md`.
+3. Apply or check the surfaces the routed owner needs.
 
 ## Script usage notes
 

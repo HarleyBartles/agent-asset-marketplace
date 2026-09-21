@@ -52,10 +52,10 @@ pages/profile/
 For each moved slice:
 
 1. Copy all files into the consuming page.
-1. Update the page's `index.ts` to export what is needed externally.
-1. Update all imports across the codebase to point to the new location.
-1. Delete the now-empty feature/entity directory.
-1. Run tests.
+2. Update the page's `index.ts` to export what is needed externally.
+3. Update all imports across the codebase to point to the new location.
+4. Delete the now-empty feature/entity directory.
+5. Run tests.
 
 ### Step 3. Keep genuinely reused code in place
 
@@ -82,9 +82,9 @@ app/sync/background-sync.ts                  ← Global concern
 ### Post-migration verification
 
 1. Run `npx steiger src`. All `insignificant-slice` warnings should be gone.
-1. Verify import directions. No upward or same-layer cross-imports.
-1. Check that no empty layer directories remain.
-1. Update documentation to reflect the new structure.
+2. Verify import directions. No upward or same-layer cross-imports.
+3. Check that no empty layer directories remain.
+4. Update documentation to reflect the new structure.
 
 ## Part 2: Custom architecture → FSD
 
@@ -95,8 +95,8 @@ This part follows the official `from-custom` migration order. The core philosoph
 The most important question to ask the team is: *do you really need it?* Some projects are perfectly fine without FSD. Reasons to consider the switch:
 
 1. New team members struggle to reach a productive level.
-1. Modifications to one part of the code **often** break unrelated parts.
-1. Adding new functionality is difficult due to the volume of context to hold in mind.
+2. Modifications to one part of the code **often** break unrelated parts.
+3. Adding new functionality is difficult due to the volume of context to hold in mind.
 
 **Avoid switching to FSD against the will of teammates**, even as a lead. Convince the team that the benefits outweigh migration and learning costs. Explain the migration plan to management; architectural changes are not immediately observable to them.
 
@@ -148,7 +148,7 @@ src/
 Find all cases where one page imports from another. Resolve each in one of two ways:
 
 1. **Copy-paste** the imported code into the depending page to remove the dependency.
-1. **Move to a Shared segment**:
+2. **Move to a Shared segment**:
    - UI kit code → `shared/ui/`
    - configuration constants → `shared/config/`
    - backend interaction → `shared/api/`
@@ -218,11 +218,11 @@ The `modules/` folder typically holds business logic, similar in nature to the F
 ## Common pitfalls during migration
 
 1. **Extracting too early.** Wait for real reuse, not anticipated reuse. The v2.1 philosophy is "pages first, extract later".
-1. **Creating empty layers.** Do not create `features/`, `entities/`, or `widgets/` directories until there is content for them.
-1. **Refactoring while migrating.** Separate relocation from refactoring. Move files first, improve them in separate commits.
-1. **Ignoring import direction.** Enforce import rules from day one with ESLint or Steiger.
-1. **Big-bang migration.** Migrate page by page, verifying each step. A hybrid structure (partly FSD, partly legacy) is acceptable during transition.
-1. **Grouping by technical role.** `components/`, `actions/`, `utils/` as segment names defeat the purpose of FSD. Group by what code is for.
+2. **Creating empty layers.** Do not create `features/`, `entities/`, or `widgets/` directories until there is content for them.
+3. **Refactoring while migrating.** Separate relocation from refactoring. Move files first, improve them in separate commits.
+4. **Ignoring import direction.** Enforce import rules from day one with ESLint or Steiger.
+5. **Big-bang migration.** Migrate page by page, verifying each step. A hybrid structure (partly FSD, partly legacy) is acceptable during transition.
+6. **Grouping by technical role.** `components/`, `actions/`, `utils/` as segment names defeat the purpose of FSD. Group by what code is for.
 
 ## Migrating from FSD v1 to v2
 

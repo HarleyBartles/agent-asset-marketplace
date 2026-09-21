@@ -87,12 +87,12 @@ Rooms-specific gate profiles (canon pressure, ambiguity preservation, analogy va
 ## Workflow
 
 1. Name the exact action that would happen after the gate.
-1. Identify which gates are material using the routing table above. Read only those reference docs.
-1. Identify hidden risk, unresolved decisions, unstable assumptions, contradictions, source gaps, authority gaps, or canon drift that could make the next action unsafe or false.
-1. Classify the gate mode (internal, interactive, blocked).
-1. Resolve forced decisions internally when policy, source authority, current scope, or user instruction leaves only one legitimate route.
-1. Surface only unresolved legitimate choices.
-1. Return green only when the next action has a lawful route, required authority, sufficient evidence, and the correct output surface.
+2. Identify which gates are material using the routing table above. Read only those reference docs.
+3. Identify hidden risk, unresolved decisions, unstable assumptions, contradictions, source gaps, authority gaps, or canon drift that could make the next action unsafe or false.
+4. Classify the gate mode (internal, interactive, blocked).
+5. Resolve forced decisions internally when policy, source authority, current scope, or user instruction leaves only one legitimate route.
+6. Surface only unresolved legitimate choices.
+7. Return green only when the next action has a lawful route, required authority, sufficient evidence, and the correct output surface.
 
 If a single missing fact blocks the next step, invoke `asking-clarifying-questions` before guessing.
 

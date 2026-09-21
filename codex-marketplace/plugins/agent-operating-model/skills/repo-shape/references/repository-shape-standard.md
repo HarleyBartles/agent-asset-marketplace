@@ -29,10 +29,10 @@ This file describes the surfaces `repo-standards` checks and can apply. It is th
 Root `AGENTS.md` is a router, not an encyclopedia. It must contain exactly five core sections:
 
 1. `## Repository purpose`
-1. `## Source-of-truth split`
-1. `## Build and test commands`
-1. `## Routing pointers`
-1. `## Maintenance responsibility`
+2. `## Source-of-truth split`
+3. `## Build and test commands`
+4. `## Routing pointers`
+5. `## Maintenance responsibility`
 
 The `## Routing pointers` section must list resolvable links to the scoped surfaces that own each canonical topic. Canonical topics include: Repository purpose, Source-of-truth split, Publication proof, Build and test commands, Testing instructions, Code style guidelines, Review guidelines, PR instructions, Contributing, Security considerations, Routing pointers, and Maintenance responsibility.
 

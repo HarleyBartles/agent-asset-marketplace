@@ -5,10 +5,10 @@ This is the shared, model-agnostic contract for composed workflow skills. It app
 ## Authority order
 
 1. Explicit human instruction.
-1. Repository canon and policy for the surface being changed.
-1. The owning skill's applicability and safety contract.
-1. Caller or runbook routing advice.
-1. Generic defaults.
+2. Repository canon and policy for the surface being changed.
+3. The owning skill's applicability and safety contract.
+4. Caller or runbook routing advice.
+5. Generic defaults.
 
 The owning skill defines applicability and entry conditions. A caller may request a capability, but cannot bypass, weaken, or strengthen the owner's gate. Portable skills do not outrank repository canon.
 

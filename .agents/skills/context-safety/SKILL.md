@@ -59,9 +59,9 @@ Treat a write as context-risky when either of these is true:
 When context-risky:
 
 1. Do not compose the whole document as one inline string in the main session.
-1. Prefer a clean-context worker/subagent write with only the required inputs.
-1. Or generate the document in bounded sections with sequential append calls, keeping each section near the 2,000-line target and well below the 4,000-line ceiling.
-1. Still apply the existing chunked/temp-file write mechanics inside the chosen path.
+2. Prefer a clean-context worker/subagent write with only the required inputs.
+3. Or generate the document in bounded sections with sequential append calls, keeping each section near the 2,000-line target and well below the 4,000-line ceiling.
+4. Still apply the existing chunked/temp-file write mechanics inside the chosen path.
 
 If the output is expected to land around 1,500 lines or more, split it into smaller chunks before starting so the chunks stay under the target and comfortably below the limit.
 
@@ -79,11 +79,11 @@ If a write is expected to land around 1,500 lines or more, split it into smaller
 ## Safe sequence
 
 1. Estimate line count and byte size from the content in memory.
-1. Choose the write path before opening the temp file.
-1. For small payloads, write the whole content to a temp file in one shot.
-1. For larger payloads, write the temp file in chunks or append loops.
-1. Re-open and validate the completed temp file.
-1. Atomically replace the target only after validation passes.
+2. Choose the write path before opening the temp file.
+3. For small payloads, write the whole content to a temp file in one shot.
+4. For larger payloads, write the temp file in chunks or append loops.
+5. Re-open and validate the completed temp file.
+6. Atomically replace the target only after validation passes.
 
 ## Python pattern
 
@@ -181,9 +181,9 @@ Use bounded composition when:
 ### Usage pattern
 
 1. Resolve the scratch folder: run `py -3 subagent-workspace/scripts/workspace.py --apply` with no plan file and capture the printed path.
-1. Write large temporary outputs (e.g. the `.tmp` staging file in `write_large_text`) to that scratch folder.
-1. Use the temporary outputs as needed during the session.
-1. Clean up the scratch folder when work is complete (when cleaning up worktree).
+2. Write large temporary outputs (e.g. the `.tmp` staging file in `write_large_text`) to that scratch folder.
+3. Use the temporary outputs as needed during the session.
+4. Clean up the scratch folder when work is complete (when cleaning up worktree).
 
 ### Cleanup guidance
 

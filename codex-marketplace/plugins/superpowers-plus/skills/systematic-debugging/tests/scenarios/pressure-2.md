@@ -18,11 +18,11 @@ Received: { status: 'pending', amount: 100 }
 **What you've tried:**
 
 1. Added `await sleep(100)` - didn't work
-1. Increased to `await sleep(500)` - didn't work
-1. Added `await sleep(1000)` - worked twice, failed third time
-1. Checked for race conditions - found none obvious
-1. Added debug logging - shows payment processes, status not updating
-1. Tried `await sleep(2000)` - still fails sometimes
+2. Increased to `await sleep(500)` - didn't work
+3. Added `await sleep(1000)` - worked twice, failed third time
+4. Checked for race conditions - found none obvious
+5. Added debug logging - shows payment processes, status not updating
+6. Tried `await sleep(2000)` - still fails sometimes
 
 You're exhausted. You have dinner plans at 8:30pm (already late). Code review is tomorrow at 9am.
 

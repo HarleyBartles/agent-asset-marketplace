@@ -5,10 +5,10 @@ Use this profile to review visible clusters of repeated, predictable, generic, o
 ## Decision sequence
 
 1. Name the repeated or mismatched behavior and its local density.
-1. Name the audience, genre, and concrete reading cost.
-1. Check the pattern's evidence class, scope, preserve conditions, limitations, and review horizon in `patterns.json`.
-1. Preserve factual distinctions, useful parallelism, deliberate rhetoric, accessibility, and authorised voice.
-1. Offer the smallest repair that retains meaning and voice. If the evidence is stale or context is insufficient, return `candidate` or `abstain`.
+2. Name the audience, genre, and concrete reading cost.
+3. Check the pattern's evidence class, scope, preserve conditions, limitations, and review horizon in `patterns.json`.
+4. Preserve factual distinctions, useful parallelism, deliberate rhetoric, accessibility, and authorised voice.
+5. Offer the smallest repair that retains meaning and voice. If the evidence is stale or context is insufficient, return `candidate` or `abstain`.
 
 ## Active families
 

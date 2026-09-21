@@ -37,10 +37,10 @@ Use this skill when choosing or applying Python web and task-queue frameworks.
 ## Core Pattern
 
 1. Choose Django for full-stack server-rendered or admin-heavy applications that need an ORM, migrations, and batteries-included conventions.
-1. Choose FastAPI for API-first services that benefit from async endpoints, automatic OpenAPI docs, and Pydantic validation.
-1. Use Celery to offload work to background workers when the response path must stay fast; broker with Redis or RabbitMQ and use result backends only when callers need results.
-1. Keep framework code decoupled from business rules; put domain logic in services, models, or repositories and call it from views or tasks.
-1. Test at the framework boundary with the FastAPI `TestClient` or Django test client; unit-test domain logic without loading the framework.
+2. Choose FastAPI for API-first services that benefit from async endpoints, automatic OpenAPI docs, and Pydantic validation.
+3. Use Celery to offload work to background workers when the response path must stay fast; broker with Redis or RabbitMQ and use result backends only when callers need results.
+4. Keep framework code decoupled from business rules; put domain logic in services, models, or repositories and call it from views or tasks.
+5. Test at the framework boundary with the FastAPI `TestClient` or Django test client; unit-test domain logic without loading the framework.
 
 ## Common Mistakes
 

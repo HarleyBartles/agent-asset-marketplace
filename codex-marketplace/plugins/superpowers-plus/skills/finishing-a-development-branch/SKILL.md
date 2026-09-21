@@ -43,11 +43,11 @@ This marketplace-maintained derivative is based on `obra/superpowers` v6.4.1 com
 When a PR merged externally while the agent was away, do not show the pre-integration menu. Prove the exact published work before retiring it:
 
 1. Find the forge PR associated with the branch and verify it is `MERGED` into the expected base.
-1. Verify the PR's recorded head SHA equals the branch head being retired. If the branch moved after that recorded head SHA, stop: it contains additional work.
-1. Verify the PR's recorded merge result is contained in the current expected base history.
-1. Check whether the feature head is an ancestor of the base and record the branch-deletion command. Preserved ancestry selects `git branch -d <branch>`; verified non-ancestry integration selects deliberate `git branch -D <branch>` because ancestry-aware deletion cannot succeed.
-1. Run `scripts/remove_worktree.py --check <target>` and then `--apply` from outside the target worktree. Use its worktree `--force` only with explicit authority to discard consumer-owned modified or untracked files.
-1. After the worktree is gone, run the selected branch-deletion command and verify the local branch ref no longer exists.
+2. Verify the PR's recorded head SHA equals the branch head being retired. If the branch moved after that recorded head SHA, stop: it contains additional work.
+3. Verify the PR's recorded merge result is contained in the current expected base history.
+4. Check whether the feature head is an ancestor of the base and record the branch-deletion command. Preserved ancestry selects `git branch -d <branch>`; verified non-ancestry integration selects deliberate `git branch -D <branch>` because ancestry-aware deletion cannot succeed.
+5. Run `scripts/remove_worktree.py --check <target>` and then `--apply` from outside the target worktree. Use its worktree `--force` only with explicit authority to discard consumer-owned modified or untracked files.
+6. After the worktree is gone, run the selected branch-deletion command and verify the local branch ref no longer exists.
 
 Squash is a common reason ancestry is absent, but convention is not proof. The merged state, expected base, recorded head SHA, recorded merge result, and current graph are the proof. Stop if any identity or integration fact is ambiguous.
 
@@ -58,8 +58,8 @@ Before selecting or stating a finish route, inspect the current branch and statu
 Complete all three observations before choosing a route:
 
 1. Read the current branch, `HEAD`, and status.
-1. Search the repository's declared evidence locations and bounded local metadata (including `.agents/*evidence*` when present) for the focused and broad validation receipts named by the request.
-1. Confirm that each receipt names the current `HEAD` and claim. Ignore explicitly excluded harness/tool scaffolding when judging whether the product tree changed; do not let such scaffolding substitute for reading the evidence receipt.
+2. Search the repository's declared evidence locations and bounded local metadata (including `.agents/*evidence*` when present) for the focused and broad validation receipts named by the request.
+3. Confirm that each receipt names the current `HEAD` and claim. Ignore explicitly excluded harness/tool scaffolding when judging whether the product tree changed; do not let such scaffolding substitute for reading the evidence receipt.
 
 Hidden and Git-excluded evidence does not appear in a default `rg --files` listing. When `.agents/` exists, include it explicitly with a bounded read such as:
 

@@ -17,24 +17,24 @@ Mark findings resolved and generate the resolved-ledger evidence gate.
        --state <scratch_dir>/review-state.json \
        --data '{"finding_id": "<finding_id>", "resolved_at_node": "<reviewer-fixes|regression-scan>", "resolved_at_round": <round>}'
    ```
-1. Regenerate the metrics file:
+2. Regenerate the metrics file:
    ```bash
    py -3 .agents/skills/iterative-review/scripts/compile_metrics.py \
        --state <scratch_dir>/review-state.json \
        --metrics <scratch_dir>/review-metrics.json
    ```
-1. When the queue is empty, run:
+3. When the queue is empty, run:
    ```bash
    py -3 .agents/skills/iterative-review/scripts/resolved_ledger.py --apply --metrics <scratch_dir>/review-metrics.json
    ```
-1. If the command exits 1, do not proceed to `final-strong`; return to `finding-fix` or `regression-scan`.
-1. If more findings remain in the queue, choose the next one, then authorize `finding-fix`:
+4. If the command exits 1, do not proceed to `final-strong`; return to `finding-fix` or `regression-scan`.
+5. If more findings remain in the queue, choose the next one, then authorize `finding-fix`:
    ```bash
    py -3 .agents/skills/iterative-review/scripts/next_node.py \
        --state <scratch_dir>/review-state.json \
        --propose finding-fix
    ```
-1. If the queue is empty and `resolved_ledger.py` succeeded, authorize `final-strong`:
+6. If the queue is empty and `resolved_ledger.py` succeeded, authorize `final-strong`:
    ```bash
    py -3 .agents/skills/iterative-review/scripts/next_node.py \
        --state <scratch_dir>/review-state.json \

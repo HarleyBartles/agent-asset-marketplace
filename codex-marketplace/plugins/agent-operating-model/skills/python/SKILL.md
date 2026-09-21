@@ -34,10 +34,10 @@ Use this skill for idiomatic Python guidance across language patterns, concurren
 ## Core Pattern
 
 1. Prefer explicit over implicit: write readable code, avoid surprise imports, and document public APIs.
-1. Use `asyncio` for I/O-bound concurrency; use `concurrent.futures` or multiprocessing for CPU-bound work.
-1. Structure tests with `pytest`, fixtures for shared state, and parametrization for data-driven cases.
-1. Add type hints where they clarify contracts; run `mypy` or a type checker in CI.
-1. Profile before optimizing; `cProfile` and `line_profiler` identify real bottlenecks.
+2. Use `asyncio` for I/O-bound concurrency; use `concurrent.futures` or multiprocessing for CPU-bound work.
+3. Structure tests with `pytest`, fixtures for shared state, and parametrization for data-driven cases.
+4. Add type hints where they clarify contracts; run `mypy` or a type checker in CI.
+5. Profile before optimizing; `cProfile` and `line_profiler` identify real bottlenecks.
 
 ## Common Mistakes
 

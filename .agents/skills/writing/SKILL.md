@@ -25,9 +25,9 @@ license: MIT
 Use this as the normal entrypoint for human-facing prose. It composes specialist skills; it does not invent facts, infer authorship, or optimise text for detector evasion.
 
 1. Establish the artifact, audience, purpose, verified facts, hard constraints, supplied draft, and any explicit project or editorial rules. Read a declared voice card only when it is authorised for this task.
-1. Invoke `writing-with-clarity` to draft or revise. Preserve facts, qualifications, accessibility, and intended meaning.
-1. If an authorised voice card is present, invoke `writing-style` to apply it. Do not infer a private voice profile or retain a supplied corpus.
-1. Invoke `writing-style` for writing-specific fatigue review only when the available evidence supports a material contextual finding. A phrase match or a request to “sound human” is not enough.
-1. Invoke `writing-with-clarity` for its final edit. Restore anything removed by a style repair if the removal damaged meaning, necessary qualification, readability, or authorised voice.
+2. Invoke `writing-with-clarity` to draft or revise. Preserve facts, qualifications, accessibility, and intended meaning.
+3. If an authorised voice card is present, invoke `writing-style` to apply it. Do not infer a private voice profile or retain a supplied corpus.
+4. Invoke `writing-style` for writing-specific fatigue review only when the available evidence supports a material contextual finding. A phrase match or a request to “sound human” is not enough.
+5. Invoke `writing-with-clarity` for its final edit. Restore anything removed by a style repair if the removal damaged meaning, necessary qualification, readability, or authorised voice.
 
 Follow [the workflow](references/workflow.md) and [authority order](references/authority-order.md). Load only the bounded specialist material needed for the task. If no material fatigue pattern is present, return the clear draft unchanged. Disclose material voice or style choices briefly when that helps the reader assess the revision.

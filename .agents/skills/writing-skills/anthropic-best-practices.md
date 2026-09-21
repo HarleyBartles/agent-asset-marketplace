@@ -725,10 +725,10 @@ Guide agents through decision points:
 **Evaluation-driven development:**
 
 1. **Identify gaps**: Run your agent on representative tasks without a Skill. Document specific failures or missing context
-1. **Create evaluations**: Build three scenarios that test these gaps
-1. **Establish baseline**: Measure the agent's performance without the Skill
-1. **Write minimal instructions**: Create just enough content to address the gaps and pass evaluations
-1. **Iterate**: Execute evaluations, compare against baseline, and refine
+2. **Create evaluations**: Build three scenarios that test these gaps
+3. **Establish baseline**: Measure the agent's performance without the Skill
+4. **Write minimal instructions**: Create just enough content to address the gaps and pass evaluations
+5. **Iterate**: Execute evaluations, compare against baseline, and refine
 
 This approach ensures you're solving actual problems rather than anticipating requirements that may never materialize.
 
@@ -759,23 +759,23 @@ The most effective Skill development process involves the agent itself. Work wit
 
 1. **Complete a task without a Skill**: Work through a problem with Agent A using normal prompting. As you work, you'll naturally provide context, explain preferences, and share procedural knowledge. Notice what information you repeatedly provide.
 
-1. **Identify the reusable pattern**: After completing the task, identify what context you provided that would be useful for similar future tasks.
+2. **Identify the reusable pattern**: After completing the task, identify what context you provided that would be useful for similar future tasks.
 
    **Example**: If you worked through a BigQuery analysis, you might have provided table names, field definitions, filtering rules (like "always exclude test accounts"), and common query patterns.
 
-1. **Ask Agent A to create a Skill**: "Create a Skill that captures this BigQuery analysis pattern we just used. Include the table schemas, naming conventions, and the rule about filtering test accounts."
+3. **Ask Agent A to create a Skill**: "Create a Skill that captures this BigQuery analysis pattern we just used. Include the table schemas, naming conventions, and the rule about filtering test accounts."
 
    <Tip>
      Modern agents understand the Skill format and structure natively. You don't need special system prompts or a "writing skills" skill to get help creating Skills. Simply ask the agent to create a Skill and it will generate properly structured SKILL.md content with appropriate frontmatter and body content.
    </Tip>
 
-1. **Review for conciseness**: Check that Agent A hasn't added unnecessary explanations. Ask: "Remove the explanation about what win rate means - the agent already knows that."
+4. **Review for conciseness**: Check that Agent A hasn't added unnecessary explanations. Ask: "Remove the explanation about what win rate means - the agent already knows that."
 
-1. **Improve information architecture**: Ask Agent A to organize the content more effectively. For example: "Organize this so the table schema is in a separate reference file. We might add more tables later."
+5. **Improve information architecture**: Ask Agent A to organize the content more effectively. For example: "Organize this so the table schema is in a separate reference file. We might add more tables later."
 
-1. **Test on similar tasks**: Use the Skill with Agent B (a fresh instance with the Skill loaded) on related use cases. Observe whether Agent B finds the right information, applies rules correctly, and handles the task successfully.
+6. **Test on similar tasks**: Use the Skill with Agent B (a fresh instance with the Skill loaded) on related use cases. Observe whether Agent B finds the right information, applies rules correctly, and handles the task successfully.
 
-1. **Iterate based on observation**: If Agent B struggles or misses something, return to Agent A with specifics: "When the agent used this Skill, it forgot to filter by date for Q4. Should we add a section about date filtering patterns?"
+7. **Iterate based on observation**: If Agent B struggles or misses something, return to Agent A with specifics: "When the agent used this Skill, it forgot to filter by date for Q4. Should we add a section about date filtering patterns?"
 
 **Iterating on existing Skills:**
 
@@ -787,23 +787,23 @@ The same hierarchical pattern continues when improving Skills. You alternate bet
 
 1. **Use the Skill in real workflows**: Give Agent B (with the Skill loaded) actual tasks, not test scenarios
 
-1. **Observe Agent B's behavior**: Note where it struggles, succeeds, or makes unexpected choices
+2. **Observe Agent B's behavior**: Note where it struggles, succeeds, or makes unexpected choices
 
    **Example observation**: "When I asked Agent B for a regional sales report, it wrote the query but forgot to filter out test accounts, even though the Skill mentions this rule."
 
-1. **Return to Agent A for improvements**: Share the current SKILL.md and describe what you observed. Ask: "I noticed Agent B forgot to filter test accounts when I asked for a regional report. The Skill mentions filtering, but maybe it's not prominent enough?"
+3. **Return to Agent A for improvements**: Share the current SKILL.md and describe what you observed. Ask: "I noticed Agent B forgot to filter test accounts when I asked for a regional report. The Skill mentions filtering, but maybe it's not prominent enough?"
 
-1. **Review Agent A's suggestions**: Agent A might suggest reorganizing to make rules more prominent, using stronger language like "MUST filter" instead of "always filter", or restructuring the workflow section.
+4. **Review Agent A's suggestions**: Agent A might suggest reorganizing to make rules more prominent, using stronger language like "MUST filter" instead of "always filter", or restructuring the workflow section.
 
-1. **Apply and test changes**: Update the Skill with Agent A's refinements, then test again with Agent B on similar requests
+5. **Apply and test changes**: Update the Skill with Agent A's refinements, then test again with Agent B on similar requests
 
-1. **Repeat based on usage**: Continue this observe-refine-test cycle as you encounter new scenarios. Each iteration improves the Skill based on real agent behavior, not assumptions.
+6. **Repeat based on usage**: Continue this observe-refine-test cycle as you encounter new scenarios. Each iteration improves the Skill based on real agent behavior, not assumptions.
 
 **Gathering team feedback:**
 
 1. Share Skills with teammates and observe their usage
-1. Ask: Does the Skill activate when expected? Are instructions clear? What's missing?
-1. Incorporate feedback to address blind spots in your own usage patterns
+2. Ask: Does the Skill activate when expected? Are instructions clear? What's missing?
+3. Incorporate feedback to address blind spots in your own usage patterns
 
 **Why this approach works**: Agent A understands agent needs, you provide domain expertise, Agent B reveals gaps through real usage, and iterative refinement improves Skills based on observed behavior rather than assumptions.
 
@@ -1017,9 +1017,9 @@ Skills run in a code execution environment with filesystem access, bash commands
 **How agents access Skills:**
 
 1. **Metadata pre-loaded**: At startup, the name and description from all Skills' YAML frontmatter are loaded into the system prompt
-1. **Files read on-demand**: Agents use their file-reading tools to access SKILL.md and other files from the filesystem when needed
-1. **Scripts executed efficiently**: Utility scripts can be executed via bash without loading their full contents into context. Only the script's output consumes tokens
-1. **No context penalty for large files**: Reference files, data, or documentation don't consume context tokens until actually read
+2. **Files read on-demand**: Agents use their file-reading tools to access SKILL.md and other files from the filesystem when needed
+3. **Scripts executed efficiently**: Utility scripts can be executed via bash without loading their full contents into context. Only the script's output consumes tokens
+4. **No context penalty for large files**: Reference files, data, or documentation don't consume context tokens until actually read
 
 - **File paths matter**: Agents navigate your skill directory like a filesystem. Use forward slashes (`reference/guide.md`), not backslashes
 - **Name files descriptively**: Use names that indicate content: `form_validation_rules.md`, not `doc2.md`

@@ -45,10 +45,10 @@ Do not use for framework-agnostic styling; defer to `web-styling`. Do not use fo
 ## Core Pattern
 
 1. Favor small, single-responsibility functional components.
-1. Keep hooks at the top level and outside loops, conditions, and nested functions.
-1. Lift state to the closest common ancestor and pass data down through props.
-1. Use `useEffect` to synchronize with external systems, not to derive state.
-1. Memoize only after measuring; avoid premature optimization.
+2. Keep hooks at the top level and outside loops, conditions, and nested functions.
+3. Lift state to the closest common ancestor and pass data down through props.
+4. Use `useEffect` to synchronize with external systems, not to derive state.
+5. Memoize only after measuring; avoid premature optimization.
 
 ## Common Mistakes
 

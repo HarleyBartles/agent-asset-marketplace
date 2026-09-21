@@ -26,11 +26,11 @@ Use this section to decide whether `reviewer-security` should be dispatched for 
 Use this checklist during `orchestrator-self-review` and as the core of the diff review:
 
 1. **Discord/Slack/Matrix snowflake IDs** — 17–20 digit numbers, especially next to `guild_id`, `server_id`, `channel_id`, `user_id`, `tenant_id`, or `discord`.
-1. **Credentials and secrets** — `api_key`, `token`, `secret`, `password`, `private_key`, `credential` with a real-looking value.
-1. **Email addresses** in source, examples, or test data.
-1. **Private IP addresses** — `10.x`, `172.16-31.x`, `192.168.x`, `127.x`.
-1. **Redaction consistency** — any value redacted in one file but present in another.
-1. **Placeholder acceptability** — prefer `<PLACEHOLDER>` or an env-var instruction over real values.
+2. **Credentials and secrets** — `api_key`, `token`, `secret`, `password`, `private_key`, `credential` with a real-looking value.
+3. **Email addresses** in source, examples, or test data.
+4. **Private IP addresses** — `10.x`, `172.16-31.x`, `192.168.x`, `127.x`.
+5. **Redaction consistency** — any value redacted in one file but present in another.
+6. **Placeholder acceptability** — prefer `<PLACEHOLDER>` or an env-var instruction over real values.
 
 ## Invariants
 
@@ -62,17 +62,17 @@ Write `review-log-security.md` in the off-repo scratch. Begin with a brief `## I
 ## Procedure
 
 1. If `<scan_findings>` is provided, read it first and use it as a starting point.
-1. If `<pr_description>` is provided, read it to understand scope. Do not invent expectations that contradict it.
-1. Read `<diff_path>`. If it truncates, use the overflow file or re-read with `offset` and `limit`.
-1. Use `grep` to find likely secrets and identifiers in the diff and the touched files:
+2. If `<pr_description>` is provided, read it to understand scope. Do not invent expectations that contradict it.
+3. Read `<diff_path>`. If it truncates, use the overflow file or re-read with `offset` and `limit`.
+4. Use `grep` to find likely secrets and identifiers in the diff and the touched files:
    - 17–20 digit Discord/Slack/Matrix snowflake IDs, especially next to `guild_id`, `server_id`, `channel_id`, `user_id`, `tenant_id`, `discord`.
    - `api_key`, `token`, `secret`, `password`, `private_key`, `credential` with a value.
    - Email addresses.
    - Private IP addresses (`10.x`, `172.16-31.x`, `192.168.x`, `127.x`).
    - Any value that was redacted in one file but appears in another.
-1. For each finding, decide whether it is a real secret/identifier or an acceptable placeholder. If in doubt, report it.
-1. Report only security/PII issues. Cite `file:line`, severity, and remediation.
-1. End with `reviewer-security: N issue(s)` or `reviewer-security: clean`.
+5. For each finding, decide whether it is a real secret/identifier or an acceptable placeholder. If in doubt, report it.
+6. Report only security/PII issues. Cite `file:line`, severity, and remediation.
+7. End with `reviewer-security: N issue(s)` or `reviewer-security: clean`.
 
 ## Output format
 

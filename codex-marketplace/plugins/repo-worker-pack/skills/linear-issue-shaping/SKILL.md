@@ -33,10 +33,10 @@ Material connector blocks are blocked, rejected, safety-filtered, permission-rej
 Linear is the durable issue/control plane. The boring default is:
 
 1. create or update a worker-ready Linear issue;
-1. inspect Linear comments, attachments, assignee, labels, and status when checking progress;
-1. prepare a paste-ready worker handoff only when your human partner explicitly asks for one;
-1. switch to GitHub proof only after a GitHub PR, branch, commit, or URL exists;
-1. never claim execution, publication, merge, or closeout unless the target system proves it.
+2. inspect Linear comments, attachments, assignee, labels, and status when checking progress;
+3. prepare a paste-ready worker handoff only when your human partner explicitly asks for one;
+4. switch to GitHub proof only after a GitHub PR, branch, commit, or URL exists;
+5. never claim execution, publication, merge, or closeout unless the target system proves it.
 
 If a Linear write is blocked, rejected, safety-filtered, permission-rejected, schema-rejected, or validation-rejected, route the recovery into `connector-safety` immediately. Do not paraphrase the payload from memory or retry the same mutation shape from the same surface.
 
@@ -143,10 +143,10 @@ Phrases such as `worker ready`, `worker send ready`, `send-ready issue`, `worker
 ## Normal workflow
 
 1. For issue creation or update, read `references/issue-readiness.md` and make the issue boring enough for a future worker. For a campaign-shaped repo issue, also read `references/campaign-shape.md` and include the campaign shape, lane-document option, one-PR preference, split conditions, and worktree isolation gate.
-1. For status pickup, read `references/state-machine.md`, fetch Linear state first, then decide whether GitHub proof is available.
-1. For paste-ready external handoff text, read `references/external-worker-handoff.md` and produce a compact handoff without mutating repo or issue state unless separately authorized. For repo work, include the worktree isolation gate in the launch handoff and resume nudge.
-1. For GitHub PR, branch, commit, merge, or main-state proof, hand off to GitHub verification tooling after the GitHub artifact is known.
-1. Stop when the issue is shaped, the status is reported, or the next proof surface is named. Do not invent an execution lane to continue.
+2. For status pickup, read `references/state-machine.md`, fetch Linear state first, then decide whether GitHub proof is available.
+3. For paste-ready external handoff text, read `references/external-worker-handoff.md` and produce a compact handoff without mutating repo or issue state unless separately authorized. For repo work, include the worktree isolation gate in the launch handoff and resume nudge.
+4. For GitHub PR, branch, commit, merge, or main-state proof, hand off to GitHub verification tooling after the GitHub artifact is known.
+5. Stop when the issue is shaped, the status is reported, or the next proof surface is named. Do not invent an execution lane to continue.
 
 ## Linear as event log
 

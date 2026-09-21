@@ -23,20 +23,20 @@ Check for:
 Use the domain's declared source hierarchy when available. If no explicit hierarchy exists, prefer:
 
 1. Current user instruction for the current task, within lawful scope.
-1. Tracked source files, manifests, schemas, accepted decisions, or canonical docs.
-1. Issue bodies, PRs, comments, reports, and validation logs as evidence surfaces, not automatic canon.
-1. Prior conversation or memory only as discovery hints until verified.
-1. Analogy or inference only as labeled reasoning, never as canon by itself.
+2. Tracked source files, manifests, schemas, accepted decisions, or canonical docs.
+3. Issue bodies, PRs, comments, reports, and validation logs as evidence surfaces, not automatic canon.
+4. Prior conversation or memory only as discovery hints until verified.
+5. Analogy or inference only as labeled reasoning, never as canon by itself.
 
 ## Workflow
 
 1. Name the canon-facing claim or mutation.
-1. Identify the relevant canon domain and authoritative source route.
-1. Separate source-backed facts, reported claims, inference, assumptions, and unresolved ambiguity.
-1. Check contradiction, drift, authority, and mutation boundary.
-1. Repair wording or route internally when one lawful path exists.
-1. Surface a decision only when lawful authority must choose among real canon options.
-1. Block rather than invent when the canon source or authority is unavailable.
+2. Identify the relevant canon domain and authoritative source route.
+3. Separate source-backed facts, reported claims, inference, assumptions, and unresolved ambiguity.
+4. Check contradiction, drift, authority, and mutation boundary.
+5. Repair wording or route internally when one lawful path exists.
+6. Surface a decision only when lawful authority must choose among real canon options.
+7. Block rather than invent when the canon source or authority is unavailable.
 
 ## Generic extraction rule
 

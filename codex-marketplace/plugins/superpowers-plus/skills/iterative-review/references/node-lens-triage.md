@@ -12,7 +12,7 @@ Normalize lens reports and classify every finding into a severity-based routing 
 ## Recipe
 
 1. Run `py -3 .agents/skills/iterative-review/scripts/normalize_review_inputs.py --apply <scratch_dir>` to ensure all lens reports are plain UTF-8.
-1. Classify every finding from the lens reports. For each finding, call:
+2. Classify every finding from the lens reports. For each finding, call:
    ```bash
    py -3 .agents/skills/iterative-review/scripts/record_finding.py \
        --state <scratch_dir>/review-state.json \
@@ -24,14 +24,14 @@ Normalize lens reports and classify every finding into a severity-based routing 
        --state <scratch_dir>/review-state.json \
        --metrics <scratch_dir>/review-metrics.json
    ```
-1. Classify each finding. If a finding is determined to be a false positive or otherwise requires no fix, record that resolution at `lens-triage`:
+3. Classify each finding. If a finding is determined to be a false positive or otherwise requires no fix, record that resolution at `lens-triage`:
    ```bash
    py -3 .agents/skills/iterative-review/scripts/record_resolution.py \
        --state <scratch_dir>/review-state.json \
        --data '{"finding_id": "<finding_id>", "resolved_at_node": "lens-triage", "resolved_at_round": <round>}'
    ```
    A `lens-triage` resolution marks the finding as resolved without entering the fix loop.
-1. Route:
+4. Route:
    - Any `contested`/`load-bearing` finding -> `blocked`
    - Any unresolved `blocking/important` finding -> `metrics-track` then `finding-fix`
    - Only `trivial/deferred` findings remaining, or all `blocking/important` findings resolved at triage -> `final-strong` (the `resolved-ledger` node is skipped because no fixes were applied)

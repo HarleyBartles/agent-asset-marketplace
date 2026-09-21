@@ -16,9 +16,9 @@ The `shared` and `app` layers do not have slices, so imports within those layers
 Cross-imports blur domain boundaries and introduce implicit dependencies. Four concrete problems:
 
 1. **Unclear ownership and responsibility.** When `cart` imports from `product`, it becomes unclear which slice owns the shared logic. Changes to `product`'s internal implementation can break `cart` without warning. This makes bugs harder to localize and code harder to reason about.
-1. **Reduced isolation and testability.** A core benefit of sliced architecture is that each slice can be developed, tested, and deployed independently. Cross-imports break this isolation. Testing `cart` now requires setting up `product`, and changes in one slice can cause unexpected test failures in another.
-1. **Increased cognitive load.** Working on `cart` now requires accounting for how `product` is structured. As cross-imports accumulate, tracing the impact of a change requires following more code across slice boundaries.
-1. **Path to circular dependencies.** Cross-imports often start as one-way dependencies but evolve into bidirectional ones (A imports B, B imports A). This locks slices together and makes refactoring increasingly costly.
+2. **Reduced isolation and testability.** A core benefit of sliced architecture is that each slice can be developed, tested, and deployed independently. Cross-imports break this isolation. Testing `cart` now requires setting up `product`, and changes in one slice can cause unexpected test failures in another.
+3. **Increased cognitive load.** Working on `cart` now requires accounting for how `product` is structured. As cross-imports accumulate, tracing the impact of a change requires following more code across slice boundaries.
+4. **Path to circular dependencies.** Cross-imports often start as one-way dependencies but evolve into bidirectional ones (A imports B, B imports A). This locks slices together and makes refactoring increasingly costly.
 
 ## Entities layer: prefer boundary merge over @x
 
@@ -57,9 +57,9 @@ import { getUserDisplayName } from "@/entities/user/@x/order";
 ### Rules when using @x
 
 1. Document why `@x` is needed and why merging boundaries does not apply.
-1. Review periodically. Requirements change and `@x` may become unnecessary.
-1. Minimize the surface area of `@x` exports.
-1. Only between entities. Features and widgets should use Strategy C or D below, not `@x`.
+2. Review periodically. Requirements change and `@x` may become unnecessary.
+3. Minimize the surface area of `@x` exports.
+4. Only between entities. Features and widgets should use Strategy C or D below, not `@x`.
 
 ## Features and widgets: four strategies
 

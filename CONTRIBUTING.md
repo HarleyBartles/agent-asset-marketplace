@@ -11,6 +11,6 @@ This is the contributor entry point for `agent-asset-marketplace`.
 ## Contributor workflow
 
 1. **Start with `using-superpowers-plus`** and follow its routed workflow.
-1. Use the local design, planning, implementation, and review runbooks when the routed owner calls for their repository-specific details.
+2. Use the local design, planning, implementation, and review runbooks when the routed owner calls for their repository-specific details.
 
 Always work in an isolated worktree. Local file changes are not repo completion; publish a PR or authorized direct-main commit before claiming done.

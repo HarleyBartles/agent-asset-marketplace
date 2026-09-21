@@ -13,6 +13,6 @@ The shared policy defines the categories and stable placeholders. Keep the same 
 Procedure:
 
 1. `find BUNDLE -type f` and process every file, including `environment.json` and `findings/*.md`.
-1. Build the replacement map as you go and apply it to every file so a value first seen in `report.md` is also replaced in `transcripts/`.
-1. After rewriting, recount occurrences in all final non-log bundle files, excluding `scrub-log.md`. Write `BUNDLE/scrub-log.md` as a table of placeholder → category → count. Never write a plaintext replacement map or an original value into the log.
-1. Return the scrub-log table and the list of files rewritten. Nothing else.
+2. Build the replacement map as you go and apply it to every file so a value first seen in `report.md` is also replaced in `transcripts/`.
+3. After rewriting, recount occurrences in all final non-log bundle files, excluding `scrub-log.md`. Write `BUNDLE/scrub-log.md` as a table of placeholder → category → count. Never write a plaintext replacement map or an original value into the log.
+4. Return the scrub-log table and the list of files rewritten. Nothing else.

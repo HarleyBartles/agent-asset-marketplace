@@ -13,14 +13,14 @@ Re-run the consumer's canonical preflight after a fix to catch newly introduced 
 ## Recipe
 
 1. Re-run the consumer's canonical preflight over the post-fix range.
-1. For each new deterministic finding, record it:
+2. For each new deterministic finding, record it:
    ```bash
    py -3 .agents/skills/iterative-review/scripts/record_finding.py \
        --state <scratch_dir>/review-state.json \
        --data '{"finding_id": "<finding_id>", "lens": "preflight", "discovered_at_node": "re-preflight", "discovered_at_round": <round>, "severity": "<severity>"}'
    ```
    If the re-preflight is clean, no new finding is recorded.
-1. Regenerate the metrics file and authorize the next node:
+3. Regenerate the metrics file and authorize the next node:
    ```bash
    py -3 .agents/skills/iterative-review/scripts/compile_metrics.py \
        --state <scratch_dir>/review-state.json \
@@ -29,8 +29,8 @@ Re-run the consumer's canonical preflight after a fix to catch newly introduced 
        --state <scratch_dir>/review-state.json \
        --propose <next-node>
    ```
-1. If it reports new deterministic issues, go to `fast-fix`.
-1. If it is clean, go to `reviewer-fixes`.
+4. If it reports new deterministic issues, go to `fast-fix`.
+5. If it is clean, go to `reviewer-fixes`.
 
 ## Outputs
 
