@@ -1,0 +1,178 @@
+from __future__ import annotations
+
+import importlib.util
+import json
+import subprocess
+import sys
+from pathlib import Path
+
+import pytest
+
+
+SCRIPT = Path(__file__).parents[1] / "scripts" / "format_markdown.py"
+
+
+def load_module():
+    spec = importlib.util.spec_from_file_location("format_markdown_under_test", SCRIPT)
+    assert spec and spec.loader
+    module = importlib.util.module_from_spec(spec)
+    sys.modules[spec.name] = module
+    spec.loader.exec_module(module)
+    return module
+
+
+def git(repo: Path, *args: str) -> str:
+    result = subprocess.run(["git", *args], cwd=repo, text=True, capture_output=True, check=True)
+    return result.stdout.strip()
+
+
+def make_repo(tmp_path: Path, *, state: str = "adopted") -> Path:
+    repo = tmp_path / "consumer"
+    repo.mkdir()
+    git(repo, "init", "-b", "main")
+    git(repo, "config", "user.name", "Formatter Test")
+    git(repo, "config", "user.email", "formatter@example.invalid")
+    (repo / ".agents/contracts").mkdir(parents=True)
+    (repo / ".mdformat.toml").write_text(
+        'wrap = "no"\nend_of_line = "lf"\nvalidate = true\nextensions = ["gfm", "frontmatter"]\n',
+        encoding="utf-8",
+    )
+    (repo / ".agents/contracts/markdown-formatting.json").write_text(
+        json.dumps({"version": 1, "state": state, "exclusions": []}) + "\n",
+        encoding="utf-8",
+    )
+    return repo
+
+
+def commit_all(repo: Path) -> None:
+    git(repo, "add", "--all")
+    git(repo, "commit", "-m", "fixture")
+
+
+def test_eligible_markdown_is_tracked_sorted_and_honors_file_and_tree(tmp_path: Path):
+    module = load_module()
+    repo = make_repo(tmp_path)
+    (repo / "docs/vendor").mkdir(parents=True)
+    for relative in ("z.md", "a.md", "docs/vendor/evidence.md"):
+        (repo / relative).write_text("# title\n", encoding="utf-8")
+    commit_all(repo)
+    (repo / "untracked.md").write_text("# ignore\n", encoding="utf-8")
+    contract_path = repo / ".agents/contracts/markdown-formatting.json"
+    contract_path.write_text(
+        json.dumps(
+            {
+                "version": 1,
+                "state": "enforced",
+                "exclusions": [
+                    {"kind": "file", "path": "z.md", "reason": "external bytes"},
+                    {
+                        "kind": "tree",
+                        "path": "docs/vendor",
+                        "reason": "vendored evidence",
+                    },
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
+    contract = module.load_contract(repo)
+    assert contract.state == "enforced"
+    assert [path.relative_to(repo).as_posix() for path in module.eligible_markdown(repo, contract)] == ["a.md"]
+
+
+@pytest.mark.parametrize(
+    ("entry", "message"),
+    [
+        ({"kind": "file", "path": "missing.md", "reason": "custody"}, "matches no tracked Markdown"),
+        ({"kind": "tree", "path": "empty", "reason": "custody"}, "matches no tracked Markdown"),
+        ({"kind": "file", "path": "../escape.md", "reason": "custody"}, "repository-relative"),
+        ({"kind": "file", "path": "*.md", "reason": "custody"}, "globs are not supported"),
+        ({"kind": "file", "path": "a.md", "reason": ""}, "non-empty reason"),
+        ({"kind": "other", "path": "a.md", "reason": "custody"}, "kind must be"),
+    ],
+)
+def test_invalid_exclusions_fail_closed(tmp_path: Path, entry: dict[str, str], message: str):
+    module = load_module()
+    repo = make_repo(tmp_path)
+    (repo / "a.md").write_text("# title\n", encoding="utf-8")
+    (repo / "empty").mkdir()
+    commit_all(repo)
+    (repo / ".agents/contracts/markdown-formatting.json").write_text(
+        json.dumps({"version": 1, "state": "adopted", "exclusions": [entry]}),
+        encoding="utf-8",
+    )
+    with pytest.raises(module.ContractError, match=message):
+        module.load_contract(repo)
+
+
+@pytest.mark.parametrize("state", ["disabled", "ready", ""])
+def test_only_adopted_and_enforced_states_are_valid(tmp_path: Path, state: str):
+    module = load_module()
+    repo = make_repo(tmp_path, state=state)
+    commit_all(repo)
+    with pytest.raises(module.ContractError, match="state"):
+        module.load_contract(repo)
+
+
+def test_verify_toolchain_reports_missing_and_mismatched_packages(monkeypatch):
+    module = load_module()
+    versions = dict(module.REQUIRED_DISTRIBUTIONS)
+    missing = next(iter(versions))
+
+    def missing_version(name: str) -> str:
+        if name == missing:
+            raise module.importlib_metadata.PackageNotFoundError(name)
+        return versions[name]
+
+    monkeypatch.setattr(module.importlib_metadata, "version", missing_version)
+    with pytest.raises(module.ToolchainError, match=missing):
+        module.verify_toolchain()
+
+    monkeypatch.setattr(
+        module.importlib_metadata,
+        "version",
+        lambda name: "0.0.0" if name == missing else versions[name],
+    )
+    with pytest.raises(module.ToolchainError, match="0.0.0"):
+        module.verify_toolchain()
+
+
+def test_apply_restores_every_original_byte_when_later_batch_fails(tmp_path: Path, monkeypatch):
+    module = load_module()
+    repo = make_repo(tmp_path)
+    first = repo / "first file.md"
+    second = repo / "second.md"
+    first.write_bytes(b"# first   \r\n")
+    second.write_bytes(b"# second   \r\n")
+    commit_all(repo)
+    originals = {path: path.read_bytes() for path in (first, second)}
+    calls = 0
+
+    def fake_run(command, **kwargs):
+        nonlocal calls
+        calls += 1
+        target = repo / command[-1]
+        target.write_text("# changed\n", encoding="utf-8")
+        return subprocess.CompletedProcess(command, 0 if calls == 1 else 1)
+
+    monkeypatch.setattr(module.subprocess, "run", fake_run)
+    monkeypatch.setattr(module, "MAX_COMMAND_CHARS", 1)
+    with pytest.raises(module.FormatterError):
+        module.run_formatter(repo, [first, second], mode="apply")
+    assert {path: path.read_bytes() for path in originals} == originals
+
+
+def test_check_files_rejects_untracked_non_markdown_and_escape(tmp_path: Path):
+    module = load_module()
+    repo = make_repo(tmp_path)
+    (repo / "tracked.md").write_text("# tracked\n", encoding="utf-8")
+    (repo / "tracked.txt").write_text("text\n", encoding="utf-8")
+    commit_all(repo)
+    (repo / "untracked.md").write_text("# untracked\n", encoding="utf-8")
+    for candidate, message in (
+        ("untracked.md", "tracked"),
+        ("tracked.txt", "Markdown"),
+        ("../escape.md", "repository-relative"),
+    ):
+        with pytest.raises(module.ContractError, match=message):
+            module.validate_requested_files(repo, [candidate])
