@@ -4,7 +4,7 @@
 
 **Goal:** Route Codex subagents through the live GPT-6 family, require review dispatches to consult the selector, and make the bundled worktree script the required creation path.
 
-**State:** in-progress
+**State:** completed-awaiting-retirement
 
 **Execution Strategy:** Inline implementation in this worktree, followed by focused validation, the tracked hook, and a draft PR.
 

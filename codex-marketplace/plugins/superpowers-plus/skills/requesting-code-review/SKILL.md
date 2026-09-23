@@ -17,6 +17,7 @@ metadata:
     - no changes exist to review.
     - a substitute for self-review.
   related_skills:
+    - selecting-a-subagent
     - receiving-code-review
     - iterative-review
     - finishing-a-development-branch
@@ -62,7 +63,7 @@ HEAD_SHA=$(git rev-parse HEAD)
 
 **2. Dispatch code reviewer subagent:**
 
-Dispatch a `general-purpose` subagent, filling the template at [code-reviewer.md](code-reviewer.md)
+Describe the review needed, then consult `selecting-a-subagent` before every reviewer dispatch for the active runtime's profile or model, reasoning, and context route. Fill the template at [code-reviewer.md](code-reviewer.md) with that route. Do not turn a review description into a model or profile name yourself.
 
 **Placeholders:**
 
@@ -85,10 +86,7 @@ When the code-review request is about a branch or PR diff, the orchestrator (thi
 1. Determine the base ref (`<base>`) and branch (`<branch>`).
 2. Generate the review package as UTF-8 without a BOM with `py -3 .agents/skills/subagent-workspace/scripts/review_package.py --apply - <base> <branch> <diff_path>`. Use `-` for no plan file; `diff_path` is optional and the script prints the path it wrote.
 3. If the review object is a PR, capture the PR title and body into `<pr_description>` (e.g. with `gh pr view <number> --json title,body` or `mcp_call_tool`).
-4. Dispatch the reviewer subagent with the prepared inputs:
-   - `reviewer` for most reviews.
-   - `reviewer-strong` for full branch/PR reviews where the whole diff is in scope.
-   - `reviewer-fixes` for small, tightly focused re-reviews of a single fix or a small coherent diff.
+4. Describe whether the review covers the whole branch or PR, an ordinary change, or a focused fix. Consult `selecting-a-subagent` before every reviewer dispatch to choose the active runtime's route, then dispatch with the prepared inputs. A request for a strong or whole-branch review does not itself select a profile, model, or reasoning level.
 
 Inputs to pass to the subagent:
 
