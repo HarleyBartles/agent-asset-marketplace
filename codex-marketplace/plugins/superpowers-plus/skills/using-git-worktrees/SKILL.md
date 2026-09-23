@@ -15,7 +15,7 @@ metadata:
   do_not_use_when:
     - already in an isolated workspace.
     - the user declines a worktree.
-    - native tools already manage isolation.
+    - the task is read-only and needs no new worktree.
   related_skills:
     - using-superpowers-plus
     - refreshing-installed-skills
@@ -33,13 +33,13 @@ This marketplace-maintained derivative is based on `obra/superpowers` v6.4.1 com
 
 ## Overview
 
-Ensure work happens in an isolated workspace. Prefer your platform's native worktree tools. Fall back to manual git worktrees only when no native tool is available.
+Ensure work happens in an isolated workspace. Use this skill's bundled creation script so the worktree lands in the canonical sibling location.
 
-**Core principle:** Detect existing isolation first. Then use native tools. Then fall back to git. Never fight the harness.
+**Core principle:** Detect existing isolation first. Use the bundled script for creation. Verify the resulting location and branch.
 
 **Announce at start:** "I'm using the using-git-worktrees skill to set up an isolated workspace."
 
-**Mandatory pre-flight:** Invoke this skill BEFORE running `git worktree add`, not after. If you are about to create a worktree without having invoked this skill, stop and invoke it first. Creating a worktree ad hoc without consulting this skill risks placing the worktree in a non-canonical location that violates repo conventions.
+**Mandatory pre-flight:** Invoke this skill before creating a worktree. Do not create one through a native app tool or direct Git commands; those routes can place it outside the repository's canonical worktree root.
 
 **Session resume check:** If you are resuming a session that inherited a worktree from a previous conversation, verify the worktree location matches the repo's declared canonical worktree root before proceeding with substantive work. If the worktree is in a non-canonical location, move it with `git worktree move` before continuing.
 
@@ -77,85 +77,20 @@ Honor any existing declared preference without asking. If the user declines cons
 
 ## Step 1: Create Isolated Workspace
 
-**You have two mechanisms. Try them in this order.**
+Use the bundled `new_worktree.py` script for every new worktree. It creates the worktree at the canonical sibling root (`../_agent-worktrees/<repo-name>/<branch>`), installs dependencies, and refreshes installed skills. A native Codex worktree tool may instead choose its own app directory and violate the consumer's location policy. Do not use it as an alternate creation path.
 
-### 1a. Native Worktree Tools (preferred)
+From the main checkout, preview and then create:
 
-The user has asked for an isolated workspace (Step 0 consent). Do you already have a way to create a worktree? It might be a tool with a name like `EnterWorktree`, `WorktreeCreate`, a `/worktree` command, or a `--worktree` flag. If you do, use it and skip to Step 2.
-
-Native tools handle directory placement, branch creation, and cleanup automatically. Using `git worktree add` when you have a native tool creates phantom state your harness can't see or manage.
-
-Only proceed to Step 1b if you have no native worktree tool available.
-
-Use the `new-worktree` script bundled with this skill as the Step 1b fallback. If the repo also provides its own worktree helper (for example, in a `scripts/` directory at the repo root), prefer the repo-specific one. The bundled script is installed at `.agents/skills/using-git-worktrees/scripts/` and places the worktree at the canonical sibling-folder root (`../_agent-worktrees/<repo-name>/<branch>`), automatically refreshing installed skills after creation. If `refreshing-installed-skills` is not available, the script creates the worktree and prints a warning instead of failing. Worktree and branch retirement belongs to `finishing-a-development-branch`.
-
-The bundled `new-worktree` script does not require `--allow-shared-checkout`; a new worktree is an isolated linked worktree, so child skill scripts can write inside it without the flag. Example: `py -3 .agents/skills/using-git-worktrees/scripts/new_worktree.py --apply <branch>`. Preview with `--check <branch>` first.
-
-### 1b. Git Worktree Fallback
-
-**Only use this if Step 1a does not apply** — you have no native worktree tool available. Create a worktree manually using git.
-
-#### Directory Selection
-
-Follow this priority order. Explicit user preference always beats observed filesystem state.
-
-1. **Check your instructions for a declared worktree directory preference.** If the user has already specified one, use it without asking.
-
-2. **If the repo instructions declare a canonical sibling-folder worktree root, use that location.** For example, use `../_agent-worktrees/<repo-name>` when the repo's AGENTS file names that path.
-
-3. **Otherwise, check for an existing project-local worktree directory:**
-
-   ```bash
-   ls -d .worktrees 2>/dev/null     # Preferred (hidden)
-   ls -d worktrees 2>/dev/null      # Alternative
-   ```
-
-   If found, use it. If both exist, `.worktrees` wins.
-
-4. **If there is no other guidance available**, default to `.worktrees/` at the project root.
-
-#### Safety Verification (project-local directories only)
-
-**MUST verify directory is ignored before creating worktree:**
-
-```bash
-git check-ignore -q .worktrees 2>/dev/null || git check-ignore -q worktrees 2>/dev/null
+```text
+py -3 .agents/skills/using-git-worktrees/scripts/new_worktree.py --check <branch>
+py -3 .agents/skills/using-git-worktrees/scripts/new_worktree.py --apply <branch>
 ```
 
-**If NOT ignored:** Add to .gitignore, commit the change, then proceed.
-
-**Why critical:** Prevents accidentally committing worktree contents to repository.
-
-#### Create the Worktree
-
-```bash
-# Determine path based on chosen location
-path="$LOCATION/$BRANCH_NAME"
-
-git worktree add "$path" -b "$BRANCH_NAME"
-cd "$path"
-```
-
-**Sandbox fallback:** If `git worktree add` fails with a permission error (sandbox denial), tell the user the sandbox blocked worktree creation and you're working in the current directory instead. Then run setup and baseline tests in place.
+The preview exits nonzero when the worktree does not exist yet; read its proposed path. After creation, verify the returned path, branch, and Git registration against the consumer's policy before editing. If the script cannot create the canonical worktree, stop and report the blocker instead of choosing another creator or working in the shared checkout. Worktree and branch retirement belongs to `finishing-a-development-branch`.
 
 ## Step 2: Project Setup
 
-The dependency step depends on how the worktree was created:
-
-- **If you used `scripts/new_worktree.py --apply <branch>`:** dependencies were already installed while the worktree was being created. Do not run a separate install step.
-- **If you used `git worktree add` or any native/manual route:** dependencies have not been installed yet. Run them now before the baseline checks.
-
-For a manually created worktree, inspect the consumer repository's local guidance for its canonical dependency-install capability and use it when one exists. If the repository does not own such a capability, use the bundled fallback by detecting the package-manager manifest and running the matching command:
-
-| manifest            | command                           |
-| ------------------- | --------------------------------- |
-| `package-lock.json` | `npm ci`                          |
-| `yarn.lock`         | `yarn install --frozen-lockfile`  |
-| `pnpm-lock.yaml`    | `pnpm install --frozen-lockfile`  |
-| `package.json`      | `npm install`                     |
-| `requirements.txt`  | `pip install -r requirements.txt` |
-
-If a recognised manifest is present but its required installer is missing, fail closed and do not claim the workspace is ready. The portable skill does not prescribe the consumer's command-bus name or target.
+The bundled script performs dependency setup. Check its result; do not repeat installation unless the consumer's guidance requires an additional step.
 
 ## Step 3: Verify Clean Baseline
 
@@ -188,34 +123,26 @@ All scripts support `--help` and classify each flag as `read-only` or `mutating`
 
 ## Quick Reference
 
-| Situation                                   | Action                                                       |
-| ------------------------------------------- | ------------------------------------------------------------ |
-| Already in linked worktree                  | Skip creation (Step 0)                                       |
-| In a submodule                              | Treat as normal repo (Step 0 guard)                          |
-| Native worktree tool available              | Use it (Step 1a)                                             |
-| No native tool                              | Git worktree fallback (Step 1b)                              |
-| Repo declares canonical sibling-folder root | Use `../_agent-worktrees/<repo-name>`                        |
-| `.worktrees/` exists                        | Use it (verify ignored)                                      |
-| `worktrees/` exists                         | Use it (verify ignored)                                      |
-| Both exist                                  | Use `.worktrees/`                                            |
-| Neither exists                              | Check instruction file, then default `.worktrees/`           |
-| Directory not ignored                       | Add to .gitignore + commit                                   |
-| Permission error on create                  | Sandbox fallback, work in place                              |
-| Tests fail during baseline                  | Report failures + ask                                        |
-| No supported manifest                       | Skip dependency install                                      |
-| Bundled `new-worktree` script               | Use it instead of `git worktree add`                         |
-| Completed branch/worktree                   | Use `finishing-a-development-branch` for verified retirement |
-| Skills need refresh after creation          | `new-worktree` auto-runs `refreshing-installed-skills`       |
+| Situation                          | Action                                                       |
+| ---------------------------------- | ------------------------------------------------------------ |
+| Already in linked worktree         | Skip creation (Step 0)                                       |
+| In a submodule                     | Treat as normal repo (Step 0 guard)                          |
+| New worktree needed                | Preview and apply bundled `new_worktree.py`                  |
+| Native worktree tool available     | Still use bundled `new_worktree.py`                          |
+| Creation fails                     | Report blocker; do not switch creator or checkout            |
+| Tests fail during baseline         | Report failures + ask                                        |
+| Bundled `new-worktree` script      | Use it for creation                                          |
+| Completed branch/worktree          | Use `finishing-a-development-branch` for verified retirement |
+| Skills need refresh after creation | `new-worktree` auto-runs `refreshing-installed-skills`       |
 
 ## Common Rationalizations
 
-| Excuse                                                         | Reality                                                                                                                                                                  |
-| -------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| "I'm obviously not in a worktree — no need to check"           | Run Step 0. Harness-created isolation and submodules both fool eyeballing; the detection commands settle it.                                                             |
-| "`git worktree add` is quicker than hunting for a native tool" | A native tool (e.g. `EnterWorktree`) owns placement, branching, and cleanup. Bypassing it is the #1 mistake — it creates phantom state your harness can't see or manage. |
-| "The worktree directory is surely ignored already"             | Run `git check-ignore`. An unignored worktree directory commits the whole tree into the repo.                                                                            |
-| "Any directory name works"                                     | Explicit instructions beat an existing project-local directory, which beats the `.worktrees/` default.                                                                   |
-| "The workspace is fresh — baseline tests can wait"             | A dirty baseline makes every later failure ambiguous. Run the tests now; proceeding past failures is your human partner's call.                                          |
+| Excuse                                               | Reality                                                                                                                         |
+| ---------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| "I'm obviously not in a worktree — no need to check" | Run Step 0. Harness-created isolation and submodules both fool eyeballing; the detection commands settle it.                    |
+| "Codex has a worktree button"                        | The app can choose a different root. Use the bundled script and verify its canonical result.                                    |
+| "A different creator is close enough"                | The bundled script owns placement and setup. Stop if it cannot create the canonical worktree.                                   |
+| "The workspace is fresh — baseline tests can wait"   | A dirty baseline makes every later failure ambiguous. Run the tests now; proceeding past failures is your human partner's call. |
 
 ## Retirement handoff
 
