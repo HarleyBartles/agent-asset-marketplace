@@ -2311,3 +2311,14 @@ def test_scaffold_pr_template_carries_composition_sections() -> None:
         "## Prohibited combinations",
     ):
         assert heading in content
+
+
+def test_shared_checkout_help_does_not_require_flag_in_worktrees() -> None:
+    result = subprocess.run(
+        [sys.executable, str(REPO_STANDARDS), "--help"],
+        capture_output=True,
+        text=True,
+        check=True,
+    )
+    assert "shared/git-worktree checkout" not in result.stdout
+    assert "shared/worktree checkouts" not in result.stdout

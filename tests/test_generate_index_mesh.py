@@ -271,7 +271,7 @@ def test_allow_shared_checkout_with_check_requires_apply(tmp_path: Path) -> None
 
 
 def test_apply_in_main_shared_checkout_requires_allow_flag(tmp_path: Path) -> None:
-    """--apply in the main shared checkout on main fails without --allow-shared-checkout."""
+    """--apply in the main shared checkout fails without --allow-shared-checkout."""
     repo = _make_repo(tmp_path, "main-no-flag")
     _commit_file(repo, "docs/guide.md")
     result = subprocess.run(

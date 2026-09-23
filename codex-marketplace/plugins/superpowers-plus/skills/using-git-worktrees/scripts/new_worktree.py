@@ -500,7 +500,7 @@ def _configure_worktree(
         if exit_code is None:
             refresh_script = _find_refresh_script(worktree_root)
             if refresh_script:
-                refresh_args = [str(refresh_script), "--apply", "--allow-shared-checkout"]
+                refresh_args = [str(refresh_script), "--apply"]
                 result = subprocess.run(
                     [sys.executable, *refresh_args],
                     cwd=worktree_root,
@@ -521,7 +521,7 @@ def _configure_worktree(
         if exit_code is None:
             mesh_script = _find_mesh_script(worktree_root)
             if mesh_script:
-                mesh_args = [str(mesh_script), "--apply", "--allow-shared-checkout"]
+                mesh_args = [str(mesh_script), "--apply"]
                 result = subprocess.run(
                     [sys.executable, *mesh_args],
                     cwd=worktree_root,

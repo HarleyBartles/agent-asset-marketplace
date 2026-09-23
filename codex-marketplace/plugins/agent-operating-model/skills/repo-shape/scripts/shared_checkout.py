@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Shared-checkout detection and human-approval helpers."""
+"""Shared-checkout detection and explicit mutation-intent guard."""
 
 from __future__ import annotations
 
@@ -53,61 +53,25 @@ def is_main_shared_checkout(repo_root: Path) -> bool:
     return _is_main_worktree(repo_root)
 
 
-def _current_branch(repo_root: Path) -> str:
-    """Return the current git branch name; returns 'HEAD' when detached, or an empty string if the git command fails."""
-    result = subprocess.run(
-        ["git", "rev-parse", "--abbrev-ref", "HEAD"],
-        cwd=repo_root,
-        capture_output=True,
-        text=True,
-        check=False,
-        env=_stripped_env(),
-    )
-    return result.stdout.strip()
-
-
-def prompt_for_approval(script_name: str) -> bool:
-    """Prompt an interactive user for main-worktree approval on main."""
-    if not sys.stdin.isatty():
-        return False
-    try:
-        response = input(
-            f"warning: this is the main shared checkout on the main branch. "
-            f"Allow {script_name} to apply changes? (y/N) "
-        )
-    except (EOFError, KeyboardInterrupt):
-        return False
-    return response.strip().lower() == "y"
-
-
 def approve_mutation(repo_root: Path, script_name: str, flag_approved: bool) -> bool:
     """Return True if mutation is approved.
 
     - Linked worktree: always approved.
-    - Main shared checkout on the main branch: requires explicit approval;
-      --allow-shared-checkout prints a warning and approves.
-    - Main shared checkout on any other branch: always approved.
-    - Main shared checkout on main with interactive terminal: prompt the user.
-    - Otherwise: print an actionable error and return False.
+    - Main shared checkout on any branch: requires --allow-shared-checkout.
+    - The flag prints a warning and records explicit intent to write there.
     """
     if not is_main_shared_checkout(repo_root):
         return True
-    branch = _current_branch(repo_root)
-    if branch != "main":
-        return True
     if flag_approved:
         print(
-            f"warning: --allow-shared-checkout supplied; {script_name} "
-            f"will apply changes in the main shared checkout on the main branch",
+            f"warning: --allow-shared-checkout supplied; {script_name} will apply changes in the main shared checkout",
             file=sys.stderr,
         )
         return True
-    if prompt_for_approval(script_name):
-        return True
     print(
         f"error: refusing to apply {script_name} in the main shared checkout "
-        f"on the main branch. "
-        f"Pass --allow-shared-checkout if this is intentional, or run interactively to confirm.",
+        "without --allow-shared-checkout. Pass --allow-shared-checkout only if writing to "
+        "the shared checkout is intentional.",
         file=sys.stderr,
     )
     return False

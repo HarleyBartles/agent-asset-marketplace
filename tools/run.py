@@ -620,7 +620,7 @@ def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument(
         "--allow-shared-checkout",
         action="store_true",
-        help="approve writes in the main shared checkout on the main branch (requires --apply)",
+        help="acknowledge intentional writes in the main shared checkout on any branch (requires --apply)",
     )
     parser.add_argument(
         "--diagnostics",
