@@ -26,6 +26,6 @@ Every `tools/*.py` file that is meant to be run directly (it has an `if __name__
 - respond to `--check` as the default, read-only, idempotent mode;
 - respond to `--apply` if it is classified `mixed` or `mutating`;
 - support `--force` if it may overwrite an existing, drifted surface;
-- support `--allow-shared-checkout` (which requires `--apply`) if it may write to a shared or main worktree.
+- support `--allow-shared-checkout` (which requires `--apply`) if it may write to the main shared checkout. Linked worktrees do not need the flag.
 
 `tools/validate_tool_cli.py --check` is the contract gate and is run by `tools/run.py ci --check`.

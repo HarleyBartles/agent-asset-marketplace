@@ -4,7 +4,7 @@
 
 **Goal:** Make `--allow-shared-checkout` mean explicit intent to mutate the shared checkout, while linked worktrees need only `--apply`.
 
-**State:** in-progress
+**State:** completed-awaiting-retirement
 
 **Execution Strategy:** Inline implementation in the canonical worktree; focused tests, generated projections, tracked hook, draft PR.
 

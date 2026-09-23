@@ -802,8 +802,8 @@ while the contract is absent."""
         "--allow-shared-checkout",
         action="store_true",
         help=(
-            "Approve applying changes in the main shared checkout on the main branch. "
-            "Linked worktrees are always approved. Only pass this if you intend to mutate this checkout."
+            "Acknowledge intentional changes in the main shared checkout on any branch. "
+            "Linked worktrees do not need this flag."
         ),
     )
     args = parser.parse_args(argv)

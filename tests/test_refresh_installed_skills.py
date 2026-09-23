@@ -786,7 +786,6 @@ def test_allow_shared_checkout_with_check_requires_apply(capsys) -> None:
 def test_apply_in_shared_checkout_requires_allow_flag(capsys, monkeypatch) -> None:
     """--apply on main in a shared checkout fails without --allow-shared-checkout."""
     monkeypatch.setattr(refresh_installed_skills.shared_checkout, "is_main_shared_checkout", lambda _root: True)
-    monkeypatch.setattr(refresh_installed_skills.shared_checkout, "_current_branch", lambda _root: "main")
     monkeypatch.setattr("sys.stdin.isatty", lambda: False)
     with patch.object(sys, "argv", ["refresh_installed_skills.py", "--apply"]):
         result = refresh_installed_skills.main()
