@@ -760,7 +760,7 @@ examples:
   %(prog)s --check                                report drift for every surface in the manifest
   %(prog)s --apply --yes                          create missing surfaces without prompting
   %(prog)s --force <surface-id>                          targeted confirmed template deployment
-  %(prog)s --apply --yes --allow-shared-checkout  create missing surfaces in a shared/git-worktree checkout
+  %(prog)s --apply --yes --allow-shared-checkout  create missing surfaces in the main shared checkout
 
 exit codes:
   0  all surfaces present (or applied successfully)
@@ -781,10 +781,7 @@ while the contract is absent."""
     parser.add_argument(
         "--yes",
         action="store_true",
-        help=(
-            "confirm applying surfaces; shared-checkout approval is still "
-            "required separately in shared/worktree checkouts"
-        ),
+        help=("confirm applying surfaces; writing in the main shared checkout also requires --allow-shared-checkout"),
     )
     parser.add_argument(
         "--force",
