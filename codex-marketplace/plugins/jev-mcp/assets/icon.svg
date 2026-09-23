@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
+  <title id="title">Repo Worker Base</title>
+  <desc id="desc">Minimal icon for the repo worker base plugin.</desc>
+  <rect width="256" height="256" rx="48" fill="#111827"/>
+  <rect x="52" y="60" width="152" height="136" rx="20" fill="#1F2937" stroke="#E5E7EB" stroke-width="8"/>
+  <path d="M82 102h92M82 132h92M82 162h60" stroke="#93C5FD" stroke-width="12" stroke-linecap="round"/>
+  <circle cx="182" cy="162" r="12" fill="#FDE68A"/>
+</svg>
