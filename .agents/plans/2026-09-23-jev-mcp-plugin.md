@@ -2,7 +2,7 @@
 
 **Goal:** Publish a Codex marketplace plugin that connects the community Jev MCP and teaches agents to use its six decision tools, with model routing as the first concrete use case.
 
-**State:** in-progress
+**State:** completed-awaiting-retirement
 
 ## Scope
 
@@ -16,3 +16,9 @@
 2. Define a focused RED check for MCP configuration, tool routing, and hard policy boundaries; then scaffold the plugin and skill.
 3. Run focused validation, regenerate marketplace outputs, inspect the generated inventory, and use the tracked pre-commit gate.
 4. Review the committed diff, publish a draft PR to `main`, and verify its head and checks. Mark this plan `completed-awaiting-retirement` when agent-owned work is complete.
+
+## Completion evidence
+
+- The focused MCP contract test passed after a RED failure for the missing declaration.
+- Marketplace and mesh generation completed; the staged pre-commit gate passed for the implementation commit.
+- The package was reviewed as a draft-PR handoff. A live Jev decision call requires a personal key and an installed MCP connection in the consuming runtime.
