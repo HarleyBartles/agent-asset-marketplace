@@ -1,0 +1,10 @@
+version: 1
+metadata:
+  skill_name: using-jev-mcp
+  source_category: first_party
+interface:
+  display_name: Using Jev MCP
+  short_description: Route bounded Jev decisions while preserving workflow policy.
+  default_prompt: Use Jev MCP to advise a bounded choice among eligible options, then validate the result against the owning workflow.
+policy:
+  allow_implicit_invocation: true

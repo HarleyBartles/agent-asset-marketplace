@@ -172,6 +172,15 @@
       "plugin_root": "codex-marketplace/plugins/agent-operating-model",
       "manifest_path": "codex-marketplace/plugins/agent-operating-model/.codex-plugin/plugin.json",
       "enabled": true
+    },
+    {
+      "order": 19,
+      "name": "jev-mcp",
+      "category": "Productivity",
+      "registry_path": "./codex-marketplace/plugins/jev-mcp",
+      "plugin_root": "codex-marketplace/plugins/jev-mcp",
+      "manifest_path": "codex-marketplace/plugins/jev-mcp/.codex-plugin/plugin.json",
+      "enabled": true
     }
   ]
 }
