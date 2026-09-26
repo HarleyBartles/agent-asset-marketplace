@@ -6,3 +6,4 @@ mdformat-gfm==1.0.0
 ./codex-marketplace/packages/mdformat-safe-link-labels/wheels/mdformat_safe_link_labels-1.0.0-py3-none-any.whl
 ruff==0.9.0
 pytest==9.0.3
+jsonschema==4.26.0
