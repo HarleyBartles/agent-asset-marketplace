@@ -114,10 +114,20 @@ def test_literal_underscore_filename_links_pass_generator_and_formatter(tmp_path
     (formatter / "scripts").mkdir(parents=True)
     shutil.copy2(skill_source / "requirements.txt", formatter / "requirements.txt")
     shutil.copy2(skill_source / "scripts/format_markdown.py", formatter / "scripts/format_markdown.py")
-    shutil.copytree(skill_source / "renderer-plugin", formatter / "renderer-plugin")
+    marketplace_source = repo / ".agents/plugins/marketplace-source"
+    wheel_source = (
+        REPO_ROOT / "codex-marketplace/packages/mdformat-safe-link-labels/wheels/"
+        "mdformat_safe_link_labels-1.0.0-py3-none-any.whl"
+    )
+    wheel_target = (
+        marketplace_source / "codex-marketplace/packages/mdformat-safe-link-labels/wheels/"
+        "mdformat_safe_link_labels-1.0.0-py3-none-any.whl"
+    )
+    wheel_target.parent.mkdir(parents=True)
+    shutil.copy2(wheel_source, wheel_target)
     isolated_python = tmp_path / "formatter-python"
     subprocess.run(
-        [sys.executable, "-m", "venv", "--system-site-packages", str(isolated_python)],
+        [sys.executable, "-m", "venv", str(isolated_python)],
         check=True,
         capture_output=True,
     )
@@ -139,9 +149,8 @@ def test_literal_underscore_filename_links_pass_generator_and_formatter(tmp_path
         check=True,
     )
     assert Path(module_origin.stdout.strip()).resolve().is_relative_to(isolated_python.resolve())
-    plugin_source = (formatter / "renderer-plugin").resolve()
-    assert plugin_source.is_relative_to(repo.resolve())
-    shutil.rmtree(plugin_source)
+    assert marketplace_source.is_relative_to(repo.resolve())
+    shutil.rmtree(marketplace_source)
     (repo / ".agents/contracts").mkdir(parents=True)
     shutil.copy2(REPO_ROOT / ".mdformat.toml", repo / ".mdformat.toml")
     (repo / ".agents/contracts/markdown-formatting.json").write_text(

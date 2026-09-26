@@ -1,12 +1,12 @@
 # Safe Markdown Link Labels Implementation Plan
 
-**State:** completed-awaiting-retirement
+**State:** in-progress
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use `executing-plans` to implement this plan task by task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** Make generated index links with safe literal underscores pass generation and Markdown formatting checks without changing their labels or targets.
 
-**Architecture:** Keep the portable formatter as the owner of normalization. Replace or extend its pinned renderer through a supported, distributable mechanism that preserves literal underscores only where the parsed Markdown meaning is unchanged. Install the renderer as a built distribution into the shared Python interpreter; keep per-repository skill files as the package source and version contract. Exercise the canonical index producer against that formatter, including its explicit `--check-files` boundary and behavior after its source package is removed.
+**Architecture:** Keep the portable formatter as the owner of normalization. Ship the renderer as a separate marketplace Python package with a checked-in pure-Python wheel. Consumers already pin this marketplace repository through `.agents/plugins/marketplace-source`; the formatter skill declares the renderer wheel and expected version, and consumer requirements install the wheel into the shared Python interpreter. Keep package source and artifacts outside the skill projection so skill refresh does not manage dependencies. Exercise the canonical index producer against that formatter, including its explicit `--check-files` boundary and behavior after the source submodule is unavailable.
 
 **Tech Stack:** Python, mdformat, markdown-it-py, pytest, marketplace skill projections.
 
@@ -16,11 +16,12 @@
 
 ## Global Constraints
 
-- Edit canonical skill source under `codex-marketplace/plugins/`; regenerate `.agents/skills/` through the repository commands.
+- Edit canonical skill source under `codex-marketplace/plugins/`; keep the renderer package under `codex-marketplace/packages/`; regenerate `.agents/skills/` through the repository commands.
 - Preserve GFM, frontmatter, validation, LF output, and the existing file selection and exclusion contract.
 - Keep `--check-files` checking every requested producer output, including untracked files.
 - Do not add a Rooms filename rule, blanket underscore unescaping, generator emitted escapes, or an exclusion for generated indexes.
-- Use a focused RED/GREEN behavior test and meaningful producer integration. Avoid tests that merely compare mirrored implementation strings.
+- Use a focused behavior test and meaningful producer integration. Avoid tests that merely compare mirrored implementation strings.
+- Do not build Python packages inside consumer submodules or installed skill directories. The pinned marketplace submodule supplies the wheel directly.
 - Publish implementation through a Draft PR to `main`; the tracked pre-commit hook owns the full staged gate.
 
 ## Review Focus
@@ -94,3 +95,24 @@ ______________________________________________________________________
 - [x] Review the committed diff and obtain a fresh code review. Correct findings and repeat review on the latest commit.
 
 - [x] Use `completing-planning-artifacts` to promote any enduring decision, mark this plan `completed-awaiting-retirement`, and commit it. Push the branch, open Draft [PR #333](https://github.com/HarleyBartles/agent-asset-marketplace/pull/333) to `main`, and verify its head and checks in GitHub.
+
+### Task 4: Separate the renderer dependency from the skill
+
+**Files:**
+
+- Move: renderer package source from the skill to `codex-marketplace/packages/mdformat-safe-link-labels/`
+- Add: a built pure-Python wheel beside the package source
+- Modify: the skill requirements, toolchain verification, documentation, tests, and generated skill projection
+- Revert: the `.egg-info` ignore and installed-skill refresh exceptions added to repair the source-build approach
+
+**Interfaces:**
+
+- Consumers install the wheel from their pinned `.agents/plugins/marketplace-source` checkout.
+
+- The skill verifies the installed renderer version and reports a useful mismatch when another repository installed an incompatible version into the shared interpreter.
+
+- [x] Build the wheel from package source without mutating tracked source or the consumer submodule.
+
+- [x] Update the temporary-consumer integration to install the marketplace wheel, then run formatting after source checkout removal.
+
+- [ ] Remove the skill-local package and source-build workarounds; regenerate projections and validate the revised architecture in hosted CI.

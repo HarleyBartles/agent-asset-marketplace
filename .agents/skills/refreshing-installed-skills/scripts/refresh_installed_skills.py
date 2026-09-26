@@ -411,9 +411,8 @@ def _should_skip_file(path: Path) -> bool:
     """Return True for cache/build artifacts that should not be synced."""
     return (
         path.name in SKIP_DIR_NAMES
-        or path.name.endswith(".egg-info")
         or path.suffix.lower() in SKIP_FILE_SUFFIXES
-        or any(part in SKIP_DIR_NAMES or part.endswith(".egg-info") for part in path.parts)
+        or any(part in SKIP_DIR_NAMES for part in path.parts)
     )
 
 

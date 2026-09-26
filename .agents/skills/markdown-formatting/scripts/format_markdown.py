@@ -23,7 +23,11 @@ REQUIREMENTS_PATH = Path(__file__).resolve().parents[1] / "requirements.txt"
 REQUIRED_DISTRIBUTION_NAMES = frozenset(
     {"mdformat", "mdformat-frontmatter", "mdformat-gfm", "mdformat-safe-link-labels"}
 )
-LOCAL_DISTRIBUTION_PINS = {"mdformat-safe-link-labels": "1.0.0"}
+RENDERER_VERSION = "1.0.0"
+RENDERER_WHEEL_REQUIREMENT = (
+    "./.agents/plugins/marketplace-source/codex-marketplace/packages/"
+    "mdformat-safe-link-labels/wheels/mdformat_safe_link_labels-1.0.0-py3-none-any.whl"
+)
 
 
 def _required_distributions() -> dict[str, str]:
@@ -36,10 +40,8 @@ def _required_distributions() -> dict[str, str]:
         match = re.fullmatch(r"([A-Za-z0-9_.-]+)==([^\s]+)", line.strip())
         if match:
             pins[match.group(1)] = match.group(2)
-    local_requirements = {line.strip() for line in lines}
-    for distribution, expected in LOCAL_DISTRIBUTION_PINS.items():
-        if "./.agents/skills/markdown-formatting/renderer-plugin" in local_requirements:
-            pins[distribution] = expected
+    if RENDERER_WHEEL_REQUIREMENT in {line.strip() for line in lines}:
+        pins["mdformat-safe-link-labels"] = RENDERER_VERSION
     missing = REQUIRED_DISTRIBUTION_NAMES - pins.keys()
     if missing:
         raise ToolchainError(f"{REQUIREMENTS_PATH}: missing exact pins for {', '.join(sorted(missing))}")

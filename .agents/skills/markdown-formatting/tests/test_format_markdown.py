@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import importlib.util
 import json
-import shutil
 import subprocess
 import sys
 from pathlib import Path
@@ -189,6 +188,22 @@ def test_local_renderer_requirement_must_install_a_distribution(tmp_path: Path, 
         module._required_distributions()
 
 
+def test_marketplace_renderer_wheel_is_a_versioned_toolchain_requirement(tmp_path: Path, monkeypatch):
+    module = load_module()
+    requirements = tmp_path / "requirements.txt"
+    wheel_requirement = (
+        "./.agents/plugins/marketplace-source/codex-marketplace/packages/"
+        "mdformat-safe-link-labels/wheels/mdformat_safe_link_labels-1.0.0-py3-none-any.whl"
+    )
+    requirements.write_text(
+        f"mdformat==1.0.0\nmdformat-frontmatter==2.1.2\nmdformat-gfm==1.0.0\n{wheel_requirement}\n",
+        encoding="utf-8",
+    )
+    monkeypatch.setattr(module, "REQUIREMENTS_PATH", requirements)
+
+    assert module._required_distributions()["mdformat-safe-link-labels"] == "1.0.0"
+
+
 def test_apply_restores_every_original_byte_when_later_batch_fails(tmp_path: Path, monkeypatch):
     module = load_module()
     repo = make_repo(tmp_path)
@@ -233,8 +248,6 @@ def test_check_files_accepts_untracked_producer_output_and_rejects_invalid_paths
 
 def test_safe_underscores_in_link_labels_are_formatter_stable(tmp_path: Path):
     repo = make_repo(tmp_path)
-    installed_plugin = repo / ".agents/skills/markdown-formatting/renderer-plugin"
-    shutil.copytree(SCRIPT.parents[1] / "renderer-plugin", installed_plugin)
     target_name = "absynth_lover__seegreenfairies.md"
     source = f"- [{target_name.removesuffix('.md')}]({target_name})\n"
     index = repo / "INDEX.md"

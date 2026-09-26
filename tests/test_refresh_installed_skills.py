@@ -35,21 +35,6 @@ def test_copy_skill_directory_preserves_nested_test_tree_bytes(tmp_path: Path) -
     assert (installed_skill / "tests" / "fixture" / "nested.txt").read_bytes() == expected
 
 
-def test_skill_needs_update_ignores_python_distribution_metadata(tmp_path: Path) -> None:
-    source_skill = tmp_path / "source" / "markdown-formatting"
-    source_skill.mkdir(parents=True)
-    (source_skill / "SKILL.md").write_text("# Markdown formatting\n", encoding="utf-8")
-    installed_skill = tmp_path / "installed" / "markdown-formatting"
-    with patch.object(refresh_installed_skills, "ROOT", tmp_path):
-        refresh_installed_skills._copy_skill_directory(source_skill, installed_skill)
-
-    build_metadata = installed_skill / "renderer-plugin" / "src" / "mdformat_safe_link_labels.egg-info"
-    build_metadata.mkdir(parents=True)
-    (build_metadata / "PKG-INFO").write_text("Metadata-Version: 2.1\n", encoding="utf-8")
-
-    assert not refresh_installed_skills._skill_needs_update(source_skill, installed_skill)
-
-
 def test_force_refresh_with_no_skill_changes_is_a_no_diff_operation(tmp_path: Path) -> None:
     skills_path = tmp_path / "skills"
     skills_path.mkdir()

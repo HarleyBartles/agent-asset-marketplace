@@ -2,7 +2,7 @@
 
 This repo keeps the active Codex plugin bundles under `codex-marketplace/plugins/`, and the authoritative active-root list lives in `codex-marketplace/plugin-roots.json`. `superpowers-plus` is the retained mixed first-party workflow bundle over Superpowers source.
 
-Editable source custody lives under `codex-marketplace/plugins/<plugin>/skills/`. The marketplace roots under `codex-marketplace/plugins/` are the installable surfaces.
+Editable skill source custody lives under `codex-marketplace/plugins/<plugin>/skills/`. The marketplace roots under `codex-marketplace/plugins/` are the installable plugin surfaces. Separately maintained Python packages and their consumer-installable wheels live under `codex-marketplace/packages/`; they are not skills or Codex plugins.
 
 ## Layout
 
@@ -10,6 +10,7 @@ Editable source custody lives under `codex-marketplace/plugins/<plugin>/skills/`
 - `plugins/<plugin>/.codex-plugin/plugin.json` — plugin metadata
 - `plugins/<plugin>/skills/<skill>/` — canonical skill source trees
 - `manifest.json` — generated aggregate marketplace manifest
+- `packages/<package>/` — separately versioned Python package source and shipped wheels, pinned for consumers by the marketplace-source submodule
 
 ## Inventory
 
