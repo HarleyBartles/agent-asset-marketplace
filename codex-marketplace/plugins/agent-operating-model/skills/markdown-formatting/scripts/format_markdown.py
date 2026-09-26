@@ -36,20 +36,10 @@ def _required_distributions() -> dict[str, str]:
         match = re.fullmatch(r"([A-Za-z0-9_.-]+)==([^\s]+)", line.strip())
         if match:
             pins[match.group(1)] = match.group(2)
-    editable_paths = {match.group(1) for line in lines if (match := re.fullmatch(r"-e\s+([^\s]+)", line.strip()))}
+    local_requirements = {line.strip() for line in lines}
     for distribution, expected in LOCAL_DISTRIBUTION_PINS.items():
-        local_path = ".agents/skills/markdown-formatting/renderer-plugin"
-        if local_path not in editable_paths:
-            continue
-        try:
-            project_path = _repo_root() / local_path / "pyproject.toml"
-            project = tomllib.loads(project_path.read_text(encoding="utf-8"))
-        except (OSError, tomllib.TOMLDecodeError) as exc:
-            raise ToolchainError(f"cannot read local formatter extension metadata: {exc}") from exc
-        project_metadata = project.get("project", {})
-        if project_metadata.get("name") != distribution or project_metadata.get("version") != expected:
-            raise ToolchainError(f"local formatter extension must declare {distribution}=={expected}")
-        pins[distribution] = expected
+        if "./.agents/skills/markdown-formatting/renderer-plugin" in local_requirements:
+            pins[distribution] = expected
     missing = REQUIRED_DISTRIBUTION_NAMES - pins.keys()
     if missing:
         raise ToolchainError(f"{REQUIREMENTS_PATH}: missing exact pins for {', '.join(sorted(missing))}")

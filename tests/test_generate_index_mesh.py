@@ -115,6 +115,33 @@ def test_literal_underscore_filename_links_pass_generator_and_formatter(tmp_path
     shutil.copy2(skill_source / "requirements.txt", formatter / "requirements.txt")
     shutil.copy2(skill_source / "scripts/format_markdown.py", formatter / "scripts/format_markdown.py")
     shutil.copytree(skill_source / "renderer-plugin", formatter / "renderer-plugin")
+    isolated_python = tmp_path / "formatter-python"
+    subprocess.run(
+        [sys.executable, "-m", "venv", "--system-site-packages", str(isolated_python)],
+        check=True,
+        capture_output=True,
+    )
+    python = isolated_python / ("Scripts/python.exe" if sys.platform == "win32" else "bin/python")
+    installed = subprocess.run(
+        [str(python), "-m", "pip", "install", "--disable-pip-version-check", "-r", str(formatter / "requirements.txt")],
+        cwd=repo,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+    )
+    assert installed.returncode == 0, installed.stderr
+    module_origin = subprocess.run(
+        [str(python), "-c", "import mdformat_safe_link_labels; print(mdformat_safe_link_labels.__file__)"],
+        cwd=repo,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+        check=True,
+    )
+    assert Path(module_origin.stdout.strip()).resolve().is_relative_to(isolated_python.resolve())
+    plugin_source = (formatter / "renderer-plugin").resolve()
+    assert plugin_source.is_relative_to(repo.resolve())
+    shutil.rmtree(plugin_source)
     (repo / ".agents/contracts").mkdir(parents=True)
     shutil.copy2(REPO_ROOT / ".mdformat.toml", repo / ".mdformat.toml")
     (repo / ".agents/contracts/markdown-formatting.json").write_text(
@@ -148,8 +175,8 @@ def test_literal_underscore_filename_links_pass_generator_and_formatter(tmp_path
 
     for command in (
         [sys.executable, str(CORE), "--check"],
-        [sys.executable, formatter, "--check-files", "INDEX.md"],
-        [sys.executable, formatter, "--check"],
+        [str(python), formatter, "--check-files", "INDEX.md"],
+        [str(python), formatter, "--check"],
         [sys.executable, str(CORE), "--check"],
     ):
         result = subprocess.run(

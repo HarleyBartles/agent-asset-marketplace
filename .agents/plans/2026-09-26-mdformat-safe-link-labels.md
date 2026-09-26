@@ -6,7 +6,7 @@
 
 **Goal:** Make generated index links with safe literal underscores pass generation and Markdown formatting checks without changing their labels or targets.
 
-**Architecture:** Keep the portable formatter as the owner of normalization. Replace or extend its pinned renderer through a supported, distributable mechanism that preserves literal underscores only where the parsed Markdown meaning is unchanged. Exercise the canonical index producer against that formatter, including its explicit `--check-files` boundary.
+**Architecture:** Keep the portable formatter as the owner of normalization. Replace or extend its pinned renderer through a supported, distributable mechanism that preserves literal underscores only where the parsed Markdown meaning is unchanged. Install the renderer as a built distribution into the shared Python interpreter; keep per-repository skill files as the package source and version contract. Exercise the canonical index producer against that formatter, including its explicit `--check-files` boundary and behavior after its source package is removed.
 
 **Tech Stack:** Python, mdformat, markdown-it-py, pytest, marketplace skill projections.
 
