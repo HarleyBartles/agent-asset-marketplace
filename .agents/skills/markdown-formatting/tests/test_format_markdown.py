@@ -274,6 +274,15 @@ def test_escaped_underscores_that_prevent_emphasis_remain_escaped():
     assert r"\_foo\_" in formatted
 
 
+def test_safe_escaped_underscore_is_normalized_without_changing_rendered_label():
+    source = r"- [foo\_bar](target.md)" + "\n"
+    formatted = mdformat.text(source, extensions={"safe-link-labels"})
+
+    parser = MarkdownIt("commonmark")
+    assert parser.render(formatted) == parser.render(source)
+    assert "[foo_bar](target.md)" in formatted
+
+
 def test_help_classifies_the_cli_as_mixed():
     result = subprocess.run([sys.executable, str(SCRIPT), "--help"], text=True, capture_output=True, check=True)
     assert "mixed" in result.stdout.lower()

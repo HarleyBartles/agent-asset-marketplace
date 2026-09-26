@@ -27,7 +27,7 @@
 
 - A double underscore inside a filename label remains literal and links to the intended file.
 - Underscores that can create emphasis remain protected and render with the same structure.
-- Already escaped labels, code spans, and non-label Markdown keep their intended output.
+- Already escaped labels keep their rendered meaning; safe plain-text escapes may normalize to literal underscores. Code spans and non-label Markdown keep their intended output.
 - A second generator run and formatter check both accept the same source bytes.
 
 ______________________________________________________________________
