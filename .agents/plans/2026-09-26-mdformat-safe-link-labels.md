@@ -1,6 +1,6 @@
 # Safe Markdown Link Labels Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use `executing-plans` to implement this plan task by task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use `executing-plans` to implement this plan task by task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** Make generated index links with safe literal underscores pass generation and Markdown formatting checks without changing their labels or targets.
 
@@ -45,13 +45,13 @@ ______________________________________________________________________
 
 - Produces: one reproducible formatter command that accepts safe literal link-label underscores and preserves parsed meaning.
 
-- [ ] Add a real fixture containing `- [absynth_lover__seegreenfairies](absynth_lover__seegreenfairies.md)` and a target file. Assert the CLI `--check-files` accepts the literal source, `--apply` leaves it literal, and a second check succeeds. Assert the current pin fails before implementation.
+- [x] Add a real fixture containing `- [absynth_lover__seegreenfairies](absynth_lover__seegreenfairies.md)` and a target file. Assert the CLI `--check-files` accepts the literal source, `--apply` leaves it literal, and a second check succeeds. Assert the current pin fails before implementation.
 
-- [ ] Add a contrasting fixture where unescaped underscores alter emphasis parsing. Compare parsed token structure and link destination before and after formatting; require semantic preservation rather than a regex-only assertion.
+- [x] Add a contrasting fixture where unescaped underscores alter emphasis parsing. Compare parsed token structure and link destination before and after formatting; require semantic preservation rather than a regex-only assertion.
 
-- [ ] Inspect mdformat's documented renderer/plugin extension API and the installed `escape_underscore_emphasis` call site. Select a supported extension or maintained pinned formatter build; do not monkeypatch private installed package files at runtime. Record the chosen seam and version or package provenance in the skill documentation.
+- [x] Inspect mdformat's documented renderer/plugin extension API and the installed `escape_underscore_emphasis` call site. Select a supported extension or maintained pinned formatter build; do not monkeypatch private installed package files at runtime. Record the chosen seam and version or package provenance in the skill documentation.
 
-- [ ] Implement the smallest formatter-level change and rerun the focused tests. Confirm the ordinary prose, list, GFM, and frontmatter behavior already covered by the skill tests still passes.
+- [x] Implement the smallest formatter-level change and rerun the focused tests. Confirm the ordinary prose, list, GFM, and frontmatter behavior already covered by the skill tests still passes.
 
 ### Task 2: Prove producer and formatter convergence
 
@@ -66,11 +66,11 @@ ______________________________________________________________________
 
 - Produces: a generated index whose source is accepted unchanged by generation and formatting checks.
 
-- [ ] In a temporary consumer repository, track a file named `absynth_lover__seegreenfairies.md`, enable the formatting contract, install the canonical skills and pinned requirements, and run the real index generator. Assert the generated link label and target are literal and correct.
+- [x] In a temporary consumer repository, track a file named `absynth_lover__seegreenfairies.md`, enable the formatting contract, install the canonical skills and pinned requirements, and run the real index generator. Assert the generated link label and target are literal and correct.
 
-- [ ] Run generator `--check`, formatter `--check-files` on the index, formatter repository `--check`, and generator `--check` again. Compare index bytes before and after; all commands must pass without source churn.
+- [x] Run generator `--check`, formatter `--check-files` on the index, formatter repository `--check`, and generator `--check` again. Compare index bytes before and after; all commands must pass without source churn.
 
-- [ ] Confirm the generator still reports a deliberately malformed or stale index; the integration must not bypass either check.
+- [x] Confirm the generator still reports a deliberately malformed or stale index; the integration must not bypass either check.
 
 ### Task 3: Regenerate, validate, and publish
 
@@ -85,7 +85,7 @@ ______________________________________________________________________
 
 - Produces: a reviewable Draft PR with the canonical source, generated projection, focused evidence, and hook proof.
 
-- [ ] Run the focused skill and generator tests, then `py -3 tools/run.py marketplace --apply` and `py -3 tools/run.py mesh --apply`; inspect the diff for unrelated generated changes.
+- [x] Run the focused skill and generator tests, then `py -3 tools/run.py marketplace --apply` and `py -3 tools/run.py mesh --apply`; inspect the diff for unrelated generated changes.
 
 - [ ] Stage the intended tree and commit normally so the tracked pre-commit hook runs its staged apply/check gate. Do not run a redundant canonical check immediately before or after that commit.
 

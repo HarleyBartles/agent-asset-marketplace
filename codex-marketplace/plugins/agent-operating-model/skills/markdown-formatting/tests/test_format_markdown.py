@@ -2,11 +2,14 @@ from __future__ import annotations
 
 import importlib.util
 import json
+import shutil
 import subprocess
 import sys
 from pathlib import Path
 
 import pytest
+import mdformat
+from markdown_it import MarkdownIt
 
 
 SCRIPT = Path(__file__).parents[1] / "scripts" / "format_markdown.py"
@@ -34,7 +37,8 @@ def make_repo(tmp_path: Path, *, state: str = "adopted") -> Path:
     git(repo, "config", "user.email", "formatter@example.invalid")
     (repo / ".agents/contracts").mkdir(parents=True)
     (repo / ".mdformat.toml").write_text(
-        'wrap = "no"\nend_of_line = "lf"\nvalidate = true\nnumber = true\nextensions = ["gfm", "frontmatter"]\n',
+        'wrap = "no"\nend_of_line = "lf"\nvalidate = true\nnumber = true\n'
+        'extensions = ["gfm", "frontmatter", "safe-link-labels"]\n',
         encoding="utf-8",
     )
     (repo / ".agents/contracts/markdown-formatting.json").write_text(
@@ -211,6 +215,54 @@ def test_check_files_accepts_untracked_producer_output_and_rejects_invalid_paths
     ):
         with pytest.raises(module.ContractError, match=message):
             module.validate_requested_files(repo, [candidate])
+
+
+def test_safe_underscores_in_link_labels_are_formatter_stable(tmp_path: Path):
+    repo = make_repo(tmp_path)
+    installed_plugin = repo / ".agents/skills/markdown-formatting/renderer-plugin"
+    shutil.copytree(SCRIPT.parents[1] / "renderer-plugin", installed_plugin)
+    target_name = "absynth_lover__seegreenfairies.md"
+    source = f"- [{target_name.removesuffix('.md')}]({target_name})\n"
+    index = repo / "INDEX.md"
+    index.write_text(source, encoding="utf-8", newline="\n")
+    (repo / target_name).write_text("# target\n", encoding="utf-8", newline="\n")
+    commit_all(repo)
+
+    checked = subprocess.run(
+        [sys.executable, str(SCRIPT), "--check-files", "INDEX.md"],
+        cwd=repo,
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+    assert checked.returncode == 0, checked.stderr
+
+    applied = subprocess.run(
+        [sys.executable, str(SCRIPT), "--apply"],
+        cwd=repo,
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+    assert applied.returncode == 0, applied.stderr
+    assert index.read_text(encoding="utf-8") == source
+
+    checked_again = subprocess.run(
+        [sys.executable, str(SCRIPT), "--check-files", "INDEX.md"],
+        cwd=repo,
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+    assert checked_again.returncode == 0, checked_again.stderr
+
+
+def test_emphasis_in_link_labels_keeps_its_parsed_meaning():
+    source = "- [_emphasis_](target.md)\n"
+    formatted = mdformat.text(source, extensions={"safe-link-labels"})
+
+    parser = MarkdownIt("commonmark")
+    assert parser.render(formatted) == parser.render(source)
 
 
 def test_help_classifies_the_cli_as_mixed():

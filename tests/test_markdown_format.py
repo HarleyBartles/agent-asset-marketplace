@@ -36,12 +36,16 @@ def test_installed_markdown_formatter_matches_canonical_source() -> None:
     canonical_files = {
         path.relative_to(canonical)
         for path in canonical.rglob("*")
-        if path.is_file() and "__pycache__" not in path.parts
+        if path.is_file()
+        and "__pycache__" not in path.parts
+        and not any(part.endswith(".egg-info") for part in path.parts)
     }
     installed_files = {
         path.relative_to(installed)
         for path in installed.rglob("*")
-        if path.is_file() and "__pycache__" not in path.parts
+        if path.is_file()
+        and "__pycache__" not in path.parts
+        and not any(part.endswith(".egg-info") for part in path.parts)
     }
 
     assert installed_files == canonical_files

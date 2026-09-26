@@ -20,7 +20,10 @@ CONTRACT_PATH = Path(".agents/contracts/markdown-formatting.json")
 CONFIG_PATH = Path(".mdformat.toml")
 MAX_COMMAND_CHARS = 28_000
 REQUIREMENTS_PATH = Path(__file__).resolve().parents[1] / "requirements.txt"
-REQUIRED_DISTRIBUTION_NAMES = frozenset({"mdformat", "mdformat-frontmatter", "mdformat-gfm"})
+REQUIRED_DISTRIBUTION_NAMES = frozenset(
+    {"mdformat", "mdformat-frontmatter", "mdformat-gfm", "mdformat-safe-link-labels"}
+)
+LOCAL_DISTRIBUTION_PINS = {"mdformat-safe-link-labels": "1.0.0"}
 
 
 def _required_distributions() -> dict[str, str]:
@@ -33,6 +36,20 @@ def _required_distributions() -> dict[str, str]:
         match = re.fullmatch(r"([A-Za-z0-9_.-]+)==([^\s]+)", line.strip())
         if match:
             pins[match.group(1)] = match.group(2)
+    editable_paths = {match.group(1) for line in lines if (match := re.fullmatch(r"-e\s+([^\s]+)", line.strip()))}
+    for distribution, expected in LOCAL_DISTRIBUTION_PINS.items():
+        local_path = ".agents/skills/markdown-formatting/renderer-plugin"
+        if local_path not in editable_paths:
+            continue
+        try:
+            project_path = _repo_root() / local_path / "pyproject.toml"
+            project = tomllib.loads(project_path.read_text(encoding="utf-8"))
+        except (OSError, tomllib.TOMLDecodeError) as exc:
+            raise ToolchainError(f"cannot read local formatter extension metadata: {exc}") from exc
+        project_metadata = project.get("project", {})
+        if project_metadata.get("name") != distribution or project_metadata.get("version") != expected:
+            raise ToolchainError(f"local formatter extension must declare {distribution}=={expected}")
+        pins[distribution] = expected
     missing = REQUIRED_DISTRIBUTION_NAMES - pins.keys()
     if missing:
         raise ToolchainError(f"{REQUIREMENTS_PATH}: missing exact pins for {', '.join(sorted(missing))}")
@@ -181,8 +198,9 @@ def verify_configuration(repo_root: Path) -> None:
         if config.get(key) != value:
             raise ContractError(f"{CONFIG_PATH.as_posix()}: {key} must be {value!r}")
     extensions = config.get("extensions")
-    if not isinstance(extensions, list) or not {"gfm", "frontmatter"}.issubset(extensions):
-        raise ContractError(f"{CONFIG_PATH.as_posix()}: extensions must include gfm and frontmatter")
+    required_extensions = {"gfm", "frontmatter", "safe-link-labels"}
+    if not isinstance(extensions, list) or not required_extensions.issubset(extensions):
+        raise ContractError(f"{CONFIG_PATH.as_posix()}: extensions must include gfm, frontmatter, and safe-link-labels")
 
 
 def verify_toolchain() -> None:
