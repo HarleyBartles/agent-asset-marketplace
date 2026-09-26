@@ -397,7 +397,9 @@ class TestGateBoundaryMatching:
             payload = {
                 "hook_event_name": "PreToolUse",
                 "tool_name": "write",
-                "tool_input": {"file_path": "%IR_TEST_DENY%/state.json"},
+                "tool_input": {
+                    "file_path": ("%IR_TEST_DENY%/state.json" if os.name == "nt" else "$IR_TEST_DENY/state.json")
+                },
                 "tool_use_id": "w_2",
                 "session_id": "sess-1",
                 "prompt_id": "p-1",
