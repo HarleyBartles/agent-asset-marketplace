@@ -50,10 +50,10 @@ class RunnerError(Exception):
         super().__init__(f"[tools/run] target '{target}' failed.\nFix: {fix}")
 
 
-def _run(cmd: list[str], ctx: Ctx) -> None:
+def _run(cmd: list[str], ctx: Ctx, *, env: dict[str, str] | None = None) -> None:
     if ctx.verbose:
         print("+ " + " ".join(shlex.quote(part) for part in cmd))
-    subprocess.run(cmd, cwd=ROOT, check=True)
+    subprocess.run(cmd, cwd=ROOT, check=True, env=env)
 
 
 def _ref_exists(ref: str) -> bool:
@@ -467,8 +467,18 @@ def _run_ci(ctx: Ctx) -> None:
         )
 
 
+def _run_python_tests(ctx: Ctx) -> None:
+    test_env = os.environ.copy()
+    test_env.pop("REPO_STANDARDS_STAGED_SNAPSHOT", None)
+    _run([sys.executable, "-m", "pytest", "-q"], ctx, env=test_env)
+
+
 _TASKS: dict[str, Task] = {
     "lint": Task(apply=(_run_lint,), check=(_run_lint,), fix="tools/run lint --apply"),
+    "tests": Task(
+        check=(_run_python_tests,),
+        fix="python -m pytest -q",
+    ),
     "repo-standards": Task(
         apply=(_run_repo_standards,),
         check=(_run_repo_standards,),
@@ -532,7 +542,7 @@ _TASKS: dict[str, Task] = {
         fix="tools/run runtime-agents --apply --allow-shared-checkout",
     ),
     "ci": Task(
-        deps=("lint", "repo-standards", "validate"),
+        deps=("lint", "repo-standards", "tests", "validate"),
         apply=(_run_ci,),
         check=(_run_ci,),
         fix="tools/run ci --apply",

@@ -111,8 +111,14 @@ ______________________________________________________________________
 
 - The skill verifies the installed renderer version and reports a useful mismatch when another repository installed an incompatible version into the shared interpreter.
 
+- The shared `tools/run.py ci --check` task runs the repository's pinned Python test suite, so the tracked hook and hosted CI enforce the same test gate.
+
 - [x] Build the wheel from package source without mutating tracked source or the consumer submodule.
 
 - [x] Update the temporary-consumer integration to install the marketplace wheel, then run formatting after source checkout removal.
 
-- [ ] Remove the skill-local package and source-build workarounds; regenerate projections and validate the revised architecture in hosted CI.
+- [x] Remove the skill-local package and source-build workarounds; regenerate projections and validate the revised architecture locally.
+
+- [x] Add pytest to the shared CI check task and repair the seven stale suite failures revealed by enabling the full test gate.
+
+- [ ] Commit through the tracked hook, push the PR update, and verify the hosted gate passes with the same Python test suite enabled.

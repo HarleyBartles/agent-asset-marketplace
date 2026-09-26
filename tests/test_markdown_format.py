@@ -14,8 +14,10 @@ def test_repository_uses_portable_markdown_formatter_wiring() -> None:
     runner = (ROOT / "tools/run.py").read_text(encoding="utf-8")
     commands = json.loads((ROOT / ".agents/contracts/repo-standards-commands.json").read_text(encoding="utf-8"))
 
-    assert "-r .agents/skills/markdown-formatting/requirements.txt" in requirements
-    assert "mdformat==" not in requirements
+    assert "mdformat==1.0.0" in requirements
+    assert (
+        "./codex-marketplace/packages/mdformat-safe-link-labels/wheels/mdformat_safe_link_labels-1.0.0-py3-none-any.whl"
+    ) in requirements
     assert "_all_tracked_markdown_files" not in runner
     assert "_run_mdformat" not in runner
     assert commands["apply"][0] == [
@@ -36,16 +38,12 @@ def test_installed_markdown_formatter_matches_canonical_source() -> None:
     canonical_files = {
         path.relative_to(canonical)
         for path in canonical.rglob("*")
-        if path.is_file()
-        and "__pycache__" not in path.parts
-        and not any(part.endswith(".egg-info") for part in path.parts)
+        if path.is_file() and "__pycache__" not in path.parts
     }
     installed_files = {
         path.relative_to(installed)
         for path in installed.rglob("*")
-        if path.is_file()
-        and "__pycache__" not in path.parts
-        and not any(part.endswith(".egg-info") for part in path.parts)
+        if path.is_file() and "__pycache__" not in path.parts
     }
 
     assert installed_files == canonical_files

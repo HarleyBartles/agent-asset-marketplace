@@ -85,6 +85,24 @@ def test_resolve_ci_order():
     assert "archive-links" not in targets
 
 
+def test_ci_runs_python_tests(monkeypatch):
+    calls = []
+    monkeypatch.setenv("REPO_STANDARDS_STAGED_SNAPSHOT", "1")
+
+    def fake_run(cmd, ctx, *, env=None):
+        calls.append((cmd, env))
+
+    monkeypatch.setattr(run, "_run", fake_run)
+    ctx = run.Ctx(mode="check", base_ref=None, allow_shared=False, verbose=False)
+
+    run.run_targets(["ci"], ctx)
+
+    assert "tests" in run._resolve_ci_deps()
+    command, environment = next((cmd, env) for cmd, env in calls if "pytest" in cmd)
+    assert command == [sys.executable, "-m", "pytest", "-q"]
+    assert "REPO_STANDARDS_STAGED_SNAPSHOT" not in environment
+
+
 def test_resolve_all_aliases_to_ci():
     assert run.resolve_targets(["all"]) == run.resolve_targets(["ci"])
 

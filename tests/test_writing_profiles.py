@@ -611,7 +611,7 @@ def test_blinded_campaign_is_frozen_and_hides_the_judge_rubric_from_workers() ->
 
 def test_blinded_campaign_pins_remain_coherent_after_product_divergence() -> None:
     campaign = _load_json(BLINDED_ROOT / "campaign.json")
-    assert campaign["campaign_version"] == "1.5.0"
+    assert campaign["campaign_version"] == "1.6.0"
     assert "prospective_freeze" not in campaign
     treatment = next(arm for arm in campaign["arms"] if arm["id"] == "treatment-writing-style")
     intervention_paths = set(treatment["worker_allowed_reads"]) - {"tests/pressure/writing/blinded/stimulus.md"}
