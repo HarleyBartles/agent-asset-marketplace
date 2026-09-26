@@ -124,6 +124,7 @@ def test_markdown_surface_adoption_and_enforcement_are_separate(tmp_path: Path) 
     )
     markdown = repo / "README.md"
     markdown.write_text("#  Title   \n", encoding="utf-8")
+    (repo / ".mdformat.toml").write_bytes((REPO_ROOT / ".mdformat.toml").read_bytes())
     subprocess.run(["git", "add", "--all"], cwd=repo, check=True)
     subprocess.run(["git", "commit", "-m", "fixture"], cwd=repo, check=True, capture_output=True)
     before = markdown.read_bytes()

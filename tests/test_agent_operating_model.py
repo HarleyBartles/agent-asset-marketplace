@@ -6,6 +6,7 @@ ROOT = Path(__file__).resolve().parents[1]
 PLUGINS = ROOT / "codex-marketplace" / "plugins"
 EXPECTED_SKILLS = {
     "command-bus",
+    "markdown-formatting",
     "python",
     "repo-agent-assets",
     "repo-composition",

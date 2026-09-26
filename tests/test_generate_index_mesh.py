@@ -1,5 +1,6 @@
 import json
 import os
+import shutil
 import subprocess
 import sys
 import urllib.parse
@@ -104,6 +105,109 @@ def test_check_mode_fails_when_stale(tmp_path: Path) -> None:
     )
     assert result.returncode != 0
     assert "stale" in result.stderr.lower() or "stale" in result.stdout.lower()
+
+
+def test_literal_underscore_filename_links_pass_generator_and_formatter(tmp_path: Path) -> None:
+    repo = _make_repo(tmp_path, "literal-underscore-repo")
+    skill_source = REPO_ROOT / ".agents" / "skills" / "markdown-formatting"
+    formatter = repo / ".agents/skills/markdown-formatting"
+    (formatter / "scripts").mkdir(parents=True)
+    shutil.copy2(skill_source / "requirements.txt", formatter / "requirements.txt")
+    shutil.copy2(skill_source / "scripts/format_markdown.py", formatter / "scripts/format_markdown.py")
+    marketplace_source = repo / ".agents/plugins/marketplace-source"
+    wheel_source = (
+        REPO_ROOT / "codex-marketplace/packages/mdformat-safe-link-labels/wheels/"
+        "mdformat_safe_link_labels-1.0.0-py3-none-any.whl"
+    )
+    wheel_target = (
+        marketplace_source / "codex-marketplace/packages/mdformat-safe-link-labels/wheels/"
+        "mdformat_safe_link_labels-1.0.0-py3-none-any.whl"
+    )
+    wheel_target.parent.mkdir(parents=True)
+    shutil.copy2(wheel_source, wheel_target)
+    isolated_python = tmp_path / "formatter-python"
+    subprocess.run(
+        [sys.executable, "-m", "venv", str(isolated_python)],
+        check=True,
+        capture_output=True,
+    )
+    python = isolated_python / ("Scripts/python.exe" if sys.platform == "win32" else "bin/python")
+    installed = subprocess.run(
+        [str(python), "-m", "pip", "install", "--disable-pip-version-check", "-r", str(formatter / "requirements.txt")],
+        cwd=repo,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+    )
+    assert installed.returncode == 0, installed.stderr
+    module_origin = subprocess.run(
+        [str(python), "-c", "import mdformat_safe_link_labels; print(mdformat_safe_link_labels.__file__)"],
+        cwd=repo,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+        check=True,
+    )
+    assert Path(module_origin.stdout.strip()).resolve().is_relative_to(isolated_python.resolve())
+    assert marketplace_source.is_relative_to(repo.resolve())
+    shutil.rmtree(marketplace_source)
+    (repo / ".agents/contracts").mkdir(parents=True)
+    shutil.copy2(REPO_ROOT / ".mdformat.toml", repo / ".mdformat.toml")
+    (repo / ".agents/contracts/markdown-formatting.json").write_text(
+        json.dumps({"version": 1, "state": "adopted", "exclusions": []}) + "\n",
+        encoding="utf-8",
+    )
+    target_name = "absynth_lover__seegreenfairies.md"
+    _commit_file(repo, target_name)
+    (repo / target_name).write_text("# Target file\n\ncontent\n", encoding="utf-8", newline="\n")
+    subprocess.run(["git", "add", target_name], cwd=repo, check=True, capture_output=True)
+    subprocess.run(
+        ["git", "commit", "-m", "use formatter-clean file content"],
+        cwd=repo,
+        check=True,
+        capture_output=True,
+    )
+
+    generated = subprocess.run(
+        [sys.executable, str(CORE), "--apply", "--allow-shared-checkout"],
+        cwd=repo,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+    )
+    assert generated.returncode == 0, generated.stderr
+    index = repo / "INDEX.md"
+    expected = f"- [{target_name}]({target_name})"
+    assert expected in index.read_text(encoding="utf-8")
+    first_bytes = index.read_bytes()
+    formatter = str(repo / ".agents/skills/markdown-formatting/scripts/format_markdown.py")
+
+    for command in (
+        [sys.executable, str(CORE), "--check"],
+        [str(python), formatter, "--check-files", "INDEX.md"],
+        [str(python), formatter, "--check"],
+        [sys.executable, str(CORE), "--check"],
+    ):
+        result = subprocess.run(
+            command,
+            cwd=repo,
+            env=_stripped_env(),
+            capture_output=True,
+            text=True,
+        )
+        assert result.returncode == 0, result.stderr
+        assert index.read_bytes() == first_bytes
+
+    index.write_text(index.read_text(encoding="utf-8").replace(expected, "- [stale](missing.md)"), encoding="utf-8")
+    stale = subprocess.run(
+        [sys.executable, str(CORE), "--check"],
+        cwd=repo,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+    )
+    assert stale.returncode != 0
+    assert "stale" in stale.stderr.lower() or "stale" in stale.stdout.lower()
 
 
 def test_empty_repo_generates_root_index(tmp_path: Path) -> None:
