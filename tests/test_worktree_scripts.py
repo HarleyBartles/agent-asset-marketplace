@@ -1208,11 +1208,19 @@ def test_new_worktree_keeps_worktree_when_pip_is_missing(tmp_path: Path) -> None
     subprocess.run(["git", "add", "-A"], cwd=repo, check=True, capture_output=True)
     subprocess.run(["git", "commit", "-m", "add requirements"], cwd=repo, check=True, capture_output=True)
 
-    # Restrict PATH to git only so pip is not found.
+    # Restrict PATH to a git-only directory so pip is not found.
     git_path = shutil.which("git")
     assert git_path is not None
     env = _stripped_env()
-    env["PATH"] = str(Path(git_path).parent)
+    if os.name == "nt":
+        env["PATH"] = str(Path(git_path).parent)
+    else:
+        git_only = tmp_path / "git-only-bin"
+        git_only.mkdir()
+        git_shim = git_only / "git"
+        git_shim.write_text(f'#!/bin/sh\nexec "{git_path}" "$@"\n', encoding="utf-8")
+        git_shim.chmod(0o755)
+        env["PATH"] = str(git_only)
 
     worktree_root = tmp_path / "_agent-worktrees" / "missing-pip-repo" / "feature"
     result = subprocess.run(
@@ -1227,6 +1235,7 @@ def test_new_worktree_keeps_worktree_when_pip_is_missing(tmp_path: Path) -> None
     assert "pip is not on PATH" in result.stderr
 
 
+@pytest.mark.skipif(os.name != "nt", reason="process working directories do not lock worktrees on POSIX")
 def test_remove_worktree_stops_on_locked_directory(tmp_path: Path) -> None:
     """If the worktree directory is locked, the script deregisters it and stops."""
     repo = _make_repo(tmp_path, "locked-repo")

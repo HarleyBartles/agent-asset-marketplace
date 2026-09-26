@@ -47,7 +47,7 @@ def _ctl(*args, runtime="devin-desktop", cwd=None):
     else:
         env[engine.RUNTIME_ENV_VAR] = runtime
     return subprocess.run(
-        ["py", "-3", str(REVIEWCTL), *args],
+        [sys.executable, str(REVIEWCTL), *args],
         capture_output=True,
         text=True,
         env=env,
@@ -60,7 +60,7 @@ def _run(script: Path, *args, env_extra=None):
     if env_extra:
         env.update(env_extra)
     return subprocess.run(
-        ["py", "-3", str(script), *args],
+        [sys.executable, str(script), *args],
         capture_output=True,
         text=True,
         env=env,

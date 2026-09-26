@@ -101,6 +101,7 @@ def test_ci_runs_python_tests(monkeypatch):
     command, environment = next((cmd, env) for cmd, env in calls if "pytest" in cmd)
     assert command == [sys.executable, "-m", "pytest", "-q"]
     assert "REPO_STANDARDS_STAGED_SNAPSHOT" not in environment
+    assert "REPO_STANDARDS_HOSTED_COMMIT" not in environment
 
 
 def test_resolve_all_aliases_to_ci():
@@ -289,10 +290,10 @@ def test_validate_fix_message(monkeypatch):
 
 
 def test_ci_apply_does_not_run_manual_review_preflight(monkeypatch):
-    calls = []
+    calls: list[list[str]] = []
 
     def fake_run(cmd, ctx):
-        calls.append(" ".join(cmd))
+        calls.append(cmd)
 
     monkeypatch.setattr(run, "_run", fake_run)
     monkeypatch.setattr(run, "_git_diff_check", lambda ctx: None)
@@ -301,8 +302,7 @@ def test_ci_apply_does_not_run_manual_review_preflight(monkeypatch):
     ctx = run.Ctx(mode="apply", base_ref=None, allow_shared=True, verbose=False)
     run.run_targets(run.resolve_targets(["ci"]), ctx)
 
-    review_preflight_calls = [c for c in calls if "tools/review_preflight.py" in c]
-    assert not review_preflight_calls
+    assert not any(command[:2] == [sys.executable, "tools/review_preflight.py"] for command in calls)
 
 
 def test_validate_does_not_call_git_diff_exit_code(monkeypatch):

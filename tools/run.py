@@ -470,6 +470,7 @@ def _run_ci(ctx: Ctx) -> None:
 def _run_python_tests(ctx: Ctx) -> None:
     test_env = os.environ.copy()
     test_env.pop("REPO_STANDARDS_STAGED_SNAPSHOT", None)
+    test_env.pop("REPO_STANDARDS_HOSTED_COMMIT", None)
     _run([sys.executable, "-m", "pytest", "-q"], ctx, env=test_env)
 
 

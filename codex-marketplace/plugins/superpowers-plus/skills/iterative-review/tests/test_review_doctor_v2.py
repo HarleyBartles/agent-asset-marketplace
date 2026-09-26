@@ -33,7 +33,7 @@ def _ctl(*args, runtime="devin-desktop", env_extra=None):
     if env_extra:
         env.update(env_extra)
     return subprocess.run(
-        ["py", "-3", str(REVIEWCTL), *args],
+        [sys.executable, str(REVIEWCTL), *args],
         capture_output=True,
         text=True,
         env=env,
@@ -45,7 +45,7 @@ def _run_hook(script: Path, stdin_payload) -> subprocess.CompletedProcess:
     env["IR_HOOK_ENV"] = str(script.parent / "hook-env.json")
     data = stdin_payload if isinstance(stdin_payload, str) else json.dumps(stdin_payload)
     return subprocess.run(
-        ["py", "-3", str(script)],
+        [sys.executable, str(script)],
         input=data,
         capture_output=True,
         text=True,
@@ -561,8 +561,7 @@ class TestDoctorRows:
     def test_run_cmd_decodes_utf8_output(self):
         rc, out, _err = reviewctl._run_cmd(
             [
-                "py",
-                "-3",
+                sys.executable,
                 "-c",
                 "import sys; sys.stdout.buffer.write('café'.encode('utf-8'))",
             ]

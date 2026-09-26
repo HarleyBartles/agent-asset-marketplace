@@ -119,6 +119,8 @@ ______________________________________________________________________
 
 - [x] Remove the skill-local package and source-build workarounds; regenerate projections and validate the revised architecture locally.
 
-- [x] Add pytest to the shared CI check task and repair the seven stale suite failures revealed by enabling the full test gate.
+- [x] Add pinned pytest and jsonschema dependencies to the shared CI check task and repair the stale suite expectations revealed by enabling the full test gate.
+
+- [x] Make the Python suite portable across the Windows workstations and Linux hosted runner: invoke the active interpreter, isolate git in the missing-pip test, and gate only Windows path-conversion and file-locking cases.
 
 - [ ] Commit through the tracked hook, push the PR update, and verify the hosted gate passes with the same Python test suite enabled.
