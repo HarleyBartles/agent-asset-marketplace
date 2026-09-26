@@ -1,6 +1,6 @@
 # Safe Markdown Link Labels Implementation Plan
 
-**State:** in-progress
+**State:** completed-awaiting-retirement
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use `executing-plans` to implement this plan task by task. Steps use checkbox (`- [x]`) syntax for tracking.
 
@@ -123,4 +123,4 @@ ______________________________________________________________________
 
 - [x] Make the Python suite portable across the Windows workstations and Linux hosted runner: invoke the active interpreter, isolate git in the missing-pip test, and gate only Windows path-conversion and file-locking cases.
 
-- [ ] Commit through the tracked hook, push the PR update, and verify the hosted gate passes with the same Python test suite enabled.
+- [x] Commit through the tracked hook, push the PR update, and verify the hosted gate passes with the same Python test suite enabled.
