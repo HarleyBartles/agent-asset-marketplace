@@ -1,5 +1,7 @@
 # Safe Markdown Link Labels Implementation Plan
 
+**State:** completed-awaiting-retirement
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use `executing-plans` to implement this plan task by task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** Make generated index links with safe literal underscores pass generation and Markdown formatting checks without changing their labels or targets.
@@ -87,8 +89,8 @@ ______________________________________________________________________
 
 - [x] Run the focused skill and generator tests, then `py -3 tools/run.py marketplace --apply` and `py -3 tools/run.py mesh --apply`; inspect the diff for unrelated generated changes.
 
-- [ ] Stage the intended tree and commit normally so the tracked pre-commit hook runs its staged apply/check gate. Do not run a redundant canonical check immediately before or after that commit.
+- [x] Stage the intended tree and commit normally so the tracked pre-commit hook runs its staged apply/check gate. Do not run a redundant canonical check immediately before or after that commit.
 
-- [ ] Review the committed diff and obtain a fresh code review. Correct findings and repeat review on the latest commit.
+- [x] Review the committed diff and obtain a fresh code review. Correct findings and repeat review on the latest commit.
 
 - [ ] Use `completing-planning-artifacts` to promote any enduring decision, mark this plan `completed-awaiting-retirement`, and commit it. Push the branch, open a Draft PR to `main`, and verify its head and checks in GitHub.
