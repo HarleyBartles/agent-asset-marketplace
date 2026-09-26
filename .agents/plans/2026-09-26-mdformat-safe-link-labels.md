@@ -93,4 +93,4 @@ ______________________________________________________________________
 
 - [x] Review the committed diff and obtain a fresh code review. Correct findings and repeat review on the latest commit.
 
-- [ ] Use `completing-planning-artifacts` to promote any enduring decision, mark this plan `completed-awaiting-retirement`, and commit it. Push the branch, open a Draft PR to `main`, and verify its head and checks in GitHub.
+- [x] Use `completing-planning-artifacts` to promote any enduring decision, mark this plan `completed-awaiting-retirement`, and commit it. Push the branch, open Draft [PR #333](https://github.com/HarleyBartles/agent-asset-marketplace/pull/333) to `main`, and verify its head and checks in GitHub.
