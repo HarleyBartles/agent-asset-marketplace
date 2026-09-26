@@ -265,6 +265,15 @@ def test_emphasis_in_link_labels_keeps_its_parsed_meaning():
     assert parser.render(formatted) == parser.render(source)
 
 
+def test_escaped_underscores_that_prevent_emphasis_remain_escaped():
+    source = r"- [\_foo\_](target.md)" + "\n"
+    formatted = mdformat.text(source, extensions={"safe-link-labels"})
+
+    parser = MarkdownIt("commonmark")
+    assert parser.render(formatted) == parser.render(source)
+    assert r"\_foo\_" in formatted
+
+
 def test_help_classifies_the_cli_as_mixed():
     result = subprocess.run([sys.executable, str(SCRIPT), "--help"], text=True, capture_output=True, check=True)
     assert "mixed" in result.stdout.lower()

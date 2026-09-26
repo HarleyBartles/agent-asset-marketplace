@@ -18,7 +18,18 @@ def _preserve_plain_link_label_underscores(rendered: str, node: RenderTreeNode, 
     if closing is None:
         return rendered
     label = rendered[1:closing].replace(r"\_", "_")
+    if not _is_plain_text(label, node):
+        return rendered
     return f"[{label}]{rendered[closing + 1 :]}"
+
+
+def _is_plain_text(label: str, node: RenderTreeNode) -> bool:
+    """Return whether unescaping preserves this label's plain-text parse."""
+    parsed = MarkdownIt("commonmark").parseInline(label)
+    children = parsed[-1].children or []
+    parsed_text = "".join(child.content or "" for child in children)
+    original_text = "".join(child.content or "" for child in node.children or [])
+    return all(child.type == "text" for child in children) and parsed_text == original_text
 
 
 def _link_label_closing_bracket(rendered: str) -> int | None:
