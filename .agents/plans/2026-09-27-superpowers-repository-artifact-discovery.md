@@ -36,6 +36,7 @@ ______________________________________________________________________
 
 **Files:**
 
+- Modify: `codex-marketplace/plugins/superpowers-plus/skills/using-superpowers-plus/SKILL.md`
 - Modify: `codex-marketplace/plugins/superpowers-plus/skills/using-superpowers-plus/references/bootstrap-routing.md`
 - Modify: `codex-marketplace/plugins/superpowers-plus/skills/using-superpowers-plus/references/superpowers-composition.md`
 
@@ -45,13 +46,13 @@ ______________________________________________________________________
 
 - Produces: one portable rule for locating and conditionally reading applicable local guidance, including how to proceed when none exists.
 
-- [ ] Replace assumptions that `.agents/playbooks/INDEX.md` and `.agents/runbooks/INDEX.md` are universal discovery paths with repository-declared discovery, when available.
+- [x] Replace assumptions that `.agents/playbooks/INDEX.md` and `.agents/runbooks/INDEX.md` are universal discovery paths with repository-declared discovery, when available.
 
-- [ ] Preserve bounded topical discovery: consult only relevant local artifacts, and do not fan out across all playbooks or guides.
+- [x] Preserve bounded topical discovery: consult only relevant local artifacts, and do not fan out across all playbooks or guides.
 
-- [ ] Remove the composition contract that makes a stage runbook a required composition root for every consumer; retain the relationship as this repository's local convention where applicable.
+- [x] Remove the composition contract that makes a stage runbook a required composition root for every consumer; retain the relationship as this repository's local convention where applicable.
 
-- [ ] State that absent local artifacts do not block portable baseline execution, while surfacing a material assumption or repository-local gap when needed.
+- [x] State that absent local artifacts do not block portable baseline execution, while surfacing a material assumption or repository-local gap when needed.
 
 ### Task 2: Align stage skills with conditional local guidance
 
@@ -70,13 +71,13 @@ ______________________________________________________________________
 
 - Produces: stage-specific instructions that consult applicable repository-resident workflow guidance when present and retain the skill's baseline when absent.
 
-- [ ] Replace mandatory `.agents/runbooks/<stage>.md` instructions with conditional consultation of repository-declared artifacts relevant to that stage.
+- [x] Replace mandatory `.agents/runbooks/<stage>.md` instructions with conditional consultation of repository-declared artifacts relevant to that stage.
 
-- [ ] Preserve any specific local constraints already required by this repository through its own root guidance and runbook system.
+- [x] Preserve any specific local constraints already required by this repository through its own root guidance and runbook system.
 
-- [ ] In `subagent-driven-development`, preserve the controller's responsibility for enforcing implementation and handoff requirements without making a particular runbook the universal source.
+- [x] In `subagent-driven-development`, preserve the controller's responsibility for enforcing implementation and handoff requirements without making a particular runbook the universal source.
 
-- [ ] Review all remaining fixed-path runbook requirements within the Superpowers Plus skill tree and either update in-scope workflow assumptions or document why a remaining path is intentionally repo-specific.
+- [x] Review all remaining fixed-path runbook requirements within the Superpowers Plus skill tree and either update in-scope workflow assumptions or document why a remaining path is intentionally repo-specific.
 
 ### Task 3: Regenerate and verify the skill package
 
@@ -84,6 +85,7 @@ ______________________________________________________________________
 
 - Regenerate: `.agents/skills/superpowers-plus/` through the owning marketplace and skill projection commands.
 - Regenerate: mesh or marketplace indexes only if the owning commands report them stale.
+- Modify: `tests/test_workflow_contracts.py` to remove the obsolete exact-path and source-placement assertions.
 
 **Interfaces:**
 
@@ -91,13 +93,15 @@ ______________________________________________________________________
 
 - Produces: synchronized generated projections and a reviewable Draft PR with source, projection, and validation evidence.
 
-- [ ] Audit the canonical Superpowers Plus skill tree for remaining mandatory `.agents/runbooks/` and `.agents/playbooks/` consumer assumptions; inspect each match in context.
+- [x] Audit the canonical Superpowers Plus skill tree for remaining mandatory `.agents/runbooks/` and `.agents/playbooks/` consumer assumptions; inspect each match in context.
 
-- [ ] Regenerate through `py -3 tools/run.py marketplace --apply` and the required mesh command; inspect the generated diff for unrelated changes.
+- [x] Regenerate through `py -3 tools/run.py marketplace --apply` and the required mesh command; inspect the generated diff for unrelated changes.
 
-- [ ] Confirm canonical sources and installed projections agree using the repository's owning validation commands.
+- [x] Confirm canonical sources and installed projections agree using the repository's owning validation commands.
 
-- [ ] Do not add tests unless implementation reveals a genuine behavioral validation gap; avoid tautological wording checks.
+- [x] Do not add tests unless implementation reveals a genuine behavioral validation gap; avoid tautological wording checks. The paired baseline probes completed both tasks without exposing a behavior gap, so no scenario test was retained.
+
+- [ ] Update the existing pressure-repair contract test only to remove obsolete exact-path and source-placement assertions; do not replace them with wording checks.
 
 - [ ] Review the complete diff for portable wording, preserved local policy, source custody, and generated projection scope.
 

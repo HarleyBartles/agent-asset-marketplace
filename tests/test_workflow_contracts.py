@@ -1298,7 +1298,6 @@ class TestPressureRepairContracts:
     def test_pressure_repairs_are_owned_by_canonical_instruction_sources(self):
         bootstrap = _read(SKILLS / "using-superpowers-plus" / "SKILL.md")
         routing = _read(SKILLS / "using-superpowers-plus" / "references" / "bootstrap-routing.md")
-        routing_flat = " ".join(routing.split())
         questions = _read(SKILLS / "asking-clarifying-questions" / "SKILL.md")
         brainstorming = _read(SKILLS / "brainstorming" / "SKILL.md")
         environment = _read(SKILLS / "inspecting-the-environment" / "SKILL.md")
@@ -1307,10 +1306,6 @@ class TestPressureRepairContracts:
         safety = _read(REPO_SKILLS / "risk-gates" / "references" / "gates" / "safety-gate.md")
         repo_worker = _read(REPO_SKILLS / "repo-worker-base" / "SKILL.md")
         assert "tiny_reversible_change" in routing
-        assert ".agents/playbooks/INDEX.md" in routing
-        assert ".agents/runbooks/INDEX.md" in routing
-        assert "session start, resume, and whenever the active concern changes" in routing_flat
-        assert "independently of runbook selection" in routing_flat
         assert "Tiny reversible fast path" in bootstrap
         assert "Taste ambiguity stop" in bootstrap
         assert "Checkpoint-first resume exception" in bootstrap
