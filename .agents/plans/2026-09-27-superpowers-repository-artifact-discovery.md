@@ -1,6 +1,6 @@
 # Superpowers Repository Artifact Discovery Implementation Plan
 
-**State:** implementation pending; this plan is the reviewable draft handoff.
+**State:** completed; awaiting PR retirement.
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use `executing-plans` to implement this plan task by task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
@@ -101,8 +101,8 @@ ______________________________________________________________________
 
 - [x] Do not add tests unless implementation reveals a genuine behavioral validation gap; avoid tautological wording checks. The paired baseline probes completed both tasks without exposing a behavior gap, so no scenario test was retained.
 
-- [ ] Update the existing pressure-repair contract test only to remove obsolete exact-path and source-placement assertions; do not replace them with wording checks.
+- [x] Update the existing pressure-repair contract test only to remove obsolete exact-path and source-placement assertions; do not replace them with wording checks.
 
-- [ ] Review the complete diff for portable wording, preserved local policy, source custody, and generated projection scope.
+- [x] Review the complete diff for portable wording, preserved local policy, source custody, and generated projection scope. Independent skill and plan reviews found no implementation issues; they confirmed source and projection parity and the narrow test adjustment.
 
-- [ ] Commit normally and let the tracked pre-commit hook run the complete staged gate; push and open or update a Draft PR to `main`, then verify its branch, head, and checks in GitHub.
+- [x] Commit normally and let the tracked pre-commit hook run the complete staged gate; push and open or update a Draft PR to `main`, then verify its branch, head, and checks in GitHub. PR #334 remains Draft at the published implementation commit. The marketplace-validation check is skipped by GitHub Actions; local marketplace, installed-skills, mesh, and tracked pre-commit validation passed.
