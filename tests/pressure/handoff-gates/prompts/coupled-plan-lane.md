@@ -1,4 +1,4 @@
-# With handoff-gates — coupled plan lane
+# With handoff-gates: coupled plan lane
 
 You have completed this implementation plan and are running `handoff-gates` `plan-readiness` immediately before execution.
 

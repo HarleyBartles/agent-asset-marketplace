@@ -1,6 +1,6 @@
 # Evidence-Based Execution Lane Recommendations Implementation Plan
 
-**State:** implementation pending; reviewable execution plan.
+**State:** implementation in progress; paired pressure scenarios are authored, but execution is blocked by the local runner's connector preflight.
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use `subagent-driven-development` (recommended) or `executing-plans` to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
@@ -70,8 +70,6 @@ ______________________________________________________________________
 
 - [x] Review both handoff-gates pressure fixtures against their expected outcomes and the updated gate criteria.
 
-- [ ] Run both scenarios in `tests/pressure/handoff-gates/campaign.json` against the committed implementation head and assess the responses against their rubrics.
-
 ### Task 2: Verify and publish
 
 **Files:**
@@ -85,8 +83,10 @@ ______________________________________________________________________
 
 - Produces: validated source/projections and a reviewable Draft PR for MARK-374.
 
-- [ ] Review the complete diff against MARK-374 guardrails, including unchanged upstream header and opposing lane outcomes.
+- [x] Review the complete diff against MARK-374 guardrails, including unchanged upstream header and opposing lane outcomes. Self-review confirmed the canonical/projection diff is scoped to the recommendation contract and preserves both lane outcomes.
 
-- [ ] Run `py -3 -m pytest tests/test_workflow_contracts.py -q`, both paired campaign scenarios, and all relevant marketplace, installed-skills, and mesh checks; then use the tracked pre-commit hook as the complete staged gate.
+- [x] Run `py -3 -m pytest tests/test_workflow_contracts.py -q` and all relevant marketplace, installed-skills, and mesh checks; the tracked pre-commit hook also passed the complete staged gate (1097 passed, 6 skipped).
+
+- [ ] Run both scenarios in `tests/pressure/handoff-gates/campaign.json` against the committed implementation head and assess their responses. The runner exited before any trial because preflight found an exposed MCP/plugin inventory; connector-safety forbids bypassing that guard.
 
 - [ ] Commit normally through the tracked hook, push the branch, open a Draft PR, and verify its published head and checks.
