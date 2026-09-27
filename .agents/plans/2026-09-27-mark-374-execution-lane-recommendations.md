@@ -1,6 +1,6 @@
 # Evidence-Based Execution Lane Recommendations Implementation Plan
 
-**State:** implementation in progress; paired pressure scenarios are authored, but execution is blocked by the local runner's connector preflight.
+**State:** implementation published in Draft PR #335; paired pressure scenario execution remains blocked by the local runner's connector preflight.
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use `subagent-driven-development` (recommended) or `executing-plans` to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
@@ -89,4 +89,4 @@ ______________________________________________________________________
 
 - [ ] Run both scenarios in `tests/pressure/handoff-gates/campaign.json` against the committed implementation head and assess their responses. The runner exited before any trial because preflight found an exposed MCP/plugin inventory; connector-safety forbids bypassing that guard.
 
-- [ ] Commit normally through the tracked hook, push the branch, open a Draft PR, and verify its published head and checks.
+- [x] Commit normally through the tracked hook, push the branch, open a Draft PR, and verify its published head and checks. PR #335 is open against `main` and mergeable; GitHub's `marketplace-validation` check is skipped.
