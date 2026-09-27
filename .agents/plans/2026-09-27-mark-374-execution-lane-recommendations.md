@@ -31,61 +31,48 @@
 
 ______________________________________________________________________
 
-### Task 1: Specify and cover plan-specific lane selection
+### Task 1: Add and cover plan-specific lane selection
 
 **Files:**
 
-- Modify: `tests/test_workflow_contracts.py`
 - Modify: `tests/pressure/handoff-gates/README.md`
+- Create: `tests/pressure/handoff-gates/campaign.json`
 - Create: `tests/pressure/handoff-gates/prompts/coupled-plan-lane.md`
 - Create: `tests/pressure/handoff-gates/prompts/independent-plan-lane.md`
+- Modify: `codex-marketplace/plugins/superpowers-plus/skills/handoff-gates/SKILL.md`
+- Modify: `codex-marketplace/plugins/superpowers-plus/skills/writing-plans/SKILL.md` only where needed to make the gate result authoritative.
+- Regenerate: `.agents/skills/superpowers-plus/` through owning commands.
 - Regenerate: pressure prompt indexes through the owning mesh command.
 
 **Interfaces:**
 
 - Consumes: current plan-readiness and writing-plans handoff contract.
 
-- Produces: deterministic workflow-contract coverage and paired pressure prompts with opposite justified lane outcomes.
+- Produces: paired pressure scenarios with opposite justified lane outcomes and a saved plan strategy controlled by plan-readiness evidence.
 
-- [ ] Add a focused workflow-contract test for the plan-specific comparison, the pre-handoff rewrite of the saved `Execution Strategy` field, and preservation of the upstream subskill header.
+- [x] Add the coupled-plan pressure prompt: nine individually reviewable steps share one schema, coordinator, and cross-step state; expect inline execution with concrete continuity evidence.
 
-- [ ] Run `py -3 -m pytest tests/test_workflow_contracts.py::TestExecutionLaneRecommendationContracts -q` and confirm it fails because the current gate does not require a comparison or field rewrite.
+- [x] Add the independent-plan pressure prompt: bounded tasks have disjoint files/interfaces and benefit materially from fresh implementer and reviewer context; expect SDD with concrete isolation evidence.
 
-- [ ] Add the coupled-plan pressure prompt: nine individually reviewable steps share one schema, coordinator, and cross-step state; expect inline execution with concrete continuity evidence.
+- [x] Document the paired scenarios and deterministic expected outcomes in the existing handoff-gates pressure README.
 
-- [ ] Add the independent-plan pressure prompt: bounded tasks have disjoint files/interfaces and benefit materially from fresh implementer and reviewer context; expect SDD with concrete isolation evidence.
+- [x] Add both pressure prompts to a scoped campaign using the repository's existing pressure runner schema.
 
-- [ ] Document the paired scenarios and deterministic expected outcomes in the existing handoff-gates pressure README.
+- [x] Add a plan-readiness check after reviewing task order that compares the proposed lane with its nearest credible alternative using task independence, dependencies, shared implementation context, state coupling, review burden, context reconstruction, and consequence.
 
-### Task 2: Make plan-readiness own the final lane recommendation
+- [x] Require concrete evidence from the saved plan and a clear statement of why the selected lane wins; plan length and task count alone are insufficient.
 
-**Files:**
+- [x] Require the planner to update the saved `Execution Strategy` field after the comparison and before handoff. Leave the upstream-required subskill header untouched.
 
-- Modify: `codex-marketplace/plugins/superpowers-plus/skills/handoff-gates/SKILL.md`
-- Modify: `codex-marketplace/plugins/superpowers-plus/skills/writing-plans/SKILL.md` only where needed to make the gate result authoritative.
-- Regenerate: `.agents/skills/superpowers-plus/` through owning commands.
+- [x] Clarify the writing-plans self-review and handoff wording so the completed gate result, not the template's parenthetical recommendation, determines the lane and the saved field.
 
-**Interfaces:**
+- [x] Generate the installed skill projections and confirm the canonical sources and projections agree.
 
-- Consumes: the paired behavior expectations and current approved plan.
+- [x] Review both handoff-gates pressure fixtures against their expected outcomes and the updated gate criteria.
 
-- Produces: a mandatory evidence-based comparison and a saved plan whose `Execution Strategy` field reflects the selected lane before handoff.
+- [ ] Run both scenarios in `tests/pressure/handoff-gates/campaign.json` against the committed implementation head and assess the responses against their rubrics.
 
-- [ ] Add a plan-readiness check after reviewing task order that compares the proposed lane with its nearest credible alternative using task independence, dependencies, shared implementation context, state coupling, review burden, context reconstruction, and consequence.
-
-- [ ] Require concrete evidence from the saved plan and a clear statement of why the selected lane wins; plan length and task count alone are insufficient.
-
-- [ ] Require the planner to update the saved `Execution Strategy` field after the comparison and before handoff. Leave the upstream-required subskill header untouched.
-
-- [ ] Clarify the writing-plans self-review and handoff wording so the completed gate result, not the template's parenthetical recommendation, determines the lane and the saved field.
-
-- [ ] Generate the installed skill projections and confirm the canonical sources and projections agree.
-
-- [ ] Run `py -3 -m pytest tests/test_workflow_contracts.py::TestExecutionLaneRecommendationContracts -q` and confirm it passes.
-
-- [ ] Review both handoff-gates pressure fixtures against their expected outcomes and the updated gate criteria.
-
-### Task 3: Verify and publish
+### Task 2: Verify and publish
 
 **Files:**
 
@@ -94,12 +81,12 @@ ______________________________________________________________________
 
 **Interfaces:**
 
-- Consumes: canonical skill changes, tests, and pressure evidence from Tasks 1 and 2.
+- Consumes: canonical skill changes, tests, and pressure evidence from Task 1.
 
 - Produces: validated source/projections and a reviewable Draft PR for MARK-374.
 
 - [ ] Review the complete diff against MARK-374 guardrails, including unchanged upstream header and opposing lane outcomes.
 
-- [ ] Run `py -3 -m pytest tests/test_workflow_contracts.py -q`, `py -3 tools/run.py marketplace --apply`, `py -3 tools/run.py installed-skills --apply`, and `py -3 tools/run.py mesh --apply`; then use the tracked pre-commit hook as the complete staged gate.
+- [ ] Run `py -3 -m pytest tests/test_workflow_contracts.py -q`, both paired campaign scenarios, and all relevant marketplace, installed-skills, and mesh checks; then use the tracked pre-commit hook as the complete staged gate.
 
 - [ ] Commit normally through the tracked hook, push the branch, open a Draft PR, and verify its published head and checks.
