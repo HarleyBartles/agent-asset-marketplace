@@ -311,11 +311,34 @@ def _check_index_mesh(ctx: Ctx) -> None:
 
 
 def _run_validate(ctx: Ctx) -> None:
+    _check_tracked_line_endings()
     _run([sys.executable, "tools/validate_authority_assets.py"], ctx)
     _run([sys.executable, "tools/validate_agents_md.py"], ctx)
     _run([sys.executable, "tools/validate_tool_cli.py"], ctx)
     if ctx.mode == "check":
         _git_diff_check(ctx)
+
+
+def _check_tracked_line_endings() -> None:
+    """Catch text bytes that Git would silently normalize when committing."""
+    result = subprocess.run(
+        ["git", "ls-files", "--eol", "-z"],
+        cwd=ROOT,
+        capture_output=True,
+        check=True,
+    )
+    offenders: list[str] = []
+    for entry in result.stdout.split(b"\0"):
+        if not entry:
+            continue
+        state, path = entry.split(b"\t", maxsplit=1)
+        if b"eol=lf" not in state:
+            continue
+        if any(marker in state for marker in (b"i/crlf", b"i/mixed", b"w/crlf", b"w/mixed")):
+            offenders.append(path.decode("utf-8", errors="replace"))
+    if offenders:
+        raise ValueError("tracked text must use LF line endings: " + ", ".join(offenders))
+    print("OK tracked text line endings: LF")
 
 
 def _apply_marketplace(ctx: Ctx) -> None:
