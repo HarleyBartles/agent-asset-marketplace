@@ -20,6 +20,21 @@ if str(SCRIPTS) not in sys.path:
 import refresh_installed_skills  # noqa: E402
 
 
+def test_copy_skill_directory_preserves_nested_test_tree_bytes(tmp_path: Path) -> None:
+    source_skill = tmp_path / "source" / "sample-skill"
+    source_test = source_skill / "tests" / "fixture" / "nested.txt"
+    source_test.parent.mkdir(parents=True)
+    expected = "naïve fixture\r\nsecond line\r\n".encode()
+    source_test.write_bytes(expected)
+    (source_skill / "SKILL.md").write_text("---\nname: sample-skill\n---\n", encoding="utf-8")
+    installed_skill = tmp_path / "installed" / "sample-skill"
+
+    with patch.object(refresh_installed_skills, "ROOT", tmp_path):
+        refresh_installed_skills._copy_skill_directory(source_skill, installed_skill)
+
+    assert (installed_skill / "tests" / "fixture" / "nested.txt").read_bytes() == expected
+
+
 def test_force_refresh_with_no_skill_changes_is_a_no_diff_operation(tmp_path: Path) -> None:
     skills_path = tmp_path / "skills"
     skills_path.mkdir()
@@ -771,7 +786,6 @@ def test_allow_shared_checkout_with_check_requires_apply(capsys) -> None:
 def test_apply_in_shared_checkout_requires_allow_flag(capsys, monkeypatch) -> None:
     """--apply on main in a shared checkout fails without --allow-shared-checkout."""
     monkeypatch.setattr(refresh_installed_skills.shared_checkout, "is_main_shared_checkout", lambda _root: True)
-    monkeypatch.setattr(refresh_installed_skills.shared_checkout, "_current_branch", lambda _root: "main")
     monkeypatch.setattr("sys.stdin.isatty", lambda: False)
     with patch.object(sys, "argv", ["refresh_installed_skills.py", "--apply"]):
         result = refresh_installed_skills.main()

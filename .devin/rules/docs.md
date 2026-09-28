@@ -3,6 +3,7 @@ description: "Docs discovery guidance"
 trigger: glob
 globs: ".agents/docs/**"
 ---
+
 ## Scope
 
 For the canonical doctrine behind this rule, read `.agents/doctrine/docs.md`.

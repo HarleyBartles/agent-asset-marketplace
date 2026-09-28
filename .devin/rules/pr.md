@@ -6,6 +6,7 @@ globs:
   - "tools/run.py ci*"
   - ".agents/runbooks/pr.md"
 ---
+
 ## Scope
 
 This rule fires when creating, updating, or publishing a pull request.

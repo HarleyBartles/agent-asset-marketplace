@@ -3,11 +3,38 @@ from __future__ import annotations
 import shutil
 import subprocess
 import sys
+import importlib.util
 from pathlib import Path
 
 import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
+
+
+def test_changed_python_files_use_staged_snapshot_when_hook_marks_it(tmp_path: Path, monkeypatch) -> None:
+    repo = tmp_path / "staged-python"
+    repo.mkdir()
+    subprocess.run(["git", "init"], cwd=repo, check=True, capture_output=True)
+    subprocess.run(["git", "config", "user.email", "test@test"], cwd=repo, check=True)
+    subprocess.run(["git", "config", "user.name", "Test"], cwd=repo, check=True)
+    source = repo / "sample.py"
+    source.write_text("value = 1\n", encoding="utf-8")
+    subprocess.run(["git", "add", "sample.py"], cwd=repo, check=True)
+    subprocess.run(["git", "commit", "-m", "base"], cwd=repo, check=True, capture_output=True)
+    source.write_text("value = 2\n", encoding="utf-8")
+    subprocess.run(["git", "add", "sample.py"], cwd=repo, check=True)
+
+    spec = importlib.util.spec_from_file_location("run_under_test", ROOT / "tools" / "run.py")
+    module = importlib.util.module_from_spec(spec)
+    assert spec.loader is not None
+    sys.modules[spec.name] = module
+    spec.loader.exec_module(module)
+    monkeypatch.setattr(module, "ROOT", repo)
+    monkeypatch.setenv("REPO_STANDARDS_STAGED_SNAPSHOT", "1")
+
+    assert module._changed_python_files("HEAD") == [Path("sample.py")]
+
+
 sys.path.insert(0, str(ROOT / "tools"))
 import run  # noqa: E402
 
@@ -56,6 +83,25 @@ def test_resolve_ci_order():
     assert targets.index("repo-index") < targets.index("mesh")
     assert targets.index("mesh") < targets.index("validate")
     assert "archive-links" not in targets
+
+
+def test_ci_runs_python_tests(monkeypatch):
+    calls = []
+    monkeypatch.setenv("REPO_STANDARDS_STAGED_SNAPSHOT", "1")
+
+    def fake_run(cmd, ctx, *, env=None):
+        calls.append((cmd, env))
+
+    monkeypatch.setattr(run, "_run", fake_run)
+    ctx = run.Ctx(mode="check", base_ref=None, allow_shared=False, verbose=False)
+
+    run.run_targets(["ci"], ctx)
+
+    assert "tests" in run._resolve_ci_deps()
+    command, environment = next((cmd, env) for cmd, env in calls if "pytest" in cmd)
+    assert command == [sys.executable, "-m", "pytest", "-q"]
+    assert "REPO_STANDARDS_STAGED_SNAPSHOT" not in environment
+    assert "REPO_STANDARDS_HOSTED_COMMIT" not in environment
 
 
 def test_resolve_all_aliases_to_ci():
@@ -140,6 +186,7 @@ def test_lint_fix_command_used_in_apply(monkeypatch):
     assert "--fix" in check_cmd[0]
     fmt_cmd = [c for c in calls if c[1:4] == ["-m", "ruff", "format"]]
     assert fmt_cmd
+    assert not [c for c in calls if c[1:3] == ["-m", "mdformat"]]
 
 
 def test_lint_check_mode_does_not_format_files(monkeypatch):
@@ -159,6 +206,7 @@ def test_lint_check_mode_does_not_format_files(monkeypatch):
     fmt_cmd = [c for c in calls if c[1:4] == ["-m", "ruff", "format"]]
     assert fmt_cmd
     assert "--check" in fmt_cmd[0]
+    assert not [c for c in calls if c[1:3] == ["-m", "mdformat"]]
 
 
 def test_base_ref_forwards_to_ruff_diff(monkeypatch):
@@ -184,7 +232,8 @@ def test_base_ref_forwards_to_ruff_diff(monkeypatch):
 @pytest.mark.skipif(shutil.which("bash") is None, reason="bash not available")
 def test_bash_wrapper_delegates_to_runpy():
     result = subprocess.run(
-        ["bash", str(ROOT / "tools" / "run"), "--help"],
+        ["bash", "-lc", "./tools/run --help"],
+        cwd=ROOT,
         capture_output=True,
         text=True,
     )
@@ -241,10 +290,10 @@ def test_validate_fix_message(monkeypatch):
 
 
 def test_ci_apply_does_not_run_manual_review_preflight(monkeypatch):
-    calls = []
+    calls: list[list[str]] = []
 
     def fake_run(cmd, ctx):
-        calls.append(" ".join(cmd))
+        calls.append(cmd)
 
     monkeypatch.setattr(run, "_run", fake_run)
     monkeypatch.setattr(run, "_git_diff_check", lambda ctx: None)
@@ -253,8 +302,7 @@ def test_ci_apply_does_not_run_manual_review_preflight(monkeypatch):
     ctx = run.Ctx(mode="apply", base_ref=None, allow_shared=True, verbose=False)
     run.run_targets(run.resolve_targets(["ci"]), ctx)
 
-    review_preflight_calls = [c for c in calls if "tools/review_preflight.py" in c]
-    assert not review_preflight_calls
+    assert not any(command[:2] == [sys.executable, "tools/review_preflight.py"] for command in calls)
 
 
 def test_validate_does_not_call_git_diff_exit_code(monkeypatch):

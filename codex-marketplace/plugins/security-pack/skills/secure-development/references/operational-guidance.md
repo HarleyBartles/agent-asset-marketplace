@@ -3,6 +3,7 @@
 ## When to apply
 
 Use when the secure-development skill loaded and the question is deeper than a single sentence:
+
 - choosing a secure coding pattern for input handling or secrets,
 - interpreting security scan results or test coverage,
 - building a threat model or data-flow diagram,

@@ -9,15 +9,15 @@ metadata:
   status: active
   owner: Harley Bartles
   use_when:
-  - designing or reviewing an agent loop.
-  - choosing or constructing a harness for tools and actions.
-  - orchestrating multiple agents or merging parallel results.
+    - designing or reviewing an agent loop.
+    - choosing or constructing a harness for tools and actions.
+    - orchestrating multiple agents or merging parallel results.
   do_not_use_when:
-  - another more specific skill owns the task.
+    - another more specific skill owns the task.
   related_skills:
-  - agent-evaluation
-  - research-ops
-  - release-engineering
+    - agent-evaluation
+    - research-ops
+    - release-engineering
 license: MIT
 ---
 

@@ -2,14 +2,11 @@
 
 Scope: `.agents/docs/`
 
-This scope covers repo docs, contract docs, and the unslop profile under
-`.agents/docs/`.
+This scope covers repo docs, contract docs, and the unslop profile under `.agents/docs/`.
 
-Defer to the repository root `AGENTS.md` for global repo doctrine and to
-`.agents/doctrine/mesh-policy.md` for the canonical mesh statement.
+Defer to the repository root `AGENTS.md` for global repo doctrine and to `.agents/doctrine/mesh-policy.md` for the canonical mesh statement.
 
-Keep these docs compact. They should describe scoped guidance, not directory
-navigation.
+Keep these docs compact. They should describe scoped guidance, not directory navigation.
 
 ## Routing pointers
 
@@ -17,5 +14,5 @@ navigation.
 - `INDEX.md` for docs-owned discovery surfaces
 - `.agents/doctrine/repo-runbook-policy.md` for this repo's mapping to the cross-repo runbook standard
 - `../runbooks/AGENTS.md` for runbook-stage routing
-- `../runbooks/completing-plans.md` for removing completed planning artifacts
+- `../doctrine/completed-artifacts.md` for the two-slice planning-artifact lifecycle
 - `../../.devin/rules/contracts.md` for repository contract routing

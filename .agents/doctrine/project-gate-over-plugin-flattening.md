@@ -3,13 +3,10 @@
 ## Composition doctrine
 
 - Project packs contain project-specific gate or orchestration skills.
-- Domain plugins should stay separately installed when a repo needs a chunk of
-  them.
-- A project gate skill composes and constrains skills from separately installed
-  domain plugins.
+- Domain plugins should stay separately installed when a repo needs a chunk of them.
+- A project gate skill composes and constrains skills from separately installed domain plugins.
 - Do not flatten whole domain plugins into project packs.
-- If a project only needs one or two narrow adjuncts from a broad plugin, keep
-  them narrow and explicit with provenance and rationale.
+- If a project only needs one or two narrow adjuncts from a broad plugin, keep them narrow and explicit with provenance and rationale.
 
 ## Repo guidance
 

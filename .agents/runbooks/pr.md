@@ -1,34 +1,39 @@
-# PR Runbook
+# PR Instructions Runbook
 
-Use this runbook for pull-request workflow and publication proof in `agent-asset-marketplace`.
+## When
 
-## Before you begin
+Use after implementation and review are complete and source needs publication.
 
-- Read root [`AGENTS.md`](../../AGENTS.md) `## Publication proof for repo work` and `## Draft PR policy` for the durable doctrine.
-- Read [`.devin/rules/pr.md`](../../.devin/rules/pr.md) for the conditional rule trigger that loads this runbook.
-- Invoke `using-superpowers-plus` once and follow its publication handoff.
+## Required skills
 
-## When to use
+- `publishing-source`
+- `repo-worker-base`
+- `verification-before-completion`
+- `completing-planning-artifacts`
 
-- Preparing a branch for review.
-- Creating or updating a PR.
-- Providing publication proof for repo work.
+## Composition
 
-## Draft PR policy
+Before Ready, use the `completing-planning-artifacts` completing-slice lane: promote enduring content, mark governed artifacts `completed-awaiting-retirement`, retain them in the PR, and verify the published head contains them. Commit through the tracked hook, push the task branch, open a Draft PR, and verify the published head.
 
-This repo's rules:
+Draft is normally a commercial and CI posture, not evidence that implementation is unfinished. When the agent hands off a fully reviewable Draft, every agent-owned plan item is complete and human-owned Ready or merge actions must not remain unchecked. Keep the plan open only when the Draft is explicitly declared incomplete. Whoever later changes the PR state applies the repository's Ready preflight at that time.
 
-- Open pull requests as **draft**.
-- This repo's CI must not run on draft pull requests. The `marketplace-validation` workflow skips draft PRs and runs once a PR is no longer draft; it is gated by `github.event.pull_request.draft == false`.
-- The published PR is the publication proof; its body describes scope and
-  material evidence boundaries rather than restating its own metadata.
+## Doctrine and contracts
 
-## Repo-specific guidance
+- [Repository command contract](../contracts/repo-standards-commands.json)
+- [Completed artifacts](../doctrine/completed-artifacts.md)
 
-- Do not run `py -3 tools/run.py ci --check` immediately before a normal commit or immediately after a successful hooked commit. It is a complete CI/PR gate, not a pre-pre-commit step. The pre-commit hook already materializes the staged snapshot, runs `ci --apply`, stages only the owned generated surfaces, and runs `ci --check --diagnostics`; running `ci --check` manually first is wasteful.
-- If the pre-commit hook is not installed, run `py -3 tools/run.py ci --apply` manually before committing. Then commit normally; the hook (or `ci --check --diagnostics` if the hook is absent) proves the staged tree. Do not run `ci --check` separately unless no commit follows.
-- Only run `py -3 tools/run.py ci --check` deliberately for uncommitted verification, pipeline diagnosis, or explicit CI-parity work.
-- `py -3 tools/run.py marketplace --apply` regenerates derived surfaces; stage any generated changes before committing.
+## Local commands and paths
 
-The routed publication skill owns generic Draft lifecycle, review sequencing,
-commit discipline, and publication handoff.
+The base branch is `main`. Hosted proof comes from GitHub checks for the exact pushed SHA.
+
+## Evidence contract
+
+Return the verified PR URL, head SHA, validation boundary, and any blocker.
+
+## Prohibited combinations
+
+Do not publish directly to `main` without explicit authorization or bypass the pre-commit hook.
+
+## Playbook routing
+
+None.

@@ -1,4 +1,3 @@
-
 ## First-Party Skill Source Format
 
 This scope covers first-party skills that live under `codex-marketplace/plugins/<plugin>/skills/<skill-name>/`.
@@ -37,8 +36,7 @@ Use these rules when editing or adding a first-party skill in a Codex plugin.
 
 - Use it for the Codex-facing wrapper metadata.
 - Keep `interface.display_name`, `interface.short_description`, and `interface.default_prompt` aligned to the canonical skill name and trigger language.
-- Follow the field-language contracts: capability copy for `short_description`
-  and a direct instruction naming the selected skill for `default_prompt`.
+- Follow the field-language contracts: capability copy for `short_description` and a direct instruction naming the selected skill for `default_prompt`.
 - Keep `policy.allow_implicit_invocation` explicit.
 - Add dependencies only when the skill actually needs them.
 

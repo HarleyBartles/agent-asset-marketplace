@@ -1,7 +1,6 @@
 ---
 name: api-design
-description: Use when designing, reviewing, or versioning an HTTP API contract, choosing
-  resource naming, or mapping OpenAPI structures to implementation boundaries.
+description: Use when designing, reviewing, or versioning an HTTP API contract, choosing resource naming, or mapping OpenAPI structures to implementation boundaries.
 metadata:
   source-id: api-design
   source-path: codex-marketplace/plugins/api-contracts-pack/skills/api-design/SKILL.md
@@ -10,15 +9,15 @@ metadata:
   status: active
   owner: Harley Bartles
   use_when:
-  - designing a new API contract.
-  - reviewing an existing API contract for consistency and spec compliance.
-  - versioning paths, schemas, or security schemes.
-  - choosing resource and operation naming conventions.
+    - designing a new API contract.
+    - reviewing an existing API contract for consistency and spec compliance.
+    - versioning paths, schemas, or security schemes.
+    - choosing resource and operation naming conventions.
   do_not_use_when:
-  - the work is implementation framework-specific.
-  - the work is code-generation only.
+    - the work is implementation framework-specific.
+    - the work is code-generation only.
   related_skills:
-  - secure-development
+    - secure-development
 license: MIT
 ---
 

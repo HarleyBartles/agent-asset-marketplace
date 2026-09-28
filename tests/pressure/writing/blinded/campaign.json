@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "campaign_id": "writing-style-adversarial-ab",
-  "campaign_version": "1.5.0",
+  "campaign_version": "1.6.0",
   "status": "frozen_unrun",
-  "frozen_at": "2026-09-12",
+  "frozen_at": "2026-09-26",
   "designer": {
     "shared_role": "reviewer",
     "named_profile": null,
@@ -16,12 +16,12 @@
   "artifacts": {
     "stimulus": {
       "path": "tests/pressure/writing/blinded/stimulus.md",
-      "sha256": "1cd2584fa49bbb68c362e52a8b4d79352e7715b2eeee8699eaf8fc9463660bd3",
+      "sha256": "dd4e74ee1e2a586d108285b9fd298675488df17ae412b31573668c8e58e96686",
       "worker_visible": true
     },
     "hidden_rubric": {
       "path": "tests/pressure/writing/blinded/hidden-rubric.md",
-      "sha256": "23d8476a713ada6e68aa4a717938f029ec9e1c43fe3d1ee1f7edb88ba1dba6dc",
+      "sha256": "383af8eb69aea5ef90c06db28868ddf42672605ffcd54d4c3bbc768d908b79a7",
       "worker_visible": false
     }
   },
@@ -36,19 +36,19 @@
   "treatment_artifacts": [
     {
       "path": "codex-marketplace/plugins/writing-pack/skills/writing-style/SKILL.md",
-      "sha256": "2749da998cbef2044a245c725c506903e787db70dae1915e971e4590baf094ae"
+      "sha256": "c27ae251a2f25e4e35999b91dd383bdb0964b716773304a1f5896f7174d66b9a"
     },
     {
       "path": "codex-marketplace/plugins/writing-pack/skills/writing-style/references/profile-contract.md",
-      "sha256": "8dcce0de9ce6c4c27bca38a4cf26eb2c973880838fab582402e4343f0b9335c6"
+      "sha256": "0012d9d8864055fce9e8a7e8dea302b20af7f849583702d963195b42d6f1ae45"
     },
     {
       "path": "codex-marketplace/plugins/writing-pack/skills/writing-style/references/voice-card.md",
-      "sha256": "0118ed5d3e9422129d9d5cb4a4f8243d3eb3c4aa413336a48bf73f66f2bcc53c"
+      "sha256": "4608124274ceb0284f560f1e333d8117f9845611d9ffd114beb4ef17edf0a736"
     },
     {
       "path": "codex-marketplace/plugins/writing-pack/skills/writing-style/references/profiles/fatigue/ai-prose-fatigue/profile.md",
-      "sha256": "87826a7217176e6fd77da8b2072fa65a8cdbc80feef55f368be712f3cabe330f"
+      "sha256": "5d92e266eb15b344dee956deabd31ff81a40cc07dc343e1a5f247aa868b927df"
     },
     {
       "path": "codex-marketplace/plugins/writing-pack/skills/writing-style/references/profiles/fatigue/ai-prose-fatigue/patterns.json",
@@ -56,19 +56,19 @@
     },
     {
       "path": "codex-marketplace/plugins/writing-pack/skills/writing-with-clarity/SKILL.md",
-      "sha256": "7af9f68a5de577f02a9df2c5253949ec7444b9d5ed54066ae1711b7330076a18"
+      "sha256": "9b06ca3ff349e9b4a2af4d8ec7cca7fa71e63803bb6ad320c8700f141eb182e8"
     },
     {
       "path": "codex-marketplace/plugins/writing-pack/skills/writing-with-clarity/references/routing.md",
-      "sha256": "e337ffb3186584f72509e17e7d65a85d6b60907a801af396ceb2a14c2f8320f5"
+      "sha256": "b5a7da097f4920a189c332f8225841deacb6683212a48b7253473a65b2a164b6"
     },
     {
       "path": "codex-marketplace/plugins/writing-pack/skills/writing-with-clarity/references/composition-and-flow.md",
-      "sha256": "182adbc537b9c58dbad39221fded5953a194d680de7c5999d6b30701f524939e"
+      "sha256": "a948d819d1b6d512f4316ba6547ac9c102db1af7b1f5e2a1e14f208215ae35c7"
     },
     {
       "path": "codex-marketplace/plugins/writing-pack/skills/writing-with-clarity/references/final-edit.md",
-      "sha256": "06e58473bc7bb4d4235475475d44d48837d3238d87883239c2808ccb59bde346"
+      "sha256": "04f4ad30bb6b29bf0a150f0c93080b8b91363e7c31e142d6b9c907413d9075d5"
     }
   ],
   "evaluator_goldens": {

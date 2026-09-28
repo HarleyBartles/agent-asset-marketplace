@@ -52,53 +52,28 @@ def test_approve_mutation_allowed_in_normal_checkout(monkeypatch, tmp_path: Path
 
 def test_approve_mutation_allowed_with_flag_in_shared_checkout(monkeypatch, tmp_path: Path, capsys) -> None:
     monkeypatch.setattr(shared_checkout, "is_main_shared_checkout", lambda _root: True)
-    monkeypatch.setattr(shared_checkout, "_current_branch", lambda _root: "main")
     assert shared_checkout.approve_mutation(tmp_path, "test", flag_approved=True)
     captured = capsys.readouterr()
     assert "--allow-shared-checkout supplied" in captured.err
 
 
-def test_approve_mutation_prompts_in_shared_checkout_and_approves(monkeypatch, tmp_path: Path) -> None:
+def test_shared_checkout_on_other_branch_requires_flag(monkeypatch, tmp_path: Path) -> None:
     monkeypatch.setattr(shared_checkout, "is_main_shared_checkout", lambda _root: True)
-    monkeypatch.setattr(shared_checkout, "_current_branch", lambda _root: "main")
-    monkeypatch.setattr(shared_checkout, "prompt_for_approval", lambda _name: True)
-    assert shared_checkout.approve_mutation(tmp_path, "test", flag_approved=False)
+    monkeypatch.setattr(shared_checkout, "_current_branch", lambda _root: "feature", raising=False)
+    assert not shared_checkout.approve_mutation(tmp_path, "test", flag_approved=False)
 
 
-def test_approve_mutation_denies_when_prompt_rejects(monkeypatch, tmp_path: Path, capsys) -> None:
+def test_interactive_shared_checkout_still_requires_flag(monkeypatch, tmp_path: Path) -> None:
     monkeypatch.setattr(shared_checkout, "is_main_shared_checkout", lambda _root: True)
-    monkeypatch.setattr(shared_checkout, "_current_branch", lambda _root: "main")
-    monkeypatch.setattr(shared_checkout, "prompt_for_approval", lambda _name: False)
+    monkeypatch.setattr(shared_checkout, "prompt_for_approval", lambda _name: True, raising=False)
+    assert not shared_checkout.approve_mutation(tmp_path, "test", flag_approved=False)
+
+
+def test_approve_mutation_denies_without_flag(monkeypatch, tmp_path: Path, capsys) -> None:
+    monkeypatch.setattr(shared_checkout, "is_main_shared_checkout", lambda _root: True)
     assert not shared_checkout.approve_mutation(tmp_path, "test", flag_approved=False)
     captured = capsys.readouterr()
     assert "refusing to apply" in captured.err
-
-
-def test_prompt_for_approval_returns_false_when_non_tty(monkeypatch) -> None:
-    monkeypatch.setattr(sys.stdin, "isatty", lambda: False)
-    assert not shared_checkout.prompt_for_approval("test")
-
-
-def test_prompt_for_approval_reads_y(monkeypatch) -> None:
-    monkeypatch.setattr(sys.stdin, "isatty", lambda: True)
-    monkeypatch.setattr("builtins.input", lambda _prompt: "y")
-    assert shared_checkout.prompt_for_approval("test")
-
-
-def test_prompt_for_approval_reads_n(monkeypatch) -> None:
-    monkeypatch.setattr(sys.stdin, "isatty", lambda: True)
-    monkeypatch.setattr("builtins.input", lambda _prompt: "n")
-    assert not shared_checkout.prompt_for_approval("test")
-
-
-def test_prompt_for_approval_catches_keyboard_interrupt(monkeypatch) -> None:
-    monkeypatch.setattr(sys.stdin, "isatty", lambda: True)
-
-    def raise_interrupt(_prompt: str) -> None:
-        raise KeyboardInterrupt
-
-    monkeypatch.setattr("builtins.input", raise_interrupt)
-    assert not shared_checkout.prompt_for_approval("test")
 
 
 def test_all_shared_checkout_copies_match_canonical() -> None:

@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import shlex
 import shutil
 import subprocess
@@ -49,10 +50,10 @@ class RunnerError(Exception):
         super().__init__(f"[tools/run] target '{target}' failed.\nFix: {fix}")
 
 
-def _run(cmd: list[str], ctx: Ctx) -> None:
+def _run(cmd: list[str], ctx: Ctx, *, env: dict[str, str] | None = None) -> None:
     if ctx.verbose:
         print("+ " + " ".join(shlex.quote(part) for part in cmd))
-    subprocess.run(cmd, cwd=ROOT, check=True)
+    subprocess.run(cmd, cwd=ROOT, check=True, env=env)
 
 
 def _ref_exists(ref: str) -> bool:
@@ -79,6 +80,15 @@ def _resolve_base_ref(args: argparse.Namespace) -> str | None:
 
 
 def _changed_python_files(base_ref: str | None) -> list[Path]:
+    if os.environ.get("REPO_STANDARDS_STAGED_SNAPSHOT") == "1":
+        diff = subprocess.run(
+            ["git", "diff", "--cached", "--name-only", "--diff-filter=ACMR"],
+            cwd=ROOT,
+            capture_output=True,
+            text=True,
+            check=True,
+        )
+        return [Path(p) for p in diff.stdout.splitlines() if p.endswith(".py") and (ROOT / p).is_file()]
     if base_ref is None:
         return _all_tracked_python_files()
     diff = subprocess.run(
@@ -312,7 +322,7 @@ def _apply_marketplace(ctx: Ctx) -> None:
     _run([sys.executable, "tools/sync_skill_shared_references.py", "--apply"], ctx)
     _run([sys.executable, "tools/generate_marketplace.py", "--apply"], ctx)
     _run([sys.executable, "tools/validate_marketplace.py", "--phase", "all"], ctx)
-    _run([sys.executable, ".agents/skills/repo-standards/scripts/deploy_vendor_profiles.py", "--apply"], ctx)
+    _run([sys.executable, ".agents/skills/repo-shape/scripts/deploy_vendor_profiles.py", "--apply"], ctx)
 
 
 def _check_marketplace(ctx: Ctx) -> None:
@@ -324,6 +334,10 @@ def _run_lint(ctx: Ctx) -> None:
     if ctx.mode == "check":
         if ctx.base_ref:
             _run([sys.executable, "tools/ruff_diff.py", "--changed-from", ctx.base_ref], ctx)
+            if os.environ.get("REPO_STANDARDS_STAGED_SNAPSHOT") == "1":
+                files = _changed_python_files(ctx.base_ref)
+                if files:
+                    _run([sys.executable, "-m", "ruff", "format", "--check", *map(str, files)], ctx)
         else:
             print(
                 "warning: no base ref available for lint; linting all tracked .py files",
@@ -334,15 +348,15 @@ def _run_lint(ctx: Ctx) -> None:
         files = _changed_python_files(ctx.base_ref)
         if not files:
             print("No changed Python files to lint.")
-            return
-        _run_ruff(files, ctx, fix=True)
+        else:
+            _run_ruff(files, ctx, fix=True)
 
 
 def _validate_skill_scripts(ctx: Ctx) -> None:
     _run(
         [
             sys.executable,
-            ".agents/skills/repo-standards/scripts/validate_skill_scripts.py",
+            ".agents/skills/repo-shape/scripts/validate_skill_scripts.py",
             "--check",
         ],
         ctx,
@@ -354,7 +368,7 @@ def _run_repo_standards(ctx: Ctx) -> None:
         _run(
             [
                 sys.executable,
-                ".agents/skills/repo-standards/scripts/repo_standards.py",
+                ".agents/skills/repo-shape/scripts/repo_standards.py",
                 "--check",
             ],
             ctx,
@@ -363,7 +377,7 @@ def _run_repo_standards(ctx: Ctx) -> None:
     else:
         cmd = [
             sys.executable,
-            ".agents/skills/repo-standards/scripts/repo_standards.py",
+            ".agents/skills/repo-shape/scripts/repo_standards.py",
             "--apply",
             "--yes",
         ]
@@ -453,8 +467,19 @@ def _run_ci(ctx: Ctx) -> None:
         )
 
 
+def _run_python_tests(ctx: Ctx) -> None:
+    test_env = os.environ.copy()
+    test_env.pop("REPO_STANDARDS_STAGED_SNAPSHOT", None)
+    test_env.pop("REPO_STANDARDS_HOSTED_COMMIT", None)
+    _run([sys.executable, "-m", "pytest", "-q"], ctx, env=test_env)
+
+
 _TASKS: dict[str, Task] = {
     "lint": Task(apply=(_run_lint,), check=(_run_lint,), fix="tools/run lint --apply"),
+    "tests": Task(
+        check=(_run_python_tests,),
+        fix="python -m pytest -q",
+    ),
     "repo-standards": Task(
         apply=(_run_repo_standards,),
         check=(_run_repo_standards,),
@@ -518,7 +543,7 @@ _TASKS: dict[str, Task] = {
         fix="tools/run runtime-agents --apply --allow-shared-checkout",
     ),
     "ci": Task(
-        deps=("lint", "repo-standards", "validate"),
+        deps=("lint", "repo-standards", "tests", "validate"),
         apply=(_run_ci,),
         check=(_run_ci,),
         fix="tools/run ci --apply",
@@ -606,7 +631,7 @@ def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument(
         "--allow-shared-checkout",
         action="store_true",
-        help="approve writes in the main shared checkout on the main branch (requires --apply)",
+        help="acknowledge intentional writes in the main shared checkout on any branch (requires --apply)",
     )
     parser.add_argument(
         "--diagnostics",

@@ -3,6 +3,7 @@
 ## When to apply
 
 Use when the Python Frameworks skill loaded and the question is deeper than a single sentence:
+
 - choosing a web framework,
 - structuring Django apps or FastAPI services,
 - designing Celery tasks,

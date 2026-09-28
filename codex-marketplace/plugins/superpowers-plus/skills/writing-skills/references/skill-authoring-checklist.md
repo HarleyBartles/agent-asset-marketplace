@@ -1,15 +1,13 @@
 # Skill Authoring Checklist
 
-When the consuming repository provides field-language contracts, apply them to
-frontmatter and `agents/openai.yaml`. Do not copy a standalone `Use when`
-description into `scope`, trigger-list values, short descriptions, or default
-prompts.
+When the consuming repository provides field-language contracts, apply them to frontmatter and `agents/openai.yaml`. Do not copy a standalone `Use when` description into `scope`, trigger-list values, short descriptions, or default prompts.
 
 Use this checklist when creating, reviewing, or refreshing a skill.
 
 ## 1. Choose custody and lane
 
-- [ ] Local `.agents/skills/mark-*` skill, or marketplace `codex-marketplace/plugins/<lane>/skills/<name>/` source?
+- [ ] Local `.agents/skills/<name>/` skill declared by exact name in `repo.local_skills`, or marketplace `codex-marketplace/plugins/<lane>/skills/<name>/` source?
+- [ ] Treat any prefix as an optional naming choice, not a custody mechanism.
 - [ ] Lane: `first_party`, `skills-with-source`, `skills-with-citation`, or `skills-with-mixed-source`?
 - [ ] Read `local-and-marketplace-custody.md` if unsure.
 

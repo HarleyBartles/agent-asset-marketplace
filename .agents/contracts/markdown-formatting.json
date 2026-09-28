@@ -1,0 +1,236 @@
+{
+  "version": 1,
+  "state": "enforced",
+  "exclusions": [
+    {
+      "kind": "tree",
+      "path": "./codex-marketplace/plugins/agent-operating-model/skills/python/assets/authority",
+      "reason": "Preserve vendored authority evidence byte-for-byte for provenance review."
+    },
+    {
+      "kind": "tree",
+      "path": "./codex-marketplace/plugins/agentic-evaluation/skills/agent-evaluation/assets/authority",
+      "reason": "Preserve vendored authority evidence byte-for-byte for provenance review."
+    },
+    {
+      "kind": "tree",
+      "path": "./codex-marketplace/plugins/agentic-workflows/skills/agentic-harness/assets/authority",
+      "reason": "Preserve vendored authority evidence byte-for-byte for provenance review."
+    },
+    {
+      "kind": "tree",
+      "path": "./codex-marketplace/plugins/api-contracts-pack/skills/api-design/assets/authority",
+      "reason": "Preserve vendored authority evidence byte-for-byte for provenance review."
+    },
+    {
+      "kind": "tree",
+      "path": "./codex-marketplace/plugins/architecture-pack/skills/clean-architecture/assets/authority",
+      "reason": "Preserve vendored authority evidence byte-for-byte for provenance review."
+    },
+    {
+      "kind": "tree",
+      "path": "./codex-marketplace/plugins/architecture-pack/skills/cqrs/assets/authority",
+      "reason": "Preserve vendored authority evidence byte-for-byte for provenance review."
+    },
+    {
+      "kind": "tree",
+      "path": "./codex-marketplace/plugins/architecture-pack/skills/database-design-patterns/assets/authority",
+      "reason": "Preserve vendored authority evidence byte-for-byte for provenance review."
+    },
+    {
+      "kind": "tree",
+      "path": "./codex-marketplace/plugins/architecture-pack/skills/ddd/assets/authority",
+      "reason": "Preserve vendored authority evidence byte-for-byte for provenance review."
+    },
+    {
+      "kind": "tree",
+      "path": "./codex-marketplace/plugins/architecture-pack/skills/event-driven-systems/assets/authority",
+      "reason": "Preserve vendored authority evidence byte-for-byte for provenance review."
+    },
+    {
+      "kind": "tree",
+      "path": "./codex-marketplace/plugins/architecture-pack/skills/event-sourcing/assets/authority",
+      "reason": "Preserve vendored authority evidence byte-for-byte for provenance review."
+    },
+    {
+      "kind": "tree",
+      "path": "./codex-marketplace/plugins/architecture-pack/skills/hexagonal-architecture/assets/authority",
+      "reason": "Preserve vendored authority evidence byte-for-byte for provenance review."
+    },
+    {
+      "kind": "tree",
+      "path": "./codex-marketplace/plugins/data-platform-pack/skills/database-engines/assets/authority",
+      "reason": "Preserve vendored authority evidence byte-for-byte for provenance review."
+    },
+    {
+      "kind": "tree",
+      "path": "./codex-marketplace/plugins/dotnet-pack/skills/dotnet/assets/authority",
+      "reason": "Preserve vendored authority evidence byte-for-byte for provenance review."
+    },
+    {
+      "kind": "tree",
+      "path": "./codex-marketplace/plugins/engineering-pack/skills/observability/assets/authority",
+      "reason": "Preserve vendored authority evidence byte-for-byte for provenance review."
+    },
+    {
+      "kind": "tree",
+      "path": "./codex-marketplace/plugins/engineering-pack/skills/release-engineering/assets/authority",
+      "reason": "Preserve vendored authority evidence byte-for-byte for provenance review."
+    },
+    {
+      "kind": "tree",
+      "path": "./codex-marketplace/plugins/frontend-pack/skills/frontend-ux/assets/authority",
+      "reason": "Preserve vendored authority evidence byte-for-byte for provenance review."
+    },
+    {
+      "kind": "tree",
+      "path": "./codex-marketplace/plugins/frontend-pack/skills/playwright-testing/assets/authority",
+      "reason": "Preserve vendored authority evidence byte-for-byte for provenance review."
+    },
+    {
+      "kind": "tree",
+      "path": "./codex-marketplace/plugins/frontend-pack/skills/react/assets/authority",
+      "reason": "Preserve vendored authority evidence byte-for-byte for provenance review."
+    },
+    {
+      "kind": "tree",
+      "path": "./codex-marketplace/plugins/frontend-pack/skills/wcag/assets/authority",
+      "reason": "Preserve vendored authority evidence byte-for-byte for provenance review."
+    },
+    {
+      "kind": "tree",
+      "path": "./codex-marketplace/plugins/frontend-pack/skills/web-styling/assets/authority",
+      "reason": "Preserve vendored authority evidence byte-for-byte for provenance review."
+    },
+    {
+      "kind": "tree",
+      "path": "./codex-marketplace/plugins/language-patterns-pack/skills/python-frameworks/assets/authority",
+      "reason": "Preserve vendored authority evidence byte-for-byte for provenance review."
+    },
+    {
+      "kind": "tree",
+      "path": "./codex-marketplace/plugins/language-patterns-pack/skills/typescript/assets/authority",
+      "reason": "Preserve vendored authority evidence byte-for-byte for provenance review."
+    },
+    {
+      "kind": "tree",
+      "path": "./codex-marketplace/plugins/planning-pack/skills/estimation/assets/authority",
+      "reason": "Preserve vendored authority evidence byte-for-byte for provenance review."
+    },
+    {
+      "kind": "tree",
+      "path": "./codex-marketplace/plugins/planning-pack/skills/mermaid-diagramming/assets/authority",
+      "reason": "Preserve vendored authority evidence byte-for-byte for provenance review."
+    },
+    {
+      "kind": "tree",
+      "path": "./codex-marketplace/plugins/planning-pack/skills/release-engineering/assets/authority",
+      "reason": "Preserve vendored authority evidence byte-for-byte for provenance review."
+    },
+    {
+      "kind": "tree",
+      "path": "./codex-marketplace/plugins/planning-pack/skills/requirements-elicitation/assets/authority",
+      "reason": "Preserve vendored authority evidence byte-for-byte for provenance review."
+    },
+    {
+      "kind": "tree",
+      "path": "./codex-marketplace/plugins/repo-worker-pack/skills/risk-gates/assets/authority",
+      "reason": "Preserve vendored authority evidence byte-for-byte for provenance review."
+    },
+    {
+      "kind": "tree",
+      "path": "./codex-marketplace/plugins/research-pack/skills/research-ops/assets/authority",
+      "reason": "Preserve vendored authority evidence byte-for-byte for provenance review."
+    },
+    {
+      "kind": "tree",
+      "path": "./codex-marketplace/plugins/security-pack/skills/owasp-top-ten/assets/authority",
+      "reason": "Preserve vendored authority evidence byte-for-byte for provenance review."
+    },
+    {
+      "kind": "tree",
+      "path": "./codex-marketplace/plugins/security-pack/skills/risk-gates/assets/authority",
+      "reason": "Preserve vendored authority evidence byte-for-byte for provenance review."
+    },
+    {
+      "kind": "tree",
+      "path": "./codex-marketplace/plugins/security-pack/skills/secure-development/assets/authority",
+      "reason": "Preserve vendored authority evidence byte-for-byte for provenance review."
+    },
+    {
+      "kind": "tree",
+      "path": "./codex-marketplace/plugins/security-pack/skills/web-identity/assets/authority",
+      "reason": "Preserve vendored authority evidence byte-for-byte for provenance review."
+    },
+    {
+      "kind": "tree",
+      "path": "./codex-marketplace/plugins/superpowers-plus/skills/handoff-gates/assets/authority",
+      "reason": "Preserve vendored authority evidence byte-for-byte for provenance review."
+    },
+    {
+      "kind": "tree",
+      "path": "./codex-marketplace/plugins/superpowers-plus/skills/writing-roadmaps/assets/authority",
+      "reason": "Preserve vendored authority evidence byte-for-byte for provenance review."
+    },
+    {
+      "kind": "tree",
+      "path": "./codex-marketplace/plugins/unslop-plus/skills/unslop-engine/assets/authority",
+      "reason": "Preserve vendored authority evidence byte-for-byte for provenance review."
+    },
+    {
+      "kind": "tree",
+      "path": "./codex-marketplace/plugins/writing-pack/skills/writing-style/assets/authority",
+      "reason": "Preserve vendored authority evidence byte-for-byte for provenance review."
+    },
+    {
+      "kind": "tree",
+      "path": "./codex-marketplace/plugins/writing-pack/skills/writing-with-clarity/assets/authority",
+      "reason": "Preserve vendored authority evidence byte-for-byte for provenance review."
+    },
+    {
+      "kind": "tree",
+      "path": ".agents/skills/handoff-gates/assets/authority",
+      "reason": "Preserve the installed projection of vendored authority evidence byte-for-byte for provenance review."
+    },
+    {
+      "kind": "tree",
+      "path": ".agents/skills/python/assets/authority",
+      "reason": "Preserve the installed projection of vendored authority evidence byte-for-byte for provenance review."
+    },
+    {
+      "kind": "tree",
+      "path": ".agents/skills/risk-gates/assets/authority",
+      "reason": "Preserve the installed projection of vendored authority evidence byte-for-byte for provenance review."
+    },
+    {
+      "kind": "tree",
+      "path": ".agents/skills/unslop-engine/assets/authority",
+      "reason": "Preserve the installed projection of vendored authority evidence byte-for-byte for provenance review."
+    },
+    {
+      "kind": "tree",
+      "path": ".agents/skills/writing-roadmaps/assets/authority",
+      "reason": "Preserve the installed projection of vendored authority evidence byte-for-byte for provenance review."
+    },
+    {
+      "kind": "tree",
+      "path": ".agents/skills/writing-style/assets/authority",
+      "reason": "Preserve the installed projection of vendored authority evidence byte-for-byte for provenance review."
+    },
+    {
+      "kind": "tree",
+      "path": ".agents/skills/writing-with-clarity/assets/authority",
+      "reason": "Preserve the installed projection of vendored authority evidence byte-for-byte for provenance review."
+    },
+    {
+      "kind": "file",
+      "path": "codex-marketplace/plugins/superpowers-plus/skills/writing-skills/templates/skill/SKILL.md",
+      "reason": "Preserve the unrendered {metadata} insertion token; the frontmatter becomes valid only when the scaffold is materialized."
+    },
+    {
+      "kind": "file",
+      "path": ".agents/skills/writing-skills/templates/skill/SKILL.md",
+      "reason": "Preserve the installed projection of the unrendered {metadata} insertion token; the frontmatter becomes valid only when the scaffold is materialized."
+    }
+  ]
+}

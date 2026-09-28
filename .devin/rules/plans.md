@@ -3,6 +3,7 @@ description: "Plan workflow guidance"
 trigger: glob
 globs: ".agents/plans/**"
 ---
+
 ## Scope
 
 For the canonical doctrine behind this rule, read `.agents/doctrine/plans.md`.

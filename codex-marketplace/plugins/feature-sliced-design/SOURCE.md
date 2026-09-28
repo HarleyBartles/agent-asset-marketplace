@@ -1,7 +1,6 @@
 # Source
 
-This plugin vendors the `feature-sliced-design` skill from the upstream
-`feature-sliced/skills` repository.
+This plugin vendors the `feature-sliced-design` skill from the upstream `feature-sliced/skills` repository.
 
 ## Upstream basis
 
@@ -38,5 +37,4 @@ This plugin vendors the `feature-sliced-design` skill from the upstream
 
 The retained upstream snapshot is no longer kept as a live custody tree; see this `SOURCE.md` and `references/bundle-manifest.json` for attribution.
 
-The project keeps the source-custody record separate from the installable
-marketplace root so the bundle can be regenerated from live source bytes.
+The project keeps the source-custody record separate from the installable marketplace root so the bundle can be regenerated from live source bytes.

@@ -1,6 +1,6 @@
 ---
 name: handoff-gates
-description: Use when a stage-boundary artifact (spec, plan, or completed work) needs a readiness check before handoff.
+description: Use when a plan or completed implementation needs a readiness check before handoff to execution or code review.
 metadata:
   source-id: handoff-gates
   source-path: codex-marketplace/plugins/superpowers-plus/skills/handoff-gates/SKILL.md
@@ -8,30 +8,27 @@ metadata:
   source-category: first_party
   status: active
   owner: Harley Bartles
-  scope: Readiness gates for brainstorming, planning, execution, and code-review handoffs.
+  scope: Readiness gates for planning-to-execution and execution-to-code-review handoffs.
   use_when:
-  - a spec is ready to move from brainstorming to planning.
-  - a plan is ready to move from writing-plans to execution.
-  - completed work is ready to move from executing-plans to code review.
+    - a plan is ready to move from writing-plans to execution.
+    - completed work is ready to move from executing-plans to code review.
   do_not_use_when:
-  - the artifact is not clearly at a stage boundary (see references/scope-notes.md for boundary cases)
-  - a substitute for risk-gates when the question is pre-action risk.
+    - the artifact is not clearly at a stage boundary (see references/scope-notes.md for boundary cases)
+    - a substitute for risk-gates when the question is pre-action risk.
   related_skills:
-  - risk-gates
-  - writing-plans
-  - executing-plans
-  - subagent-driven-development
-  - writing-roadmaps
+    - risk-gates
+    - writing-plans
+    - executing-plans
+    - subagent-driven-development
+    - writing-roadmaps
   use_after:
-  - brainstorming
-  - writing-plans
-  - executing-plans
+    - writing-plans
+    - executing-plans
   use_before:
-  - writing-plans
-  - executing-plans
-  - subagent-driven-development
-  - finishing-a-development-branch
-  - requesting-code-review
+    - executing-plans
+    - subagent-driven-development
+    - finishing-a-development-branch
+    - requesting-code-review
 license: MIT
 ---
 
@@ -39,13 +36,10 @@ license: MIT
 
 ## Overview
 
-Rate stage-boundary artifacts for execution confidence. Never hand off below
-8/10. Target 9/10+. The score is a behavioral forcing function used during the
-handoff; do not persist it in a roadmap, ledger, PR, or other durable record.
+Rate stage-boundary artifacts for execution confidence. Never hand off below 8/10. Target 9/10+. The score is a behavioral forcing function used during the handoff; do not persist it in a roadmap, ledger, PR, or other durable record.
 
 ## Lanes
 
-- **spec-readiness** (brainstorming → planning): Can a planning agent expand this spec into a full plan without improvising or discovering seams mid-flight?
 - **plan-readiness** (planning → execution): Can the implementing agent or orchestrator plus subagents execute this plan without improvising mid-flight?
 - **completion-readiness** (execution → code review): What will a code reviewer find when they review this work against the plan and the repo's code review guide?
 
@@ -55,8 +49,7 @@ Use a 1–10 execution-confidence scale.
 
 - **< 8:** Identify gaps, strengthen, and re-rate. Never proceed below 8.
 - **8–8.9:** Try one bounded strengthening pass to reach 9+.
-- **≥ 9:** Proceed to handoff and report the final rating in the current
-  conversation only.
+- **≥ 9:** Proceed to handoff and report the final rating in the current conversation only.
 
 ## How to Use
 
@@ -64,12 +57,11 @@ Use a 1–10 execution-confidence scale.
 2. Pick the lane matching the boundary.
 3. Score the artifact against the lane question and checklist.
 4. Strengthen gaps until the score is at least 8, targeting 9+.
-5. Report the rating in the current handoff and proceed, or return `blocked`
-   with the unresolved gaps.
+5. Report the rating in the current handoff and proceed, or return `blocked` with the unresolved gaps.
 
 ## Plan-Readiness Checklist
 
-For SDD `plan-readiness`, rate the artifact against these items. Strengthen any that fail before handoff.
+For plan-readiness, rate the artifact against these items. Strengthen any that fail before handoff.
 
 - [ ] **Dependency-order coherence.** Each task's `Consumes` block only references earlier tasks. If a later output is needed earlier, move the producer, split a step, or add a bridge.
 
@@ -81,9 +73,29 @@ For SDD `plan-readiness`, rate the artifact against these items. Strengthen any 
 
 - [ ] **No temporary validation drift.** If a task is expected to leave the tree in a temporarily unbuildable state, it is explicitly documented so the implementer and reviewer know it is expected.
 
+- [ ] **Plan-specific execution lane.** Compare the plan's proposed lane with its nearest credible alternative using evidence from the saved plan. Consider task independence, dependency order, shared implementation context, state coupling, review burden, context-reconstruction cost, and consequence. State why the selected lane wins for this plan. Plan length and task count alone do not decide the lane.
+
+## Execution Lane Recommendation
+
+After reviewing the complete plan and before handing it to execution, examine its `Execution Strategy` field. Treat the template's parenthetical `subagent-driven-development (recommended)` as a candidate to question, not evidence that SDD fits this plan. Compare that proposal with the nearest credible alternative; when parallel tracks are genuinely independent, include `dispatching-parallel-agents` among the candidates.
+
+Ask yourself: "Having read this plan, do I really recommend the lane currently written here? Would I choose it if the template had not called SDD recommended?"
+
+Use plan evidence to weigh:
+
+- whether tasks can be implemented and reviewed independently;
+- how tasks depend on earlier outputs and how much shared state or implementation context they use;
+- whether fresh per-task implementer and reviewer contexts are likely to catch meaningful defects;
+- how much handoff and context-reconstruction work repeated task boundaries add;
+- whether parallel progress or continuity matters more for the consequence and verification burden of this change.
+
+Do not infer independence from separate checklist items or test steps. A long plan can be tightly coupled; a short plan can contain independent work. Compare the closest credible alternative and explain the concrete trade-off in the current handoff. Before handoff, update or confirm that the saved plan's `Execution Strategy` field names the selected lane and gives a concise plan-specific reason. Keep the required subskill header unchanged. Do not persist the readiness score or extended comparative reasoning in the plan.
+
+The value left in the saved `Execution Strategy` field is the operative recommendation for this plan. The required subskill header remains as authored by the planning template and does not override that selected value.
+
 ## Boundary cases
 
-If the artifact is intentionally thin, blocked externally, or touches `verification-before-completion` or `requesting-code-review`, load `references/scope-notes.md` and only proceed on a green path.
+If the plan is blocked externally, or the boundary touches `verification-before-completion` or `requesting-code-review`, load `references/scope-notes.md` and only proceed on a green path.
 
 ## Common Mistakes
 

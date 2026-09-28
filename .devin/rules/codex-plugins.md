@@ -3,6 +3,7 @@ description: "Plugin marketplace bundle law"
 trigger: glob
 globs: "codex-marketplace/plugins/**"
 ---
+
 ## Scope
 
 For the canonical doctrine behind this rule, read `.agents/doctrine/codex-plugins.md`.

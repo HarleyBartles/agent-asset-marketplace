@@ -1,36 +1,37 @@
-# Repo Runbook Policy
+# Repository Runbook and Playbook Policy
 
-This repo follows the `repo-standards` layout. Invoke `using-superpowers-plus`
-once and follow its handoff; local runbooks supply repository-specific deltas.
+This repository follows `repo-standards`. Lifecycle stages are runbooks; available topical workflows are playbooks.
 
-## Standard-to-local mapping
+## Standard runbooks
 
-| Standard runbook | Local path | Status |
-|---|---|---|
-| design.md | `.agents/runbooks/design.md` | required |
-| planning.md | `.agents/runbooks/planning.md` | required |
-| implementing.md | `.agents/runbooks/implementing.md` | required |
-| code-review.md | `.agents/runbooks/code-review.md` | required |
-| marketplace-generation.md | `.agents/runbooks/marketplace-generation.md` | exists |
-| skill-authoring.md | `.agents/runbooks/skill-authoring.md` | exists |
-| security.md | `.agents/runbooks/security.md` | exists |
-| testing.md | `.agents/runbooks/testing.md` | exists |
-| pr.md | `.agents/runbooks/pr.md` | required |
-| code-style.md | `.agents/runbooks/code-style.md` | exists |
-| completing-plans.md | `.agents/runbooks/completing-plans.md` | exists |
+| Standard runbook | Local path                         | Status   |
+| ---------------- | ---------------------------------- | -------- |
+| design.md        | `.agents/runbooks/design.md`       | required |
+| planning.md      | `.agents/runbooks/planning.md`     | required |
+| implementing.md  | `.agents/runbooks/implementing.md` | required |
+| code-review.md   | `.agents/runbooks/code-review.md`  | required |
+| pr.md            | `.agents/runbooks/pr.md`           | required |
 
-Root `AGENTS.md` is a router. The 12 canonical topics are covered by the union of root headings and the listed runbooks/routed surfaces.
+## Standard playbooks
 
-## Additional repo-specific runbooks
+| Standard playbook         | Local path                                    | Status   |
+| ------------------------- | --------------------------------------------- | -------- |
+| code-style.md             | `.agents/playbooks/code-style.md`             | required |
+| testing.md                | `.agents/playbooks/testing.md`                | required |
+| security.md               | `.agents/playbooks/security.md`               | required |
+| skill-authoring.md        | `.agents/playbooks/skill-authoring.md`        | required |
+| marketplace-generation.md | `.agents/playbooks/marketplace-generation.md` | required |
+| repo-doctrine.md          | `.agents/playbooks/repo-doctrine.md`          | required |
 
-- `marketplace-generation.md` — because this repo is an asset marketplace.
-- `skill-authoring.md` — because this repo authors skills.
+## Additional repository-specific playbooks
+
+None.
 
 ## Root contributor and review surfaces
 
-- `REVIEW.md` is the review entry point. It enters through `using-superpowers-plus`; the review owner reads `.agents/runbooks/code-review.md` for the repository-specific methodology.
-- `CONTRIBUTING.md` is the substantive contributor entry point. It routes to the design, planning, implementation, and review runbooks and to the relevant repo-worker-pack and Superpowers skills.
+- `REVIEW.md` enters through `.agents/runbooks/code-review.md`.
+- `CONTRIBUTING.md` enters through the applicable lifecycle runbook.
 
 ## Exceptions
 
-- `marketplace-source-submodule` — this repo is the marketplace source and does not vendor itself as a submodule.
+- `marketplace-source-submodule` - this repository is the marketplace source and does not vendor itself.

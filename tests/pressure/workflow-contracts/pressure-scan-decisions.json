@@ -1,346 +1,218 @@
 [
   {
     "path": "codex-marketplace/plugins/superpowers-plus/skills/dispatching-parallel-agents/SKILL.md",
-    "line": 42,
+    "line": 41,
     "pattern": "must-read",
-    "classification": "intended",
-    "owner": "owning portable skill",
-    "reason": "The owning portable skill uses this phrase conditionally within its scoped workflow."
+    "context": "If you are invoking this skill from a plan, read the `Execution Strategy` in the plan header and **MUST READ:** `references/execution-lane-override.md` before dispatching. Announce that you are using `dispatching-parallel-agents` and see it through unless the human asks to change.",
+    "classification": "repo-local",
+    "owner": "runbook-playbook contract",
+    "reason": "Repository-local composition guidance required by the approved runbook and playbook contract."
   },
   {
     "path": "codex-marketplace/plugins/superpowers-plus/skills/dispatching-parallel-agents/SKILL.md",
-    "line": 114,
+    "line": 118,
     "pattern": "full-test-suite",
-    "classification": "intended",
-    "owner": "owning portable skill",
-    "reason": "The owning portable skill uses this phrase conditionally within its scoped workflow."
+    "context": "- Run full test suite",
+    "classification": "repo-local",
+    "owner": "runbook-playbook contract",
+    "reason": "Repository-local composition guidance required by the approved runbook and playbook contract."
   },
   {
     "path": "codex-marketplace/plugins/superpowers-plus/skills/dispatching-parallel-agents/SKILL.md",
-    "line": 189,
+    "line": 190,
     "pattern": "full-test-suite",
-    "classification": "intended",
-    "owner": "owning portable skill",
-    "reason": "The owning portable skill uses this phrase conditionally within its scoped workflow."
+    "context": "**Integration:** All fixes independent, no conflicts, full suite green",
+    "classification": "repo-local",
+    "owner": "runbook-playbook contract",
+    "reason": "Repository-local composition guidance required by the approved runbook and playbook contract."
   },
   {
     "path": "codex-marketplace/plugins/superpowers-plus/skills/dispatching-parallel-agents/SKILL.md",
-    "line": 196,
+    "line": 198,
     "pattern": "full-test-suite",
-    "classification": "intended",
-    "owner": "owning portable skill",
-    "reason": "The owning portable skill uses this phrase conditionally within its scoped workflow."
+    "context": "1. **Run full suite** - Verify all fixes work together",
+    "classification": "repo-local",
+    "owner": "runbook-playbook contract",
+    "reason": "Repository-local composition guidance required by the approved runbook and playbook contract."
   },
   {
     "path": "codex-marketplace/plugins/superpowers-plus/skills/executing-plans/SKILL.md",
-    "line": 53,
-    "pattern": "must-read",
-    "classification": "intended",
-    "owner": "owning portable skill",
-    "reason": "The owning portable skill uses this phrase conditionally within its scoped workflow."
+    "line": 76,
+    "pattern": "full-test-suite",
+    "context": "1. Run `bash scripts/task-done PLAN_FILE N BASE -- TEST_COMMAND [ARGS...]` through the same verified Bash. The helper stores the full test log, prints its tail, and appends completion only after a passing command.",
+    "classification": "repo-local",
+    "owner": "runbook-playbook contract",
+    "reason": "Repository-local composition guidance required by the approved runbook and playbook contract."
   },
   {
     "path": "codex-marketplace/plugins/superpowers-plus/skills/subagent-driven-development/SKILL.md",
-    "line": 211,
+    "line": 158,
     "pattern": "must-read",
-    "classification": "intended",
-    "owner": "owning portable skill",
-    "reason": "The owning portable skill uses this phrase conditionally within its scoped workflow."
+    "context": "Read the plan once, note its context and Global Constraints, and create a todo per task. If the plan names a Spec, read that too: the spec is the authority the plan argues from, and conflicts inside the plan resolve against it. A plan with no reachable spec gets a ledger note saying so \u2014 rulings made without one are provisional. Before Task 1, note the `Execution Strategy` in the plan header. **MUST READ:** `references/execution-lane-override.md` to confirm `subagent-driven-development` is the right lane. If the plan recommends a different lane but you are using this one because the tasks are independent or the human directed it here, state that at the start of execution and do not re-litigate.",
+    "classification": "repo-local",
+    "owner": "runbook-playbook contract",
+    "reason": "Repository-local composition guidance required by the approved runbook and playbook contract."
   },
   {
     "path": "codex-marketplace/plugins/superpowers-plus/skills/using-superpowers-plus/SKILL.md",
     "line": 67,
     "pattern": "universal-startup-read",
-    "classification": "intended",
-    "owner": "owning portable skill",
-    "reason": "The owning portable skill uses this phrase conditionally within its scoped workflow."
+    "context": "At the start of every conversation, use `using-superpowers-plus` as the sole",
+    "classification": "repo-local",
+    "owner": "runbook-playbook contract",
+    "reason": "Repository-local composition guidance required by the approved runbook and playbook contract."
+  },
+  {
+    "path": "codex-marketplace/plugins/superpowers-plus/skills/using-superpowers-plus/SKILL.md",
+    "line": 139,
+    "pattern": "unconditional-connector",
+    "context": "1. **Inspect only route-changing environment dimensions.** Invoke `inspecting-the-environment` when shell, repository, branch, worktree, or connector facts can change the selected route or immediate action. Do not perform a broad inventory merely because the skill is available.",
+    "classification": "repo-local",
+    "owner": "runbook-playbook contract",
+    "reason": "Repository-local composition guidance required by the approved runbook and playbook contract."
   },
   {
     "path": "codex-marketplace/plugins/superpowers-plus/skills/writing-plans/SKILL.md",
-    "line": 98,
+    "line": 94,
     "pattern": "must-read",
-    "classification": "intended",
-    "owner": "owning portable skill",
-    "reason": "The owning portable skill uses this phrase conditionally within its scoped workflow."
+    "context": "If you think \"this is a lot\" or \"the plan is huge\" while writing, you are at a scope sizing decision point. **MUST READ:** `references/plan-scope-sizing.md` and follow one of the three escape hatches before continuing.",
+    "classification": "repo-local",
+    "owner": "runbook-playbook contract",
+    "reason": "Repository-local composition guidance required by the approved runbook and playbook contract."
   },
   {
     "path": "codex-marketplace/plugins/superpowers-plus/skills/writing-roadmaps/SKILL.md",
-    "line": 65,
+    "line": 67,
     "pattern": "must-read",
-    "classification": "intended",
-    "owner": "owning portable skill",
-    "reason": "The owning portable skill uses this phrase conditionally within its scoped workflow."
+    "context": "If a plan in progress grows beyond one deliverable, stop writing. **MUST READ:** `references/plan-scope-sizing.md` and use escape hatch 3:",
+    "classification": "repo-local",
+    "owner": "runbook-playbook contract",
+    "reason": "Repository-local composition guidance required by the approved runbook and playbook contract."
   },
   {
     "path": "codex-marketplace/plugins/superpowers-plus/skills/writing-skills/testing-skills-with-subagents.md",
     "line": 15,
     "pattern": "full-test-suite",
-    "classification": "intended",
-    "owner": "owning portable skill",
-    "reason": "The owning portable skill uses this phrase conditionally within its scoped workflow."
+    "context": "**Complete worked example:** See examples/CLAUDE_MD_TESTING.md for a full test campaign testing CLAUDE.md documentation variants.",
+    "classification": "repo-local",
+    "owner": "runbook-playbook contract",
+    "reason": "Repository-local composition guidance required by the approved runbook and playbook contract."
+  },
+  {
+    "path": "codex-marketplace/plugins/superpowers-plus/skills/iterative-review/tests/review_v2_helpers.py",
+    "line": 756,
+    "pattern": "portable-repo-command",
+    "context": "policy.LocalCheckItem(\"item-preflight\", \"preflight\", (\"py\", \"-3\", \"tools/run.py\", \"ci\", \"--check\"), \".\", True),",
+    "classification": "repo-local",
+    "owner": "runbook-playbook contract",
+    "reason": "Repository-local composition guidance required by the approved runbook and playbook contract."
+  },
+  {
+    "path": "codex-marketplace/plugins/superpowers-plus/skills/iterative-review/tests/review_v2_helpers.py",
+    "line": 1711,
+    "pattern": "portable-repo-command",
+    "context": "(\"py\", \"-3\", \"tools/run.py\", \"ci\", \"--check\"),",
+    "classification": "repo-local",
+    "owner": "runbook-playbook contract",
+    "reason": "Repository-local composition guidance required by the approved runbook and playbook contract."
   },
   {
     "path": "codex-marketplace/plugins/repo-worker-pack/skills/repo-worker-base/references/repository-validation-contract.md",
-    "line": 34,
+    "line": 22,
     "pattern": "every-function",
-    "classification": "intended",
-    "owner": "owning portable skill",
-    "reason": "The owning portable skill uses this phrase conditionally within its scoped workflow."
+    "context": "Preserve meaningful RED/GREEN behavior where it adds evidence. A helper with no independent behavior may be covered transitively through its caller; do not require a ceremonial direct test for every function or method.",
+    "classification": "repo-local",
+    "owner": "runbook-playbook contract",
+    "reason": "Repository-local composition guidance required by the approved runbook and playbook contract."
   },
   {
-    "path": "codex-marketplace/plugins/repo-worker-pack/skills/repo-standards/references/ci-validation-pipeline.md",
-    "line": 67,
+    "path": "codex-marketplace/plugins/agent-operating-model/skills/repo-shape/references/ci-validation-pipeline.md",
+    "line": 61,
     "pattern": "must-read",
-    "classification": "intended",
-    "owner": "owning portable skill",
-    "reason": "The owning portable skill uses this phrase conditionally within its scoped workflow."
+    "context": "The consuming repository documents the exact apply/check commands, target names, hook sequence, and any platform-specific wrappers. Portable workers must read that local command map rather than assuming a path, interpreter, command bus, or target name.",
+    "classification": "repo-local",
+    "owner": "runbook-playbook contract",
+    "reason": "Repository-local composition guidance required by the approved runbook and playbook contract."
   },
   {
     "path": ".agents/runbooks/code-review.md",
-    "line": 14,
+    "line": 23,
     "pattern": "portable-repo-command",
+    "context": "Use `py -3 tools/run.py ci --check` only for uncommitted verification or diagnosis; the normal commit hook proves the staged tree.",
     "classification": "repo-local",
-    "owner": "agent-asset-marketplace runbook",
-    "reason": "This repository runbook records a local command or evidence requirement and does not impose it on consumers."
-  },
-  {
-    "path": ".agents/runbooks/code-review.md",
-    "line": 21,
-    "pattern": "portable-repo-command",
-    "classification": "repo-local",
-    "owner": "agent-asset-marketplace runbook",
-    "reason": "This repository runbook records a local command or evidence requirement and does not impose it on consumers."
-  },
-  {
-    "path": ".agents/runbooks/code-review.md",
-    "line": 27,
-    "pattern": "portable-repo-command",
-    "classification": "repo-local",
-    "owner": "agent-asset-marketplace runbook",
-    "reason": "This repository runbook records a local command or evidence requirement and does not impose it on consumers."
-  },
-  {
-    "path": ".agents/runbooks/code-review.md",
-    "line": 28,
-    "pattern": "portable-repo-command",
-    "classification": "repo-local",
-    "owner": "agent-asset-marketplace runbook",
-    "reason": "This repository runbook records a local command or evidence requirement and does not impose it on consumers."
-  },
-  {
-    "path": ".agents/runbooks/code-review.md",
-    "line": 29,
-    "pattern": "portable-repo-command",
-    "classification": "repo-local",
-    "owner": "agent-asset-marketplace runbook",
-    "reason": "This repository runbook records a local command or evidence requirement and does not impose it on consumers."
-  },
-  {
-    "path": ".agents/runbooks/code-review.md",
-    "line": 30,
-    "pattern": "portable-repo-command",
-    "classification": "repo-local",
-    "owner": "agent-asset-marketplace runbook",
-    "reason": "This repository runbook records a local command or evidence requirement and does not impose it on consumers."
+    "owner": "runbook-playbook contract",
+    "reason": "Repository-local composition guidance required by the approved runbook and playbook contract."
   },
   {
     "path": ".agents/runbooks/implementing.md",
     "line": 24,
     "pattern": "portable-repo-command",
+    "context": "Canonical plugin source lives under `codex-marketplace/plugins/<plugin>/skills/`. Use `py -3 tools/run.py marketplace --apply` after source changes, then `py -3 tools/run.py installed-skills --apply` to refresh installed projections.",
     "classification": "repo-local",
-    "owner": "agent-asset-marketplace runbook",
-    "reason": "This repository runbook records a local command or evidence requirement and does not impose it on consumers."
+    "owner": "runbook-playbook contract",
+    "reason": "Repository-local composition guidance required by the approved runbook and playbook contract."
   },
   {
     "path": ".agents/runbooks/implementing.md",
     "line": 26,
     "pattern": "portable-repo-command",
+    "context": "When repo-local runtime subagent profiles under `.agents/agents/` change, run `py -3 tools/run.py runtime-agents --apply --allow-shared-checkout` from the worktree and restart the IDE before dispatching a changed profile.",
     "classification": "repo-local",
-    "owner": "agent-asset-marketplace runbook",
-    "reason": "This repository runbook records a local command or evidence requirement and does not impose it on consumers."
+    "owner": "runbook-playbook contract",
+    "reason": "Repository-local composition guidance required by the approved runbook and playbook contract."
   },
   {
-    "path": ".agents/runbooks/implementing.md",
-    "line": 28,
+    "path": ".agents/runbooks/planning.md",
+    "line": 24,
     "pattern": "portable-repo-command",
+    "context": "Plans live under `.agents/plans/`. Use `py -3 tools/run.py mesh --apply` after adding one.",
     "classification": "repo-local",
-    "owner": "agent-asset-marketplace runbook",
-    "reason": "This repository runbook records a local command or evidence requirement and does not impose it on consumers."
+    "owner": "runbook-playbook contract",
+    "reason": "Repository-local composition guidance required by the approved runbook and playbook contract."
   },
   {
-    "path": ".agents/runbooks/implementing.md",
-    "line": 30,
+    "path": ".agents/playbooks/marketplace-generation.md",
+    "line": 23,
     "pattern": "portable-repo-command",
+    "context": "Run `py -3 tools/run.py marketplace --apply` after changes to canonical plugin skills, per-pack provenance, bundle manifests, or plugin manifests. Then run `py -3 tools/run.py installed-skills --apply` for installed projections and the repository-owned index/mesh apply targets when files move.",
     "classification": "repo-local",
-    "owner": "agent-asset-marketplace runbook",
-    "reason": "This repository runbook records a local command or evidence requirement and does not impose it on consumers."
+    "owner": "runbook-playbook contract",
+    "reason": "Repository-local composition guidance required by the approved runbook and playbook contract."
   },
   {
-    "path": ".agents/runbooks/implementing.md",
-    "line": 32,
+    "path": ".agents/playbooks/marketplace-generation.md",
+    "line": 25,
     "pattern": "portable-repo-command",
+    "context": "Editable inputs are canonical trees under `codex-marketplace/plugins/<plugin>/skills/`, per-pack `SOURCE.md`, and plugin metadata. Derived manifests, indexes, bundle manifests, and `.agents/skills/` stay generator-owned. `py -3 tools/run.py ci --apply` is the full reconciliation route used by the commit hook; focused apply targets remain explicit rather than being attributed to `marketplace --apply` alone.",
     "classification": "repo-local",
-    "owner": "agent-asset-marketplace runbook",
-    "reason": "This repository runbook records a local command or evidence requirement and does not impose it on consumers."
+    "owner": "runbook-playbook contract",
+    "reason": "Repository-local composition guidance required by the approved runbook and playbook contract."
   },
   {
-    "path": ".agents/runbooks/marketplace-generation.md",
-    "line": 14,
+    "path": ".agents/playbooks/repo-doctrine.md",
+    "line": 26,
     "pattern": "portable-repo-command",
+    "context": "Canonical validation is `py -3 tools/run.py ci --check`; marketplace reconciliation is `py -3 tools/run.py marketplace --apply`. Review entry is `REVIEW.md`, contribution entry is `CONTRIBUTING.md`, and publication proof is an open PR or explicitly authorized direct-main commit.",
     "classification": "repo-local",
-    "owner": "agent-asset-marketplace runbook",
-    "reason": "This repository runbook records a local command or evidence requirement and does not impose it on consumers."
+    "owner": "runbook-playbook contract",
+    "reason": "Repository-local composition guidance required by the approved runbook and playbook contract."
   },
   {
-    "path": ".agents/runbooks/marketplace-generation.md",
-    "line": 67,
+    "path": ".agents/playbooks/skill-authoring.md",
+    "line": 24,
     "pattern": "portable-repo-command",
+    "context": "Scaffold through `writing-skills/scripts/new_skill.py`, regenerate marketplace-wide changes with `py -3 tools/run.py marketplace --apply`, and refresh installed skills through the canonical marketplace target. MCP wrapper skills use the `using-<x>-mcp` name, a reference router, `agents/openai.yaml`, an icon, and a tool-surface reference.",
     "classification": "repo-local",
-    "owner": "agent-asset-marketplace runbook",
-    "reason": "This repository runbook records a local command or evidence requirement and does not impose it on consumers."
+    "owner": "runbook-playbook contract",
+    "reason": "Repository-local composition guidance required by the approved runbook and playbook contract."
   },
   {
-    "path": ".agents/runbooks/marketplace-generation.md",
-    "line": 80,
+    "path": ".agents/playbooks/testing.md",
+    "line": 22,
     "pattern": "portable-repo-command",
+    "context": "Run focused tests with `py -3 -m pytest tests/<file>.py -v`. Contract tests live under `tests/`. Marketplace generation correctness requires `py -3 tools/run.py marketplace --apply`; the complete local gate is `py -3 tools/run.py ci --check`, while normal commits rely on the tracked hook. Source-custody, plugin-shape, manifest, provenance, or generated-zip changes require the full marketplace rebuild.",
     "classification": "repo-local",
-    "owner": "agent-asset-marketplace runbook",
-    "reason": "This repository runbook records a local command or evidence requirement and does not impose it on consumers."
-  },
-  {
-    "path": ".agents/runbooks/marketplace-generation.md",
-    "line": 92,
-    "pattern": "portable-repo-command",
-    "classification": "repo-local",
-    "owner": "agent-asset-marketplace runbook",
-    "reason": "This repository runbook records a local command or evidence requirement and does not impose it on consumers."
-  },
-  {
-    "path": ".agents/runbooks/marketplace-generation.md",
-    "line": 97,
-    "pattern": "portable-repo-command",
-    "classification": "repo-local",
-    "owner": "agent-asset-marketplace runbook",
-    "reason": "This repository runbook records a local command or evidence requirement and does not impose it on consumers."
-  },
-  {
-    "path": ".agents/runbooks/marketplace-generation.md",
-    "line": 109,
-    "pattern": "portable-repo-command",
-    "classification": "repo-local",
-    "owner": "agent-asset-marketplace runbook",
-    "reason": "This repository runbook records a local command or evidence requirement and does not impose it on consumers."
-  },
-  {
-    "path": ".agents/runbooks/marketplace-generation.md",
-    "line": 114,
-    "pattern": "portable-repo-command",
-    "classification": "repo-local",
-    "owner": "agent-asset-marketplace runbook",
-    "reason": "This repository runbook records a local command or evidence requirement and does not impose it on consumers."
-  },
-  {
-    "path": ".agents/runbooks/marketplace-generation.md",
-    "line": 127,
-    "pattern": "portable-repo-command",
-    "classification": "repo-local",
-    "owner": "agent-asset-marketplace runbook",
-    "reason": "This repository runbook records a local command or evidence requirement and does not impose it on consumers."
-  },
-  {
-    "path": ".agents/runbooks/marketplace-generation.md",
-    "line": 129,
-    "pattern": "portable-repo-command",
-    "classification": "repo-local",
-    "owner": "agent-asset-marketplace runbook",
-    "reason": "This repository runbook records a local command or evidence requirement and does not impose it on consumers."
-  },
-  {
-    "path": ".agents/runbooks/marketplace-generation.md",
-    "line": 130,
-    "pattern": "portable-repo-command",
-    "classification": "repo-local",
-    "owner": "agent-asset-marketplace runbook",
-    "reason": "This repository runbook records a local command or evidence requirement and does not impose it on consumers."
-  },
-  {
-    "path": ".agents/runbooks/pr.md",
-    "line": 31,
-    "pattern": "portable-repo-command",
-    "classification": "repo-local",
-    "owner": "agent-asset-marketplace runbook",
-    "reason": "This repository runbook records a local command or evidence requirement and does not impose it on consumers."
-  },
-  {
-    "path": ".agents/runbooks/pr.md",
-    "line": 28,
-    "pattern": "portable-repo-command",
-    "classification": "repo-local",
-    "owner": "agent-asset-marketplace runbook",
-    "reason": "This repository runbook records a local command or evidence requirement and does not impose it on consumers."
-  },
-  {
-    "path": ".agents/runbooks/pr.md",
-    "line": 29,
-    "pattern": "portable-repo-command",
-    "classification": "repo-local",
-    "owner": "agent-asset-marketplace runbook",
-    "reason": "This repository runbook records a local command or evidence requirement and does not impose it on consumers."
-  },
-  {
-    "path": ".agents/runbooks/pr.md",
-    "line": 30,
-    "pattern": "portable-repo-command",
-    "classification": "repo-local",
-    "owner": "agent-asset-marketplace runbook",
-    "reason": "This repository runbook records a local command or evidence requirement and does not impose it on consumers."
-  },
-  {
-    "path": ".agents/runbooks/repo-doctrine.md",
-    "line": 34,
-    "pattern": "portable-repo-command",
-    "classification": "repo-local",
-    "owner": "agent-asset-marketplace runbook",
-    "reason": "This repository runbook records a local command or evidence requirement and does not impose it on consumers."
-  },
-  {
-    "path": ".agents/runbooks/skill-authoring.md",
-    "line": 49,
-    "pattern": "portable-repo-command",
-    "classification": "repo-local",
-    "owner": "agent-asset-marketplace runbook",
-    "reason": "This repository runbook records a local command or evidence requirement and does not impose it on consumers."
-  },
-  {
-    "path": ".agents/runbooks/skill-authoring.md",
-    "line": 55,
-    "pattern": "portable-repo-command",
-    "classification": "repo-local",
-    "owner": "agent-asset-marketplace runbook",
-    "reason": "This repository runbook records a local command or evidence requirement and does not impose it on consumers."
-  },
-  {
-    "path": ".agents/runbooks/skill-authoring.md",
-    "line": 61,
-    "pattern": "portable-repo-command",
-    "classification": "repo-local",
-    "owner": "agent-asset-marketplace runbook",
-    "reason": "This repository runbook records a local command or evidence requirement and does not impose it on consumers."
-  },
-  {
-    "path": ".agents/runbooks/skill-authoring.md",
-    "line": 78,
-    "pattern": "portable-repo-command",
-    "classification": "repo-local",
-    "owner": "agent-asset-marketplace runbook",
-    "reason": "This repository runbook records a local command or evidence requirement and does not impose it on consumers."
-  },
-  {
-    "path": ".agents/runbooks/testing.md",
-    "line": 19,
-    "pattern": "portable-repo-command",
-    "classification": "repo-local",
-    "owner": "agent-asset-marketplace runbook",
-    "reason": "This repository runbook records a local command or evidence requirement and does not impose it on consumers."
+    "owner": "runbook-playbook contract",
+    "reason": "Repository-local composition guidance required by the approved runbook and playbook contract."
   }
 ]

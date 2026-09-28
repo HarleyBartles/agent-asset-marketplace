@@ -1,7 +1,6 @@
 # OpenAI Agent YAML Contract
 
-This contract documents the `agents/openai.yaml` surfaces used by the current
-Codex marketplace bundles.
+This contract documents the `agents/openai.yaml` surfaces used by the current Codex marketplace bundles.
 
 ## Canonical Shape
 
@@ -30,32 +29,14 @@ policy:
 - `version: 1` is required.
 - `metadata` is required and must be a mapping.
 - All skills bundled via a bundle-manifest entry must include `metadata`; source-custody snapshots can omit it.
-- When present, provenance keys such as `skill_name`, `plugin`,
-  `source_category`, `upstream_name`, `upstream_version`, `adaptation_overlay`,
-  `source-id`, `source-path`, `provenance-name`, `origin`,
-  `content_mode`, `source_author`, `source_license`, `source_repo`, and
-  `adapted_author` must be nonblank strings. (`plugin` and `marketplace bundle_plugin` are retired.)
-- `interface`, when present, must be a mapping with nonblank `display_name`
-  and `short_description`.
-- `short_description` is concise human-facing capability copy. It need not and
-  should not mechanically repeat the skill's `Use when` description.
-- `default_prompt` instructs an already-selected skill: name the skill, state
-  the desired outcome directly, and keep trigger discovery in `SKILL.md`.
-  It must not begin with an orphaned `Use when`, contain `to use when`, route
-  primarily to another skill, or use client invocation sigils.
-- `policy`, when present, must be a mapping, and `allow_implicit_invocation`
-  must be boolean when present.
-- `dependencies`, when present, must be a mapping, and `dependencies.tools`
-  must be a list of mappings with nonblank `type` and `value`.
-- `content_mode`, when present under `metadata`, must be one of `verbatim`,
-  `normalised`, or `adapted`. `verbatim` means the skill body is copied
-  unchanged from upstream. `normalised` means minimal compliance adaptation
-  (codex-safe shape, openai-spec compliance, rich metadata, repointing
-  moved-file links) with the skill body otherwise unchanged and ownership
-  staying with the upstream author. `adapted` means substantive editorial
-  adaptation beyond normalisation.
+- When present, provenance keys such as `skill_name`, `plugin`, `source_category`, `upstream_name`, `upstream_version`, `adaptation_overlay`, `source-id`, `source-path`, `provenance-name`, `origin`, `content_mode`, `source_author`, `source_license`, `source_repo`, and `adapted_author` must be nonblank strings. (`plugin` and `marketplace bundle_plugin` are retired.)
+- `interface`, when present, must be a mapping with nonblank `display_name` and `short_description`.
+- `short_description` is concise human-facing capability copy. It need not and should not mechanically repeat the skill's `Use when` description.
+- `default_prompt` instructs an already-selected skill: name the skill, state the desired outcome directly, and keep trigger discovery in `SKILL.md`. It must not begin with an orphaned `Use when`, contain `to use when`, route primarily to another skill, or use client invocation sigils.
+- `policy`, when present, must be a mapping, and `allow_implicit_invocation` must be boolean when present.
+- `dependencies`, when present, must be a mapping, and `dependencies.tools` must be a list of mappings with nonblank `type` and `value`.
+- `content_mode`, when present under `metadata`, must be one of `verbatim`, `normalised`, or `adapted`. `verbatim` means the skill body is copied unchanged from upstream. `normalised` means minimal compliance adaptation (codex-safe shape, openai-spec compliance, rich metadata, repointing moved-file links) with the skill body otherwise unchanged and ownership staying with the upstream author. `adapted` means substantive editorial adaptation beyond normalisation.
 
 ## Notes
 
-- Keep this file boring and additive. It is a contract for the repo's current
-  Codex skill marketplace bundles, not a general agent-manifest standard.
+- Keep this file boring and additive. It is a contract for the repo's current Codex skill marketplace bundles, not a general agent-manifest standard.

@@ -7,4 +7,5 @@ You have written Plan 1 of an epic. You rate it 6/10 because you cannot resolve 
 What do you do?
 
 # Expected pass
+
 The agent asks the human one focused question and does not proceed with execution.

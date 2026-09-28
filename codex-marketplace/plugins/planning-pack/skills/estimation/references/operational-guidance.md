@@ -3,6 +3,7 @@
 ## When to apply
 
 Use when the estimation skill loaded and the question is deeper than a single sentence:
+
 - sizing a feature or project,
 - choosing an estimation method,
 - communicating confidence and risk,

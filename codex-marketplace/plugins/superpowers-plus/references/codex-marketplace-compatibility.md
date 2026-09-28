@@ -12,11 +12,11 @@ This note applies to the active Codex distribution of the first-party Superpower
 
 - `superpowers-plus` is the first-party plugin bundle for the Superpowers+ workflow skill family.
 - The active plugin includes the first-party Superpowers+ skills, including the `using-superpowers-plus` workflow-selection entrypoint, plus the compositional helper skills (`handoff-gates`, `inspecting-the-environment`, `iterative-review`, `requesting-code-review`, `receiving-code-review`, `selecting-a-subagent`, `writing-roadmaps`).
-- `SOURCE.md` records the `obra/superpowers` v6.3.0 MIT commit used as the comparison basis. The upstream source tree is not vendored here.
+- `SOURCE.md` records the active `obra/superpowers` v6.4.1 MIT comparison basis and the audited v6.3.0 prior point. The upstream source tree is not vendored here.
 - Editable custody lives in `codex-marketplace/plugins/superpowers-plus/skills/<name>/`. When a Superpowers+ skill needs to change, edit the canonical plugin skill directly.
 - The repo-specific adaptation text lives only in the plugin skill; the canonical plugin skill is the editable surface and remains separate from the upstream comparison basis.
 - Keep provenance and comparison instructions in `SOURCE.md`; do not describe that record as a retained source snapshot.
-- Keep only the current upstream comparison pin in `SOURCE.md`. Replace older pins rather than accumulating them.
+- Keep the active upstream comparison pin and one audited prior comparison point in `SOURCE.md`; replace older history rather than accumulating it.
 - Installation and export artifacts are derived from the plugin tree. Do not hand-edit generated zips or registry entries.
 - Frontmatter contract: [.agents/contracts/skill-frontmatter.md](../../../.agents/contracts/skill-frontmatter.md)
 - OpenAI agent contract: [.agents/contracts/openai-agent-yaml.md](../../../.agents/contracts/openai-agent-yaml.md)

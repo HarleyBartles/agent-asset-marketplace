@@ -1,0 +1,39 @@
+{
+  "name": "@harleybartles/agent-operating-model",
+  "version": "1.0.0",
+  "description": "Portable repository structure, workflows, commands, validation, and execution contracts for agents.",
+  "author": {
+    "name": "Harley Bartles"
+  },
+  "homepage": "https://github.com/HarleyBartles/agent-asset-marketplace",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HarleyBartles/agent-asset-marketplace.git",
+    "directory": "codex-marketplace/plugins/agent-operating-model"
+  },
+  "license": "MIT",
+  "rights": "First-party Harley-authored marketplace plugin.",
+  "keywords": [
+    "codex",
+    "marketplace",
+    "agent-operating-model",
+    "repository",
+    "command-bus",
+    "validation",
+    "python"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "type": "cli",
+    "displayName": "Agent Operating Model",
+    "shortDescription": "Repository operating contracts for agents",
+    "longDescription": "Portable repository shape, workflow composition, command bus, validation, tracked hooks, agent assets, and Python guidance.",
+    "developerName": "Harley Bartles",
+    "category": "Productivity",
+    "capabilities": ["Interactive", "Write"],
+    "defaultPrompt": "Route repository operating-model work through repo-standards and its focused capability skills.",
+    "brandColor": "#2563EB",
+    "composerIcon": "./assets/icon.svg",
+    "logo": "./assets/icon.svg"
+  }
+}

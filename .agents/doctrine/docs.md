@@ -1,4 +1,3 @@
-
 ## Scope
 
 `.agents/docs/`

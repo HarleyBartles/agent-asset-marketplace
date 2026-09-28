@@ -77,18 +77,15 @@ def _source_paths() -> set[str]:
             if not base.is_dir():
                 continue
             for p in base.rglob("*"):
-                if p.is_file() and p.suffix in {".md", ".ps1"}:
+                if p.is_file() and p.suffix in {".md", ".py"}:
                     _SOURCE_PATHS.add(p.relative_to(base).as_posix())
-        # Include extensionless helper scripts and their .ps1 twins from the
-        # subagent workspace; docs may reference either form.
+        # Include the Python helper CLIs from the subagent workspace.
         sw = plugin_dir / "skills" / "subagent-workspace" / "scripts"
         if sw.is_dir():
             for p in sw.iterdir():
                 if p.is_file():
                     rel = p.relative_to(sw).as_posix()
                     _SOURCE_PATHS.add(rel)
-                    if p.suffix == ".ps1":
-                        _SOURCE_PATHS.add(rel[:-4])
     return _SOURCE_PATHS
 
 
@@ -116,11 +113,11 @@ def _scan_canonical_paths(path: Path, content: str, findings: list[str]) -> None
             else:
                 prefix = "subagent-workspace/scripts/"
                 target = ROOT / ".agents/skills/subagent-workspace/scripts" / rel
-            if target.is_file() or target.with_suffix(".ps1").is_file() or target.with_suffix(".sh").is_file():
+            if target.is_file() or target.with_suffix(".py").is_file() or target.with_suffix(".sh").is_file():
                 continue
             # Fall back to the source plugin tree for paths not yet installed.
             source = _source_paths()
-            if rel in source or f"{rel}.ps1" in source or f"{rel}.sh" in source:
+            if rel in source or f"{rel}.py" in source or f"{rel}.sh" in source:
                 continue
             _warn(findings, path, line_no, f"referenced path `{prefix}{rel}` does not exist")
 

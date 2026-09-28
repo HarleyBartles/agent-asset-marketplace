@@ -3,6 +3,7 @@ description: "Skill installation and custody"
 trigger: glob
 globs: ".agents/skills/**"
 ---
+
 ## Scope
 
 For the canonical doctrine behind this rule, read `.agents/doctrine/skills.md`.

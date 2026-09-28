@@ -15,7 +15,6 @@
   "plugin_author": "Harley Bartles",
   "plugin_license": "MIT",
   "entries": [
-
     {
       "canonical_name": "base-doctrine",
       "source_category": "first_party",
@@ -37,6 +36,17 @@
       "source_path": "codex-marketplace/plugins/repo-worker-pack/skills/cleanup-custody/SKILL.md",
       "copy_expectation": "byte_identical",
       "provenance_note": "Canonical first-party cleanup-custody skill."
+    },
+    {
+      "canonical_name": "completing-planning-artifacts",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "canonical_source_path": "codex-marketplace/plugins/repo-worker-pack/skills/completing-planning-artifacts",
+      "local_path": "skills/completing-planning-artifacts",
+      "source_path": "codex-marketplace/plugins/repo-worker-pack/skills/completing-planning-artifacts/SKILL.md",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Canonical first-party completing-planning-artifacts skill."
     },
     {
       "canonical_name": "connector-safety",
@@ -100,17 +110,6 @@
       "source_author": "Harley Bartles",
       "source_license": "MIT",
       "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
-    },
-    {
-      "canonical_name": "repo-standards",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "source_family": "first_party",
-      "canonical_source_path": "codex-marketplace/plugins/repo-worker-pack/skills/repo-standards",
-      "local_path": "skills/repo-standards",
-      "source_path": "codex-marketplace/plugins/repo-worker-pack/skills/repo-standards/SKILL.md",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "Canonical first-party repo-standards skill. Defines cross-repo guide layout, invocation, and workflow order."
     },
     {
       "canonical_name": "repo-worker-base",

@@ -1,4 +1,3 @@
-
 ## Scope
 
 `codex-marketplace/plugins/`

@@ -9,15 +9,15 @@ metadata:
   status: active
   owner: Harley Bartles
   use_when:
-  - planning a research task or systematic review.
-  - triaging and recording sources.
-  - synthesizing evidence into a cited conclusion.
+    - planning a research task or systematic review.
+    - triaging and recording sources.
+    - synthesizing evidence into a cited conclusion.
   do_not_use_when:
-  - another more specific skill owns the task.
+    - another more specific skill owns the task.
   related_skills:
-  - agentic-harness
-  - agent-evaluation
-  - estimation
+    - agentic-harness
+    - agent-evaluation
+    - estimation
 license: MIT
 ---
 

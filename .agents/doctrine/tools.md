@@ -1,4 +1,3 @@
-
 ## Scope
 
 `tools/`
@@ -43,6 +42,7 @@ Deterministic pack rule: if a plugin pack lacks a manifest-driven generator/vali
 This repo normalizes to LF. `core.autocrlf` is `false` so git does not translate line endings. Generators and agents that write text files must write LF explicitly, not the platform default (CRLF on Windows).
 
 When writing text files, prefer `open("w")` with `newline="\n"`:
+
 ```python
 with path.open("w", encoding="utf-8", newline="\n") as f:
     f.write(content)

@@ -9,15 +9,15 @@ metadata:
   status: active
   owner: Harley Bartles
   use_when:
-  - evaluating an agent's output against a rubric.
-  - designing or running a benchmark.
-  - building a self-evaluation workflow.
+    - evaluating an agent's output against a rubric.
+    - designing or running a benchmark.
+    - building a self-evaluation workflow.
   do_not_use_when:
-  - another more specific skill owns the task.
+    - another more specific skill owns the task.
   related_skills:
-  - agentic-harness
-  - research-ops
-  - observability
+    - agentic-harness
+    - research-ops
+    - observability
 license: MIT
 ---
 

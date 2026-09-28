@@ -3,6 +3,7 @@
 ## When to apply
 
 Use when the mermaid-diagramming skill is loaded and the question goes beyond a one-sentence answer:
+
 - choosing a diagram type,
 - writing or refactoring Mermaid syntax,
 - styling or grouping a complex diagram,
@@ -10,18 +11,18 @@ Use when the mermaid-diagramming skill is loaded and the question goes beyond a 
 
 ## Diagram type selection
 
-| If you need to show... | Use |
-|---|---|
-| Process flow, decisions, branching | `flowchart` |
-| Interactions over time | `sequenceDiagram` |
-| Data models and relationships | `erDiagram` |
-| Object structure and inheritance | `classDiagram` |
-| States and transitions | `stateDiagram-v2` |
-| Schedules and dependencies | `gantt` |
-| User experience steps | `journey` |
-| Hierarchical idea mapping | `mindmap` |
-| Events over time | `timeline` |
-| System architecture layers | C4 context/container diagrams |
+| If you need to show...             | Use                           |
+| ---------------------------------- | ----------------------------- |
+| Process flow, decisions, branching | `flowchart`                   |
+| Interactions over time             | `sequenceDiagram`             |
+| Data models and relationships      | `erDiagram`                   |
+| Object structure and inheritance   | `classDiagram`                |
+| States and transitions             | `stateDiagram-v2`             |
+| Schedules and dependencies         | `gantt`                       |
+| User experience steps              | `journey`                     |
+| Hierarchical idea mapping          | `mindmap`                     |
+| Events over time                   | `timeline`                    |
+| System architecture layers         | C4 context/container diagrams |
 
 ## Syntax and style conventions
 
