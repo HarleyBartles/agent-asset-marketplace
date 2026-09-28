@@ -67,28 +67,28 @@ ______________________________________________________________________
 
 - Keep the current surface manifest as an implementation inventory only during the compatibility transition; standard selection becomes authoritative in later tasks.
 
-- [ ] **Step 1: Add catalog behavior tests**
+- [x] **Step 1: Add catalog behavior tests**
 
 Cover the actual current surfaces, independently selectable catalog entries, resource containment, valid dependency edges, and rejection of duplicate IDs, unknown resources, and dependency cycles. Include a representative composition selecting two standards while omitting a third.
 
-- [ ] **Step 2: Confirm the focused test fails**
+- [x] **Step 2: Confirm the focused test fails**
 
 Run: `py -3 -m pytest skills/repo-shape/tests/scripts/test_operating_standards_catalog.py -q`
 
 Expected: FAIL because the catalog contract and validator do not exist.
 
-- [ ] **Step 3: Add and package the catalog**
+- [x] **Step 3: Add and package the catalog**
 
 Inventory the live shape-manifest validators, scaffolds, and documentation. Assign every current surface to the smallest independent standard boundary supported by its behavior. Add catalog and schema validation; package the catalog as an Agent Operating Model resource and describe its role as an ambient choice catalog.
 
-- [ ] **Step 4: Verify catalog behavior**
+- [x] **Step 4: Verify catalog behavior**
 
-Run the focused test from Step 2. Expected: PASS for valid independent standards and all invalid-catalog cases. Run the plugin-definition membership test to verify the catalog ships in the generated Agent Operating Model plugin.
+Run: `py -3 -m pytest skills/repo-shape/tests/scripts/test_operating_standards_catalog.py tests/build/test_plugin_definition_contract.py tests/build/test_plugin_assembly.py -q`. Expected: PASS for valid independent standards and all invalid-catalog cases. Run `py -3 tools/run.py marketplace --apply` and confirm the catalog and validator appear under `dist/plugins/agent-operating-model/skills/repo-shape/`.
 
-- [ ] **Step 5: Commit the catalog**
+- [x] **Step 5: Commit the catalog**
 
 ```powershell
-git add skills/repo-shape/references/operating-standards-catalog.json skills/repo-shape/references/operating-standards-catalog.schema.json skills/repo-shape/scripts/operating_standards_catalog.py skills/repo-standards/SKILL.md src/plugin-definitions/agent-operating-model/files/README.md src/plugin-definitions/agent-operating-model/files/SOURCE.md skills/repo-shape/tests/scripts/test_operating_standards_catalog.py
+git add skills/repo-shape/references/operating-standards-catalog.json skills/repo-shape/references/operating-standards-catalog.schema.json skills/repo-shape/scripts/operating_standards_catalog.py skills/repo-shape/tests/scripts/test_operating_standards_catalog.py skills/repo-standards/SKILL.md src/plugin-definitions/agent-operating-model/files/README.md src/plugin-definitions/agent-operating-model/files/SOURCE.md dist/plugins/agent-operating-model .agents/skills/repo-shape .agents/skills/repo-standards
 git commit -m "feat: define selectable operating standards"
 ```
 

@@ -13,6 +13,10 @@ license: MIT
 
 # Repo Standards
 
+Agent Operating Model is an ambient catalog. Its presence does not mean the consumer adopts any of its standards. Help the repository choose only the standards it wants, including none; keep repository-owned standards in the repository's own composition. Run checks and scaffolds only for the explicitly declared composition.
+
+The catalog is packaged with `repo-shape` at `references/operating-standards-catalog.json`. Treat its entries as available choices; a repository adopts a standard only through its own explicit composition declaration.
+
 Route the request to the smallest owning capability:
 
 | Concern                                                       | Skill                   |
