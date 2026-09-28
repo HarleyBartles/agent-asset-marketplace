@@ -3,7 +3,7 @@ name: writing-profile-engine
 description: Use when writing-specific fatigue or voice profiles need lawful discovery, validation, or transparent deterministic evaluation.
 metadata:
   source-id: writing-profile-engine
-  source-path: codex-marketplace/plugins/writing-pack/skills/writing-profile-engine/SKILL.md
+  source-path: skills/writing-profile-engine/SKILL.md
   provenance-name: Writing profile engine first-party skill
   source-category: first_party
   status: active

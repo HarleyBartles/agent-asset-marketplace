@@ -5,7 +5,7 @@
   "marketplace_root": ".agents/plugins/marketplace.json",
   "plugin_root": "codex-marketplace/plugins/feature-sliced-design",
   "source_families": [
-    "feature-sliced"
+    "first_party"
   ],
   "notes": [
     "Standalone FSD v2.1 skill for frontend architecture with layers, slices, and segments.",
@@ -15,23 +15,6 @@
   "provenance_refs": [],
   "plugin_author": "Harley Bartles",
   "plugin_license": "MIT",
-  "entries": [
-    {
-      "canonical_name": "feature-sliced-design",
-      "source_category": "third_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "codex-marketplace/plugins/feature-sliced-design/skills/feature-sliced-design",
-      "local_path": "skills/feature-sliced-design",
-      "import_status": "imported",
-      "source_path": "codex-marketplace/plugins/feature-sliced-design/skills/feature-sliced-design/SKILL.md",
-      "source_author": "Feature-Sliced Design (feature-sliced/skills)",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/feature-sliced/skills",
-      "source_family": "feature-sliced",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex plugin."
-    }
-  ],
   "repo_index": {
     "source_md": "codex-marketplace/plugins/feature-sliced-design/SOURCE.md",
     "bundle_manifest": "codex-marketplace/plugins/feature-sliced-design/references/bundle-manifest.json",
@@ -41,5 +24,22 @@
       "status": "aligned",
       "note": null
     }
-  }
+  },
+  "entries": [
+    {
+      "canonical_name": "feature-sliced-design",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "import_status": "imported",
+      "source_author": "Feature-Sliced Design (feature-sliced/skills)",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/feature-sliced/skills",
+      "source_family": "feature-sliced",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "First-party maintained skill based on the pinned Feature-Sliced Design MIT source; upstream attribution is preserved.",
+      "canonical_source_path": "skills/feature-sliced-design",
+      "local_path": "skills/feature-sliced-design",
+      "source_path": "skills/feature-sliced-design/SKILL.md"
+    }
+  ]
 }

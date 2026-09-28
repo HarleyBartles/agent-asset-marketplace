@@ -3,7 +3,7 @@ name: repo-composition
 description: Use when creating, changing, or validating repository runbooks, playbooks, their policy mapping, or declared composition edges.
 metadata:
   source-id: repo-composition
-  source-path: codex-marketplace/plugins/agent-operating-model/skills/repo-composition/SKILL.md
+  source-path: skills/repo-composition/SKILL.md
   provenance-name: Repo Composition first-party skill
   source-category: first_party
   status: active

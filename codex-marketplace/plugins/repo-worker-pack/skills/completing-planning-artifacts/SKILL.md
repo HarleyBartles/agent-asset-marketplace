@@ -3,7 +3,7 @@ name: completing-planning-artifacts
 description: Use when a repository work slice is completing or a new substantive slice starts while completed plans, specifications, roadmaps, or checkpoints remain tracked.
 metadata:
   source-id: completing-planning-artifacts
-  source-path: codex-marketplace/plugins/repo-worker-pack/skills/completing-planning-artifacts/SKILL.md
+  source-path: skills/completing-planning-artifacts/SKILL.md
   provenance-name: Completing Planning Artifacts first-party skill
   source-category: first_party
   status: active

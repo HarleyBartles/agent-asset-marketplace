@@ -3,7 +3,7 @@ name: iterative-review
 description: Use when a human-approved draft-PR review inside a Devin harness needs legacy subagent assistance because the orchestrator is not known to be frontier-capable. Do not use with a harness-designated frontier model (Sol, Astra, Fable, or Opus) or outside a Devin harness.
 metadata:
   source-id: iterative-review
-  source-path: codex-marketplace/plugins/superpowers-plus/skills/iterative-review/SKILL.md
+  source-path: skills/iterative-review/SKILL.md
   provenance-name: Iterative Review first-party skill
   source-category: first_party
   status: active

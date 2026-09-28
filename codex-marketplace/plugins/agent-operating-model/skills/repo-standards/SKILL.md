@@ -3,7 +3,7 @@ name: repo-standards
 description: Use when aligning several repository operating-model concerns or deciding which focused repository standard owns a requested change.
 metadata:
   source-id: repo-standards
-  source-path: codex-marketplace/plugins/agent-operating-model/skills/repo-standards/SKILL.md
+  source-path: skills/repo-standards/SKILL.md
   provenance-name: Repo Standards router first-party skill
   source-category: first_party
   status: active

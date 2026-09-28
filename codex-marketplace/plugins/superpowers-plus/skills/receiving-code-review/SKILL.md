@@ -3,7 +3,7 @@ name: receiving-code-review
 description: Use when received code-review feedback is unclear, technically questionable, or needs verification before implementation.
 metadata:
   source-id: receiving-code-review
-  source-path: codex-marketplace/plugins/superpowers-plus/skills/receiving-code-review/SKILL.md
+  source-path: skills/receiving-code-review/SKILL.md
   provenance-name: Receiving Code Review first-party skill
   source-category: first_party
   status: active

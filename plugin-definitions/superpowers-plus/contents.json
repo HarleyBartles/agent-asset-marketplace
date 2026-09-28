@@ -1,0 +1,257 @@
+{
+  "skills": [
+    {
+      "name": "brainstorming",
+      "source": "brainstorming",
+      "provenance": {
+        "source_category": "first_party",
+        "content_mode": "verbatim",
+        "source_family": "first_party",
+        "copy_expectation": "byte_identical",
+        "provenance_note": "First-party skill derived from the obra/superpowers v6.4.1 MIT upstream basis recorded in `SOURCE.md`."
+      }
+    },
+    {
+      "name": "diagnosing-superpowers",
+      "source": "diagnosing-superpowers",
+      "provenance": {
+        "source_category": "first_party",
+        "content_mode": "verbatim",
+        "source_family": "first_party",
+        "copy_expectation": "byte_identical",
+        "provenance_note": "First-party skill derived from the obra/superpowers v6.4.1 MIT upstream basis recorded in `SOURCE.md`."
+      }
+    },
+    {
+      "name": "asking-clarifying-questions",
+      "source": "asking-clarifying-questions",
+      "provenance": {
+        "source_category": "first_party",
+        "content_mode": "verbatim",
+        "source_family": "first_party",
+        "copy_expectation": "byte_identical",
+        "provenance_note": "First-party helper skill bundled verbatim; not derived from the obra/superpowers upstream snapshot."
+      }
+    },
+    {
+      "name": "dispatching-parallel-agents",
+      "source": "dispatching-parallel-agents",
+      "provenance": {
+        "source_category": "first_party",
+        "content_mode": "verbatim",
+        "source_family": "first_party",
+        "copy_expectation": "byte_identical",
+        "provenance_note": "First-party skill derived from the obra/superpowers v6.4.1 MIT upstream basis recorded in `SOURCE.md`."
+      }
+    },
+    {
+      "name": "executing-plans",
+      "source": "executing-plans",
+      "provenance": {
+        "source_category": "first_party",
+        "content_mode": "verbatim",
+        "source_family": "first_party",
+        "copy_expectation": "byte_identical",
+        "provenance_note": "First-party skill derived from the obra/superpowers v6.4.1 MIT upstream basis recorded in `SOURCE.md`."
+      }
+    },
+    {
+      "name": "finishing-a-development-branch",
+      "source": "finishing-a-development-branch",
+      "provenance": {
+        "source_category": "first_party",
+        "content_mode": "verbatim",
+        "source_family": "first_party",
+        "copy_expectation": "byte_identical",
+        "provenance_note": "First-party skill derived from the obra/superpowers v6.4.1 MIT upstream basis recorded in `SOURCE.md`."
+      }
+    },
+    {
+      "name": "handoff-gates",
+      "source": "handoff-gates",
+      "provenance": {
+        "source_category": "first_party",
+        "content_mode": "verbatim",
+        "source_family": "first_party",
+        "copy_expectation": "byte_identical",
+        "provenance_note": "First-party helper skill bundled verbatim; not derived from the obra/superpowers upstream snapshot."
+      }
+    },
+    {
+      "name": "inspecting-the-environment",
+      "source": "inspecting-the-environment",
+      "provenance": {
+        "source_category": "first_party",
+        "content_mode": "verbatim",
+        "source_family": "first_party",
+        "copy_expectation": "byte_identical",
+        "provenance_note": "First-party helper skill bundled verbatim; not derived from the obra/superpowers upstream snapshot."
+      }
+    },
+    {
+      "name": "iterative-review",
+      "source": "iterative-review",
+      "provenance": {
+        "source_category": "first_party",
+        "content_mode": "verbatim",
+        "source_family": "first_party",
+        "copy_expectation": "byte_identical",
+        "provenance_note": "First-party helper skill bundled verbatim."
+      }
+    },
+    {
+      "name": "publishing-source",
+      "source": "publishing-source",
+      "provenance": {
+        "source_category": "first_party",
+        "content_mode": "verbatim",
+        "source_family": "first_party",
+        "copy_expectation": "byte_identical",
+        "provenance_note": "First-party helper skill bundled verbatim; not derived from the obra/superpowers upstream snapshot."
+      }
+    },
+    {
+      "name": "receiving-code-review",
+      "source": "receiving-code-review",
+      "provenance": {
+        "source_category": "first_party",
+        "content_mode": "verbatim",
+        "source_family": "first_party",
+        "copy_expectation": "byte_identical",
+        "provenance_note": "First-party skill derived from the obra/superpowers v6.4.1 MIT upstream basis recorded in `SOURCE.md`."
+      }
+    },
+    {
+      "name": "requesting-code-review",
+      "source": "requesting-code-review",
+      "provenance": {
+        "source_category": "first_party",
+        "content_mode": "verbatim",
+        "source_family": "first_party",
+        "copy_expectation": "byte_identical",
+        "provenance_note": "First-party skill derived from the obra/superpowers v6.4.1 MIT upstream basis recorded in `SOURCE.md`."
+      }
+    },
+    {
+      "name": "selecting-a-subagent",
+      "source": "selecting-a-subagent",
+      "provenance": {
+        "source_category": "first_party",
+        "content_mode": "verbatim",
+        "source_family": "first_party",
+        "copy_expectation": "byte_identical",
+        "provenance_note": "First-party helper skill bundled verbatim; not derived from the obra/superpowers upstream snapshot."
+      }
+    },
+    {
+      "name": "subagent-driven-development",
+      "source": "subagent-driven-development",
+      "provenance": {
+        "source_category": "first_party",
+        "content_mode": "verbatim",
+        "source_family": "first_party",
+        "copy_expectation": "byte_identical",
+        "provenance_note": "First-party skill derived from the obra/superpowers v6.4.1 MIT upstream basis recorded in `SOURCE.md`."
+      }
+    },
+    {
+      "name": "subagent-workspace",
+      "source": "subagent-workspace",
+      "provenance": {
+        "source_category": "first_party",
+        "content_mode": "verbatim",
+        "source_family": "first_party",
+        "copy_expectation": "byte_identical",
+        "provenance_note": "Canonical first-party subagent-workspace skill. (Subagent Workspace first-party skill)"
+      }
+    },
+    {
+      "name": "systematic-debugging",
+      "source": "systematic-debugging",
+      "provenance": {
+        "source_category": "first_party",
+        "content_mode": "verbatim",
+        "source_family": "first_party",
+        "copy_expectation": "byte_identical",
+        "provenance_note": "First-party skill derived from the obra/superpowers v6.4.1 MIT upstream basis recorded in `SOURCE.md`."
+      }
+    },
+    {
+      "name": "test-driven-development",
+      "source": "test-driven-development",
+      "provenance": {
+        "source_category": "first_party",
+        "content_mode": "verbatim",
+        "source_family": "first_party",
+        "copy_expectation": "byte_identical",
+        "provenance_note": "First-party skill derived from the obra/superpowers v6.4.1 MIT upstream basis recorded in `SOURCE.md`."
+      }
+    },
+    {
+      "name": "using-git-worktrees",
+      "source": "using-git-worktrees",
+      "provenance": {
+        "source_category": "first_party",
+        "content_mode": "verbatim",
+        "source_family": "first_party",
+        "copy_expectation": "byte_identical",
+        "provenance_note": "First-party skill derived from the obra/superpowers v6.4.1 MIT upstream basis recorded in `SOURCE.md`."
+      }
+    },
+    {
+      "name": "using-superpowers-plus",
+      "source": "using-superpowers-plus",
+      "provenance": {
+        "source_category": "first_party",
+        "content_mode": "verbatim",
+        "source_family": "first_party",
+        "copy_expectation": "byte_identical",
+        "provenance_note": "First-party skill derived from the obra/superpowers v6.4.1 MIT upstream basis recorded in `SOURCE.md`."
+      }
+    },
+    {
+      "name": "verification-before-completion",
+      "source": "verification-before-completion",
+      "provenance": {
+        "source_category": "first_party",
+        "content_mode": "verbatim",
+        "source_family": "first_party",
+        "copy_expectation": "byte_identical",
+        "provenance_note": "First-party skill derived from the obra/superpowers v6.4.1 MIT upstream basis recorded in `SOURCE.md`."
+      }
+    },
+    {
+      "name": "writing-plans",
+      "source": "writing-plans",
+      "provenance": {
+        "source_category": "first_party",
+        "content_mode": "verbatim",
+        "source_family": "first_party",
+        "copy_expectation": "byte_identical",
+        "provenance_note": "First-party skill derived from the obra/superpowers v6.4.1 MIT upstream basis recorded in `SOURCE.md`."
+      }
+    },
+    {
+      "name": "writing-roadmaps",
+      "source": "writing-roadmaps",
+      "provenance": {
+        "source_category": "first_party",
+        "content_mode": "verbatim",
+        "source_family": "first_party",
+        "copy_expectation": "byte_identical",
+        "provenance_note": "First-party helper skill bundled verbatim; not derived from the obra/superpowers upstream snapshot."
+      }
+    },
+    {
+      "name": "writing-skills",
+      "source": "writing-skills",
+      "provenance": {
+        "source_category": "first_party",
+        "content_mode": "verbatim",
+        "source_family": "first_party",
+        "copy_expectation": "byte_identical",
+        "provenance_note": "First-party skill derived from the obra/superpowers v6.4.1 MIT upstream basis recorded in `SOURCE.md`."
+      }
+    }
+  ]
+}

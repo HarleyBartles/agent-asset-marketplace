@@ -3,7 +3,7 @@ name: using-discord-mcp
 description: Use when working with the Discord MCP server, choosing the right tool, or deciding whether the bot's current read-only permissions allow an action or require your human partner to widen them.
 metadata:
   source-id: using-discord-mcp
-  source-path: codex-marketplace/plugins/mcp-usage-pack/skills/using-discord-mcp/SKILL.md
+  source-path: skills/using-discord-mcp/SKILL.md
   provenance-name: Using Discord MCP first-party skill
   source-category: first_party
   status: active

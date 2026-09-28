@@ -19,11 +19,11 @@
       "source_category": "first_party",
       "content_mode": "verbatim",
       "source_family": "first_party",
-      "canonical_source_path": "codex-marketplace/plugins/jev-mcp/skills/using-jev-mcp",
-      "local_path": "skills/using-jev-mcp",
-      "source_path": "codex-marketplace/plugins/jev-mcp/skills/using-jev-mcp/SKILL.md",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Canonical first-party using-jev-mcp skill. (Using Jev MCP first-party skill)"
+      "provenance_note": "Canonical first-party using-jev-mcp skill. (Using Jev MCP first-party skill)",
+      "canonical_source_path": "skills/using-jev-mcp",
+      "local_path": "skills/using-jev-mcp",
+      "source_path": "skills/using-jev-mcp/SKILL.md"
     }
   ]
 }

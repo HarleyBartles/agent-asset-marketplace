@@ -3,7 +3,7 @@ name: using-deepwiki-mcp
 description: Use when you need high-level orientation, conventions, architecture, or cross-repo context for a GitHub repo and need to choose the right DeepWiki MCP tool and question phrasing.
 metadata:
   source-id: using-deepwiki-mcp
-  source-path: codex-marketplace/plugins/mcp-usage-pack/skills/using-deepwiki-mcp/SKILL.md
+  source-path: skills/using-deepwiki-mcp/SKILL.md
   provenance-name: Using DeepWiki MCP first-party skill
   source-category: first_party
   status: active

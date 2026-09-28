@@ -3,7 +3,7 @@ name: publishing-source
 description: Use when completed source work needs a decision about whether to commit, push, tag, release, or export it.
 metadata:
   source-id: publishing-source
-  source-path: codex-marketplace/plugins/superpowers-plus/skills/publishing-source/SKILL.md
+  source-path: skills/publishing-source/SKILL.md
   provenance-name: Publishing Source first-party skill
   source-category: first_party
   status: active

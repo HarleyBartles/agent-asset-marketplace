@@ -3,7 +3,7 @@ name: linear-issue-shaping
 description: Use when shaping Linear-backed issues, projects, or documents; inspecting Linear state; preparing explicitly requested worker handoffs; or routing pull-request proof after a PR exists.
 metadata:
   source-id: linear-issue-shaping
-  source-path: codex-marketplace/plugins/repo-worker-pack/skills/linear-issue-shaping/SKILL.md
+  source-path: skills/linear-issue-shaping/SKILL.md
   provenance-name: Linear Issue Shaping first-party skill
   source-category: first_party
   status: active

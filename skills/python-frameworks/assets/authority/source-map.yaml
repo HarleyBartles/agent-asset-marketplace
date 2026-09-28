@@ -1,0 +1,12 @@
+schema_version: 1
+reconciled_against: 881c2ac807a5dbeb65eb32e9731fac17e1e72c415b81a2f012be516107ef0514
+references:
+  - path: references/operational-guidance.md
+    source_sections:
+    - Django patterns
+    - FastAPI patterns
+    - Celery patterns
+    - Choosing a framework
+    load_when:
+    - Use when python-frameworks operational guidance is needed.
+    content_mode: first_party_synthesis

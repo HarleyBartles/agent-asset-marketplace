@@ -3,7 +3,7 @@ name: python
 description: Use when writing, reviewing, or debugging Python code and the task calls for idiomatic language patterns, concurrency, testing, or type-safety guidance.
 metadata:
   source-id: python
-  source-path: codex-marketplace/plugins/agent-operating-model/skills/python/SKILL.md
+  source-path: skills/python/SKILL.md
   provenance-name: Python first-party skill
   source-category: first_party
   status: active

@@ -3,7 +3,7 @@ name: repo-shape
 description: Use when checking, creating, or repairing the required agent-facing files, directories, manifests, pointers, and structural contracts of a repository.
 metadata:
   source-id: repo-shape
-  source-path: codex-marketplace/plugins/agent-operating-model/skills/repo-shape/SKILL.md
+  source-path: skills/repo-shape/SKILL.md
   provenance-name: Repo Shape first-party skill
   source-category: first_party
   status: active

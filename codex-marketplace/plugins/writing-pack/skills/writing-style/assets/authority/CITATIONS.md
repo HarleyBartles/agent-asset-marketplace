@@ -11,7 +11,7 @@
 ## Derivation boundary
 
 - First-party synthesis: contextual fatigue pattern families, thresholds, preserve conditions, typed guidance, refresh policy, goldens, and the bounded voice-card contract.
-- Measured source findings remain in `research/ai-prose-fatigue/`; operational files state only bounded implications and limitations.
+- Measured source findings remain in `references/profiles/fatigue/ai-prose-fatigue/research/`; operational files state only bounded implications and limitations.
 - Outside scope: authorship classification, detector scoring or evasion, exact-token bans, private author corpora, universal prose-quality claims, and causal claims that the profile improves prose.
 
 ## Attribution

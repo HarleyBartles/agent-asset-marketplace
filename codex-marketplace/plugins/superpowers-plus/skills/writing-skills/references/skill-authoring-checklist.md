@@ -6,7 +6,8 @@ Use this checklist when creating, reviewing, or refreshing a skill.
 
 ## 1. Choose custody and lane
 
-- [ ] Local `.agents/skills/<name>/` skill declared by exact name in `repo.local_skills`, or marketplace `codex-marketplace/plugins/<lane>/skills/<name>/` source?
+- [ ] Local `.agents/skills/<name>/` skill declared by exact name in `repo.local_skills`, or canonical marketplace source under `skills/<name>/`?
+- [ ] For marketplace source, which `plugin-definitions/<plugin>/contents.json` products should include this skill?
 - [ ] Treat any prefix as an optional naming choice, not a custody mechanism.
 - [ ] Lane: `first_party`, `skills-with-source`, `skills-with-citation`, or `skills-with-mixed-source`?
 - [ ] Read `local-and-marketplace-custody.md` if unsure.
@@ -19,7 +20,7 @@ Use this checklist when creating, reviewing, or refreshing a skill.
 
 ## 3. Scaffold
 
-- [ ] Run `scripts/new_skill.py --name <name> --custody <local|marketplace> --lane <lane>` to scaffold.
+- [ ] Run `scripts/new_skill.py --name <name> --custody <local|marketplace> --lane <authority-lane>` to scaffold. Plugin membership is declared separately.
 - [ ] Review generated files before adding authority evidence.
 
 ## 4. Validate

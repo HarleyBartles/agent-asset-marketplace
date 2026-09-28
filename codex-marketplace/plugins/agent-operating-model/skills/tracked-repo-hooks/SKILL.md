@@ -3,7 +3,7 @@ name: tracked-repo-hooks
 description: Use when installing, changing, or validating tracked pre-commit hooks, staged-snapshot execution, linked-worktree activation, or hosted-CI parity.
 metadata:
   source-id: tracked-repo-hooks
-  source-path: codex-marketplace/plugins/agent-operating-model/skills/tracked-repo-hooks/SKILL.md
+  source-path: skills/tracked-repo-hooks/SKILL.md
   provenance-name: Tracked Repo Hooks first-party skill
   source-category: first_party
   status: active

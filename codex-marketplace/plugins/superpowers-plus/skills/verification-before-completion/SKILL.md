@@ -3,7 +3,7 @@ name: verification-before-completion
 description: Use when a claim that work is complete, fixed, passing, or ready needs current evidence before a commit, pull request, or handoff.
 metadata:
   source-id: verification-before-completion
-  source-path: codex-marketplace/plugins/superpowers-plus/skills/verification-before-completion/SKILL.md
+  source-path: skills/verification-before-completion/SKILL.md
   provenance-name: Verification Before Completion first-party skill
   source-category: first_party
   status: active

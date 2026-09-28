@@ -7,7 +7,7 @@ This policy is stricter than upstream sources where noted; otherwise the upstrea
 - The [agentskills.io specification](https://agentskills.io/specification) defines the base `SKILL.md` frontmatter format.
 - The installed `superpowers-plus:writing-skills` plugin skill defines the TDD-based approach to skill creation and discovery optimization.
 
-The first-party [`writing-skills`](../../codex-marketplace/plugins/superpowers-plus/skills/writing-skills/SKILL.md) skill owns skill-authoring lanes, custody-aware scaffolding, authority evidence, scholarly citations, and clean-room boundaries. See `writing-skills/references/local-and-marketplace-custody.md` and `writing-skills/references/source-grounded-authoring.md` for the authoring lanes and `writing-skills/scripts/new_skill.py` for the scaffolder.
+The first-party [`writing-skills`](../../skills/writing-skills/SKILL.md) skill owns skill-authoring lanes, custody-aware scaffolding, authority evidence, scholarly citations, and clean-room boundaries. See `writing-skills/references/local-and-marketplace-custody.md` and `writing-skills/references/source-grounded-authoring.md` for the authoring lanes and `writing-skills/scripts/new_skill.py` for the scaffolder.
 
 ## External references
 
@@ -21,13 +21,13 @@ The first-party [`writing-skills`](../../codex-marketplace/plugins/superpowers-p
 ## Directory structure
 
 ```
-codex-marketplace/plugins/<plugin-pack>/skills/<skill-name>/
+skills/<skill-id>/
 ├── SKILL.md              # Required: metadata + instructions
 ├── agents/               # Optional: agent configuration
 ├── references/           # Optional: supporting documentation
 ├── scripts/              # Optional: helper scripts
 ├── assets/               # Optional: ordinary-use templates and authority
-└── tests/                # Optional: maintainer verification shipped with the skill
+└── tests/                # Optional: maintainer verification, excluded from packages
 ```
 
 The skill directory name must match the `name` field in `SKILL.md` frontmatter.
@@ -85,7 +85,7 @@ See `.agents/contracts/openai-agent-yaml.md` for the full contract.
 
 ## Bundled scripts
 
-Every executable Python script bundled with a first-party skill must support the CLI contract in the repo-standards [`skill-script-contract-validator.md`](../../codex-marketplace/plugins/repo-worker-pack/skills/repo-standards/references/skill-script-contract-validator.md):
+Every executable Python script bundled with a first-party skill must support the CLI contract in the repo-standards [`skill-script-contract-validator.md`](../../skills/repo-standards/references/skill-script-contract-validator.md):
 
 - `--help` prints usage, a one-line description, and the read-only or mutating classification for each flag.
 - `--check` is the default mode: report what the script would do and exit `0` when no mutation is needed.
@@ -102,7 +102,7 @@ Files in a skill's `scripts/` directory that are not executed directly (they hav
 
 ## Testing
 
-Skills are code, and code ships with its tests. Skill-owned tests therefore ship in the canonical skill directory and every installed projection. Code does not ship test results, and skills do not ship test results. Follow `.agents/contracts/skill-tests.md` for test-material custody, distribution, invocation boundaries, and directory roles.
+Skill-owned tests stay beside canonical source under `tests/`, with executable tests and pressure cases in named subdirectories. The builder carries ship-ready test material into every plugin that includes the skill. Follow `.agents/contracts/skill-tests.md` for packaging and invocation boundaries.
 
 Before deploying a skill, verify:
 
@@ -128,7 +128,7 @@ Pure reference skills (syntax guides, API docs) and skills without a concrete fa
 
 ### Required artifacts when pressure testing
 
-1. **Test package in the skill:** Keep reusable prompts, evaluation scenarios, complete lightweight fixture trees, materializers, rubrics, and deterministic assertions under the skill's `tests/` directory. These ship with the skill; run outputs do not.
+1. **Test package in the skill:** Keep reusable prompts, evaluation scenarios, complete lightweight fixture trees, materializers, rubrics, and deterministic assertions under the skill's `tests/` directory. These remain source-side maintainer assets; build outputs omit them.
 2. **RED/GREEN comparison:** When the acceptance claim depends on behavior, compare the scenario without and with the skill. Keep reusable prompts and deterministic assertions; do not retain run-by-run transcripts, score folders, or copied model metadata as permanent repository proof.
 3. **Tool-calling fidelity:** Subagents cannot invoke skills, but they can read the skill files from disk and call available MCP or other tools directly. Do not pre-truncate or fabricate tool-list fixtures; let the subagent call the actual MCP server (e.g., `mcp_list_tools`) and experience the same truncation or discovery cost a real agent would.
 4. **Blinding:** The maintainer orchestration may read the skill-root test package. The GREEN worker reads `SKILL.md` and its ordinary behavioral resources, never the hidden rubric or expected result.
@@ -139,7 +139,7 @@ Pure reference skills (syntax guides, API docs) and skills without a concrete fa
 - Modified skills: if the change affects routing, decisions, or tool selection, re-examine whether a pressure test is now warranted or needs updating.
 - Existing skills: backfill pressure tests opportunistically; do not block current work on full backfill.
 
-See `tests/pressure/README.md` for shared campaign orchestration and `codex-marketplace/plugins/superpowers-plus/skills/writing-skills/testing-skills-with-subagents.md` for the RED/GREEN methodology.
+See `tests/evaluation-harness/README.md` for shared campaign orchestration and `skills/writing-skills/testing-skills-with-subagents.md` for the RED/GREEN methodology.
 
 ## Compliance status
 

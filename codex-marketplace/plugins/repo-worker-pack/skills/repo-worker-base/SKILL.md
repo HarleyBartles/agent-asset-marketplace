@@ -3,7 +3,7 @@ name: repo-worker-base
 description: Use when beginning or reviewing repo-backed work that needs portable worktree, source-custody, validation, or publication guidance, especially when a portable suggestion conflicts with repository policy.
 metadata:
   source-id: repo-worker-base
-  source-path: codex-marketplace/plugins/repo-worker-pack/skills/repo-worker-base/SKILL.md
+  source-path: skills/repo-worker-base/SKILL.md
   provenance-name: Repo Worker Base first-party skill
   source-category: first_party
   status: active

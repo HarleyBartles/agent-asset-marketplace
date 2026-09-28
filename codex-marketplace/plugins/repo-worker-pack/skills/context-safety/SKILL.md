@@ -3,7 +3,7 @@ name: context-safety
 description: Use when a text write is expected to exceed the safe threshold for the remaining session context, when a document is very large or context-heavy, or when a normal editor write path would be brittle.
 metadata:
   source-id: context-safety
-  source-path: codex-marketplace/plugins/repo-worker-pack/skills/context-safety/SKILL.md
+  source-path: skills/context-safety/SKILL.md
   provenance-name: Context Safety first-party skill
   source-category: first_party
   status: active

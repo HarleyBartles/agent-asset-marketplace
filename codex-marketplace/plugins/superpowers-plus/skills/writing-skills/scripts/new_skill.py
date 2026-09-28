@@ -15,31 +15,25 @@ from typing import Final
 
 
 CUSTODIES: Final = {"local", "marketplace"}
+LANES: Final = {"first_party", "skills-with-source", "skills-with-mixed-source", "skills-with-citation"}
 NAME_PATTERN: Final = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
 SCRIPT_ROOT = Path(__file__).resolve().parent
 TEMPLATE_ROOT = SCRIPT_ROOT.parent / "templates"
 
 
-def _marketplace_plugins(repo_root: Path) -> set[str]:
-    plugins_dir = repo_root / "codex-marketplace" / "plugins"
-    if not plugins_dir.is_dir():
-        return set()
-    return {p.name for p in plugins_dir.iterdir() if p.is_dir()}
-
-
-def validate_request(name: str, custody: str, lane: str, plugins: set[str]) -> None:
+def validate_request(name: str, custody: str, lane: str) -> None:
     if custody not in CUSTODIES:
         raise ValueError(f"unsupported custody: {custody}")
     if len(name) > 64 or not NAME_PATTERN.fullmatch(name):
         raise ValueError("skill name must use lowercase letters, numbers, and single hyphens (64 characters maximum)")
-    if custody == "marketplace" and lane not in plugins:
-        raise ValueError(f"--lane must be a marketplace plugin pack; got {lane!r}")
+    if lane not in LANES:
+        raise ValueError(f"unsupported authoring lane: {lane}")
 
 
 def destination_for(repo_root: Path, name: str, custody: str, lane: str) -> Path:
     if custody == "local":
         return repo_root / ".agents" / "skills" / name
-    return repo_root / "codex-marketplace" / "plugins" / lane / "skills" / name
+    return repo_root / "skills" / name
 
 
 def _template(path: str, **values: str) -> str:
@@ -48,12 +42,12 @@ def _template(path: str, **values: str) -> str:
 
 def _metadata_for(name: str, custody: str, lane: str) -> str:
     if custody == "local":
-        return f"  custody: {custody}\n  lane: {lane}"
+        return f"  custody: {custody}"
     description = f"Use when authoring or reviewing the {name} skill."
     title = name.replace("-", " ").title()
     return (
         f"  source-id: {json.dumps(name)}\n"
-        f"  source-path: {json.dumps(f'codex-marketplace/plugins/{lane}/skills/{name}/SKILL.md')}\n"
+        f"  source-path: {json.dumps(f'skills/{name}/SKILL.md')}\n"
         f"  provenance-name: {json.dumps(f'{title} first-party skill')}\n"
         "  source-category: first_party\n"
         "  status: active\n"
@@ -116,8 +110,7 @@ def _resolve_cli_repo_root(start_directory: Path) -> Path:
 def scaffold(
     repo_root: Path, name: str, custody: str, lane: str, check: bool, *, allow_shared_checkout: bool = False
 ) -> int:
-    plugins = _marketplace_plugins(repo_root)
-    validate_request(name, custody, lane, plugins)
+    validate_request(name, custody, lane)
     if not check:
         repo_root = _guard_write_checkout(repo_root, allow_shared_checkout)
     destination = destination_for(repo_root, name, custody, lane)
@@ -162,7 +155,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--name")
     parser.add_argument("--custody", choices=sorted(CUSTODIES))
-    parser.add_argument("--lane", help="marketplace plugin pack for marketplace custody; ignored for local")
+    parser.add_argument("--lane", choices=sorted(LANES), help="source-authoring and authority-evidence lane")
     parser.add_argument("--check", action="store_true", help="report what would be scaffolded (read-only)")
     parser.add_argument("--allow-shared-checkout", action="store_true")
     args = parser.parse_args()

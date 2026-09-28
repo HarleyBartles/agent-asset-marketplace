@@ -3,7 +3,7 @@ name: diagnosing-superpowers
 description: Use when a Superpowers session in Codex or Devin Desktop went wrong and the human wants an evidence-backed account of repeated work, ignored plans, stumbles, poor results, cost, or skill routing.
 metadata:
   source-id: diagnosing-superpowers
-  source-path: codex-marketplace/plugins/superpowers-plus/skills/diagnosing-superpowers/SKILL.md
+  source-path: skills/diagnosing-superpowers/SKILL.md
   provenance-name: Diagnosing Superpowers first-party skill
   source-category: first_party
   status: active

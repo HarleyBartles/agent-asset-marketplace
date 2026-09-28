@@ -1,12 +1,12 @@
 ## First-Party Skill Source Format
 
-This scope covers first-party skills that live under `codex-marketplace/plugins/<plugin>/skills/<skill-name>/`.
+This scope covers canonical first-party maintained skills under `skills/<skill-id>/`. Product membership is declared separately under `plugin-definitions/`.
 
 Use these rules when editing or adding a first-party skill in a Codex plugin.
 
 ## Canonical source shape
 
-- One current root per skill.
+- One canonical source root per skill identity. Same-named but behaviorally distinct sources use distinct source IDs.
 - The current root is the source of truth; bundle manifests and generated surfaces are derived from it.
 - Historical or retired names belong in provenance, archive, or history surfaces, not in active first-party skill roots.
 
@@ -42,8 +42,8 @@ Use these rules when editing or adding a first-party skill in a Codex plugin.
 
 ## Repo usage
 
-- The first-party source is edited directly in the Codex plugin skill tree.
-- Generators should read from this source, not from hand-maintained plugin duplicates.
+- The first-party source is edited directly under `skills/<skill-id>/`.
+- Plugin builders read the canonical source and assemble self-contained skill copies.
 - Active generated surfaces must stay in sync with the canonical source.
-- If a historical name remains anywhere, it must be quarantined to provenance or archive material.
+- Preserve upstream attribution and license obligations even when an adapted skill is first-party maintained.
 - Skill-root `INDEX.md` files do not belong in this tree.

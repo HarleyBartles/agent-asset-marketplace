@@ -5,7 +5,6 @@
   "marketplace_root": ".agents/plugins/marketplace.json",
   "plugin_root": "codex-marketplace/plugins/frontend-pack",
   "source_families": [
-    "feature-sliced",
     "first_party"
   ],
   "notes": [
@@ -14,78 +13,6 @@
   "provenance_refs": [],
   "plugin_author": "Harley Bartles",
   "plugin_license": "MIT",
-  "entries": [
-    {
-      "canonical_name": "feature-sliced-design",
-      "source_category": "third_party",
-      "content_mode": "verbatim",
-      "canonical_source_path": "codex-marketplace/plugins/frontend-pack/skills/feature-sliced-design",
-      "local_path": "skills/feature-sliced-design",
-      "import_status": "imported",
-      "source_path": "codex-marketplace/plugins/frontend-pack/skills/feature-sliced-design/SKILL.md",
-      "source_author": "Feature-Sliced Design (feature-sliced/skills)",
-      "source_license": "MIT",
-      "source_repo": "https://github.com/feature-sliced/skills",
-      "source_family": "feature-sliced",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "Copied verbatim from the retained upstream snapshot into the Codex plugin."
-    },
-    {
-      "canonical_name": "frontend-ux",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "source_family": "first_party",
-      "canonical_source_path": "codex-marketplace/plugins/frontend-pack/skills/frontend-ux",
-      "local_path": "skills/frontend-ux",
-      "import_status": "imported",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "Copied verbatim from the first-party frontend-ux skill."
-    },
-    {
-      "canonical_name": "playwright-testing",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "source_family": "first_party",
-      "canonical_source_path": "codex-marketplace/plugins/frontend-pack/skills/playwright-testing",
-      "local_path": "skills/playwright-testing",
-      "import_status": "imported",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "Copied verbatim from the first-party playwright-testing skill."
-    },
-    {
-      "canonical_name": "react",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "source_family": "first_party",
-      "canonical_source_path": "codex-marketplace/plugins/frontend-pack/skills/react",
-      "local_path": "skills/react",
-      "import_status": "imported",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "Copied verbatim from the first-party react skill."
-    },
-    {
-      "canonical_name": "wcag",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "source_family": "first_party",
-      "canonical_source_path": "codex-marketplace/plugins/frontend-pack/skills/wcag",
-      "local_path": "skills/wcag",
-      "import_status": "imported",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "Copied verbatim from the first-party wcag skill."
-    },
-    {
-      "canonical_name": "web-styling",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "source_family": "first_party",
-      "canonical_source_path": "codex-marketplace/plugins/frontend-pack/skills/web-styling",
-      "local_path": "skills/web-styling",
-      "import_status": "imported",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "Copied verbatim from the first-party web-styling skill."
-    }
-  ],
   "generated_doc_surfaces": [
     "README.md",
     "SOURCE.md"
@@ -99,5 +26,82 @@
       "status": "aligned",
       "note": null
     }
-  }
+  },
+  "entries": [
+    {
+      "canonical_name": "feature-sliced-design",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "import_status": "imported",
+      "source_author": "Feature-Sliced Design (feature-sliced/skills)",
+      "source_license": "MIT",
+      "source_repo": "https://github.com/feature-sliced/skills",
+      "source_family": "feature-sliced",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "First-party maintained skill based on the pinned Feature-Sliced Design MIT source; upstream attribution is preserved.",
+      "canonical_source_path": "skills/feature-sliced-design",
+      "local_path": "skills/feature-sliced-design",
+      "source_path": "skills/feature-sliced-design/SKILL.md"
+    },
+    {
+      "canonical_name": "frontend-ux",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "import_status": "imported",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Copied verbatim from the first-party frontend-ux skill.",
+      "canonical_source_path": "skills/frontend-ux",
+      "local_path": "skills/frontend-ux",
+      "source_path": "skills/frontend-ux/SKILL.md"
+    },
+    {
+      "canonical_name": "playwright-testing",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "import_status": "imported",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Copied verbatim from the first-party playwright-testing skill.",
+      "canonical_source_path": "skills/playwright-testing",
+      "local_path": "skills/playwright-testing",
+      "source_path": "skills/playwright-testing/SKILL.md"
+    },
+    {
+      "canonical_name": "react",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "import_status": "imported",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Copied verbatim from the first-party react skill.",
+      "canonical_source_path": "skills/react",
+      "local_path": "skills/react",
+      "source_path": "skills/react/SKILL.md"
+    },
+    {
+      "canonical_name": "wcag",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "import_status": "imported",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Copied verbatim from the first-party wcag skill.",
+      "canonical_source_path": "skills/wcag",
+      "local_path": "skills/wcag",
+      "source_path": "skills/wcag/SKILL.md"
+    },
+    {
+      "canonical_name": "web-styling",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "import_status": "imported",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Copied verbatim from the first-party web-styling skill.",
+      "canonical_source_path": "skills/web-styling",
+      "local_path": "skills/web-styling",
+      "source_path": "skills/web-styling/SKILL.md"
+    }
+  ]
 }

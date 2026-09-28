@@ -3,7 +3,7 @@ name: repository-validation
 description: Use when defining or diagnosing focused checks, complete repository gates, apply-check convergence, diagnostics, or validation evidence.
 metadata:
   source-id: repository-validation
-  source-path: codex-marketplace/plugins/agent-operating-model/skills/repository-validation/SKILL.md
+  source-path: skills/repository-validation/SKILL.md
   provenance-name: Repository Validation first-party skill
   source-category: first_party
   status: active

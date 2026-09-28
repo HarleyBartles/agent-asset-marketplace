@@ -10,7 +10,7 @@ name: using-superpowers-plus
 description: Use when starting workflow-sensitive work that may need a Superpowers workflow skill.
 metadata:
   source-id: using-superpowers-plus
-  source-path: codex-marketplace/plugins/superpowers-plus/skills/using-superpowers-plus/SKILL.md
+  source-path: skills/using-superpowers-plus/SKILL.md
   provenance-name: Using Superpowers Plus first-party skill
   source-category: first_party
   status: active

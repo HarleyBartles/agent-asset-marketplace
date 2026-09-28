@@ -3,7 +3,7 @@ name: inspecting-the-environment
 description: Use when shell, repository, worktree, authentication, connector, or mutation-authority facts could change the next safe action, including when a durable checkpoint or missing destructive authority changes what may be inspected first.
 metadata:
   source-id: inspecting-the-environment
-  source-path: codex-marketplace/plugins/superpowers-plus/skills/inspecting-the-environment/SKILL.md
+  source-path: skills/inspecting-the-environment/SKILL.md
   provenance-name: Inspecting The Environment first-party skill
   source-category: first_party
   status: active

@@ -3,7 +3,7 @@ name: selecting-a-subagent
 description: Use when choosing a child subagent profile, model, reasoning level, or context mode for a task.
 metadata:
   source-id: selecting-a-subagent
-  source-path: codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/SKILL.md
+  source-path: skills/selecting-a-subagent/SKILL.md
   provenance-name: Selecting A Subagent first-party skill
   source-category: first_party
   status: active

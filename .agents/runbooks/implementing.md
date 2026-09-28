@@ -21,7 +21,7 @@ Work from the committed plan in an isolated worktree. Edit canonical source, exe
 
 ## Local commands and paths
 
-Canonical plugin source lives under `codex-marketplace/plugins/<plugin>/skills/`. Use `py -3 tools/run.py marketplace --apply` after source changes, then `py -3 tools/run.py installed-skills --apply` to refresh installed projections.
+Canonical skill source lives under `skills/`, reusable resources under `shared/`, and product membership under `plugin-definitions/`. Use `py -3 tools/run.py marketplace --apply` after source changes, then refresh installed projections when needed.
 
 When repo-local runtime subagent profiles under `.agents/agents/` change, run `py -3 tools/run.py runtime-agents --apply --allow-shared-checkout` from the worktree and restart the IDE before dispatching a changed profile.
 

@@ -3,7 +3,7 @@ name: finishing-a-development-branch
 description: Use when implementation is complete and needs integration, or when a PR merged externally and its exact branch head and worktree need retirement.
 metadata:
   source-id: finishing-a-development-branch
-  source-path: codex-marketplace/plugins/superpowers-plus/skills/finishing-a-development-branch/SKILL.md
+  source-path: skills/finishing-a-development-branch/SKILL.md
   provenance-name: Finishing A Development Branch first-party skill
   source-category: first_party
   status: active

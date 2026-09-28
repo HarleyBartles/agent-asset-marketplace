@@ -3,7 +3,7 @@ name: base-doctrine
 description: Use when work depends on cross-project operating invariants not owned by a more specific skill, including system-prompt limits, tool/source evidence honesty, durable doctrine routing, bounded skill/reference read loops, correction/trust posture, canonical agent asset source truth, or output artifact-shape authority such as reserved YAML, dispatch/continuity confusion, worker-copy attention guards, and lower-skill format conflicts.
 metadata:
   source-id: base-doctrine
-  source-path: codex-marketplace/plugins/repo-worker-pack/skills/base-doctrine/SKILL.md
+  source-path: skills/base-doctrine/SKILL.md
   provenance-name: Base Doctrine first-party skill
   source-category: first_party
   status: active

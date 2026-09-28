@@ -3,16 +3,16 @@ custody: marketplace
 lane: skills-with-citation
 authority:
   title: MARK-371 writing-style evidence synthesis
-  canonical_url: https://github.com/HarleyBartles/agent-asset-marketplace/tree/main/research/ai-prose-fatigue
-  pinned_source_url: https://github.com/HarleyBartles/agent-asset-marketplace/blob/main/research/ai-prose-fatigue/source-register.json
-  latest_check_url: https://github.com/HarleyBartles/agent-asset-marketplace/tree/main/research/ai-prose-fatigue
+  canonical_url: https://github.com/HarleyBartles/agent-asset-marketplace/tree/main/skills/writing-style/references/profiles/fatigue/ai-prose-fatigue/research
+  pinned_source_url: https://github.com/HarleyBartles/agent-asset-marketplace/blob/main/skills/writing-style/references/profiles/fatigue/ai-prose-fatigue/research/source-register.json
+  latest_check_url: https://github.com/HarleyBartles/agent-asset-marketplace/tree/main/skills/writing-style/references/profiles/fatigue/ai-prose-fatigue/research
   revision: '2026-08-25'
   retrieved_at: '2026-08-25'
-  content_sha256: 9988374c03d47258c0bf586ebd78d2849b2e9ef0d5868f1c6a244651cb8a22e7
+  content_sha256: 0b0c1367b49e47df1583dbb8439add63702fbbad498dd75f76ab17f1f51a0d20
   license: MIT first-party synthesis; cited papers not redistributed
   license_url: https://github.com/HarleyBartles/agent-asset-marketplace/blob/main/LICENSE
 decomposition:
-  reconciled_against: 9988374c03d47258c0bf586ebd78d2849b2e9ef0d5868f1c6a244651cb8a22e7
+  reconciled_against: 0b0c1367b49e47df1583dbb8439add63702fbbad498dd75f76ab17f1f51a0d20
   references:
   - path: references/profile-contract.md
     source_sections:

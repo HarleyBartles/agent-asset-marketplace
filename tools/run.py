@@ -319,13 +319,14 @@ def _run_validate(ctx: Ctx) -> None:
 
 
 def _apply_marketplace(ctx: Ctx) -> None:
-    _run([sys.executable, "tools/sync_skill_shared_references.py", "--apply"], ctx)
+    _run([sys.executable, "tools/build_marketplace.py", "--apply"], ctx)
     _run([sys.executable, "tools/generate_marketplace.py", "--apply"], ctx)
     _run([sys.executable, "tools/validate_marketplace.py", "--phase", "all"], ctx)
     _run([sys.executable, ".agents/skills/repo-shape/scripts/deploy_vendor_profiles.py", "--apply"], ctx)
 
 
 def _check_marketplace(ctx: Ctx) -> None:
+    _run([sys.executable, "tools/build_marketplace.py", "--check"], ctx)
     _run([sys.executable, "tools/generate_marketplace.py", "--check"], ctx)
     _run([sys.executable, "tools/validate_marketplace.py", "--phase", "all"], ctx)
 
@@ -467,19 +468,30 @@ def _run_ci(ctx: Ctx) -> None:
         )
 
 
-def _run_python_tests(ctx: Ctx) -> None:
+def _run_python_tests(ctx: Ctx, suite: str) -> None:
     test_env = os.environ.copy()
     test_env.pop("REPO_STANDARDS_STAGED_SNAPSHOT", None)
     test_env.pop("REPO_STANDARDS_HOSTED_COMMIT", None)
-    _run([sys.executable, "-m", "pytest", "-q"], ctx, env=test_env)
+    _run([sys.executable, "-m", "pytest", "-q", f"tests/{suite}"], ctx, env=test_env)
+
+
+def _run_build_tests(ctx: Ctx) -> None:
+    _run_python_tests(ctx, "build")
+
+
+def _run_repository_tests(ctx: Ctx) -> None:
+    _run_python_tests(ctx, "repository")
+
+
+def _run_shipping_tests(ctx: Ctx) -> None:
+    _run_python_tests(ctx, "shipping")
 
 
 _TASKS: dict[str, Task] = {
     "lint": Task(apply=(_run_lint,), check=(_run_lint,), fix="tools/run lint --apply"),
-    "tests": Task(
-        check=(_run_python_tests,),
-        fix="python -m pytest -q",
-    ),
+    "tests-build": Task(check=(_run_build_tests,), fix="python -m pytest -q tests/build"),
+    "tests-repository": Task(check=(_run_repository_tests,), fix="python -m pytest -q tests/repository"),
+    "tests-shipping": Task(check=(_run_shipping_tests,), fix="python -m pytest -q tests/shipping"),
     "repo-standards": Task(
         apply=(_run_repo_standards,),
         check=(_run_repo_standards,),
@@ -543,7 +555,7 @@ _TASKS: dict[str, Task] = {
         fix="tools/run runtime-agents --apply --allow-shared-checkout",
     ),
     "ci": Task(
-        deps=("lint", "repo-standards", "tests", "validate"),
+        deps=("lint", "repo-standards", "tests-build", "tests-repository", "tests-shipping", "validate"),
         apply=(_run_ci,),
         check=(_run_ci,),
         fix="tools/run ci --apply",

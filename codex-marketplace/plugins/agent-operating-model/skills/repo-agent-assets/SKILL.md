@@ -3,7 +3,7 @@ name: repo-agent-assets
 description: Use when changing repository plugin subscriptions, local skill declarations, installed skill projections, provenance, or orphan cleanup.
 metadata:
   source-id: repo-agent-assets
-  source-path: codex-marketplace/plugins/agent-operating-model/skills/repo-agent-assets/SKILL.md
+  source-path: skills/repo-agent-assets/SKILL.md
   provenance-name: Repo Agent Assets first-party skill
   source-category: first_party
   status: active

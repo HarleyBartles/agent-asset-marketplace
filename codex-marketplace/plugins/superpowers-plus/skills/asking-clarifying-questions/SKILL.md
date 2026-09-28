@@ -3,7 +3,7 @@ name: asking-clarifying-questions
 description: Use when an ambiguity remains after safe internal resolution and one human answer would materially determine the next action.
 metadata:
   source-id: asking-clarifying-questions
-  source-path: codex-marketplace/plugins/superpowers-plus/skills/asking-clarifying-questions/SKILL.md
+  source-path: skills/asking-clarifying-questions/SKILL.md
   provenance-name: Asking Clarifying Questions first-party skill
   source-category: first_party
   status: active

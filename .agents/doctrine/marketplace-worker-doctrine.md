@@ -5,8 +5,8 @@ This is the durable repo-local worker doctrine for `agent-asset-marketplace`. Re
 ## Execution model
 
 - Edit first-party source files directly when first-party behavior changes.
-- Treat third-party source custody as immutable; do not edit the retained provenance record to change behavior. Update the canonical plugin source or bundle manifest and regenerate the plugin distribution instead.
-- Edit canonical plugin or manifest source surfaces as the source of truth for bundled behavior.
+- Treat provenance records as evidence; edit canonical skill source under `skills/` and product composition under `plugin-definitions/` when behavior or membership changes.
+- Record upstream attribution and license obligations honestly for every adapted open-source source.
 - Reproject the marketplace and generated outputs with the checked-in deterministic tooling.
 - Reproject the repo-wide `INDEX.md` mesh with the checked-in deterministic tooling.
 - Run the repo validators after regeneration and treat their results as the proof surface.

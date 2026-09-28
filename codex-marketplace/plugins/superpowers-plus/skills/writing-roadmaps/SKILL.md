@@ -3,7 +3,7 @@ name: writing-roadmaps
 description: Use when a goal is too large for one writing-plans plan and requires a sequenced roadmap of consecutive plans.
 metadata:
   source-id: writing-roadmaps
-  source-path: codex-marketplace/plugins/superpowers-plus/skills/writing-roadmaps/SKILL.md
+  source-path: skills/writing-roadmaps/SKILL.md
   provenance-name: Writing Roadmaps first-party skill
   source-category: first_party
   status: active

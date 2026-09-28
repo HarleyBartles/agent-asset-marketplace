@@ -3,7 +3,7 @@ name: command-bus
 description: Use when creating, reviewing, or changing a repository command bus, named command targets, standard modes, orchestration, or exit behaviour.
 metadata:
   source-id: command-bus
-  source-path: codex-marketplace/plugins/agent-operating-model/skills/command-bus/SKILL.md
+  source-path: skills/command-bus/SKILL.md
   provenance-name: Command Bus first-party skill
   source-category: first_party
   status: active

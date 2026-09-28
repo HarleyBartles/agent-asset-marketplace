@@ -3,7 +3,7 @@ name: writing-style
 description: Use when revising or reviewing human-facing prose against an authorised voice card or a contextual reader-fatigue profile.
 metadata:
   source-id: writing-style
-  source-path: codex-marketplace/plugins/writing-pack/skills/writing-style/SKILL.md
+  source-path: skills/writing-style/SKILL.md
   provenance-name: Writing Style first-party skill
   source-category: first_party
   status: active

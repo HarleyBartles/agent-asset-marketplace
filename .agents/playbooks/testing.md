@@ -19,7 +19,7 @@ Apply the named capability skills under the binding doctrine and local evidence 
 
 ## Local commands and paths
 
-Run focused tests with `py -3 -m pytest tests/<file>.py -v`. Contract tests live under `tests/`. Marketplace generation correctness requires `py -3 tools/run.py marketplace --apply`; the complete local gate is `py -3 tools/run.py ci --check`, while normal commits rely on the tracked hook. Source-custody, plugin-shape, manifest, provenance, or generated-zip changes require the full marketplace rebuild.
+Run focused tests from the changed skill's `skills/<skill-id>/tests/` directory. Pressure cases are evaluated with the relevant skill; their run results remain transient. The commit and PR gate runs `tests/build/`, `tests/repository/`, and `tests/shipping/` as separate suites. The pressure-runner unit suite is `tests/evaluation-harness/` and runs when its tooling changes. Marketplace generation correctness requires `py -3 tools/build_marketplace.py --check`; normal commits rely on the tracked hook for the complete repository gate. Default pytest discovery covers only the three commit-gated suites.
 
 ## Evidence contract
 

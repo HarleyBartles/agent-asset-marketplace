@@ -1,0 +1,16 @@
+{
+  "bundle_name": "mcp-usage-pack",
+  "bundle_version": "1.0.0",
+  "bundle_type": "plugin-pack",
+  "marketplace_root": ".agents/plugins/marketplace.json",
+  "plugin_root": "codex-marketplace/plugins/mcp-usage-pack",
+  "source_families": [
+    "first_party"
+  ],
+  "notes": [
+    "mcp-usage-pack combines first-party MCP-usage skills."
+  ],
+  "provenance_refs": [],
+  "plugin_author": "Harley Bartles",
+  "plugin_license": "MIT"
+}

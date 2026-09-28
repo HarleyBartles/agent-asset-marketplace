@@ -3,7 +3,7 @@ name: dispatching-parallel-agents
 description: Use when facing 2+ independent tasks that can be worked on without shared state or sequential dependencies.
 metadata:
   source-id: dispatching-parallel-agents
-  source-path: codex-marketplace/plugins/superpowers-plus/skills/dispatching-parallel-agents/SKILL.md
+  source-path: skills/dispatching-parallel-agents/SKILL.md
   provenance-name: Dispatching Parallel Agents first-party skill
   source-category: first_party
   status: active

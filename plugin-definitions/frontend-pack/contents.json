@@ -1,0 +1,85 @@
+{
+  "skills": [
+    {
+      "name": "feature-sliced-design",
+      "source": "feature-sliced-design",
+      "provenance": {
+        "source_category": "first_party",
+        "content_mode": "verbatim",
+        "import_status": "imported",
+        "source_author": "Feature-Sliced Design (feature-sliced/skills)",
+        "source_license": "MIT",
+        "source_repo": "https://github.com/feature-sliced/skills",
+        "source_family": "feature-sliced",
+        "copy_expectation": "byte_identical",
+        "provenance_note": "First-party maintained skill based on the pinned Feature-Sliced Design MIT source; upstream attribution is preserved."
+      },
+      "resources": [
+        {
+          "source": "feature-sliced-design-migration-guide",
+          "destination": "references/migration-guide.md"
+        }
+      ]
+    },
+    {
+      "name": "frontend-ux",
+      "source": "frontend-ux",
+      "provenance": {
+        "source_category": "first_party",
+        "content_mode": "verbatim",
+        "source_family": "first_party",
+        "import_status": "imported",
+        "copy_expectation": "byte_identical",
+        "provenance_note": "Copied verbatim from the first-party frontend-ux skill."
+      }
+    },
+    {
+      "name": "playwright-testing",
+      "source": "playwright-testing",
+      "provenance": {
+        "source_category": "first_party",
+        "content_mode": "verbatim",
+        "source_family": "first_party",
+        "import_status": "imported",
+        "copy_expectation": "byte_identical",
+        "provenance_note": "Copied verbatim from the first-party playwright-testing skill."
+      }
+    },
+    {
+      "name": "react",
+      "source": "react",
+      "provenance": {
+        "source_category": "first_party",
+        "content_mode": "verbatim",
+        "source_family": "first_party",
+        "import_status": "imported",
+        "copy_expectation": "byte_identical",
+        "provenance_note": "Copied verbatim from the first-party react skill."
+      }
+    },
+    {
+      "name": "wcag",
+      "source": "wcag",
+      "provenance": {
+        "source_category": "first_party",
+        "content_mode": "verbatim",
+        "source_family": "first_party",
+        "import_status": "imported",
+        "copy_expectation": "byte_identical",
+        "provenance_note": "Copied verbatim from the first-party wcag skill."
+      }
+    },
+    {
+      "name": "web-styling",
+      "source": "web-styling",
+      "provenance": {
+        "source_category": "first_party",
+        "content_mode": "verbatim",
+        "source_family": "first_party",
+        "import_status": "imported",
+        "copy_expectation": "byte_identical",
+        "provenance_note": "Copied verbatim from the first-party web-styling skill."
+      }
+    }
+  ]
+}

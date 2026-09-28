@@ -13,261 +13,6 @@
   "provenance_refs": [],
   "plugin_author": "Harley Bartles",
   "plugin_license": "MIT",
-  "entries": [
-    {
-      "canonical_name": "brainstorming",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "source_family": "first_party",
-      "canonical_source_path": "codex-marketplace/plugins/superpowers-plus/skills/brainstorming",
-      "local_path": "skills/brainstorming",
-      "source_path": "codex-marketplace/plugins/superpowers-plus/skills/brainstorming/SKILL.md",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "First-party skill derived from the obra/superpowers v6.4.1 MIT upstream basis recorded in `SOURCE.md`."
-    },
-    {
-      "canonical_name": "diagnosing-superpowers",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "source_family": "first_party",
-      "canonical_source_path": "codex-marketplace/plugins/superpowers-plus/skills/diagnosing-superpowers",
-      "local_path": "skills/diagnosing-superpowers",
-      "source_path": "codex-marketplace/plugins/superpowers-plus/skills/diagnosing-superpowers/SKILL.md",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "First-party skill derived from the obra/superpowers v6.4.1 MIT upstream basis recorded in `SOURCE.md`."
-    },
-    {
-      "canonical_name": "asking-clarifying-questions",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "source_family": "first_party",
-      "canonical_source_path": "codex-marketplace/plugins/superpowers-plus/skills/asking-clarifying-questions",
-      "local_path": "skills/asking-clarifying-questions",
-      "source_path": "codex-marketplace/plugins/superpowers-plus/skills/asking-clarifying-questions/SKILL.md",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "First-party helper skill bundled verbatim; not derived from the obra/superpowers upstream snapshot."
-    },
-    {
-      "canonical_name": "dispatching-parallel-agents",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "source_family": "first_party",
-      "canonical_source_path": "codex-marketplace/plugins/superpowers-plus/skills/dispatching-parallel-agents",
-      "local_path": "skills/dispatching-parallel-agents",
-      "source_path": "codex-marketplace/plugins/superpowers-plus/skills/dispatching-parallel-agents/SKILL.md",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "First-party skill derived from the obra/superpowers v6.4.1 MIT upstream basis recorded in `SOURCE.md`."
-    },
-    {
-      "canonical_name": "executing-plans",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "source_family": "first_party",
-      "canonical_source_path": "codex-marketplace/plugins/superpowers-plus/skills/executing-plans",
-      "local_path": "skills/executing-plans",
-      "source_path": "codex-marketplace/plugins/superpowers-plus/skills/executing-plans/SKILL.md",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "First-party skill derived from the obra/superpowers v6.4.1 MIT upstream basis recorded in `SOURCE.md`."
-    },
-    {
-      "canonical_name": "finishing-a-development-branch",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "source_family": "first_party",
-      "canonical_source_path": "codex-marketplace/plugins/superpowers-plus/skills/finishing-a-development-branch",
-      "local_path": "skills/finishing-a-development-branch",
-      "source_path": "codex-marketplace/plugins/superpowers-plus/skills/finishing-a-development-branch/SKILL.md",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "First-party skill derived from the obra/superpowers v6.4.1 MIT upstream basis recorded in `SOURCE.md`."
-    },
-    {
-      "canonical_name": "handoff-gates",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "source_family": "first_party",
-      "canonical_source_path": "codex-marketplace/plugins/superpowers-plus/skills/handoff-gates",
-      "local_path": "skills/handoff-gates",
-      "source_path": "codex-marketplace/plugins/superpowers-plus/skills/handoff-gates/SKILL.md",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "First-party helper skill bundled verbatim; not derived from the obra/superpowers upstream snapshot."
-    },
-    {
-      "canonical_name": "inspecting-the-environment",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "source_family": "first_party",
-      "canonical_source_path": "codex-marketplace/plugins/superpowers-plus/skills/inspecting-the-environment",
-      "local_path": "skills/inspecting-the-environment",
-      "source_path": "codex-marketplace/plugins/superpowers-plus/skills/inspecting-the-environment/SKILL.md",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "First-party helper skill bundled verbatim; not derived from the obra/superpowers upstream snapshot."
-    },
-    {
-      "canonical_name": "iterative-review",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "source_family": "first_party",
-      "canonical_source_path": "codex-marketplace/plugins/superpowers-plus/skills/iterative-review",
-      "local_path": "skills/iterative-review",
-      "source_path": "codex-marketplace/plugins/superpowers-plus/skills/iterative-review/SKILL.md",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "First-party helper skill bundled verbatim."
-    },
-    {
-      "canonical_name": "publishing-source",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "source_family": "first_party",
-      "canonical_source_path": "codex-marketplace/plugins/superpowers-plus/skills/publishing-source",
-      "local_path": "skills/publishing-source",
-      "source_path": "codex-marketplace/plugins/superpowers-plus/skills/publishing-source/SKILL.md",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "First-party helper skill bundled verbatim; not derived from the obra/superpowers upstream snapshot."
-    },
-    {
-      "canonical_name": "receiving-code-review",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "source_family": "first_party",
-      "canonical_source_path": "codex-marketplace/plugins/superpowers-plus/skills/receiving-code-review",
-      "local_path": "skills/receiving-code-review",
-      "source_path": "codex-marketplace/plugins/superpowers-plus/skills/receiving-code-review/SKILL.md",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "First-party skill derived from the obra/superpowers v6.4.1 MIT upstream basis recorded in `SOURCE.md`."
-    },
-    {
-      "canonical_name": "requesting-code-review",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "source_family": "first_party",
-      "canonical_source_path": "codex-marketplace/plugins/superpowers-plus/skills/requesting-code-review",
-      "local_path": "skills/requesting-code-review",
-      "source_path": "codex-marketplace/plugins/superpowers-plus/skills/requesting-code-review/SKILL.md",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "First-party skill derived from the obra/superpowers v6.4.1 MIT upstream basis recorded in `SOURCE.md`."
-    },
-    {
-      "canonical_name": "selecting-a-subagent",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "source_family": "first_party",
-      "canonical_source_path": "codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent",
-      "local_path": "skills/selecting-a-subagent",
-      "source_path": "codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/SKILL.md",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "First-party helper skill bundled verbatim; not derived from the obra/superpowers upstream snapshot."
-    },
-    {
-      "canonical_name": "subagent-driven-development",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "source_family": "first_party",
-      "canonical_source_path": "codex-marketplace/plugins/superpowers-plus/skills/subagent-driven-development",
-      "local_path": "skills/subagent-driven-development",
-      "source_path": "codex-marketplace/plugins/superpowers-plus/skills/subagent-driven-development/SKILL.md",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "First-party skill derived from the obra/superpowers v6.4.1 MIT upstream basis recorded in `SOURCE.md`."
-    },
-    {
-      "canonical_name": "subagent-workspace",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "source_family": "first_party",
-      "canonical_source_path": "codex-marketplace/plugins/superpowers-plus/skills/subagent-workspace",
-      "local_path": "skills/subagent-workspace",
-      "source_path": "codex-marketplace/plugins/superpowers-plus/skills/subagent-workspace/SKILL.md",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "Canonical first-party subagent-workspace skill. (Subagent Workspace first-party skill)"
-    },
-    {
-      "canonical_name": "systematic-debugging",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "source_family": "first_party",
-      "canonical_source_path": "codex-marketplace/plugins/superpowers-plus/skills/systematic-debugging",
-      "local_path": "skills/systematic-debugging",
-      "source_path": "codex-marketplace/plugins/superpowers-plus/skills/systematic-debugging/SKILL.md",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "First-party skill derived from the obra/superpowers v6.4.1 MIT upstream basis recorded in `SOURCE.md`."
-    },
-    {
-      "canonical_name": "test-driven-development",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "source_family": "first_party",
-      "canonical_source_path": "codex-marketplace/plugins/superpowers-plus/skills/test-driven-development",
-      "local_path": "skills/test-driven-development",
-      "source_path": "codex-marketplace/plugins/superpowers-plus/skills/test-driven-development/SKILL.md",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "First-party skill derived from the obra/superpowers v6.4.1 MIT upstream basis recorded in `SOURCE.md`."
-    },
-    {
-      "canonical_name": "using-git-worktrees",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "source_family": "first_party",
-      "canonical_source_path": "codex-marketplace/plugins/superpowers-plus/skills/using-git-worktrees",
-      "local_path": "skills/using-git-worktrees",
-      "source_path": "codex-marketplace/plugins/superpowers-plus/skills/using-git-worktrees/SKILL.md",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "First-party skill derived from the obra/superpowers v6.4.1 MIT upstream basis recorded in `SOURCE.md`."
-    },
-    {
-      "canonical_name": "using-superpowers-plus",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "source_family": "first_party",
-      "canonical_source_path": "codex-marketplace/plugins/superpowers-plus/skills/using-superpowers-plus",
-      "local_path": "skills/using-superpowers-plus",
-      "source_path": "codex-marketplace/plugins/superpowers-plus/skills/using-superpowers-plus/SKILL.md",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "First-party skill derived from the obra/superpowers v6.4.1 MIT upstream basis recorded in `SOURCE.md`."
-    },
-    {
-      "canonical_name": "verification-before-completion",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "source_family": "first_party",
-      "canonical_source_path": "codex-marketplace/plugins/superpowers-plus/skills/verification-before-completion",
-      "local_path": "skills/verification-before-completion",
-      "source_path": "codex-marketplace/plugins/superpowers-plus/skills/verification-before-completion/SKILL.md",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "First-party skill derived from the obra/superpowers v6.4.1 MIT upstream basis recorded in `SOURCE.md`."
-    },
-    {
-      "canonical_name": "writing-plans",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "source_family": "first_party",
-      "canonical_source_path": "codex-marketplace/plugins/superpowers-plus/skills/writing-plans",
-      "local_path": "skills/writing-plans",
-      "source_path": "codex-marketplace/plugins/superpowers-plus/skills/writing-plans/SKILL.md",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "First-party skill derived from the obra/superpowers v6.4.1 MIT upstream basis recorded in `SOURCE.md`."
-    },
-    {
-      "canonical_name": "writing-roadmaps",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "source_family": "first_party",
-      "canonical_source_path": "codex-marketplace/plugins/superpowers-plus/skills/writing-roadmaps",
-      "local_path": "skills/writing-roadmaps",
-      "source_path": "codex-marketplace/plugins/superpowers-plus/skills/writing-roadmaps/SKILL.md",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "First-party helper skill bundled verbatim; not derived from the obra/superpowers upstream snapshot."
-    },
-    {
-      "canonical_name": "writing-skills",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "source_family": "first_party",
-      "canonical_source_path": "codex-marketplace/plugins/superpowers-plus/skills/writing-skills",
-      "local_path": "skills/writing-skills",
-      "source_path": "codex-marketplace/plugins/superpowers-plus/skills/writing-skills/SKILL.md",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "First-party skill derived from the obra/superpowers v6.4.1 MIT upstream basis recorded in `SOURCE.md`."
-    }
-  ],
   "generated_doc_surfaces": [
     "README.md",
     "SOURCE.md"
@@ -281,5 +26,260 @@
       "status": "aligned",
       "note": null
     }
-  }
+  },
+  "entries": [
+    {
+      "canonical_name": "brainstorming",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "First-party skill derived from the obra/superpowers v6.4.1 MIT upstream basis recorded in `SOURCE.md`.",
+      "canonical_source_path": "skills/brainstorming",
+      "local_path": "skills/brainstorming",
+      "source_path": "skills/brainstorming/SKILL.md"
+    },
+    {
+      "canonical_name": "diagnosing-superpowers",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "First-party skill derived from the obra/superpowers v6.4.1 MIT upstream basis recorded in `SOURCE.md`.",
+      "canonical_source_path": "skills/diagnosing-superpowers",
+      "local_path": "skills/diagnosing-superpowers",
+      "source_path": "skills/diagnosing-superpowers/SKILL.md"
+    },
+    {
+      "canonical_name": "asking-clarifying-questions",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "First-party helper skill bundled verbatim; not derived from the obra/superpowers upstream snapshot.",
+      "canonical_source_path": "skills/asking-clarifying-questions",
+      "local_path": "skills/asking-clarifying-questions",
+      "source_path": "skills/asking-clarifying-questions/SKILL.md"
+    },
+    {
+      "canonical_name": "dispatching-parallel-agents",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "First-party skill derived from the obra/superpowers v6.4.1 MIT upstream basis recorded in `SOURCE.md`.",
+      "canonical_source_path": "skills/dispatching-parallel-agents",
+      "local_path": "skills/dispatching-parallel-agents",
+      "source_path": "skills/dispatching-parallel-agents/SKILL.md"
+    },
+    {
+      "canonical_name": "executing-plans",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "First-party skill derived from the obra/superpowers v6.4.1 MIT upstream basis recorded in `SOURCE.md`.",
+      "canonical_source_path": "skills/executing-plans",
+      "local_path": "skills/executing-plans",
+      "source_path": "skills/executing-plans/SKILL.md"
+    },
+    {
+      "canonical_name": "finishing-a-development-branch",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "First-party skill derived from the obra/superpowers v6.4.1 MIT upstream basis recorded in `SOURCE.md`.",
+      "canonical_source_path": "skills/finishing-a-development-branch",
+      "local_path": "skills/finishing-a-development-branch",
+      "source_path": "skills/finishing-a-development-branch/SKILL.md"
+    },
+    {
+      "canonical_name": "handoff-gates",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "First-party helper skill bundled verbatim; not derived from the obra/superpowers upstream snapshot.",
+      "canonical_source_path": "skills/handoff-gates",
+      "local_path": "skills/handoff-gates",
+      "source_path": "skills/handoff-gates/SKILL.md"
+    },
+    {
+      "canonical_name": "inspecting-the-environment",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "First-party helper skill bundled verbatim; not derived from the obra/superpowers upstream snapshot.",
+      "canonical_source_path": "skills/inspecting-the-environment",
+      "local_path": "skills/inspecting-the-environment",
+      "source_path": "skills/inspecting-the-environment/SKILL.md"
+    },
+    {
+      "canonical_name": "iterative-review",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "First-party helper skill bundled verbatim.",
+      "canonical_source_path": "skills/iterative-review",
+      "local_path": "skills/iterative-review",
+      "source_path": "skills/iterative-review/SKILL.md"
+    },
+    {
+      "canonical_name": "publishing-source",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "First-party helper skill bundled verbatim; not derived from the obra/superpowers upstream snapshot.",
+      "canonical_source_path": "skills/publishing-source",
+      "local_path": "skills/publishing-source",
+      "source_path": "skills/publishing-source/SKILL.md"
+    },
+    {
+      "canonical_name": "receiving-code-review",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "First-party skill derived from the obra/superpowers v6.4.1 MIT upstream basis recorded in `SOURCE.md`.",
+      "canonical_source_path": "skills/receiving-code-review",
+      "local_path": "skills/receiving-code-review",
+      "source_path": "skills/receiving-code-review/SKILL.md"
+    },
+    {
+      "canonical_name": "requesting-code-review",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "First-party skill derived from the obra/superpowers v6.4.1 MIT upstream basis recorded in `SOURCE.md`.",
+      "canonical_source_path": "skills/requesting-code-review",
+      "local_path": "skills/requesting-code-review",
+      "source_path": "skills/requesting-code-review/SKILL.md"
+    },
+    {
+      "canonical_name": "selecting-a-subagent",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "First-party helper skill bundled verbatim; not derived from the obra/superpowers upstream snapshot.",
+      "canonical_source_path": "skills/selecting-a-subagent",
+      "local_path": "skills/selecting-a-subagent",
+      "source_path": "skills/selecting-a-subagent/SKILL.md"
+    },
+    {
+      "canonical_name": "subagent-driven-development",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "First-party skill derived from the obra/superpowers v6.4.1 MIT upstream basis recorded in `SOURCE.md`.",
+      "canonical_source_path": "skills/subagent-driven-development",
+      "local_path": "skills/subagent-driven-development",
+      "source_path": "skills/subagent-driven-development/SKILL.md"
+    },
+    {
+      "canonical_name": "subagent-workspace",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Canonical first-party subagent-workspace skill. (Subagent Workspace first-party skill)",
+      "canonical_source_path": "skills/subagent-workspace",
+      "local_path": "skills/subagent-workspace",
+      "source_path": "skills/subagent-workspace/SKILL.md"
+    },
+    {
+      "canonical_name": "systematic-debugging",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "First-party skill derived from the obra/superpowers v6.4.1 MIT upstream basis recorded in `SOURCE.md`.",
+      "canonical_source_path": "skills/systematic-debugging",
+      "local_path": "skills/systematic-debugging",
+      "source_path": "skills/systematic-debugging/SKILL.md"
+    },
+    {
+      "canonical_name": "test-driven-development",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "First-party skill derived from the obra/superpowers v6.4.1 MIT upstream basis recorded in `SOURCE.md`.",
+      "canonical_source_path": "skills/test-driven-development",
+      "local_path": "skills/test-driven-development",
+      "source_path": "skills/test-driven-development/SKILL.md"
+    },
+    {
+      "canonical_name": "using-git-worktrees",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "First-party skill derived from the obra/superpowers v6.4.1 MIT upstream basis recorded in `SOURCE.md`.",
+      "canonical_source_path": "skills/using-git-worktrees",
+      "local_path": "skills/using-git-worktrees",
+      "source_path": "skills/using-git-worktrees/SKILL.md"
+    },
+    {
+      "canonical_name": "using-superpowers-plus",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "First-party skill derived from the obra/superpowers v6.4.1 MIT upstream basis recorded in `SOURCE.md`.",
+      "canonical_source_path": "skills/using-superpowers-plus",
+      "local_path": "skills/using-superpowers-plus",
+      "source_path": "skills/using-superpowers-plus/SKILL.md"
+    },
+    {
+      "canonical_name": "verification-before-completion",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "First-party skill derived from the obra/superpowers v6.4.1 MIT upstream basis recorded in `SOURCE.md`.",
+      "canonical_source_path": "skills/verification-before-completion",
+      "local_path": "skills/verification-before-completion",
+      "source_path": "skills/verification-before-completion/SKILL.md"
+    },
+    {
+      "canonical_name": "writing-plans",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "First-party skill derived from the obra/superpowers v6.4.1 MIT upstream basis recorded in `SOURCE.md`.",
+      "canonical_source_path": "skills/writing-plans",
+      "local_path": "skills/writing-plans",
+      "source_path": "skills/writing-plans/SKILL.md"
+    },
+    {
+      "canonical_name": "writing-roadmaps",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "First-party helper skill bundled verbatim; not derived from the obra/superpowers upstream snapshot.",
+      "canonical_source_path": "skills/writing-roadmaps",
+      "local_path": "skills/writing-roadmaps",
+      "source_path": "skills/writing-roadmaps/SKILL.md"
+    },
+    {
+      "canonical_name": "writing-skills",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "First-party skill derived from the obra/superpowers v6.4.1 MIT upstream basis recorded in `SOURCE.md`.",
+      "canonical_source_path": "skills/writing-skills",
+      "local_path": "skills/writing-skills",
+      "source_path": "skills/writing-skills/SKILL.md"
+    }
+  ]
 }

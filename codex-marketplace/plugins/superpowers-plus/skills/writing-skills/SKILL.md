@@ -3,7 +3,7 @@ name: writing-skills
 description: Use when creating new skills, editing existing skills, or verifying skills work before deployment.
 metadata:
   source-id: writing-skills
-  source-path: codex-marketplace/plugins/superpowers-plus/skills/writing-skills/SKILL.md
+  source-path: skills/writing-skills/SKILL.md
   provenance-name: Writing Skills first-party skill
   source-category: first_party
   status: active
@@ -44,7 +44,7 @@ You write test cases (pressure scenarios with subagents), watch them fail (basel
 
 **Official guidance:** For Anthropic's official skill authoring best practices, see anthropic-best-practices.md. This document provides additional patterns and guidelines that complement the TDD-focused approach in this skill.
 
-**Custody, lanes, and scaffolding:** For choosing between local and marketplace custody, understanding source-grounded authority, and the clean-room/redistribution boundary, see [references/local-and-marketplace-custody.md](references/local-and-marketplace-custody.md) and [references/source-grounded-authoring.md](references/source-grounded-authoring.md). Use [references/skill-authoring-checklist.md](references/skill-authoring-checklist.md) as a step-by-step authoring and review guide. To scaffold a new skill after choosing custody and lane, run `scripts/new_skill.py` (or `scripts/new-skill.sh` on bash).
+**Custody, lanes, and scaffolding:** For choosing between local and marketplace custody, understanding source-grounded authority, and the clean-room/redistribution boundary, see [references/local-and-marketplace-custody.md](references/local-and-marketplace-custody.md) and [references/source-grounded-authoring.md](references/source-grounded-authoring.md). Use [references/skill-authoring-checklist.md](references/skill-authoring-checklist.md) as a step-by-step authoring and review guide. Marketplace skill source is created under `skills/<name>/`; select plugin membership separately in `plugin-definitions/<plugin>/contents.json`. To scaffold a new skill after choosing custody and authority lane, run `scripts/new_skill.py` (or `scripts/new-skill.sh` on bash).
 
 ## What is a Skill?
 

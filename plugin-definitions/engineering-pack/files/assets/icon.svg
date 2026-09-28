@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Engineering Pack icon">
+  <rect width="128" height="128" rx="24" fill="#EA580C"/>
+  <path d="M40 76h48l-8 20H48z" fill="#FFEDD5"/>
+  <path d="M48 28h32l-4 16H52z" fill="#FFEDD5"/>
+  <rect x="30" y="84" width="68" height="10" rx="5" fill="#FFEDD5"/>
+</svg>

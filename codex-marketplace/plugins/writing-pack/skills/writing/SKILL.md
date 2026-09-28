@@ -3,7 +3,7 @@ name: writing
 description: Use when drafting, revising, or reviewing prose for human readers and clarity, an authorised voice, or reader-fatigue concerns may interact.
 metadata:
   source-id: writing
-  source-path: codex-marketplace/plugins/writing-pack/skills/writing/SKILL.md
+  source-path: skills/writing/SKILL.md
   provenance-name: Writing composition first-party skill
   source-category: first_party
   status: active

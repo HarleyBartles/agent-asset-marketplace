@@ -3,7 +3,7 @@ name: brainstorming
 description: Use when starting creative work, shaping an uncertain design, or sketching an implementation after its target is concrete, unless an unresolved human-owned taste decision still blocks the design.
 metadata:
   source-id: brainstorming
-  source-path: codex-marketplace/plugins/superpowers-plus/skills/brainstorming/SKILL.md
+  source-path: skills/brainstorming/SKILL.md
   provenance-name: Brainstorming first-party skill
   source-category: first_party
   status: active

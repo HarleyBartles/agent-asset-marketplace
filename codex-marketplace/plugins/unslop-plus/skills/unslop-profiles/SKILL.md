@@ -3,7 +3,7 @@ name: unslop-profiles
 description: Use when a software development workflow would benefit from anti-slop guidance for writing, documentation, implementation plans, code review, worker returns, debugging, React work, UI design, API design, architecture, testing, security review, or repository cleanup.
 metadata:
   source-id: unslop-profiles
-  source-path: codex-marketplace/plugins/unslop-plus/skills/unslop-profiles/SKILL.md
+  source-path: skills/unslop-profiles/SKILL.md
   provenance-name: Unslop Profiles first-party skill
   source-category: first_party
   status: active

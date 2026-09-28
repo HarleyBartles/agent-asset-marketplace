@@ -1,0 +1,52 @@
+{
+  "skills": [
+    {
+      "name": "estimation",
+      "source": "estimation",
+      "provenance": {
+        "source_category": "first_party",
+        "content_mode": "verbatim",
+        "source_family": "first_party",
+        "import_status": "imported",
+        "copy_expectation": "byte_identical",
+        "provenance_note": "Copied verbatim from the first-party estimation skill."
+      }
+    },
+    {
+      "name": "mermaid-diagramming",
+      "source": "mermaid-diagramming",
+      "provenance": {
+        "source_category": "first_party",
+        "content_mode": "verbatim",
+        "source_family": "first_party",
+        "import_status": "imported",
+        "copy_expectation": "byte_identical",
+        "provenance_note": "Copied verbatim from the first-party mermaid-diagramming skill."
+      }
+    },
+    {
+      "name": "release-engineering",
+      "source": "planning-pack--release-engineering",
+      "provenance": {
+        "source_category": "first_party",
+        "content_mode": "verbatim",
+        "source_family": "first_party",
+        "import_status": "imported",
+        "copy_expectation": "byte_identical",
+        "provenance_note": "Copied verbatim from the first-party release-engineering skill."
+      }
+    },
+    {
+      "name": "requirements-elicitation",
+      "source": "requirements-elicitation",
+      "provenance": {
+        "source_category": "first_party",
+        "content_mode": "verbatim",
+        "source_family": "first_party",
+        "import_status": "imported",
+        "copy_expectation": "byte_identical",
+        "provenance_note": "Copied verbatim from the first-party requirements-elicitation skill."
+      }
+    }
+  ]
+}

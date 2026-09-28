@@ -13,85 +13,6 @@
   "provenance_refs": [],
   "plugin_author": "Harley Bartles",
   "plugin_license": "MIT",
-  "entries": [
-    {
-      "canonical_name": "clean-architecture",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "source_family": "first_party",
-      "canonical_source_path": "codex-marketplace/plugins/architecture-pack/skills/clean-architecture",
-      "local_path": "skills/clean-architecture",
-      "import_status": "imported",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "Copied verbatim from the first-party clean-architecture skill."
-    },
-    {
-      "canonical_name": "cqrs",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "source_family": "first_party",
-      "canonical_source_path": "codex-marketplace/plugins/architecture-pack/skills/cqrs",
-      "local_path": "skills/cqrs",
-      "import_status": "imported",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "Copied verbatim from the first-party cqrs skill."
-    },
-    {
-      "canonical_name": "database-design-patterns",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "source_family": "first_party",
-      "canonical_source_path": "codex-marketplace/plugins/architecture-pack/skills/database-design-patterns",
-      "local_path": "skills/database-design-patterns",
-      "import_status": "imported",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "Copied verbatim from the first-party database-design-patterns skill."
-    },
-    {
-      "canonical_name": "ddd",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "source_family": "first_party",
-      "canonical_source_path": "codex-marketplace/plugins/architecture-pack/skills/ddd",
-      "local_path": "skills/ddd",
-      "import_status": "imported",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "Copied verbatim from the first-party ddd skill."
-    },
-    {
-      "canonical_name": "event-driven-systems",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "source_family": "first_party",
-      "canonical_source_path": "codex-marketplace/plugins/architecture-pack/skills/event-driven-systems",
-      "local_path": "skills/event-driven-systems",
-      "import_status": "imported",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "Copied verbatim from the first-party event-driven-systems skill."
-    },
-    {
-      "canonical_name": "event-sourcing",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "source_family": "first_party",
-      "canonical_source_path": "codex-marketplace/plugins/architecture-pack/skills/event-sourcing",
-      "local_path": "skills/event-sourcing",
-      "import_status": "imported",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "Copied verbatim from the first-party event-sourcing skill."
-    },
-    {
-      "canonical_name": "hexagonal-architecture",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "source_family": "first_party",
-      "canonical_source_path": "codex-marketplace/plugins/architecture-pack/skills/hexagonal-architecture",
-      "local_path": "skills/hexagonal-architecture",
-      "import_status": "imported",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "Copied verbatim from the first-party hexagonal-architecture skill."
-    }
-  ],
   "generated_doc_surfaces": [
     "README.md",
     "SOURCE.md"
@@ -105,5 +26,91 @@
       "status": "aligned",
       "note": null
     }
-  }
+  },
+  "entries": [
+    {
+      "canonical_name": "clean-architecture",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "import_status": "imported",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Copied verbatim from the first-party clean-architecture skill.",
+      "canonical_source_path": "skills/clean-architecture",
+      "local_path": "skills/clean-architecture",
+      "source_path": "skills/clean-architecture/SKILL.md"
+    },
+    {
+      "canonical_name": "cqrs",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "import_status": "imported",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Copied verbatim from the first-party cqrs skill.",
+      "canonical_source_path": "skills/cqrs",
+      "local_path": "skills/cqrs",
+      "source_path": "skills/cqrs/SKILL.md"
+    },
+    {
+      "canonical_name": "database-design-patterns",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "import_status": "imported",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Copied verbatim from the first-party database-design-patterns skill.",
+      "canonical_source_path": "skills/database-design-patterns",
+      "local_path": "skills/database-design-patterns",
+      "source_path": "skills/database-design-patterns/SKILL.md"
+    },
+    {
+      "canonical_name": "ddd",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "import_status": "imported",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Copied verbatim from the first-party ddd skill.",
+      "canonical_source_path": "skills/ddd",
+      "local_path": "skills/ddd",
+      "source_path": "skills/ddd/SKILL.md"
+    },
+    {
+      "canonical_name": "event-driven-systems",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "import_status": "imported",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Copied verbatim from the first-party event-driven-systems skill.",
+      "canonical_source_path": "skills/event-driven-systems",
+      "local_path": "skills/event-driven-systems",
+      "source_path": "skills/event-driven-systems/SKILL.md"
+    },
+    {
+      "canonical_name": "event-sourcing",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "import_status": "imported",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Copied verbatim from the first-party event-sourcing skill.",
+      "canonical_source_path": "skills/event-sourcing",
+      "local_path": "skills/event-sourcing",
+      "source_path": "skills/event-sourcing/SKILL.md"
+    },
+    {
+      "canonical_name": "hexagonal-architecture",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "import_status": "imported",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Copied verbatim from the first-party hexagonal-architecture skill.",
+      "canonical_source_path": "skills/hexagonal-architecture",
+      "local_path": "skills/hexagonal-architecture",
+      "source_path": "skills/hexagonal-architecture/SKILL.md"
+    }
+  ]
 }

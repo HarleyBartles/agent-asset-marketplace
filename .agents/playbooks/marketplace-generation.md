@@ -20,9 +20,9 @@ Apply the named capability skills under the binding doctrine and local evidence 
 
 ## Local commands and paths
 
-Run `py -3 tools/run.py marketplace --apply` after changes to canonical plugin skills, per-pack provenance, bundle manifests, or plugin manifests. Then run `py -3 tools/run.py installed-skills --apply` for installed projections and the repository-owned index/mesh apply targets when files move.
+Run `py -3 tools/run.py marketplace --apply` after changes to `skills/`, `shared/`, or `plugin-definitions/`. Then run the installed-skills and repository index/mesh targets when their inputs change.
 
-Editable inputs are canonical trees under `codex-marketplace/plugins/<plugin>/skills/`, per-pack `SOURCE.md`, and plugin metadata. Derived manifests, indexes, bundle manifests, and `.agents/skills/` stay generator-owned. `py -3 tools/run.py ci --apply` is the full reconciliation route used by the commit hook; focused apply targets remain explicit rather than being attributed to `marketplace --apply` alone.
+Editable inputs are canonical skills under `skills/`, reusable resources under `shared/`, and plugin definitions under `plugin-definitions/`. `py -3 tools/build_marketplace.py --apply` assembles complete plugin packages under `codex-marketplace/plugins/`; the marketplace target also updates catalog and inventory surfaces. Manifests, indexes, bundle manifests, built plugin trees, and `.agents/skills/` stay generator-owned. `py -3 tools/run.py ci --apply` is the full reconciliation route used by the commit hook.
 
 ## Evidence contract
 

@@ -3,7 +3,7 @@ name: refreshing-installed-skills
 description: Use when a worktree is initialized or .agents/skills/ is stale from the plugin source.
 metadata:
   source-id: refreshing-installed-skills
-  source-path: codex-marketplace/plugins/repo-worker-pack/skills/refreshing-installed-skills/SKILL.md
+  source-path: skills/refreshing-installed-skills/SKILL.md
   provenance-name: Refreshing Installed Skills first-party skill
   source-category: first_party
   status: active

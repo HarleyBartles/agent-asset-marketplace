@@ -14,52 +14,6 @@
   "provenance_refs": [],
   "plugin_author": "Harley Bartles",
   "plugin_license": "MIT",
-  "entries": [
-    {
-      "canonical_name": "owasp-top-ten",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "source_family": "first_party",
-      "canonical_source_path": "codex-marketplace/plugins/security-pack/skills/owasp-top-ten",
-      "local_path": "skills/owasp-top-ten",
-      "import_status": "imported",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "Copied verbatim from the first-party owasp-top-ten skill."
-    },
-    {
-      "canonical_name": "risk-gates",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "source_family": "first_party",
-      "canonical_source_path": "codex-marketplace/plugins/security-pack/skills/risk-gates",
-      "local_path": "skills/risk-gates",
-      "import_status": "imported",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "Copied verbatim from the first-party risk-gates skill, expanded with a safety gate for destructive operations."
-    },
-    {
-      "canonical_name": "secure-development",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "source_family": "first_party",
-      "canonical_source_path": "codex-marketplace/plugins/security-pack/skills/secure-development",
-      "local_path": "skills/secure-development",
-      "import_status": "imported",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "Copied verbatim from the first-party secure-development skill."
-    },
-    {
-      "canonical_name": "web-identity",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "source_family": "first_party",
-      "canonical_source_path": "codex-marketplace/plugins/security-pack/skills/web-identity",
-      "local_path": "skills/web-identity",
-      "import_status": "imported",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "Copied verbatim from the first-party web-identity skill."
-    }
-  ],
   "generated_doc_surfaces": [
     "README.md",
     "SOURCE.md"
@@ -73,5 +27,55 @@
       "status": "aligned",
       "note": null
     }
-  }
+  },
+  "entries": [
+    {
+      "canonical_name": "owasp-top-ten",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "import_status": "imported",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Copied verbatim from the first-party owasp-top-ten skill.",
+      "canonical_source_path": "skills/owasp-top-ten",
+      "local_path": "skills/owasp-top-ten",
+      "source_path": "skills/owasp-top-ten/SKILL.md"
+    },
+    {
+      "canonical_name": "risk-gates",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "import_status": "imported",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Copied verbatim from the first-party risk-gates skill, expanded with a safety gate for destructive operations.",
+      "canonical_source_path": "skills/security-pack--risk-gates",
+      "local_path": "skills/risk-gates",
+      "source_path": "skills/security-pack--risk-gates/SKILL.md"
+    },
+    {
+      "canonical_name": "secure-development",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "import_status": "imported",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Copied verbatim from the first-party secure-development skill.",
+      "canonical_source_path": "skills/secure-development",
+      "local_path": "skills/secure-development",
+      "source_path": "skills/secure-development/SKILL.md"
+    },
+    {
+      "canonical_name": "web-identity",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "import_status": "imported",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Copied verbatim from the first-party web-identity skill.",
+      "canonical_source_path": "skills/web-identity",
+      "local_path": "skills/web-identity",
+      "source_path": "skills/web-identity/SKILL.md"
+    }
+  ]
 }

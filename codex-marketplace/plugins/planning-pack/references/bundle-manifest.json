@@ -15,52 +15,6 @@
   "provenance_refs": [],
   "plugin_author": "Harley Bartles",
   "plugin_license": "MIT",
-  "entries": [
-    {
-      "canonical_name": "estimation",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "source_family": "first_party",
-      "canonical_source_path": "codex-marketplace/plugins/planning-pack/skills/estimation",
-      "local_path": "skills/estimation",
-      "import_status": "imported",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "Copied verbatim from the first-party estimation skill."
-    },
-    {
-      "canonical_name": "mermaid-diagramming",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "source_family": "first_party",
-      "canonical_source_path": "codex-marketplace/plugins/planning-pack/skills/mermaid-diagramming",
-      "local_path": "skills/mermaid-diagramming",
-      "import_status": "imported",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "Copied verbatim from the first-party mermaid-diagramming skill."
-    },
-    {
-      "canonical_name": "release-engineering",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "source_family": "first_party",
-      "canonical_source_path": "codex-marketplace/plugins/planning-pack/skills/release-engineering",
-      "local_path": "skills/release-engineering",
-      "import_status": "imported",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "Copied verbatim from the first-party release-engineering skill."
-    },
-    {
-      "canonical_name": "requirements-elicitation",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "source_family": "first_party",
-      "canonical_source_path": "codex-marketplace/plugins/planning-pack/skills/requirements-elicitation",
-      "local_path": "skills/requirements-elicitation",
-      "import_status": "imported",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "Copied verbatim from the first-party requirements-elicitation skill."
-    }
-  ],
   "generated_doc_surfaces": [
     "README.md",
     "SOURCE.md"
@@ -74,5 +28,55 @@
       "status": "aligned",
       "note": null
     }
-  }
+  },
+  "entries": [
+    {
+      "canonical_name": "estimation",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "import_status": "imported",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Copied verbatim from the first-party estimation skill.",
+      "canonical_source_path": "skills/estimation",
+      "local_path": "skills/estimation",
+      "source_path": "skills/estimation/SKILL.md"
+    },
+    {
+      "canonical_name": "mermaid-diagramming",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "import_status": "imported",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Copied verbatim from the first-party mermaid-diagramming skill.",
+      "canonical_source_path": "skills/mermaid-diagramming",
+      "local_path": "skills/mermaid-diagramming",
+      "source_path": "skills/mermaid-diagramming/SKILL.md"
+    },
+    {
+      "canonical_name": "release-engineering",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "import_status": "imported",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Copied verbatim from the first-party release-engineering skill.",
+      "canonical_source_path": "skills/planning-pack--release-engineering",
+      "local_path": "skills/release-engineering",
+      "source_path": "skills/planning-pack--release-engineering/SKILL.md"
+    },
+    {
+      "canonical_name": "requirements-elicitation",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "import_status": "imported",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Copied verbatim from the first-party requirements-elicitation skill.",
+      "canonical_source_path": "skills/requirements-elicitation",
+      "local_path": "skills/requirements-elicitation",
+      "source_path": "skills/requirements-elicitation/SKILL.md"
+    }
+  ]
 }

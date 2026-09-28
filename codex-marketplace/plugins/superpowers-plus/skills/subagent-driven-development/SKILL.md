@@ -3,7 +3,7 @@ name: subagent-driven-development
 description: Use when executing implementation plans with independent tasks in the current session.
 metadata:
   source-id: subagent-driven-development
-  source-path: codex-marketplace/plugins/superpowers-plus/skills/subagent-driven-development/SKILL.md
+  source-path: skills/subagent-driven-development/SKILL.md
   provenance-name: Subagent Driven Development first-party skill
   source-category: first_party
   status: active

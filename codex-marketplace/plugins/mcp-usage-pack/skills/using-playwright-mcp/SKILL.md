@@ -3,7 +3,7 @@ name: using-playwright-mcp
 description: Use when working with the Playwright MCP server, choosing the right browser tool call, or falling back to non-MCP Playwright surfaces when the MCP does not cover the task.
 metadata:
   source-id: using-playwright-mcp
-  source-path: codex-marketplace/plugins/mcp-usage-pack/skills/using-playwright-mcp/SKILL.md
+  source-path: skills/using-playwright-mcp/SKILL.md
   provenance-name: Using Playwright MCP first-party skill
   source-category: first_party
   status: active

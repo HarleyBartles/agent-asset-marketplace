@@ -3,7 +3,7 @@ name: requesting-code-review
 description: Use when completing tasks, implementing major features, or before merging to verify work meets requirements.
 metadata:
   source-id: requesting-code-review
-  source-path: codex-marketplace/plugins/superpowers-plus/skills/requesting-code-review/SKILL.md
+  source-path: skills/requesting-code-review/SKILL.md
   provenance-name: Requesting Code Review first-party skill
   source-category: first_party
   status: active

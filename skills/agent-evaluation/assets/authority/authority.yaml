@@ -1,0 +1,25 @@
+schema_version: 1
+custody: marketplace
+lane: skills-with-citation
+authority:
+  title: Agent Evaluation
+  canonical_url: https://github.com/SWE-bench/SWE-bench
+  pinned_source_url: https://github.com/SWE-bench/SWE-bench
+  latest_check_url: https://github.com/SWE-bench/SWE-bench
+  revision: '2024-04-02'
+  retrieved_at: '2026-07-21'
+  content_sha256: 8be0e6fe36c68255f8312c211e0b01fba532467198fb454f11a0ab2b531b91c6
+  license: 'Multiple; see CITATIONS.md'
+  license_url: https://github.com/SWE-bench/SWE-bench
+decomposition:
+  reconciled_against: 8be0e6fe36c68255f8312c211e0b01fba532467198fb454f11a0ab2b531b91c6
+  references:
+  - path: references/operational-guidance.md
+    source_sections:
+    - Benchmark design
+    - Scoring agent outputs
+    - Self-evaluation rubrics
+    - Common mistakes
+    load_when:
+    - Use when agent-evaluation operational guidance is needed.
+    content_mode: first_party_synthesis

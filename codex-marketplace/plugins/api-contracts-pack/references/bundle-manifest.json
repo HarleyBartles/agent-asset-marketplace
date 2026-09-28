@@ -13,19 +13,6 @@
   "provenance_refs": [],
   "plugin_author": "Harley Bartles",
   "plugin_license": "MIT",
-  "entries": [
-    {
-      "canonical_name": "api-design",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "source_family": "first_party",
-      "canonical_source_path": "codex-marketplace/plugins/api-contracts-pack/skills/api-design",
-      "local_path": "skills/api-design",
-      "import_status": "imported",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "Copied verbatim from the first-party api-design skill."
-    }
-  ],
   "generated_doc_surfaces": [
     "README.md",
     "SOURCE.md"
@@ -39,5 +26,19 @@
       "status": "aligned",
       "note": null
     }
-  }
+  },
+  "entries": [
+    {
+      "canonical_name": "api-design",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "import_status": "imported",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Copied verbatim from the first-party api-design skill.",
+      "canonical_source_path": "skills/api-design",
+      "local_path": "skills/api-design",
+      "source_path": "skills/api-design/SKILL.md"
+    }
+  ]
 }

@@ -1,0 +1,59 @@
+{
+  "skills": [
+    {
+      "name": "using-deepwiki-mcp",
+      "source": "using-deepwiki-mcp",
+      "provenance": {
+        "source_category": "first_party",
+        "content_mode": "verbatim",
+        "source_family": "first_party",
+        "copy_expectation": "byte_identical",
+        "provenance_note": "Canonical first-party using-deepwiki-mcp skill. (Using DeepWiki MCP first-party skill)"
+      }
+    },
+    {
+      "name": "using-discord-mcp",
+      "source": "using-discord-mcp",
+      "provenance": {
+        "source_category": "first_party",
+        "content_mode": "verbatim",
+        "source_family": "first_party",
+        "copy_expectation": "byte_identical",
+        "provenance_note": "Canonical first-party using-discord-mcp skill. (Using Discord MCP first-party skill)"
+      }
+    },
+    {
+      "name": "using-github-mcp",
+      "source": "using-github-mcp",
+      "provenance": {
+        "source_category": "first_party",
+        "content_mode": "verbatim",
+        "source_family": "first_party",
+        "copy_expectation": "byte_identical",
+        "provenance_note": "Canonical first-party using-github-mcp skill. (Using GitHub MCP first-party skill)"
+      }
+    },
+    {
+      "name": "using-linear-mcp",
+      "source": "using-linear-mcp",
+      "provenance": {
+        "source_category": "first_party",
+        "content_mode": "verbatim",
+        "source_family": "first_party",
+        "copy_expectation": "byte_identical",
+        "provenance_note": "Canonical first-party using-linear-mcp skill. (Using Linear MCP first-party skill)"
+      }
+    },
+    {
+      "name": "using-playwright-mcp",
+      "source": "using-playwright-mcp",
+      "provenance": {
+        "source_category": "first_party",
+        "content_mode": "verbatim",
+        "source_family": "first_party",
+        "copy_expectation": "byte_identical",
+        "provenance_note": "Canonical first-party using-playwright-mcp skill. (Using Playwright MCP first-party skill)"
+      }
+    }
+  ]
+}

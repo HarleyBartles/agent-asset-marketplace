@@ -3,7 +3,7 @@ name: using-linear-mcp
 description: Use when working with the Linear connector surface, choosing the right tool call, or finding create/update tools exposed under `save_*` rather than `create_*` or `update_*`.
 metadata:
   source-id: using-linear-mcp
-  source-path: codex-marketplace/plugins/mcp-usage-pack/skills/using-linear-mcp/SKILL.md
+  source-path: skills/using-linear-mcp/SKILL.md
   provenance-name: Using Linear MCP first-party skill
   source-category: first_party
   status: active

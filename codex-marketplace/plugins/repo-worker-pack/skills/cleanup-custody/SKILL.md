@@ -3,7 +3,7 @@ name: cleanup-custody
 description: Use when a workspace or repository surface needs a custody decision about whether to keep it live, move it to cold store or governed trash, delete it now, or route it to an owning authority.
 metadata:
   source-id: cleanup-custody
-  source-path: codex-marketplace/plugins/repo-worker-pack/skills/cleanup-custody/SKILL.md
+  source-path: skills/cleanup-custody/SKILL.md
   provenance-name: Cleanup Custody first-party skill
   source-category: first_party
   status: active

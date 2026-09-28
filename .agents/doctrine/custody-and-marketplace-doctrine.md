@@ -1,69 +1,38 @@
-# Custody and marketplace doctrine
+# Custody and Marketplace Doctrine
 
-This document is required reading for agents working in this repo. It defines where source lives, how it is bundled into Codex plugins, and how the marketplace manifests are exported. It is authoritative, not a tutorial.
+This document defines source custody, product composition, and generated package boundaries.
 
 ## Source custody
 
-Source custody is the canonical home for asset content. Marketplace and export surfaces are derived from custody, never the reverse.
+- `skills/<skill-id>/` is the canonical source for each installable skill. Source identity and provenance do not depend on which plugin includes it.
+- `shared/` owns reusable references, templates, and assets. Definitions name each resource and its destination inside a packaged skill.
+- `plugin-definitions/<plugin>/plugin.json` owns Codex plugin metadata. `contents.json` declares skill membership, shared resources, and per-inclusion provenance.
+- All marketplace skills are first-party maintained source, including adaptations of open-source material. Record attribution, upstream revision or URL, adaptation, and license obligations accurately. Do not create a separate third-party source pool or describe an adaptation as unmodified upstream source.
+- `codex-marketplace/plugins/` contains generated, self-contained installable plugin packages. Never edit shipped output to change source behavior.
+- `src/marketplace/` owns reusable definition validation and build implementation. `tools/` owns command entry points and repository tooling.
+- Skill tests remain beside source under `skills/<skill-id>/tests/` and ship with the skill except evaluator-only material and run results. Build tests live in `tests/build/`; installed product contracts live in `tests/shipping/`. Repository tests live in `tests/repository/`.
+- `.agents/skills/` remains the installed operating mesh for this repository, not marketplace source.
 
-- **Third-party pool** custody is recorded per pack in `codex-marketplace/plugins/<plugin>/SOURCE.md`. If a vendor snapshot is retained in-tree, place it under `codex-marketplace/plugins/<plugin>/skills/<skill>/` and record the upstream repo, pinned commit, license, and adaptation path in the pack's `SOURCE.md`. Do not edit third-party custody to adapt skill behavior; adapt at bundle time and record the adaptation honestly.
-- **First-party authoring** lives under `codex-marketplace/plugins/<plugin>/`. These are Harley-authored skills. Edit the skill body here when the skill needs to change.
-- **MIT posture.** First-party source is MIT licensed. Third-party source retains its upstream license; the marketplace bundle must preserve attribution and license evidence.
+## Composition and build
 
-## Provenance modes
+One skill may appear in multiple plugin definitions. Distinct source IDs may share an installed skill name when their authored behavior differs. A shared resource is copied into each declared skill at its package-relative destination; installed plugins resolve no path outside their own package.
 
-Every bundled entry carries one provenance mode. Provenance is per-entry, not per-plugin (see Plugin curation below).
+Run `py -3 tools/run.py marketplace --apply` to build packages and regenerate the marketplace catalog. Run `py -3 tools/run.py marketplace --check` to detect missing, stale, or unexpected package output without writing. The build is deterministic and preserves independent sources under `codex-marketplace/packages/`.
 
-- **`verbatim`** — the bundled skill is byte-identical to source custody. No transformation, no metadata enrichment beyond what source already carries. Example: a first-party skill copied straight into a plugin with no changes.
-- **`normalised`** — minimal compliance adaptation only: codex-safe shape, openai-spec compliance, rich metadata, and repointing of moved-file links. The skill body is unchanged beyond link repointing. Ownership stays with the upstream author. Example: a third-party skill whose YAML front matter is normalized to marketplace schema but whose instructions body is untouched.
-- **`adapted`** — substantive skill body changes beyond compliance. The bundle must be honest about what changed and why. Example: a third-party skill whose instruction body was rewritten for marketplace voice or merged with first-party guidance.
+`codex-marketplace/` is the committed generated output root because the Portfolio submodule consumes `codex-marketplace/plugins/`. It is not a second editable source tree.
 
-### First-party is always verbatim in the bundle
+## Provenance and license
 
-First-party skills are always `verbatim` in the bundle. If a first-party skill needs to change, fix the source under `codex-marketplace/plugins/<plugin>/` and regenerate. Do not adapt first-party content at bundle time. This keeps source custody as the single edit point for first-party work.
+First-party describes current source custody and responsibility. It does not erase an upstream basis. Keep attribution and required notices with the canonical source and ensure every plugin that ships that material includes the required notice. Preserve upstream names, URLs or commit pins, license terms, and meaningful adaptation notes. Avoid claims of verbatim upstream copying when repository authors have adapted the work.
 
-## Plugin curation
+## Authoring workflow
 
-Plugins under `codex-marketplace/plugins/` are curated bundles, not upstream package mirrors. Harley curates which entries appear in which plugin.
+1. Create or update canonical source under `skills/<skill-id>/` and shared materials under `shared/`.
+2. Declare product membership and resource destinations in the relevant `plugin-definitions/<plugin>/contents.json` files.
+3. Run the focused skill tests, build tests, or package tests owned by the changed behavior.
+4. Run `py -3 tools/run.py marketplace --apply`, then refresh installed skills and indexes through their owning targets.
+5. Run focused checks. The tracked hook runs the three repository-owned suites once on the final commit.
 
-- **Provenance is per-entry, not per-plugin.** A single plugin may mix `verbatim`, `normalised`, and `adapted` entries. Each entry's manifest record declares its own mode.
-- **Plugins are not source custody.** If an entry's content needs to change, change the source and regenerate the bundle. Do not edit plugin files directly to change skill behavior.
+## Product metadata
 
-## Mega-packs (retired)
-
-The `house-skills` mega-pack, `is_mega_pack` registry field, and `tools/generate_mega_packs.py` have been removed. First-party skills now bundle into topical packs directly; `superpowers-plus` remains the only mixed plugin bundle. This section is kept as a tombstone for historical context.
-
-## Marketplace bundle model
-
-The flow is:
-
-1. **Source custody** — `codex-marketplace/plugins/<plugin>/`.
-2. **Bundle** — `codex-marketplace/plugins/` vendored bundles, generated from custody plus manifest entries.
-3. **Install / export** — `codex-marketplace/plugins/` is the canonical install surface.
-
-The bundle tree is generated, not hand-edited. The manifest is the edit surface that drives the bundle.
-
-Bundle discovery shortcut: when a generated plugin bundle needs to change, start at the source skill, then the plugin manifest, then the relevant validator, then the generated bundle tree. If the source or manifest changes, regenerate the derived outputs instead of hand-editing the generated tree.
-
-When a change touches multiple generated surfaces, prefer regenerating the full market surface set before chasing validator failures one artifact at a time. The validator is a proof gate, not a replacement for regeneration.
-
-## BAU workflow
-
-The business-as-usual target for adding or updating a skill is:
-
-1. **Write source** — add or edit the skill under `codex-marketplace/plugins/<plugin>/skills/` and record any third-party provenance in `codex-marketplace/plugins/<plugin>/SOURCE.md`.
-2. **Add bundle entry** — declare the entry in the pack's `references/bundle-manifest.json` `entries` with `canonical_name`, `source_category`, `content_mode`, `source_family`, `canonical_source_path` (directory-level), and `local_path`.
-3. **Regenerate plugin** — run `py -3 tools/run.py marketplace --apply` to update bundle manifests, plugin manifests, installed skill trees, and marketplace exports.
-4. **Validate** — run `tools/run ci --check` to prove all surfaces are current.
-
-If a first-party skill is removed from a project pack but remains in source custody, keep the source and regenerate the bundles so only the pack loses the exposure. Retire a skill to provenance only when it is no longer supported.
-
-No Python edits for normal skill work. If the workflow requires editing Python to land a skill, that is a tooling gap to raise, not a step to silently absorb.
-
-## Manifest shape validation
-
-All 19 plugin manifests must use the directory-level `entries[]` plugin shape. The validator (`validate_no_legacy_manifest_shapes`) rejects manifests with legacy shapes (`skills[]`, `components[]`, or file-level `canonical_source_path` ending in a file suffix). This ensures the materializer never silently skips a plugin.
-
-## Zip exports (retired)
-
-Flat skill zip exports and the `house-skills` mega-pack have been removed. The Codex plugin tree under `codex-marketplace/plugins/` is the canonical install surface.
+`plugin-definitions/` and `codex-marketplace/plugin-roots.json` describe installable products and inventory. The generated `codex-marketplace/plugins/<plugin>/` tree is the published package surface. `references/bundle-manifest.json`, package summaries, marketplace manifests, and indexes are generated compatibility or discovery outputs; they are not composition authorities.

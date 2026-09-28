@@ -1,0 +1,1 @@
+An implementation session was interrupted after a committed in-flight checkpoint was written. The checkout may or may not have changed since then. Continue the work from the repository state available in this trial.

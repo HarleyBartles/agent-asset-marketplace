@@ -1,0 +1,39 @@
+{
+  "name": "@harleybartles/repo-worker-pack",
+  "version": "1.0.0",
+  "description": "Thin repo hygiene pack for Codex workers in Harley's workspace.",
+  "author": {
+    "name": "Harley Bartles"
+  },
+  "homepage": "https://github.com/HarleyBartles/agent-asset-marketplace",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HarleyBartles/agent-asset-marketplace.git",
+    "directory": "codex-marketplace/plugins/repo-worker-pack"
+  },
+  "license": "MIT",
+  "rights": "First-party Harley-authored marketplace plugin.",
+  "keywords": [
+    "codex",
+    "marketplace",
+    "worker",
+    "repo",
+    "fresh-main",
+    "branching",
+    "validation"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "type": "cli",
+    "displayName": "Repo Worker Pack",
+    "shortDescription": "Thin repo hygiene pack for Codex workers in Harley's workspace.",
+    "longDescription": "Thin first-party Codex marketplace plugin for repo-backed worker hygiene: fresh-main discipline, task branches, validation evidence, and honest publication reporting. The plugin stays compositional and routes narrow concerns to specialist skills.",
+    "developerName": "Harley Bartles",
+    "category": "Productivity",
+    "capabilities": [],
+    "defaultPrompt": "Use Repo Worker Pack as the compositional repo hygiene entrypoint for repo-backed work in Harley's workspace.",
+    "brandColor": "#111827",
+    "composerIcon": "./assets/icon.svg",
+    "logo": "./assets/icon.svg"
+  }
+}

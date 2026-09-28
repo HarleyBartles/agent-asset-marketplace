@@ -14,32 +14,6 @@
   "provenance_refs": [],
   "plugin_author": "Harley Bartles",
   "plugin_license": "MIT",
-  "entries": [
-    {
-      "canonical_name": "python-frameworks",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "source_family": "first_party",
-      "canonical_source_path": "codex-marketplace/plugins/language-patterns-pack/skills/python-frameworks",
-      "local_path": "skills/python-frameworks",
-      "source_path": "codex-marketplace/plugins/language-patterns-pack/skills/python-frameworks/SKILL.md",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "Copied verbatim from the first-party python-frameworks skill.",
-      "import_status": "imported"
-    },
-    {
-      "canonical_name": "typescript",
-      "source_category": "first_party",
-      "content_mode": "verbatim",
-      "source_family": "first_party",
-      "canonical_source_path": "codex-marketplace/plugins/language-patterns-pack/skills/typescript",
-      "local_path": "skills/typescript",
-      "source_path": "codex-marketplace/plugins/language-patterns-pack/skills/typescript/SKILL.md",
-      "copy_expectation": "byte_identical",
-      "provenance_note": "Copied verbatim from the first-party typescript skill.",
-      "import_status": "imported"
-    }
-  ],
   "generated_doc_surfaces": [
     "README.md",
     "SOURCE.md"
@@ -53,5 +27,31 @@
       "status": "aligned",
       "note": null
     }
-  }
+  },
+  "entries": [
+    {
+      "canonical_name": "python-frameworks",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Copied verbatim from the first-party python-frameworks skill.",
+      "import_status": "imported",
+      "canonical_source_path": "skills/python-frameworks",
+      "local_path": "skills/python-frameworks",
+      "source_path": "skills/python-frameworks/SKILL.md"
+    },
+    {
+      "canonical_name": "typescript",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Copied verbatim from the first-party typescript skill.",
+      "import_status": "imported",
+      "canonical_source_path": "skills/typescript",
+      "local_path": "skills/typescript",
+      "source_path": "skills/typescript/SKILL.md"
+    }
+  ]
 }

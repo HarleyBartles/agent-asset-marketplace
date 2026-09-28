@@ -1,0 +1,88 @@
+{
+  "skills": [
+    {
+      "name": "clean-architecture",
+      "source": "clean-architecture",
+      "provenance": {
+        "source_category": "first_party",
+        "content_mode": "verbatim",
+        "source_family": "first_party",
+        "import_status": "imported",
+        "copy_expectation": "byte_identical",
+        "provenance_note": "Copied verbatim from the first-party clean-architecture skill."
+      }
+    },
+    {
+      "name": "cqrs",
+      "source": "cqrs",
+      "provenance": {
+        "source_category": "first_party",
+        "content_mode": "verbatim",
+        "source_family": "first_party",
+        "import_status": "imported",
+        "copy_expectation": "byte_identical",
+        "provenance_note": "Copied verbatim from the first-party cqrs skill."
+      }
+    },
+    {
+      "name": "database-design-patterns",
+      "source": "database-design-patterns",
+      "provenance": {
+        "source_category": "first_party",
+        "content_mode": "verbatim",
+        "source_family": "first_party",
+        "import_status": "imported",
+        "copy_expectation": "byte_identical",
+        "provenance_note": "Copied verbatim from the first-party database-design-patterns skill."
+      }
+    },
+    {
+      "name": "ddd",
+      "source": "ddd",
+      "provenance": {
+        "source_category": "first_party",
+        "content_mode": "verbatim",
+        "source_family": "first_party",
+        "import_status": "imported",
+        "copy_expectation": "byte_identical",
+        "provenance_note": "Copied verbatim from the first-party ddd skill."
+      }
+    },
+    {
+      "name": "event-driven-systems",
+      "source": "event-driven-systems",
+      "provenance": {
+        "source_category": "first_party",
+        "content_mode": "verbatim",
+        "source_family": "first_party",
+        "import_status": "imported",
+        "copy_expectation": "byte_identical",
+        "provenance_note": "Copied verbatim from the first-party event-driven-systems skill."
+      }
+    },
+    {
+      "name": "event-sourcing",
+      "source": "event-sourcing",
+      "provenance": {
+        "source_category": "first_party",
+        "content_mode": "verbatim",
+        "source_family": "first_party",
+        "import_status": "imported",
+        "copy_expectation": "byte_identical",
+        "provenance_note": "Copied verbatim from the first-party event-sourcing skill."
+      }
+    },
+    {
+      "name": "hexagonal-architecture",
+      "source": "hexagonal-architecture",
+      "provenance": {
+        "source_category": "first_party",
+        "content_mode": "verbatim",
+        "source_family": "first_party",
+        "import_status": "imported",
+        "copy_expectation": "byte_identical",
+        "provenance_note": "Copied verbatim from the first-party hexagonal-architecture skill."
+      }
+    }
+  ]
+}

@@ -3,7 +3,7 @@ name: using-superpowers-plus
 description: Use when starting or resuming a conversation that may need workflow, doctrine, safety, or repository-scope routing.
 metadata:
   source-id: using-superpowers-plus
-  source-path: codex-marketplace/plugins/superpowers-plus/skills/using-superpowers-plus/SKILL.md
+  source-path: skills/using-superpowers-plus/SKILL.md
   provenance-name: Using Superpowers Plus first-party skill
   source-category: first_party
   status: active

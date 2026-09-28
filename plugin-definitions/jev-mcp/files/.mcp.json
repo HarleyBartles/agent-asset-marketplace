@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "jev": {
+      "type": "http",
+      "url": "https://www.jevai.org/api/mcp",
+      "bearer_token_env_var": "JEV_API_KEY"
+    }
+  }
+}

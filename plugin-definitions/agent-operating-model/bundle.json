@@ -1,0 +1,16 @@
+{
+  "bundle_name": "agent-operating-model",
+  "bundle_version": "1.0.0",
+  "bundle_type": "plugin-pack",
+  "marketplace_root": ".agents/plugins/marketplace.json",
+  "plugin_root": "codex-marketplace/plugins/agent-operating-model",
+  "source_families": [
+    "first_party"
+  ],
+  "notes": [
+    "agent-operating-model combines first-party agent-operating-model skills."
+  ],
+  "provenance_refs": [],
+  "plugin_author": "Harley Bartles",
+  "plugin_license": "MIT"
+}

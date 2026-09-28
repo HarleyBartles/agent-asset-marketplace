@@ -3,7 +3,7 @@ name: writing-plans
 description: Use when an approved specification or settled requirements need to become an executable multi-step implementation plan.
 metadata:
   source-id: writing-plans
-  source-path: codex-marketplace/plugins/superpowers-plus/skills/writing-plans/SKILL.md
+  source-path: skills/writing-plans/SKILL.md
   provenance-name: Writing Plans first-party skill
   source-category: first_party
   status: active

@@ -43,7 +43,7 @@ Thumbs.db
 .superpowers/
 
 # Local-only pressure campaign traces.
-tests/pressure/**/runs/
+skills/**/tests/pressure/**/runs/
 
 # Local evaluation harness clones.
 evals/

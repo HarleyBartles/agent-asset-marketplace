@@ -1,0 +1,31 @@
+{
+  "bundle_name": "unslop-plus",
+  "bundle_version": "1.0.0",
+  "bundle_type": "plugin-pack",
+  "marketplace_root": ".agents/plugins/marketplace.json",
+  "plugin_root": "codex-marketplace/plugins/unslop-plus",
+  "source_families": [
+    "first_party"
+  ],
+  "notes": [
+    "Unslop+ is a first-party plugin bundle containing the unslop engine skill and the anti-slop profile router skill.",
+    "The bundle replaces the previous unslop mega-pack and keeps the engine separate from the profile router."
+  ],
+  "provenance_refs": [],
+  "plugin_author": "Harley Bartles",
+  "plugin_license": "MIT",
+  "generated_doc_surfaces": [
+    "README.md",
+    "SOURCE.md"
+  ],
+  "repo_index": {
+    "source_md": "codex-marketplace/plugins/unslop-plus/SOURCE.md",
+    "bundle_manifest": "codex-marketplace/plugins/unslop-plus/references/bundle-manifest.json",
+    "skills_path": "codex-marketplace/plugins/unslop-plus/skills",
+    "agents_md": null,
+    "registry_alignment": {
+      "status": "aligned",
+      "note": null
+    }
+  }
+}

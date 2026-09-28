@@ -1,0 +1,25 @@
+schema_version: 1
+custody: marketplace
+lane: skills-with-citation
+authority:
+  title: Research Ops
+  canonical_url: https://book.the-turing-way.org/reproducible-research/reproducible-research/
+  pinned_source_url: https://book.the-turing-way.org/reproducible-research/reproducible-research/
+  latest_check_url: https://book.the-turing-way.org/reproducible-research/reproducible-research/
+  revision: 'current'
+  retrieved_at: '2026-07-21'
+  content_sha256: c7814aba1125e2163e26ab177a0fbd004a378cd766a822404d6e3594a9cb0890
+  license: 'Multiple; see CITATIONS.md'
+  license_url: https://book.the-turing-way.org/reproducible-research/reproducible-research/
+decomposition:
+  reconciled_against: c7814aba1125e2163e26ab177a0fbd004a378cd766a822404d6e3594a9cb0890
+  references:
+  - path: references/operational-guidance.md
+    source_sections:
+    - Evidence-first workflow
+    - Source triage
+    - Synthesis and citation
+    - Common mistakes
+    load_when:
+    - Use when research-ops operational guidance is needed.
+    content_mode: first_party_synthesis

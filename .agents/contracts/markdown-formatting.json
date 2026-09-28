@@ -229,8 +229,198 @@
     },
     {
       "kind": "file",
+      "path": "skills/writing-skills/templates/skill/SKILL.md",
+      "reason": "Preserve the canonical unrendered {metadata} insertion token before the scaffold is materialized."
+    },
+    {
+      "kind": "file",
       "path": ".agents/skills/writing-skills/templates/skill/SKILL.md",
       "reason": "Preserve the installed projection of the unrendered {metadata} insertion token; the frontmatter becomes valid only when the scaffold is materialized."
+    },
+    {
+      "kind": "tree",
+      "reason": "Preserve authored authority evidence byte-for-byte for provenance review.",
+      "path": "./skills/agent-evaluation/assets/authority"
+    },
+    {
+      "kind": "tree",
+      "reason": "Preserve authored authority evidence byte-for-byte for provenance review.",
+      "path": "./skills/agentic-harness/assets/authority"
+    },
+    {
+      "kind": "tree",
+      "reason": "Preserve authored authority evidence byte-for-byte for provenance review.",
+      "path": "./skills/api-design/assets/authority"
+    },
+    {
+      "kind": "tree",
+      "reason": "Preserve authored authority evidence byte-for-byte for provenance review.",
+      "path": "./skills/clean-architecture/assets/authority"
+    },
+    {
+      "kind": "tree",
+      "reason": "Preserve authored authority evidence byte-for-byte for provenance review.",
+      "path": "./skills/cqrs/assets/authority"
+    },
+    {
+      "kind": "tree",
+      "reason": "Preserve authored authority evidence byte-for-byte for provenance review.",
+      "path": "./skills/database-design-patterns/assets/authority"
+    },
+    {
+      "kind": "tree",
+      "reason": "Preserve authored authority evidence byte-for-byte for provenance review.",
+      "path": "./skills/database-engines/assets/authority"
+    },
+    {
+      "kind": "tree",
+      "reason": "Preserve authored authority evidence byte-for-byte for provenance review.",
+      "path": "./skills/ddd/assets/authority"
+    },
+    {
+      "kind": "tree",
+      "reason": "Preserve authored authority evidence byte-for-byte for provenance review.",
+      "path": "./skills/dotnet/assets/authority"
+    },
+    {
+      "kind": "tree",
+      "reason": "Preserve authored authority evidence byte-for-byte for provenance review.",
+      "path": "./skills/engineering-pack--release-engineering/assets/authority"
+    },
+    {
+      "kind": "tree",
+      "reason": "Preserve authored authority evidence byte-for-byte for provenance review.",
+      "path": "./skills/estimation/assets/authority"
+    },
+    {
+      "kind": "tree",
+      "reason": "Preserve authored authority evidence byte-for-byte for provenance review.",
+      "path": "./skills/event-driven-systems/assets/authority"
+    },
+    {
+      "kind": "tree",
+      "reason": "Preserve authored authority evidence byte-for-byte for provenance review.",
+      "path": "./skills/event-sourcing/assets/authority"
+    },
+    {
+      "kind": "tree",
+      "reason": "Preserve authored authority evidence byte-for-byte for provenance review.",
+      "path": "./skills/frontend-ux/assets/authority"
+    },
+    {
+      "kind": "tree",
+      "reason": "Preserve authored authority evidence byte-for-byte for provenance review.",
+      "path": "./skills/handoff-gates/assets/authority"
+    },
+    {
+      "kind": "tree",
+      "reason": "Preserve authored authority evidence byte-for-byte for provenance review.",
+      "path": "./skills/hexagonal-architecture/assets/authority"
+    },
+    {
+      "kind": "tree",
+      "reason": "Preserve authored authority evidence byte-for-byte for provenance review.",
+      "path": "./skills/mermaid-diagramming/assets/authority"
+    },
+    {
+      "kind": "tree",
+      "reason": "Preserve authored authority evidence byte-for-byte for provenance review.",
+      "path": "./skills/observability/assets/authority"
+    },
+    {
+      "kind": "tree",
+      "reason": "Preserve authored authority evidence byte-for-byte for provenance review.",
+      "path": "./skills/owasp-top-ten/assets/authority"
+    },
+    {
+      "kind": "tree",
+      "reason": "Preserve authored authority evidence byte-for-byte for provenance review.",
+      "path": "./skills/planning-pack--release-engineering/assets/authority"
+    },
+    {
+      "kind": "tree",
+      "reason": "Preserve authored authority evidence byte-for-byte for provenance review.",
+      "path": "./skills/playwright-testing/assets/authority"
+    },
+    {
+      "kind": "tree",
+      "reason": "Preserve authored authority evidence byte-for-byte for provenance review.",
+      "path": "./skills/python/assets/authority"
+    },
+    {
+      "kind": "tree",
+      "reason": "Preserve authored authority evidence byte-for-byte for provenance review.",
+      "path": "./skills/python-frameworks/assets/authority"
+    },
+    {
+      "kind": "tree",
+      "reason": "Preserve authored authority evidence byte-for-byte for provenance review.",
+      "path": "./skills/react/assets/authority"
+    },
+    {
+      "kind": "tree",
+      "reason": "Preserve authored authority evidence byte-for-byte for provenance review.",
+      "path": "./skills/repo-worker-pack--risk-gates/assets/authority"
+    },
+    {
+      "kind": "tree",
+      "reason": "Preserve authored authority evidence byte-for-byte for provenance review.",
+      "path": "./skills/requirements-elicitation/assets/authority"
+    },
+    {
+      "kind": "tree",
+      "reason": "Preserve authored authority evidence byte-for-byte for provenance review.",
+      "path": "./skills/research-ops/assets/authority"
+    },
+    {
+      "kind": "tree",
+      "reason": "Preserve authored authority evidence byte-for-byte for provenance review.",
+      "path": "./skills/secure-development/assets/authority"
+    },
+    {
+      "kind": "tree",
+      "reason": "Preserve authored authority evidence byte-for-byte for provenance review.",
+      "path": "./skills/security-pack--risk-gates/assets/authority"
+    },
+    {
+      "kind": "tree",
+      "reason": "Preserve authored authority evidence byte-for-byte for provenance review.",
+      "path": "./skills/typescript/assets/authority"
+    },
+    {
+      "kind": "tree",
+      "reason": "Preserve authored authority evidence byte-for-byte for provenance review.",
+      "path": "./skills/unslop-engine/assets/authority"
+    },
+    {
+      "kind": "tree",
+      "reason": "Preserve authored authority evidence byte-for-byte for provenance review.",
+      "path": "./skills/wcag/assets/authority"
+    },
+    {
+      "kind": "tree",
+      "reason": "Preserve authored authority evidence byte-for-byte for provenance review.",
+      "path": "./skills/web-identity/assets/authority"
+    },
+    {
+      "kind": "tree",
+      "reason": "Preserve authored authority evidence byte-for-byte for provenance review.",
+      "path": "./skills/web-styling/assets/authority"
+    },
+    {
+      "kind": "tree",
+      "reason": "Preserve authored authority evidence byte-for-byte for provenance review.",
+      "path": "./skills/writing-roadmaps/assets/authority"
+    },
+    {
+      "kind": "tree",
+      "reason": "Preserve authored authority evidence byte-for-byte for provenance review.",
+      "path": "./skills/writing-style/assets/authority"
+    },
+    {
+      "kind": "tree",
+      "reason": "Preserve authored authority evidence byte-for-byte for provenance review.",
+      "path": "./skills/writing-with-clarity/assets/authority"
     }
   ]
 }

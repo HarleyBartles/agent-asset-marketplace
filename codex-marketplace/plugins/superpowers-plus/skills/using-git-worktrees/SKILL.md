@@ -3,7 +3,7 @@ name: using-git-worktrees
 description: Use when feature work or plan execution needs an isolated Git workspace.
 metadata:
   source-id: using-git-worktrees
-  source-path: codex-marketplace/plugins/superpowers-plus/skills/using-git-worktrees/SKILL.md
+  source-path: skills/using-git-worktrees/SKILL.md
   provenance-name: Using Git Worktrees first-party skill
   source-category: first_party
   status: active

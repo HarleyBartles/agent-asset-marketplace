@@ -3,7 +3,7 @@ name: connector-safety
 description: Use when a connector or tool call is blocked or rejected, when a planned side effect is sensitive, destructive, permission-changing, or easy to over-bundle, or when the safe mutation and verification route is uncertain.
 metadata:
   source-id: connector-safety
-  source-path: codex-marketplace/plugins/repo-worker-pack/skills/connector-safety/SKILL.md
+  source-path: skills/connector-safety/SKILL.md
   provenance-name: Connector Safety first-party skill
   source-category: first_party
   status: active

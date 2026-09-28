@@ -3,7 +3,7 @@ name: executing-plans
 description: Use when executing an approved written plan inline, especially when tasks are sequential or tightly coupled.
 metadata:
   source-id: executing-plans
-  source-path: codex-marketplace/plugins/superpowers-plus/skills/executing-plans/SKILL.md
+  source-path: skills/executing-plans/SKILL.md
   provenance-name: Executing Plans first-party skill
   source-category: first_party
   status: active

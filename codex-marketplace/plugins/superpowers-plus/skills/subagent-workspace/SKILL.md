@@ -4,7 +4,7 @@ description: Use when resolving the off-repo scratch workspace for subagent task
 license: MIT.
 metadata:
   source-id: subagent-workspace
-  source-path: codex-marketplace/plugins/superpowers-plus/skills/subagent-workspace/SKILL.md
+  source-path: skills/subagent-workspace/SKILL.md
   provenance-name: Subagent Workspace first-party skill
   source-category: first_party
   status: active

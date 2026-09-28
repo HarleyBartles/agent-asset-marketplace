@@ -3,7 +3,7 @@ name: risk-gates
 description: Use when an action, mutation, dispatch, canon claim, analogy, or resolution could violate scope, authority, source truth, safety, canon, or user intent.
 metadata:
   source-id: risk-gates
-  source-path: codex-marketplace/plugins/repo-worker-pack/skills/risk-gates/SKILL.md
+  source-path: skills/repo-worker-pack--risk-gates/SKILL.md
   provenance-name: Risk Gates first-party skill
   source-category: first_party
   status: active

@@ -3,7 +3,7 @@ name: markdown-formatting
 description: Use when a repository adopts, enforces, or diagnoses the portable Markdown formatting standard or a Markdown generator must validate its output.
 metadata:
   source-id: markdown-formatting
-  source-path: codex-marketplace/plugins/agent-operating-model/skills/markdown-formatting/SKILL.md
+  source-path: skills/markdown-formatting/SKILL.md
   provenance-name: Markdown Formatting first-party skill
   source-category: first_party
   status: active

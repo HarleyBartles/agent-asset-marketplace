@@ -3,7 +3,7 @@ name: test-driven-development
 description: Use when implementing any feature or bugfix, before writing implementation code.
 metadata:
   source-id: test-driven-development
-  source-path: codex-marketplace/plugins/superpowers-plus/skills/test-driven-development/SKILL.md
+  source-path: skills/test-driven-development/SKILL.md
   provenance-name: Test Driven Development first-party skill
   source-category: first_party
   status: active
