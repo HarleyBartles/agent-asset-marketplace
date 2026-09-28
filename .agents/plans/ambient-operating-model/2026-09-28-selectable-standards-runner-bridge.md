@@ -194,7 +194,7 @@ Run: `py -3 -m pytest skills/repo-shape/tests/scripts/test_repo_standards.py ski
 
 Expected: PASS for independent/empty selections, legacy migration diagnostics, plugin independence, and existing mutation safety.
 
-- [ ] **Step 5: Commit selective dispatch**
+- [x] **Step 5: Commit selective dispatch**
 
 ```powershell
 git add skills/repo-shape/scripts/repo_standards.py skills/repo-shape/scripts/plugin_contracts.py skills/repo-shape/references/repository-shape-manifest.json skills/repo-shape/references/repository-shape-manifest.schema.json skills/repo-shape/references/repository-shape-standard.md skills/repo-shape/references/consumer-surface-audit.md skills/repo-shape/tests/scripts/test_repo_standards.py skills/repo-shape/tests/scripts/test_operating_model_plugin_contracts.py skills/repo-shape/tests/scripts/test_operating_standards_dispatch.py
@@ -242,7 +242,7 @@ Add a safe deployment command and provenance record. Use only catalog-resolved p
 
 Run the focused command from Step 2. Expected: PASS with only selected deployed resources present and no ambient skill/plugin state required.
 
-- [ ] **Step 5: Commit pinned deployment and hosted validation**
+- [x] **Step 5: Commit pinned deployment and hosted validation**
 
 ```powershell
 git add skills/repo-shape/scripts/deploy_operating_standards.py skills/repo-shape/scripts/repo_standards.py skills/repo-shape/references/ci-validation-pipeline.md skills/repo-shape/tests/scripts/test_operating_standards_deployment.py skills/repo-shape/tests/scripts/test_repo_standards_hooks.py skills/refreshing-installed-skills/tests/scripts/test_refresh_installed_skills.py
@@ -255,9 +255,9 @@ git commit -m "feat: deploy standards for hosted validation"
 
 - Create: `skills/repo-shape/references/consumer-runner-migration.md`
 - Modify: `skills/repo-shape/references/ci-validation-pipeline.md`
-- Modify: `skills/repo-shape/scripts/deploy_operating_standards.py`
 - Create: `skills/repo-shape/tests/scripts/test_consumer_runner_migration.py`
-- Modify: `skills/repo-shape/tests/scripts/test_repo_standards_hooks.py`
+
+Task 4 already provides selected-resource deployment and the pinned generic dispatcher. The refresh utility already supports the pinned submodule path, `--no-roll-marketplace-source`, and explicit shared-checkout apply confirmation. Task 5 changes these source files only if the consumer-derived fixture exposes a missing behavior; otherwise it records and exercises the existing bridge without adding a redundant code layer.
 
 **Interfaces:**
 
@@ -271,21 +271,21 @@ git commit -m "feat: deploy standards for hosted validation"
 
 - Do not edit `Z:\rooms-mostly` or any other consumer.
 
-- [ ] **Step 1: Add a Rooms-derived runner migration behavior fixture**
+- [x] **Step 1: Add a Rooms-derived runner migration behavior fixture**
 
 Model the live `_repo_standards_cmd`, `_skills_cmd`, `_mesh_generate_cmd`, `_mesh_validate_cmd`, CI apply/check sequence, and hosted hook entrypoint. Assert the old installed-skill path fails when Repo Worker Pack is absent and that the pinned-submodule refresh path and deployed selected-standard dispatcher work with the outer `ci --apply` / `ci --check` commands unchanged.
 
-- [ ] **Step 2: Confirm the focused migration test fails**
+- [x] **Step 2: Confirm the focused migration test fails**
 
 Run: `py -3 -m pytest skills/repo-shape/tests/scripts/test_consumer_runner_migration.py -q`
 
 Expected: FAIL because the fixture's old Repo Worker Pack dependency has no supported local migration path.
 
-- [ ] **Step 3: Implement the migration guide and supported path**
+- [x] **Step 3: Implement the migration guide and supported path**
 
 Document exact sequencing, runner changes, validation at each transition, and recovery to the current pinned-submodule state. Remove all obsolete mesh migration language; Plan 1's removal requires no mesh replacement. Make the refresh utility's direct submodule invocation and selected-standard deployment the supported bridge.
 
-- [ ] **Step 4: Verify migration and hosted hook behavior**
+- [x] **Step 4: Verify migration and hosted hook behavior**
 
 Run: `py -3 -m pytest skills/repo-shape/tests/scripts/test_consumer_runner_migration.py skills/repo-shape/tests/scripts/test_repo_standards_hooks.py -q`
 

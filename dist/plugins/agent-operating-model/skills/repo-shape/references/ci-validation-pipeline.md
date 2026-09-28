@@ -21,6 +21,8 @@ Both commands run from the pinned `.agents/plugins/marketplace-source/skills/rep
 
 Hosted CI invokes the repository's canonical runner against the checked-in composition and deployed selected resources. It does not install Codex, marketplace plugins, or `.agents/skills/` projections. Refreshing ambient skill projections owns only `.agents/skills/` and its skill provenance; it does not rewrite standards selections or deployments.
 
+For migration from installed ambient refresh scripts or the retired index mesh, follow [Consumer runner migration](consumer-runner-migration.md). Invoke refresh from the pinned `.agents/plugins/marketplace-source` checkout with `--no-roll-marketplace-source`; mesh generation and validation have no replacement.
+
 ## Consumer preflight
 
 The consumer's canonical check is the full non-mutating CI/PR gate. It runs the declared checks in their repository-defined order and stops at the first failure, unless its diagnostic mode is requested.
