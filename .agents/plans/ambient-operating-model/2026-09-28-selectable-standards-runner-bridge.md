@@ -45,8 +45,6 @@ ______________________________________________________________________
 
 **Files:**
 
-- Modify: `skills/repo-shape/references/repository-shape-manifest.json`
-- Modify: `skills/repo-shape/references/repository-shape-manifest.schema.json`
 - Create: `skills/repo-shape/references/operating-standards-catalog.json`
 - Create: `skills/repo-shape/references/operating-standards-catalog.schema.json`
 - Create: `skills/repo-shape/scripts/operating_standards_catalog.py`
@@ -57,13 +55,13 @@ ______________________________________________________________________
 
 **Interfaces:**
 
-- Catalog IDs are stable, kebab-case, and represent independently adoptable contracts. Each surface in the implementation inventory names exactly one `standard_id`; catalog entries define deployable resource paths, check/apply capability, and `requires` edges. The validator verifies the references in both directions without duplicating surface ownership lists.
+- Catalog IDs are stable, kebab-case, and represent independently adoptable contracts. Catalog entries list the implementation surface IDs they own, deployable resource paths, check/apply capability, and `requires` edges. The catalog is the single ownership mapping; the existing surface manifest remains the implementation inventory.
 
 - Classify every current shape-manifest surface. Split the surfaces into coherent independently adoptable standards; retain `markdown-formatting` as its own standard. Do not group all surfaces under a single required standard. Record the classification in the catalog so the consumer can select individual standards.
 
 - Use these proposed boundaries as the initial catalog vocabulary: `marketplace-skill-management` (marketplace source, marketplace JSON, local skill preservation), `root-agent-router`, `runbook-composition` (policy, runbooks, optional runbook router), `playbook-composition` (playbooks and optional playbook router), `tracked-validation-hook` (command declaration, hook, shared-checkout support), `markdown-formatting`, `review-entrypoint`, `contribution-entrypoint`, `root-gitignore-hygiene`, and `completed-artifact-custody` (doctrine plus forbidden retired archive paths). The legacy `operating-model-contract` exception mechanism is migration input, not an adopted standard. Adjust a boundary only when the current validator behavior proves an actual dependency; encode that dependency as an edge instead of silently merging the standards.
 
-- A standard may depend only on another catalog standard by ID. Reject duplicate IDs, unknown surface standard IDs, unreferenced standards, unknown dependencies/resources, self-dependencies, and dependency cycles.
+- A standard may depend only on another catalog standard by ID. Reject duplicate IDs, unknown/duplicate surface IDs, uncovered implementation surfaces, unknown dependencies/resources, self-dependencies, and dependency cycles.
 
 - All catalog resources resolve inside the Agent Operating Model plugin source. The catalog itself is shipped with that ambient plugin and does not assert consumer adoption.
 
@@ -90,7 +88,7 @@ Run the focused test from Step 2. Expected: PASS for valid independent standards
 - [ ] **Step 5: Commit the catalog**
 
 ```powershell
-git add skills/repo-shape/references/repository-shape-manifest.json skills/repo-shape/references/repository-shape-manifest.schema.json skills/repo-shape/references/operating-standards-catalog.json skills/repo-shape/references/operating-standards-catalog.schema.json skills/repo-shape/scripts/operating_standards_catalog.py skills/repo-standards/SKILL.md src/plugin-definitions/agent-operating-model/files/README.md src/plugin-definitions/agent-operating-model/files/SOURCE.md skills/repo-shape/tests/scripts/test_operating_standards_catalog.py
+git add skills/repo-shape/references/operating-standards-catalog.json skills/repo-shape/references/operating-standards-catalog.schema.json skills/repo-shape/scripts/operating_standards_catalog.py skills/repo-standards/SKILL.md src/plugin-definitions/agent-operating-model/files/README.md src/plugin-definitions/agent-operating-model/files/SOURCE.md skills/repo-shape/tests/scripts/test_operating_standards_catalog.py
 git commit -m "feat: define selectable operating standards"
 ```
 
