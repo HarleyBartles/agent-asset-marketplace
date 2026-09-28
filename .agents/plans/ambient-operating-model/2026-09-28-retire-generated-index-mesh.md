@@ -230,10 +230,12 @@ Run the touched repo-shape and runner tests from Tasks 1-3, then run `py -3 tool
 
 Run: `py -3 tools/run.py ci --apply` for explicit uncommitted diagnosis only if needed. For normal publication, stage the intended tree and commit through the tracked hook, which runs the canonical apply/check gate. Do not run the full check immediately before or after a successful hooked commit.
 
-- [ ] **Step 5: Review product output and publish a Draft PR**
+- [x] **Step 5: Review product output and publish a Draft PR**
 
 Review source and generated diff for complete index removal, preserved non-index marketplace metadata, consumer migration clarity, and no remaining mesh runtime calls. Push the branch and open a Draft PR. Verify the PR head and hosted checks before marking Plan 1 complete in the roadmap.
 
 ## Completion boundary
 
 Plan 1 completes when the mesh skill and both generated index layers are retired, no `INDEX.md` or `INDEX.json` files remain in the marketplace repository or shipped plugin outputs, consumer standards no longer require them, and the normal runner and marketplace build work without mesh/index commands. Consumer repositories are not modified in this plan; their agents use the updated portable guidance to migrate each consumer independently.
+
+Status: completed-awaiting-retirement. Draft PR: https://github.com/HarleyBartles/agent-asset-marketplace/pull/338. GitHub marketplace validation is skipped for draft PRs; the commit hook passed the canonical local apply/check gate on the published tree.
