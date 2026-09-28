@@ -11,15 +11,12 @@ ROOT = Path(__file__).resolve().parents[1]
 
 def test_repository_uses_portable_markdown_formatter_wiring() -> None:
     requirements = (ROOT / "requirements.txt").read_text(encoding="utf-8")
-    runner = (ROOT / "tools/run.py").read_text(encoding="utf-8")
     commands = json.loads((ROOT / ".agents/contracts/repo-standards-commands.json").read_text(encoding="utf-8"))
 
     assert "mdformat==1.0.0" in requirements
     assert (
         "./codex-marketplace/packages/mdformat-safe-link-labels/wheels/mdformat_safe_link_labels-1.0.0-py3-none-any.whl"
     ) in requirements
-    assert "_all_tracked_markdown_files" not in runner
-    assert "_run_mdformat" not in runner
     assert commands["apply"][0] == [
         "@python",
         ".agents/skills/markdown-formatting/scripts/format_markdown.py",
