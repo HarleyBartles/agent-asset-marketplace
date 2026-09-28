@@ -20,8 +20,8 @@ ROOT = Path(__file__).resolve().parent.parent
 SCRIPT_NAME = "tools/run"
 
 
-PLUGIN_ROOTS_PATH = ROOT / "codex-marketplace" / "plugins"
-PLUGIN_ROOT_INVENTORY_PATH = ROOT / "codex-marketplace" / "plugin-roots.json"
+PLUGIN_ROOTS_PATH = ROOT / "dist" / "plugins"
+PLUGIN_ROOT_INVENTORY_PATH = ROOT / "dist" / "plugin-roots.json"
 _MAX_CMD_CHARS = 28000
 
 

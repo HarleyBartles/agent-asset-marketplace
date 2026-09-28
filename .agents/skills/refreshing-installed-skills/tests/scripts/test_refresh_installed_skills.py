@@ -45,7 +45,7 @@ def test_force_refresh_with_no_skill_changes_is_a_no_diff_operation(tmp_path: Pa
         "localSkills": [],
         "marketplace": {
             "source": "HarleyBartles/agent-asset-marketplace",
-            "sourcePath": "codex-marketplace/plugins",
+            "sourcePath": "dist/plugins",
         },
         "localPlugins": [],
         "marketplaceFile": ".agents/plugins/marketplace.json",
@@ -372,7 +372,7 @@ def test_get_plugin_skills_path_local_source(tmp_path: Path) -> None:
 
 def test_get_plugin_skills_path_github_source(tmp_path: Path) -> None:
     submodule = tmp_path / ".agents" / "plugins" / "marketplace-source"
-    skills = submodule / "codex-marketplace" / "plugins" / "repo-worker-pack" / "skills"
+    skills = submodule / "dist" / "plugins" / "repo-worker-pack" / "skills"
     skills.mkdir(parents=True)
     plugin = {
         "name": "repo-worker-pack",
@@ -380,7 +380,7 @@ def test_get_plugin_skills_path_github_source(tmp_path: Path) -> None:
             "source": "github",
             "owner": "HarleyBartles",
             "repo": "agent-asset-marketplace",
-            "path": "codex-marketplace/plugins/repo-worker-pack",
+            "path": "dist/plugins/repo-worker-pack",
         },
     }
     with patch.object(refresh_installed_skills, "ROOT", tmp_path):
@@ -390,7 +390,7 @@ def test_get_plugin_skills_path_github_source(tmp_path: Path) -> None:
 
 def test_get_plugin_skills_path_github_source_with_dotdot_resolving_inside_base(tmp_path: Path) -> None:
     submodule = tmp_path / ".agents" / "plugins" / "marketplace-source"
-    skills = submodule / "codex-marketplace" / "plugins" / "repo-worker-pack" / "skills"
+    skills = submodule / "dist" / "plugins" / "repo-worker-pack" / "skills"
     skills.mkdir(parents=True)
     plugin = {
         "name": "repo-worker-pack",
@@ -398,7 +398,7 @@ def test_get_plugin_skills_path_github_source_with_dotdot_resolving_inside_base(
             "source": "github",
             "owner": "HarleyBartles",
             "repo": "agent-asset-marketplace",
-            "path": "../marketplace-source/codex-marketplace/plugins/repo-worker-pack",
+            "path": "../marketplace-source/dist/plugins/repo-worker-pack",
         },
     }
     with patch.object(refresh_installed_skills, "ROOT", tmp_path):
@@ -653,7 +653,7 @@ def test_provenance_records_local_plugin_origin(tmp_path: Path) -> None:
                 "source": "github",
                 "owner": "HarleyBartles",
                 "repo": "agent-asset-marketplace",
-                "path": "codex-marketplace/plugins/repo-worker-pack",
+                "path": "dist/plugins/repo-worker-pack",
             },
         },
         {
@@ -693,7 +693,7 @@ def test_provenance_records_local_plugin_origin(tmp_path: Path) -> None:
     assert provenance["syncedPlugins"] == ["repo-worker-pack", "game-studio"]
     assert provenance["manifestSha"] == "pinned-sha"
     assert provenance["marketplace"]["source"] == "HarleyBartles/agent-asset-marketplace"
-    assert provenance["marketplace"]["sourcePath"] == "codex-marketplace/plugins"
+    assert provenance["marketplace"]["sourcePath"] == "dist/plugins"
     assert provenance["localPlugins"] == [
         {
             "name": "game-studio",

@@ -86,7 +86,7 @@ def test_all_shared_checkout_copies_match_canonical() -> None:
         repo_root / "sources" / "first_party" / "skills",
         repo_root / "adapters",
         repo_root / ".agents" / "skills",
-        repo_root / "codex-marketplace" / "plugins",
+        repo_root / "dist" / "plugins",
     ]
     copies = []
     for root in search_roots:

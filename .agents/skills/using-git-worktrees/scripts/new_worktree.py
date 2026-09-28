@@ -163,8 +163,8 @@ def _find_skill_core(repo_root: Path, skill_name: str, core_name: str) -> Option
                 return candidate
 
     for pattern in [
-        f"codex-marketplace/plugins/*/skills/{skill_name}/scripts/{core_name}",
-        f".agents/plugins/marketplace-source/codex-marketplace/plugins/*/skills/{skill_name}/scripts/{core_name}",
+        f"dist/plugins/*/skills/{skill_name}/scripts/{core_name}",
+        f".agents/plugins/marketplace-source/dist/plugins/*/skills/{skill_name}/scripts/{core_name}",
     ]:
         for candidate in sorted(repo_root.glob(pattern)):
             if candidate.is_file() and _is_under_repo(repo_root, candidate):

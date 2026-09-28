@@ -44,7 +44,7 @@ def _copy_shared_checkout_into_skill(skill_root: Path) -> None:
 
 def _copy_current_skill_sources(repo: Path, skill_names: tuple[str, ...]) -> list[str]:
     """Copy requested skills using the live bundle manifests as custody truth."""
-    plugins_root = REPO_ROOT / "codex-marketplace" / "plugins"
+    plugins_root = REPO_ROOT / "dist" / "plugins"
     owners: dict[str, tuple[str, Path]] = {}
     for manifest_path in plugins_root.glob("*/references/bundle-manifest.json"):
         manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
@@ -63,7 +63,7 @@ def _copy_current_skill_sources(repo: Path, skill_names: tuple[str, ...]) -> lis
         if skill_name not in owners:
             raise AssertionError(f"canonical skill {skill_name!r} not found in bundle manifests")
         plugin_name, source = owners[skill_name]
-        target = repo / "codex-marketplace" / "plugins" / plugin_name / "skills" / skill_name
+        target = repo / "dist" / "plugins" / plugin_name / "skills" / skill_name
         shutil.copytree(source, target, ignore=shutil.ignore_patterns("__pycache__", "*.pyc"))
         _copy_shared_checkout_into_skill(target)
         copied_plugins.add(plugin_name)
@@ -89,7 +89,7 @@ def _make_repo_with_bundled_refresh(tmp_path: Path, name: str) -> Path:
         "plugins": [
             {
                 "name": plugin_name,
-                "source": {"source": "local", "path": f"./codex-marketplace/plugins/{plugin_name}"},
+                "source": {"source": "local", "path": f"./dist/plugins/{plugin_name}"},
                 "policy": {"installation": "INSTALLED_BY_DEFAULT", "authentication": "ON_INSTALL"},
             }
             for plugin_name in plugin_names
@@ -120,7 +120,7 @@ def _make_repo_with_failing_refresh(tmp_path: Path, name: str) -> Path:
     # Replace the refresh script with one that writes a marker and exits non-zero.
     fake_refresh = (
         repo
-        / "codex-marketplace"
+        / "dist"
         / "plugins"
         / "repo-worker-pack"
         / "skills"
@@ -141,7 +141,7 @@ def _make_repo_with_failing_refresh(tmp_path: Path, name: str) -> Path:
         "plugins": [
             {
                 "name": plugin_name,
-                "source": {"source": "local", "path": f"./codex-marketplace/plugins/{plugin_name}"},
+                "source": {"source": "local", "path": f"./dist/plugins/{plugin_name}"},
                 "policy": {"installation": "INSTALLED_BY_DEFAULT", "authentication": "ON_INSTALL"},
             }
             for plugin_name in plugin_names
@@ -173,7 +173,7 @@ def _make_repo_with_marketplace_source_submodule(tmp_path: Path, name: str) -> P
     subprocess.run(["git", "clone", str(submod_bare), str(submod_work)], check=True, capture_output=True)
     subprocess.run(["git", "config", "user.email", "test@test"], cwd=submod_work, check=True, capture_output=True)
     subprocess.run(["git", "config", "user.name", "Test"], cwd=submod_work, check=True, capture_output=True)
-    pack = submod_work / "codex-marketplace" / "plugins" / "remote-pack" / "skills"
+    pack = submod_work / "dist" / "plugins" / "remote-pack" / "skills"
     pack.mkdir(parents=True)
     skill = pack / "submod-skill"
     skill.mkdir()
@@ -202,7 +202,7 @@ def _make_repo_with_marketplace_source_submodule(tmp_path: Path, name: str) -> P
                 "source": "github",
                 "owner": "test",
                 "repo": "test",
-                "path": "codex-marketplace/plugins/remote-pack",
+                "path": "dist/plugins/remote-pack",
             },
             "policy": {"installation": "INSTALLED_BY_DEFAULT", "authentication": "ON_INSTALL"},
         }
@@ -579,7 +579,7 @@ def test_new_worktree_initializes_submodules_before_refresh(tmp_path: Path, monk
         / ".agents"
         / "plugins"
         / "marketplace-source"
-        / "codex-marketplace"
+        / "dist"
         / "plugins"
         / "remote-pack"
         / "skills"

@@ -16,14 +16,14 @@ Run it as part of the consumer's canonical repository-standards or CI check. CI 
 
 1. Run the failing script with `--help` and `--check` locally:
    ```bash
-   py -3 codex-marketplace/plugins/<plugin-pack>/skills/<skill-name>/scripts/<script>.py --help
-   py -3 codex-marketplace/plugins/<plugin-pack>/skills/<skill-name>/scripts/<script>.py --check
+   py -3 dist/plugins/<plugin-pack>/skills/<skill-name>/scripts/<script>.py --help
+   py -3 dist/plugins/<plugin-pack>/skills/<skill-name>/scripts/<script>.py --check
    ```
 2. Add `argparse` with `--help`, `--check`, and (for mixed scripts) `--apply`.
 3. Keep `--check` as the default mode and document the classification in the help text.
 4. Re-run the validator:
    ```bash
-   py -3 codex-marketplace/plugins/agent-operating-model/skills/repo-shape/scripts/validate_skill_scripts.py
+   py -3 dist/plugins/agent-operating-model/skills/repo-shape/scripts/validate_skill_scripts.py
    ```
 
 ## Deferred scripts

@@ -17,15 +17,15 @@
       "index_json": ".agents/plugins/INDEX.json"
     },
     {
-      "name": "codex-marketplace-root",
-      "path": "codex-marketplace",
-      "index_json": "codex-marketplace/INDEX.json"
+      "name": "dist-root",
+      "path": "dist",
+      "index_json": "dist/INDEX.json"
     },
     {
       "name": "marketplace-root-inventory",
-      "path": "codex-marketplace/plugin-roots.json",
-      "purpose": "Editable active marketplace plugin root inventory for manifest and validator generation.",
-      "surface_kind": "hand-authored",
+      "path": "dist/plugin-roots.json",
+      "purpose": "Generated inventory of active marketplace plugin roots.",
+      "surface_kind": "runtime-facing",
       "nearest_scoped_agents_md": null,
       "key_validation_scripts": [
         "tools/validate_marketplace.py",
@@ -33,9 +33,9 @@
       ]
     },
     {
-      "name": "codex-marketplace-plugins",
-      "path": "codex-marketplace/plugins",
-      "index_json": "codex-marketplace/plugins/INDEX.json"
+      "name": "dist-plugins",
+      "path": "dist/plugins",
+      "index_json": "dist/plugins/INDEX.json"
     },
     {
       "name": "contracts-unslop-profile",

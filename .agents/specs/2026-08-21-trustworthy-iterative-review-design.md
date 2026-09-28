@@ -695,7 +695,7 @@ Track frontier escapes per internally green PR, by severity and obligation categ
 
 ### Repository validation
 
-- `py -3 -m pytest codex-marketplace/plugins/superpowers-plus/skills/iterative-review/tests -q`
+- `py -3 -m pytest dist/plugins/superpowers-plus/skills/iterative-review/tests -q`
 - `py -3 tools/run.py marketplace --apply`
 - `git add -A`
 - `py -3 tools/run.py ci --check`

@@ -16,7 +16,7 @@
 
 ## Global Constraints
 
-- Edit canonical sources under `codex-marketplace/plugins/superpowers-plus/skills/`; generated `.agents/skills/` copies are downstream.
+- Edit canonical sources under `dist/plugins/superpowers-plus/skills/`; generated `.agents/skills/` copies are downstream.
 - Do not require a particular repository directory, filename, inventory, or runbook convention from marketplace consumers.
 - Preserve this repository's own runbook requirements in its local guidance and keep portable skill technique intact.
 - Read local artifacts only when the repository declares them and they apply to the active workflow; do not load every local guide speculatively.
@@ -36,9 +36,9 @@ ______________________________________________________________________
 
 **Files:**
 
-- Modify: `codex-marketplace/plugins/superpowers-plus/skills/using-superpowers-plus/SKILL.md`
-- Modify: `codex-marketplace/plugins/superpowers-plus/skills/using-superpowers-plus/references/bootstrap-routing.md`
-- Modify: `codex-marketplace/plugins/superpowers-plus/skills/using-superpowers-plus/references/superpowers-composition.md`
+- Modify: `dist/plugins/superpowers-plus/skills/using-superpowers-plus/SKILL.md`
+- Modify: `dist/plugins/superpowers-plus/skills/using-superpowers-plus/references/bootstrap-routing.md`
+- Modify: `dist/plugins/superpowers-plus/skills/using-superpowers-plus/references/superpowers-composition.md`
 
 **Interfaces:**
 
@@ -58,12 +58,12 @@ ______________________________________________________________________
 
 **Files:**
 
-- Modify: `codex-marketplace/plugins/superpowers-plus/skills/brainstorming/SKILL.md`
-- Modify: `codex-marketplace/plugins/superpowers-plus/skills/executing-plans/SKILL.md`
-- Modify: `codex-marketplace/plugins/superpowers-plus/skills/subagent-driven-development/SKILL.md`
-- Modify: `codex-marketplace/plugins/superpowers-plus/skills/requesting-code-review/SKILL.md`
-- Modify: `codex-marketplace/plugins/superpowers-plus/skills/writing-plans/SKILL.md`
-- Modify: `codex-marketplace/plugins/superpowers-plus/skills/finishing-a-development-branch/SKILL.md`
+- Modify: `dist/plugins/superpowers-plus/skills/brainstorming/SKILL.md`
+- Modify: `dist/plugins/superpowers-plus/skills/executing-plans/SKILL.md`
+- Modify: `dist/plugins/superpowers-plus/skills/subagent-driven-development/SKILL.md`
+- Modify: `dist/plugins/superpowers-plus/skills/requesting-code-review/SKILL.md`
+- Modify: `dist/plugins/superpowers-plus/skills/writing-plans/SKILL.md`
+- Modify: `dist/plugins/superpowers-plus/skills/finishing-a-development-branch/SKILL.md`
 
 **Interfaces:**
 

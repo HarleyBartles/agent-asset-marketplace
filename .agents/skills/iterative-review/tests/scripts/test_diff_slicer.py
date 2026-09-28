@@ -34,8 +34,8 @@ class TestDiffSlicerCLI(unittest.TestCase):
 class TestDiffSlicerHelpers(unittest.TestCase):
     def test_glob_match_supports_double_star(self):
         module = _load_diff_slicer()
-        source = "codex-marketplace/plugins/**/skills/**/*.md"
-        in_source = "codex-marketplace/plugins/superpowers-plus/skills/iterative-review/SKILL.md"
+        source = "dist/plugins/**/skills/**/*.md"
+        in_source = "dist/plugins/superpowers-plus/skills/iterative-review/SKILL.md"
         in_mirror = ".agents/skills/iterative-review/SKILL.md"
         self.assertTrue(module._glob_match(source, in_source))
         self.assertFalse(module._glob_match(source, in_mirror))
@@ -43,7 +43,7 @@ class TestDiffSlicerHelpers(unittest.TestCase):
     def test_installed_mirror_paths_excludes_source_duplicates(self):
         module = _load_diff_slicer()
         changed = [
-            "codex-marketplace/plugins/superpowers-plus/skills/iterative-review/SKILL.md",
+            "dist/plugins/superpowers-plus/skills/iterative-review/SKILL.md",
             ".agents/skills/iterative-review/SKILL.md",
             ".agents/skills/new-skill/SKILL.md",
         ]
@@ -74,7 +74,7 @@ class TestDiffSlicerHelpers(unittest.TestCase):
     def test_slice_hunks_respects_exclude_paths(self):
         module = _load_diff_slicer()
         mirror = ".agents/skills/iterative-review/SKILL.md"
-        source = "codex-marketplace/plugins/superpowers-plus/skills/iterative-review/SKILL.md"
+        source = "dist/plugins/superpowers-plus/skills/iterative-review/SKILL.md"
         diff = (
             f"diff --git a/{mirror} b/{mirror}\n"
             f"--- a/{mirror}\n"

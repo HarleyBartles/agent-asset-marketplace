@@ -7,7 +7,7 @@ This script follows the skill-bundled CLI contract:
   `.agents/agents/` is already aligned with the installed plugin packs.
 - `--apply` copies missing or changed profiles and removes orphan profiles.
 
-`repo-standards` owns the one-shot deployment of `codex-marketplace/plugins/*/assets/profiles/*.md`
+`repo-standards` owns the one-shot deployment of `dist/plugins/*/assets/profiles/*.md`
 into `.agents/agents/`.
 """
 

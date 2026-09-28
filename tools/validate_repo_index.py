@@ -127,7 +127,7 @@ def validate_repo_index() -> dict:
     schema_version = repo_index.get("schema_version")
     if schema_version != 2:
         raise ValueError("INDEX.json schema_version must be 2")
-    if repo_index.get("marketplace_root_inventory_path") != "codex-marketplace/plugin-roots.json":
+    if repo_index.get("marketplace_root_inventory_path") != "dist/plugin-roots.json":
         raise ValueError("INDEX.json marketplace_root_inventory_path mismatch")
 
     zones = repo_index.get("zones")
@@ -140,7 +140,7 @@ def validate_repo_index() -> dict:
 
     if repo_index.get("marketplace_registry_path") != ".agents/plugins/marketplace.json":
         raise ValueError("INDEX.json marketplace_registry_path mismatch")
-    if repo_index.get("codex_marketplace_manifest_path") != "codex-marketplace/manifest.json":
+    if repo_index.get("codex_marketplace_manifest_path") != "dist/manifest.json":
         raise ValueError("INDEX.json codex_marketplace_manifest_path mismatch")
 
     validation = repo_index.get("validation")
@@ -194,7 +194,7 @@ def validate_repo_index() -> dict:
     registry = check_json(MARKETPLACE_PATH)
     codex_manifest = check_json(CODEX_MARKETPLACE_MANIFEST_PATH)
     if registry != codex_manifest:
-        raise ValueError(".agents/plugins/marketplace.json does not match codex-marketplace/manifest.json")
+        raise ValueError(".agents/plugins/marketplace.json does not match dist/manifest.json")
 
     registry_plugins = {plugin["name"]: plugin for plugin in registry.get("plugins", [])}
     spec_by_name = {spec["name"]: spec for spec in MARKETPLACE_PLUGIN_SPECS}

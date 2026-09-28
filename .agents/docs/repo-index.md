@@ -3,7 +3,7 @@
 The repo index is the machine-readable navigation surface for the repository. It lives in two layers:
 
 - **Root `INDEX.json`** at the repository root is a thin registry. It lists the repository's zones and points each zone at its own sidecar.
-- **Per-zone `INDEX.json` sidecars** live next to the things they describe (e.g. `codex-marketplace/INDEX.json`, `tools/INDEX.json`). Each sidecar carries zone-specific metadata such as `surface_kind`, `nearest_scoped_agents_md`, `key_validation_scripts`, and any data that the `INDEX.md` mesh does not already express.
+- **Per-zone `INDEX.json` sidecars** live next to the things they describe (e.g. `dist/INDEX.json`, `tools/INDEX.json`). Each sidecar carries zone-specific metadata such as `surface_kind`, `nearest_scoped_agents_md`, `key_validation_scripts`, and any data that the `INDEX.md` mesh does not already express.
 
 The index exists so agents can traverse the repository without depending on chat memory, embeddings, or a separate discovery runtime. It records the main repo zones, the nearest scoped `AGENTS.md` file where one exists, and the validation or generation hooks that matter for a path.
 

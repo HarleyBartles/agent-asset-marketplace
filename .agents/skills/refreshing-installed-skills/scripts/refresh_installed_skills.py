@@ -613,7 +613,7 @@ def _provenance_state(
         "localSkills": local_skills,
         "marketplace": {
             "source": _marketplace_source_slug(ROOT),
-            "sourcePath": "codex-marketplace/plugins",
+            "sourcePath": "dist/plugins",
         },
         "localPlugins": local_plugins,
         "marketplaceFile": ".agents/plugins/marketplace.json",
@@ -838,7 +838,7 @@ def main(argv: list[str] | None = None) -> int:
     if not deploy_script.is_file():
         deploy_script = (
             ROOT
-            / "codex-marketplace"
+            / "dist"
             / "plugins"
             / "agent-operating-model"
             / "skills"

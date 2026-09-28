@@ -94,13 +94,12 @@ def validate_marketplace_registry(registry: dict, plugin_manifests: list[dict]) 
 
 
 def validate_active_plugin_tree() -> None:
-    plugin_root = ROOT / "codex-marketplace/plugins"
+    plugin_root = ROOT / "dist/plugins"
     expected_names = sorted(spec["name"] for spec in MARKETPLACE_PLUGIN_SPECS)
     actual_names = sorted(path.name for path in plugin_root.iterdir() if path.is_dir())
     if actual_names != expected_names:
         raise ValueError(
-            "codex-marketplace/plugins contains non-protected plugin roots: "
-            f"expected {expected_names}, found {actual_names}"
+            f"dist/plugins contains non-protected plugin roots: expected {expected_names}, found {actual_names}"
         )
 
 
@@ -237,7 +236,7 @@ def validate_project(*, skip_freshness: bool = False) -> None:
     validate_marketplace_registry(registry, plugin_manifests)
     codex_manifest = check_json(CODEX_MARKETPLACE_MANIFEST_PATH)
     if codex_manifest != registry:
-        raise ValueError("codex-marketplace/manifest.json does not match .agents/plugins/marketplace.json")
+        raise ValueError("dist/manifest.json does not match .agents/plugins/marketplace.json")
     for spec in MARKETPLACE_PLUGIN_SPECS:
         plugin_root = ROOT / spec["plugin_root"]
         if spec["name"] == "superpowers-plus":
@@ -257,9 +256,8 @@ def validate_project(*, skip_freshness: bool = False) -> None:
         if bundle_path.exists():
             check_json(bundle_path)
 
-    check_text(ROOT / "codex-marketplace/README.md")
-    check_text(ROOT / "codex-marketplace/plugins/README.md")
-    check_text(ROOT / "codex-marketplace/plugins/unslop-plus/SOURCE.md")
+    check_text(ROOT / "docs/distribution.md")
+    check_text(ROOT / "dist/plugins/unslop-plus/SOURCE.md")
     validate_bundle_source_contracts()
     print("OK validate_marketplace: project")
 

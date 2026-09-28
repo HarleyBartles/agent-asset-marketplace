@@ -12,14 +12,14 @@ All skill content is first-party source for this repository, including material 
 
 - `skills/<skill-name>/` is the canonical home for authored skill instructions and skill-specific resources.
 - `shared/` contains reusable authored resources, such as references, templates, and assets. These are build inputs, not runtime dependencies of installed plugins.
-- `plugin-definitions/<plugin-name>/` contains the plugin's manifest and an explicit composition definition. It declares inclusion and packaging; it does not contain canonical skill source.
+- `src/plugin-definitions/<plugin-name>/` contains the plugin's manifest and an explicit composition definition. It declares inclusion and packaging; it does not contain canonical skill source.
 - `src/` contains reusable marketplace build and validation implementation. Existing repository-maintenance commands under `tools/` remain command entrypoints and unrelated repository tooling does not move merely to satisfy a directory convention.
-- `codex-marketplace/` is the committed generated marketplace catalog and complete installable plugin tree. It is physically named for the existing consumer contract, but serves as the build output. Each plugin is self-contained and resolves no path back into `skills/`, `shared/`, or `plugin-definitions/`.
-- `packages/` continues to own independently versioned runtime packages and their distributions.
+- `dist/` is the committed distribution output, with complete installable plugin trees and built wheels. Each plugin is self-contained and resolves no path back into `skills/`, `shared/`, or `src/plugin-definitions/`.
+- `src/packages/` owns independently versioned runtime package source; built wheels are distributed under `dist/wheels/`.
 - `.agents/` continues to own this repository's installed operating mesh; it is neither vendored marketplace source nor plugin build output.
 - `docs/decisions/` owns the repository's architecture decision records; `docs/research/` owns repository research material. Root-level durable project docs are grouped under `docs/`.
 
-The generated marketplace must remain usable from the repository's Git distribution. `Z:/portfolio/.gitmodules` and live portfolio content consume this repository's `codex-marketplace/plugins/` paths, so `codex-marketplace/` remains the one committed, freshness-checked build output root. Do not add a parallel `dist/` copy. The current `.agents/plugins/marketplace.json`, `codex-marketplace/manifest.json`, plugin inventory, README/index surfaces, and downstream marketplace-source submodule consumers must be accounted for in the migration. Do not retain competing editable and generated authorities.
+The generated marketplace must remain usable from the repository's Git distribution. `dist/` is the one committed, freshness-checked output root. The root `.agents/plugins/marketplace.json` is Codex's marketplace entry point and refers to built plugin roots under `dist/plugins/`. Keep authored catalog inputs in `src/plugin-definitions/` and generated inventory in `dist/`.
 
 ## Test responsibilities
 
@@ -40,7 +40,7 @@ The build must copy shared material into each packaged skill at a declared relat
 
 ## Migration boundaries
 
-The refactor replaces the current source-custody assumption in `.agents/doctrine/custody-and-marketplace-doctrine.md` and the generated `codex-marketplace/plugins/` authoring flow. It also moves root `adr/` contents to `docs/decisions/` and root `research/` to `docs/research/`, updating links and generated indexes. It must update `AGENTS.md`, the marketplace generation playbook, implementation guidance, marketplace manifests/inventory/indexes, plugin scaffolding, validators, tests, CI/task-runner targets, README/contributor documentation, and downstream consumer expectations where the live repo uses them.
+The refactor replaces the current source-custody assumption in `.agents/doctrine/custody-and-marketplace-doctrine.md` and the generated `dist/plugins/` authoring flow. It also moves root `adr/` contents to `docs/decisions/` and root `research/` to `docs/research/`, updating links and generated indexes. It must update `AGENTS.md`, the marketplace generation playbook, implementation guidance, marketplace manifests/inventory/indexes, plugin scaffolding, validators, tests, CI/task-runner targets, README/contributor documentation, and downstream consumer expectations where the live repo uses them.
 
 Migration proceeds through a representative pilot that proves one skill can be included in two built plugins and one shared reference is copied into each package. After the build contract is verified, migrate the remaining first-party inventory, remove superseded source/build projections, and regenerate every owned output. Preserve public plugin identities, install policies, plugin contents, authored wording, provenance, license terms, and existing runtime behavior unless the approved design explicitly requires a change.
 

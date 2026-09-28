@@ -1,7 +1,7 @@
 ---
 description: "First-party skill format"
 trigger: glob
-globs: "skills/**,plugin-definitions/**/contents.json"
+globs: "skills/**,src/plugin-definitions/**/contents.json"
 ---
 
 ## Scope

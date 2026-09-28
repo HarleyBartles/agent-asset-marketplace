@@ -2,10 +2,10 @@
 
 ## Canonical location
 
-First-party portable subagent `.md` profile assets live in `codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/assets/`. For example:
+First-party portable subagent `.md` profile assets live in `dist/plugins/superpowers-plus/skills/selecting-a-subagent/assets/`. For example:
 
 ```
-codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/
+dist/plugins/superpowers-plus/skills/selecting-a-subagent/
   assets/
     reviewer.md
     reviewer-fixes.md

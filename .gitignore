@@ -7,7 +7,6 @@ __pycache__/
 .pytest_cache/
 *.pyc
 node_modules/
-dist/
 build/
 coverage/
 
@@ -16,9 +15,11 @@ coverage/
 *.tar
 *.tar.gz
 *.zip
-# Vendored source snapshots in plugin authority are source custody, not build noise
-!codex-marketplace/plugins/**/assets/authority/reference-source/**/*.tar.gz
-!codex-marketplace/plugins/**/assets/authority/reference-source/**/*.zip
+# Authority source snapshots and their packaged copies are not build noise.
+!skills/**/assets/authority/reference-source/**/*.tar.gz
+!skills/**/assets/authority/reference-source/**/*.zip
+!dist/plugins/**/assets/authority/reference-source/**/*.tar.gz
+!dist/plugins/**/assets/authority/reference-source/**/*.zip
 
 # OS and editor files
 .DS_Store

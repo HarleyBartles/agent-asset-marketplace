@@ -4,7 +4,7 @@
 
 **Goal:** Separate canonical first-party skill/resource source from plugin products, build complete self-contained marketplace plugins into a committed distribution tree, and give skill behavior, build tooling, and shipped-artifact tests distinct homes.
 
-**Architecture:** Use top-level `skills/` and `shared/` as authored source, `plugin-definitions/` for product metadata and inclusion lists, `src/` for reusable build code, and `codex-marketplace/` for complete built plugin packages and their marketplace catalog. The existing output path is retained because the Portfolio marketplace-source submodule consumes it. Keep repository command entrypoints under `tools/`, independent runtime packages under `packages/`, and the repository's own installed agent mesh under `.agents/`. Build copies selected skills and shared resources into each plugin and carries required provenance/license notices into the shipped package.
+**Architecture:** Use top-level `skills/` and `shared/` as authored source, `src/plugin-definitions/` for product metadata and inclusion lists, `src/` for reusable build code, and `dist/` for complete built plugin packages and their marketplace catalog. The output is committed under `dist/` because it is what this repository distributes. Keep repository command entrypoints under `tools/`, independent runtime package source under `src/packages/`, and the repository's own installed agent mesh under `.agents/`. Build copies selected skills and shared resources into each plugin and carries required provenance/license notices into the shipped package.
 
 **Tech Stack:** Python build and validation tooling, JSON plugin/build manifests, Markdown skills and references, pytest, existing `tools/run.py` task runner and tracked CI/pre-commit pipeline.
 
@@ -18,7 +18,7 @@
 - Plugin packages remain self-contained installable units; runtime references never escape the installed plugin or skill directory.
 - Include the same canonical skill in multiple plugins when product definitions request it.
 - Copy canonical shared references/resources into each packaged skill at explicitly declared paths.
-- Keep generated output generated: never hand-edit `codex-marketplace/` or compatibility marketplace exports to change product behavior.
+- Keep generated output generated: never hand-edit `dist/` or compatibility marketplace exports to change product behavior.
 - Preserve plugin names, marketplace install policy, authored skill wording, provenance, license notices, and current runtime behavior unless the build contract requires a narrowly documented adjustment.
 - Keep `.agents/skills/` as installed operating projections and `packages/` as independently versioned runtime packages.
 - Move all root ADR content to `docs/decisions/`, remove the empty root `adr/` directory, and move root `research/` to `docs/research/`. Repair authored links and regenerate projections/indexes that name the old paths. Include these layout changes in the same PR.
@@ -41,7 +41,7 @@ ______________________________________________________________________
 
 **Files:**
 
-- Inspect: `AGENTS.md`, `README.md`, `.agents/doctrine/custody-and-marketplace-doctrine.md`, `.agents/playbooks/marketplace-generation.md`, `.agents/runbooks/implementing.md`, `docs/decisions/`, `docs/research/`, `codex-marketplace/plugin-roots.json`, `codex-marketplace/manifest.json`, `.agents/plugins/marketplace.json`, `tools/run.py`, `tools/marketplace_utils.py`, `tools/generate_marketplace.py`, `tools/validate_marketplace.py`, `tools/generate_repo_index.py`, `tests/`
+- Inspect: `AGENTS.md`, `README.md`, `.agents/doctrine/custody-and-marketplace-doctrine.md`, `.agents/playbooks/marketplace-generation.md`, `.agents/runbooks/implementing.md`, `docs/decisions/`, `docs/research/`, `dist/plugin-roots.json`, `dist/manifest.json`, `.agents/plugins/marketplace.json`, `tools/run.py`, `tools/marketplace_utils.py`, `tools/generate_marketplace.py`, `tools/validate_marketplace.py`, `tools/generate_repo_index.py`, `tests/`
 - Inspect consumer: downstream repository contracts and documentation that pin or consume this repository as marketplace source. This repo has no `.gitmodules`; do not assume its consumers are configured as local submodules.
 - Modify: move `adr/*` to `docs/decisions/` and `research/*` to `docs/research/`; update `AGENTS.md`, `README.md`, research-source links, and the canonical generating-agent-mesh skill reference. Keep consumer findings in the off-repo execution ledger, not a new permanent registry.
 
@@ -57,7 +57,7 @@ Confirm this branch is based on current `origin/main`. Inspect `.agents/plans/20
 
 - [x] **Step 2: Trace all marketplace consumers**
 
-Inspect downstream repository contracts/docs that consume this repository, `.agents/plugins/marketplace.json`, the current generated manifest, plugin inventory, and repository indexes. `Z:/portfolio/.gitmodules` pins this repository at `.agents/plugins/marketplace-source`, and its content uses `codex-marketplace/plugins/...`; therefore retain `codex-marketplace/` as the single committed generated output root, not a compatibility copy beside a second `dist/` tree. GitHub's merged PR #336 status checks are marketplace validation only; they provide no pytest timing, so the user-reported suite baseline is retained.
+Inspect downstream repository contracts/docs that consume this repository, `.agents/plugins/marketplace.json`, the current generated manifest, plugin inventory, and repository indexes. `dist/` is the single committed generated output root for the repository's distributed assets. Consumer subscription changes will be handled separately. GitHub's merged PR #336 status checks are marketplace validation only; they provide no pytest timing, so the user-reported suite baseline is retained.
 
 - [x] **Step 3: Map test ownership and runtime without reverting merged sanitation**
 
@@ -71,7 +71,7 @@ Review the merged test tree and its latest complete-hook timing. Identify tests 
 
 - Create: `skills/` canonical directories for the pilot skill(s)
 - Create: `shared/` canonical pilot resource(s)
-- Create: `plugin-definitions/<plugin>/plugin.json` and `contents.json` for two pilot plugins
+- Create: `src/plugin-definitions/<plugin>/plugin.json` and `contents.json` for two pilot plugins
 - Create: `src/marketplace/` package skeleton and schema/data contracts
 - Test: `tests/build/test_plugin_definition_contract.py`
 
@@ -111,7 +111,7 @@ Run the same pytest command and confirm all valid and invalid definition cases p
 
 - Consumes: validated definitions from Task 2.
 
-- Produces: one complete plugin directory per definition beneath `codex-marketplace/plugins/`, with `plugin.json`, skills, copied shared resources, required assets, and license/provenance notices; a generated marketplace catalog under `codex-marketplace/`.
+- Produces: one complete plugin directory per definition beneath `dist/plugins/`, with `plugin.json`, skills, copied shared resources, required assets, and license/provenance notices; a generated marketplace catalog under `dist/`.
 
 - [ ] **Step 1: Add assembly behavior tests**
 
@@ -123,7 +123,7 @@ Run `py -3 -m pytest tests/build/test_plugin_assembly.py -q` and `py -3 -m pytes
 
 - [ ] **Step 3: Implement apply/check assembly**
 
-Build all declared plugin packages into a temporary staging directory, validate the complete staged tree, then replace the owned `codex-marketplace/` generated outputs deterministically. Preserve independently authored package sources in `codex-marketplace/packages/` and any other explicitly declared inputs; the builder must not erase them. Check mode compares expected output and reports stale/missing/unexpected files without writing. Do not remove unrelated files outside the owned output root. Generated plugin paths must never refer back to top-level source.
+Build all declared plugin packages into a temporary staging directory, validate the complete staged tree, then replace the owned `dist/` generated outputs deterministically. Preserve independently authored package sources in `packages/` and any other explicitly declared inputs; the builder must not erase them. Check mode compares expected output and reports stale/missing/unexpected files without writing. Do not remove unrelated files outside the owned output root. Generated plugin paths must never refer back to top-level source.
 
 - [ ] **Step 4: Verify focused tests and build repeatability**
 
@@ -136,7 +136,7 @@ Run both focused pytest commands, apply the build twice, and compare output mani
 - Create/move: two representative skill source trees under `skills/`
 - Create: a shared reference under `shared/references/`
 - Create: two plugin definitions that both include one skill and include the shared reference in at least two skills
-- Generate: pilot packages under `codex-marketplace/plugins/` and marketplace catalog under `codex-marketplace/`
+- Generate: pilot packages under `dist/plugins/` and marketplace catalog under `dist/`
 - Test: `tests/shipping/test_pilot_install_closure.py`
 
 **Interfaces:**
@@ -165,9 +165,9 @@ Run `py -3 tools/run.py marketplace --apply`, inspect both package trees and cat
 
 **Files:**
 
-- Move: all currently canonical skill trees out of `codex-marketplace/plugins/*/skills/` into `skills/<skill-name>/`
+- Move: all currently canonical skill trees out of `dist/plugins/*/skills/` into `skills/<skill-name>/`
 - Move/extract: shared canonical references/assets currently synchronized by `tools/sync_skill_shared_references.py` into `shared/`
-- Create/update: `plugin-definitions/*/contents.json` for the current 20 plugin identities and all 86 bundled skill inclusions
+- Create/update: `src/plugin-definitions/*/contents.json` for the current 20 plugin identities and all 86 bundled skill inclusions
 - Update/remove: `SOURCE.md`, `references/bundle-manifest.json`, and source-path fields according to the new provenance/build record contract
 - Update: `tools/new_plugin.py` to scaffold canonical skill source or plugin definitions at the new homes
 - Test: skill-owned tests under `skills/<skill>/tests/scripts/` and `skills/<skill>/tests/behavior/` for changed or migrated assets
@@ -238,8 +238,8 @@ Run focused tests for each changed suite and confirm that CI names only reposito
 
 **Files:**
 
-- Generate: `codex-marketplace/manifest.json` and `codex-marketplace/plugins/*`
-- Generate or preserve compatibility: `.agents/plugins/marketplace.json`, `codex-marketplace/manifest.json`, `codex-marketplace/plugin-roots.json`, `codex-marketplace/README.md`, `codex-marketplace/INDEX.*`, root `INDEX.*`, and marketplace submodule exports as justified by Task 1 consumer evidence
+- Generate: `dist/manifest.json` and `dist/plugins/*`
+- Generate or preserve compatibility: `.agents/plugins/marketplace.json`, `dist/manifest.json`, `dist/plugin-roots.json`, `dist/README.md`, `dist/INDEX.*`, root `INDEX.*`, and marketplace submodule exports as justified by Task 1 consumer evidence
 - Modify: `tools/generate_plugin_root_inventory.py`, `tools/generate_repo_index.py`, `tools/validate_marketplace.py`, `tools/validate_repo_index.py`, `tools/marketplace_utils.py`, `tools/run.py`
 - Modify: `AGENTS.md`, `README.md`, `CONTRIBUTING.md`, `.agents/doctrine/custody-and-marketplace-doctrine.md`, `.agents/playbooks/marketplace-generation.md`, `.agents/runbooks/implementing.md`, and relevant `.devin/rules/` files
 - Test: `tests/shipping/` catalog resolution and generated-surface validation
@@ -252,7 +252,7 @@ Run focused tests for each changed suite and confirm that CI names only reposito
 
 - [ ] **Step 1: Add consumer-path tests**
 
-Verify `.agents/plugins/marketplace.json` entries resolve to the built package root under the actual repo marketplace resolution rules; verify `codex-marketplace/manifest.json` matches the canonical generated catalog. Verify the Portfolio marketplace-source submodule can still read `codex-marketplace/plugins/` at its pinned checkout path.
+Verify `.agents/plugins/marketplace.json` entries resolve to the built package root under the actual repo marketplace resolution rules; verify `dist/manifest.json` matches the canonical generated catalog. Verify every catalog entry resolves to a complete plugin under `dist/plugins/`.
 
 - [ ] **Step 2: Implement catalog and inventory generation**
 
@@ -260,7 +260,7 @@ Generate catalog order, categories, install policies, and plugin-root inventory 
 
 - [ ] **Step 3: Update authoritative doctrine and routing**
 
-Replace source-custody and BAU claims that skill source lives under plugin directories. State the new `skills/`, `shared/`, `plugin-definitions/`, `src/`, and `codex-marketplace/` responsibilities, build/apply/check commands, output ownership, and test routing in `AGENTS.md`, custody doctrine, marketplace-generation playbook, implementing runbook, contribution docs, and scoped rules. Document `codex-marketplace/` as generated output retained at this path for the Portfolio submodule. Move ADRs into `docs/decisions/` and research into `docs/research/`, repair the root ADR link and references to the research corpus, and regenerate documentation indexes. Keep source custody, product composition, and output generation as separate concepts.
+Replace source-custody and BAU claims that skill source lives under plugin directories. State the new `skills/`, `shared/`, `src/plugin-definitions/`, `src/`, and `dist/` responsibilities, build/apply/check commands, output ownership, and test routing in `AGENTS.md`, custody doctrine, marketplace-generation playbook, implementing runbook, contribution docs, and scoped rules. Document `dist/` as generated, committed distribution output. Move ADRs into `docs/decisions/` and research into `docs/research/`, repair the root ADR link and references to the research corpus, and regenerate documentation indexes. Keep source custody, product composition, and output generation as separate concepts.
 
 - [ ] **Step 4: Remove superseded generators and projections**
 

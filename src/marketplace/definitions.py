@@ -80,9 +80,9 @@ def load_marketplace(root: Path) -> Marketplace:
     root = root.resolve()
     skills_root = (root / "skills").resolve()
     shared_root = (root / "shared").resolve()
-    plugin_root = root / "plugin-definitions"
+    plugin_root = root / "src/plugin-definitions"
     if not skills_root.is_dir() or not shared_root.is_dir() or not plugin_root.is_dir():
-        raise DefinitionError("repository must contain skills/, shared/, and plugin-definitions/ roots")
+        raise DefinitionError("repository must contain skills/, shared/, and src/plugin-definitions/ roots")
 
     skills = {path.name: path.resolve() for path in skills_root.iterdir() if path.is_dir()}
     resources_data = _read_json(root / "resources.json")

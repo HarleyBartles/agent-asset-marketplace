@@ -39,7 +39,7 @@ def test_email_is_flagged():
 
 def test_email_in_hash_pinned_reference_snapshot_is_not_flagged():
     path, content = _fixture(
-        "codex-marketplace/plugins/example/skills/example/assets/authority/reference-source/upstream/source.txt",
+        "dist/plugins/example/skills/example/assets/authority/reference-source/upstream/source.txt",
         "Upstream contact: maintainer@example.com.\n",
     )
     findings = []

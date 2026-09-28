@@ -2,7 +2,7 @@
 
 ## Ownership
 
-`repo-standards/scripts/deploy_vendor_profiles.py` owns the one-shot deployment of `codex-marketplace/plugins/*/assets/profiles/*.md` into `.agents/agents/`.
+`repo-standards/scripts/deploy_vendor_profiles.py` owns the one-shot deployment of `dist/plugins/*/assets/profiles/*.md` into `.agents/agents/`.
 
 `refreshing-installed-skills` still records the `vendorProfiles` provenance field in `.agents/skills/.provenance.json`, but it delegates the actual copy and orphan removal to the `repo-standards` script.
 
@@ -16,8 +16,8 @@
 ## Safe invocation
 
 ```bash
-py -3 codex-marketplace/plugins/agent-operating-model/skills/repo-shape/scripts/deploy_vendor_profiles.py --check
-py -3 codex-marketplace/plugins/agent-operating-model/skills/repo-shape/scripts/deploy_vendor_profiles.py --apply
+py -3 dist/plugins/agent-operating-model/skills/repo-shape/scripts/deploy_vendor_profiles.py --check
+py -3 dist/plugins/agent-operating-model/skills/repo-shape/scripts/deploy_vendor_profiles.py --apply
 ```
 
 `refreshing-installed-skills` calls the script automatically; do not run it directly unless you are testing or debugging.

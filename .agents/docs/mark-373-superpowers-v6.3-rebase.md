@@ -1,6 +1,6 @@
 # Superpowers+ v6.3 Rebase Decisions
 
-Canonical provenance, upstream commits, and source custody are recorded in `codex-marketplace/plugins/superpowers-plus/SOURCE.md`. This record retains only the decisions that cannot be reconstructed reliably from the resulting Git diff.
+Canonical provenance, upstream commits, and source custody are recorded in `dist/plugins/superpowers-plus/SOURCE.md`. This record retains only the decisions that cannot be reconstructed reliably from the resulting Git diff.
 
 ## Manual merges
 

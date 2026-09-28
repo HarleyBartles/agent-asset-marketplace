@@ -465,8 +465,8 @@ _GATED_FILES = (
     REPO_ROOT / ".agents" / "doctrine" / "tools.md",
     REPO_ROOT / ".agents" / "doctrine" / "plans.md",
     REPO_ROOT / ".agents" / "runbooks" / "planning.md",
-    REPO_ROOT / "codex-marketplace" / "plugins" / "superpowers-plus" / "skills" / "handoff-gates" / "SKILL.md",
-    REPO_ROOT / "codex-marketplace" / "plugins" / "superpowers-plus" / "skills" / "publishing-source" / "SKILL.md",
+    REPO_ROOT / "dist" / "plugins" / "superpowers-plus" / "skills" / "handoff-gates" / "SKILL.md",
+    REPO_ROOT / "dist" / "plugins" / "superpowers-plus" / "skills" / "publishing-source" / "SKILL.md",
 )
 
 

@@ -22,10 +22,10 @@ def assert_plugin_is_self_contained(plugin: Path) -> None:
 
 def test_built_plugin_can_be_inspected_as_an_isolated_install(tmp_path: Path) -> None:
     _write(tmp_path, "skills/guide/SKILL.md", "# Guide\n")
-    _write(tmp_path, "plugin-definitions/guide/plugin.json", json.dumps({"name": "guide", "version": "1.0.0"}))
-    _write(tmp_path, "plugin-definitions/guide/contents.json", json.dumps({"skills": [{"name": "guide"}]}))
+    _write(tmp_path, "src/plugin-definitions/guide/plugin.json", json.dumps({"name": "guide", "version": "1.0.0"}))
+    _write(tmp_path, "src/plugin-definitions/guide/contents.json", json.dumps({"skills": [{"name": "guide"}]}))
     _write(tmp_path, "resources.json", "{}")
     (tmp_path / "shared").mkdir()
 
     build_marketplace(tmp_path, apply=True)
-    assert_plugin_is_self_contained(tmp_path / "codex-marketplace/plugins/guide")
+    assert_plugin_is_self_contained(tmp_path / "dist/plugins/guide")

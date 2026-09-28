@@ -1,0 +1,16 @@
+{
+  "bundle_name": "writing-pack",
+  "bundle_version": "1.0.0",
+  "bundle_type": "plugin-pack",
+  "marketplace_root": ".agents/plugins/marketplace.json",
+  "plugin_root": "dist/plugins/writing-pack",
+  "source_families": [
+    "first_party"
+  ],
+  "notes": [
+    "writing-pack combines first-party writing-pack skills."
+  ],
+  "provenance_refs": [],
+  "plugin_author": "Harley Bartles",
+  "plugin_license": "MIT"
+}

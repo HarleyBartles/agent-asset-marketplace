@@ -43,7 +43,7 @@ def _copy_source(
 
 def _expected_plugins(root: Path, staging: Path) -> None:
     marketplace = load_marketplace(root)
-    definitions = root / "plugin-definitions"
+    definitions = root / "src/plugin-definitions"
     skills_root = root / "skills"
     shared_root = root / "shared"
     for name, plugin in marketplace.plugins.items():
@@ -95,7 +95,7 @@ def _package_files(root: Path) -> dict[str, bytes]:
 def build_marketplace(root: Path, *, apply: bool) -> bool:
     """Build plugin packages; check mode compares output without changing it."""
     root = root.resolve()
-    output = root / "codex-marketplace/plugins"
+    output = root / "dist/plugins"
     with tempfile.TemporaryDirectory(prefix="marketplace-build-") as temporary:
         staging = Path(temporary) / "plugins"
         staging.mkdir()

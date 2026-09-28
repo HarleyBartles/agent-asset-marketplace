@@ -28,7 +28,7 @@ FULL_DIFF_LENSES = {"reviewer-fast"}
 
 def _installed_mirror_paths(changed: list[str], repo_root: Path) -> set[str]:
     """Return installed .agents/skills paths whose source also appears in the diff."""
-    if not (repo_root / "codex-marketplace" / "plugins").exists():
+    if not (repo_root / "dist" / "plugins").exists():
         return set()
     mirrors = set()
     for path in changed:
@@ -40,7 +40,7 @@ def _installed_mirror_paths(changed: list[str], repo_root: Path) -> set[str]:
             continue
         skill = parts[0]
         rest = "/".join(parts[1:])
-        source = f"codex-marketplace/plugins/**/skills/{skill}/{rest}"
+        source = f"dist/plugins/**/skills/{skill}/{rest}"
         if any(_glob_match(source, c) for c in changed):
             mirrors.add(path)
     return mirrors

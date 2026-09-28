@@ -68,7 +68,7 @@ def _source_paths() -> set[str]:
     if _SOURCE_PATHS is not None:
         return _SOURCE_PATHS
     _SOURCE_PATHS = set()
-    plugins = ROOT / "codex-marketplace/plugins"
+    plugins = ROOT / "dist/plugins"
     for plugin_dir in plugins.iterdir():
         if not plugin_dir.is_dir():
             continue

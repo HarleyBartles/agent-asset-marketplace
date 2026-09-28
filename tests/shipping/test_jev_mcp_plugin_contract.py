@@ -5,7 +5,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[2]
-PLUGIN = ROOT / "codex-marketplace/plugins/jev-mcp"
+PLUGIN = ROOT / "dist/plugins/jev-mcp"
 
 
 def test_remote_mcp_uses_documented_endpoint_and_external_key() -> None:

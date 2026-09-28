@@ -2,7 +2,7 @@
 
 ## Scope
 
-`plugin-definitions/` owns product metadata and composition. `codex-marketplace/plugins/` is the generated Codex install surface. Active products and catalog order are declared in `codex-marketplace/plugin-roots.json` and validated against both marketplace manifests.
+`src/plugin-definitions/` owns product metadata and composition. `dist/plugins/` is the generated Codex install surface. Active products and catalog order are declared in `dist/plugin-roots.json` and validated against both marketplace manifests.
 
 Skill source lives under `skills/<skill-id>/`; shared resources live under `shared/`. A plugin may include a skill without owning its source, and one canonical skill may be selected by multiple products. `contents.json` names skill sources and shared resource destinations. `references/bundle-manifest.json` in built plugin folders is generated compatibility metadata.
 
@@ -14,6 +14,6 @@ All marketplace source is first-party maintained, including open-source adaptati
 - Run `py -3 tools/run.py marketplace --check` to verify package and manifest freshness without writing.
 - Do not hand-edit generated plugin contents, bundle manifests, indexes, or installed skill projections.
 - Verify `.codex-plugin/plugin.json`, all referenced assets, skill closure, copied resources, and required license notices in each built package.
-- Confirm `codex-marketplace/plugins/` remains consumable from a Git checkout; Portfolio pins this path through the marketplace-source submodule.
+- Confirm `dist/plugins/` remains consumable from a Git checkout; Portfolio pins this path through the marketplace-source submodule.
 
-Keep this doctrine aligned with `codex-marketplace/plugin-roots.json` and [marketplace source doctrine](codex-marketplace.md).
+Keep this doctrine aligned with `dist/plugin-roots.json` and [marketplace source doctrine](dist.md).

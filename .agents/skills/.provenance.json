@@ -1,5 +1,5 @@
 {
-  "manifestSha": "d617d39207143aaa1829893bfc09e8b0d370e109c56b0090e4a33ffecf659345",
+  "manifestSha": "91b2a354deacc19db8ab656ddfbb97fc9a6c6fe5abc8ab3ab5121a6b50cb2698",
   "syncedPlugins": [
     "mcp-usage-pack",
     "repo-worker-pack",
@@ -12,41 +12,41 @@
   "localSkills": [],
   "marketplace": {
     "source": "HarleyBartles/agent-asset-marketplace",
-    "sourcePath": "codex-marketplace/plugins"
+    "sourcePath": "dist/plugins"
   },
   "localPlugins": [
     {
       "name": "mcp-usage-pack",
-      "path": "./codex-marketplace/plugins/mcp-usage-pack",
+      "path": "./dist/plugins/mcp-usage-pack",
       "source": "local"
     },
     {
       "name": "repo-worker-pack",
-      "path": "./codex-marketplace/plugins/repo-worker-pack",
+      "path": "./dist/plugins/repo-worker-pack",
       "source": "local"
     },
     {
       "name": "superpowers-plus",
-      "path": "./codex-marketplace/plugins/superpowers-plus",
+      "path": "./dist/plugins/superpowers-plus",
       "source": "local"
     },
     {
       "name": "unslop-plus",
-      "path": "./codex-marketplace/plugins/unslop-plus",
+      "path": "./dist/plugins/unslop-plus",
       "source": "local"
     },
     {
       "name": "writing-pack",
-      "path": "./codex-marketplace/plugins/writing-pack",
+      "path": "./dist/plugins/writing-pack",
       "source": "local"
     },
     {
       "name": "agent-operating-model",
-      "path": "./codex-marketplace/plugins/agent-operating-model",
+      "path": "./dist/plugins/agent-operating-model",
       "source": "local"
     }
   ],
   "marketplaceFile": ".agents/plugins/marketplace.json",
   "vendorProfiles": [],
-  "syncedAt": "2026-09-28T18:27:39.022722"
+  "syncedAt": "2026-09-28T18:49:57.204189"
 }

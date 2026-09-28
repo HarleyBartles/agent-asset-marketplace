@@ -13,7 +13,7 @@
     "**/INDEX.json",
     "**/.provenance.json",
     ".agents/plugins/marketplace.json",
-    "codex-marketplace/plugin-roots.json",
-    "codex-marketplace/manifest.json"
+    "dist/plugin-roots.json",
+    "dist/manifest.json"
   ]
 }

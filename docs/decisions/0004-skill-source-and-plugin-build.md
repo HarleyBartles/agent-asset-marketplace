@@ -8,7 +8,7 @@ Plugin-owned source prevented one skill or shared reference from being reused cl
 
 ## Decision
 
-Canonical first-party maintained skills live under `skills/`. Shared authored resources live under `shared/`. `plugin-definitions/` declares plugin identity, composition, provenance, and static package files. A deterministic build assembles complete plugin packages under `codex-marketplace/plugins/`; those packages are committed for marketplace consumers. Plugins carry skills but do not own their source.
+Canonical first-party maintained skills live under `skills/`. Shared authored resources live under `shared/`. `src/plugin-definitions/` declares plugin identity, composition, provenance, and static package files. A deterministic build assembles complete plugin packages under `dist/plugins/`; those packages are committed for marketplace consumers. Plugins carry skills but do not own their source.
 
 Each skill owns its executable tests and pressure cases under its source `tests/` directory. The build carries ship-ready tests with each installed skill and excludes evaluator-only material, caches, and run results. The commit and PR gate runs separate repository, build, and shipped-package suites under the root `tests/` directory. Skill tests and evaluation-harness tests run when their owner changes.
 

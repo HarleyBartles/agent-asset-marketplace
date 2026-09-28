@@ -22,7 +22,7 @@ def test_shared_skill_and_reference_resolve_after_each_plugin_isolated(tmp_path:
     installed = tmp_path / "installed"
     installed.mkdir()
     for name in PLUGIN_NAMES:
-        source = ROOT / "codex-marketplace/plugins" / name
+        source = ROOT / "dist/plugins" / name
         package = installed / name
         shutil.copytree(source, package)
 

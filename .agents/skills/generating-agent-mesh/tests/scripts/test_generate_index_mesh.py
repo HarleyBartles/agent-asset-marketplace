@@ -106,14 +106,8 @@ def test_literal_underscore_filename_links_pass_generator_and_formatter(tmp_path
     shutil.copy2(skill_source / "requirements.txt", formatter / "requirements.txt")
     shutil.copy2(skill_source / "scripts/format_markdown.py", formatter / "scripts/format_markdown.py")
     marketplace_source = repo / ".agents/plugins/marketplace-source"
-    wheel_source = (
-        REPO_ROOT / "codex-marketplace/packages/mdformat-safe-link-labels/wheels/"
-        "mdformat_safe_link_labels-1.0.0-py3-none-any.whl"
-    )
-    wheel_target = (
-        marketplace_source / "codex-marketplace/packages/mdformat-safe-link-labels/wheels/"
-        "mdformat_safe_link_labels-1.0.0-py3-none-any.whl"
-    )
+    wheel_source = REPO_ROOT / "dist/wheels/mdformat_safe_link_labels-1.0.0-py3-none-any.whl"
+    wheel_target = marketplace_source / "dist/wheels/mdformat_safe_link_labels-1.0.0-py3-none-any.whl"
     wheel_target.parent.mkdir(parents=True)
     shutil.copy2(wheel_source, wheel_target)
     isolated_python = tmp_path / "formatter-python"

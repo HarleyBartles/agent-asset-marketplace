@@ -14,8 +14,8 @@ from typing import Final
 import shared_checkout
 
 ROOT: Final[Path] = Path(__file__).resolve().parents[1]
-DEFINITIONS: Final[Path] = ROOT / "plugin-definitions"
-PLUGIN_ROOTS: Final[Path] = ROOT / "codex-marketplace/plugin-roots.json"
+DEFINITIONS: Final[Path] = ROOT / "src/plugin-definitions"
+PLUGIN_ROOTS: Final[Path] = ROOT / "src/plugin-definitions/catalog.json"
 TEMPLATE: Final[Path] = DEFINITIONS / "repo-worker-pack/files/assets/icon.svg"
 
 
@@ -91,7 +91,7 @@ def _scaffold(definition: Path, name: str) -> None:
         "bundle_version": "1.0.0",
         "bundle_type": "plugin-pack",
         "marketplace_root": ".agents/plugins/marketplace.json",
-        "plugin_root": f"codex-marketplace/plugins/{name}",
+        "plugin_root": f"dist/plugins/{name}",
         "source_families": ["first_party"],
         "notes": [f"{display} is assembled from first-party skill source."],
         "provenance_refs": [],
@@ -110,7 +110,7 @@ def _scaffold(definition: Path, name: str) -> None:
     (package_files / "LICENSE").write_text(_license(), encoding="utf-8")
     (package_files / "README.md").write_text(
         f"# {display}\n\nThis plugin is assembled from first-party sources declared in "
-        f"`plugin-definitions/{name}/contents.json`.\n",
+        f"`src/plugin-definitions/{name}/contents.json`.\n",
         encoding="utf-8",
     )
     (package_files / "SOURCE.md").write_text(
@@ -133,9 +133,9 @@ def _register_root(name: str) -> None:
             "order": order,
             "name": name,
             "category": "Productivity",
-            "registry_path": f"./codex-marketplace/plugins/{name}",
-            "plugin_root": f"codex-marketplace/plugins/{name}",
-            "manifest_path": f"codex-marketplace/plugins/{name}/.codex-plugin/plugin.json",
+            "registry_path": f"./dist/plugins/{name}",
+            "plugin_root": f"dist/plugins/{name}",
+            "manifest_path": f"dist/plugins/{name}/.codex-plugin/plugin.json",
             "enabled": False,
         }
     )

@@ -14,9 +14,7 @@ def test_repository_uses_portable_markdown_formatter_wiring() -> None:
     commands = json.loads((ROOT / ".agents/contracts/repo-standards-commands.json").read_text(encoding="utf-8"))
 
     assert "mdformat==1.0.0" in requirements
-    assert (
-        "./codex-marketplace/packages/mdformat-safe-link-labels/wheels/mdformat_safe_link_labels-1.0.0-py3-none-any.whl"
-    ) in requirements
+    assert ("./dist/wheels/mdformat_safe_link_labels-1.0.0-py3-none-any.whl") in requirements
     assert commands["apply"][0] == [
         "@python",
         ".agents/skills/markdown-formatting/scripts/format_markdown.py",
@@ -30,7 +28,7 @@ def test_repository_uses_portable_markdown_formatter_wiring() -> None:
 
 
 def test_installed_markdown_formatter_matches_canonical_source() -> None:
-    canonical = ROOT / "codex-marketplace/plugins/agent-operating-model/skills/markdown-formatting"
+    canonical = ROOT / "dist/plugins/agent-operating-model/skills/markdown-formatting"
     installed = ROOT / ".agents/skills/markdown-formatting"
     canonical_files = {
         path.relative_to(canonical)

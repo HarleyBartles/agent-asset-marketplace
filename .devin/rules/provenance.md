@@ -1,7 +1,7 @@
 ---
 description: "Marketplace source provenance and licenses"
 trigger: glob
-globs: "skills/**,shared/**,plugin-definitions/**"
+globs: "skills/**,shared/**,src/plugin-definitions/**"
 ---
 
 ## Scope

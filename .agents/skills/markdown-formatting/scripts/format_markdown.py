@@ -25,8 +25,7 @@ REQUIRED_DISTRIBUTION_NAMES = frozenset(
 )
 RENDERER_VERSION = "1.0.0"
 RENDERER_WHEEL_REQUIREMENT = (
-    "./.agents/plugins/marketplace-source/codex-marketplace/packages/"
-    "mdformat-safe-link-labels/wheels/mdformat_safe_link_labels-1.0.0-py3-none-any.whl"
+    "./.agents/plugins/marketplace-source/dist/wheels/mdformat_safe_link_labels-1.0.0-py3-none-any.whl"
 )
 
 

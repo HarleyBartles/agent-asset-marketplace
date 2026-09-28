@@ -192,8 +192,7 @@ def test_marketplace_renderer_wheel_is_a_versioned_toolchain_requirement(tmp_pat
     module = load_module()
     requirements = tmp_path / "requirements.txt"
     wheel_requirement = (
-        "./.agents/plugins/marketplace-source/codex-marketplace/packages/"
-        "mdformat-safe-link-labels/wheels/mdformat_safe_link_labels-1.0.0-py3-none-any.whl"
+        "./.agents/plugins/marketplace-source/dist/wheels/mdformat_safe_link_labels-1.0.0-py3-none-any.whl"
     )
     requirements.write_text(
         f"mdformat==1.0.0\nmdformat-frontmatter==2.1.2\nmdformat-gfm==1.0.0\n{wheel_requirement}\n",

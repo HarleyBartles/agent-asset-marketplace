@@ -1,6 +1,6 @@
 ## First-Party Skill Source Format
 
-This scope covers canonical first-party maintained skills under `skills/<skill-id>/`. Product membership is declared separately under `plugin-definitions/`.
+This scope covers canonical first-party maintained skills under `skills/<skill-id>/`. Product membership is declared separately under `src/plugin-definitions/`.
 
 Use these rules when editing or adding a first-party skill in a Codex plugin.
 

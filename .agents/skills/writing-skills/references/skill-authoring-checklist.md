@@ -7,7 +7,7 @@ Use this checklist when creating, reviewing, or refreshing a skill.
 ## 1. Choose custody and lane
 
 - [ ] Local `.agents/skills/<name>/` skill declared by exact name in `repo.local_skills`, or canonical marketplace source under `skills/<name>/`?
-- [ ] For marketplace source, which `plugin-definitions/<plugin>/contents.json` products should include this skill?
+- [ ] For marketplace source, which `src/plugin-definitions/<plugin>/contents.json` products should include this skill?
 - [ ] Treat any prefix as an optional naming choice, not a custody mechanism.
 - [ ] Lane: `first_party`, `skills-with-source`, `skills-with-citation`, or `skills-with-mixed-source`?
 - [ ] Read `local-and-marketplace-custody.md` if unsure.

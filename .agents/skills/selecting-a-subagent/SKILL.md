@@ -117,7 +117,7 @@ When `iterative-review` runs, it should discover each `reviewer-*.md` profile fr
 
 ## Vendor and third-party profiles
 
-This skill ships first-party portable subagent `.md` profiles under `codex-marketplace/plugins/superpowers-plus/skills/selecting-a-subagent/assets/`. Run `py -3 .agents/skills/selecting-a-subagent/scripts/install_profiles.py --apply` to copy them to the Devin Desktop user-global agents directory (`~/.config/devin/agents/` or `%APPDATA%\devin\agents\` on Windows). Use `--target <dir>` to install elsewhere; the default target is the canonical surface for shared, portable profiles.
+This skill ships first-party portable subagent `.md` profiles under `dist/plugins/superpowers-plus/skills/selecting-a-subagent/assets/`. Run `py -3 .agents/skills/selecting-a-subagent/scripts/install_profiles.py --apply` to copy them to the Devin Desktop user-global agents directory (`~/.config/devin/agents/` or `%APPDATA%\devin\agents\` on Windows). Use `--target <dir>` to install elsewhere; the default target is the canonical surface for shared, portable profiles.
 
 When choosing a profile, apply the Devin Desktop agents search path; later directories in this list override earlier ones:
 

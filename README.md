@@ -12,9 +12,11 @@ You are welcome to browse or use anything here, but these skills were built for 
 
 - `skills/` — canonical skill source, independent of plugin membership.
 - `shared/` — reusable references and assets copied into built skills.
-- `plugin-definitions/` — plugin metadata and declared skill/resource composition.
+- `src/plugin-definitions/` — plugin metadata and declared skill/resource composition.
 - `src/marketplace/` — definition validation and deterministic plugin build implementation.
-- `codex-marketplace/plugins/` — generated, self-contained installable Codex plugins.
+- `src/packages/` — source for separately built Python packages.
+- `dist/plugins/` — generated, self-contained installable Codex plugins.
+- `dist/wheels/` — built Python wheels distributed by this repository.
 - `.agents/skills/` — portable skills and runbooks I use directly with agents.
 - `docs/decisions/` — architecture decision records.
 - `tests/` — named repository, build, shipping, and evaluation-harness suites; skill tests stay with their source.

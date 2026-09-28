@@ -39,8 +39,8 @@ ______________________________________________________________________
 - Create: `tests/pressure/handoff-gates/campaign.json`
 - Create: `tests/pressure/handoff-gates/prompts/coupled-plan-lane.md`
 - Create: `tests/pressure/handoff-gates/prompts/independent-plan-lane.md`
-- Modify: `codex-marketplace/plugins/superpowers-plus/skills/handoff-gates/SKILL.md`
-- Modify: `codex-marketplace/plugins/superpowers-plus/skills/writing-plans/SKILL.md` only where needed to make the gate result authoritative.
+- Modify: `dist/plugins/superpowers-plus/skills/handoff-gates/SKILL.md`
+- Modify: `dist/plugins/superpowers-plus/skills/writing-plans/SKILL.md` only where needed to make the gate result authoritative.
 - Regenerate: `.agents/skills/superpowers-plus/` through owning commands.
 - Regenerate: pressure prompt indexes through the owning mesh command.
 
