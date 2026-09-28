@@ -372,7 +372,7 @@ def test_command_declaration_exposes_generated_paths(tmp_path: Path) -> None:
             {
                 "apply": ["@python", "tools/run.py", "ci", "--apply"],
                 "check": ["@python", "tools/run.py", "ci", "--check"],
-                "generated_paths": [".agents/skills/**", "**/INDEX.md"],
+                "generated_paths": [".agents/skills/**", "dist/**"],
             }
         ),
         encoding="utf-8",
@@ -380,7 +380,7 @@ def test_command_declaration_exposes_generated_paths(tmp_path: Path) -> None:
     declaration, findings = repo_standards._check_declared_commands(tmp_path)
     assert findings == []
     assert declaration is not None
-    assert declaration.generated_paths == (".agents/skills/**", "**/INDEX.md")
+    assert declaration.generated_paths == (".agents/skills/**", "dist/**")
 
 
 @pytest.mark.parametrize(

@@ -7,6 +7,5 @@ Records are numbered in decision order. A record states the current decision, it
 | ADR                                                 | Decision                            | Status             |
 | --------------------------------------------------- | ----------------------------------- | ------------------ |
 | [0001](0001-plugin-first-marketplace-source.md)     | Plugin-first marketplace source     | Superseded by 0004 |
-| [0002](0002-derived-agent-mesh.md)                  | Derived agent-mesh navigation       | Accepted           |
 | [0003](0003-off-repo-completed-artifact-custody.md) | Off-repo completed-artifact custody | Accepted           |
 | [0004](0004-skill-source-and-plugin-build.md)       | Skill source and plugin build       | Accepted           |

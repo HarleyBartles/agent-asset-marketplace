@@ -16,12 +16,11 @@ Apply the named capability skills under the binding doctrine and local evidence 
 
 ## Doctrine and contracts
 
-- [Mesh policy](../doctrine/mesh-policy.md)
 - [Repository runbook policy](../doctrine/repo-runbook-policy.md)
 
 ## Local commands and paths
 
-Edit the owning canonical marketplace source when consumers should inherit the change. Regenerate the marketplace and index mesh after source edits. Root `AGENTS.md` and `.agents/doctrine/mesh-policy.md` remain law surfaces; this playbook contains procedures and pointers, not operative law.
+Edit the owning canonical marketplace source when consumers should inherit the change. Regenerate the marketplace after source edits. Root `AGENTS.md` and scoped doctrine remain law surfaces; this playbook contains procedures and pointers, not operative law.
 
 Canonical validation is `py -3 tools/run.py ci --check`; marketplace reconciliation is `py -3 tools/run.py marketplace --apply`. Review entry is `REVIEW.md`, contribution entry is `CONTRIBUTING.md`, and publication proof is an open PR or explicitly authorized direct-main commit.
 

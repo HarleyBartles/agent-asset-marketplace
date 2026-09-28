@@ -240,10 +240,21 @@ def test_runbook_composition_ignores_agents_md_and_absent_dir(tmp_path: Path) ->
     assert repo_standards._check_composition_graph(tmp_path) == []
 
 
-def test_runbook_composition_ignores_generated_index(tmp_path: Path) -> None:
+def test_runbook_composition_works_without_generated_index(tmp_path: Path) -> None:
     runbooks = tmp_path / ".agents" / "runbooks"
     runbooks.mkdir(parents=True)
-    (runbooks / "INDEX.md").write_text("# Index\n", encoding="utf-8")
+    (runbooks / "implementing.md").write_text(
+        "# Implementing\n\n"
+        "## When\n\nUse it.\n\n"
+        "## Required skills\n\nNone.\n\n"
+        "## Composition\n\nCompose it.\n\n"
+        "## Doctrine and contracts\n\nRead doctrine.\n\n"
+        "## Local commands and paths\n\nRun commands.\n\n"
+        "## Evidence contract\n\nRecord evidence.\n\n"
+        "## Prohibited combinations\n\nNone.\n\n"
+        "## Playbook routing\n\nNone.\n",
+        encoding="utf-8",
+    )
     assert repo_standards._check_composition_graph(tmp_path) == []
 
 

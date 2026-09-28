@@ -15,3 +15,7 @@ Keep AGENTS.md files as thin scoped law routers and README files as human-facing
 Local authored skills remain in their canonical repository source home. Installers, marketplace bundles, and caches are runtime surfaces and must not prune or replace authored custody. Cleanup removes stale disposable or generated surfaces only after proving their source and publication requirements survive.
 
 Publication proof remains a GitHub-visible PR or explicitly authorized direct-main commit, not local files or generator output.
+
+## Removing generated indexes
+
+When a repository retires generated `INDEX.md` or `INDEX.json` files, remove the tracked generated files and their generation and validation commands from local runners, hooks, and hosted CI. Do not add a replacement subscription or generated catalog. Keep direct `AGENTS.md` routes for binding repository guidance, and let authored runbooks, playbooks, and skills remain discoverable through their declared runtime or repository paths.

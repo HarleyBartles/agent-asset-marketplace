@@ -27,7 +27,7 @@ When repo-local runtime subagent profiles under `.agents/agents/` change, run `p
 
 ## Evidence contract
 
-Focused tests pass, generated marketplace and mesh surfaces are current, and the normal hooked commit proves the staged tree.
+Focused tests pass, generated marketplace surfaces are current, and the normal hooked commit proves the staged tree.
 
 ## Prohibited combinations
 

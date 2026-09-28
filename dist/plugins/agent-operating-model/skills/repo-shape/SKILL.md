@@ -24,6 +24,8 @@ This skill owns the portable repository surface model and the check/apply coordi
 
 Each repo supplies a thin overlay at `.agents/doctrine/repo-runbook-policy.md` that records local mappings and shape exceptions. `repo-composition` owns the meaning of runbooks, playbooks, and their graph.
 
+If a repo retires generated `INDEX.md` or `INDEX.json` files, remove the tracked outputs and their generation/check commands from local runners, hooks, and hosted CI. Do not add a replacement subscription or generated inventory. Keep binding routes in `AGENTS.md`, and let runbooks and playbooks remain directly addressable by their declared local paths.
+
 ## Read when
 
 | Need                                                     | Read                                                                                                                                                                          |

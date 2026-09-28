@@ -24,7 +24,7 @@ After refreshing `main` and creating the slice branch/worktree, run the `complet
 ## Local commands and paths
 
 - In-flight planning homes: `.agents/plans/`, `.agents/specs/`, and `.agents/roadmaps/`.
-- Name the consumer's index/mesh regeneration command here.
+- Name the consumer's relevant generation and validation commands here.
 
 ## Evidence contract
 

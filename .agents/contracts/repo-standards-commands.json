@@ -9,8 +9,6 @@
   ],
   "generated_paths": [
     ".agents/skills/**",
-    "**/INDEX.md",
-    "**/INDEX.json",
     "**/.provenance.json",
     ".agents/plugins/marketplace.json",
     "dist/plugin-roots.json",

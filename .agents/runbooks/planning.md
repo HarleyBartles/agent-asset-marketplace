@@ -21,7 +21,7 @@ After refreshing `main` and creating the slice worktree, run the `completing-pla
 
 ## Local commands and paths
 
-Plans live under `.agents/plans/`. Use `py -3 tools/run.py mesh --apply` after adding one.
+Plans live under `.agents/plans/`. Link the current plan from the task conversation or the relevant scoped `AGENTS.md` guidance.
 
 ## Evidence contract
 

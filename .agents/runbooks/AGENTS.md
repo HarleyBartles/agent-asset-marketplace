@@ -4,7 +4,7 @@ Scope: `.agents/runbooks/`
 
 This scope covers the repo's runbook surfaces for stage-based agent routing.
 
-Defer to `../.agents/doctrine/mesh-policy.md` for mesh law and to `INDEX.md` for the generated runbook inventory.
+Defer to the root `AGENTS.md` and the doctrine files it routes for repository law. Read the runbook named for the lifecycle stage in scope.
 
 Keep this scope short. Runbooks are lifecycle-stage composition roots. Conditional concerns live under `.agents/playbooks/`.
 
