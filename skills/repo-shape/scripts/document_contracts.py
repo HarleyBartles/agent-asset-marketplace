@@ -153,7 +153,7 @@ def check_runbook_set(path: Path, repo_root: Path) -> list[Finding]:
     return [
         finding
         for item in sorted(path.glob("*.md"))
-        if item.name not in {"AGENTS.md", "INDEX.md"}
+        if item.name != "AGENTS.md"
         for finding in check_runbook(item, repo_root)
     ]
 
@@ -166,7 +166,7 @@ def check_playbook_set(path: Path, repo_root: Path) -> list[Finding]:
     return [
         finding
         for item in sorted(path.glob("*.md"))
-        if item.name not in {"AGENTS.md", "INDEX.md"}
+        if item.name != "AGENTS.md"
         for finding in check_playbook(item, repo_root)
     ]
 

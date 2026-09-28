@@ -561,12 +561,9 @@ def _clean_orphan_skills(
     return cleaned_any
 
 
-NON_PROFILE_MD_NAMES = {"INDEX.md"}
-
-
 def _is_vendor_profile_file(path: Path) -> bool:
     """Return True for a `.md` file that should be treated as a vendor profile."""
-    return path.is_file() and path.suffix.lower() == ".md" and path.name not in NON_PROFILE_MD_NAMES
+    return path.is_file() and path.suffix.lower() == ".md"
 
 
 def _vendor_profile_source_dir(plugin: dict[str, Any]) -> Path | None:

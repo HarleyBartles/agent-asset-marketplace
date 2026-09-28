@@ -170,8 +170,6 @@ run_declared apply
 git update-index --add --remove -z --stdin < "$ORIGINAL_STAGED_PATHS"
 
 git add -A -- .agents/skills/ 2>/dev/null || true
-git add -- ':(glob)**/INDEX.md' 2>/dev/null || true
-git add -- ':(glob)**/INDEX.json' 2>/dev/null || true
 git add -- ':(glob)**/.provenance.json' 2>/dev/null || true
 git add -- .agents/plugins/marketplace.json 2>/dev/null || true
 git add -- dist/plugin-roots.json 2>/dev/null || true

@@ -479,7 +479,7 @@ _MARKDOWN_LINK = re.compile(r"\[[^\]]+\]\(([^)#]+)(?:#[^)]+)?\)")
 def _composition_files(directory: Path) -> list[Path]:
     if not directory.is_dir():
         return []
-    return [path for path in sorted(directory.glob("*.md")) if path.name not in ("AGENTS.md", "INDEX.md")]
+    return [path for path in sorted(directory.glob("*.md")) if path.name != "AGENTS.md"]
 
 
 def _section_links(path: Path, heading: str) -> list[Path]:
