@@ -100,7 +100,7 @@
   },
   {
     "path": "codex-marketplace/plugins/superpowers-plus/skills/iterative-review/tests/review_v2_helpers.py",
-    "line": 755,
+    "line": 756,
     "pattern": "portable-repo-command",
     "context": "policy.LocalCheckItem(\"item-preflight\", \"preflight\", (\"py\", \"-3\", \"tools/run.py\", \"ci\", \"--check\"), \".\", True),",
     "classification": "repo-local",
@@ -109,7 +109,7 @@
   },
   {
     "path": "codex-marketplace/plugins/superpowers-plus/skills/iterative-review/tests/review_v2_helpers.py",
-    "line": 1637,
+    "line": 1711,
     "pattern": "portable-repo-command",
     "context": "(\"py\", \"-3\", \"tools/run.py\", \"ci\", \"--check\"),",
     "classification": "repo-local",
