@@ -8,6 +8,7 @@ __pycache__/
 *.pyc
 node_modules/
 build/
+!/tests/build/
 coverage/
 
 # Package and archive noise
