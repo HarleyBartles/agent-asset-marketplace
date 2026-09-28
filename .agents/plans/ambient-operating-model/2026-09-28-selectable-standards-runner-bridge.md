@@ -49,8 +49,8 @@ ______________________________________________________________________
 - Modify: `skills/repo-shape/references/repository-shape-manifest.schema.json`
 - Create: `skills/repo-shape/references/operating-standards-catalog.json`
 - Create: `skills/repo-shape/references/operating-standards-catalog.schema.json`
+- Create: `skills/repo-shape/scripts/operating_standards_catalog.py`
 - Modify: `skills/repo-standards/SKILL.md`
-- Modify: `src/plugin-definitions/agent-operating-model/contents.json`
 - Modify: `src/plugin-definitions/agent-operating-model/files/README.md`
 - Modify: `src/plugin-definitions/agent-operating-model/files/SOURCE.md`
 - Test: `skills/repo-shape/tests/scripts/test_operating_standards_catalog.py`
@@ -90,7 +90,7 @@ Run the focused test from Step 2. Expected: PASS for valid independent standards
 - [ ] **Step 5: Commit the catalog**
 
 ```powershell
-git add skills/repo-shape/references/repository-shape-manifest.json skills/repo-shape/references/repository-shape-manifest.schema.json skills/repo-shape/references/operating-standards-catalog.json skills/repo-shape/references/operating-standards-catalog.schema.json skills/repo-standards/SKILL.md src/plugin-definitions/agent-operating-model/contents.json src/plugin-definitions/agent-operating-model/files/README.md src/plugin-definitions/agent-operating-model/files/SOURCE.md skills/repo-shape/tests/scripts/test_operating_standards_catalog.py
+git add skills/repo-shape/references/repository-shape-manifest.json skills/repo-shape/references/repository-shape-manifest.schema.json skills/repo-shape/references/operating-standards-catalog.json skills/repo-shape/references/operating-standards-catalog.schema.json skills/repo-shape/scripts/operating_standards_catalog.py skills/repo-standards/SKILL.md src/plugin-definitions/agent-operating-model/files/README.md src/plugin-definitions/agent-operating-model/files/SOURCE.md skills/repo-shape/tests/scripts/test_operating_standards_catalog.py
 git commit -m "feat: define selectable operating standards"
 ```
 
