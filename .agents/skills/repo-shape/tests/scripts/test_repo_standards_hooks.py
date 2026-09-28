@@ -257,13 +257,19 @@ def test_hosted_hook_reconstructs_commit_as_staged_snapshot(tmp_path: Path) -> N
     subprocess.run(["git", "add", "retired-plan.md"], cwd=repo, check=True)
     subprocess.run(["git", "commit", "--no-verify", "-m", "add completed plan"], cwd=repo, check=True)
     _install_repo_standards(repo)
+    assert not (repo / ".agents/skills").exists()
+    (repo / ".agents/plugins/marketplace.json").unlink()
+    assert not (repo / ".agents/plugins/marketplace.json").exists()
     tools = repo / "tools"
     tools.mkdir(exist_ok=True)
     (tools / "run.py").write_text(
         """import os
 import subprocess
 import sys
+from pathlib import Path
 
+if Path(".agents/skills").exists() or Path(".agents/plugins/marketplace.json").exists():
+    raise SystemExit("ambient plugin projections are not part of hosted validation")
 if os.environ.get("REPO_STANDARDS_STAGED_SNAPSHOT") != "1":
     raise SystemExit("missing staged-snapshot marker")
 changed = subprocess.run(

@@ -46,6 +46,7 @@ def dispatch(
     *,
     mode: str,
     standard_id: str | None = None,
+    allow_shared_checkout: bool = False,
     run: _RUN = subprocess.run,
 ) -> list[str]:
     """Validate the complete declaration and preflight every selected command before execution."""
@@ -90,7 +91,18 @@ def dispatch(
         vector = entry["check"] if mode == "check" else entry["apply"]
         if not vector:
             continue
-        commands.append((entry["id"], _command_vector(repo_root, tuple(vector), entry["id"])))
+        expanded = [
+            flag
+            for argument in vector
+            for flag in (
+                ["--allow-shared-checkout"]
+                if argument == "@allow-shared-checkout" and allow_shared_checkout
+                else []
+                if argument == "@allow-shared-checkout"
+                else [argument]
+            )
+        ]
+        commands.append((entry["id"], _command_vector(repo_root, tuple(expanded), entry["id"])))
 
     completed: list[str] = []
     for selected_id, command in commands:
@@ -101,11 +113,32 @@ def dispatch(
     return completed
 
 
+def resource_destination(implementation_root: Path, resource: str) -> Path:
+    normalized = resource.replace("\\", "/")
+    if normalized.startswith("skills/repo-shape/"):
+        relative = normalized.removeprefix("skills/repo-shape/")
+    elif normalized.startswith("skills/"):
+        relative = normalized.removeprefix("skills/")
+    else:
+        raise ValueError(f"unsupported marketplace resource path: {resource}")
+    destination = (implementation_root / relative).resolve()
+    try:
+        destination.relative_to(implementation_root.resolve())
+    except ValueError as exc:
+        raise ValueError(f"marketplace resource escapes implementation root: {resource}") from exc
+    return destination
+
+
 def load_catalog(script_path: Path) -> operating_standards_catalog.StandardsCatalog:
-    skill_root = script_path.resolve().parent.parent
-    source_root = skill_root.parent.parent
+    script_path = script_path.resolve()
+    candidates = (script_path.parent / "references", script_path.parent.parent / "references")
+    references = next(
+        (candidate for candidate in candidates if (candidate / "operating-standards-catalog.json").is_file()),
+        script_path.parent.parent / "references",
+    )
     return operating_standards_catalog.load_catalog(
-        skill_root / "references/operating-standards-catalog.json",
-        skill_root / "references/repository-shape-manifest.json",
-        source_root,
+        references / "operating-standards-catalog.json",
+        references / "repository-shape-manifest.json",
+        references.parent,
+        validate_resources=False,
     )

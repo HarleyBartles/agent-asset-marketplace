@@ -97,7 +97,9 @@ def _check_cycles(standards: dict[str, OperatingStandard]) -> None:
         visit(standard_id)
 
 
-def load_catalog(catalog_path: Path, manifest_path: Path, source_root: Path) -> StandardsCatalog:
+def load_catalog(
+    catalog_path: Path, manifest_path: Path, source_root: Path, *, validate_resources: bool = True
+) -> StandardsCatalog:
     """Load and validate catalog structure, surface ownership, dependencies, and resources."""
 
     raw = json.loads(catalog_path.read_text(encoding="utf-8-sig"))
@@ -137,8 +139,9 @@ def load_catalog(catalog_path: Path, manifest_path: Path, source_root: Path) -> 
             if surface_id in assigned:
                 raise ValueError(f"surface {surface_id} assigned more than once")
             assigned[surface_id] = standard_id
-        for resource in resources:
-            _resource_path(resource, standard_id=standard_id, source_root=source_root)
+        if validate_resources:
+            for resource in resources:
+                _resource_path(resource, standard_id=standard_id, source_root=source_root)
         for capability in ("check", "apply"):
             if not isinstance(row[capability], bool):
                 raise ValueError(f"standard {standard_id} {capability} must be a boolean")

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+from types import SimpleNamespace
 import sys
 from pathlib import Path
 
@@ -143,3 +144,23 @@ def test_unavailable_later_command_fails_preflight_before_first_marker(tmp_path:
         operating_standards_dispatch.dispatch(tmp_path, CATALOG, contract, mode="check")
 
     assert not (tmp_path / "repo-first.marker").exists()
+
+
+def test_shared_checkout_approval_flows_to_nested_standard_apply(tmp_path: Path) -> None:
+    entry = _entry(tmp_path, "repo-apply")
+    entry["apply"].append("@allow-shared-checkout")
+    contract = tmp_path / ".agents/contracts/operating-standards.json"
+    contract.parent.mkdir(parents=True)
+    contract.write_text(json.dumps({"version": 1, "standards": [entry]}), encoding="utf-8")
+    captured: list[list[str]] = []
+
+    def capture(command, **kwargs):
+        captured.append(command)
+        return SimpleNamespace(returncode=0)
+
+    operating_standards_dispatch.dispatch(
+        tmp_path, CATALOG, contract, mode="apply", allow_shared_checkout=True, run=capture
+    )
+
+    assert captured[0][-1] == "--allow-shared-checkout"
+    assert "@allow-shared-checkout" not in captured[0]

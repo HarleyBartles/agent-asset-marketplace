@@ -56,6 +56,7 @@ def test_migration_preview_preserves_enabled_standards_and_does_not_write(tmp_pa
     assert all(entry["revision"] == REVISION for entry in result["standards"])
     assert all("--run-standard" in entry["check"] for entry in result["standards"])
     assert all("--yes" in entry["apply"] for entry in result["standards"])
+    assert all("@allow-shared-checkout" in entry["apply"] for entry in result["standards"])
     assert "operating-model-contract" not in {entry["id"] for entry in result["standards"]}
     assert not target.exists()
     assert legacy_path.read_bytes() == legacy_before

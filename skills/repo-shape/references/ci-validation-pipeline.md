@@ -7,6 +7,20 @@ Every repo that uses `repo-standards` supplies its own canonical validation capa
 - The tracked `githooks/pre-commit` hook, activated with `core.hooksPath=githooks`, is the single complete local gate for a normal commit. It materializes the staged snapshot, applies mechanical surfaces, stages only owned generated surfaces, then checks that snapshot before allowing the commit.
 - CI runs the same canonical check capability in a fail-fast workflow.
 
+## Declared marketplace standards
+
+A composition in `.agents/contracts/operating-standards.json` is the complete standards declaration. For a legacy consumer, use this activation sequence:
+
+1. Preview the legacy mapping with `migrate_operating_standards.py --check`.
+2. Preview selected-resource deployment with `deploy_operating_standards.py --prepare-migration --check`.
+3. Apply deployment with `deploy_operating_standards.py --prepare-migration --apply --yes`.
+4. Apply the new declaration with `migrate_operating_standards.py --apply`.
+5. Re-run deployment in check mode and the consumer's canonical check before changing its hook or runner.
+
+Both commands run from the pinned `.agents/plugins/marketplace-source/skills/repo-shape/scripts/` path. Migration apply refuses activation until the selected implementation roots and generic runtime exist. Deployment records the source revision and hashes for every selected resource in `.agents/standards/provenance.json`; checks compare deployed bytes with that record. Repositories with no marketplace standards need no deployed marketplace runtime or deployment provenance.
+
+Hosted CI invokes the repository's canonical runner against the checked-in composition and deployed selected resources. It does not install Codex, marketplace plugins, or `.agents/skills/` projections. Refreshing ambient skill projections owns only `.agents/skills/` and its skill provenance; it does not rewrite standards selections or deployments.
+
 ## Consumer preflight
 
 The consumer's canonical check is the full non-mutating CI/PR gate. It runs the declared checks in their repository-defined order and stops at the first failure, unless its diagnostic mode is requested.

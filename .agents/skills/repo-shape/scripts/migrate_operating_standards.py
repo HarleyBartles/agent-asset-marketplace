@@ -108,6 +108,7 @@ def plan_migration(repo_root: Path, catalog, revision: str) -> dict:
                     standard.id,
                     "--apply",
                     "--yes",
+                    "@allow-shared-checkout",
                 ]
                 if standard.apply
                 else []

@@ -92,6 +92,9 @@ def test_standard_runner_executes_catalog_surfaces_without_redispatch(tmp_path: 
     _write_marketplace(tmp_path, [])
     implementation = tmp_path / ".agents/standards/root-gitignore-hygiene"
     implementation.mkdir(parents=True)
+    resource = implementation / "scripts/scaffold_gitignore.py"
+    resource.parent.mkdir(parents=True)
+    resource.write_bytes((SCRIPTS / "scaffold_gitignore.py").read_bytes())
     contract = tmp_path / ".agents/contracts/operating-standards.json"
     contract.parent.mkdir(parents=True, exist_ok=True)
     contract.write_text(

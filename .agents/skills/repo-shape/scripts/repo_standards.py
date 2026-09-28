@@ -155,18 +155,20 @@ def _load_exceptions(repo_root: Path) -> set[str]:
     return exceptions
 
 
-def _template_path(surface: dict[str, object]) -> Path | None:
+def _template_path(surface: dict[str, object], implementation_root: Path | None = None) -> Path | None:
     source = surface.get("source")
     if not source:
         return None
-    return Path(__file__).resolve().parent.parent / str(source)
+    root = implementation_root or Path(__file__).resolve().parent.parent
+    return root / str(source)
 
 
-def _scaffold_script_path(surface: dict[str, object]) -> Path | None:
+def _scaffold_script_path(surface: dict[str, object], implementation_root: Path | None = None) -> Path | None:
     scaffold = surface.get("scaffold")
     if not scaffold:
         return None
-    return Path(__file__).resolve().parent / str(scaffold)
+    root = implementation_root / "scripts" if implementation_root else Path(__file__).resolve().parent
+    return root / str(scaffold)
 
 
 def _surface_is_explicitly_excepted(surface: dict[str, object], exceptions: set[str]) -> bool:
@@ -610,6 +612,7 @@ def _check_surface(
     surface: dict[str, object],
     exceptions: set[str],
     enabled_surface_ids: set[str] | None = None,
+    implementation_root: Path | None = None,
 ) -> list[str]:
     findings: list[str] = []
     rel = str(surface["path"])
@@ -620,8 +623,8 @@ def _check_surface(
         return findings
     kind = str(surface.get("kind", "file"))
     optional = bool(surface.get("optional", False))
-    template = _template_path(surface)
-    scaffold = _scaffold_script_path(surface)
+    template = _template_path(surface, implementation_root)
+    scaffold = _scaffold_script_path(surface, implementation_root)
     full = repo_root / rel
 
     if kind == "command-declaration":
@@ -692,6 +695,7 @@ def _apply_surface(
     exceptions: set[str],
     force: bool,
     enabled_surface_ids: set[str] | None = None,
+    implementation_root: Path | None = None,
 ) -> bool:
     rel = str(surface["path"])
     surf_id = str(surface.get("id", ""))
@@ -700,8 +704,8 @@ def _apply_surface(
     if enabled_surface_ids is not None and surf_id and surf_id not in enabled_surface_ids:
         return False
     kind = str(surface.get("kind", "file"))
-    template = _template_path(surface)
-    scaffold = _scaffold_script_path(surface)
+    template = _template_path(surface, implementation_root)
+    scaffold = _scaffold_script_path(surface, implementation_root)
     if scaffold is not None and scaffold.is_file() and not force:
         result = subprocess.run(
             [sys.executable, str(scaffold)],
@@ -845,6 +849,20 @@ while the contract is absent."""
             if args.run_standard not in entries:
                 raise ValueError(f"standard is not declared in this repository: {args.run_standard}")
             standard = next(item for item in catalog.standards if item.id == args.run_standard)
+            implementation_root = (repo_root / entries[args.run_standard]["implementation_root"]).resolve()
+            try:
+                implementation_root.relative_to(repo_root.resolve())
+            except ValueError as exc:
+                raise ValueError("selected standard implementation root escapes repository") from exc
+            if not implementation_root.is_dir():
+                raise ValueError(f"selected standard implementation root is missing: {implementation_root}")
+            missing_resources = [
+                resource
+                for resource in standard.resources
+                if not operating_standards_dispatch.resource_destination(implementation_root, resource).is_file()
+            ]
+            if missing_resources:
+                raise ValueError(f"selected standard resources are unavailable: {', '.join(missing_resources)}")
             manifest = surface_contracts.load_manifest(_manifest_path())
             by_id = {surface.id: _coordinator_surface(surface) for surface in manifest.surfaces}
             selected_surfaces = [by_id[surface_id] for surface_id in standard.surfaces]
@@ -858,15 +876,15 @@ while the contract is absent."""
                 findings = [
                     finding
                     for surface in selected_surfaces
-                    for finding in _check_surface(repo_root, surface, set(), selected_ids)
+                    for finding in _check_surface(repo_root, surface, set(), selected_ids, implementation_root)
                 ]
                 for finding in findings:
                     print(f"DRIFT: [{args.run_standard}] {finding}")
                 return 1 if findings else 0
             applied = 0
             for surface in selected_surfaces:
-                if _check_surface(repo_root, surface, set(), selected_ids):
-                    applied += int(_apply_surface(repo_root, surface, set(), False, selected_ids))
+                if _check_surface(repo_root, surface, set(), selected_ids, implementation_root):
+                    applied += int(_apply_surface(repo_root, surface, set(), False, selected_ids, implementation_root))
             print(f"OK repo-standards: applied standard {args.run_standard} ({applied} surface(s))")
             return 0
         except (OSError, ValueError, json.JSONDecodeError, KeyError, StopIteration) as exc:
@@ -891,6 +909,7 @@ while the contract is absent."""
                 composition_path,
                 mode="apply" if args.apply else "check",
                 standard_id=args.standard,
+                allow_shared_checkout=args.allow_shared_checkout,
             )
         except (OSError, ValueError) as exc:
             print(f"DRIFT: [operating-standards] {exc}", file=sys.stderr)

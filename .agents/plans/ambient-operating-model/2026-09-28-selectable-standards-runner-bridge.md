@@ -214,7 +214,7 @@ git commit -m "feat: dispatch only adopted repository standards"
 
 **Interfaces:**
 
-- Deployment resolves the consumer's declared pinned marketplace revision and copies only the selected standards' catalog-declared checker, template, and support resources into consumer-selected implementation roots. Record source revision and per-resource provenance.
+- Deployment resolves the consumer's declared pinned marketplace revision and copies only the selected standards' catalog-declared checker, template, and support resources into consumer-selected implementation roots. During migration, `--prepare-migration` derives the selection from the legacy exception contract, deploys it without activating the new contract, and then the migration `--apply` is safe to run. Record source revision and per-resource provenance.
 
 - The generic dispatcher can run from the pinned marketplace-source submodule; selected checker inputs and templates live in the consumer working tree at declared roots. Do not depend on `.agents/skills/` projections or copy an entire ambient plugin.
 
@@ -224,21 +224,21 @@ git commit -m "feat: dispatch only adopted repository standards"
 
 - Skill refresh may update ambient skill projections, but must not change the operating-standards declaration, deployed standard bytes, or their provenance.
 
-- [ ] **Step 1: Add deployment and hosted-runner behavior tests**
+- [x] **Step 1: Add deployment and hosted-runner behavior tests**
 
 Use a temporary consumer repository and a local pinned-source fixture. Assert selected-only deployment, provenance, read-only check behavior, refusal of path escapes and ambiguous overwrites, hosted validation after removing ambient projections, and refresh preserving declarations and deployed files.
 
-- [ ] **Step 2: Confirm the focused tests fail**
+- [x] **Step 2: Confirm the focused tests fail**
 
 Run: `py -3 -m pytest skills/repo-shape/tests/scripts/test_operating_standards_deployment.py skills/repo-shape/tests/scripts/test_repo_standards_hooks.py skills/refreshing-installed-skills/tests/scripts/test_refresh_installed_skills.py -q`
 
 Expected: FAIL because standards deployment and ambient-free dispatch are not implemented.
 
-- [ ] **Step 3: Implement deployment and hosted execution**
+- [x] **Step 3: Implement deployment and hosted execution**
 
 Add a safe deployment command and provenance record. Use only catalog-resolved paths under the pinned source root and consumer-declared destinations. Point consumer check/apply vectors at the pinned generic dispatcher and selected deployed checker inputs. Keep standard adoption explicit and check mode side-effect free.
 
-- [ ] **Step 4: Verify deployment and hook behavior**
+- [x] **Step 4: Verify deployment and hook behavior**
 
 Run the focused command from Step 2. Expected: PASS with only selected deployed resources present and no ambient skill/plugin state required.
 

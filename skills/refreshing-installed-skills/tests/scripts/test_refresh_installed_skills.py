@@ -1026,3 +1026,34 @@ def test_provenance_rewritten_when_local_skill_added(tmp_path: Path) -> None:
 
     provenance = json.loads(provenance_path.read_text(encoding="utf-8"))
     assert provenance["localSkills"] == ["mark-local"]
+
+
+def test_refresh_does_not_change_operating_standards_deployment(tmp_path: Path) -> None:
+    contract = tmp_path / ".agents/contracts/operating-standards.json"
+    contract.parent.mkdir(parents=True)
+    contract.write_text('{"version":1,"standards":[]}\n', encoding="utf-8")
+    deployment = tmp_path / ".agents/standards/provenance.json"
+    deployment.parent.mkdir(parents=True)
+    deployment.write_text('{"version":1,"resources":{}}\n', encoding="utf-8")
+    deployed_file = tmp_path / ".agents/standards/owned/checker.py"
+    deployed_file.parent.mkdir(parents=True)
+    deployed_file.write_text("# pinned checker\n", encoding="utf-8")
+    before = (contract.read_bytes(), deployment.read_bytes(), deployed_file.read_bytes())
+
+    with (
+        patch.object(refresh_installed_skills, "ROOT", tmp_path),
+        patch.object(refresh_installed_skills, "_is_submodule", return_value=False),
+        patch.object(
+            refresh_installed_skills,
+            "_load_marketplace_config",
+            return_value={"plugins": [], "repo": {"local_skills": []}},
+        ),
+        patch.object(refresh_installed_skills, "_local_skills", return_value=[]),
+        patch.object(refresh_installed_skills, "_validate_local_skill_dirs", return_value=[]),
+        patch.object(refresh_installed_skills, "_run_validate_local_skills_extra", return_value=True),
+        patch.object(refresh_installed_skills, "_get_installed_plugins", return_value=[]),
+        patch.object(refresh_installed_skills.shared_checkout, "approve_mutation", return_value=True),
+    ):
+        assert refresh_installed_skills.main(["--apply", "--allow-shared-checkout"]) == 0
+
+    assert (contract.read_bytes(), deployment.read_bytes(), deployed_file.read_bytes()) == before
