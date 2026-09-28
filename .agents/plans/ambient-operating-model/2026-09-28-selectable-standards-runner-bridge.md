@@ -57,13 +57,13 @@ ______________________________________________________________________
 
 **Interfaces:**
 
-- Catalog IDs are stable, kebab-case, and represent independently adoptable contracts. Catalog entries enumerate owned surface IDs, deployable resource paths, check/apply capability, and `requires` edges.
+- Catalog IDs are stable, kebab-case, and represent independently adoptable contracts. Each surface in the implementation inventory names exactly one `standard_id`; catalog entries define deployable resource paths, check/apply capability, and `requires` edges. The validator verifies the references in both directions without duplicating surface ownership lists.
 
 - Classify every current shape-manifest surface. Split the surfaces into coherent independently adoptable standards; retain `markdown-formatting` as its own standard. Do not group all surfaces under a single required standard. Record the classification in the catalog so the consumer can select individual standards.
 
 - Use these proposed boundaries as the initial catalog vocabulary: `marketplace-skill-management` (marketplace source, marketplace JSON, local skill preservation), `root-agent-router`, `runbook-composition` (policy, runbooks, optional runbook router), `playbook-composition` (playbooks and optional playbook router), `tracked-validation-hook` (command declaration, hook, shared-checkout support), `markdown-formatting`, `review-entrypoint`, `contribution-entrypoint`, `root-gitignore-hygiene`, and `completed-artifact-custody` (doctrine plus forbidden retired archive paths). The legacy `operating-model-contract` exception mechanism is migration input, not an adopted standard. Adjust a boundary only when the current validator behavior proves an actual dependency; encode that dependency as an edge instead of silently merging the standards.
 
-- A standard may depend only on another catalog standard by ID. Reject duplicate IDs, unknown surfaces/resources, unknown dependencies, self-dependencies, and dependency cycles.
+- A standard may depend only on another catalog standard by ID. Reject duplicate IDs, unknown surface standard IDs, unreferenced standards, unknown dependencies/resources, self-dependencies, and dependency cycles.
 
 - All catalog resources resolve inside the Agent Operating Model plugin source. The catalog itself is shipped with that ambient plugin and does not assert consumer adoption.
 
