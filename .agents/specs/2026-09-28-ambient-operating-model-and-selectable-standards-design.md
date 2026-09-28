@@ -68,10 +68,10 @@ The companion-pack audit will classify each relevant instruction or reference as
 
 The marketplace release must support a consumer transition in which existing runner contracts continue to work while dependency-providing scripts are moved or replaced. In particular:
 
-1. Identify the exact refresh and mesh functions Rooms-Mostly calls, their ownership, and their hook/CI behavior.
-2. Provide a supported replacement or compatibility entrypoint that does not require the consumer to subscribe to Repo Worker Pack for ambient workflow availability.
-3. Migrate the relevant marketplace consumer contract and validator so the replacement is recognized and validated.
-4. Only after that bridge is available may Rooms remove Repo Worker Pack and Superpowers+ subscriptions while preserving its hook and hosted check behavior.
+1. Identify the exact refresh function Rooms-Mostly calls, its ownership, and its hook/CI behavior. The index mesh and its generator/validator were retired in Plan 1; Rooms removes those calls and files with no replacement mesh entrypoint.
+2. Provide a supported refresh entrypoint that does not require the consumer to subscribe to Repo Worker Pack. The pinned `.agents/plugins/marketplace-source` submodule may provide this utility directly, provided the consumer's hosted runner is pinned and the utility remains independent of ambient skill projections.
+3. Migrate the relevant marketplace consumer contract and validator so the selected standard deployment and refresh entrypoint are recognized and validated.
+4. Only after the bridge is available may Rooms remove Repo Worker Pack and Superpowers+ subscriptions while preserving its hook and hosted check behavior.
 
 The compatibility path must not silently change what the runner refreshes, generates, or validates. A consumer migration guide will state ordering, expected intermediate states, how to validate each step, and how to recover if a consumer cannot adopt the new composition immediately.
 
@@ -103,7 +103,7 @@ The consumer's adopted composition is the authority for which validators and sca
 - Ambient skill refresh does not alter the consumer's standard composition or deployed standards.
 - Portable runbook/playbook contracts select skills by capability, preserve exact references for genuine repo-owned skills, and stop clearly when a required capability has no provider.
 - The four companion ambient packs have a documented assumption audit, with findings, disposition, and source locations; Agent Operating Model's catalog and deployment assumptions are addressed by its primary redesign.
-- Rooms has a documented and technically viable sequence to replace Repo Worker Pack-supplied refresh/mesh calls before removing that subscription, with unchanged hook and hosted validation intent.
+- Rooms has a documented and technically viable sequence to move refresh off the Repo Worker Pack installed-skill path, remove the retired mesh calls entirely, and only then remove ambient-pack subscriptions, with unchanged hook and hosted validation intent.
 - Existing consumers have a compatibility and migration path with explicit validation and recovery guidance.
 
 ## Planning handoff

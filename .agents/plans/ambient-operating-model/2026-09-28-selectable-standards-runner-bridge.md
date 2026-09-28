@@ -2,82 +2,99 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use `subagent-driven-development` (recommended) or `executing-plans` to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Let each consumer explicitly adopt any subset of marketplace standards and repository-owned standards, run only declared checks, and validate deployed checkers in hosted CI without ambient plugins.
+**Goal:** Let each consumer explicitly select independently adoptable marketplace standards, keep repository-owned standards independent, execute only declared checks and scaffolds, and validate deployed checkers in hosted CI without ambient plugins.
 
-**Architecture:** Add a versioned standards catalog and consumer composition contract to Agent Operating Model. Make the repo-shape coordinator validate and apply only declared standard implementations, preserving a deliberate migration from the current bundled shape. Deploy pinned, consumer-controlled runner utilities for refresh and mesh operations so hooks do not depend on Repo Worker Pack skill projections.
+**Architecture:** Agent Operating Model's standard catalog defines stable standard IDs, real dependencies, and the exact deployable resources and invocation contract for each standard. A versioned consumer composition records explicit marketplace and repository-owned standards. A coordinator validates the complete composition before mutation and runs only selected contracts. Consumers deploy pinned selected checker inputs; their local and hosted runners invoke those inputs without resolving skills from ambient Codex plugins. A migration command translates an existing consumer's effective legacy shape into an explicit declaration for review. The Rooms compatibility guide replaces Repo Worker Pack's installed refresh-script path with the same utility under the consumer's pinned marketplace-source submodule. Index mesh is already retired by Plan 1 and has no replacement.
 
-**Tech Stack:** Python 3, JSON Schema, pytest, existing marketplace plugin build and repository command bus.
+**Tech Stack:** Python 3, JSON Schema, pytest, existing marketplace builder, pinned marketplace-source submodule, and consumer canonical runner/hook contract.
 
 **Spec:** `.agents/specs/2026-09-28-ambient-operating-model-and-selectable-standards-design.md`
 
-**Execution Strategy:** `executing-plans` - contract, coordinator, deployment, and hook/CI behavior share schemas and migration boundaries. One implementation context minimizes interface drift; task exits provide focused review points.
+**Roadmap context:** Plan 1 retired generated index mesh in commits `b1aaef107`, `ba486ac56`, `2c5848caa`, and `e6a6c7868`; its Draft PR is [#338](https://github.com/HarleyBartles/agent-asset-marketplace/pull/338). The same branch is based on current `main` `d505f31aa`. Mesh generation and validation have no compatibility bridge; only the refresh runner dependency remains to migrate.
+
+**Execution Strategy:** `executing-plans` - catalog, migration, dispatcher, deployment, and runner handoff form a dependent chain with shared schemas and compatibility behavior. Keeping one integration context reduces interface drift; each task still ends with its focused behavior gate and commit.
 
 ## Global Constraints
 
-- Agent Operating Model is an ambient catalog; its presence does not imply that a repository adopted any standard.
-- Consumers may declare an empty marketplace-standard set and any number of repository-owned standards.
-- Apply/check behavior and dependencies are limited to declared standards.
-- Hosted CI uses pinned, consumer-controlled checker sources and does not require Codex or ambient plugin installation.
-- Missing configuration does not silently imply adoption or an empty set; existing consumers get an explicit migration path.
-- Do not edit consumer repositories in this plan.
-- Canonical source is under `skills/`, reusable packaged resources under `shared/`, and plugin membership under `src/plugin-definitions/`. Regenerate `dist/` and `.agents/skills/` through their owning commands.
-- Use portable behavior tests. Do not add exact-prose or change-detector tests.
+- Agent Operating Model availability never implies consumer adoption. A consumer can choose an empty marketplace-standard set and independently declare repository-owned standards.
+- Marketplace standards are individually identifiable and deployable. Do not ship one omnibus `repo-shape` adoption that keeps every current check mandatory under a new name.
+- Validate dependencies, ownership, implementation roots, commands, and generated paths before any apply-side mutation. Missing or ambiguous declarations fail clearly; they do not silently mean all or none.
+- A migration preview must show the exact standards inferred from current explicit legacy surface exceptions and existing declarations. Applying it requires an explicit apply invocation and preserves the existing consumer runner/hook commands.
+- Only selected standards' checks, scaffolds, generated paths, and declared dependencies run. Marketplace plugin subscriptions and installed skill projections do not select standards.
+- Hosted CI executes checked-in or gitlink-pinned consumer-controlled checker inputs. It does not need Codex, ambient plugins, or `.agents/skills/` projections.
+- Deploy only selected standard resources plus the minimal generic coordinator needed to invoke them. Do not copy entire ambient plugins into consumers.
+- For Rooms compatibility, index mesh calls are removed with no replacement. The refresh utility can be invoked from the pinned `.agents/plugins/marketplace-source` submodule, avoiding the Repo Worker Pack installed-skill path. Preserve the intended refresh behavior and canonical `ci --apply` / `ci --check` hook contract.
+- Do not edit Rooms or any other consumer checkout. Use a behavior fixture derived from current read-only Rooms evidence.
+- Edit canonical source under `skills/` and `src/plugin-definitions/`; regenerate `dist/` and `.agents/skills/` through owning commands. Never hand-edit generated projections.
+- Use portable behavioral tests. No exact-prose assertions or tests that merely detect file changes.
 
 ## Review Focus
 
-- Empty composition invokes no marketplace standard check or scaffold; cover in dispatch tests.
-- Missing declared dependency fails before mutation; cover in composition tests.
-- Hosted CI runs with no ambient plugin projections; cover in deployment/runner integration.
-- Migration makes legacy adoption explicit and preserves existing hook commands; cover in migration and hook tests.
-- Ambient skill refresh leaves standard declarations and deployed standard files unchanged; cover in refresh/deployment integration.
+- A consumer can select two distinct standards and omit a third; only the selected checks/scaffolds execute.
+- An empty catalog selection runs no marketplace-standard checks or scaffolds, while repository-owned declarations remain possible.
+- Missing, unknown, cyclic, or unsatisfied standard dependencies fail before any command marker or generated file changes.
+- Plugin subscriptions, including Agent Operating Model, Superpowers+, Repo Worker Pack, and Unslop+, do not affect the selected standard set.
+- Migration preview and apply preserve the consumer's effective explicitly excepted legacy surfaces and existing runner commands; ambiguous legacy state is refused.
+- A hosted hook fixture passes with no ambient skill projections and with only the selected standard implementations present.
+- Skill refresh does not mutate the standard composition or deployed checker bytes.
+- Rooms migration instructions remove mesh invocations and route refresh to the pinned submodule source while preserving the outer hook and hosted validation behavior.
 
 ______________________________________________________________________
 
-### Task 1: Define independently selectable catalog standards
+### Task 1: Inventory and define independently adoptable standards
 
 **Files:**
 
+- Modify: `skills/repo-shape/references/repository-shape-manifest.json`
+- Modify: `skills/repo-shape/references/repository-shape-manifest.schema.json`
+- Create: `skills/repo-shape/references/operating-standards-catalog.json`
+- Create: `skills/repo-shape/references/operating-standards-catalog.schema.json`
 - Modify: `skills/repo-standards/SKILL.md`
-- Create: `skills/repo-standards/references/standards-catalog.json`
-- Create: `skills/repo-standards/references/standards-catalog.schema.json`
-- Modify: `src/plugin-definitions/agent-operating-model/plugin.json`
-- Modify: `src/plugin-definitions/agent-operating-model/files/SOURCE.md`
-- Modify: `src/plugin-definitions/agent-operating-model/files/README.md`
 - Modify: `src/plugin-definitions/agent-operating-model/contents.json`
+- Modify: `src/plugin-definitions/agent-operating-model/files/README.md`
+- Modify: `src/plugin-definitions/agent-operating-model/files/SOURCE.md`
 - Test: `skills/repo-shape/tests/scripts/test_operating_standards_catalog.py`
 
 **Interfaces:**
 
-- Each catalog entry has a stable ID, deployable resource list relative to the Agent Operating Model package root, explicit standard dependencies, and check/apply invocation contract.
+- Catalog IDs are stable, kebab-case, and represent independently adoptable contracts. Catalog entries enumerate owned surface IDs, deployable resource paths, check/apply capability, and `requires` edges.
 
-- Group current `repository-shape-manifest.json` surfaces into independently adoptable policy/check units. Keep actual dependencies as explicit edges and `markdown-formatting` separate because it already has an independent adoption state.
+- Classify every current shape-manifest surface. Split the surfaces into coherent independently adoptable standards; retain `markdown-formatting` as its own standard. Do not group all surfaces under a single required standard. Record the classification in the catalog so the consumer can select individual standards.
 
-- The consumer composition contract is versioned and has a `standards` array. Entries identify `id`, `origin` (`marketplace` or `repository`), optional marketplace `revision`, local `implementation_root`, `check` and `apply` command vectors, `generated_paths`, and `requires` standard IDs.
+- Use these proposed boundaries as the initial catalog vocabulary: `marketplace-skill-management` (marketplace source, marketplace JSON, local skill preservation), `root-agent-router`, `runbook-composition` (policy, runbooks, optional runbook router), `playbook-composition` (playbooks and optional playbook router), `tracked-validation-hook` (command declaration, hook, shared-checkout support), `markdown-formatting`, `review-entrypoint`, `contribution-entrypoint`, `root-gitignore-hygiene`, and `completed-artifact-custody` (doctrine plus forbidden retired archive paths). The legacy `operating-model-contract` exception mechanism is migration input, not an adopted standard. Adjust a boundary only when the current validator behavior proves an actual dependency; encode that dependency as an edge instead of silently merging the standards.
+
+- A standard may depend only on another catalog standard by ID. Reject duplicate IDs, unknown surfaces/resources, unknown dependencies, self-dependencies, and dependency cycles.
+
+- All catalog resources resolve inside the Agent Operating Model plugin source. The catalog itself is shipped with that ambient plugin and does not assert consumer adoption.
+
+- Keep the current surface manifest as an implementation inventory only during the compatibility transition; standard selection becomes authoritative in later tasks.
 
 - [ ] **Step 1: Add catalog behavior tests**
 
-Test unique IDs, schema validity, declared resource paths, declared dependencies, cycle rejection, and separate adoption entries for representative current surfaces.
+Cover the actual current surfaces, independently selectable catalog entries, resource containment, valid dependency edges, and rejection of duplicate IDs, unknown resources, and dependency cycles. Include a representative composition selecting two standards while omitting a third.
 
-- [ ] **Step 2: Confirm the focused tests fail**
+- [ ] **Step 2: Confirm the focused test fails**
 
-Run: `py -3 -m pytest skills/repo-shape/tests/scripts/test_operating_standards_catalog.py -q` Expected: FAIL because the catalog and validator do not exist.
+Run: `py -3 -m pytest skills/repo-shape/tests/scripts/test_operating_standards_catalog.py -q`
 
-- [ ] **Step 3: Add catalog, schema, and package membership**
+Expected: FAIL because the catalog contract and validator do not exist.
 
-Classify every current shape-manifest surface into a standard; encode only real prerequisite edges. Include current `markdown-formatting` as its own standard. Add the catalog validator and declare its resources in the Agent Operating Model plugin.
+- [ ] **Step 3: Add and package the catalog**
+
+Inventory the live shape-manifest validators, scaffolds, and documentation. Assign every current surface to the smallest independent standard boundary supported by its behavior. Add catalog and schema validation; package the catalog as an Agent Operating Model resource and describe its role as an ambient choice catalog.
 
 - [ ] **Step 4: Verify catalog behavior**
 
-Run: `py -3 -m pytest skills/repo-shape/tests/scripts/test_operating_standards_catalog.py -q` Expected: PASS for valid catalog entries and rejection of duplicate IDs, invalid resources, unknown dependencies, and cycles.
+Run the focused test from Step 2. Expected: PASS for valid independent standards and all invalid-catalog cases. Run the plugin-definition membership test to verify the catalog ships in the generated Agent Operating Model plugin.
 
 - [ ] **Step 5: Commit the catalog**
 
 ```powershell
-git add skills/repo-standards/SKILL.md skills/repo-standards/references/standards-catalog.json skills/repo-standards/references/standards-catalog.schema.json src/plugin-definitions/agent-operating-model/plugin.json src/plugin-definitions/agent-operating-model/files/SOURCE.md src/plugin-definitions/agent-operating-model/files/README.md src/plugin-definitions/agent-operating-model/contents.json skills/repo-shape/tests/scripts/test_operating_standards_catalog.py
+git add skills/repo-shape/references/repository-shape-manifest.json skills/repo-shape/references/repository-shape-manifest.schema.json skills/repo-shape/references/operating-standards-catalog.json skills/repo-shape/references/operating-standards-catalog.schema.json skills/repo-standards/SKILL.md src/plugin-definitions/agent-operating-model/contents.json src/plugin-definitions/agent-operating-model/files/README.md src/plugin-definitions/agent-operating-model/files/SOURCE.md skills/repo-shape/tests/scripts/test_operating_standards_catalog.py
 git commit -m "feat: define selectable operating standards"
 ```
 
-### Task 2: Add consumer composition and explicit legacy migration
+### Task 2: Define consumer composition and explicit legacy migration
 
 **Files:**
 
@@ -85,45 +102,48 @@ git commit -m "feat: define selectable operating standards"
 - Create: `skills/repo-shape/templates/operating-standards.json`
 - Create: `skills/repo-shape/scripts/scaffold_operating_standards.py`
 - Create: `skills/repo-shape/scripts/migrate_operating_standards.py`
+- Modify: `skills/repo-shape/scripts/plugin_contracts.py`
 - Test: `skills/repo-shape/tests/scripts/test_operating_standards_contract.py`
 - Test: `skills/repo-shape/tests/scripts/test_operating_standards_migration.py`
 
 **Interfaces:**
 
-- Contract path: `.agents/contracts/operating-standards.json`.
+- Consumer contract: `.agents/contracts/operating-standards.json`, versioned, with an explicit `standards` array. Empty array is an explicit choice of no marketplace standards.
 
-- Contract shape: `{"version": 1, "standards": [...]}`. Entries follow Task 1 and include the resolved local implementation root and command vectors.
+- Every entry has `id`, `origin` (`marketplace` or `repository`), `implementation_root`, `check` command vector, `apply` command vector (empty only when the standard has no apply action), `generated_paths`, and `requires`. Marketplace entries also have a pinned `revision`; repository-owned entries omit it and own their commands/resources in the consumer tree.
 
-- `migrate_operating_standards.py --check` reports the explicit adoption set it would write. `--apply` writes that set and source provenance without changing the existing command declaration or hook.
+- Validate all entries against the catalog, validate transitive dependencies and path containment, and preserve source/version provenance. Marketplace plugin installation metadata is not consulted to infer adoption.
 
-- `standards: []` explicitly means no catalog standards. A missing or invalid file is reported as migration/configuration drift.
+- Migration `--check` is read-only and reports the exact contract it would write. `--apply` requires explicit invocation and writes only the new contract/provenance; it does not rewrite hook commands, plugin subscriptions, or deployed files.
 
-- Migration refuses malformed or ambiguous legacy inputs and never silently opts a consumer into an empty set.
+- Migration maps current explicit surface exceptions and other authoritative declarations to the new catalog units while preserving the currently enabled legacy surface set. If no trustworthy source exists or a mapping is ambiguous, return a diagnostic before writing. A missing new contract is not interpreted as an empty set.
 
-- [ ] **Step 1: Add contract and migration behavior tests**
+- [ ] **Step 1: Add composition and migration behavior tests**
 
-Cover empty and mixed marketplace/repository declarations; unknown standards; missing dependencies; invalid command vectors and generated paths; dependency cycles; migration preview and apply; and refusal of ambiguous inputs.
+Cover empty, mixed marketplace/repository-owned, and dependency-bearing compositions; unknown IDs; invalid roots/commands; unsafe generated paths; migration preview/apply; exact preservation of legacy enabled surfaces; refusal of ambiguous legacy state; and proof that preview performs no writes.
 
 - [ ] **Step 2: Confirm the focused tests fail**
 
-Run: `py -3 -m pytest skills/repo-shape/tests/scripts/test_operating_standards_contract.py skills/repo-shape/tests/scripts/test_operating_standards_migration.py -q` Expected: FAIL because the contract and migration command do not exist.
+Run: `py -3 -m pytest skills/repo-shape/tests/scripts/test_operating_standards_contract.py skills/repo-shape/tests/scripts/test_operating_standards_migration.py -q`
 
-- [ ] **Step 3: Implement validation, scaffolding, and migration**
+Expected: FAIL because the new declaration and migration command do not exist.
 
-Add schema validation and deterministic migration from current `agent-operating-model.json`, runbook/playbook mappings, and active shape surfaces. Preserve consumer-owned files and command vectors. New scaffolds must not silently opt consumers into standards.
+- [ ] **Step 3: Implement schema, scaffold, and migration**
+
+Implement validation from the packaged catalog. Keep explicit marketplace provenance separate from repository-owned contracts. Make preview output deterministic. Resolve the complete migration before writing, then atomically write the new declaration only after all inputs pass validation.
 
 - [ ] **Step 4: Verify contract and migration behavior**
 
-Run the same focused pytest command from Step 2. Expected: PASS, including refusal before writes on ambiguous input.
+Run the focused command from Step 2. Expected: PASS, including refusal before writes on invalid or ambiguous legacy data.
 
 - [ ] **Step 5: Commit the composition contract**
 
 ```powershell
-git add skills/repo-shape/references/operating-standards.schema.json skills/repo-shape/templates/operating-standards.json skills/repo-shape/scripts/scaffold_operating_standards.py skills/repo-shape/scripts/migrate_operating_standards.py skills/repo-shape/tests/scripts/test_operating_standards_contract.py skills/repo-shape/tests/scripts/test_operating_standards_migration.py
+git add skills/repo-shape/references/operating-standards.schema.json skills/repo-shape/templates/operating-standards.json skills/repo-shape/scripts/scaffold_operating_standards.py skills/repo-shape/scripts/migrate_operating_standards.py skills/repo-shape/scripts/plugin_contracts.py skills/repo-shape/tests/scripts/test_operating_standards_contract.py skills/repo-shape/tests/scripts/test_operating_standards_migration.py
 git commit -m "feat: declare consumer operating standards"
 ```
 
-### Task 3: Dispatch only declared standards
+### Task 3: Dispatch only the declared standards
 
 **Files:**
 
@@ -133,37 +153,41 @@ git commit -m "feat: declare consumer operating standards"
 - Modify: `skills/repo-shape/references/repository-shape-manifest.schema.json`
 - Modify: `skills/repo-shape/references/repository-shape-standard.md`
 - Modify: `skills/repo-shape/references/consumer-surface-audit.md`
-- Test: `skills/repo-shape/tests/scripts/test_repo_standards.py`
-- Test: `skills/repo-shape/tests/scripts/test_operating_model_plugin_contracts.py`
-- Test: `skills/repo-shape/tests/scripts/test_operating_standards_dispatch.py`
+- Modify: `skills/repo-shape/tests/scripts/test_repo_standards.py`
+- Modify: `skills/repo-shape/tests/scripts/test_operating_model_plugin_contracts.py`
+- Create: `skills/repo-shape/tests/scripts/test_operating_standards_dispatch.py`
 
 **Interfaces:**
 
-- `repo-standards --check` validates composition and runs only declared standard checks.
+- With a valid new declaration, `repo-standards --check` validates the whole composition and runs only the selected standards' checks. `--apply` validates the whole composition before mutation, then runs only selected apply/scaffold actions.
 
-- `repo-standards --apply` runs only declared standard apply commands and scaffolds.
+- Aggregate generated paths only from selected standards. A selected standard's declared prerequisites are included explicitly and deterministically; missing prerequisites fail before execution.
 
-- The existing repository command declaration remains the outer apply/check entrypoint for local hooks and hosted CI.
+- Marketplace plugin prerequisites and plugin-conditioned warnings are removed from `repo-standards`. Agent Operating Model, Superpowers+, Repo Worker Pack, MCP Usage Pack, and Unslop+ do not select or gate consumer standards. Any profile-specific enforcement must be represented by a declared standard, not inferred from a plugin subscription or directory presence.
 
-- While legacy consumers are supported, a missing new contract reports migration-required; it never silently means full or empty adoption.
+- Preserve a compatibility lane for existing consumers with the legacy operating-model contract while providing the explicit migration command. Do not make an absent legacy and new contract silently select all or none.
 
-- Plugin installation metadata does not infer standards. Remove mandatory Agent Operating Model, Superpowers+, Repo Worker Pack, and Unslop+ plugin prerequisites.
+- Preserve apply/check mutation guards, staged-snapshot behavior, consumer exceptions during legacy migration, and existing command-bus outer entrypoints.
 
 - [ ] **Step 1: Add selective-dispatch behavior tests**
 
-Use temporary consumer repos and command marker scripts. Assert empty selection runs nothing, a selected pair runs only those commands in declaration order, missing dependencies fail before markers are written, and plugin subscriptions do not change the result.
+Use temporary consumer roots and real marker commands/scaffolds. Prove two selected standards run and an omitted standard does not; empty selection runs no marketplace checks; repository-owned standards still run when selected; invalid dependencies fail before markers; and changing plugin subscriptions has no effect on dispatch.
 
 - [ ] **Step 2: Confirm focused tests fail**
 
-Run: `py -3 -m pytest skills/repo-shape/tests/scripts/test_operating_standards_dispatch.py skills/repo-shape/tests/scripts/test_operating_model_plugin_contracts.py -q` Expected: FAIL on current fixed requirements and fixed-surface execution.
+Run: `py -3 -m pytest skills/repo-shape/tests/scripts/test_operating_standards_dispatch.py skills/repo-shape/tests/scripts/test_operating_model_plugin_contracts.py -q`
 
-- [ ] **Step 3: Implement composition-driven apply/check**
+Expected: FAIL because the current validator uses fixed surfaces and mandatory plugin subscriptions.
 
-Resolve declarations against the catalog, validate dependencies and paths before mutation, dispatch only selected commands, and aggregate only selected generated paths. Keep each standard's validator responsible for its own contract.
+- [ ] **Step 3: Implement composition-driven validation and apply**
+
+Use the new declaration as the dispatch authority. Validate every selected implementation and its dependencies before running a command. Remove hidden fixed required-surface execution from the new-contract path, retaining only compatibility behavior needed by legacy consumers.
 
 - [ ] **Step 4: Verify coordinator and plugin independence**
 
-Run: `py -3 -m pytest skills/repo-shape/tests/scripts/test_repo_standards.py skills/repo-shape/tests/scripts/test_operating_model_plugin_contracts.py skills/repo-shape/tests/scripts/test_operating_standards_dispatch.py -q` Expected: PASS for selection, migration diagnostics, and existing mutation safety behavior.
+Run: `py -3 -m pytest skills/repo-shape/tests/scripts/test_repo_standards.py skills/repo-shape/tests/scripts/test_operating_model_plugin_contracts.py skills/repo-shape/tests/scripts/test_operating_standards_dispatch.py -q`
+
+Expected: PASS for independent/empty selections, legacy migration diagnostics, plugin independence, and existing mutation safety.
 
 - [ ] **Step 5: Commit selective dispatch**
 
@@ -172,123 +196,144 @@ git add skills/repo-shape/scripts/repo_standards.py skills/repo-shape/scripts/pl
 git commit -m "feat: dispatch only adopted repository standards"
 ```
 
-### Task 4: Deploy pinned standard implementations for hosted CI
+### Task 4: Deploy pinned checker inputs for ambient-free hosted CI
 
 **Files:**
 
 - Create: `skills/repo-shape/scripts/deploy_operating_standards.py`
 - Modify: `skills/repo-shape/scripts/repo_standards.py`
 - Modify: `skills/repo-shape/references/ci-validation-pipeline.md`
-- Test: `skills/repo-shape/tests/scripts/test_operating_standards_deployment.py`
-- Test: `skills/repo-shape/tests/scripts/test_repo_standards_hooks.py`
-- Test: `skills/refreshing-installed-skills/tests/scripts/test_refresh_installed_skills.py`
+- Modify: `skills/repo-shape/tests/scripts/test_repo_standards_hooks.py`
+- Create: `skills/repo-shape/tests/scripts/test_operating_standards_deployment.py`
+- Modify: `skills/refreshing-installed-skills/tests/scripts/test_refresh_installed_skills.py`
 
 **Interfaces:**
 
-- Deployment resolves resources under the consumer's pinned Agent Operating Model package root, copies only declared resources to selected `implementation_root` paths, and records the marketplace commit and resource provenance.
+- Deployment resolves the consumer's declared pinned marketplace revision and copies only the selected standards' catalog-declared checker, template, and support resources into consumer-selected implementation roots. Record source revision and per-resource provenance.
 
-- Deployment also copies the self-contained standard coordinator runtime into `.agents/standards/_runtime/`; hosted CI uses this local copy rather than `.agents/skills/repo-shape/scripts/repo_standards.py`.
+- The generic dispatcher can run from the pinned marketplace-source submodule; selected checker inputs and templates live in the consumer working tree at declared roots. Do not depend on `.agents/skills/` projections or copy an entire ambient plugin.
 
-- Check mode is read-only. Apply fails closed on path escape, unknown resources, source mismatch, or ambiguous overwrite.
+- Check mode is read-only. Apply fails closed on unknown resources, source/revision mismatch, path escape, conflicting ownership, or an unconfirmed overwrite. A no-op redeployment is deterministic.
 
-- Hosted checks invoke deployed local files and the existing canonical runner. They do not import `.agents/skills/*` or require Codex plugin installation.
+- The hosted hook invokes the same consumer canonical runner and validates only selected standards from tracked/pinned consumer-controlled inputs. It must work after removing all ambient skill projection directories and Codex plugin-install state.
+
+- Skill refresh may update ambient skill projections, but must not change the operating-standards declaration, deployed standard bytes, or their provenance.
 
 - [ ] **Step 1: Add deployment and hosted-runner behavior tests**
 
-Use a temporary consumer plus marketplace-source fixture. Assert selected-only deployment and provenance, no writes in check mode, safe refusal of path escape/overwrite, and successful hosted check after removing ambient skill directories and plugin declarations. Run skill refresh with deployed standards present and assert the consumer declaration and deployed standard bytes remain unchanged.
+Use a temporary consumer repository and a local pinned-source fixture. Assert selected-only deployment, provenance, read-only check behavior, refusal of path escapes and ambiguous overwrites, hosted validation after removing ambient projections, and refresh preserving declarations and deployed files.
 
 - [ ] **Step 2: Confirm the focused tests fail**
 
-Run: `py -3 -m pytest skills/repo-shape/tests/scripts/test_operating_standards_deployment.py skills/repo-shape/tests/scripts/test_repo_standards_hooks.py skills/refreshing-installed-skills/tests/scripts/test_refresh_installed_skills.py -q` Expected: FAIL because deployed checker resources and ambient-independent execution do not exist.
+Run: `py -3 -m pytest skills/repo-shape/tests/scripts/test_operating_standards_deployment.py skills/repo-shape/tests/scripts/test_repo_standards_hooks.py skills/refreshing-installed-skills/tests/scripts/test_refresh_installed_skills.py -q`
 
-- [ ] **Step 3: Implement deployment and local execution**
+Expected: FAIL because standards deployment and ambient-free dispatch are not implemented.
 
-Resolve the pinned Agent Operating Model package root from the consumer's declared marketplace source; do not assume the retired `codex-marketplace/` path. Copy the standard coordinator runtime and only catalog-declared checkers, templates, and command-bus entries into consumer-selected roots. Point local command vectors at `.agents/standards/_runtime/repo_standards.py` and deployed standard roots. Keep source revision tied to deployed copies and prohibit marketplace rolling during hosted checks.
+- [ ] **Step 3: Implement deployment and hosted execution**
 
-- [ ] **Step 4: Document and verify the hosted contract**
+Add a safe deployment command and provenance record. Use only catalog-resolved paths under the pinned source root and consumer-declared destinations. Point consumer check/apply vectors at the pinned generic dispatcher and selected deployed checker inputs. Keep standard adoption explicit and check mode side-effect free.
 
-Update `ci-validation-pipeline.md` while preserving its staged-snapshot and hosted-commit contract. Add the ambient-free hosted case to the hook tests.
+- [ ] **Step 4: Verify deployment and hook behavior**
 
-- [ ] **Step 5: Run focused deployment and hook tests**
+Run the focused command from Step 2. Expected: PASS with only selected deployed resources present and no ambient skill/plugin state required.
 
-Run the same focused pytest command from Step 2. Expected: PASS, including operation without ambient skills or plugin subscriptions.
-
-- [ ] **Step 6: Commit deployment and hosted validation**
+- [ ] **Step 5: Commit pinned deployment and hosted validation**
 
 ```powershell
 git add skills/repo-shape/scripts/deploy_operating_standards.py skills/repo-shape/scripts/repo_standards.py skills/repo-shape/references/ci-validation-pipeline.md skills/repo-shape/tests/scripts/test_operating_standards_deployment.py skills/repo-shape/tests/scripts/test_repo_standards_hooks.py skills/refreshing-installed-skills/tests/scripts/test_refresh_installed_skills.py
 git commit -m "feat: deploy standards for hosted validation"
 ```
 
-### Task 5: Provide a Rooms-compatible refresh and mesh runner bridge
+### Task 5: Provide the post-index-retirement consumer runner migration
 
 **Files:**
 
 - Create: `skills/repo-shape/references/consumer-runner-migration.md`
 - Modify: `skills/repo-shape/references/ci-validation-pipeline.md`
 - Modify: `skills/repo-shape/scripts/deploy_operating_standards.py`
-- Test: `skills/repo-shape/tests/scripts/test_consumer_runner_migration.py`
-- Test: `skills/repo-shape/tests/scripts/test_repo_standards_hooks.py`
+- Create: `skills/repo-shape/tests/scripts/test_consumer_runner_migration.py`
+- Modify: `skills/repo-shape/tests/scripts/test_repo_standards_hooks.py`
 
 **Interfaces:**
 
-- Migration deploys repository-local refresh and mesh entrypoints from the pinned source, then updates consumer apply/check vectors to use those local entrypoints and `.agents/standards/_runtime/repo_standards.py`. Hook/CI operation does not depend on `.agents/skills/` projections.
+- Migration instructions are ordered and reversible: deploy/check selected standard resources; migrate the consumer declaration; point the runner at the deployed checker and generic pinned dispatcher; move refresh invocation from `.agents/skills/refreshing-installed-skills/...` to `.agents/plugins/marketplace-source/skills/refreshing-installed-skills/...`; remove mesh targets/calls and all tracked mesh/index files; then remove ambient-pack subscriptions no longer required.
 
-- For Rooms, the guide identifies the exact `tools/run.py` helpers to update: `_repo_standards_cmd`, `_skills_cmd`, `_mesh_generate_cmd`, and `_mesh_validate_cmd`. The consumer's outer `repo-standards-commands.json` hook vectors remain stable because they still call `tools/run.py ci`.
+- The guide preserves the consumer's existing `tools/run.py ci --apply` / `tools/run.py ci --check` outer command contract and its tracked hook/hosted-CI staged-snapshot semantics.
 
-- The guide updates the consumer's pinned marketplace source to a release containing the Agent Operating Model package and uses that package root for deployment. It does not depend on a legacy package path or a Codex ambient plugin in CI.
+- The refresh entrypoint uses the pinned marketplace submodule utility with `--no-roll-marketplace-source` for deterministic CI. Local mutation still follows explicit apply/shared-checkout safeguards. This path uses the utility's marketplace-owned `tools/shared_checkout.py`, not a consumer-installed Repo Worker Pack copy.
 
-- Existing command-bus apply/check operations and staged-snapshot generated-path behavior remain equivalent.
+- The test fixture is based on current read-only Rooms runner/hook behavior but lives wholly under marketplace tests. It proves old path fails once Repo Worker Pack skill projection is absent, migrated refresh works from the pinned submodule, mesh is absent, and canonical apply/check hook behavior remains.
 
-- Test the migration against a self-contained fixture derived from the live Rooms runner. Do not modify `Z:\rooms-mostly`.
+- Do not edit `Z:\rooms-mostly` or any other consumer.
 
-- [ ] **Step 1: Add a fixture matching observed Rooms runner behavior**
+- [ ] **Step 1: Add a Rooms-derived runner migration behavior fixture**
 
-Model its current `_repo_standards_cmd`, `_skills_cmd`, `_mesh_generate_cmd`, and `_mesh_validate_cmd` implementations, `ci --apply`/`ci --check` declaration, and hosted hook mode. Assert missing skill projections fail before migration and deployed local entrypoints work after the fixture's runner helpers are updated.
+Model the live `_repo_standards_cmd`, `_skills_cmd`, `_mesh_generate_cmd`, `_mesh_validate_cmd`, CI apply/check sequence, and hosted hook entrypoint. Assert the old installed-skill path fails when Repo Worker Pack is absent and that the pinned-submodule refresh path and deployed selected-standard dispatcher work with the outer `ci --apply` / `ci --check` commands unchanged.
 
 - [ ] **Step 2: Confirm the focused migration test fails**
 
-Run: `py -3 -m pytest skills/repo-shape/tests/scripts/test_consumer_runner_migration.py -q` Expected: FAIL because local deployed entrypoints are unavailable.
+Run: `py -3 -m pytest skills/repo-shape/tests/scripts/test_consumer_runner_migration.py -q`
 
-- [ ] **Step 3: Implement bridge deployment and migration guidance**
+Expected: FAIL because the fixture's old Repo Worker Pack dependency has no supported local migration path.
 
-Deploy the exact executables and wrappers needed by the observed runner. Preserve argument vectors, source pin, output, return codes, and staged-snapshot behavior. Document order, intermediate checks, and rollback to current plugin-backed commands.
+- [ ] **Step 3: Implement the migration guide and supported path**
+
+Document exact sequencing, runner changes, validation at each transition, and recovery to the current pinned-submodule state. Remove all obsolete mesh migration language; Plan 1's removal requires no mesh replacement. Make the refresh utility's direct submodule invocation and selected-standard deployment the supported bridge.
 
 - [ ] **Step 4: Verify migration and hosted hook behavior**
 
-Run: `py -3 -m pytest skills/repo-shape/tests/scripts/test_consumer_runner_migration.py skills/repo-shape/tests/scripts/test_repo_standards_hooks.py -q` Expected: PASS with plugin subscriptions and skill projections removed after deployment, while the declared apply/check sequence is preserved.
+Run: `py -3 -m pytest skills/repo-shape/tests/scripts/test_consumer_runner_migration.py skills/repo-shape/tests/scripts/test_repo_standards_hooks.py -q`
 
-- [ ] **Step 5: Commit the runner bridge**
+Expected: PASS with no Repo Worker Pack or Agent Operating Model skill projection, no mesh calls, selected deployed standards active, and unchanged outer apply/check intent.
+
+- [ ] **Step 5: Commit the runner migration contract**
 
 ```powershell
 git add skills/repo-shape/references/consumer-runner-migration.md skills/repo-shape/references/ci-validation-pipeline.md skills/repo-shape/scripts/deploy_operating_standards.py skills/repo-shape/tests/scripts/test_consumer_runner_migration.py skills/repo-shape/tests/scripts/test_repo_standards_hooks.py
-git commit -m "feat: bridge consumer runners off ambient skill copies"
+git commit -m "feat: add ambient-pack runner migration path"
 ```
 
-### Task 6: Regenerate, review, and publish Plan 1
+### Task 6: Regenerate, review, and publish Plan 2
 
 **Files:**
 
-- Modify through generators: `dist/plugins/agent-operating-model/`, `.agents/skills/`, indexes, and marketplace metadata
+- Modify: `src/plugin-definitions/agent-operating-model/contents.json`
 
-- Review: all source and generated files from Tasks 1-5
+- Modify: generated `dist/plugins/agent-operating-model/` resources through the marketplace build
 
-- [ ] **Step 1: Run touched repository tests and skill-owned tests**
+- Modify: installed `.agents/skills/` projections through the installed-skill build
 
-Run only suites covering changed behavior; do not substitute exact-prose tests for behavior evidence.
+- Review: all source and generated output from Tasks 1-5
 
-- [ ] **Step 2: Regenerate marketplace and installed projections**
+- [ ] **Step 1: Run focused source tests**
 
-Run: `py -3 tools/run.py marketplace --apply` Run: `py -3 tools/run.py installed-skills --apply` Run: `py -3 tools/run.py mesh --apply`
+Run the tests introduced or modified in Tasks 1-5, plus the existing repo-shape, repo-standards, operating-model plugin contract, refresh, and hosted-hook suites.
+
+- [ ] **Step 2: Regenerate and validate projections**
+
+Run:
+
+```powershell
+py -3 tools/run.py marketplace --apply
+py -3 tools/run.py installed-skills --apply
+py -3 tools/run.py marketplace --check
+py -3 tools/run.py installed-skills --check
+```
+
+Expected: Agent Operating Model ships the selectable catalog and deployment tools. Consumer-facing templates do not silently select standards, and generated output contains no index mesh artifacts.
 
 - [ ] **Step 3: Review source and generated outputs**
 
-Confirm only declared resources ship, plugin membership does not imply standard adoption, package dependencies are self-contained, and generated trees were not hand-edited.
+Review the complete branch diff against the approved spec. Confirm every prior fixed surface has a catalog classification; subscriptions do not select standards; chosen standards alone run; hosted behavior works without ambient skills; refresh is submodule-pinned; no mesh generator or index artifact has returned; and all copied/deployed resources have ownership and source revision evidence.
 
-- [ ] **Step 4: Commit through the tracked hook and publish a Draft PR**
+- [ ] **Step 4: Run canonical validation and commit through the hook**
 
-Stage intended source and generated files and commit normally. Let the tracked hook run the canonical apply/check gate; do not bypass it or run complete CI immediately before or after a successful hooked commit. Push, open a Draft PR, and verify its head and hosted checks before marking Plan 1 complete in the roadmap.
+Stage the intended tree and commit normally. The tracked pre-commit hook is the complete canonical apply/check gate. Do not run the complete CI check immediately before or after a successful hooked commit.
+
+- [ ] **Step 5: Push and verify the Draft PR**
+
+Push the same roadmap branch and verify the PR head SHA and hosted checks. The draft workflow may skip validation; record the local hook evidence and any hosted-check limitation. Keep the existing PR draft while later roadmap plans remain in progress.
 
 ## Completion boundary
 
-Plan 1 completes when selective standards can be deployed and checked without ambient plugins, fixed plugin prerequisites are removed, and the Rooms-equivalent runner fixture passes with local deployed utilities. It does not change Superpowers+, MCP Usage Pack, or Unslop+ guidance, complete capability-based workflow composition, or migrate Rooms or another consumer.
+Plan 2 completes when consumer standard selection is explicit, independently granular, migration from the legacy shape is reviewable, dispatch and scaffolding are composition-driven, hosted CI uses pinned consumer-controlled selected implementations without ambient plugins, and the Rooms-derived fixture proves refresh/runner continuity after mesh removal and ambient-pack unsubscription. It does not edit Rooms or complete the companion-pack audit and capability-based workflow contract; those remain later roadmap work.
