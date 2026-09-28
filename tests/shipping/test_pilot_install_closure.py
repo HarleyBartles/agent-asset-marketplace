@@ -1,6 +1,9 @@
+import json
 import re
 import shutil
 from pathlib import Path
+
+import yaml
 
 ROOT = Path(__file__).resolve().parents[2]
 PLUGIN_NAMES = ("feature-sliced-design", "frontend-pack")
@@ -26,7 +29,11 @@ def test_shared_skill_and_reference_resolve_after_each_plugin_isolated(tmp_path:
         assert (package / ".codex-plugin/plugin.json").is_file()
         assert (package / "LICENSE").is_file()
         skill = package / "skills/feature-sliced-design"
-        assert (skill / "PROVENANCE.md").is_file()
+        frontmatter = yaml.safe_load((skill / "SKILL.md").read_text(encoding="utf-8").split("---", 2)[1])
+        entries = json.loads((package / "references/bundle-manifest.json").read_text(encoding="utf-8"))["entries"]
+        entry = next(item for item in entries if item["canonical_name"] == "feature-sliced-design")
+        for field in ("source_author", "source_license", "source_repo"):
+            assert frontmatter["metadata"][field] == entry[field]
         assert (skill / "references/migration-guide.md").is_file()
         for link in _local_links(skill):
             assert link.is_file(), f"unresolved installed skill reference: {link}"

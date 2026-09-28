@@ -73,19 +73,6 @@ def _expected_plugins(root: Path, staging: Path) -> None:
                 skills_root,
                 excluded_directories=frozenset({"__pycache__", ".pytest_cache", "runs", "evaluator-only"}),
             )
-            provenance = [f"Canonical source: `{skill.source_id}`", ""]
-            for key, label in (
-                ("source_license", "License"),
-                ("source_author", "Attribution"),
-                ("source_repo", "Source repository"),
-                ("provenance_note", "Provenance"),
-            ):
-                if value := skill.provenance.get(key):
-                    provenance.append(f"- {label}: {value}")
-            provenance_path = skill_target / "PROVENANCE.md"
-            if provenance_path.exists():
-                raise DefinitionError(f"plugin {name} skill {skill.name}: PROVENANCE.md collides with authored source")
-            provenance_path.write_text("\n".join(provenance) + "\n", encoding="utf-8", newline="\n")
             for resource in skill.resources:
                 target = skill_target / resource.destination
                 if target.exists():
