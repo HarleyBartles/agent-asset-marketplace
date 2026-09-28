@@ -1,0 +1,48 @@
+{
+  "name": "feature-sliced-design",
+  "version": "0.1.0",
+  "description": "Official Feature-Sliced Design (FSD) v2.1 skill for structuring frontend projects with standardized layers, slices, and segments. Teaches AI agents the FSD methodology including layer hierarchy, import rules, decision frameworks for code placement, and common architectural patterns.",
+  "author": {
+    "name": "Feature-Sliced Design",
+    "url": "https://fsd.how"
+  },
+  "homepage": "https://github.com/feature-sliced/skills",
+  "repository": "https://github.com/feature-sliced/skills",
+  "license": "MIT",
+  "keywords": [
+    "feature-sliced-design",
+    "fsd",
+    "frontend-architecture",
+    "vertical-slices",
+    "layers",
+    "segments",
+    "react",
+    "nextjs",
+    "nuxt",
+    "vite",
+    "astro"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Feature-Sliced Design",
+    "shortDescription": "FSD v2.1 frontend architecture methodology",
+    "longDescription": "Apply Feature-Sliced Design v2.1 principles when structuring frontend projects. Covers layer hierarchy (app, pages, widgets, features, entities, shared), import rules, decision frameworks for code placement, asset handling, cross-import resolution, entity management, framework integration (Next.js, Nuxt, Vite, Astro), and common patterns (auth, API, Redux, TanStack Query).",
+    "developerName": "Feature-Sliced Design",
+    "category": "Coding",
+    "capabilities": [
+      "Interactive",
+      "Write"
+    ],
+    "websiteURL": "https://fsd.how",
+    "privacyPolicyURL": "https://github.com/feature-sliced/skills",
+    "termsOfServiceURL": "https://github.com/feature-sliced/skills/blob/master/README.md",
+    "defaultPrompt": [
+      "Set up FSD project structure for a React app",
+      "Where should I put this component using FSD?"
+    ],
+    "brandColor": "#6C3FE0",
+    "composerIcon": "./assets/icon.svg",
+    "logo": "./assets/icon.svg",
+    "screenshots": []
+  }
+}

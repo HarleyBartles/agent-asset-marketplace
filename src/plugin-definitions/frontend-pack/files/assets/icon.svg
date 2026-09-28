@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="Frontend Pack icon">
+  <rect width="256" height="256" rx="48" fill="#2563EB"/>
+  <rect x="44" y="58" width="168" height="140" rx="20" fill="#EFF6FF" opacity="0.96"/>
+  <rect x="60" y="78" width="136" height="16" rx="8" fill="#2563EB" opacity="0.88"/>
+  <rect x="60" y="114" width="76" height="16" rx="8" fill="#2563EB" opacity="0.72"/>
+  <rect x="60" y="150" width="108" height="16" rx="8" fill="#2563EB" opacity="0.72"/>
+  <path d="M170 120l20 20-20 20" fill="none" stroke="#2563EB" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

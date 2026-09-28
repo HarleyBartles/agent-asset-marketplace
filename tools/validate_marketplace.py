@@ -8,8 +8,6 @@ import subprocess
 import sys
 from pathlib import Path
 
-import yaml
-
 from marketplace_utils import (
     CODEX_MARKETPLACE_MANIFEST_PATH,
     EXPECTED_ACTIVE_MARKETPLACE_PLUGIN_NAMES,
@@ -20,7 +18,6 @@ from marketplace_utils import (
     REPO_INDEX_PATH,
     build_marketplace_manifest,
     load_json,
-    parse_top_markdown_table,
     _installation_policy_for_plugin,
 )
 from validate_repo_index import validate_repo_index
@@ -56,216 +53,6 @@ def _run_tool_check(command: list[str], label: str) -> None:
         subprocess.run(command, cwd=ROOT, check=True)
     except subprocess.CalledProcessError as exc:  # pragma: no cover - exercised via integration checks
         raise ValueError(f"{label} failed with exit code {exc.returncode}") from exc
-
-
-def _git_lines(*args: str) -> list[str]:
-    result = subprocess.run(["git", *args], cwd=ROOT, capture_output=True, text=True, check=True)
-    return result.stdout.splitlines()
-
-
-def _split_skill_frontmatter_and_body(path: Path) -> tuple[str, str]:
-    text = path.read_text(encoding="utf-8")
-    if not text.startswith("---"):
-        return "", text
-    lines = text.splitlines(keepends=True)
-    if not lines or lines[0].strip() != "---":
-        return "", text
-    end_index = None
-    for index, line in enumerate(lines[1:], start=1):
-        if line.strip() == "---":
-            end_index = index
-            break
-    if end_index is None:
-        raise ValueError(f"{path} is missing a closing YAML frontmatter delimiter")
-    frontmatter = "".join(lines[1:end_index])
-    body = "".join(lines[end_index + 1 :])
-    return frontmatter, body
-
-
-def _validate_repo_index_metadata(repo_index: dict | None, *, bundle_name: str, plugin_root: str) -> None:
-    if repo_index is None:
-        return
-    if not isinstance(repo_index, dict):
-        raise ValueError(f"{bundle_name} bundle manifest repo_index must be a mapping")
-
-    agents_md = repo_index.get("agents_md")
-    if agents_md is not None and (not isinstance(agents_md, str) or not agents_md.strip()):
-        raise ValueError(f"{bundle_name} bundle manifest repo_index agents_md must be a nonblank string or null")
-
-    registry_alignment = repo_index.get("registry_alignment")
-    if not isinstance(registry_alignment, dict):
-        raise ValueError(f"{bundle_name} bundle manifest repo_index registry_alignment must be a mapping")
-    status = registry_alignment.get("status")
-    note = registry_alignment.get("note")
-    if status not in {"aligned", "intentional-delta"}:
-        raise ValueError(f"{bundle_name} bundle manifest repo_index registry_alignment status mismatch")
-    if status == "intentional-delta" and not isinstance(note, str):
-        raise ValueError(f"{bundle_name} bundle manifest repo_index registry_alignment note must be text")
-    if status == "intentional-delta" and not note.strip():
-        raise ValueError(f"{bundle_name} bundle manifest repo_index registry_alignment note must be nonblank")
-
-    for field_name in ("source_md", "license_path", "license_reference", "bundle_manifest", "skills_path"):
-        value = repo_index.get(field_name)
-        if value is not None and (not isinstance(value, str) or not value.strip()):
-            raise ValueError(f"{bundle_name} bundle manifest repo_index {field_name} must be a nonblank string or null")
-
-
-def _load_markdown_table_column_values(path: Path, column_name: str) -> list[str]:
-    rows = parse_top_markdown_table(path)
-    values: list[str] = []
-    seen_values: set[str] = set()
-    for row in rows:
-        value = row.get(column_name)
-        if not isinstance(value, str) or not value.strip():
-            raise ValueError(f"{path}: markdown table column {column_name} must contain nonblank strings")
-        if value in seen_values:
-            raise ValueError(f"{path}: markdown table column {column_name} contains a duplicate value: {value}")
-        seen_values.add(value)
-        values.append(value)
-    if not values:
-        raise ValueError(f"{path}: markdown table column {column_name} must contain at least one value")
-    return values
-
-
-def _validate_skill_frontmatter_metadata(skill_path: Path, *, bundle_name: str, entry: dict) -> None:
-    """Validate that SKILL.md frontmatter has required metadata fields based on content_mode.
-
-    MARK-262: Adapted skills must have complete metadata frontmatter.
-    Verbatim skills should be byte-identical to upstream and should NOT
-    have metadata.
-    """
-    skill_md = skill_path / "SKILL.md"
-    if not skill_md.is_file():
-        raise FileNotFoundError(skill_md)
-
-    content_mode = entry.get("content_mode")
-    canonical_name = entry.get("canonical_name") or skill_path.name
-
-    # For verbatim entries, SKILL.md should NOT have MARK-262 authorship metadata
-    # (byte-identical to upstream). First-party verbatim skills are exempt: their
-    # source custody legitimately carries provenance metadata since the source IS
-    # the first-party asset.
-    if content_mode == "verbatim":
-        source_category = entry.get("source_category")
-        frontmatter, _ = _split_skill_frontmatter_and_body(skill_md)
-        if frontmatter:
-            try:
-                parsed = yaml.safe_load(frontmatter)
-            except yaml.YAMLError as e:
-                raise ValueError(f"{skill_md} has invalid YAML frontmatter: {e}")
-            if isinstance(parsed, dict) and "metadata" in parsed:
-                metadata = parsed["metadata"]
-                if isinstance(metadata, dict) and source_category == "third_party":
-                    # Check for MARK-262 authorship fields that should not be in
-                    # third-party verbatim skills (they must be byte-identical to upstream)
-                    mark262_fields = [
-                        "source_author",
-                        "source_license",
-                        "source_repo",
-                        "source_path",
-                        "content_mode",
-                        "adapted_author",
-                    ]
-                    if any(field in metadata for field in mark262_fields):
-                        raise ValueError(
-                            f"{bundle_name} skill {canonical_name} has "
-                            f"MARK-262 authorship metadata but content_mode is "
-                            f"verbatim - third-party verbatim skills must be "
-                            f"byte-identical to upstream"
-                        )
-        return
-
-    # For adapted entries, metadata is required
-    frontmatter, _ = _split_skill_frontmatter_and_body(skill_md)
-    if not frontmatter:
-        raise ValueError(f"{skill_md} is missing frontmatter - required for adapted content")
-
-    # Parse frontmatter as YAML
-    try:
-        parsed = yaml.safe_load(frontmatter)
-    except yaml.YAMLError as e:
-        raise ValueError(f"{skill_md} has invalid YAML frontmatter: {e}")
-
-    if not isinstance(parsed, dict):
-        raise ValueError(f"{skill_md} frontmatter must be a mapping")
-
-    # MARK-262: Adapted and normalised skills must have metadata section
-    # Verbatim skills may have optional metadata (e.g., origin field for provenance tracking)
-    metadata = parsed.get("metadata")
-
-    if content_mode in {"adapted", "normalised"}:
-        if not isinstance(metadata, dict):
-            raise ValueError(f"{skill_md} frontmatter is missing required metadata section for {content_mode} content")
-
-    def require_metadata_field(field_name: str) -> None:
-        if field_name not in metadata or not metadata[field_name]:
-            raise ValueError(f"{bundle_name} skill {canonical_name} frontmatter metadata is missing {field_name}")
-
-    # Required fields for adapted and normalised skills
-    require_metadata_field("content_mode")
-    require_metadata_field("source_author")
-    require_metadata_field("source_license")
-    require_metadata_field("source_repo")
-    require_metadata_field("source_path")
-
-    # Adapted skills require adapted_author and adaptation_note
-    if content_mode == "adapted":
-        require_metadata_field("adapted_author")
-        require_metadata_field("adaptation_note")
-    # Normalised skills should NOT have adapted_author or adaptation_note
-    elif content_mode == "normalised":
-        if metadata.get("adapted_author") or metadata.get("adaptation_note"):
-            raise ValueError(
-                f"{bundle_name} skill {canonical_name} normalised content "
-                f"should not have adapted_author or adaptation_note"
-            )
-
-    # Ensure content_mode in frontmatter matches bundle manifest
-    if metadata.get("content_mode") != content_mode:
-        raise ValueError(
-            f"{bundle_name} skill {canonical_name} frontmatter content_mode "
-            f"'{metadata.get('content_mode')}' does not match bundle manifest "
-            f"'{content_mode}'"
-        )
-
-
-def _validate_plugin_level_authorship(bundle_manifest: dict, *, bundle_name: str) -> None:
-    """Validate that plugin-level authorship does not flatten skill-level attribution.
-
-    MARK-262: Strict validation - all plugins must have proper plugin-level authorship.
-    """
-    plugin_author = bundle_manifest.get("plugin_author")
-    plugin_license = bundle_manifest.get("plugin_license")
-
-    # MARK-262: All plugins must declare plugin_author and plugin_license
-    if not plugin_author or not isinstance(plugin_author, str) or not plugin_author.strip():
-        raise ValueError(f"{bundle_name} bundle manifest is missing plugin_author")
-    if not plugin_license or not isinstance(plugin_license, str) or not plugin_license.strip():
-        raise ValueError(f"{bundle_name} bundle manifest is missing plugin_license")
-
-    # For repo-authored plugin shells, check standard authorship
-    if plugin_author == "Harley Bartles":
-        if plugin_license != "MIT":
-            raise ValueError(f"{bundle_name} plugin_author is Harley Bartles but plugin_license is not MIT")
-
-    # Check that individual skills retain their own upstream authorship
-    entries = bundle_manifest.get("entries", [])
-    for entry in entries:
-        if not isinstance(entry, dict):
-            continue
-        canonical_name = entry.get("canonical_name")
-        content_mode = entry.get("content_mode")
-        source_author = entry.get("source_author")
-        source_category = entry.get("source_category")
-
-        if content_mode == "verbatim" and source_author:
-            # For verbatim third-party content, ensure upstream author is not overwritten
-            if plugin_author == "Harley Bartles" and "Harley Bartles" in source_author:
-                if source_category == "third_party":
-                    raise ValueError(
-                        f"{bundle_name} entry {canonical_name} incorrectly "
-                        f"claims repo author for verbatim third-party content"
-                    )
 
 
 def validate_marketplace_registry(registry: dict, plugin_manifests: list[dict]) -> None:
@@ -307,13 +94,12 @@ def validate_marketplace_registry(registry: dict, plugin_manifests: list[dict]) 
 
 
 def validate_active_plugin_tree() -> None:
-    plugin_root = ROOT / "codex-marketplace/plugins"
+    plugin_root = ROOT / "dist/plugins"
     expected_names = sorted(spec["name"] for spec in MARKETPLACE_PLUGIN_SPECS)
     actual_names = sorted(path.name for path in plugin_root.iterdir() if path.is_dir())
     if actual_names != expected_names:
         raise ValueError(
-            "codex-marketplace/plugins contains non-protected plugin roots: "
-            f"expected {expected_names}, found {actual_names}"
+            f"dist/plugins contains non-protected plugin roots: expected {expected_names}, found {actual_names}"
         )
 
 
@@ -357,26 +143,8 @@ def _load_skill_inventory(plugin_root: str) -> set[str]:
     return {child.name for child in skills_root.iterdir() if child.is_dir()}
 
 
-def _normalize_string_list(value: object, *, context: str, field_name: str, allow_empty: bool) -> tuple[str, ...]:
-    if not isinstance(value, list):
-        raise ValueError(f"{context} {field_name} must be a list")
-    if not value and not allow_empty:
-        raise ValueError(f"{context} {field_name} must be a non-empty list")
-
-    normalized: list[str] = []
-    seen: set[str] = set()
-    for item in value:
-        if not isinstance(item, str) or not item.strip():
-            raise ValueError(f"{context} {field_name} entries must be nonblank strings")
-        if item in seen:
-            raise ValueError(f"{context} {field_name} contains a duplicate value: {item}")
-        seen.add(item)
-        normalized.append(item)
-    return tuple(normalized)
-
-
-def validate_no_legacy_manifest_shapes() -> None:
-    """Validate that no plugin manifest uses a legacy shape that the materializer would skip."""
+def validate_bundle_source_contracts() -> None:
+    """Check that built bundle metadata names canonical skills and installed copies."""
     for spec in MARKETPLACE_PLUGIN_SPECS:
         plugin_root = ROOT / spec["plugin_root"]
         manifest_path = plugin_root / "references" / "bundle-manifest.json"
@@ -388,22 +156,34 @@ def validate_no_legacy_manifest_shapes() -> None:
             raise ValueError(
                 f"{spec['name']}: manifest must have entries[] array (legacy skills[] or components[] not allowed)"
             )
-        if not entries:
-            continue
+        names: set[str] = set()
         for i, entry in enumerate(entries):
             if not isinstance(entry, dict):
                 raise ValueError(f"{spec['name']}: entry {i} must be an object")
-            if "canonical_name" not in entry or "canonical_source_path" not in entry:
-                raise ValueError(
-                    f"{spec['name']}: entry {i} must have canonical_name and canonical_source_path (legacy shape)"
-                )
-            csp = entry.get("canonical_source_path", "")
-            if isinstance(csp, str) and Path(csp).suffix:
-                raise ValueError(
-                    f"{spec['name']}: entry {i} canonical_source_path "
-                    f"must be directory-level (legacy file-level path: {csp})"
-                )
-    print("OK manifest shape: all plugins use plugin-first directory-level entries[]")
+            name = entry.get("canonical_name")
+            source = entry.get("canonical_source_path")
+            if not isinstance(name, str) or not name or name in names:
+                raise ValueError(f"{spec['name']}: entry {i} has a missing or duplicate skill name")
+            names.add(name)
+            if (
+                not isinstance(source, str)
+                or Path(source).parts[:1] != ("skills",)
+                or ".." in Path(source).parts
+                or len(Path(source).parts) != 2
+            ):
+                raise ValueError(f"{spec['name']}: entry {i} must point to top-level skill source")
+            if entry.get("source_category") != "first_party":
+                raise ValueError(f"{spec['name']}: entry {i} must declare first-party source custody")
+            if entry.get("source_path") != f"{source}/SKILL.md" or not (ROOT / source / "SKILL.md").is_file():
+                raise ValueError(f"{spec['name']}: entry {i} has an unresolved canonical source")
+            if (
+                entry.get("local_path") != f"skills/{name}"
+                or not (plugin_root / "skills" / name / "SKILL.md").is_file()
+            ):
+                raise ValueError(f"{spec['name']}: entry {i} has an unresolved installed skill")
+        if names != _load_skill_inventory(spec["plugin_root"]):
+            raise ValueError(f"{spec['name']}: bundle entries differ from packaged skills")
+    print("OK bundle source contracts: every installed skill maps to canonical first-party source")
 
 
 def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
@@ -456,7 +236,7 @@ def validate_project(*, skip_freshness: bool = False) -> None:
     validate_marketplace_registry(registry, plugin_manifests)
     codex_manifest = check_json(CODEX_MARKETPLACE_MANIFEST_PATH)
     if codex_manifest != registry:
-        raise ValueError("codex-marketplace/manifest.json does not match .agents/plugins/marketplace.json")
+        raise ValueError("dist/manifest.json does not match .agents/plugins/marketplace.json")
     for spec in MARKETPLACE_PLUGIN_SPECS:
         plugin_root = ROOT / spec["plugin_root"]
         if spec["name"] == "superpowers-plus":
@@ -476,10 +256,9 @@ def validate_project(*, skip_freshness: bool = False) -> None:
         if bundle_path.exists():
             check_json(bundle_path)
 
-    check_text(ROOT / "codex-marketplace/README.md")
-    check_text(ROOT / "codex-marketplace/plugins/README.md")
-    check_text(ROOT / "codex-marketplace/plugins/unslop-plus/SOURCE.md")
-    validate_no_legacy_manifest_shapes()
+    check_text(ROOT / "docs/distribution.md")
+    check_text(ROOT / "dist/plugins/unslop-plus/SOURCE.md")
+    validate_bundle_source_contracts()
     print("OK validate_marketplace: project")
 
 

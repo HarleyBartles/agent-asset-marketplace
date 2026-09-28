@@ -1,0 +1,103 @@
+{
+  "skills": [
+    {
+      "name": "command-bus",
+      "source": "command-bus",
+      "provenance": {
+        "source_category": "first_party",
+        "content_mode": "verbatim",
+        "source_family": "first_party",
+        "copy_expectation": "byte_identical",
+        "provenance_note": "Canonical first-party command-bus skill. (Command Bus first-party skill)"
+      }
+    },
+    {
+      "name": "markdown-formatting",
+      "source": "markdown-formatting",
+      "provenance": {
+        "source_category": "first_party",
+        "content_mode": "verbatim",
+        "source_family": "first_party",
+        "copy_expectation": "byte_identical",
+        "provenance_note": "Canonical first-party markdown-formatting skill. (Markdown Formatting first-party skill)"
+      }
+    },
+    {
+      "name": "python",
+      "source": "python",
+      "provenance": {
+        "source_category": "first_party",
+        "content_mode": "verbatim",
+        "source_family": "first_party",
+        "copy_expectation": "byte_identical",
+        "provenance_note": "Canonical first-party python skill. (Python first-party skill)"
+      }
+    },
+    {
+      "name": "repo-agent-assets",
+      "source": "repo-agent-assets",
+      "provenance": {
+        "source_category": "first_party",
+        "content_mode": "verbatim",
+        "source_family": "first_party",
+        "copy_expectation": "byte_identical",
+        "provenance_note": "Canonical first-party repo-agent-assets skill. (Repo Agent Assets first-party skill)"
+      }
+    },
+    {
+      "name": "repo-composition",
+      "source": "repo-composition",
+      "provenance": {
+        "source_category": "first_party",
+        "content_mode": "verbatim",
+        "source_family": "first_party",
+        "copy_expectation": "byte_identical",
+        "provenance_note": "Canonical first-party repo-composition skill. (Repo Composition first-party skill)"
+      }
+    },
+    {
+      "name": "repo-shape",
+      "source": "repo-shape",
+      "provenance": {
+        "source_category": "first_party",
+        "content_mode": "verbatim",
+        "source_family": "first_party",
+        "copy_expectation": "byte_identical",
+        "provenance_note": "Canonical first-party repo-shape skill. (Repo Shape first-party skill)"
+      }
+    },
+    {
+      "name": "repo-standards",
+      "source": "repo-standards",
+      "provenance": {
+        "source_category": "first_party",
+        "content_mode": "verbatim",
+        "source_family": "first_party",
+        "copy_expectation": "byte_identical",
+        "provenance_note": "Canonical first-party repo-standards skill. (Repo Standards router first-party skill)"
+      }
+    },
+    {
+      "name": "repository-validation",
+      "source": "repository-validation",
+      "provenance": {
+        "source_category": "first_party",
+        "content_mode": "verbatim",
+        "source_family": "first_party",
+        "copy_expectation": "byte_identical",
+        "provenance_note": "Canonical first-party repository-validation skill. (Repository Validation first-party skill)"
+      }
+    },
+    {
+      "name": "tracked-repo-hooks",
+      "source": "tracked-repo-hooks",
+      "provenance": {
+        "source_category": "first_party",
+        "content_mode": "verbatim",
+        "source_family": "first_party",
+        "copy_expectation": "byte_identical",
+        "provenance_note": "Canonical first-party tracked-repo-hooks skill. (Tracked Repo Hooks first-party skill)"
+      }
+    }
+  ]
+}

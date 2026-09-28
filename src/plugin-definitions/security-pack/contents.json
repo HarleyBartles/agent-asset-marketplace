@@ -1,0 +1,52 @@
+{
+  "skills": [
+    {
+      "name": "owasp-top-ten",
+      "source": "owasp-top-ten",
+      "provenance": {
+        "source_category": "first_party",
+        "content_mode": "verbatim",
+        "source_family": "first_party",
+        "import_status": "imported",
+        "copy_expectation": "byte_identical",
+        "provenance_note": "Copied verbatim from the first-party owasp-top-ten skill."
+      }
+    },
+    {
+      "name": "risk-gates",
+      "source": "security-pack--risk-gates",
+      "provenance": {
+        "source_category": "first_party",
+        "content_mode": "verbatim",
+        "source_family": "first_party",
+        "import_status": "imported",
+        "copy_expectation": "byte_identical",
+        "provenance_note": "Copied verbatim from the first-party risk-gates skill, expanded with a safety gate for destructive operations."
+      }
+    },
+    {
+      "name": "secure-development",
+      "source": "secure-development",
+      "provenance": {
+        "source_category": "first_party",
+        "content_mode": "verbatim",
+        "source_family": "first_party",
+        "import_status": "imported",
+        "copy_expectation": "byte_identical",
+        "provenance_note": "Copied verbatim from the first-party secure-development skill."
+      }
+    },
+    {
+      "name": "web-identity",
+      "source": "web-identity",
+      "provenance": {
+        "source_category": "first_party",
+        "content_mode": "verbatim",
+        "source_family": "first_party",
+        "import_status": "imported",
+        "copy_expectation": "byte_identical",
+        "provenance_note": "Copied verbatim from the first-party web-identity skill."
+      }
+    }
+  ]
+}

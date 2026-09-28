@@ -59,7 +59,7 @@ def main(argv: list[str] | None = None) -> int:
     _check_freshness(CODEX_MARKETPLACE_MANIFEST_PATH, rendered)
     print(f"OK {MARKETPLACE_PATH.relative_to(ROOT)}")
     print(f"OK {CODEX_MARKETPLACE_MANIFEST_PATH.relative_to(ROOT)}")
-    print("OK marketplace: .agents/plugins/marketplace.json and codex-marketplace/manifest.json are current")
+    print("OK marketplace: .agents/plugins/marketplace.json and dist/manifest.json are current")
     return 0
 
 

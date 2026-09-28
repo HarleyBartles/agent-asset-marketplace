@@ -20,8 +20,8 @@ ROOT = Path(__file__).resolve().parent.parent
 SCRIPT_NAME = "tools/run"
 
 
-PLUGIN_ROOTS_PATH = ROOT / "codex-marketplace" / "plugins"
-PLUGIN_ROOT_INVENTORY_PATH = ROOT / "codex-marketplace" / "plugin-roots.json"
+PLUGIN_ROOTS_PATH = ROOT / "dist" / "plugins"
+PLUGIN_ROOT_INVENTORY_PATH = ROOT / "dist" / "plugin-roots.json"
 _MAX_CMD_CHARS = 28000
 
 
@@ -311,6 +311,7 @@ def _check_index_mesh(ctx: Ctx) -> None:
 
 
 def _run_validate(ctx: Ctx) -> None:
+    _check_tracked_line_endings()
     _run([sys.executable, "tools/validate_authority_assets.py"], ctx)
     _run([sys.executable, "tools/validate_agents_md.py"], ctx)
     _run([sys.executable, "tools/validate_tool_cli.py"], ctx)
@@ -318,14 +319,37 @@ def _run_validate(ctx: Ctx) -> None:
         _git_diff_check(ctx)
 
 
+def _check_tracked_line_endings() -> None:
+    """Catch text bytes that Git would silently normalize when committing."""
+    result = subprocess.run(
+        ["git", "ls-files", "--eol", "-z"],
+        cwd=ROOT,
+        capture_output=True,
+        check=True,
+    )
+    offenders: list[str] = []
+    for entry in result.stdout.split(b"\0"):
+        if not entry:
+            continue
+        state, path = entry.split(b"\t", maxsplit=1)
+        if b"eol=lf" not in state:
+            continue
+        if any(marker in state for marker in (b"i/crlf", b"i/mixed", b"w/crlf", b"w/mixed")):
+            offenders.append(path.decode("utf-8", errors="replace"))
+    if offenders:
+        raise ValueError("tracked text must use LF line endings: " + ", ".join(offenders))
+    print("OK tracked text line endings: LF")
+
+
 def _apply_marketplace(ctx: Ctx) -> None:
-    _run([sys.executable, "tools/sync_skill_shared_references.py", "--apply"], ctx)
+    _run([sys.executable, "tools/build_marketplace.py", "--apply"], ctx)
     _run([sys.executable, "tools/generate_marketplace.py", "--apply"], ctx)
     _run([sys.executable, "tools/validate_marketplace.py", "--phase", "all"], ctx)
     _run([sys.executable, ".agents/skills/repo-shape/scripts/deploy_vendor_profiles.py", "--apply"], ctx)
 
 
 def _check_marketplace(ctx: Ctx) -> None:
+    _run([sys.executable, "tools/build_marketplace.py", "--check"], ctx)
     _run([sys.executable, "tools/generate_marketplace.py", "--check"], ctx)
     _run([sys.executable, "tools/validate_marketplace.py", "--phase", "all"], ctx)
 
@@ -467,19 +491,30 @@ def _run_ci(ctx: Ctx) -> None:
         )
 
 
-def _run_python_tests(ctx: Ctx) -> None:
+def _run_python_tests(ctx: Ctx, suite: str) -> None:
     test_env = os.environ.copy()
     test_env.pop("REPO_STANDARDS_STAGED_SNAPSHOT", None)
     test_env.pop("REPO_STANDARDS_HOSTED_COMMIT", None)
-    _run([sys.executable, "-m", "pytest", "-q"], ctx, env=test_env)
+    _run([sys.executable, "-m", "pytest", "-q", f"tests/{suite}"], ctx, env=test_env)
+
+
+def _run_build_tests(ctx: Ctx) -> None:
+    _run_python_tests(ctx, "build")
+
+
+def _run_repository_tests(ctx: Ctx) -> None:
+    _run_python_tests(ctx, "repository")
+
+
+def _run_shipping_tests(ctx: Ctx) -> None:
+    _run_python_tests(ctx, "shipping")
 
 
 _TASKS: dict[str, Task] = {
     "lint": Task(apply=(_run_lint,), check=(_run_lint,), fix="tools/run lint --apply"),
-    "tests": Task(
-        check=(_run_python_tests,),
-        fix="python -m pytest -q",
-    ),
+    "tests-build": Task(check=(_run_build_tests,), fix="python -m pytest -q tests/build"),
+    "tests-repository": Task(check=(_run_repository_tests,), fix="python -m pytest -q tests/repository"),
+    "tests-shipping": Task(check=(_run_shipping_tests,), fix="python -m pytest -q tests/shipping"),
     "repo-standards": Task(
         apply=(_run_repo_standards,),
         check=(_run_repo_standards,),
@@ -543,7 +578,7 @@ _TASKS: dict[str, Task] = {
         fix="tools/run runtime-agents --apply --allow-shared-checkout",
     ),
     "ci": Task(
-        deps=("lint", "repo-standards", "tests", "validate"),
+        deps=("lint", "repo-standards", "tests-build", "tests-repository", "tests-shipping", "validate"),
         apply=(_run_ci,),
         check=(_run_ci,),
         fix="tools/run ci --apply",

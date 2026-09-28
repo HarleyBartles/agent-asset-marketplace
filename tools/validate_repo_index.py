@@ -32,16 +32,6 @@ def check_json(path: Path) -> dict:
     return data
 
 
-def check_text(path: Path) -> str:
-    if not path.exists():
-        raise FileNotFoundError(path)
-    text = path.read_text(encoding="utf-8")
-    if not text.strip():
-        raise ValueError(f"{path} is empty")
-    print(f"OK text: {path.relative_to(ROOT)}")
-    return text
-
-
 def _resolved_path(relative_path: str) -> Path:
     if not isinstance(relative_path, str) or not relative_path.strip():
         raise ValueError("expected a non-empty relative path string")
@@ -137,7 +127,7 @@ def validate_repo_index() -> dict:
     schema_version = repo_index.get("schema_version")
     if schema_version != 2:
         raise ValueError("INDEX.json schema_version must be 2")
-    if repo_index.get("marketplace_root_inventory_path") != "codex-marketplace/plugin-roots.json":
+    if repo_index.get("marketplace_root_inventory_path") != "dist/plugin-roots.json":
         raise ValueError("INDEX.json marketplace_root_inventory_path mismatch")
 
     zones = repo_index.get("zones")
@@ -150,7 +140,7 @@ def validate_repo_index() -> dict:
 
     if repo_index.get("marketplace_registry_path") != ".agents/plugins/marketplace.json":
         raise ValueError("INDEX.json marketplace_registry_path mismatch")
-    if repo_index.get("codex_marketplace_manifest_path") != "codex-marketplace/manifest.json":
+    if repo_index.get("codex_marketplace_manifest_path") != "dist/manifest.json":
         raise ValueError("INDEX.json codex_marketplace_manifest_path mismatch")
 
     validation = repo_index.get("validation")
@@ -204,7 +194,7 @@ def validate_repo_index() -> dict:
     registry = check_json(MARKETPLACE_PATH)
     codex_manifest = check_json(CODEX_MARKETPLACE_MANIFEST_PATH)
     if registry != codex_manifest:
-        raise ValueError(".agents/plugins/marketplace.json does not match codex-marketplace/manifest.json")
+        raise ValueError(".agents/plugins/marketplace.json does not match dist/manifest.json")
 
     registry_plugins = {plugin["name"]: plugin for plugin in registry.get("plugins", [])}
     spec_by_name = {spec["name"]: spec for spec in MARKETPLACE_PLUGIN_SPECS}
@@ -294,17 +284,6 @@ def validate_repo_index() -> dict:
         raise ValueError("INDEX.json marketplace plugin list does not match the current marketplace registry")
     if [entry.get("name") for entry in marketplace_plugins] != list(EXPECTED_ACTIVE_MARKETPLACE_PLUGIN_NAMES):
         raise ValueError("INDEX.json marketplace plugin order does not match the protected marketplace shape")
-
-    third_party_agents = ROOT / ".agents/doctrine/third-party.md"
-    third_party_guidance = check_text(third_party_agents)
-    normalized_third_party_guidance = " ".join(third_party_guidance.split())
-    if (
-        "third-party source custody" not in normalized_third_party_guidance
-        or "not repository doctrine" not in normalized_third_party_guidance
-    ):
-        raise ValueError(
-            ".agents/doctrine/third-party.md must clearly distinguish repo-owned guidance from third-party instructions"
-        )
 
     print("Repo index validation passed.")
     return repo_index

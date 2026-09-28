@@ -1,0 +1,186 @@
+{
+  "schema_version": 1,
+  "description": "Editable inventory for the active Codex marketplace plugin roots.",
+  "roots": [
+    {
+      "order": 0,
+      "name": "agentic-evaluation",
+      "category": "Coding",
+      "registry_path": "./dist/plugins/agentic-evaluation",
+      "plugin_root": "dist/plugins/agentic-evaluation",
+      "manifest_path": "dist/plugins/agentic-evaluation/.codex-plugin/plugin.json",
+      "enabled": true
+    },
+    {
+      "order": 1,
+      "name": "agentic-workflows",
+      "category": "Coding",
+      "registry_path": "./dist/plugins/agentic-workflows",
+      "plugin_root": "dist/plugins/agentic-workflows",
+      "manifest_path": "dist/plugins/agentic-workflows/.codex-plugin/plugin.json",
+      "enabled": true
+    },
+    {
+      "order": 2,
+      "name": "api-contracts-pack",
+      "category": "Productivity",
+      "registry_path": "./dist/plugins/api-contracts-pack",
+      "plugin_root": "dist/plugins/api-contracts-pack",
+      "manifest_path": "dist/plugins/api-contracts-pack/.codex-plugin/plugin.json",
+      "enabled": true
+    },
+    {
+      "order": 3,
+      "name": "architecture-pack",
+      "category": "Productivity",
+      "registry_path": "./dist/plugins/architecture-pack",
+      "plugin_root": "dist/plugins/architecture-pack",
+      "manifest_path": "dist/plugins/architecture-pack/.codex-plugin/plugin.json",
+      "enabled": true
+    },
+    {
+      "order": 4,
+      "name": "data-platform-pack",
+      "category": "Productivity",
+      "registry_path": "./dist/plugins/data-platform-pack",
+      "plugin_root": "dist/plugins/data-platform-pack",
+      "manifest_path": "dist/plugins/data-platform-pack/.codex-plugin/plugin.json",
+      "enabled": true
+    },
+    {
+      "order": 5,
+      "name": "dotnet-pack",
+      "category": "Productivity",
+      "registry_path": "./dist/plugins/dotnet-pack",
+      "plugin_root": "dist/plugins/dotnet-pack",
+      "manifest_path": "dist/plugins/dotnet-pack/.codex-plugin/plugin.json",
+      "enabled": true
+    },
+    {
+      "order": 6,
+      "name": "engineering-pack",
+      "category": "Coding",
+      "registry_path": "./dist/plugins/engineering-pack",
+      "plugin_root": "dist/plugins/engineering-pack",
+      "manifest_path": "dist/plugins/engineering-pack/.codex-plugin/plugin.json",
+      "enabled": true
+    },
+    {
+      "order": 7,
+      "name": "feature-sliced-design",
+      "category": "Coding",
+      "registry_path": "./dist/plugins/feature-sliced-design",
+      "plugin_root": "dist/plugins/feature-sliced-design",
+      "manifest_path": "dist/plugins/feature-sliced-design/.codex-plugin/plugin.json",
+      "enabled": true
+    },
+    {
+      "order": 8,
+      "name": "frontend-pack",
+      "category": "Productivity",
+      "registry_path": "./dist/plugins/frontend-pack",
+      "plugin_root": "dist/plugins/frontend-pack",
+      "manifest_path": "dist/plugins/frontend-pack/.codex-plugin/plugin.json",
+      "enabled": true
+    },
+    {
+      "order": 9,
+      "name": "language-patterns-pack",
+      "category": "Productivity",
+      "registry_path": "./dist/plugins/language-patterns-pack",
+      "plugin_root": "dist/plugins/language-patterns-pack",
+      "manifest_path": "dist/plugins/language-patterns-pack/.codex-plugin/plugin.json",
+      "enabled": true
+    },
+    {
+      "order": 10,
+      "name": "mcp-usage-pack",
+      "category": "Productivity",
+      "registry_path": "./dist/plugins/mcp-usage-pack",
+      "plugin_root": "dist/plugins/mcp-usage-pack",
+      "manifest_path": "dist/plugins/mcp-usage-pack/.codex-plugin/plugin.json",
+      "enabled": true
+    },
+    {
+      "order": 11,
+      "name": "planning-pack",
+      "category": "Productivity",
+      "registry_path": "./dist/plugins/planning-pack",
+      "plugin_root": "dist/plugins/planning-pack",
+      "manifest_path": "dist/plugins/planning-pack/.codex-plugin/plugin.json",
+      "enabled": true
+    },
+    {
+      "order": 12,
+      "name": "repo-worker-pack",
+      "category": "Productivity",
+      "registry_path": "./dist/plugins/repo-worker-pack",
+      "plugin_root": "dist/plugins/repo-worker-pack",
+      "manifest_path": "dist/plugins/repo-worker-pack/.codex-plugin/plugin.json",
+      "enabled": true
+    },
+    {
+      "order": 13,
+      "name": "research-pack",
+      "category": "Productivity",
+      "registry_path": "./dist/plugins/research-pack",
+      "plugin_root": "dist/plugins/research-pack",
+      "manifest_path": "dist/plugins/research-pack/.codex-plugin/plugin.json",
+      "enabled": true
+    },
+    {
+      "order": 14,
+      "name": "security-pack",
+      "category": "Productivity",
+      "registry_path": "./dist/plugins/security-pack",
+      "plugin_root": "dist/plugins/security-pack",
+      "manifest_path": "dist/plugins/security-pack/.codex-plugin/plugin.json",
+      "enabled": true
+    },
+    {
+      "order": 15,
+      "name": "superpowers-plus",
+      "category": "Coding",
+      "registry_path": "./dist/plugins/superpowers-plus",
+      "plugin_root": "dist/plugins/superpowers-plus",
+      "manifest_path": "dist/plugins/superpowers-plus/.codex-plugin/plugin.json",
+      "enabled": true
+    },
+    {
+      "order": 16,
+      "name": "unslop-plus",
+      "category": "Productivity",
+      "registry_path": "./dist/plugins/unslop-plus",
+      "plugin_root": "dist/plugins/unslop-plus",
+      "manifest_path": "dist/plugins/unslop-plus/.codex-plugin/plugin.json",
+      "enabled": true
+    },
+    {
+      "order": 17,
+      "name": "writing-pack",
+      "category": "Productivity",
+      "registry_path": "./dist/plugins/writing-pack",
+      "plugin_root": "dist/plugins/writing-pack",
+      "manifest_path": "dist/plugins/writing-pack/.codex-plugin/plugin.json",
+      "enabled": true
+    },
+    {
+      "order": 18,
+      "name": "agent-operating-model",
+      "category": "Productivity",
+      "registry_path": "./dist/plugins/agent-operating-model",
+      "plugin_root": "dist/plugins/agent-operating-model",
+      "manifest_path": "dist/plugins/agent-operating-model/.codex-plugin/plugin.json",
+      "enabled": true
+    },
+    {
+      "order": 19,
+      "name": "jev-mcp",
+      "category": "Productivity",
+      "registry_path": "./dist/plugins/jev-mcp",
+      "plugin_root": "dist/plugins/jev-mcp",
+      "manifest_path": "dist/plugins/jev-mcp/.codex-plugin/plugin.json",
+      "enabled": true
+    }
+  ]
+}

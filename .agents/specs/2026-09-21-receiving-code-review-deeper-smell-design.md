@@ -22,7 +22,7 @@ Make code-review reception include one bounded deeper-smell inspection after a f
 
 ### 1. Add a structural deeper-smell step
 
-The response pattern in the canonical `codex-marketplace/plugins/superpowers-plus/skills/receiving-code-review/SKILL.md` will add an explicit inspection between technical evaluation and response:
+The response pattern in the canonical `dist/plugins/superpowers-plus/skills/receiving-code-review/SKILL.md` will add an explicit inspection between technical evaluation and response:
 
 ```text
 READ -> UNDERSTAND -> VERIFY -> EVALUATE -> INSPECT -> RESPOND -> IMPLEMENT -> VERIFY
@@ -65,7 +65,7 @@ This scenario proves transfer because the skill may use manifest drift as an exp
 
 ### 4. Ship and materialize an ordinary local PR fixture
 
-The skill will ship the complete lightweight fixture source tree at `codex-marketplace/plugins/superpowers-plus/skills/receiving-code-review/tests/deeper-smell/`. The tree will contain the materializer, review comment, rubric, feature patch, and a deliberately small fixture repository. It will contain no dependency trees, build output, binaries, caches, or captured run artifacts.
+The skill will ship the complete lightweight fixture source tree at `dist/plugins/superpowers-plus/skills/receiving-code-review/tests/deeper-smell/`. The tree will contain the materializer, review comment, rubric, feature patch, and a deliberately small fixture repository. It will contain no dependency trees, build output, binaries, caches, or captured run artifacts.
 
 `materialize.py` will default to a read-only check and require an explicit apply mode, empty destination, and skill-source path before it writes. It will copy the fixture unchanged into a neutral project, initialize Git, commit the complete base state on `main`, install the selected `receiving-code-review` behavioural surface, create a feature branch, apply and commit the feature patch, and leave a clean PR-head working tree. The installed copy excludes the skill's `tests/` tree so the fixture recipe, hidden rubric, and expected result cannot leak into the blinded worker context. `git diff main...HEAD` will show only the implementation under review.
 

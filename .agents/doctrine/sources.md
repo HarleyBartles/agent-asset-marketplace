@@ -1,9 +1,5 @@
 ## Scope
 
-`sources/` (retired)
+Marketplace source custody lives in `skills/`, `shared/`, and `src/plugin-definitions/`. The old `sources/` directory is retired. All marketplace source is first-party maintained, while attribution and license obligations for upstream adaptations remain explicit in provenance records and shipped notices.
 
-This scope is retired. The old first-party and third-party custody trees under the `sources/` directory were removed.
-
-Canonical first-party skill custody now lives under `codex-marketplace/plugins/<plugin>/skills/`. Third-party upstream provenance is recorded per pack in `codex-marketplace/plugins/<plugin>/SOURCE.md`.
-
-Defer to the repository root `AGENTS.md` for global repo doctrine.
+See [custody and marketplace doctrine](custody-and-marketplace-doctrine.md) and [provenance guidance](provenance.md) for current source and license rules.

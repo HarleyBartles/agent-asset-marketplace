@@ -1,0 +1,26 @@
+schema_version: 1
+custody: marketplace
+lane: skills-with-citation
+authority:
+  title: Agentic Harness
+  canonical_url: https://github.com/standardagents/dmux
+  pinned_source_url: https://github.com/standardagents/dmux
+  latest_check_url: https://github.com/standardagents/dmux
+  revision: '2025-08-20'
+  retrieved_at: '2026-07-21'
+  content_sha256: 3672692bdc57c72ee015cd59cbb7422796d3523f17ad30d7e3939c9cfd36bc59
+  license: 'Multiple; see CITATIONS.md'
+  license_url: https://github.com/standardagents/dmux
+decomposition:
+  reconciled_against: 3672692bdc57c72ee015cd59cbb7422796d3523f17ad30d7e3939c9cfd36bc59
+  references:
+  - path: references/operational-guidance.md
+    source_sections:
+    - Agent loop design
+    - Tool and action spaces
+    - Multi-agent orchestration
+    - Harness construction
+    - Common mistakes
+    load_when:
+    - Use when agentic-harness operational guidance is needed.
+    content_mode: first_party_synthesis

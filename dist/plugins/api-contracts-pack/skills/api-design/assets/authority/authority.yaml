@@ -1,0 +1,24 @@
+schema_version: 1
+custody: marketplace
+lane: skills-with-mixed-source
+authority:
+  openapi-specification:
+    title: OpenAPI Specification 3.1.0
+    canonical_url: https://spec.openapis.org/oas/v3.1.0
+    pinned_source_url: https://raw.githubusercontent.com/OAI/OpenAPI-Specification/main/versions/3.1.0.md
+    latest_check_url: https://github.com/OAI/OpenAPI-Specification
+    revision: '3.1.0'
+    retrieved_at: '2026-07-21'
+    content_sha256: ee99bcc50c7610f4876ce77b2f746036d4095e0909968bb6839259f955bac022
+    license: Apache-2.0
+    license_url: https://www.apache.org/licenses/LICENSE-2.0
+decomposition:
+  reconciled_against:
+    openapi-specification: ee99bcc50c7610f4876ce77b2f746036d4095e0909968bb6839259f955bac022
+  references:
+  - path: references/operational-guidance.md
+    source_sections:
+    - API design and OpenAPI
+    load_when:
+    - Use when api-design operational guidance is needed.
+    content_mode: first_party_synthesis

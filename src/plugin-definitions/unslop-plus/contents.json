@@ -1,0 +1,26 @@
+{
+  "skills": [
+    {
+      "name": "unslop-engine",
+      "source": "unslop-engine",
+      "provenance": {
+        "source_category": "first_party",
+        "content_mode": "verbatim",
+        "source_family": "first_party",
+        "copy_expectation": "byte_identical",
+        "provenance_note": "Copied verbatim from the first-party unslop-engine skill."
+      }
+    },
+    {
+      "name": "unslop-profiles",
+      "source": "unslop-profiles",
+      "provenance": {
+        "source_category": "first_party",
+        "content_mode": "verbatim",
+        "source_family": "first_party",
+        "copy_expectation": "byte_identical",
+        "provenance_note": "Copied verbatim from the first-party unslop-profiles skill."
+      }
+    }
+  ]
+}

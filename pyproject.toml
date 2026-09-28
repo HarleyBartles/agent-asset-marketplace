@@ -1,3 +1,7 @@
+[tool.pytest.ini_options]
+testpaths = ["tests/build", "tests/repository", "tests/shipping"]
+norecursedirs = [".*", "dist", "node_modules", "venv", "CVS", "_darcs", "{arch}", "*.egg"]
+
 [tool.ruff]
 line-length = 120
 

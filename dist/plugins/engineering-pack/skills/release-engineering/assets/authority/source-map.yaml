@@ -1,0 +1,14 @@
+schema_version: 1
+reconciled_against: 2ac62defd2b962721256854fc0b705f3d90b407c7b05e583a897174624b7c8f5
+references:
+  - path: references/operational-guidance.md
+    source_sections:
+    - When to apply
+    - Container images
+    - CI/CD pipelines
+    - Deployment patterns
+    - Rollback
+    - Supply-chain security
+    load_when:
+    - Use when release-engineering operational guidance is needed.
+    content_mode: first_party_synthesis

@@ -16,7 +16,7 @@
     "runtime_identities",
     "run_metadata"
   ],
-  "transient_run_location": "tests/pressure/<campaign>/runs/",
+  "transient_run_location": "skills/<skill-id>/tests/pressure/runs/",
   "forbidden_tracked_basenames": [
     "results.md",
     "fresh-context-pressure-results.md"

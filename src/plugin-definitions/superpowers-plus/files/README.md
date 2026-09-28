@@ -1,0 +1,23 @@
+# Superpowers+
+
+This bundle contains the first-party Superpowers+ workflow skills, including the `using-superpowers-plus` workflow-selection entrypoint.
+
+It also includes `diagnosing-superpowers`, the v6.4.1 evidence-reporting flow adapted for Codex and Devin Desktop session custody.
+
+## Bundle contents
+
+### Documentation
+
+- provenance and source mapping in `SOURCE.md` (see `## Upstream Basis` and `## Plugin custody`)
+- bundle inventory in `references/bundle-manifest.json`
+
+## Boundary
+
+- `superpowers-plus` is the first-party plugin bundle for the Superpowers+ workflow skill family.
+- Editable custody lives in the source repository's `skills/<name>/` tree. The upstream `obra/superpowers` v6.4.1 MIT comparison commit is recorded in `SOURCE.md` (see `## Upstream Basis` and `## Plugin custody`). Upstream source is not vendored or editable here, and no adapter overlay is applied.
+- `dist/plugin-roots.json` lists the active plugin roots.
+- `superpowers-mega-pack` is retired and is not a maintained active marketplace bundle.
+
+## Install shape
+
+Skills are installed from the Codex plugin root under `dist/plugins/superpowers-plus/skills/<skill>/`.

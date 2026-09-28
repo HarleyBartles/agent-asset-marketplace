@@ -10,9 +10,9 @@ from typing import Any
 
 
 ROOT = Path(__file__).resolve().parents[1]
-PLUGIN_ROOT_INVENTORY_PATH = ROOT / "codex-marketplace/plugin-roots.json"
+PLUGIN_ROOT_INVENTORY_PATH = ROOT / "dist/plugin-roots.json"
 MARKETPLACE_PATH = ROOT / ".agents/plugins/marketplace.json"
-CODEX_MARKETPLACE_MANIFEST_PATH = ROOT / "codex-marketplace/manifest.json"
+CODEX_MARKETPLACE_MANIFEST_PATH = ROOT / "dist/manifest.json"
 REPO_INDEX_PATH = ROOT / "INDEX.json"
 ZONE_INDEX_FILE_NAME = "INDEX.json"
 
@@ -26,7 +26,7 @@ def zone_index_path(zone_path: str) -> Path:
     return ROOT / zone_path / ZONE_INDEX_FILE_NAME
 
 
-REPO_LOCAL_MARKETPLACE_POLICY_PATH = ROOT / "codex-marketplace/repo-local-marketplace-policy.json"
+REPO_LOCAL_MARKETPLACE_POLICY_PATH = ROOT / "src/plugin-definitions/marketplace-policy.json"
 
 MARKETPLACE_NOTES = [
     "Canonical Codex marketplace source layout.",

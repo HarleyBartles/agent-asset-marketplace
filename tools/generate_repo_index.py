@@ -38,15 +38,15 @@ DEFAULT_ROOT_INDEX: dict[str, Any] = {
             "index_json": ".agents/plugins/INDEX.json",
         },
         {
-            "name": "codex-marketplace-root",
-            "path": "codex-marketplace",
-            "index_json": "codex-marketplace/INDEX.json",
+            "name": "dist-root",
+            "path": "dist",
+            "index_json": "dist/INDEX.json",
         },
         {
             "name": "marketplace-root-inventory",
-            "path": "codex-marketplace/plugin-roots.json",
-            "purpose": "Editable active marketplace plugin root inventory for manifest and validator generation.",
-            "surface_kind": "hand-authored",
+            "path": "dist/plugin-roots.json",
+            "purpose": "Generated inventory of active marketplace plugin roots.",
+            "surface_kind": "runtime-facing",
             "nearest_scoped_agents_md": None,
             "key_validation_scripts": [
                 "tools/validate_marketplace.py",
@@ -54,9 +54,9 @@ DEFAULT_ROOT_INDEX: dict[str, Any] = {
             ],
         },
         {
-            "name": "codex-marketplace-plugins",
-            "path": "codex-marketplace/plugins",
-            "index_json": "codex-marketplace/plugins/INDEX.json",
+            "name": "dist-plugins",
+            "path": "dist/plugins",
+            "index_json": "dist/plugins/INDEX.json",
         },
         {
             "name": "contracts-unslop-profile",
@@ -88,18 +88,18 @@ DEFAULT_ROOT_INDEX: dict[str, Any] = {
 
 DEFAULT_CODEX_MARKETPLACE_INDEX: dict[str, Any] = {
     "schema_version": 2,
-    "name": "codex-marketplace",
-    "path": "codex-marketplace",
-    "purpose": "Codex marketplace source root and export manifest surface.",
+    "name": "dist",
+    "path": "dist",
+    "purpose": "Committed distribution root for built plugins, wheels, and inventory.",
     "surface_kind": "runtime-facing",
     "nearest_scoped_agents_md": ".devin/rules/codex-marketplace.md",
     "key_validation_scripts": [
         "tools/validate_marketplace.py",
         "tools/validate_repo_index.py",
     ],
-    "marketplace_root_inventory_path": "codex-marketplace/plugin-roots.json",
+    "marketplace_root_inventory_path": "dist/plugin-roots.json",
     "marketplace_registry_path": ".agents/plugins/marketplace.json",
-    "codex_marketplace_manifest_path": "codex-marketplace/manifest.json",
+    "codex_marketplace_manifest_path": "dist/manifest.json",
     "marketplace_plugins": [],
 }
 
@@ -118,8 +118,8 @@ DEFAULT_ZONE_INDEXES: list[dict[str, Any]] = [
     },
     {
         "schema_version": 2,
-        "name": "codex-marketplace-plugins",
-        "path": "codex-marketplace/plugins",
+        "name": "dist-plugins",
+        "path": "dist/plugins",
         "purpose": "Protected active Codex marketplace plugin pack roots and their packaging metadata.",
         "surface_kind": "runtime-facing",
         "nearest_scoped_agents_md": ".devin/rules/codex-plugins.md",
@@ -193,7 +193,7 @@ def build_zone_indexes() -> list[tuple[Path, dict[str, Any]]]:
 
     codex = dict(DEFAULT_CODEX_MARKETPLACE_INDEX)
     codex["marketplace_plugins"] = [_plugin_entry(spec) for spec in MARKETPLACE_PLUGIN_SPECS]
-    sidecars.append((zone_index_path("codex-marketplace"), codex))
+    sidecars.append((zone_index_path("dist"), codex))
 
     for zone in DEFAULT_ZONE_INDEXES:
         data = dict(zone)

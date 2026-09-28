@@ -9,8 +9,8 @@ import subprocess
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
-CANONICAL_DIR = ROOT / "codex-marketplace" / "plugins" / "superpowers-plus" / "references"
-SKILL_DIR = ROOT / "codex-marketplace" / "plugins" / "superpowers-plus" / "skills"
+CANONICAL_DIR = ROOT / "dist" / "plugins" / "superpowers-plus" / "references"
+SKILL_DIR = ROOT / "dist" / "plugins" / "superpowers-plus" / "skills"
 
 SHARES = {
     "plan-scope-sizing.md": [

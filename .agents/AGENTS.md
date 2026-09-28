@@ -20,4 +20,4 @@ Keep this scope short. It owns local agent-facing law, not directory navigation.
 - Flag any `.agents/` file that turns into product/source custody instead of agent-facing infrastructure.
 - Flag any hand-maintained navigation inside `.agents/`; the tree should stay self-describing through generated indexes and scoped law.
 - Flag mesh-law drift when a `.agents/` file starts repeating root doctrine instead of stating the local delta.
-- Treat `codex-marketplace/plugins/**` as the canonical product custody for plugins and skills; edit the source directly when the skill or asset changes.
+- Treat `dist/plugins/**` as the canonical product custody for plugins and skills; edit the source directly when the skill or asset changes.

@@ -1,0 +1,48 @@
+{
+  "skills": [
+    {
+      "name": "writing",
+      "source": "writing",
+      "provenance": {
+        "source_category": "first_party",
+        "content_mode": "verbatim",
+        "source_family": "first_party",
+        "copy_expectation": "byte_identical",
+        "provenance_note": "Canonical first-party writing skill. (Writing composition first-party skill)"
+      }
+    },
+    {
+      "name": "writing-profile-engine",
+      "source": "writing-profile-engine",
+      "provenance": {
+        "source_category": "first_party",
+        "content_mode": "verbatim",
+        "source_family": "first_party",
+        "copy_expectation": "byte_identical",
+        "provenance_note": "Canonical first-party writing-profile-engine skill. (Writing profile engine first-party skill)"
+      }
+    },
+    {
+      "name": "writing-style",
+      "source": "writing-style",
+      "provenance": {
+        "source_category": "first_party",
+        "content_mode": "verbatim",
+        "source_family": "first_party",
+        "copy_expectation": "byte_identical",
+        "provenance_note": "Canonical first-party writing-style skill. (Writing Style first-party skill)"
+      }
+    },
+    {
+      "name": "writing-with-clarity",
+      "source": "writing-with-clarity",
+      "provenance": {
+        "source_category": "first_party",
+        "content_mode": "verbatim",
+        "source_family": "first_party",
+        "copy_expectation": "byte_identical",
+        "provenance_note": "Canonical first-party writing-with-clarity skill. (Writing With Clarity first-party skill)"
+      }
+    }
+  ]
+}

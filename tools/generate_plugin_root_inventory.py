@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Reconcile the editable plugin-root inventory against the plugin tree."""
+"""Generate the shipped plugin-root inventory from the source catalog and build."""
 
 from __future__ import annotations
 
@@ -10,8 +10,9 @@ from typing import Any
 
 
 ROOT = Path(__file__).resolve().parents[1]
-PLUGIN_ROOTS_PATH = ROOT / "codex-marketplace" / "plugins"
-PLUGIN_ROOT_INVENTORY_PATH = ROOT / "codex-marketplace" / "plugin-roots.json"
+PLUGIN_ROOTS_PATH = ROOT / "dist" / "plugins"
+PLUGIN_ROOT_INVENTORY_PATH = ROOT / "dist" / "plugin-roots.json"
+CATALOG_PATH = ROOT / "src/plugin-definitions" / "catalog.json"
 
 
 def load_json(path: Path) -> Any:
@@ -45,7 +46,7 @@ def _scan_plugin_roots() -> list[dict[str, Any]]:
             path=manifest_path,
             field_name="interface.category",
         )
-        plugin_root = f"codex-marketplace/plugins/{plugin_path.name}"
+        plugin_root = f"dist/plugins/{plugin_path.name}"
         if name in seen_names:
             raise ValueError(f"{manifest_path}: duplicate active root name {name}")
         if plugin_root in seen_plugin_roots:
@@ -69,8 +70,8 @@ def _scan_plugin_roots() -> list[dict[str, Any]]:
 def reconcile_plugin_root_inventory() -> list[dict[str, Any]]:
     scanned = _scan_plugin_roots()
     existing: dict[str, dict[str, Any]] = {}
-    if PLUGIN_ROOT_INVENTORY_PATH.exists():
-        current = load_json(PLUGIN_ROOT_INVENTORY_PATH)
+    if CATALOG_PATH.exists():
+        current = load_json(CATALOG_PATH)
         for root in current.get("roots", []):
             existing[root.get("name")] = root
     for root in scanned:
@@ -93,7 +94,7 @@ def reconcile_plugin_root_inventory() -> list[dict[str, Any]]:
 def _render_inventory(roots: list[dict[str, Any]]) -> dict[str, Any]:
     return {
         "schema_version": 1,
-        "description": "Editable inventory for the active Codex marketplace plugin roots.",
+        "description": "Generated inventory for the active Codex marketplace plugin roots.",
         "roots": roots,
     }
 

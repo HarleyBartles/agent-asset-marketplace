@@ -1,0 +1,28 @@
+{
+  "skills": [
+    {
+      "name": "python-frameworks",
+      "source": "python-frameworks",
+      "provenance": {
+        "source_category": "first_party",
+        "content_mode": "verbatim",
+        "source_family": "first_party",
+        "copy_expectation": "byte_identical",
+        "provenance_note": "Copied verbatim from the first-party python-frameworks skill.",
+        "import_status": "imported"
+      }
+    },
+    {
+      "name": "typescript",
+      "source": "typescript",
+      "provenance": {
+        "source_category": "first_party",
+        "content_mode": "verbatim",
+        "source_family": "first_party",
+        "copy_expectation": "byte_identical",
+        "provenance_note": "Copied verbatim from the first-party typescript skill.",
+        "import_status": "imported"
+      }
+    }
+  ]
+}

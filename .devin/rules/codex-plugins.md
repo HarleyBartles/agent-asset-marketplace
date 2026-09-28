@@ -1,7 +1,7 @@
 ---
 description: "Plugin marketplace bundle law"
 trigger: glob
-globs: "codex-marketplace/plugins/**"
+globs: "dist/plugins/**"
 ---
 
 ## Scope

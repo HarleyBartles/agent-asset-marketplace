@@ -17,7 +17,7 @@
 ## Global Constraints
 
 - The slice starts from merged PR #328 on fresh `main`; its skill-test custody contract is a prerequisite, not work to repeat.
-- Edit canonical source under `codex-marketplace/plugins/superpowers-plus/skills/receiving-code-review/`; never hand-edit `.agents/skills/receiving-code-review/`.
+- Edit canonical source under `dist/plugins/superpowers-plus/skills/receiving-code-review/`; never hand-edit `.agents/skills/receiving-code-review/`.
 - Establish competent-local-fix RED before changing `receiving-code-review/SKILL.md`.
 - Keep fixture, patch, prompt, comment, rubric, worker selection, reasoning, and tools equal across RED/GREEN; only installed skill content may differ.
 - Ship fixture inputs and rubric under `tests/`; keep repositories, transcripts, scores, caches, and run records off-repo.
@@ -49,10 +49,10 @@ ______________________________________________________________________
 
 **Files:**
 
-- Create: `codex-marketplace/plugins/superpowers-plus/skills/receiving-code-review/tests/deeper-smell/{README.md,materialize.py,test_materialize.py,worker-prompt.md,review-comment.md,rubric.md,feature.patch}`
-- Create: `codex-marketplace/plugins/superpowers-plus/skills/receiving-code-review/tests/deeper-smell/fixture/pyproject.toml`
-- Create: `codex-marketplace/plugins/superpowers-plus/skills/receiving-code-review/tests/deeper-smell/fixture/src/signal_exporter/{__init__.py,commands.py}`
-- Create: `codex-marketplace/plugins/superpowers-plus/skills/receiving-code-review/tests/deeper-smell/fixture/tests/test_commands.py`
+- Create: `dist/plugins/superpowers-plus/skills/receiving-code-review/tests/deeper-smell/{README.md,materialize.py,test_materialize.py,worker-prompt.md,review-comment.md,rubric.md,feature.patch}`
+- Create: `dist/plugins/superpowers-plus/skills/receiving-code-review/tests/deeper-smell/fixture/pyproject.toml`
+- Create: `dist/plugins/superpowers-plus/skills/receiving-code-review/tests/deeper-smell/fixture/src/signal_exporter/{__init__.py,commands.py}`
+- Create: `dist/plugins/superpowers-plus/skills/receiving-code-review/tests/deeper-smell/fixture/tests/test_commands.py`
 
 **Interfaces:**
 
@@ -95,7 +95,7 @@ Add parameterized checks that `validate_fixture_tree` rejects a symlink, a filen
 - [ ] **Step 2: Run the focused test and verify RED**
 
 ```powershell
-& "<PYTHON>" -m pytest codex-marketplace/plugins/superpowers-plus/skills/receiving-code-review/tests/deeper-smell/test_materialize.py -q
+& "<PYTHON>" -m pytest dist/plugins/superpowers-plus/skills/receiving-code-review/tests/deeper-smell/test_materialize.py -q
 ```
 
 Expected: FAIL because the fixture does not exist.
@@ -129,8 +129,8 @@ Validate all sources and the empty destination before creating anything. Copy `f
 Run:
 
 ```powershell
-& "<PYTHON>" -m pytest codex-marketplace/plugins/superpowers-plus/skills/receiving-code-review/tests/deeper-smell/test_materialize.py -q
-& "<PYTHON>" codex-marketplace/plugins/superpowers-plus/skills/receiving-code-review/tests/deeper-smell/materialize.py --check
+& "<PYTHON>" -m pytest dist/plugins/superpowers-plus/skills/receiving-code-review/tests/deeper-smell/test_materialize.py -q
+& "<PYTHON>" dist/plugins/superpowers-plus/skills/receiving-code-review/tests/deeper-smell/materialize.py --check
 ```
 
 Then materialize once under the resolved scratch root and independently prove clean status, no remotes, the intended diff, and passing fixture tests. Remove that probe repository. Stage only Task 1 authored files and commit with `test: add deeper-smell review fixture`; allow the tracked hook to regenerate and stage its owned installed projection and indexes.
@@ -181,7 +181,7 @@ Add only concise paths, commands, exit codes, changed-path summaries, and the ru
 
 **Files:**
 
-- Modify: `codex-marketplace/plugins/superpowers-plus/skills/receiving-code-review/SKILL.md`
+- Modify: `dist/plugins/superpowers-plus/skills/receiving-code-review/SKILL.md`
 - Modify: `tests/test_workflow_contracts.py`
 
 **Interfaces:**
@@ -291,7 +291,7 @@ Use the existing installed-skill equality test to prove canonical and installed 
 Run:
 
 ```powershell
-& "<PYTHON>" -m pytest codex-marketplace/plugins/superpowers-plus/skills/receiving-code-review/tests/deeper-smell/test_materialize.py tests/test_workflow_contracts.py tests/test_refresh_installed_skills.py -q
+& "<PYTHON>" -m pytest dist/plugins/superpowers-plus/skills/receiving-code-review/tests/deeper-smell/test_materialize.py tests/test_workflow_contracts.py tests/test_refresh_installed_skills.py -q
 & "<PYTHON>" tools/run.py review-preflight --check
 ```
 

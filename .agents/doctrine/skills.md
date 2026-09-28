@@ -32,7 +32,7 @@ The installer validates and preserves every valid skill named in `repo.local_ski
 
 ## Source of Truth
 
-For marketplace-derived skills, the source of truth is the marketplace plugin under `codex-marketplace/plugins/<pack-name>/skills/`. Those installed skills are generated output and should not be edited directly.
+For marketplace-derived skills, canonical source is under `skills/<skill-id>/`; the installed plugin copy under `dist/plugins/<plugin>/skills/` is generated and should not be edited directly.
 
 For repository-local skills declared in `repo.local_skills`, the source of truth is the tracked local directory under `.agents/skills/`. Those skills are local custody and may be edited directly; they are not regenerated from marketplace content or included in marketplace provenance.
 

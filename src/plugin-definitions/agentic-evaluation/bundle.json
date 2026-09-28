@@ -1,0 +1,30 @@
+{
+  "bundle_name": "agentic-evaluation",
+  "bundle_version": "1.0.0",
+  "bundle_type": "plugin-pack",
+  "marketplace_root": ".agents/plugins/marketplace.json",
+  "plugin_root": "dist/plugins/agentic-evaluation",
+  "source_families": [
+    "first_party"
+  ],
+  "notes": [
+    "The pack covers benchmark design, scoring agent outputs, and self-evaluation rubrics."
+  ],
+  "provenance_refs": [],
+  "plugin_author": "Harley Bartles",
+  "plugin_license": "MIT",
+  "generated_doc_surfaces": [
+    "README.md",
+    "SOURCE.md"
+  ],
+  "repo_index": {
+    "source_md": "dist/plugins/agentic-evaluation/SOURCE.md",
+    "bundle_manifest": "dist/plugins/agentic-evaluation/references/bundle-manifest.json",
+    "skills_path": "dist/plugins/agentic-evaluation/skills",
+    "agents_md": null,
+    "registry_alignment": {
+      "status": "aligned",
+      "note": null
+    }
+  }
+}

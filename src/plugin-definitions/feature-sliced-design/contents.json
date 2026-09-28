@@ -1,0 +1,25 @@
+{
+  "skills": [
+    {
+      "name": "feature-sliced-design",
+      "source": "feature-sliced-design",
+      "provenance": {
+        "source_category": "first_party",
+        "content_mode": "verbatim",
+        "import_status": "imported",
+        "source_author": "Feature-Sliced Design (feature-sliced/skills)",
+        "source_license": "MIT",
+        "source_repo": "https://github.com/feature-sliced/skills",
+        "source_family": "feature-sliced",
+        "copy_expectation": "byte_identical",
+        "provenance_note": "First-party maintained skill based on the pinned Feature-Sliced Design MIT source; upstream attribution is preserved."
+      },
+      "resources": [
+        {
+          "source": "feature-sliced-design-migration-guide",
+          "destination": "references/migration-guide.md"
+        }
+      ]
+    }
+  ]
+}

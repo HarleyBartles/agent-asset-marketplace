@@ -18,11 +18,13 @@ Generated artifacts are downstream outputs unless the repo explicitly says other
 
 This repo ships portable skills and runbooks to consumer repos under `.agents/skills/`. Ask: *Is this change a repo-local fix or a standard consumer repos will inherit?* If the latter, update the source skill or reference, not only the installed copy.
 
-## Vendored asset source and inspection
+## Marketplace source and output
 
-The canonical vendored marketplace assets live under `codex-marketplace/plugins/`. The active inventory is in `codex-marketplace/plugin-roots.json`, the aggregate Codex manifest is `codex-marketplace/manifest.json`, and the bundled skills for each plugin are declared in that plugin's `references/bundle-manifest.json` with their canonical source trees under that plugin's `skills/` directory.
+Canonical skill source lives under `skills/`; reusable authored material lives under `shared/`; and plugin metadata and skill/resource membership live under `src/plugin-definitions/`. All marketplace source is first-party maintained, including adapted open-source work. Keep upstream attribution and license obligations with that source and in every shipped plugin that needs them.
 
-Do not treat `.agents/skills/` as additional or duplicate vendored assets. Those are installed copies from the plugins this repo consumes for its own operation (currently `repo-worker-pack`, `superpowers-plus`, and `mcp-usage-pack`). They are downstream of the canonical plugin source. To see what this repo actually offers, inspect the bundle manifests or read the marketplace inventory in `codex-marketplace/README.md`.
+`src/marketplace/` implements definition validation and package assembly. `src/packages/` holds separately built Python package source. `dist/` is the committed distribution output: self-contained plugins under `dist/plugins/`, wheels under `dist/wheels/`, and generated product metadata in `dist/manifest.json` and `dist/plugin-roots.json`. Do not edit built plugin trees to change behavior.
+
+Skill tests live with their source in each skill's `tests/` directory, including script tests and pressure cases. The build copies ship-ready test material with each installed skill; evaluator-only material and run results stay out of the package. Repository, build, shipped-plugin, and evaluation-harness suites have distinct homes under `tests/`. CI runs the first three suites as separate targets. `.agents/skills/` is this repository's installed operating mesh, not marketplace source. Inspect `src/plugin-definitions/` for product membership and the generated marketplace inventory for shipped products.
 
 ## Publication proof for repo work
 
@@ -55,7 +57,7 @@ Security review must apply the relevant profile and the repository lenses in `.a
 - [Playbook inventory](.agents/playbooks/INDEX.md) and [playbook routing](.agents/playbooks/AGENTS.md)
 - [Testing instructions](.agents/playbooks/testing.md), [code style guidelines](.agents/playbooks/code-style.md), [review guidelines](.agents/runbooks/code-review.md), and [PR instructions](.agents/runbooks/pr.md)
 - [Contributing](CONTRIBUTING.md) and [security considerations](.agents/playbooks/security.md)
-- [Completed-artifact custody](.agents/doctrine/completed-artifacts.md) and the root [ADR log](adr/README.md) for the in-flight, removal, and durable-decision boundary
+- [Completed-artifact custody](.agents/doctrine/completed-artifacts.md) and the [ADR log](docs/decisions/README.md) for the in-flight, removal, and durable-decision boundary
 - [Worktree and scratch policy](.agents/doctrine/non-repo-locations-policy.md)
 
 ## Maintenance responsibility

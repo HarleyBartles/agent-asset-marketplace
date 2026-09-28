@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Research Pack icon">
+  <rect width="128" height="128" rx="24" fill="#16A34A"/>
+  <circle cx="58" cy="52" r="22" fill="none" stroke="#ECFDF5" stroke-width="10"/>
+  <rect x="74" y="72" width="28" height="10" rx="5" transform="rotate(45 74 72)" fill="#ECFDF5"/>
+  <rect x="28" y="84" width="72" height="12" rx="6" fill="#ECFDF5"/>
+</svg>

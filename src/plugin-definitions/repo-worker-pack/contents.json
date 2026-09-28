@@ -1,0 +1,126 @@
+{
+  "skills": [
+    {
+      "name": "base-doctrine",
+      "source": "base-doctrine",
+      "provenance": {
+        "source_category": "first_party",
+        "content_mode": "verbatim",
+        "source_family": "first_party",
+        "copy_expectation": "byte_identical",
+        "provenance_note": "Canonical first-party base-doctrine skill."
+      }
+    },
+    {
+      "name": "cleanup-custody",
+      "source": "cleanup-custody",
+      "provenance": {
+        "source_category": "first_party",
+        "content_mode": "verbatim",
+        "source_family": "first_party",
+        "copy_expectation": "byte_identical",
+        "provenance_note": "Canonical first-party cleanup-custody skill."
+      }
+    },
+    {
+      "name": "completing-planning-artifacts",
+      "source": "completing-planning-artifacts",
+      "provenance": {
+        "source_category": "first_party",
+        "content_mode": "verbatim",
+        "source_family": "first_party",
+        "copy_expectation": "byte_identical",
+        "provenance_note": "Canonical first-party completing-planning-artifacts skill."
+      }
+    },
+    {
+      "name": "connector-safety",
+      "source": "connector-safety",
+      "provenance": {
+        "source_category": "first_party",
+        "content_mode": "verbatim",
+        "source_family": "first_party",
+        "copy_expectation": "byte_identical",
+        "provenance_note": "Canonical first-party connector-safety skill."
+      }
+    },
+    {
+      "name": "context-safety",
+      "source": "context-safety",
+      "provenance": {
+        "source_category": "first_party",
+        "content_mode": "verbatim",
+        "source_family": "first_party",
+        "copy_expectation": "byte_identical",
+        "provenance_note": "Canonical first-party context-safety skill."
+      }
+    },
+    {
+      "name": "generating-agent-mesh",
+      "source": "generating-agent-mesh",
+      "provenance": {
+        "source_category": "first_party",
+        "content_mode": "verbatim",
+        "source_family": "first_party",
+        "copy_expectation": "byte_identical",
+        "provenance_note": "First-party skill bundled verbatim into the repo-worker-pack. Runs the repo's generate_index_mesh.py command.",
+        "lane": "Worker",
+        "source_author": "Harley Bartles",
+        "source_license": "MIT",
+        "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
+      }
+    },
+    {
+      "name": "linear-issue-shaping",
+      "source": "linear-issue-shaping",
+      "provenance": {
+        "source_category": "first_party",
+        "content_mode": "verbatim",
+        "source_family": "first_party",
+        "copy_expectation": "byte_identical",
+        "provenance_note": "Canonical first-party linear-issue-shaping skill."
+      }
+    },
+    {
+      "name": "refreshing-installed-skills",
+      "source": "refreshing-installed-skills",
+      "provenance": {
+        "source_category": "first_party",
+        "content_mode": "verbatim",
+        "source_family": "first_party",
+        "copy_expectation": "byte_identical",
+        "provenance_note": "First-party skill bundled verbatim into the repo-worker-pack. Refreshes installed skills from the plugin source and regenerates the index mesh.",
+        "lane": "Worker",
+        "source_author": "Harley Bartles",
+        "source_license": "MIT",
+        "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
+      }
+    },
+    {
+      "name": "repo-worker-base",
+      "source": "repo-worker-base",
+      "provenance": {
+        "source_category": "first_party",
+        "content_mode": "verbatim",
+        "source_family": "first_party",
+        "copy_expectation": "byte_identical",
+        "provenance_note": "Canonical first-party repo worker base skill."
+      }
+    },
+    {
+      "name": "risk-gates",
+      "source": "repo-worker-pack--risk-gates",
+      "provenance": {
+        "source_category": "first_party",
+        "content_mode": "verbatim",
+        "source_family": "first_party",
+        "copy_expectation": "byte_identical",
+        "provenance_note": "First-party skill bundled verbatim into the repo-worker-pack. Generic pre-action risk gate router; rooms-specific overlays live in rooms-risk-gates.",
+        "lane": "Worker",
+        "source_author": "Harley Bartles",
+        "source_license": "MIT",
+        "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
+      }
+    }
+  ]
+}
