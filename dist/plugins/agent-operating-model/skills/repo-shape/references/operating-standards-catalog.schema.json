@@ -4,9 +4,10 @@
   "title": "Agent Operating Model standards catalog",
   "type": "object",
   "additionalProperties": false,
-  "required": ["version", "standards"],
+  "required": ["version", "standards", "migration_surfaces"],
   "properties": {
     "version": { "const": 1 },
+    "migration_surfaces": { "type": "array", "uniqueItems": true, "items": { "type": "string", "minLength": 1 } },
     "standards": {
       "type": "array",
       "items": {

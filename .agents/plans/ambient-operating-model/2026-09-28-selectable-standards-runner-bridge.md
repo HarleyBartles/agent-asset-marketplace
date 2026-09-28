@@ -101,6 +101,10 @@ git commit -m "feat: define selectable operating standards"
 - Create: `skills/repo-shape/scripts/scaffold_operating_standards.py`
 - Create: `skills/repo-shape/scripts/migrate_operating_standards.py`
 - Modify: `skills/repo-shape/scripts/plugin_contracts.py`
+- Modify: `skills/repo-shape/references/operating-standards-catalog.json`
+- Modify: `skills/repo-shape/references/operating-standards-catalog.schema.json`
+- Modify: `skills/repo-shape/scripts/operating_standards_catalog.py`
+- Modify: `skills/repo-shape/tests/scripts/test_operating_standards_catalog.py`
 - Test: `skills/repo-shape/tests/scripts/test_operating_standards_contract.py`
 - Test: `skills/repo-shape/tests/scripts/test_operating_standards_migration.py`
 
@@ -116,28 +120,30 @@ git commit -m "feat: define selectable operating standards"
 
 - Migration maps current explicit surface exceptions and other authoritative declarations to the new catalog units while preserving the currently enabled legacy surface set. If no trustworthy source exists or a mapping is ambiguous, return a diagnostic before writing. A missing new contract is not interpreted as an empty set.
 
-- [ ] **Step 1: Add composition and migration behavior tests**
+- Catalog migration inputs that are not adopted standards, especially the legacy `operating-model-contract`, are listed separately from adoptable standard surfaces. Migration preserves the old contract untouched and does not emit that legacy surface as a standard.
+
+- [x] **Step 1: Add composition and migration behavior tests**
 
 Cover empty, mixed marketplace/repository-owned, and dependency-bearing compositions; unknown IDs; invalid roots/commands; unsafe generated paths; migration preview/apply; exact preservation of legacy enabled surfaces; refusal of ambiguous legacy state; and proof that preview performs no writes.
 
-- [ ] **Step 2: Confirm the focused tests fail**
+- [x] **Step 2: Confirm the focused tests fail**
 
 Run: `py -3 -m pytest skills/repo-shape/tests/scripts/test_operating_standards_contract.py skills/repo-shape/tests/scripts/test_operating_standards_migration.py -q`
 
 Expected: FAIL because the new declaration and migration command do not exist.
 
-- [ ] **Step 3: Implement schema, scaffold, and migration**
+- [x] **Step 3: Implement schema, scaffold, and migration**
 
 Implement validation from the packaged catalog. Keep explicit marketplace provenance separate from repository-owned contracts. Make preview output deterministic. Resolve the complete migration before writing, then atomically write the new declaration only after all inputs pass validation.
 
-- [ ] **Step 4: Verify contract and migration behavior**
+- [x] **Step 4: Verify contract and migration behavior**
 
 Run the focused command from Step 2. Expected: PASS, including refusal before writes on invalid or ambiguous legacy data.
 
 - [ ] **Step 5: Commit the composition contract**
 
 ```powershell
-git add skills/repo-shape/references/operating-standards.schema.json skills/repo-shape/templates/operating-standards.json skills/repo-shape/scripts/scaffold_operating_standards.py skills/repo-shape/scripts/migrate_operating_standards.py skills/repo-shape/scripts/plugin_contracts.py skills/repo-shape/tests/scripts/test_operating_standards_contract.py skills/repo-shape/tests/scripts/test_operating_standards_migration.py
+git add skills/repo-shape/references/operating-standards.schema.json skills/repo-shape/templates/operating-standards.json skills/repo-shape/scripts/scaffold_operating_standards.py skills/repo-shape/scripts/migrate_operating_standards.py skills/repo-shape/scripts/plugin_contracts.py skills/repo-shape/references/operating-standards-catalog.json skills/repo-shape/references/operating-standards-catalog.schema.json skills/repo-shape/scripts/operating_standards_catalog.py skills/repo-shape/tests/scripts/test_operating_standards_catalog.py skills/repo-shape/tests/scripts/test_operating_standards_contract.py skills/repo-shape/tests/scripts/test_operating_standards_migration.py dist/plugins/agent-operating-model .agents/skills/repo-shape
 git commit -m "feat: declare consumer operating standards"
 ```
 

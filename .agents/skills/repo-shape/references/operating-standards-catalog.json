@@ -4,13 +4,10 @@
     {
       "id": "marketplace-skill-management",
       "title": "Marketplace skill management",
-      "surfaces": ["marketplace-source-submodule", "marketplace-json", "operating-model-contract"],
+      "surfaces": ["marketplace-source-submodule", "marketplace-json"],
       "resources": [
-        "skills/repo-shape/scripts/plugin_contracts.py",
         "skills/repo-shape/scripts/scaffold_marketplace_json.py",
-        "skills/repo-shape/scripts/scaffold_operating_model_contract.py",
-        "skills/repo-shape/scripts/skill_link_contract.py",
-        "skills/repo-shape/templates/agent-operating-model.json"
+        "skills/repo-shape/scripts/skill_link_contract.py"
       ],
       "check": true,
       "apply": true,
@@ -132,5 +129,6 @@
       "apply": true,
       "requires": []
     }
-  ]
+  ],
+  "migration_surfaces": ["operating-model-contract"]
 }

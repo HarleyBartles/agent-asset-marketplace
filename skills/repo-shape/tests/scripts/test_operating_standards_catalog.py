@@ -30,6 +30,7 @@ def test_catalog_assigns_each_shape_surface_once_to_independent_standards() -> N
     raw_manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))
     expected = {surface["id"] for surface in raw_manifest["surfaces"]}
     memberships = [surface_id for standard in catalog.standards for surface_id in standard.surfaces]
+    memberships.extend(catalog.migration_surfaces)
 
     assert set(memberships) == expected
     assert len(memberships) == len(set(memberships))
@@ -39,6 +40,7 @@ def test_catalog_assigns_each_shape_surface_once_to_independent_standards() -> N
         "playbook-composition",
         "markdown-formatting",
     }
+    assert "operating-model-contract" in catalog.migration_surfaces
     by_id = {standard.id: set(standard.surfaces) for standard in catalog.standards}
     assert by_id["root-agent-router"].isdisjoint(by_id["playbook-composition"])
 

@@ -13,7 +13,17 @@ import surface_contracts
 
 
 _ID = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
+_REVISION = re.compile(r"^(?:[0-9a-f]{40}|[0-9a-f]{64})$")
 _REQUIRED = {"id", "title", "surfaces", "resources", "check", "apply", "requires"}
+_COMPOSITION_FIELDS = {
+    "id",
+    "origin",
+    "implementation_root",
+    "check",
+    "apply",
+    "generated_paths",
+    "requires",
+}
 
 
 @dataclass(frozen=True)
@@ -31,6 +41,7 @@ class OperatingStandard:
 class StandardsCatalog:
     version: int
     standards: tuple[OperatingStandard, ...]
+    migration_surfaces: tuple[str, ...]
 
 
 def _string_list(raw: Any, *, field: str, standard_id: str, allow_empty: bool = False) -> tuple[str, ...]:
@@ -90,13 +101,19 @@ def load_catalog(catalog_path: Path, manifest_path: Path, source_root: Path) -> 
     """Load and validate catalog structure, surface ownership, dependencies, and resources."""
 
     raw = json.loads(catalog_path.read_text(encoding="utf-8-sig"))
-    if not isinstance(raw, dict) or set(raw) != {"version", "standards"}:
-        raise ValueError("catalog must contain only version and standards")
+    if not isinstance(raw, dict) or set(raw) != {"version", "standards", "migration_surfaces"}:
+        raise ValueError("catalog must contain only version, standards, and migration_surfaces")
     if raw["version"] != 1:
         raise ValueError("catalog version must be 1")
     rows = raw["standards"]
     if not isinstance(rows, list) or not rows:
         raise ValueError("catalog standards must be a non-empty list")
+    migration_surfaces = _string_list(
+        raw["migration_surfaces"],
+        field="migration_surfaces",
+        standard_id="catalog",
+        allow_empty=True,
+    )
 
     standards: list[OperatingStandard] = []
     ids: set[str] = set()
@@ -142,6 +159,12 @@ def load_catalog(catalog_path: Path, manifest_path: Path, source_root: Path) -> 
     manifest = surface_contracts.load_manifest(manifest_path)
     expected_surfaces = {surface.id for surface in manifest.surfaces}
     actual_surfaces = set(assigned)
+    duplicate_migration_surfaces = actual_surfaces & set(migration_surfaces)
+    if duplicate_migration_surfaces:
+        raise ValueError(
+            f"surface assigned as standard and migration input: {', '.join(sorted(duplicate_migration_surfaces))}"
+        )
+    actual_surfaces.update(migration_surfaces)
     unknown_surfaces = actual_surfaces - expected_surfaces
     if unknown_surfaces:
         raise ValueError(f"catalog contains unknown surface(s): {', '.join(sorted(unknown_surfaces))}")
@@ -150,4 +173,108 @@ def load_catalog(catalog_path: Path, manifest_path: Path, source_root: Path) -> 
         raise ValueError(f"catalog does not assign surface(s): {', '.join(sorted(uncovered))}")
     by_id = {standard.id: standard for standard in standards}
     _check_cycles(by_id)
-    return StandardsCatalog(version=1, standards=tuple(standards))
+    return StandardsCatalog(version=1, standards=tuple(standards), migration_surfaces=migration_surfaces)
+
+
+def _safe_repo_path(value: Any, *, field: str, standard_id: str) -> None:
+    if not isinstance(value, str) or not value or "\x00" in value:
+        raise ValueError(f"standard {standard_id} {field} must be a non-empty repository-relative path")
+    normalized = value.replace("\\", "/")
+    path = Path(normalized)
+    if (
+        path.is_absolute()
+        or normalized.startswith(("/", "!", ":"))
+        or re.match(r"^[A-Za-z]:", normalized)
+        or ".." in path.parts
+        or normalized in {"", "."}
+    ):
+        raise ValueError(f"standard {standard_id} {field} must be repository-relative without '..'")
+
+
+def _command_vector(value: Any, *, field: str, standard_id: str, allow_empty: bool) -> tuple[str, ...]:
+    if not isinstance(value, list) or (not value and not allow_empty):
+        requirement = "may be empty or" if allow_empty else "must be"
+        raise ValueError(f"standard {standard_id} {field} command {requirement} a vector")
+    if any(not isinstance(part, str) or not part or "\x00" in part for part in value):
+        raise ValueError(f"standard {standard_id} {field} command vector must contain non-empty strings")
+    return tuple(value)
+
+
+def validate_composition(data: Any, catalog: StandardsCatalog) -> None:
+    """Validate an explicit marketplace and repository-owned standards composition."""
+
+    if not isinstance(data, dict) or set(data) != {"version", "standards"}:
+        raise ValueError("composition must contain only version and standards")
+    if data["version"] != 1:
+        raise ValueError("composition version must be 1")
+    entries = data["standards"]
+    if not isinstance(entries, list):
+        raise ValueError("composition standards must be a list")
+
+    catalog_by_id = {standard.id: standard for standard in catalog.standards}
+    by_id: dict[str, dict[str, Any]] = {}
+    for index, entry in enumerate(entries):
+        if not isinstance(entry, dict):
+            raise ValueError(f"standard entry[{index}] must be an object")
+        standard_id = entry.get("id")
+        if not isinstance(standard_id, str) or not _ID.fullmatch(standard_id):
+            raise ValueError(f"standard entry[{index}] id must be kebab-case")
+        if standard_id in by_id:
+            raise ValueError(f"duplicate standard id in composition: {standard_id}")
+        origin = entry.get("origin")
+        if origin not in {"marketplace", "repository"}:
+            raise ValueError(f"standard {standard_id} origin must be marketplace or repository")
+        if origin == "repository" and "revision" in entry:
+            raise ValueError(f"repository-owned standard cannot set revision: {standard_id}")
+        expected_fields = _COMPOSITION_FIELDS | ({"revision"} if origin == "marketplace" else set())
+        if set(entry) != expected_fields:
+            raise ValueError(f"standard {standard_id} has invalid fields for origin {origin}")
+        _safe_repo_path(entry["implementation_root"], field="implementation_root", standard_id=standard_id)
+        _command_vector(entry["check"], field="check", standard_id=standard_id, allow_empty=False)
+        apply = _command_vector(entry["apply"], field="apply", standard_id=standard_id, allow_empty=True)
+        generated_paths = _string_list(
+            entry["generated_paths"], field="generated_paths", standard_id=standard_id, allow_empty=True
+        )
+        for path in generated_paths:
+            _safe_repo_path(path, field="generated_paths", standard_id=standard_id)
+        requires = _string_list(entry["requires"], field="requires", standard_id=standard_id, allow_empty=True)
+        if origin == "marketplace":
+            if standard_id not in catalog_by_id:
+                raise ValueError(f"unknown standard in catalog: {standard_id}")
+            revision = entry["revision"]
+            if not isinstance(revision, str) or not _REVISION.fullmatch(revision):
+                raise ValueError(f"standard {standard_id} revision must be a pinned commit")
+            source_standard = catalog_by_id[standard_id]
+            if not source_standard.apply and apply:
+                raise ValueError(f"standard {standard_id} does not define an apply command")
+            if source_standard.apply and not apply:
+                raise ValueError(f"standard {standard_id} requires an apply command")
+            missing_requirements = set(source_standard.requires) - set(requires)
+            if missing_requirements:
+                raise ValueError(
+                    f"standard {standard_id} missing required standard(s): {', '.join(sorted(missing_requirements))}"
+                )
+        by_id[standard_id] = entry
+
+    for standard_id, entry in by_id.items():
+        for dependency in entry["requires"]:
+            if dependency not in by_id:
+                raise ValueError(f"standard {standard_id} has unknown required standard: {dependency}")
+
+    completed: set[str] = set()
+    active: list[str] = []
+
+    def visit(standard_id: str) -> None:
+        if standard_id in active:
+            cycle = " -> ".join([*active[active.index(standard_id) :], standard_id])
+            raise ValueError(f"composition dependency cycle: {cycle}")
+        if standard_id in completed:
+            return
+        active.append(standard_id)
+        for dependency in by_id[standard_id]["requires"]:
+            visit(dependency)
+        active.pop()
+        completed.add(standard_id)
+
+    for standard_id in by_id:
+        visit(standard_id)
