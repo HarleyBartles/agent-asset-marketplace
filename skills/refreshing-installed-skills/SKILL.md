@@ -13,10 +13,7 @@ metadata:
     - creating a new worktree.
     - the marketplace-source submodule has been updated.
     - .agents/skills/ appears stale.
-  do_not_use_when:
-    - only the INDEX.md mesh is stale without any skill changes; use generating-agent-mesh instead.
   related_skills:
-    - generating-agent-mesh
     - using-git-worktrees
 license: MIT
 ---

@@ -51,6 +51,7 @@ def test_relative_rooted_and_external_links_and_agent_routed_doctrine_pass(tmp_p
             "docs/guide.md": "# Guide\n\n## Usage\n",
             ".agents/AGENTS.md": "Read [the rule](doctrine/rule.md) when working with doctrine.\n",
             ".agents/doctrine/rule.md": "---\nstatus: active\n---\n# Rule\n",
+            "skills/example/SKILL.md": "---\nname: example\nmetadata:\n  status: active\n---\n# Skill\n",
         },
     )
 
@@ -87,7 +88,7 @@ def test_active_doctrine_without_an_ancestor_route_fails(tmp_path: Path) -> None
     assert "active doctrine not routed: .agents/doctrine/rule.md" in result.stderr
 
 
-def test_index_route_is_accepted_during_transition(tmp_path: Path) -> None:
+def test_generated_index_does_not_route_active_doctrine(tmp_path: Path) -> None:
     repo = _init_repo(tmp_path / "legacy-doctrine-route")
     _commit_files(
         repo,
@@ -99,7 +100,8 @@ def test_index_route_is_accepted_during_transition(tmp_path: Path) -> None:
 
     result = _run(repo)
 
-    assert result.returncode == 0, result.stderr
+    assert result.returncode != 0
+    assert "active doctrine not routed: .agents/doctrine/rule.md" in result.stderr
 
 
 def test_consumer_relative_examples_outside_guidance_and_docs_are_not_link_checked(tmp_path: Path) -> None:

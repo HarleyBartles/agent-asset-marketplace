@@ -77,7 +77,7 @@ git commit -m "refactor: separate markdown link validation from index mesh"
 
 - Delete: `tools/generate_repo_index.py`
 - Delete: `tools/validate_repo_index.py`
-- Modify: `tools/marketplace_utils.py` (remove index path and sidecar helpers only)
+- Modify: `tools/marketplace_utils.py` (remove index path and sidecar helpers only)`r`n- Modify: `tools/validate_marketplace.py` (remove the JSON index validation phase while retaining inventory, project, and shared-reference validation)
 - Modify: `tools/run.py`
 - Modify: `tools/README.md`
 - Delete: `.agents/docs/repo-index.md`
@@ -109,7 +109,7 @@ git commit -m "refactor: separate markdown link validation from index mesh"
 
 - [ ] **Step 1: Update behavior tests before removing integrations**
 
-Change `tests/repository/test_run_cli.py` to assert resolving `ci` contains no `repo-index`, `mesh`, or `index-mesh` targets and still orders marketplace generation and installed-skill refresh before validation. Add a test that explicit retired target names are rejected with the normal unknown-target diagnostic. Inspect the JSON index generator and validator for metadata beyond navigation; preserve any product or registry metadata in its canonical existing marketplace definition and cover it with `tests/build/test_plugin_definition_contract.py` or `tests/build/test_plugin_assembly.py`. Change worktree-script behavior tests to assert skill refresh is the final preparation action and no mesh script lookup or command is attempted. Remove mesh-skill tests together with the retired skill rather than relocating tests for deleted behavior.
+Change `tests/repository/test_run_cli.py` to assert resolving `ci` contains no `repo-index`, `mesh`, or `index-mesh` targets and that it still includes validation. Add a test that explicit retired target names are rejected with the normal unknown-target diagnostic. Cover retained marketplace validation phases and the removed `index` phase. Inspect the JSON index generator and validator for metadata beyond navigation; preserve product and registry metadata in their canonical existing marketplace definitions. Change worktree-script behavior tests to prove worktree preparation no longer dispatches mesh generation while preserving refresh and dependency-install capabilities. Remove mesh-skill tests together with the retired skill rather than relocating tests for deleted behavior. The focused link validator routes active doctrine only through `AGENTS.md` files.
 
 - [ ] **Step 2: Run focused skill tests and observe old behavior fail**
 
@@ -119,7 +119,7 @@ Expected: FAIL because worktree preparation and refresh guidance still invoke or
 
 - [ ] **Step 3: Remove source, membership, and all integration branches**
 
-Delete the JSON index generator/validator and index-only utilities after preserving any non-navigation marketplace metadata found in Step 1. Remove the `repo-index`, `mesh`, and `index-mesh` tasks and their dependencies from `tools/run.py`; update `tools/README.md` and remove `.agents/docs/repo-index.md`. Delete the canonical mesh skill and tests, remove its Repo Worker Pack membership, and adjust the refreshing, worktree, Repo Worker Base, reviewer, and doctrine guidance identified in the file list. Preserve general worktree safety and worker guidance; remove mesh-specific policy, commands, fallback warnings, and reviewer profile behavior.
+Delete the JSON index generator/validator and index-only utilities after confirming whether they carry unique product metadata. Remove the JSON index phase from `tools/validate_marketplace.py`; retain its inventory, project, and shared-reference checks. The `marketplace_plugins` view in `INDEX.json` duplicates canonical plugin registry and manifest data, so drop that navigation-derived view and keep those existing sources canonical. Remove the `repo-index`, `mesh`, and `index-mesh` tasks and their dependencies from `tools/run.py`; update `tools/README.md` and remove `.agents/docs/repo-index.md`. Delete the canonical mesh skill and tests, remove its Repo Worker Pack membership, and adjust the refreshing, worktree, Repo Worker Base, reviewer, and doctrine guidance identified in the file list. Preserve general worktree safety and worker guidance; remove mesh-specific policy, commands, fallback warnings, and reviewer profile behavior.
 
 - [ ] **Step 4: Verify ambient pack and worktree behavior**
 

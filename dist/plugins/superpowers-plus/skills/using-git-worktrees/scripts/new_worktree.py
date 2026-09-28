@@ -177,11 +177,6 @@ def _find_refresh_script(worktree_root: Path) -> Optional[Path]:
     return _find_skill_core(worktree_root, "refreshing-installed-skills", "refresh_installed_skills.py")
 
 
-def _find_mesh_script(worktree_root: Path) -> Optional[Path]:
-    """Return the path to the new worktree's generate-index-mesh script."""
-    return _find_skill_core(worktree_root, "generating-agent-mesh", "generate_index_mesh.py")
-
-
 def _find_command_bus(repo_root: Path) -> Optional[Path]:
     """Return the repo's canonical command-bus entry point if one exists.
 
@@ -481,7 +476,7 @@ def _configure_worktree(
     main_repo_root: Path,
     no_skill_refresh: bool,
 ) -> int:
-    """Refresh skills and regenerate the index mesh inside the new worktree.
+    """Refresh installed skills inside the new worktree.
 
     Returns an exit code; the caller is responsible for removing the worktree
     when this returns non-zero.
@@ -515,27 +510,6 @@ def _configure_worktree(
                 exit_code = 0
         if exit_code != 0:
             print(f"error: refreshing installed skills failed in {worktree_root}", file=sys.stderr)
-            return exit_code
-
-        exit_code = _dispatch_capability(worktree_root, "index-mesh", "--apply")
-        if exit_code is None:
-            mesh_script = _find_mesh_script(worktree_root)
-            if mesh_script:
-                mesh_args = [str(mesh_script), "--apply"]
-                result = subprocess.run(
-                    [sys.executable, *mesh_args],
-                    cwd=worktree_root,
-                    env=_stripped_env(),
-                )
-                exit_code = result.returncode
-            else:
-                print(
-                    "warning: generate-index-mesh not found; worktree created but index mesh was not regenerated",
-                    file=sys.stderr,
-                )
-                exit_code = 0
-        if exit_code != 0:
-            print(f"error: generating index mesh failed in {worktree_root}", file=sys.stderr)
             return exit_code
 
     # Make the worktree runnable by installing dependencies. A repo can own

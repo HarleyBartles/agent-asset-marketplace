@@ -13,7 +13,7 @@ metadata:
     - creating or selecting a named subagent configuration.
     - recommending a child model, reasoning level, or context mode.
     - retrying failed work by changing model, reasoning, or context.
-    - choosing a custom subagent profile such as `reviewer`, `reviewer-fixes`, `reviewer-strong`, `reviewer-security`, `reviewer-skills`, `reviewer-plans`, `reviewer-mesh`, `reviewer-scripts`, `implementer`, or `implementer-strong`.
+    - choosing a custom subagent profile such as `reviewer`, `reviewer-fixes`, `reviewer-strong`, `reviewer-security`, `reviewer-skills`, `reviewer-plans`, `reviewer-scripts`, `implementer`, or `implementer-strong`.
     - selecting an implementation, code-review, architecture-review, or adjudication agent.
   do_not_use_when:
     - to switch the current parent session when the runtime cannot change models mid-session.
@@ -74,19 +74,15 @@ Do not install repo-local `<lens>.md` profiles from the pack. The consumer repo 
 
 ## Common custom subagent profile dispatch
 
-| Task                                                                             | Profile                                         |
-| -------------------------------------------------------------------------------- | ----------------------------------------------- |
-| Most review tasks, focused re-reviews, and architecture challenges               | `reviewer`                                      |
-| Full branch/PR diff review where the whole branch is in scope                    | `reviewer-strong`                               |
-| Security and PII lens in a full-branch/PR diff                                   | `reviewer-security`                             |
-| `SKILL.md`/reference/prompt-robustness lens                                      | `reviewer-skills`                               |
-| Plans, specs, roadmaps, or `.agents/plans` and `.agents/specs` changes           | `reviewer-plans`                                |
-| `INDEX.md`, generated mesh, or `repo-standards` surfaces                         | `reviewer-mesh`                                 |
-| Script safety, CLI compliance, shebangs, or `--check`/`--apply` classification   | `reviewer-scripts`                              |
-| Small, tightly focused reviews or coherent single-responsibility re-review diffs | `reviewer-fixes`                                |
-| Repo-specific lens for surfaces not covered by the portable set                  | `.agents/agents/reviewer-<lens>.md` (see below) |
-| Bounded implementation / bugfix                                                  | `implementer`                                   |
-| Implementation that needs more reasoning or broader context                      | `implementer-strong`                            |
+| Task                                                                   | Profile             |
+| ---------------------------------------------------------------------- | ------------------- |
+| Most review tasks, focused re-reviews, and architecture challenges     | `reviewer`          |
+| Full branch/PR diff review where the whole branch is in scope          | `reviewer-strong`   |
+| Security and PII lens in a full-branch/PR diff                         | `reviewer-security` |
+| `SKILL.md`/reference/prompt-robustness lens                            | `reviewer-skills`   |
+| Plans, specs, roadmaps, or `.agents/plans` and `.agents/specs` changes | `reviewer-plans`    |
+
+| Script safety, CLI compliance, shebangs, or `--check`/`--apply` classification | `reviewer-scripts` | | Small, tightly focused reviews or coherent single-responsibility re-review diffs | `reviewer-fixes` | | Repo-specific lens for surfaces not covered by the portable set | `.agents/agents/reviewer-<lens>.md` (see below) | | Bounded implementation / bugfix | `implementer` | | Implementation that needs more reasoning or broader context | `implementer-strong` |
 
 The orchestrator must provide a `<diff_path>` and optional `<pr_description>` to any reviewer profile. The reviewer subagent does not resolve the diff itself.
 

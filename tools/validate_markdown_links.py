@@ -108,6 +108,8 @@ def _link_findings(repo_root: Path, files: list[Path]) -> list[str]:
 
 
 def _is_active_doctrine(path: Path) -> bool:
+    if path.name == "SKILL.md":
+        return False
     try:
         content = path.read_text(encoding="utf-8")
     except (OSError, UnicodeDecodeError):
@@ -134,7 +136,7 @@ def _targets_from(source: Path, repo_root: Path) -> set[Path]:
 def _doctrine_route_findings(repo_root: Path, files: list[Path]) -> list[str]:
     route_targets: dict[Path, set[Path]] = {}
     for route_file in files:
-        if route_file.name not in {"AGENTS.md", "INDEX.md"}:
+        if route_file.name != "AGENTS.md":
             continue
         route_targets[route_file] = _targets_from(route_file, repo_root)
 

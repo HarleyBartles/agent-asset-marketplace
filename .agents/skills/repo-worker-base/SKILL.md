@@ -37,7 +37,7 @@ At the start of a new substantive slice, after refreshing the required base and 
 | Running or changing a mutation script                                          | [mutation-script-safety.md](references/mutation-script-safety.md)                 |
 | Creating an agent-facing script                                                | [script-entrypoint-contract.md](references/script-entrypoint-contract.md)         |
 | Focused validation, hooked commit proof, Draft/Ready publication, or CI parity | [repository-validation-contract.md](references/repository-validation-contract.md) |
-| Changing README, AGENTS.md, INDEX.md, doctrine, docs, plans, or mesh           | [repository-layout-and-mesh.md](references/repository-layout-and-mesh.md)         |
+| Changing README, AGENTS.md, doctrine, docs, plans, or specifications           | [repository-layout-and-mesh.md](references/repository-layout.md)                  |
 | Finding or creating a repository-local stage runbook                           | [stage-guide-contract.md](references/stage-guide-contract.md)                     |
 
 Read the consuming repository's local hygiene/layout policy whenever it exists. That local policy is the authority for repository-specific paths, commands, exclusions, CI, and exceptions; this skill does not replace it.

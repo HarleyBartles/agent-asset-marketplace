@@ -82,7 +82,7 @@ def _make_repo_with_bundled_refresh(tmp_path: Path, name: str) -> Path:
 
     plugin_names = _copy_current_skill_sources(
         repo,
-        ("refreshing-installed-skills", "generating-agent-mesh", "repo-standards", "repo-shape"),
+        ("refreshing-installed-skills", "repo-standards", "repo-shape"),
     )
     (repo / ".agents" / "plugins").mkdir(parents=True)
     marketplace = {
@@ -114,7 +114,7 @@ def _make_repo_with_failing_refresh(tmp_path: Path, name: str) -> Path:
 
     plugin_names = _copy_current_skill_sources(
         repo,
-        ("refreshing-installed-skills", "generating-agent-mesh", "repo-standards", "repo-shape"),
+        ("refreshing-installed-skills", "repo-standards", "repo-shape"),
     )
 
     # Replace the refresh script with one that writes a marker and exits non-zero.
@@ -548,7 +548,7 @@ def test_new_worktree_runs_refresh_installed_skills(tmp_path: Path) -> None:
     assert worktree_root.is_dir()
     assert "Worktree ready" in result.stdout
     assert "Installed skill" in result.stdout
-    assert "index mesh" in result.stdout
+    assert "Worktree ready" in result.stdout
 
 
 def test_new_worktree_initializes_submodules_before_refresh(tmp_path: Path, monkeypatch) -> None:
@@ -840,7 +840,6 @@ def main():
     capability = sys.argv[1]
     markers = {
         "refresh-skills": "refresh-bus-marker.txt",
-        "index-mesh": "index-bus-marker.txt",
         "install-deps": "install-deps-bus-marker.txt",
     }
     if capability not in markers:
@@ -867,16 +866,14 @@ def test_new_worktree_dispatches_through_command_bus_when_present(tmp_path: Path
     assert result.returncode == 0, result.stderr
     assert worktree_root.is_dir()
     assert (worktree_root / "refresh-bus-marker.txt").is_file()
-    assert (worktree_root / "index-bus-marker.txt").is_file()
     assert (worktree_root / "install-deps-bus-marker.txt").is_file()
     assert "Installed skill" not in result.stdout
-    assert "Wrote index mesh" not in result.stdout
 
 
 def test_new_worktree_fails_and_keeps_worktree_when_command_bus_fails(tmp_path: Path) -> None:
     failing_bus = """\
 import sys
-print("repo-owned index-mesh failed", file=sys.stderr)
+print("repo-owned refresh-skills failed", file=sys.stderr)
 sys.exit(1)
 """
     repo = _make_repo_with_command_bus(tmp_path, "fail-bus-repo", failing_bus)
@@ -890,8 +887,7 @@ sys.exit(1)
     )
     assert result.returncode != 0, result.stdout
     assert worktree_root.is_dir()
-    assert "repo-owned index-mesh failed" in result.stderr
-    assert "Wrote index mesh" not in result.stdout
+    assert "repo-owned refresh-skills failed" in result.stderr
 
 
 def test_new_worktree_falls_back_to_bundled_for_unknown_bus_capability(tmp_path: Path) -> None:
@@ -912,7 +908,6 @@ sys.exit(2)
     assert result.returncode == 0, result.stderr
     assert worktree_root.is_dir()
     assert "Installed skill" in result.stdout
-    assert "Wrote index mesh" in result.stdout
 
 
 @pytest.mark.skipif(shutil.which("bash") is None, reason="bash not available")
@@ -928,7 +923,6 @@ def test_new_worktree_dispatches_through_bash_shell_wrapper(tmp_path: Path) -> N
         'capability="$1"\n'
         'case "$capability" in\n'
         '  refresh-skills) echo "refresh-skills called" > refresh-bus-marker.txt ;;\n'
-        '  index-mesh) echo "index-mesh called" > index-bus-marker.txt ;;\n'
         '  *) echo "invalid choice: $capability" >&2; exit 2 ;;\n'
         "esac\n",
         encoding="utf-8",
@@ -949,9 +943,7 @@ def test_new_worktree_dispatches_through_bash_shell_wrapper(tmp_path: Path) -> N
     assert result.returncode == 0, result.stderr
     assert worktree_root.is_dir()
     assert (worktree_root / "refresh-bus-marker.txt").is_file()
-    assert (worktree_root / "index-bus-marker.txt").is_file()
     assert "Installed skill" not in result.stdout
-    assert "Wrote index mesh" not in result.stdout
 
 
 def _make_fake_package_manager(bin_dir: Path, name: str) -> None:
@@ -1061,7 +1053,6 @@ def test_new_worktree_installs_dependencies_with_no_skill_refresh(tmp_path: Path
     assert (worktree_root / "npm-calls.txt").is_file()
     assert "install" in (worktree_root / "npm-calls.txt").read_text(encoding="utf-8")
     assert "Installed skill" not in result.stdout
-    assert "Wrote index mesh" not in result.stdout
 
 
 def test_new_worktree_installs_node_and_python_dependencies(tmp_path: Path) -> None:
