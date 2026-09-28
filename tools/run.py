@@ -314,6 +314,7 @@ def _run_validate(ctx: Ctx) -> None:
     _check_tracked_line_endings()
     _run([sys.executable, "tools/validate_authority_assets.py"], ctx)
     _run([sys.executable, "tools/validate_agents_md.py"], ctx)
+    _run([sys.executable, "tools/validate_markdown_links.py", "--check"], ctx)
     _run([sys.executable, "tools/validate_tool_cli.py"], ctx)
     if ctx.mode == "check":
         _git_diff_check(ctx)

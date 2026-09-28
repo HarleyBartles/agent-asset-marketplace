@@ -327,6 +327,23 @@ def test_validate_does_not_call_git_diff_exit_code(monkeypatch):
     assert "git_diff_exit_code" not in calls
 
 
+@pytest.mark.parametrize("target", [("validate",), ("ci",)])
+def test_validation_targets_run_the_focused_markdown_link_validator(monkeypatch, target):
+    calls = []
+
+    def fake_run(cmd, ctx, *, env=None):
+        calls.append(cmd)
+
+    monkeypatch.setattr(run, "_run", fake_run)
+    monkeypatch.setattr(run, "_git_diff_check", lambda ctx: None)
+    monkeypatch.setattr(run, "_git_diff_exit_code", lambda ctx: None)
+
+    ctx = run.Ctx(mode="check", base_ref=None, allow_shared=False, verbose=False)
+    run.run_targets(list(target), ctx)
+
+    assert [sys.executable, "tools/validate_markdown_links.py", "--check"] in calls
+
+
 def test_index_mesh_target_delegates_to_bundled(monkeypatch):
     calls = []
 
