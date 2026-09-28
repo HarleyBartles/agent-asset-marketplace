@@ -127,3 +127,9 @@ def test_scaffold_does_not_overwrite_an_invalid_consumer_contract(tmp_path: Path
 
     assert scaffold_operating_standards.scaffold_contract(tmp_path, CATALOG, apply=True)
     assert target.read_bytes() == before
+
+
+def test_repository_standard_cannot_reuse_a_marketplace_catalog_id() -> None:
+    entry = _entry("root-agent-router", origin="repository")
+    with pytest.raises(ValueError, match="reserved by the marketplace catalog"):
+        operating_standards_catalog.validate_composition(_contract(entry), CATALOG)

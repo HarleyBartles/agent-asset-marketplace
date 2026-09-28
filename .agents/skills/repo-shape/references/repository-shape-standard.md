@@ -2,11 +2,17 @@
 
 This file describes the surfaces `repo-standards` checks and can apply. It is the human-readable companion to `repository-shape-manifest.json`.
 
-## Required surfaces
+## Explicit standards composition
+
+A consumer that has `.agents/contracts/operating-standards.json` uses composition mode. Its `standards` array is the complete adoption declaration: an empty array means no marketplace standards, marketplace entries name pinned implementations, and repository entries remain consumer-owned. The coordinator validates the complete declaration and dependency graph before invoking commands. It runs only declared checks or apply actions, including dependencies explicitly listed by each standard. Plugin subscriptions and installed skill projections do not select, require, or gate standards. Use `scaffold_operating_standards.py --apply` to create an explicit empty declaration, then add only the standards the repository chooses.
+
+A consumer without the new declaration remains on the legacy manifest and exception contract during migration. This compatibility lane does not require ambient plugin subscriptions. Migrate by previewing with `migrate_operating_standards.py --check`, deploying the selected implementations from the pinned marketplace source, then applying the declaration. Do not remove legacy surfaces or change runner commands until deployment and the declaration are both validated.
+
+## Legacy manifest surfaces
 
 - `.agents/plugins/marketplace-source` as a git submodule pointing at the marketplace source.
 - `.agents/plugins/marketplace.json` with exact repo-local skill identifiers in `repo.local_skills`; naming prefixes are not required.
-- `.agents/contracts/agent-operating-model.json` declaring consumer-specific surface exceptions and governed unslop-profile roots. This is separate from plugin subscription state in marketplace JSON and from workflow mapping in the runbook policy.
+- Legacy `.agents/contracts/agent-operating-model.json` carries surface exceptions during migration. New consumers use `.agents/contracts/operating-standards.json` to declare individual standards; ambient plugin availability does not impose this standard set.
 - `.agents/contracts/repo-standards-commands.json` declaring the consumer's canonical `apply` and `check` command vectors plus the repository-relative paths those commands generate whenever the `pre-commit-hook` surface is enabled. `repo-standards` validates this declaration but does not invent repository-specific commands or generated-output ownership; a consumer must supply it before `--apply` can install or repair the hook. Repositories that explicitly except the hook also except this dependent declaration.
 - Optional `markdown-formatting` is explicitly adopted with `scaffold_markdown_formatting.py --apply --state adopted` and separately enforced with `--state enforced`. Installation never opts a consumer in. Enforced consumers compose the portable formatter before their existing canonical apply/check commands.
 - The consumer's canonical validation capability, declared in its local repository guidance. See [ci-validation-pipeline.md](ci-validation-pipeline.md) for the contract.

@@ -140,7 +140,7 @@ Implement validation from the packaged catalog. Keep explicit marketplace proven
 
 Run the focused command from Step 2. Expected: PASS, including refusal before writes on invalid or ambiguous legacy data.
 
-- [ ] **Step 5: Commit the composition contract**
+- [x] **Step 5: Commit the composition contract**
 
 ```powershell
 git add skills/repo-shape/references/operating-standards.schema.json skills/repo-shape/templates/operating-standards.json skills/repo-shape/scripts/scaffold_operating_standards.py skills/repo-shape/scripts/migrate_operating_standards.py skills/repo-shape/scripts/plugin_contracts.py skills/repo-shape/references/operating-standards-catalog.json skills/repo-shape/references/operating-standards-catalog.schema.json skills/repo-shape/scripts/operating_standards_catalog.py skills/repo-shape/tests/scripts/test_operating_standards_catalog.py skills/repo-shape/tests/scripts/test_operating_standards_contract.py skills/repo-shape/tests/scripts/test_operating_standards_migration.py dist/plugins/agent-operating-model .agents/skills/repo-shape
@@ -153,8 +153,9 @@ git commit -m "feat: declare consumer operating standards"
 
 - Modify: `skills/repo-shape/scripts/repo_standards.py`
 - Modify: `skills/repo-shape/scripts/plugin_contracts.py`
-- Modify: `skills/repo-shape/references/repository-shape-manifest.json`
-- Modify: `skills/repo-shape/references/repository-shape-manifest.schema.json`
+- Modify: `skills/repo-shape/scripts/operating_standards_catalog.py`
+- Modify: `skills/repo-shape/scripts/migrate_operating_standards.py`
+- Create: `skills/repo-shape/scripts/operating_standards_dispatch.py`
 - Modify: `skills/repo-shape/references/repository-shape-standard.md`
 - Modify: `skills/repo-shape/references/consumer-surface-audit.md`
 - Modify: `skills/repo-shape/tests/scripts/test_repo_standards.py`
@@ -173,21 +174,21 @@ git commit -m "feat: declare consumer operating standards"
 
 - Preserve apply/check mutation guards, staged-snapshot behavior, consumer exceptions during legacy migration, and existing command-bus outer entrypoints.
 
-- [ ] **Step 1: Add selective-dispatch behavior tests**
+- [x] **Step 1: Add selective-dispatch behavior tests**
 
 Use temporary consumer roots and real marker commands/scaffolds. Prove two selected standards run and an omitted standard does not; empty selection runs no marketplace checks; repository-owned standards still run when selected; invalid dependencies fail before markers; and changing plugin subscriptions has no effect on dispatch.
 
-- [ ] **Step 2: Confirm focused tests fail**
+- [x] **Step 2: Confirm focused tests fail**
 
 Run: `py -3 -m pytest skills/repo-shape/tests/scripts/test_operating_standards_dispatch.py skills/repo-shape/tests/scripts/test_operating_model_plugin_contracts.py -q`
 
 Expected: FAIL because the current validator uses fixed surfaces and mandatory plugin subscriptions.
 
-- [ ] **Step 3: Implement composition-driven validation and apply**
+- [x] **Step 3: Implement composition-driven validation and apply**
 
 Use the new declaration as the dispatch authority. Validate every selected implementation and its dependencies before running a command. Remove hidden fixed required-surface execution from the new-contract path, retaining only compatibility behavior needed by legacy consumers.
 
-- [ ] **Step 4: Verify coordinator and plugin independence**
+- [x] **Step 4: Verify coordinator and plugin independence**
 
 Run: `py -3 -m pytest skills/repo-shape/tests/scripts/test_repo_standards.py skills/repo-shape/tests/scripts/test_operating_model_plugin_contracts.py skills/repo-shape/tests/scripts/test_operating_standards_dispatch.py -q`
 

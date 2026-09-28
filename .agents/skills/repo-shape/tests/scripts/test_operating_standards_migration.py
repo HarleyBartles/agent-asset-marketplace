@@ -54,6 +54,8 @@ def test_migration_preview_preserves_enabled_standards_and_does_not_write(tmp_pa
 
     assert {entry["id"] for entry in result["standards"]} == selected
     assert all(entry["revision"] == REVISION for entry in result["standards"])
+    assert all("--run-standard" in entry["check"] for entry in result["standards"])
+    assert all("--yes" in entry["apply"] for entry in result["standards"])
     assert "operating-model-contract" not in {entry["id"] for entry in result["standards"]}
     assert not target.exists()
     assert legacy_path.read_bytes() == legacy_before
@@ -86,6 +88,14 @@ def test_migration_apply_writes_only_the_new_contract(tmp_path: Path) -> None:
     target = tmp_path / ".agents/contracts/operating-standards.json"
     assert not target.exists()
 
+    with pytest.raises(ValueError, match="cannot activate migration before deploying standard"):
+        migrate_operating_standards.migrate_contract(tmp_path, CATALOG, REVISION, apply=True)
+    assert not target.exists()
+
+    (tmp_path / ".agents/standards/root-agent-router").mkdir(parents=True)
+    runtime = tmp_path / ".agents/standards/_runtime/repo_standards.py"
+    runtime.parent.mkdir(parents=True, exist_ok=True)
+    runtime.write_text("# deployed runner\n", encoding="utf-8")
     migrate_operating_standards.migrate_contract(tmp_path, CATALOG, REVISION, apply=True)
     assert json.loads(target.read_text(encoding="utf-8"))["standards"][0]["id"] == "root-agent-router"
     assert legacy_path.read_bytes() == legacy_before

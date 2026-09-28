@@ -224,6 +224,8 @@ def validate_composition(data: Any, catalog: StandardsCatalog) -> None:
         origin = entry.get("origin")
         if origin not in {"marketplace", "repository"}:
             raise ValueError(f"standard {standard_id} origin must be marketplace or repository")
+        if origin == "repository" and standard_id in catalog_by_id:
+            raise ValueError(f"repository-owned standard id is reserved by the marketplace catalog: {standard_id}")
         if origin == "repository" and "revision" in entry:
             raise ValueError(f"repository-owned standard cannot set revision: {standard_id}")
         expected_fields = _COMPOSITION_FIELDS | ({"revision"} if origin == "marketplace" else set())

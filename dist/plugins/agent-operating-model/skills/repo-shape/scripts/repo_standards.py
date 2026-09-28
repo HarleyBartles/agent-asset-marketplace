@@ -16,6 +16,8 @@ from typing import NamedTuple
 
 import document_contracts
 import plugin_contracts
+import operating_standards_catalog
+import operating_standards_dispatch
 import skill_link_contract
 import surface_contracts
 
@@ -778,6 +780,8 @@ while the contract is absent."""
     )
     parser.add_argument("--check", action="store_true", help="report drift only; do not write")
     parser.add_argument("--apply", action="store_true", help="create missing surfaces")
+    parser.add_argument("--standard", help="dispatch one declared standard and its dependencies")
+    parser.add_argument("--run-standard", help=argparse.SUPPRESS)
     parser.add_argument(
         "--yes",
         action="store_true",
@@ -826,6 +830,77 @@ while the contract is absent."""
 
     if args.allow_shared_checkout and not args.apply:
         print("error: --allow-shared-checkout requires --apply", file=sys.stderr)
+        return 1
+
+    if args.run_standard:
+        composition_path = repo_root / ".agents/contracts/operating-standards.json"
+        if not composition_path.is_file():
+            print("error: --run-standard requires operating-standards.json", file=sys.stderr)
+            return 1
+        try:
+            catalog = operating_standards_dispatch.load_catalog(Path(__file__))
+            composition = json.loads(composition_path.read_text(encoding="utf-8"))
+            operating_standards_catalog.validate_composition(composition, catalog)
+            entries = {entry["id"]: entry for entry in composition["standards"]}
+            if args.run_standard not in entries:
+                raise ValueError(f"standard is not declared in this repository: {args.run_standard}")
+            standard = next(item for item in catalog.standards if item.id == args.run_standard)
+            manifest = surface_contracts.load_manifest(_manifest_path())
+            by_id = {surface.id: _coordinator_surface(surface) for surface in manifest.surfaces}
+            selected_surfaces = [by_id[surface_id] for surface_id in standard.surfaces]
+            selected_ids = set(standard.surfaces)
+            if args.apply and not args.yes:
+                print("error: --apply requires --yes", file=sys.stderr)
+                return 1
+            if args.apply and not shared_checkout.approve_mutation(repo_root, _SCRIPT_NAME, args.allow_shared_checkout):
+                return 1
+            if args.check:
+                findings = [
+                    finding
+                    for surface in selected_surfaces
+                    for finding in _check_surface(repo_root, surface, set(), selected_ids)
+                ]
+                for finding in findings:
+                    print(f"DRIFT: [{args.run_standard}] {finding}")
+                return 1 if findings else 0
+            applied = 0
+            for surface in selected_surfaces:
+                if _check_surface(repo_root, surface, set(), selected_ids):
+                    applied += int(_apply_surface(repo_root, surface, set(), False, selected_ids))
+            print(f"OK repo-standards: applied standard {args.run_standard} ({applied} surface(s))")
+            return 0
+        except (OSError, ValueError, json.JSONDecodeError, KeyError, StopIteration) as exc:
+            print(f"DRIFT: [operating-standards] {exc}", file=sys.stderr)
+            return 1
+
+    composition_path = repo_root / ".agents/contracts/operating-standards.json"
+    if composition_path.is_file():
+        if force_targets:
+            print("error: --force is not supported by composition dispatch", file=sys.stderr)
+            return 1
+        if args.apply and not args.yes:
+            print("error: --apply requires --yes", file=sys.stderr)
+            return 1
+        if args.apply and not shared_checkout.approve_mutation(repo_root, _SCRIPT_NAME, args.allow_shared_checkout):
+            return 1
+        try:
+            catalog = operating_standards_dispatch.load_catalog(Path(__file__))
+            completed = operating_standards_dispatch.dispatch(
+                repo_root,
+                catalog,
+                composition_path,
+                mode="apply" if args.apply else "check",
+                standard_id=args.standard,
+            )
+        except (OSError, ValueError) as exc:
+            print(f"DRIFT: [operating-standards] {exc}", file=sys.stderr)
+            return 1
+        verb = "applied" if args.apply else "checked"
+        print(f"OK repo-standards: {verb} {len(completed)} declared standard(s)")
+        return 0
+
+    if args.standard:
+        print("error: --standard requires .agents/contracts/operating-standards.json", file=sys.stderr)
         return 1
 
     manifest = surface_contracts.load_manifest(_manifest_path())
@@ -881,14 +956,14 @@ while the contract is absent."""
             exceptions = _load_exceptions(repo_root)
         else:
             exceptions = set(consumer_contract.surface_exceptions)
-            if "marketplace-json" not in exceptions:
-                plugin_findings.extend(plugin_contracts.check_plugin_contract(repo_root, consumer_contract))
     else:
         exceptions = _load_exceptions(repo_root)
     enabled_surface_ids = _enabled_surface_ids(surfaces, exceptions)
     dependency_findings = _required_with_findings(surfaces, exceptions)
 
-    findings: list[str] = [*dependency_findings, *_check_composition_graph(repo_root)]
+    composition_surfaces = {"runbook-set", "playbook-set", "runbooks-agents-md", "playbooks-agents-md"}
+    graph_findings = _check_composition_graph(repo_root) if composition_surfaces & enabled_surface_ids else []
+    findings: list[str] = [*dependency_findings, *graph_findings]
     for surface in surfaces:
         findings.extend(_check_surface(repo_root, surface, exceptions, enabled_surface_ids))
     if "marketplace-json" not in exceptions:
@@ -965,10 +1040,8 @@ while the contract is absent."""
         refreshed_contract = plugin_contracts.ConsumerContract(tuple(exceptions), ())
         refreshed_exceptions = set(exceptions)
     refreshed_enabled = _enabled_surface_ids(surfaces, refreshed_exceptions)
-    unresolved = [
-        *_required_with_findings(surfaces, refreshed_exceptions),
-        *_check_composition_graph(repo_root),
-    ]
+    refreshed_graph = _check_composition_graph(repo_root) if composition_surfaces & refreshed_enabled else []
+    unresolved = [*_required_with_findings(surfaces, refreshed_exceptions), *refreshed_graph]
     for surface in surfaces:
         unresolved.extend(_check_surface(repo_root, surface, refreshed_exceptions, refreshed_enabled))
     if "operating-model-contract" in known_surface_ids and "marketplace-json" not in refreshed_exceptions:

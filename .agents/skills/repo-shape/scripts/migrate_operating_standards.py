@@ -93,9 +93,22 @@ def plan_migration(repo_root: Path, catalog, revision: str) -> dict:
             "origin": "marketplace",
             "revision": revision,
             "implementation_root": f".agents/standards/{standard.id}",
-            "check": ["@python", ".agents/standards/_runtime/repo_standards.py", "--standard", standard.id, "--check"],
+            "check": [
+                "@python",
+                ".agents/standards/_runtime/repo_standards.py",
+                "--run-standard",
+                standard.id,
+                "--check",
+            ],
             "apply": (
-                ["@python", ".agents/standards/_runtime/repo_standards.py", "--standard", standard.id, "--apply"]
+                [
+                    "@python",
+                    ".agents/standards/_runtime/repo_standards.py",
+                    "--run-standard",
+                    standard.id,
+                    "--apply",
+                    "--yes",
+                ]
                 if standard.apply
                 else []
             ),
@@ -108,8 +121,39 @@ def plan_migration(repo_root: Path, catalog, revision: str) -> dict:
     return result
 
 
+def _require_deployed_implementations(repo_root: Path, composition: dict) -> None:
+    for entry in composition["standards"]:
+        root = (repo_root / entry["implementation_root"]).resolve()
+        try:
+            root.relative_to(repo_root.resolve())
+        except ValueError as exc:
+            raise ValueError(f"implementation root escapes repository: {entry['implementation_root']}") from exc
+        if not root.is_dir():
+            raise ValueError(
+                f"cannot activate migration before deploying standard {entry['id']}: {entry['implementation_root']}"
+            )
+        for capability in ("check", "apply"):
+            vector = entry[capability]
+            if not vector:
+                continue
+            for argument in vector[1:]:
+                if not argument.endswith(".py") or argument.startswith("-"):
+                    continue
+                command_path = (repo_root / argument).resolve()
+                try:
+                    command_path.relative_to(repo_root.resolve())
+                except ValueError as exc:
+                    raise ValueError(f"standard command escapes repository: {argument}") from exc
+                if not command_path.is_file():
+                    raise ValueError(
+                        f"cannot activate migration before deploying standard {entry['id']} runtime: {argument}"
+                    )
+
+
 def migrate_contract(repo_root: Path, catalog, revision: str, *, apply: bool) -> dict:
     result = plan_migration(repo_root, catalog, revision)
+    if apply:
+        _require_deployed_implementations(repo_root, result)
     target = repo_root / TARGET
     if target.exists():
         existing = json.loads(target.read_text(encoding="utf-8"))
