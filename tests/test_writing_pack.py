@@ -16,6 +16,7 @@ APPROVED_SKILLS = {
     "writing-profile-engine",
 }
 INSTALLED_DEFAULTS = [
+    "agent-operating-model",
     "mcp-usage-pack",
     "repo-worker-pack",
     "superpowers-plus",
@@ -151,7 +152,8 @@ def test_installed_projection_retains_clarity_and_generic_unslop_provenance() ->
     installed_clarity = ROOT / ".agents" / "skills" / "writing-with-clarity" / "SKILL.md"
     installed_unslop_profiles = ROOT / ".agents" / "skills" / "unslop-profiles" / "SKILL.md"
 
-    assert provenance["syncedPlugins"] == INSTALLED_DEFAULTS
+    assert set(provenance["syncedPlugins"]) == set(INSTALLED_DEFAULTS)
+    assert len(provenance["syncedPlugins"]) == len(INSTALLED_DEFAULTS)
     assert installed_clarity.is_file()
     assert "plugins/writing-pack/skills/writing-with-clarity/SKILL.md" in installed_clarity.read_text(encoding="utf-8")
     assert "plugins/unslop-plus/skills/unslop-profiles/SKILL.md" in installed_unslop_profiles.read_text(

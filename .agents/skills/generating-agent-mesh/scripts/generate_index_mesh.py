@@ -421,8 +421,8 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument(
         "--allow-shared-checkout",
         action="store_true",
-        help="Approve generating INDEX.md files in a shared or git-worktree checkout. "
-        "Only pass this if you intend to mutate this checkout.",
+        help="Acknowledge intentional INDEX.md generation in the main shared checkout. "
+        "Linked worktrees do not need this flag.",
     )
     parser.add_argument("--repo-root", type=Path, default=None, help="repo root to process")
     parser.add_argument(

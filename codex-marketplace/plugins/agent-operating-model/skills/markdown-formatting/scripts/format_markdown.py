@@ -20,7 +20,14 @@ CONTRACT_PATH = Path(".agents/contracts/markdown-formatting.json")
 CONFIG_PATH = Path(".mdformat.toml")
 MAX_COMMAND_CHARS = 28_000
 REQUIREMENTS_PATH = Path(__file__).resolve().parents[1] / "requirements.txt"
-REQUIRED_DISTRIBUTION_NAMES = frozenset({"mdformat", "mdformat-frontmatter", "mdformat-gfm"})
+REQUIRED_DISTRIBUTION_NAMES = frozenset(
+    {"mdformat", "mdformat-frontmatter", "mdformat-gfm", "mdformat-safe-link-labels"}
+)
+RENDERER_VERSION = "1.0.0"
+RENDERER_WHEEL_REQUIREMENT = (
+    "./.agents/plugins/marketplace-source/codex-marketplace/packages/"
+    "mdformat-safe-link-labels/wheels/mdformat_safe_link_labels-1.0.0-py3-none-any.whl"
+)
 
 
 def _required_distributions() -> dict[str, str]:
@@ -33,6 +40,8 @@ def _required_distributions() -> dict[str, str]:
         match = re.fullmatch(r"([A-Za-z0-9_.-]+)==([^\s]+)", line.strip())
         if match:
             pins[match.group(1)] = match.group(2)
+    if RENDERER_WHEEL_REQUIREMENT in {line.strip() for line in lines}:
+        pins["mdformat-safe-link-labels"] = RENDERER_VERSION
     missing = REQUIRED_DISTRIBUTION_NAMES - pins.keys()
     if missing:
         raise ToolchainError(f"{REQUIREMENTS_PATH}: missing exact pins for {', '.join(sorted(missing))}")
@@ -181,8 +190,9 @@ def verify_configuration(repo_root: Path) -> None:
         if config.get(key) != value:
             raise ContractError(f"{CONFIG_PATH.as_posix()}: {key} must be {value!r}")
     extensions = config.get("extensions")
-    if not isinstance(extensions, list) or not {"gfm", "frontmatter"}.issubset(extensions):
-        raise ContractError(f"{CONFIG_PATH.as_posix()}: extensions must include gfm and frontmatter")
+    required_extensions = {"gfm", "frontmatter", "safe-link-labels"}
+    if not isinstance(extensions, list) or not required_extensions.issubset(extensions):
+        raise ContractError(f"{CONFIG_PATH.as_posix()}: extensions must include gfm, frontmatter, and safe-link-labels")
 
 
 def verify_toolchain() -> None:

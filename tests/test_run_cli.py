@@ -85,6 +85,25 @@ def test_resolve_ci_order():
     assert "archive-links" not in targets
 
 
+def test_ci_runs_python_tests(monkeypatch):
+    calls = []
+    monkeypatch.setenv("REPO_STANDARDS_STAGED_SNAPSHOT", "1")
+
+    def fake_run(cmd, ctx, *, env=None):
+        calls.append((cmd, env))
+
+    monkeypatch.setattr(run, "_run", fake_run)
+    ctx = run.Ctx(mode="check", base_ref=None, allow_shared=False, verbose=False)
+
+    run.run_targets(["ci"], ctx)
+
+    assert "tests" in run._resolve_ci_deps()
+    command, environment = next((cmd, env) for cmd, env in calls if "pytest" in cmd)
+    assert command == [sys.executable, "-m", "pytest", "-q"]
+    assert "REPO_STANDARDS_STAGED_SNAPSHOT" not in environment
+    assert "REPO_STANDARDS_HOSTED_COMMIT" not in environment
+
+
 def test_resolve_all_aliases_to_ci():
     assert run.resolve_targets(["all"]) == run.resolve_targets(["ci"])
 
@@ -271,10 +290,10 @@ def test_validate_fix_message(monkeypatch):
 
 
 def test_ci_apply_does_not_run_manual_review_preflight(monkeypatch):
-    calls = []
+    calls: list[list[str]] = []
 
     def fake_run(cmd, ctx):
-        calls.append(" ".join(cmd))
+        calls.append(cmd)
 
     monkeypatch.setattr(run, "_run", fake_run)
     monkeypatch.setattr(run, "_git_diff_check", lambda ctx: None)
@@ -283,8 +302,7 @@ def test_ci_apply_does_not_run_manual_review_preflight(monkeypatch):
     ctx = run.Ctx(mode="apply", base_ref=None, allow_shared=True, verbose=False)
     run.run_targets(run.resolve_targets(["ci"]), ctx)
 
-    review_preflight_calls = [c for c in calls if "tools/review_preflight.py" in c]
-    assert not review_preflight_calls
+    assert not any(command[:2] == [sys.executable, "tools/review_preflight.py"] for command in calls)
 
 
 def test_validate_does_not_call_git_diff_exit_code(monkeypatch):

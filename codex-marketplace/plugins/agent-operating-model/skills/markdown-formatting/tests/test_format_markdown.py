@@ -7,6 +7,8 @@ import sys
 from pathlib import Path
 
 import pytest
+import mdformat
+from markdown_it import MarkdownIt
 
 
 SCRIPT = Path(__file__).parents[1] / "scripts" / "format_markdown.py"
@@ -34,7 +36,8 @@ def make_repo(tmp_path: Path, *, state: str = "adopted") -> Path:
     git(repo, "config", "user.email", "formatter@example.invalid")
     (repo / ".agents/contracts").mkdir(parents=True)
     (repo / ".mdformat.toml").write_text(
-        'wrap = "no"\nend_of_line = "lf"\nvalidate = true\nnumber = true\nextensions = ["gfm", "frontmatter"]\n',
+        'wrap = "no"\nend_of_line = "lf"\nvalidate = true\nnumber = true\n'
+        'extensions = ["gfm", "frontmatter", "safe-link-labels"]\n',
         encoding="utf-8",
     )
     (repo / ".agents/contracts/markdown-formatting.json").write_text(
@@ -171,6 +174,36 @@ def test_requirements_must_pin_every_required_distribution(tmp_path: Path, monke
         module._required_distributions()
 
 
+def test_local_renderer_requirement_must_install_a_distribution(tmp_path: Path, monkeypatch):
+    module = load_module()
+    requirements = tmp_path / "requirements.txt"
+    requirements.write_text(
+        "mdformat==1.0.0\nmdformat-frontmatter==2.1.2\nmdformat-gfm==1.0.0\n"
+        "-e .agents/skills/markdown-formatting/renderer-plugin\n",
+        encoding="utf-8",
+    )
+    monkeypatch.setattr(module, "REQUIREMENTS_PATH", requirements)
+
+    with pytest.raises(module.ToolchainError, match="mdformat-safe-link-labels"):
+        module._required_distributions()
+
+
+def test_marketplace_renderer_wheel_is_a_versioned_toolchain_requirement(tmp_path: Path, monkeypatch):
+    module = load_module()
+    requirements = tmp_path / "requirements.txt"
+    wheel_requirement = (
+        "./.agents/plugins/marketplace-source/codex-marketplace/packages/"
+        "mdformat-safe-link-labels/wheels/mdformat_safe_link_labels-1.0.0-py3-none-any.whl"
+    )
+    requirements.write_text(
+        f"mdformat==1.0.0\nmdformat-frontmatter==2.1.2\nmdformat-gfm==1.0.0\n{wheel_requirement}\n",
+        encoding="utf-8",
+    )
+    monkeypatch.setattr(module, "REQUIREMENTS_PATH", requirements)
+
+    assert module._required_distributions()["mdformat-safe-link-labels"] == "1.0.0"
+
+
 def test_apply_restores_every_original_byte_when_later_batch_fails(tmp_path: Path, monkeypatch):
     module = load_module()
     repo = make_repo(tmp_path)
@@ -211,6 +244,70 @@ def test_check_files_accepts_untracked_producer_output_and_rejects_invalid_paths
     ):
         with pytest.raises(module.ContractError, match=message):
             module.validate_requested_files(repo, [candidate])
+
+
+def test_safe_underscores_in_link_labels_are_formatter_stable(tmp_path: Path):
+    repo = make_repo(tmp_path)
+    target_name = "absynth_lover__seegreenfairies.md"
+    source = f"- [{target_name.removesuffix('.md')}]({target_name})\n"
+    index = repo / "INDEX.md"
+    index.write_text(source, encoding="utf-8", newline="\n")
+    (repo / target_name).write_text("# target\n", encoding="utf-8", newline="\n")
+    commit_all(repo)
+
+    checked = subprocess.run(
+        [sys.executable, str(SCRIPT), "--check-files", "INDEX.md"],
+        cwd=repo,
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+    assert checked.returncode == 0, checked.stderr
+
+    applied = subprocess.run(
+        [sys.executable, str(SCRIPT), "--apply"],
+        cwd=repo,
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+    assert applied.returncode == 0, applied.stderr
+    assert index.read_text(encoding="utf-8") == source
+
+    checked_again = subprocess.run(
+        [sys.executable, str(SCRIPT), "--check-files", "INDEX.md"],
+        cwd=repo,
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+    assert checked_again.returncode == 0, checked_again.stderr
+
+
+def test_emphasis_in_link_labels_keeps_its_parsed_meaning():
+    source = "- [_emphasis_](target.md)\n"
+    formatted = mdformat.text(source, extensions={"safe-link-labels"})
+
+    parser = MarkdownIt("commonmark")
+    assert parser.render(formatted) == parser.render(source)
+
+
+def test_escaped_underscores_that_prevent_emphasis_remain_escaped():
+    source = r"- [\_foo\_](target.md)" + "\n"
+    formatted = mdformat.text(source, extensions={"safe-link-labels"})
+
+    parser = MarkdownIt("commonmark")
+    assert parser.render(formatted) == parser.render(source)
+    assert r"\_foo\_" in formatted
+
+
+def test_safe_escaped_underscore_is_normalized_without_changing_rendered_label():
+    source = r"- [foo\_bar](target.md)" + "\n"
+    formatted = mdformat.text(source, extensions={"safe-link-labels"})
+
+    parser = MarkdownIt("commonmark")
+    assert parser.render(formatted) == parser.render(source)
+    assert "[foo_bar](target.md)" in formatted
 
 
 def test_help_classifies_the_cli_as_mixed():

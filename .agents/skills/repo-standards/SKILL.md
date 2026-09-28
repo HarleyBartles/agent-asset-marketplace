@@ -22,6 +22,7 @@ Route the request to the smallest owning capability:
 | Named command targets and dispatch semantics                  | `command-bus`           |
 | Focused checks, complete gates, and evidence                  | `repository-validation` |
 | Tracked pre-commit and hosted-CI parity                       | `tracked-repo-hooks`    |
+| Markdown formatting adoption and enforcement                  | `markdown-formatting`   |
 | Plugin subscriptions, local skills, and installed projections | `repo-agent-assets`     |
 | Python implementation patterns                                | `python`                |
 

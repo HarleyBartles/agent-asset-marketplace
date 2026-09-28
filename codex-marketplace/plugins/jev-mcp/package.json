@@ -1,0 +1,35 @@
+{
+  "name": "@harleybartles/jev-mcp",
+  "version": "1.0.0",
+  "description": "Typed Jev decisions through the community MCP server.",
+  "author": {
+    "name": "Harley Bartles"
+  },
+  "homepage": "https://github.com/HarleyBartles/agent-asset-marketplace",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HarleyBartles/agent-asset-marketplace.git",
+    "directory": "codex-marketplace/plugins/jev-mcp"
+  },
+  "license": "MIT",
+  "rights": "First-party Harley-authored marketplace plugin.",
+  "keywords": [
+    "codex",
+    "marketplace",
+    "jev-mcp"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "type": "cli",
+    "displayName": "Jev MCP",
+    "shortDescription": "Typed decision tools for model routing and other bounded judgments.",
+    "longDescription": "Connects the Jev AI Community MCP and teaches when to use its decision tools while keeping runtime and repository policy in control.",
+    "developerName": "Harley Bartles",
+    "category": "Productivity",
+    "capabilities": [],
+    "defaultPrompt": "Use Jev to advise a bounded model routing decision.",
+    "brandColor": "#111827",
+    "composerIcon": "./assets/icon.svg",
+    "logo": "./assets/icon.svg"
+  }
+}

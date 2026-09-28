@@ -80,6 +80,7 @@ def test_task_start_uses_explicit_python_when_launcher_is_absent(tmp_path: Path)
     assert "base:" in result.stdout
 
 
+@pytest.mark.skipif(shutil.which("cygpath") is None, reason="cygpath is required for Windows path conversion")
 @pytest.mark.skipif(_bash() is None, reason="Git Bash/bash is unavailable")
 def test_runtime_resolution_falls_back_from_broken_python3_to_python(tmp_path: Path):
     bash = _bash()

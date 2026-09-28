@@ -124,6 +124,7 @@ def test_markdown_surface_adoption_and_enforcement_are_separate(tmp_path: Path) 
     )
     markdown = repo / "README.md"
     markdown.write_text("#  Title   \n", encoding="utf-8")
+    (repo / ".mdformat.toml").write_bytes((REPO_ROOT / ".mdformat.toml").read_bytes())
     subprocess.run(["git", "add", "--all"], cwd=repo, check=True)
     subprocess.run(["git", "commit", "-m", "fixture"], cwd=repo, check=True, capture_output=True)
     before = markdown.read_bytes()
@@ -2311,3 +2312,14 @@ def test_scaffold_pr_template_carries_composition_sections() -> None:
         "## Prohibited combinations",
     ):
         assert heading in content
+
+
+def test_shared_checkout_help_does_not_require_flag_in_worktrees() -> None:
+    result = subprocess.run(
+        [sys.executable, str(REPO_STANDARDS), "--help"],
+        capture_output=True,
+        text=True,
+        check=True,
+    )
+    assert "shared/git-worktree checkout" not in result.stdout
+    assert "shared/worktree checkouts" not in result.stdout

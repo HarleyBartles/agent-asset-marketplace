@@ -2,4 +2,4 @@ wrap = "no"
 end_of_line = "lf"
 validate = true
 number = true
-extensions = ["gfm", "frontmatter"]
+extensions = ["gfm", "frontmatter", "safe-link-labels"]

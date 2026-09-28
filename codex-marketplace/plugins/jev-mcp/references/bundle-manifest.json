@@ -1,0 +1,29 @@
+{
+  "bundle_name": "jev-mcp",
+  "bundle_version": "1.0.0",
+  "bundle_type": "plugin-pack",
+  "marketplace_root": ".agents/plugins/marketplace.json",
+  "plugin_root": "codex-marketplace/plugins/jev-mcp",
+  "source_families": [
+    "first_party"
+  ],
+  "notes": [
+    "jev-mcp combines first-party jev-mcp skills."
+  ],
+  "provenance_refs": [],
+  "plugin_author": "Harley Bartles",
+  "plugin_license": "MIT",
+  "entries": [
+    {
+      "canonical_name": "using-jev-mcp",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "canonical_source_path": "codex-marketplace/plugins/jev-mcp/skills/using-jev-mcp",
+      "local_path": "skills/using-jev-mcp",
+      "source_path": "codex-marketplace/plugins/jev-mcp/skills/using-jev-mcp/SKILL.md",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Canonical first-party using-jev-mcp skill. (Using Jev MCP first-party skill)"
+    }
+  ]
+}
