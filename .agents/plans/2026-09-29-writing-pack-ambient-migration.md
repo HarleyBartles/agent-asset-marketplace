@@ -12,7 +12,7 @@
 
 **Execution Strategy:** `executing-plans`; the policy change, empty projection behavior, and consumer checks form one sequential migration.
 
-**Status:** in-flight
+**Status:** complete
 
 ## Global Constraints
 
@@ -71,7 +71,7 @@ ______________________________________________________________________
 - [x] Regenerate marketplace registry and plugin distribution from canonical sources with `py -3 tools/run.py marketplace --apply`; reconcile the skill projection through the owning refresh command.
 - [x] Run focused tests for the changed source owners, then the repository’s prescribed complete gate: stage intended changes, commit through the tracked hook, and inspect its staged-snapshot apply/check evidence. Use `py -3 tools/run.py ci --check` only if an uncommitted verification or diagnosis is needed.
 - [x] Verify `.agents/skills/` is absent, `repo.local_skills` and `install_defaults` are empty, Writing Pack remains available and self-contained in `dist/plugins/writing-pack`, and hosted CI uses only repository-owned/deployed resources.
-- [ ] Review the full diff and ambient-safety audit findings, then publish a Draft PR with exact head and validation evidence.
+- [x] Review the full diff and ambient-safety audit findings, then publish a Draft PR with exact head and validation evidence.
 
 ## Handoff
 
