@@ -76,7 +76,16 @@ def _sections(text: str) -> tuple[str, dict[str, str]]:
 
 
 def _links(section: str) -> list[str]:
-    return [match.group(1).split(maxsplit=1)[0].strip("<>") for match in LINK.finditer(section)]
+    destinations: list[str] = []
+    for match in LINK.finditer(section):
+        target = match.group(1).strip()
+        if target.startswith("<"):
+            closing = target.find(">")
+            if closing >= 0:
+                destinations.append(target[1:closing])
+                continue
+        destinations.append(target.split(maxsplit=1)[0].strip("<>"))
+    return destinations
 
 
 def _resolve_local_link(repo_root: Path, document: Path, target: str, *, label: str) -> Path | None:
