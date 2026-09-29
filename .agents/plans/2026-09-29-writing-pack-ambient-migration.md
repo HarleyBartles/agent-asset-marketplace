@@ -39,9 +39,9 @@ ______________________________________________________________________
 
 ## Task 2: Audit Writing Pack ambient assumptions
 
-- [ ] Review `src/plugin-definitions/writing-pack/`, all four canonical skills under `skills/writing/`, `skills/writing-profile-engine/`, `skills/writing-style/`, and `skills/writing-with-clarity/`, plus their shipped tests and plugin README.
-- [ ] Search for assumptions about consumer directory layout, repository runbooks/playbooks, or installed marketplace subscriptions. Retain internal composition among Writing Pack’s own skills; replace any consumer-specific assumption with runtime capability discovery and an explicit stop when a required capability is unavailable.
-- [ ] Remove the installed-copy dependency in `skills/writing-profile-engine/tests/scripts/test_writing_profile_engine.py`; exercise the canonical or built self-contained package in a temporary location so source tests do not require this repository to install Writing Pack.
+- [x] Review `src/plugin-definitions/writing-pack/`, all four canonical skills under `skills/writing/`, `skills/writing-profile-engine/`, `skills/writing-style/`, and `skills/writing-with-clarity/`, plus their shipped tests and plugin README.
+- [x] Search for assumptions about consumer directory layout, repository runbooks/playbooks, or installed marketplace subscriptions. Retain internal composition among Writing Pack’s own skills; replace any consumer-specific assumption with runtime capability discovery and an explicit stop when a required capability is unavailable.
+- [x] Remove the installed-copy dependency in `skills/writing-profile-engine/tests/scripts/test_writing_profile_engine.py`; exercise the canonical or built self-contained package in a temporary location so source tests do not require this repository to install Writing Pack.
 - [ ] Record audit findings in the implementation PR summary, including any assumptions found and their disposition.
 
 ## Task 3: Support a repository with no skill projections
