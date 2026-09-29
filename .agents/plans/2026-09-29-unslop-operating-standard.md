@@ -162,11 +162,11 @@ Evaluate each skill-owned pressure scenario in a fresh isolated context using th
 
 - No profile is automatically modified after a single mistake, and incident notes are not accumulated as profile content.
 
-- [ ] **Step 1: Specify profile lifecycle and scope boundaries in the engine skill**
+- [x] **Step 1: Specify profile lifecycle and scope boundaries in the engine skill**
 
 Document when recurring evidence justifies creation, revision, or retirement; require a consumer-reviewable proposal and operational guidance rather than incident accumulation; link to the Unslop standard/profile shape; and state that real-work adherence is assessed by profile-guided review unless an explicit deterministic check exists.
 
-- [ ] **Step 2: Evaluate the engine lifecycle boundary scenario**
+- [x] **Step 2: Evaluate the engine lifecycle boundary scenario**
 
 In a fresh isolated context, use the engine skill with a single observed mistake and with evidence of a recurring pattern. Confirm the single mistake yields no automatic profile rewrite, while recurring evidence yields a reviewable proposal; confirm neither run claims the agent followed or violated a profile. Record observed findings in the handoff and keep run artifacts out of Git.
 
