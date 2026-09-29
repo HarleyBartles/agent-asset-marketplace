@@ -6,4 +6,4 @@ For Codex consumers, adopt the optional `repo-plugin-subscriptions` AOM standard
 
 The consuming repository owns its `.agents/contracts/operating-standards.json` opt-in and its native plugin configuration. Preserve genuine repo-authored `.agents/skills/` and `repo.local_skills` entries; the plugin subscription standard does not copy, rewrite, or delete local skills.
 
-For Wild Bunch, use the migration handoff in the active multi-harness plugin distribution plan and perform the consumer migration in that repository.
+Perform consumer migrations in the consuming repository using the [repo plugin subscription standard](repo-plugin-subscriptions-standard.md).
