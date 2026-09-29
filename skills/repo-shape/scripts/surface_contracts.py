@@ -46,6 +46,7 @@ REGISTERED_VALIDATORS = frozenset(
         "runbook-set-contract",
         "shared-checkout-contract",
         "submodule-contract",
+        "unslop-contract",
     }
 )
 

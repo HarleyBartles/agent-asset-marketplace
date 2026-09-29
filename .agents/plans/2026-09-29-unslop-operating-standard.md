@@ -58,19 +58,19 @@ ______________________________________________________________________
 
 - The validator is the surface scaffold for `.agents/contracts/unslop.json`; read-only `--check` validates the contract, profiles, and workflow routes, while `--apply` creates only a missing default contract and preserves consumer-authored content. The existing Operating Model runner invokes it only for repositories that adopt the standard.
 
-- [ ] **Step 1: Add behavior tests for adoption and profile validation**
+- [x] **Step 1: Add behavior tests for adoption and profile validation**
 
 Add tests proving that the standard accepts the default `.agents/unslop` root and additional safe repository-relative roots; rejects malformed contracts, absolute paths, traversal paths, a declared root that is a file, duplicate profile ids, missing required profile sections, broken local references, and routes to missing workflows; allows an empty or not-yet-created root; and does not require any Unslop+ plugin subscription. Include a valid example whose recognition cue appears intentionally in its application example, proving the validator checks profile structure rather than banning profile vocabulary.
 
-- [ ] **Step 2: Run the focused standard test module and observe the expected failures**
+- [x] **Step 2: Run the focused standard test module and observe the expected failures**
 
 Run: `py -3 -m pytest skills/repo-shape/tests/scripts/test_unslop_standard.py -q` Expected: FAIL because the standard validator and its catalog entry do not yet exist.
 
-- [ ] **Step 3: Implement the contract parser and standard check/apply behavior**
+- [x] **Step 3: Implement the contract parser and standard check/apply behavior**
 
 Implement the JSON contract schema and Markdown-profile checks in `unslop_standard.py`. Resolve declared workflow paths against tracked repository files and require each routed workflow to direct the agent to `$unslop-profiles` at the relevant task stage. Apply creates a missing adoption contract with the default `.agents/unslop` root; it does not invent consumer profile content. Keep profile quality judgment human-readable in the standard and examples; deterministic checks should verify structure, paths, and explicit links only. Register the `unslop` standard in the catalog with its implementation resources and check/apply flags. Remove the old claim in repo-shape that profiles are binding contracts.
 
-- [ ] **Step 4: Run the focused standard tests and catalog/deployment tests**
+- [x] **Step 4: Run the focused standard tests and catalog/deployment tests**
 
 Run: `py -3 -m pytest skills/repo-shape/tests/scripts/test_unslop_standard.py skills/repo-shape/tests/scripts/test_operating_standards_catalog.py skills/repo-shape/tests/scripts/test_operating_standards_deployment.py skills/repo-shape/tests/scripts/test_repo_standards.py -q` Expected: PASS; catalog resource pinning and standard resource deployment include the new validator and standard document.
 
