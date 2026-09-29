@@ -47,7 +47,7 @@ ______________________________________________________________________
 - [x] Review `src/plugin-definitions/writing-pack/`, all four canonical skills under `skills/writing/`, `skills/writing-profile-engine/`, `skills/writing-style/`, and `skills/writing-with-clarity/`, plus their shipped tests and plugin README.
 - [x] Search for assumptions about consumer directory layout, repository runbooks/playbooks, or installed marketplace subscriptions. Retain internal composition among Writing Pack’s own skills; replace any consumer-specific assumption with runtime capability discovery and an explicit stop when a required capability is unavailable.
 - [x] Remove the installed-copy dependency in `skills/writing-profile-engine/tests/scripts/test_writing_profile_engine.py`; exercise the canonical or built self-contained package in a temporary location so source tests do not require this repository to install Writing Pack.
-- [ ] Record audit findings in the implementation PR summary, including any assumptions found and their disposition.
+- [x] Record audit findings in the implementation PR summary, including any assumptions found and their disposition.
 
 ## Task 3: Support a repository with no skill projections
 
@@ -69,8 +69,8 @@ ______________________________________________________________________
 
 - [x] Update focused source tests for empty projection behavior, worktree refresh behavior, and any changed formatter/tool resolution. Keep behavior tests meaningful and avoid tautological or change-detector coverage.
 - [x] Regenerate marketplace registry and plugin distribution from canonical sources with `py -3 tools/run.py marketplace --apply`; reconcile the skill projection through the owning refresh command.
-- [ ] Run focused tests for the changed source owners, then the repository’s prescribed complete gate: stage intended changes, commit through the tracked hook, and inspect its staged-snapshot apply/check evidence. Use `py -3 tools/run.py ci --check` only if an uncommitted verification or diagnosis is needed.
-- [ ] Verify `.agents/skills/` is absent, `repo.local_skills` and `install_defaults` are empty, Writing Pack remains available and self-contained in `dist/plugins/writing-pack`, and hosted CI uses only repository-owned/deployed resources.
+- [x] Run focused tests for the changed source owners, then the repository’s prescribed complete gate: stage intended changes, commit through the tracked hook, and inspect its staged-snapshot apply/check evidence. Use `py -3 tools/run.py ci --check` only if an uncommitted verification or diagnosis is needed.
+- [x] Verify `.agents/skills/` is absent, `repo.local_skills` and `install_defaults` are empty, Writing Pack remains available and self-contained in `dist/plugins/writing-pack`, and hosted CI uses only repository-owned/deployed resources.
 - [ ] Review the full diff and ambient-safety audit findings, then publish a Draft PR with exact head and validation evidence.
 
 ## Handoff
