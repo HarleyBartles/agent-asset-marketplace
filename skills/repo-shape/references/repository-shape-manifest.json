@@ -22,6 +22,7 @@
     {"id":"completed-artifacts-doctrine","path":".agents/doctrine/completed-artifacts.md","presence":"required","ownership":"consumer-authored","validator":"completed-artifacts-contract-v1","apply":"create","force_reset":"confirmed-template-restore","seed":"templates/completed-artifacts.md"},
     {"id":"retired-plans-completed-dir","path":".agents/plans/completed","presence":"forbidden","ownership":"consumer-authored","validator":"must-be-absent","apply":"manual-remediation","force_reset":"unavailable"},
     {"id":"retired-specs-completed-dir","path":".agents/specs/completed","presence":"forbidden","ownership":"consumer-authored","validator":"must-be-absent","apply":"manual-remediation","force_reset":"unavailable"},
-    {"id":"retired-roadmaps-completed-dir","path":".agents/roadmaps/completed","presence":"forbidden","ownership":"consumer-authored","validator":"must-be-absent","apply":"manual-remediation","force_reset":"unavailable"}
+    {"id":"retired-roadmaps-completed-dir","path":".agents/roadmaps/completed","presence":"forbidden","ownership":"consumer-authored","validator":"must-be-absent","apply":"manual-remediation","force_reset":"unavailable"},
+    {"id":"unslop-contract","path":".agents/contracts/unslop.json","presence":"optional","ownership":"consumer-authored","validator":"unslop-contract","apply":"create","force_reset":"unavailable","scaffold":"unslop_standard.py"}
   ]
 }

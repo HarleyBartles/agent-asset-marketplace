@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/HarleyBartles/agent-asset-marketplace/unslop-contract.schema.json",
+  "title": "Consumer Unslop adoption contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "profile_roots"],
+  "properties": {
+    "version": { "const": 1 },
+    "profile_roots": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1 }
+    }
+  }
+}

@@ -63,6 +63,8 @@ def plan_migration(repo_root: Path, catalog, revision: str) -> dict:
     entries = []
     adopted: set[str] = set()
     for standard in catalog.standards:
+        if standard.legacy_migration == "explicit":
+            continue
         count = sum(surface in enabled for surface in standard.surfaces)
         if count not in (0, len(standard.surfaces)):
             raise ValueError(f"partially enabled legacy standard: {standard.id}")
@@ -76,7 +78,7 @@ def plan_migration(repo_root: Path, catalog, revision: str) -> dict:
             raise ValueError(f"broken legacy required_with relationship: {surface_id} requires {partner}")
 
     for standard in catalog.standards:
-        if standard.id not in adopted:
+        if standard.legacy_migration == "explicit" or standard.id not in adopted:
             continue
         missing = set(standard.requires) - adopted
         if missing:

@@ -49,3 +49,7 @@ Do not publish directly to `main` without explicit authorization or bypass the p
 ## Playbook routing
 
 None.
+
+## Unslop profile routing
+
+When preparing a pull request or reporting publication status, use `$unslop-profiles` to check material completion, validation, and GitHub-state claims against their owning evidence. Correct only unsupported or over-scoped claims; unrelated publication details skip profile use.

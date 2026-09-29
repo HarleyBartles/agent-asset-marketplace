@@ -33,7 +33,6 @@ def _legacy_repo(root: Path, selected: set[str]) -> tuple[Path, bytes, bytes]:
     contract = {
         "version": 1,
         "surface_exceptions": exceptions,
-        "unslop_profile_roots": [".agents/contracts/unslop"],
     }
     contract_path.write_text(json.dumps(contract, indent=2) + "\n", encoding="utf-8")
     plugin_path = root / ".agents/plugins/marketplace.json"
@@ -74,6 +73,15 @@ def test_migration_refuses_partial_legacy_standard_adoption(tmp_path: Path) -> N
         migrate_operating_standards.plan_migration(tmp_path, CATALOG, REVISION)
 
     assert not (tmp_path / ".agents/contracts/operating-standards.json").exists()
+
+
+def test_migration_does_not_infer_explicit_unslop_adoption_from_legacy_surface_state(tmp_path: Path) -> None:
+    _legacy_repo(tmp_path, {"unslop"})
+
+    result = migrate_operating_standards.plan_migration(tmp_path, CATALOG, REVISION)
+
+    assert "unslop-contract" not in {surface for entry in result["standards"] for surface in entry["generated_paths"]}
+    assert "unslop" not in {entry["id"] for entry in result["standards"]}
 
 
 def test_migration_refuses_when_no_authoritative_legacy_contract_exists(tmp_path: Path) -> None:

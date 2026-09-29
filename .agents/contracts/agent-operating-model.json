@@ -5,8 +5,5 @@
       "id": "marketplace-source-submodule",
       "reason": "This repository is the canonical marketplace source rather than a marketplace consumer."
     }
-  ],
-  "unslop_profile_roots": [
-    ".agents/contracts/unslop"
   ]
 }

@@ -130,6 +130,20 @@
       "check": true,
       "apply": true,
       "requires": []
+    },
+    {
+      "id": "unslop",
+      "title": "Unslop profiles",
+      "surfaces": ["unslop-contract"],
+      "resources": [
+        "skills/repo-shape/references/unslop-standard.md",
+        "skills/repo-shape/references/unslop-contract.schema.json",
+        "skills/repo-shape/scripts/unslop_standard.py"
+      ],
+      "check": true,
+      "apply": true,
+      "requires": [],
+      "legacy_migration": "explicit"
     }
   ],
   "migration_surfaces": ["operating-model-contract"]

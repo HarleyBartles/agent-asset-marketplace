@@ -46,3 +46,7 @@ Do not hand off an uncommitted plan, call it durable repository truth, or open a
 ## Playbook routing
 
 - [Repository doctrine](../playbooks/repo-doctrine.md) - when the plan changes repository doctrine, standards, or routing.
+
+## Unslop profile routing
+
+When planning repository changes, use `$unslop-profiles` to check the applicable Marketplace profile for evidence-backed scope, ownership, and lifecycle decisions. Apply only matching cues; unrelated planning skips profile guidance.

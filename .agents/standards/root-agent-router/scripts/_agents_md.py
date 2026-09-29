@@ -133,3 +133,41 @@ def validate_agents_md(agents_path: Path, repo_root: Path) -> list[str]:
             findings.append(f"AGENTS.md missing canonical topic coverage: {', '.join(sorted(missing_topics))}")
 
     return findings
+
+
+def validate_scope_pointer_router(text: str, agents_path: Path, repo_root: Path) -> list[str]:
+    """Validate the intentionally minimal, single-sentence scoped-router form."""
+    findings: list[str] = []
+    lines = [line.strip() for line in text.splitlines() if line.strip()]
+    if len(lines) != 1:
+        findings.append("scope-pointer router must contain exactly one sentence on one line")
+        return findings
+
+    sentence = lines[0]
+    scope_match = re.search(
+        r"\b(?:for|when)\s+(?:work|working)\s+(?:under|in)\s+`([^`]+)`",
+        sentence,
+        re.IGNORECASE,
+    )
+    try:
+        expected_scope = agents_path.resolve().parent.relative_to(repo_root.resolve()).as_posix().rstrip("/") + "/"
+    except ValueError:
+        expected_scope = ""
+    if scope_match is None or scope_match.group(1).replace("\\", "/").rstrip("/") + "/" != expected_scope:
+        findings.append(f"scope-pointer router must name its containing tree: `{expected_scope}`")
+
+    links = LINK_PATTERN.findall(sentence)
+    if not links:
+        findings.append("scope-pointer router must link to at least one local guidance file")
+    else:
+        for label, target in links:
+            is_external = target.startswith(("http://", "https://", "mailto:"))
+            if is_external or _resolve_link(agents_path, target, repo_root) is None:
+                findings.append(f"scope-pointer router link does not resolve locally: {label} -> {target}")
+
+    sentence_text = LINK_PATTERN.sub(lambda match: match.group(1), sentence)
+    sentence_text = re.sub(r"`[^`]*`", "", sentence_text)
+    endings = re.findall(r"[.!?](?=\s|$)", sentence_text)
+    if len(endings) != 1 or not sentence_text.rstrip().endswith("."):
+        findings.append("scope-pointer router must be one sentence ending with a period")
+    return findings

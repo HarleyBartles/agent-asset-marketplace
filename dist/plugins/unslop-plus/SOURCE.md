@@ -27,9 +27,9 @@ The `unslop-engine` skill adapts the upstream idea (sample collection, pattern d
 ## Marketplace Composition
 
 - The `unslop-plus` plugin root contains the `unslop-engine` and `unslop-profiles` first-party skills.
-- The `unslop-engine` skill is an adaptation of the upstream `mshumer/unslop` idea; the `unslop-profiles` skill is a first-party read-when router.
+- The `unslop-engine` skill is an adaptation of the upstream `mshumer/unslop` idea; the `unslop-profiles` skill finds, reads, and applies consumer-owned profiles exposed through the optional Unslop standard plus applicable generic starter profiles.
 - Each profile is portable across repos with no Asset Marketplace-specific nouns.
-- Generic profiles remain owned here. When `writing-pack` is installed, the generic writing profile routes sustained prose to `$writing` without creating a hard dependency between the plugins.
+- Generic starter profiles remain owned here; consumer repositories own profiles under their declared roots. When `writing-pack` is available, sustained prose can route to `$writing` without making it a dependency for profile discovery or application.
 - Provenance records the engine's upstream adaptation and the profile's original authorship.
 - Upstream MIT license preserved at `skills/unslop-engine/LICENSE.upstream`.
 - Plugin-level MIT license at `LICENSE` covers first-party profile and adaptation work.
@@ -55,5 +55,5 @@ The `unslop-engine` skill adapts the upstream idea (sample collection, pattern d
 ### Validation Expectations
 
 - Package validator checks required GPT skill files and rejects forbidden shipped runtime instructions.
-- Output validator checks `unslop-output/` for manifest, prompts, samples, counted analysis, draft profile strength, and visual evidence status.
+- Output validator checks `unslop-output/` for manifest, prompts, samples, counted analysis, draft profile strength, and visual evidence status. It validates the generated package and does not assess whether an agent followed a profile.
 - Repo marketplace validation checks the plugin manifest, registry entry, and bundle manifest.

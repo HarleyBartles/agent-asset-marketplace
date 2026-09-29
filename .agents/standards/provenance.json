@@ -1,11 +1,11 @@
 {
   "version": 1,
   "repository": "https://github.com/HarleyBartles/agent-asset-marketplace.git",
-  "revision": "b75c7e7fe670dd14c7192726a88449bc56cc7906",
+  "revision": "0af5d4da6a594458bc2bad1b8e9e013a66ea8e20",
   "resources": {
     ".agents/standards/_runtime/repo_standards.py": {
       "source": "skills/repo-shape/scripts/repo_standards.py",
-      "sha256": "ae59689bdb6ab7661439451d6f910310ee9b9fea5f578605356ecc8a9d9a4dc2",
+      "sha256": "41f23d5a191117ed97f73e421893cea0c48b6ca04eeef345925c3b876f85fb69",
       "standard_id": "_runtime"
     },
     ".agents/standards/_runtime/operating_standards_dispatch.py": {
@@ -15,22 +15,22 @@
     },
     ".agents/standards/_runtime/operating_standards_catalog.py": {
       "source": "skills/repo-shape/scripts/operating_standards_catalog.py",
-      "sha256": "3d92a2e1e64cd84cc8313b6b3a53b3cefe5d7b654a65e245c4fa4821cc83bd19",
+      "sha256": "dde3b20aa0d8741ceabe4fb04eb5120c7f988e43bd6e3ad4bc015ca89c9aaf22",
       "standard_id": "_runtime"
     },
     ".agents/standards/_runtime/surface_contracts.py": {
       "source": "skills/repo-shape/scripts/surface_contracts.py",
-      "sha256": "eef9a1e2ffb2519a983dccadef3e03d8417d535c8beed0aa1dbef579afc75b42",
+      "sha256": "c8f7eba6fdc265810bb6ad53a056a2ab5bbeed5ae6d193d21793647bdfcc4e6c",
       "standard_id": "_runtime"
     },
     ".agents/standards/_runtime/document_contracts.py": {
       "source": "skills/repo-shape/scripts/document_contracts.py",
-      "sha256": "120d30952430727ae46557b8f4ed25610826d0af071199004d6b9d37301da49c",
+      "sha256": "81debe431d31b97220abc4d472225e567235f44bd05673b60aec79e059fa85ef",
       "standard_id": "_runtime"
     },
     ".agents/standards/_runtime/plugin_contracts.py": {
       "source": "skills/repo-shape/scripts/plugin_contracts.py",
-      "sha256": "0ed583ef490613980c34431c53538568dc255ada22d715ce8c70b1702934c70e",
+      "sha256": "3437411e1c8d79ebb6be3e26fd0d6b51ca4e43e0e40eb503c2647163a6ccefef",
       "standard_id": "_runtime"
     },
     ".agents/standards/_runtime/skill_link_contract.py": {
@@ -45,7 +45,7 @@
     },
     ".agents/standards/_runtime/_agents_md.py": {
       "source": "skills/repo-shape/scripts/_agents_md.py",
-      "sha256": "0a734835a9501af9bade3b29e7afc2ce94f89e538264514750bb4a1d256bd92c",
+      "sha256": "d40709414ea3de7bf5362c4484e2d3a49466c627043fdfdb91be7ace0dc8db61",
       "standard_id": "_runtime"
     },
     ".agents/standards/_runtime/completed_artifact_contract.py": {
@@ -55,7 +55,7 @@
     },
     ".agents/standards/references/repository-shape-manifest.json": {
       "source": "skills/repo-shape/references/repository-shape-manifest.json",
-      "sha256": "be8a38291ab3689bf578e34cc970c73d3f6c204df063b412be3039b28620ceac",
+      "sha256": "fe82c8686332adf5c3120b02fd208ef43b94f93e761e4ff0b1dec1048c97e4db",
       "standard_id": "_runtime"
     },
     ".agents/standards/references/repository-shape-manifest.schema.json": {
@@ -65,17 +65,22 @@
     },
     ".agents/standards/references/operating-standards-catalog.json": {
       "source": "skills/repo-shape/references/operating-standards-catalog.json",
-      "sha256": "64fc3e7042412eacc9541da4ceb09fca57a4d6e45f98ce8a4a78677ae76883a9",
+      "sha256": "9c763a2fcc0f16d46ef314e7d78ce3ec3603ad1225c185d9101b695bee179e58",
       "standard_id": "_runtime"
     },
     ".agents/standards/references/operating-standards-catalog.schema.json": {
       "source": "skills/repo-shape/references/operating-standards-catalog.schema.json",
-      "sha256": "3b68fa0b4d7da733e36069d479e6d158d01944ec4d6091d159df37d9a14c84e1",
+      "sha256": "4e31c3f86dde46d4de330dbc1a7e53a7f2ec875912c9378e7b6e4feb8eebbbd5",
       "standard_id": "_runtime"
     },
     ".agents/standards/root-agent-router/scripts/_agents_md.py": {
       "source": "skills/repo-shape/scripts/_agents_md.py",
-      "sha256": "0a734835a9501af9bade3b29e7afc2ce94f89e538264514750bb4a1d256bd92c",
+      "sha256": "d40709414ea3de7bf5362c4484e2d3a49466c627043fdfdb91be7ace0dc8db61",
+      "standard_id": "root-agent-router"
+    },
+    ".agents/standards/root-agent-router/scripts/document_contracts.py": {
+      "source": "skills/repo-shape/scripts/document_contracts.py",
+      "sha256": "81debe431d31b97220abc4d472225e567235f44bd05673b60aec79e059fa85ef",
       "standard_id": "root-agent-router"
     },
     ".agents/standards/root-agent-router/scripts/scaffold_agents_md.py": {
@@ -90,7 +95,7 @@
     },
     ".agents/standards/runbook-composition/scripts/document_contracts.py": {
       "source": "skills/repo-shape/scripts/document_contracts.py",
-      "sha256": "120d30952430727ae46557b8f4ed25610826d0af071199004d6b9d37301da49c",
+      "sha256": "81debe431d31b97220abc4d472225e567235f44bd05673b60aec79e059fa85ef",
       "standard_id": "runbook-composition"
     },
     ".agents/standards/runbook-composition/scripts/scaffold_repo_runbook_policy.py": {
@@ -115,7 +120,7 @@
     },
     ".agents/standards/playbook-composition/scripts/document_contracts.py": {
       "source": "skills/repo-shape/scripts/document_contracts.py",
-      "sha256": "120d30952430727ae46557b8f4ed25610826d0af071199004d6b9d37301da49c",
+      "sha256": "81debe431d31b97220abc4d472225e567235f44bd05673b60aec79e059fa85ef",
       "standard_id": "playbook-composition"
     },
     ".agents/standards/playbook-composition/scripts/scaffold_playbooks.py": {
@@ -125,7 +130,7 @@
     },
     ".agents/standards/tracked-validation-hook/scripts/repo_standards.py": {
       "source": "skills/repo-shape/scripts/repo_standards.py",
-      "sha256": "ae59689bdb6ab7661439451d6f910310ee9b9fea5f578605356ecc8a9d9a4dc2",
+      "sha256": "41f23d5a191117ed97f73e421893cea0c48b6ca04eeef345925c3b876f85fb69",
       "standard_id": "tracked-validation-hook"
     },
     ".agents/standards/tracked-validation-hook/scripts/shared_checkout.py": {
@@ -140,7 +145,7 @@
     },
     ".agents/standards/markdown-formatting/scripts/scaffold_markdown_formatting.py": {
       "source": "skills/repo-shape/scripts/scaffold_markdown_formatting.py",
-      "sha256": "114e43789cafe531165c5b29311b7be6fba40e63639f2afcfe740a458f681993",
+      "sha256": "4cd38d5cb95b7c5895943f932f9cb14f92e466f5c09a1cbc9468886765edcef8",
       "standard_id": "markdown-formatting"
     },
     ".agents/standards/markdown-formatting/templates/markdown-formatting.json": {
@@ -192,6 +197,21 @@
       "source": "skills/repo-shape/templates/completed-artifacts.md",
       "sha256": "94d02f7d0d2844baa56dd535124e9b55ee718d65445d9ca80be6ce2dcd7f6e02",
       "standard_id": "completed-artifact-custody"
+    },
+    ".agents/standards/unslop/references/unslop-standard.md": {
+      "source": "skills/repo-shape/references/unslop-standard.md",
+      "sha256": "b81974061bea174e966a4dab58ae5e09722bec1232629dc543428d7838bd3c3d",
+      "standard_id": "unslop"
+    },
+    ".agents/standards/unslop/references/unslop-contract.schema.json": {
+      "source": "skills/repo-shape/references/unslop-contract.schema.json",
+      "sha256": "9645c6e638d1582aa4beda4099a046f4cdc9d1cb641dfaaf5781645d3cfb404c",
+      "standard_id": "unslop"
+    },
+    ".agents/standards/unslop/scripts/unslop_standard.py": {
+      "source": "skills/repo-shape/scripts/unslop_standard.py",
+      "sha256": "4f7f6a4a2a64a0274c0448914191e56da8834a1992cc60d4e06fae642d3300c0",
+      "standard_id": "unslop"
     }
   }
 }

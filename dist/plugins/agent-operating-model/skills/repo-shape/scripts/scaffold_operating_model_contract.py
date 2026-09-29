@@ -61,8 +61,8 @@ def _validate(data: object) -> list[str]:
     if not isinstance(data, dict):
         return ["contract must be a JSON object"]
     findings: list[str] = []
-    if set(data) != {"version", "surface_exceptions", "unslop_profile_roots"}:
-        findings.append("contract must contain only version, surface_exceptions, and unslop_profile_roots")
+    if set(data) != {"version", "surface_exceptions"}:
+        findings.append("contract must contain only version and surface_exceptions")
     if data.get("version") != 1:
         findings.append("contract version must be 1")
     manifest = surface_contracts.load_manifest(
@@ -87,11 +87,6 @@ def _validate(data: object) -> list[str]:
                 seen.add(surface_id)
             if not isinstance(reason, str) or not reason.strip():
                 findings.append(f"surface exception {surface_id!r} requires a reason")
-    roots = data.get("unslop_profile_roots")
-    if not isinstance(roots, list) or not roots or not all(isinstance(item, str) and item for item in roots):
-        findings.append("unslop_profile_roots must be a non-empty list of paths")
-    elif any(Path(item).is_absolute() or ".." in Path(item).parts for item in roots):
-        findings.append("unslop_profile_roots must contain repository-relative paths")
     return findings
 
 

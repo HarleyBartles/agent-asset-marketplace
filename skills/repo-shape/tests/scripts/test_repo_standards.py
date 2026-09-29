@@ -81,6 +81,25 @@ def test_command_declaration_accepts_legacy_and_ordered_vectors(tmp_path: Path) 
     assert len(declaration.check) == 2
 
 
+def test_legacy_apply_can_converge_when_general_contract_remains_excepted(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
+) -> None:
+    _init_git_repo(tmp_path)
+    manifest = json.loads((SKILL_ROOT.parent / "references/repository-shape-manifest.json").read_text(encoding="utf-8"))
+    exceptions = "\n".join(f"- {surface['id']}" for surface in manifest["surfaces"])
+    policy = tmp_path / ".agents/doctrine/repo-runbook-policy.md"
+    policy.parent.mkdir(parents=True)
+    policy.write_text(f"# Legacy repository policy\n\n## Exceptions\n\n{exceptions}\n", encoding="utf-8")
+    monkeypatch.setattr(repo_standards, "_repo_root", lambda: tmp_path)
+    monkeypatch.setattr(repo_standards.shared_checkout, "approve_mutation", lambda *_args: True)
+
+    result = repo_standards.main(["--apply", "--yes"])
+
+    output = capsys.readouterr()
+    assert result == 0, output.out + output.err
+    assert not (tmp_path / ".agents/contracts/agent-operating-model.json").exists()
+
+
 @pytest.mark.parametrize("value", [[], [[]], [["@python"]], ["@python", ["bad"]]])
 def test_command_declaration_rejects_invalid_ordered_vectors(tmp_path: Path, value: object) -> None:
     contracts = tmp_path / ".agents" / "contracts"

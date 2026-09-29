@@ -84,7 +84,7 @@ def test_operating_model_contract_scaffold_creates_missing_file(tmp_path: Path) 
     result = _run_scaffold(tmp_path)
     assert result.returncode == 0, result.stdout + result.stderr
     data = json.loads((tmp_path / ".agents/contracts/agent-operating-model.json").read_text())
-    assert data == {"version": 1, "surface_exceptions": [], "unslop_profile_roots": [".agents/contracts/unslop"]}
+    assert data == {"version": 1, "surface_exceptions": []}
 
 
 def test_operating_model_contract_customized_valid_passes(tmp_path: Path) -> None:
@@ -96,7 +96,6 @@ def test_operating_model_contract_customized_valid_passes(tmp_path: Path) -> Non
             {
                 "version": 1,
                 "surface_exceptions": [{"id": "marketplace-source-submodule", "reason": "source repository"}],
-                "unslop_profile_roots": [".agents/contracts/unslop", "packages/ui/.agents/contracts/unslop"],
             }
         ),
         encoding="utf-8",
@@ -110,10 +109,14 @@ def test_operating_model_contract_customized_valid_passes(tmp_path: Path) -> Non
 @pytest.mark.parametrize(
     ("payload", "message"),
     [
-        ({"version": 2, "surface_exceptions": [], "unslop_profile_roots": []}, "version"),
+        ({"version": 2, "surface_exceptions": []}, "version"),
         (
-            {"version": 1, "surface_exceptions": [{"id": "invented", "reason": "x"}], "unslop_profile_roots": []},
+            {"version": 1, "surface_exceptions": [{"id": "invented", "reason": "x"}]},
             "unknown surface",
+        ),
+        (
+            {"version": 1, "surface_exceptions": [], "unslop_profile_roots": [".agents/unslop"]},
+            "only version and surface_exceptions",
         ),
     ],
 )

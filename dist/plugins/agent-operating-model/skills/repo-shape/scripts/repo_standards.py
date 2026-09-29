@@ -648,6 +648,8 @@ def _check_surface(
         return findings
     if enabled_surface_ids is not None and surf_id and surf_id not in enabled_surface_ids:
         return findings
+    if surf_id == "unslop-contract" and implementation_root is None:
+        return findings
     kind = str(surface.get("kind", "file"))
     optional = bool(surface.get("optional", False))
     template = _template_path(surface, implementation_root)
@@ -709,7 +711,7 @@ def _check_surface(
         findings.extend(_check_hooks_path(repo_root, str(Path(rel).parent).replace("\\", "/")))
         return findings
 
-    if optional and not full.exists():
+    if optional and not full.exists() and surf_id != "unslop-contract":
         return findings
 
     validator = document_contracts.DOCUMENT_VALIDATORS.get(str(surface.get("validator", "")))
@@ -1144,7 +1146,7 @@ while the contract is absent."""
         refreshed_contract = plugin_contracts.load_consumer_contract(repo_root)
         refreshed_exceptions = set(refreshed_contract.surface_exceptions)
     else:
-        refreshed_contract = plugin_contracts.ConsumerContract(tuple(exceptions), ())
+        refreshed_contract = plugin_contracts.ConsumerContract(tuple(exceptions))
         refreshed_exceptions = set(exceptions)
     refreshed_enabled = _enabled_surface_ids(surfaces, refreshed_exceptions)
     refreshed_graph = _check_composition_graph(repo_root)

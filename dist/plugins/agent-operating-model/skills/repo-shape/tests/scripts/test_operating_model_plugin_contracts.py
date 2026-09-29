@@ -32,7 +32,6 @@ def _legacy_contract(root: Path) -> None:
                     for surface in manifest["surfaces"]
                     if surface["id"] not in enabled
                 ],
-                "unslop_profile_roots": [".agents/contracts/unslop"],
             }
         ),
         encoding="utf-8",
@@ -50,16 +49,25 @@ def _run_standards(root: Path) -> subprocess.CompletedProcess:
 
 def test_plugin_contract_is_noop_for_missing_ambient_plugins(tmp_path: Path) -> None:
     _write_marketplace(tmp_path, [])
-    config = plugin_contracts.ConsumerContract((), (".agents/contracts/unslop",))
+    (tmp_path / ".agents/contracts/agent-operating-model.json").parent.mkdir(parents=True, exist_ok=True)
+    (tmp_path / ".agents/contracts/agent-operating-model.json").write_text(
+        '{"version":1,"surface_exceptions":[]}\n', encoding="utf-8"
+    )
+    config = plugin_contracts.load_consumer_contract(tmp_path)
+    assert config == plugin_contracts.ConsumerContract(())
     assert plugin_contracts.check_plugin_contract(tmp_path, config) == []
 
 
 def test_unslop_profile_presence_does_not_require_plugin_subscription(tmp_path: Path) -> None:
-    profile = tmp_path / ".agents/contracts/unslop/repository.md"
+    profile = tmp_path / ".agents/unslop/repository.md"
     profile.parent.mkdir(parents=True)
-    profile.write_text("# Repository profile\n", encoding="utf-8")
+    profile.write_text("# Unslop Profile: repository\n", encoding="utf-8")
     _write_marketplace(tmp_path, [])
-    config = plugin_contracts.ConsumerContract((), (".agents/contracts/unslop",))
+    contract = tmp_path / ".agents/contracts/agent-operating-model.json"
+    contract.parent.mkdir(parents=True, exist_ok=True)
+    contract.write_text('{"version":1,"surface_exceptions":[]}\n', encoding="utf-8")
+    config = plugin_contracts.load_consumer_contract(tmp_path)
+    assert config == plugin_contracts.ConsumerContract(())
     assert plugin_contracts.check_plugin_contract(tmp_path, config) == []
 
 
