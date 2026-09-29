@@ -85,6 +85,7 @@ def _links(section: str) -> list[str]:
         target: list[str] = []
         depth = 0
         closed = False
+        suffix_start: int | None = None
         while index < len(section):
             char = section[index]
             if char == "\\" and index + 1 < len(section):
@@ -93,7 +94,7 @@ def _links(section: str) -> list[str]:
                 continue
             if angle_bracketed:
                 if char == ">":
-                    closed = True
+                    suffix_start = index + 1
                     break
             elif char == "(":
                 depth += 1
@@ -103,13 +104,63 @@ def _links(section: str) -> list[str]:
                     break
                 depth -= 1
             elif char.isspace() and depth == 0:
-                closed = True
+                suffix_start = index
                 break
             target.append(char)
             index += 1
+        if suffix_start is not None:
+            closed = _link_suffix_closes(section, suffix_start)
         if closed and target:
             destinations.append("".join(target))
     return destinations
+
+
+def _link_suffix_closes(section: str, index: int) -> bool:
+    start = index
+    while index < len(section) and section[index].isspace():
+        index += 1
+    if index >= len(section):
+        return False
+    if section[index] == ")":
+        return True
+    if index == start:
+        return False
+
+    opener = section[index]
+    if opener in {'"', "'"}:
+        index += 1
+        while index < len(section):
+            if section[index] == "\\":
+                index += 2
+            elif section[index] == opener:
+                index += 1
+                break
+            else:
+                index += 1
+        else:
+            return False
+    elif opener == "(":
+        depth = 1
+        index += 1
+        while index < len(section) and depth:
+            if section[index] == "\\":
+                index += 2
+            elif section[index] == "(":
+                depth += 1
+                index += 1
+            elif section[index] == ")":
+                depth -= 1
+                index += 1
+            else:
+                index += 1
+        if depth:
+            return False
+    else:
+        return False
+
+    while index < len(section) and section[index].isspace():
+        index += 1
+    return index < len(section) and section[index] == ")"
 
 
 def _resolve_local_link(repo_root: Path, document: Path, target: str, *, label: str) -> Path | None:
@@ -189,6 +240,8 @@ def _profile_findings(repo_root: Path, path: Path, seen_ids: set[str]) -> list[s
 
     reference_section = sections.get("Doctrine and skill references", "")
     reference_links = _links(reference_section)
+    if len(LINK_START.findall(reference_section)) != len(reference_links):
+        findings.append(f"profile contains a malformed doctrine or skill reference link ({relative})")
     if not reference_links:
         findings.append(f"profile requires at least one doctrine or skill reference link ({relative})")
     for target in reference_links:
@@ -199,6 +252,8 @@ def _profile_findings(repo_root: Path, path: Path, seen_ids: set[str]) -> list[s
 
     workflow_section = sections.get("Applicable workflow paths", "")
     workflow_links = _links(workflow_section)
+    if len(LINK_START.findall(workflow_section)) != len(workflow_links):
+        findings.append(f"profile contains a malformed workflow link ({relative})")
     if not workflow_links:
         findings.append(f"profile requires at least one applicable workflow link ({relative})")
     for target in workflow_links:
