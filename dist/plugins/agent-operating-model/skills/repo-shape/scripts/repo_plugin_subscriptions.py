@@ -9,7 +9,7 @@ import re
 import subprocess
 import sys
 import tomllib
-from pathlib import Path
+from pathlib import Path, PurePosixPath, PureWindowsPath
 from urllib.parse import urlsplit
 
 
@@ -28,6 +28,20 @@ def _load_json(path: Path, label: str) -> dict:
     if not isinstance(value, dict):
         raise ValueError(f"{label} must be a JSON object")
     return value
+
+
+def _validate_git_url(url: object, label: str) -> None:
+    if not isinstance(url, str) or any(character.isspace() for character in url):
+        raise ValueError(f"{label} must be a Git repository URL")
+    parsed = urlsplit(url)
+    scp_url = re.fullmatch(r"[^@/\s]+@[^:/\s]+:.+", url)
+    if not scp_url and (
+        parsed.scheme not in {"https", "ssh", "git", "file"}
+        or not parsed.path
+        or (parsed.scheme != "file" and parsed.hostname is None)
+        or parsed.path.lower().endswith((".zip", ".tar", ".tar.gz", ".tgz"))
+    ):
+        raise ValueError(f"{label} must be a Git repository URL")
 
 
 def validate(repo_root: Path) -> list[str]:
@@ -57,26 +71,19 @@ def validate(repo_root: Path) -> list[str]:
             names.add(name)
             if not isinstance(source, dict) or source.get("source") != "git-subdir":
                 raise ValueError(f"{label}.source.source must be 'git-subdir'")
-            url = source.get("url")
-            if isinstance(url, str) and any(character.isspace() for character in url):
-                raise ValueError(f"{label}.source.url must be a Git repository URL")
-            parsed = urlsplit(url) if isinstance(url, str) else None
-            scp_url = isinstance(url, str) and re.fullmatch(r"[^@/\s]+@[^:/\s]+:.+", url)
-            if not scp_url and (
-                not parsed
-                or parsed.scheme not in {"https", "ssh", "git", "file"}
-                or not parsed.path
-                or (parsed.scheme != "file" and parsed.hostname is None)
-                or parsed.path.lower().endswith((".zip", ".tar", ".tar.gz", ".tgz"))
-            ):
-                raise ValueError(f"{label}.source.url must be a Git repository URL")
+            _validate_git_url(source.get("url"), f"{label}.source.url")
             path = source.get("path")
-            plugin_path = Path(path[2:]) if isinstance(path, str) else Path()
+            relative = path[2:] if isinstance(path, str) else ""
+            posix_path = PurePosixPath(relative)
+            windows_path = PureWindowsPath(relative)
             if (
                 not isinstance(path, str)
                 or not path.startswith("./")
-                or not plugin_path.parts
-                or ".." in plugin_path.parts
+                or not posix_path.parts
+                or posix_path.anchor
+                or windows_path.anchor
+                or ".." in posix_path.parts
+                or ".." in windows_path.parts
             ):
                 raise ValueError(f"{label}.source.path must be a plugin-relative path without '..'")
             selectors = [key for key in ("ref", "sha") if key in source]
@@ -107,6 +114,14 @@ def validate(repo_root: Path) -> list[str]:
                     )
                 if not isinstance(activation[key], dict) or not isinstance(activation[key].get("enabled"), bool):
                     raise ValueError(f"{CODEX_CONFIG.as_posix()}: activation {key!r} must set enabled to a boolean")
+            marketplaces = codex.get("marketplaces", {})
+            registration = marketplaces.get(marketplace_name) if isinstance(marketplaces, dict) else None
+            label = f"[marketplaces.{marketplace_name}]"
+            if not isinstance(registration, dict) or registration.get("source_type") != "git":
+                raise ValueError(f"{label} must register the catalog with source_type = 'git' for native Upgrade")
+            _validate_git_url(registration.get("source"), f"{label}.source")
+            if "ref" in registration and (not isinstance(registration["ref"], str) or not registration["ref"].strip()):
+                raise ValueError(f"{label}.ref must be a non-empty Git ref")
         except (tomllib.TOMLDecodeError, ValueError) as exc:
             findings.append(f"{CODEX_CONFIG.as_posix()}: {exc}")
 
@@ -122,6 +137,28 @@ def validate(repo_root: Path) -> list[str]:
 
 
 def scaffold(repo_root: Path) -> list[str]:
+    codex_template = None
+    if not (repo_root / CODEX_CONFIG).exists():
+        catalog_path = repo_root / MARKETPLACE
+        catalog = _load_json(
+            catalog_path if catalog_path.exists() else TEMPLATE_ROOT / "codex-marketplace.json",
+            MARKETPLACE.as_posix(),
+        )
+        name = catalog.get("name")
+        if not isinstance(name, str) or not _NAME.fullmatch(name):
+            raise ValueError(f"{MARKETPLACE.as_posix()}: name must be a valid marketplace identifier")
+        result = subprocess.run(
+            ["git", "-C", str(repo_root), "remote", "get-url", "origin"],
+            capture_output=True,
+            text=True,
+        )
+        if result.returncode:
+            raise ValueError("scaffold requires a Git origin URL to register the consumer catalog")
+        url = result.stdout.strip()
+        _validate_git_url(url, "Git origin")
+        codex_template = (TEMPLATE_ROOT / "codex-config.toml").read_text(encoding="utf-8")
+        codex_template = codex_template.replace('"__MARKETPLACE_NAME__"', json.dumps(name))
+        codex_template = codex_template.replace('"__GIT_SOURCE__"', json.dumps(url))
     created: list[str] = []
     for relative, template_name in (
         (MARKETPLACE, "codex-marketplace.json"),
@@ -132,7 +169,10 @@ def scaffold(repo_root: Path) -> list[str]:
         if destination.exists():
             continue
         destination.parent.mkdir(parents=True, exist_ok=True)
-        destination.write_bytes((TEMPLATE_ROOT / template_name).read_bytes())
+        if relative == CODEX_CONFIG:
+            destination.write_text(codex_template, encoding="utf-8", newline="\n")
+        else:
+            destination.write_bytes((TEMPLATE_ROOT / template_name).read_bytes())
         created.append(relative.as_posix())
     return created
 
