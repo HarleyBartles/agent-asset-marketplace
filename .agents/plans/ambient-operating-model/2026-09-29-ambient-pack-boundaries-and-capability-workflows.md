@@ -1,6 +1,6 @@
 # Ambient Pack Boundaries and Capability-Based Workflows
 
-**Status:** ready
+**Status:** executing
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use `subagent-driven-development` (recommended) or `executing-plans` to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
@@ -34,7 +34,7 @@ Plugin membership is declared in `src/plugin-definitions/<plugin>/contents.json`
 | Runbook/playbook capability contract               | `skills/repo-shape/references/repository-runbook-standard.md`, `skills/repo-shape/references/repository-shape-manifest.json`, `skills/repo-shape/templates/`, `skills/repo-shape/scripts/` and tests; semantics owned by `skills/repo-composition/`; current repository examples in `.agents/runbooks/` and `.agents/playbooks/` | Define the portable requirement format, migrate repository examples away from exact ambient requirements, validate repository-owned exact references, retain graph validation, scaffold capability language, and fail clearly on unmet required capability. |
 | Shipped products and docs                          | `src/plugin-definitions/*/contents.json`, `docs/decisions/README.md`, `docs/decisions/`, `docs/`                                                                                                                                                                                                                                 | Record source-located assumption findings/dispositions and promote durable role/contract decisions. Regenerate all owned outputs.                                                                                                                           |
 
-Before implementation, inspect the live source and identify each actual instruction with a consumer layout, runbook/playbook, marketplace subscription, ambient exact-name, unavailable-tool, or profile-deployment assumption. Record source paths and disposition in the audit artifact. The file map is an initial map, not permission to skip other pack members found by inventory.
+Before implementation, inspect the live source and identify each actual instruction with a consumer layout, runbook/playbook, marketplace subscription, ambient exact-name, unavailable-tool, or profile-deployment assumption. Include command examples that invoke a bundled ambient skill through a consumer's `.agents/skills/` projection and stale index-mesh commands. Record source paths and disposition in the audit artifact. The file map is an initial map, not permission to skip other pack members found by inventory.
 
 ## Interface decisions
 
@@ -52,19 +52,19 @@ Use the smallest contract extension consistent with current Markdown and parser 
 
 **Consumes:** approved design, Plans 1 and 2, PR #334 as a known fixed Superpowers+ case.
 
-- [ ] **Step 1: Inventory actual plugin membership and consumer-facing assumptions**
+- [x] **Step 1: Inventory actual plugin membership and consumer-facing assumptions**
 
 Read each plugin membership manifest, then inspect every member skill and bundled reference/template/script for references to consumer directory layouts, runbook/playbook inventories, required marketplace subscriptions, exact ambient skill names, configured MCP tools, and consumer-deployed Unslop profiles. Exclude unrelated occurrences such as example fixture filenames unless behavior depends on them.
 
-- [ ] **Step 2: Classify each material finding by owner and effect**
+- [x] **Step 2: Classify each material finding by owner and effect**
 
 Classify it as valid ambient workflow/capability guidance, deployable Agent Operating Model standard, explicitly repository-owned policy, consumer-specific example, or invalid consumer-layout/subscription/provider assumption. For each finding, capture the exact source path, current effect, disposition, and whether a source change or explicit keep decision is required.
 
-- [ ] **Step 3: Add the source-located audit record and durable decisions**
+- [x] **Step 3: Add the source-located audit record and durable decisions**
 
 Write `docs/ambient-plugin-assumption-audit.md` with a row for each finding and a coverage statement proving that all plugin members were considered. Record why the five plugin roles remain distinct and why their ambient presence does not imply consumer adoption. Promote lasting architecture or normative policy to an ADR and update `docs/decisions/README.md`; keep file-by-file findings in the audit document.
 
-- [ ] **Step 4: Verify audit completeness against manifests**
+- [x] **Step 4: Verify audit completeness against manifests**
 
 Compare the audit coverage against all skill names in the five current manifests. Re-run the targeted source searches used for discovery and classify every material hit. Confirm that `docs/ambient-plugin-assumption-audit.md` contains no generated-output paths presented as canonical edit locations.
 
@@ -78,25 +78,29 @@ Compare the audit coverage against all skill names in the five current manifests
 
 - [ ] **Step 1: Preserve repository-guidance discovery without fixed layout assumptions**
 
-Review the current PR #334 Superpowers+ correction and every other repo-backed workflow bootstrap in the pack. Keep guidance discovery conditional on repository declarations and follow local entrypoints when present. Remove any remaining claim that consumers must provide a particular inventory or `.agents` path merely to use an ambient workflow.
+Review the current PR #334 Superpowers+ correction and every other repo-backed workflow bootstrap and workflow contract in the pack. Keep guidance discovery conditional on repository declarations and follow local entrypoints when present. Remove any remaining claim that consumers must provide a particular inventory or `.agents` path merely to use an ambient workflow. Audit plan/spec destinations and discovery in `writing-plans`, `writing-roadmaps`, `brainstorming`, `linear-issue-shaping`, `selecting-a-subagent`, `requesting-code-review`, and `iterative-review`; respect repository-declared homes, using `.agents/plans/` or `.agents/specs/` only when the repository adopts that convention or has no conflicting declared practice.
 
 - [ ] **Step 2: Keep Repo Worker Pack general-purpose and subscription-independent**
 
-Review every Repo Worker Pack skill that mentions local doctrine, marketplace plugins, installed skills, runbooks/playbooks, or runner commands. State that repository guidance is a relevant overlay only when declared by that repository. Ensure ambient worker capabilities do not require the consumer to subscribe to the pack, copy the pack, or install its projection, and do not claim ownership of Superpowers+ routing or Agent Operating Model standards.
+Review every Repo Worker Pack skill that mentions local doctrine, marketplace plugins, installed skills, runbooks/playbooks, or runner commands. State that repository guidance is a relevant overlay only when declared by that repository. Replace the fixed `.agents/runbooks/` and `.agents/playbooks/` prescription in `repo-worker-base/references/stage-guide-contract.md` with discovery of the consumer's declared stage-guide homes. Keep refresh commands in consumer canonical runners on the pinned marketplace-source path from Plan 2. Make worktree setup refresh consumer skills only when that repository declares marketplace-skill configuration; a repository with no such composition must remain lean. Recast the plugin metadata and README as a general ambient worker-capability pack, not a pack for one workspace. Ensure ambient worker capabilities do not require the consumer to subscribe to the pack, copy the pack, or install its projection, and do not claim ownership of Superpowers+ routing or Agent Operating Model standards. Remove stale index-mesh invocation from refresh skill metadata.
 
 - [ ] **Step 3: Make MCP usage conditional on the actual tool surface**
 
-For each MCP wrapper, preserve its owning server/tool guidance while requiring runtime discovery of the actual available connector surface. Keep explicit safe handling when the requested tool is unavailable. Remove instructions that imply a consumer must configure a connector or subscribe to MCP Usage Pack for the agent to use an already available MCP tool.
+For each MCP wrapper, preserve its owning server/tool guidance while requiring runtime discovery of the actual available connector surface. Keep explicit safe handling when the requested tool is unavailable. Remove instructions that imply a consumer must configure a connector or subscribe to MCP Usage Pack for the agent to use an already available MCP tool. In `using-github-mcp`, discover repository-declared PR policy at its own path; do not hard-code `.agents/runbooks/pr.md` as universal.
 
 - [ ] **Step 4: Separate Unslop+ availability from profile adoption**
 
 Audit profile discovery, evaluation, and deployment instructions. Make clear that an ambient agent can use the quality guidance when suitable, while consumer enforcement or repository-owned profile deployment is an explicit local choice. Keep profile validation scoped to profiles the consumer deliberately owns or deploys.
 
-- [ ] **Step 5: Add behavior evidence for each changed assumption**
+- [ ] **Step 5: Remove ambient command dependence on consumer skill projections**
 
-Add or extend skill tests/pressure cases at the owning skills. Cover a consumer with no declared runbook/playbook inventory, no ambient plugin subscriptions, and only a subset of MCP tools; a consumer-owned exact skill remains selectable; and an optional Unslop profile is absent. Assert the intended workflow decision and failure/reporting behavior, not text presence alone.
+Search all canonical source members of the four companion packs for commands or helper logic that resolve bundled scripts/references through `.agents/skills/<skill>/`. Update ambient agent instructions to resolve bundled files relative to the active skill's runtime-provided `SKILL.md` path. For consumer canonical runners, retain only the explicitly pinned marketplace-source invocation where the runner contract requires it. Update `using-git-worktrees/scripts/new_worktree.py` so an unconfigured consumer does not attempt marketplace-skill refresh, while a consumer that declared marketplace skills retains its refresh behavior. Do not rewrite paths owned by an explicitly adopted Agent Operating Model checker or repository policy. Remove stale `generating-agent-mesh` and index-mesh commands from all four packs.
 
-- [ ] **Step 6: Run focused source-skill suites**
+- [ ] **Step 6: Add behavior evidence for each changed assumption**
+
+Add or extend skill tests/pressure cases at the owning skills. Cover a consumer with custom plan/runbook homes, no ambient plugin subscriptions, and only a subset of MCP tools; a consumer-owned exact skill remains selectable; an optional Unslop profile is absent; an agent runs an ambient helper with no consumer `.agents/skills/` projection; and worktree creation skips skill refresh for a repository that declared no marketplace-skill configuration but preserves refresh for configured consumers. Assert the intended workflow decision and failure/reporting behavior, not text presence alone.
+
+- [ ] **Step 7: Run focused source-skill suites**
 
 Run tests only for skills changed in Steps 1-5 using their documented commands and the repository's active Python runtime. Record the test commands and results in the plan as execution proceeds.
 
