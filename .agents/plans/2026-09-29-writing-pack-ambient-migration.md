@@ -21,6 +21,11 @@
 - Keep CI and hooks owned by this repository. They must not depend on Codex ambient plugins being present in hosted CI.
 - Do not replace capability-based use with exact ambient skill names in repository runbooks or playbooks. Genuine missing required capabilities must still stop clearly.
 - Do not change consumer repositories in this slice.
+- Put maintained, agent-facing operational reference under `.agents/docs/`; put dated release notes and audit working records in this plan's scratch workspace. Keep root `docs/` for durable repository truth.
+- Add an `AGENTS.md` only where a subtree needs scoped doctrine routing. Preserve richer routing files where useful; do not turn every `AGENTS.md` into a pointer or create a routing mesh.
+- A scope-pointer router is exactly one sentence with links to the doctrine required for work in that tree. It carries no heading, copied policy, tables, general rules, or other routing layers. Its condition must be explicit in the sentence.
+- Use the same scoped `AGENTS.md` pointer across harnesses. Do not maintain a duplicate Devin-only docs trigger for the same doctrine. Keep canonical policy in `.agents/doctrine/`; do not create a parallel `.agents/rules/` store for this change.
+- Codex discovers `AGENTS.md` along the path from the repository root to its current working directory. Keep a short conditional route in the root file so root-started work is directed to a relevant scoped router.
 - Retire the completed predecessor planning artifacts in the first implementation commit; durable decisions are already recorded in ADRs and current doctrine.
 
 ## Review Focus
@@ -46,17 +51,24 @@ ______________________________________________________________________
 
 ## Task 3: Support a repository with no skill projections
 
-- [ ] Change `src/plugin-definitions/marketplace-policy.json` to set `install_defaults` to `[]`; keep `repo.local_skills` empty in `.agents/plugins/marketplace.json` and keep Writing Pack in the catalog as `AVAILABLE`.
-- [ ] Update `skills/refreshing-installed-skills/scripts/refresh_installed_skills.py` so an empty plugin selection and empty local-skill declaration cleanly remove stale managed skill projections and provenance, leave `.agents/skills/` absent, and are stable in both `--apply` and `--check` modes.
-- [ ] Update the installed-skill projection standard and generated-path declarations so the repository verifies that no vendored or local skills are present without requiring a provenance file or an empty directory.
-- [ ] Review `githooks/pre-commit`, `skills/using-git-worktrees/scripts/new_worktree.py`, `.agents/doctrine/skills.md`, `.agents/doctrine/repo-local-plugin-marketplace.md`, and `.agents/doctrine/custody-and-marketplace-doctrine.md`; remove assumptions that a non-empty projection exists while preserving refresh, stale-file cleanup, and worktree behavior.
-- [ ] Remove installed-path dependencies from marketplace-owned utilities, including `tools/new_plugin.py`, `tools/sync_skill_shared_references.py`, `skills/repo-shape/scripts/repo_standards.py`, and `skills/repo-shape/scripts/scaffold_markdown_formatting.py`. Use the declared deployed Markdown Formatting standard resource where that is the owning interface.
-- [ ] Update repository Markdown Formatting authority paths in `.agents/contracts/markdown-formatting.json` so checks do not expect Writing Pack copies under `.agents/skills/`.
+- [x] Change `src/plugin-definitions/marketplace-policy.json` to set `install_defaults` to `[]`; keep `repo.local_skills` empty in `.agents/plugins/marketplace.json` and keep Writing Pack in the catalog as `AVAILABLE`. Enforce this empty-subscription contract in `tools/validate_marketplace.py`.
+- [x] Update `skills/refreshing-installed-skills/scripts/refresh_installed_skills.py` so an empty plugin selection and empty local-skill declaration cleanly remove stale managed skill projections and provenance, leave `.agents/skills/` absent, and are stable in both `--apply` and `--check` modes.
+- [x] Keep the repository-owned projection check and generated-path handling aligned with the empty state: CI verifies no vendored or local skills without requiring provenance or an empty directory, and the hook can stage deletions of stale projections.
+- [x] Review `AGENTS.md`, `githooks/pre-commit`, `skills/using-git-worktrees/scripts/new_worktree.py`, `.agents/doctrine/skills.md`, `.agents/doctrine/repo-local-plugin-marketplace.md`, and `.agents/doctrine/custody-and-marketplace-doctrine.md`; remove assumptions that a non-empty projection exists while preserving refresh, stale-file cleanup, and worktree behavior.
+- [x] Keep the marketplace's own skill-script CI coverage on canonical `skills/` after removing the `.agents/skills/` subscription projection.
+- [x] Move the current distribution guide to `.agents/docs/` and retain only distinct agent-facing source/build/pinning guidance. Move the dated release notes, five-pack audit, and issue-specific authority/rebase inventories from both docs trees into the plan scratch workspace; remove the ADR's link to the historical audit and update the marketplace validator to the new guide path.
+- [x] Remove installed-path dependencies from marketplace-owned utilities, including `tools/new_plugin.py`, `tools/sync_skill_shared_references.py`, `skills/repo-shape/scripts/repo_standards.py`, and `skills/repo-shape/scripts/scaffold_markdown_formatting.py`. Use the declared deployed Markdown Formatting standard resource where that is the owning interface.
+- [x] Update repository Markdown Formatting authority paths in `.agents/contracts/markdown-formatting.json` so checks do not expect Writing Pack copies under `.agents/skills/`.
+- [x] Define durable document placement in `.agents/doctrine/docs.md` and update stale repository descriptions of installed skills.
+- [x] Add one-sentence scope-pointer routers only for `docs/` and `.agents/docs/`, each pointing to `.agents/doctrine/docs.md`; add a conditional root route for root-started Codex work. Keep richer root and other scoped routers in their current roles.
+- [x] Remove the duplicate Devin-only documentation triggers once the shared scoped routers are in place. Preserve unrelated `.devin/rules/*.md` files.
+- [x] Extend the Operating Model shape manifest and validator for the two optional documentation router paths (`docs/AGENTS.md` and `.agents/docs/AGENTS.md`), assigning them to the existing root-agent-router standard without scaffolding them. Validate that each pointer names its containing scope and that every doctrine link resolves inside the repository; preserve the existing contract for richer routers. Add behavior tests for valid pointers, wrong scope, missing/broken links, and extra content. Keep the accepted AGENTS.md path set explicit and do not create directory-wide router inventories.
+- [x] Keep this repository's local AGENTS validator aligned with that explicit path set and pointer contract, so its own docs routers are checked by repo-owned CI without relying on an ambient plugin. Remove only the duplicate Devin documentation triggers for these same scopes; preserve unrelated Devin rules.
 
 ## Task 4: Rebuild and validate the ambient boundary
 
-- [ ] Update focused source tests for empty projection behavior, worktree refresh behavior, and any changed formatter/tool resolution. Keep behavior tests meaningful and avoid tautological or change-detector coverage.
-- [ ] Regenerate marketplace registry and plugin distribution from canonical sources with `py -3 tools/run.py marketplace --apply`; reconcile the skill projection through the owning refresh command.
+- [x] Update focused source tests for empty projection behavior, worktree refresh behavior, and any changed formatter/tool resolution. Keep behavior tests meaningful and avoid tautological or change-detector coverage.
+- [x] Regenerate marketplace registry and plugin distribution from canonical sources with `py -3 tools/run.py marketplace --apply`; reconcile the skill projection through the owning refresh command.
 - [ ] Run focused tests for the changed source owners, then the repository’s prescribed complete gate: stage intended changes, commit through the tracked hook, and inspect its staged-snapshot apply/check evidence. Use `py -3 tools/run.py ci --check` only if an uncommitted verification or diagnosis is needed.
 - [ ] Verify `.agents/skills/` is absent, `repo.local_skills` and `install_defaults` are empty, Writing Pack remains available and self-contained in `dist/plugins/writing-pack`, and hosted CI uses only repository-owned/deployed resources.
 - [ ] Review the full diff and ambient-safety audit findings, then publish a Draft PR with exact head and validation evidence.

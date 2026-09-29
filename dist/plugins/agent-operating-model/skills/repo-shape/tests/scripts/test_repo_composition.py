@@ -131,7 +131,7 @@ def test_runbook_composition_reports_missing_required_sections(tmp_path: Path) -
     runbooks.mkdir(parents=True)
     (runbooks / "testing.md").write_text("# Testing\n\nLocal commands only.\n", encoding="utf-8")
     findings = repo_standards._check_composition_graph(tmp_path)
-    assert any("testing.md" in finding and "Required capabilities" in finding for finding in findings)
+    assert any("testing.md" in finding and "required capability section" in finding for finding in findings)
 
 
 def test_composition_graph_accepts_reciprocal_playbook_route(tmp_path: Path) -> None:

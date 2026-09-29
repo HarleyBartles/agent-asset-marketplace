@@ -42,6 +42,7 @@ def test_catalog_assigns_each_shape_surface_once_to_independent_standards() -> N
     }
     assert "operating-model-contract" in catalog.migration_surfaces
     by_id = {standard.id: set(standard.surfaces) for standard in catalog.standards}
+    assert {"docs-agents-md", "agent-docs-agents-md"} <= by_id["root-agent-router"]
     assert by_id["root-agent-router"].isdisjoint(by_id["playbook-composition"])
 
 

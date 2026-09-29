@@ -561,6 +561,39 @@ def _clean_orphan_skills(
     return cleaned_any
 
 
+def _clean_empty_skill_projection(check_mode: bool, local_skill_names: list[str]) -> bool:
+    """Remove marketplace projections and provenance when no plugin is subscribed."""
+    changed = _clean_orphan_skills(
+        check_mode=check_mode,
+        synced_skill_names=set(),
+        local_skill_names=local_skill_names,
+    )
+
+    if PROVENANCE_PATH.exists():
+        if check_mode:
+            print(f"CHECK: Would remove marketplace skill provenance: {PROVENANCE_PATH.relative_to(ROOT)}")
+        else:
+            PROVENANCE_PATH.unlink()
+            print(f"Removed marketplace skill provenance: {PROVENANCE_PATH.relative_to(ROOT)}")
+        changed = True
+
+    if AGENTS_SKILLS_PATH.is_dir():
+        preserved_entries = [
+            entry
+            for entry in AGENTS_SKILLS_PATH.iterdir()
+            if _is_local_skill_dir(entry, local_skill_names) or (entry != PROVENANCE_PATH and not entry.is_dir())
+        ]
+        if not preserved_entries:
+            if check_mode:
+                print(f"CHECK: Would remove empty skill projection directory: {AGENTS_SKILLS_PATH.relative_to(ROOT)}")
+            else:
+                AGENTS_SKILLS_PATH.rmdir()
+                print(f"Removed empty skill projection directory: {AGENTS_SKILLS_PATH.relative_to(ROOT)}")
+            changed = True
+
+    return changed
+
+
 def _is_vendor_profile_file(path: Path) -> bool:
     """Return True for a `.md` file that should be treated as a vendor profile."""
     return path.is_file() and path.suffix.lower() == ".md"
@@ -792,6 +825,13 @@ def main(argv: list[str] | None = None) -> int:
     installed_plugins = _get_installed_plugins(config)
 
     if not installed_plugins:
+        projection_changed = _clean_empty_skill_projection(
+            check_mode=args.check,
+            local_skill_names=local_skill_names,
+        )
+        if args.check and (projection_changed or marketplace_source_drift is not None):
+            print("CHECK: Empty marketplace skill selection is not clean")
+            return 1
         print("No plugins with INSTALLED_BY_DEFAULT policy found")
         return 0
 

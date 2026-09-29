@@ -91,6 +91,27 @@ def validate_marketplace_registry(registry: dict, plugin_manifests: list[dict]) 
             raise ValueError(f"Marketplace registry {name} category mismatch")
 
 
+def validate_empty_skill_subscription(policy: dict, registry: dict, skill_root: Path) -> None:
+    """Enforce this repository's policy of using ambient skills without projections."""
+    if policy.get("install_defaults") != []:
+        raise ValueError("marketplace-policy.json install_defaults must be empty")
+    if policy.get("local_skills") != []:
+        raise ValueError("marketplace-policy.json local_skills must be empty")
+    if registry.get("repo", {}).get("local_skills") != []:
+        raise ValueError("marketplace registry repo.local_skills must be empty")
+    installed_defaults = [
+        plugin.get("name")
+        for plugin in registry.get("plugins", [])
+        if plugin.get("policy", {}).get("installation") == "INSTALLED_BY_DEFAULT"
+    ]
+    if installed_defaults:
+        raise ValueError(
+            "marketplace registry must not contain INSTALLED_BY_DEFAULT plugins: " + ", ".join(installed_defaults)
+        )
+    if skill_root.exists():
+        raise ValueError(".agents/skills must be absent when the repository has no skill subscriptions")
+
+
 def validate_active_plugin_tree() -> None:
     plugin_root = ROOT / "dist/plugins"
     expected_names = sorted(spec["name"] for spec in MARKETPLACE_PLUGIN_SPECS)
@@ -229,8 +250,10 @@ def validate_project(*, skip_freshness: bool = False) -> None:
         validate_plugin_manifest(plugin_manifest, spec)
         plugin_manifests.append(plugin_manifest)
     registry = check_json(MARKETPLACE_PATH)
+    policy = check_json(ROOT / "src/plugin-definitions/marketplace-policy.json")
 
     validate_marketplace_registry(registry, plugin_manifests)
+    validate_empty_skill_subscription(policy, registry, ROOT / ".agents/skills")
     codex_manifest = check_json(CODEX_MARKETPLACE_MANIFEST_PATH)
     if codex_manifest != registry:
         raise ValueError("dist/manifest.json does not match .agents/plugins/marketplace.json")
@@ -253,7 +276,7 @@ def validate_project(*, skip_freshness: bool = False) -> None:
         if bundle_path.exists():
             check_json(bundle_path)
 
-    check_text(ROOT / "docs/distribution.md")
+    check_text(ROOT / ".agents/docs/distribution.md")
     check_text(ROOT / "dist/plugins/unslop-plus/SOURCE.md")
     validate_bundle_source_contracts()
     print("OK validate_marketplace: project")

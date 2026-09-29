@@ -16,9 +16,10 @@
     {
       "id": "root-agent-router",
       "title": "Root agent router",
-      "surfaces": ["root-agents-md"],
+      "surfaces": ["root-agents-md", "docs-agents-md", "agent-docs-agents-md"],
       "resources": [
         "skills/repo-shape/scripts/_agents_md.py",
+        "skills/repo-shape/scripts/document_contracts.py",
         "skills/repo-shape/scripts/scaffold_agents_md.py",
         "skills/repo-shape/templates/agents-md.template.md"
       ],

@@ -24,7 +24,7 @@ Canonical skill source lives under `skills/`; reusable authored material lives u
 
 `src/marketplace/` implements definition validation and package assembly. `src/packages/` holds separately built Python package source. `dist/` is the committed distribution output: self-contained plugins under `dist/plugins/`, wheels under `dist/wheels/`, and generated product metadata in `dist/manifest.json` and `dist/plugin-roots.json`. Do not edit built plugin trees to change behavior.
 
-Skill tests live with their source in each skill's `tests/` directory, including script tests and pressure cases. The build copies ship-ready test material with each installed skill; evaluator-only material and run results stay out of the package. Repository, build, shipped-plugin, and evaluation-harness suites have distinct homes under `tests/`. CI runs the first three suites as separate targets. `.agents/contracts/operating-standards.json` declares this repo's selected standards; `.agents/standards/` holds pinned checkers for hosted CI. `.agents/skills/` is the installed projection for the remaining Writing Pack subscription, not marketplace source. Inspect `src/plugin-definitions/` for product membership and the marketplace manifests for shipped products.
+Skill tests live with their source in each skill's `tests/` directory, including script tests and pressure cases. The build copies ship-ready test material with each installed skill; evaluator-only material and run results stay out of the package. Repository, build, shipped-plugin, and evaluation-harness suites have distinct homes under `tests/`. CI runs the first three suites as separate targets. `.agents/contracts/operating-standards.json` declares this repo's selected standards; `.agents/standards/` holds pinned checkers for hosted CI. This repository has no repo-local skills and subscribes to no marketplace skill projections; ambient plugins provide agent capabilities and `.agents/skills/` should be absent. Inspect `src/plugin-definitions/` for product membership and the marketplace manifests for shipped products.
 
 ## Publication proof for repo work
 
@@ -50,13 +50,22 @@ Security review must apply the relevant profile and the repository lenses in `.a
 
 ## Routing pointers
 
+- When a task starts at the repository root and works under `docs/` or `.agents/docs/`, read the relevant scoped `AGENTS.md` pointer and follow its linked doctrine.
+
 - Scoped law lives in `.devin/rules/*.md` (including [PR workflow](.devin/rules/pr.md))
+
 - [Worker guidance](.agents/playbooks/repo-doctrine.md) and [implementing workflow](.agents/runbooks/implementing.md)
+
 - [Runbook stage routing](.agents/runbooks/AGENTS.md), [implementation runbook](.agents/runbooks/implementing.md), and [repo runbook policy](.agents/doctrine/repo-runbook-policy.md)
+
 - [Playbook routing](.agents/playbooks/AGENTS.md), [testing playbook](.agents/playbooks/testing.md), and [security considerations](.agents/playbooks/security.md)
+
 - [Testing instructions](.agents/playbooks/testing.md), [code style guidelines](.agents/playbooks/code-style.md), [review guidelines](.agents/runbooks/code-review.md), and [PR instructions](.agents/runbooks/pr.md)
+
 - [Contributing](CONTRIBUTING.md) and [security considerations](.agents/playbooks/security.md)
-- [Completed-artifact custody](.agents/doctrine/completed-artifacts.md) and the [ADR log](docs/decisions/README.md) for the in-flight, removal, and durable-decision boundary
+
+- [Documentation custody](.agents/doctrine/docs.md), [completed-artifact custody](.agents/doctrine/completed-artifacts.md), and the [ADR log](docs/decisions/README.md) for document placement, in-flight artifact removal, and durable decisions
+
 - [Worktree and scratch policy](.agents/doctrine/non-repo-locations-policy.md)
 
 ## Maintenance responsibility

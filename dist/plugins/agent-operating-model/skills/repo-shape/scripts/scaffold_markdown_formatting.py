@@ -26,7 +26,7 @@ def _root() -> Path:
 
 def _formatter(root: Path):
     candidates = [
-        root / ".agents/skills/markdown-formatting/scripts/format_markdown.py",
+        root / ".agents/standards/markdown-formatting/markdown-formatting/scripts/format_markdown.py",
         Path(__file__).resolve().parents[1] / "markdown-formatting/scripts/format_markdown.py",
         Path(__file__).resolve().parents[2] / "markdown-formatting/scripts/format_markdown.py",
     ]

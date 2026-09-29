@@ -101,3 +101,58 @@ def test_optional_scoped_router_is_absent_or_valid(tmp_path: Path) -> None:
     assert document_contracts.check_optional_router(path, tmp_path) == []
     path.write_text("<!-- choose later -->\n", encoding="utf-8")
     assert any(item.code == "empty-scoped-router" for item in document_contracts.check_optional_router(path, tmp_path))
+
+
+def test_optional_scope_pointer_router_accepts_one_sentence_with_resolving_link(tmp_path: Path) -> None:
+    doctrine = tmp_path / ".agents/doctrine/docs.md"
+    doctrine.parent.mkdir(parents=True)
+    doctrine.write_text("# Documentation custody\n", encoding="utf-8")
+    path = tmp_path / "docs/AGENTS.md"
+    path.parent.mkdir()
+    path.write_text(
+        "For work under `docs/`, read and follow [documentation custody](../.agents/doctrine/docs.md).\n",
+        encoding="utf-8",
+    )
+
+    assert document_contracts.check_optional_router(path, tmp_path) == []
+
+
+def test_scope_pointer_router_rejects_wrong_scope_and_unresolved_link(tmp_path: Path) -> None:
+    path = tmp_path / "docs/AGENTS.md"
+    path.parent.mkdir(parents=True)
+    path.write_text("For work under `other/`, read [the policy](missing.md).\n", encoding="utf-8")
+
+    findings = document_contracts.check_optional_router(path, tmp_path)
+
+    assert len(findings) == 1
+    assert findings[0].code == "invalid-scope-pointer-router"
+    assert "scope" in findings[0].message.lower()
+    assert "link" in findings[0].message.lower()
+
+
+def test_scope_pointer_router_rejects_extra_sentences_and_external_links(tmp_path: Path) -> None:
+    path = tmp_path / "docs/AGENTS.md"
+    path.parent.mkdir(parents=True)
+    path.write_text(
+        "For work under `docs/`, read [the policy](https://example.com/policy). Also follow local conventions.\n",
+        encoding="utf-8",
+    )
+
+    findings = document_contracts.check_optional_router(path, tmp_path)
+
+    assert len(findings) == 1
+    assert findings[0].code == "invalid-scope-pointer-router"
+
+
+def test_agent_docs_scope_pointer_uses_containing_tree_and_local_doctrine(tmp_path: Path) -> None:
+    doctrine = tmp_path / ".agents/doctrine/docs.md"
+    doctrine.parent.mkdir(parents=True)
+    doctrine.write_text("# Documentation custody\n", encoding="utf-8")
+    path = tmp_path / ".agents/docs/AGENTS.md"
+    path.parent.mkdir(parents=True)
+    path.write_text(
+        "For work under `.agents/docs/`, read and follow [documentation custody](../doctrine/docs.md).\n",
+        encoding="utf-8",
+    )
+
+    assert document_contracts.check_optional_router(path, tmp_path) == []

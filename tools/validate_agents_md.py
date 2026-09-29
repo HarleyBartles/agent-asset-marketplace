@@ -1,10 +1,5 @@
 #!/usr/bin/env python3
-"""Validate that only the allow-listed AGENTS.md files remain in the repo.
-
-This is the CI gate referenced by the .devin/rules migration. After the
-migration, scoped law lives in .devin/rules/*.md; AGENTS.md is reserved for
-genuinely always-on law.
-"""
+"""Validate the explicit AGENTS.md path set and documentation scope pointers."""
 
 from __future__ import annotations
 
@@ -14,9 +9,12 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "skills" / "repo-shape" / "scripts"))
+from _agents_md import validate_scope_pointer_router  # noqa: E402
 
 ALLOWED_AGENTS_MD = {
     "AGENTS.md",
+    "docs/AGENTS.md",
     ".agents/AGENTS.md",
     ".agents/docs/AGENTS.md",
     ".agents/doctrine/AGENTS.md",
@@ -65,7 +63,7 @@ def main(argv: list[str] | None = None) -> int:
         for p in disallowed:
             print(f"  - {p}", file=sys.stderr)
         print(
-            "Scoped law must be in .devin/rules/*.md; follow the repository doctrine routes.",
+            "Use scoped rule triggers or an allow-listed AGENTS.md router; do not add new AGENTS.md files for law.",
             file=sys.stderr,
         )
         return 1
@@ -86,6 +84,11 @@ def main(argv: list[str] | None = None) -> int:
                     print(message, file=sys.stderr)
                     return 1
                 print(f"WARN: {message}")
+        if p in {"docs/AGENTS.md", ".agents/docs/AGENTS.md"}:
+            findings = validate_scope_pointer_router(text, ROOT / p, ROOT)
+            if findings:
+                print(f"Invalid scope-pointer router in {p}: {'; '.join(findings)}", file=sys.stderr)
+                return 1
 
     print(f"OK validate_agents_md: {len(agents_files)} allowed AGENTS.md file(s) present")
     return 0

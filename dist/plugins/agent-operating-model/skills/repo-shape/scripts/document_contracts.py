@@ -199,11 +199,10 @@ def check_agents(path: Path, repo_root: Path) -> list[Finding]:
 
 
 def check_optional_router(path: Path, repo_root: Path) -> list[Finding]:
-    del repo_root
     if not path.exists():
         return []
     live = live_markdown(path.read_text(encoding="utf-8")).strip()
-    if not live or not re.search(r"(?m)^#\s+\S", live):
+    if not live:
         return [
             _finding(
                 "empty-scoped-router",
@@ -212,6 +211,17 @@ def check_optional_router(path: Path, repo_root: Path) -> list[Finding]:
                 "add a title and routing guidance or remove the optional file",
             )
         ]
+    if not re.search(r"(?m)^#\s+\S", live):
+        problems = _agents_md.validate_scope_pointer_router(live, path, repo_root)
+        if problems:
+            return [
+                _finding(
+                    "invalid-scope-pointer-router",
+                    path,
+                    "; ".join(problems),
+                    "use one sentence naming this directory tree and linking to its local doctrine",
+                )
+            ]
     return []
 
 

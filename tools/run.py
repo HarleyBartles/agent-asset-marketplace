@@ -313,6 +313,8 @@ def _validate_skill_scripts(ctx: Ctx) -> None:
         [
             sys.executable,
             "skills/repo-shape/scripts/validate_skill_scripts.py",
+            "--root",
+            "skills",
             "--check",
         ],
         ctx,
