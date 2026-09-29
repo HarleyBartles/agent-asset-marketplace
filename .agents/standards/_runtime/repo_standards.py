@@ -1146,7 +1146,7 @@ while the contract is absent."""
         refreshed_contract = plugin_contracts.load_consumer_contract(repo_root)
         refreshed_exceptions = set(refreshed_contract.surface_exceptions)
     else:
-        refreshed_contract = plugin_contracts.ConsumerContract(tuple(exceptions), ())
+        refreshed_contract = plugin_contracts.ConsumerContract(tuple(exceptions))
         refreshed_exceptions = set(exceptions)
     refreshed_enabled = _enabled_surface_ids(surfaces, refreshed_exceptions)
     refreshed_graph = _check_composition_graph(repo_root)

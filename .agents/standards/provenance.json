@@ -1,11 +1,11 @@
 {
   "version": 1,
   "repository": "https://github.com/HarleyBartles/agent-asset-marketplace.git",
-  "revision": "a187844b58a948a6330e1b65d80d7a1413a96cc2",
+  "revision": "d6d5845d74d60eb255c9654da8c9e322b1c076e4",
   "resources": {
     ".agents/standards/_runtime/repo_standards.py": {
       "source": "skills/repo-shape/scripts/repo_standards.py",
-      "sha256": "e74c53b05301ff9b98a78bd1ad573286cffef22d52941b78bf20902dccf19191",
+      "sha256": "41f23d5a191117ed97f73e421893cea0c48b6ca04eeef345925c3b876f85fb69",
       "standard_id": "_runtime"
     },
     ".agents/standards/_runtime/operating_standards_dispatch.py": {
@@ -130,7 +130,7 @@
     },
     ".agents/standards/tracked-validation-hook/scripts/repo_standards.py": {
       "source": "skills/repo-shape/scripts/repo_standards.py",
-      "sha256": "e74c53b05301ff9b98a78bd1ad573286cffef22d52941b78bf20902dccf19191",
+      "sha256": "41f23d5a191117ed97f73e421893cea0c48b6ca04eeef345925c3b876f85fb69",
       "standard_id": "tracked-validation-hook"
     },
     ".agents/standards/tracked-validation-hook/scripts/shared_checkout.py": {
@@ -210,7 +210,7 @@
     },
     ".agents/standards/unslop/scripts/unslop_standard.py": {
       "source": "skills/repo-shape/scripts/unslop_standard.py",
-      "sha256": "255120b08eaa31011966adf3e776fcfed445d2371a5221001e2290651a4c18df",
+      "sha256": "180aeda42d45e47475f0dc650389dc640ce6a387883a92df5ba3194a25d71ead",
       "standard_id": "unslop"
     }
   }
