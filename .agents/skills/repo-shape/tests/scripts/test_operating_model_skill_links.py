@@ -24,11 +24,9 @@ def test_installed_skill_reference_resolves_from_visible_namespace(tmp_path: Pat
     assert check_skill_links(tmp_path) == []
 
 
-def test_dead_skill_link_names_document_and_skill(tmp_path: Path) -> None:
-    path = _write_playbook(tmp_path, "- `missing-skill` — required.")
-    finding = check_skill_links(tmp_path)[0]
-    assert finding.surface == path.relative_to(tmp_path).as_posix()
-    assert "missing-skill" in finding.message
+def test_legacy_ambient_skill_name_does_not_claim_runtime_availability(tmp_path: Path) -> None:
+    _write_playbook(tmp_path, "- `missing-skill` - required.")
+    assert check_skill_links(tmp_path) == []
 
 
 def test_declared_repo_local_skill_must_exist(tmp_path: Path) -> None:
@@ -48,3 +46,50 @@ def test_declared_repo_local_skill_frontmatter_must_match(tmp_path: Path) -> Non
     (skill / "SKILL.md").write_text("---\nname: wrong-name\n---\n", encoding="utf-8")
     findings = check_skill_links(tmp_path)
     assert any(item.code == "repo-local-skill-name-mismatch" for item in findings)
+
+
+def test_ambient_skill_is_not_valid_repository_owned_skill(tmp_path: Path) -> None:
+    path = _write_playbook(tmp_path, "None.")
+    text = path.read_text(encoding="utf-8")
+    text = text.replace(
+        "## Composition",
+        "## Required repository-owned skills\n\n- `repo-worker-base`\n\n## Composition",
+    )
+    path.write_text(text, encoding="utf-8")
+    ambient = tmp_path / ".agents/skills/repo-worker-base"
+    ambient.mkdir(parents=True)
+    (ambient / "SKILL.md").write_text("---\nname: repo-worker-base\n---\n", encoding="utf-8")
+
+    findings = check_skill_links(tmp_path)
+
+    assert any(item.code == "non-local-repository-skill" for item in findings)
+
+
+def test_repository_owned_skill_resolves_through_local_skill_custody(tmp_path: Path) -> None:
+    path = _write_playbook(tmp_path, "None.")
+    text = path.read_text(encoding="utf-8")
+    text = text.replace(
+        "## Composition",
+        "## Required repository-owned skills\n\n- `rooms-domain-review`\n\n## Composition",
+    )
+    path.write_text(text, encoding="utf-8")
+    skill = tmp_path / ".agents/skills/rooms-domain-review"
+    skill.mkdir(parents=True)
+    (skill / "SKILL.md").write_text("---\nname: rooms-domain-review\n---\n", encoding="utf-8")
+    marketplace = tmp_path / ".agents/plugins/marketplace.json"
+    marketplace.parent.mkdir(parents=True, exist_ok=True)
+    marketplace.write_text(json.dumps({"repo": {"local_skills": ["rooms-domain-review"]}}), encoding="utf-8")
+
+    assert check_skill_links(tmp_path) == []
+
+
+def test_capability_contract_does_not_need_provider_name(tmp_path: Path) -> None:
+    path = tmp_path / ".agents/playbooks/testing.md"
+    path.parent.mkdir(parents=True)
+    path.write_text(
+        "# Testing\n\n## Required capabilities\n\n- Drive focused verification.\n\n"
+        "## Optional capabilities\n\nNone.\n\n## Required repository-owned skills\n\nNone.\n\n"
+        "## Optional repository-owned skills\n\nNone.\n\n## Composition\n\nUse an available suitable skill.\n",
+        encoding="utf-8",
+    )
+    assert check_skill_links(tmp_path) == []

@@ -226,9 +226,9 @@ def test_runbook_scaffolds_bind_planning_artifact_lifecycle(tmp_path: Path) -> N
     assert result.returncode == 0, result.stderr
     planning = (repo / ".agents" / "runbooks" / "planning.md").read_text(encoding="utf-8").lower()
     publication = (repo / ".agents" / "runbooks" / "pr.md").read_text(encoding="utf-8").lower()
-    assert "completing-planning-artifacts" in planning
+    assert "plan-ingress procedure" in planning
     assert "successor-slice" in planning
-    assert "completing-planning-artifacts" in publication
+    assert "closeout procedure" in publication
     assert "completed-awaiting-retirement" in publication
 
 

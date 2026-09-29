@@ -6,16 +6,28 @@ Use this runbook for repository planning and successor-slice ingress.
 
 Starting a substantive repository slice or converting approved requirements into an executable plan.
 
-## Required skills
+## Required capabilities
 
-- `repo-worker-base` - fresh-base and isolated-worktree hygiene.
-- `completing-planning-artifacts` - successor-slice retirement of completion-marked artifacts.
-- `writing-plans` - executable plan authoring.
-- `handoff-gates` - plan-readiness evidence.
+- Use repository worktree, source-custody, validation, and publication procedures.
+- Maintain plan and specification status through successor-slice ingress and completion.
+- Turn approved requirements into an executable plan.
+- Check plan readiness before implementation handoff.
+
+## Optional capabilities
+
+None.
+
+## Required repository-owned skills
+
+None.
+
+## Optional repository-owned skills
+
+None.
 
 ## Composition
 
-After refreshing `main` and creating the slice branch/worktree, run the `completing-planning-artifacts` successor-slice ingress lane before substantive edits. Then write and commit the new in-flight plan.
+After refreshing the base and creating the slice branch/worktree, complete the repository successor-slice plan-ingress procedure before substantive edits. Then write and commit the new in-flight plan.
 
 ## Doctrine and contracts
 

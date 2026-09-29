@@ -1,6 +1,6 @@
 # Repo Worker Pack
 
-This bundle projects the first-party repo worker baseline skills.
+This ambient bundle makes first-party repository-worker capabilities available to agents across repositories. It is not a repository subscription and does not impose a directory layout, runbook inventory, or operating standard.
 
 ## Bundle contents
 
@@ -11,9 +11,9 @@ This bundle projects the first-party repo worker baseline skills.
 
 ## Boundary
 
-- The first-party repo worker skills stay bundled alongside the compositional repo-worker entrypoint and supporting workflow skills.
-- The bundle stays narrow, first-party only, and tracks the current manifest repo worker baseline without absorbing broader Superpowers+ or other workflow packs.
+- The first-party repo worker skills provide general worker capabilities. A consumer may use any available capability without copying or installing this bundle into its repository.
+- The bundle stays narrow and first-party. Workflow composition and independently deployable repository standards have separate owners.
 
 ## Install shape
 
-Skills are installed from the Codex plugin roots under `dist/plugins/<pack>/skills/<skill>/`.
+When a repository deliberately configures marketplace skill installation, the refresh utility projects selected skills from their declared sources. Runtime availability of this ambient bundle does not imply that repository configuration.

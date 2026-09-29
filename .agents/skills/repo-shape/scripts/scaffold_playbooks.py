@@ -92,7 +92,16 @@ def _playbook_content(name: str, *, include_runbook_routes: bool = True) -> str:
     title = PLAYBOOK_TITLES.get(name, name.replace("-", " ").title())
     sections = (
         ("When", "The class of change or trigger this playbook covers."),
-        ("Required skills", "The capability skills this topical composition invokes."),
+        (
+            "Required capabilities",
+            "Capabilities required for this workflow to proceed; describe needs rather than provider names.",
+        ),
+        ("Optional capabilities", "Useful capabilities that may be skipped when unavailable."),
+        ("Required repository-owned skills", "Exact names only for skills declared in repo.local_skills, or None."),
+        (
+            "Optional repository-owned skills",
+            "Exact names only for optional skills declared in repo.local_skills, or None.",
+        ),
         ("Composition", "Order or conditions under which the capabilities apply."),
         ("Doctrine and contracts", "Local truths and shapes that constrain this composition."),
         ("Local commands and paths", "Repository commands, paths, and exceptions."),

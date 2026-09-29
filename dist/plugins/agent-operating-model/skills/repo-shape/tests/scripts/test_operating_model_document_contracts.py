@@ -27,10 +27,56 @@ def _runbook(required_skills: str = "- `repo-worker-base`", extra: str = "") -> 
     )
 
 
+def _capability_runbook() -> str:
+    return """# Implementing
+
+## When
+When repository-backed implementation is requested.
+
+## Required capabilities
+- Isolated repository work and source-custody guidance.
+
+## Optional capabilities
+- Writing-quality review for substantial prose.
+
+## Required repository-owned skills
+None.
+
+## Optional repository-owned skills
+None.
+
+## Composition
+Resolve each required capability from the skills available in the active runtime before dependent work.
+
+## Doctrine and contracts
+Follow the repository's declared policy.
+
+## Local commands and paths
+Use the locally declared command bus.
+
+## Evidence contract
+Record current validation evidence.
+
+## Prohibited combinations
+Do not bypass validation.
+
+## Playbook routing
+None.
+"""
+
+
 def test_customized_runbook_passes_without_matching_seed(tmp_path: Path) -> None:
     path = tmp_path / ".agents/runbooks/implementing.md"
     path.parent.mkdir(parents=True)
     path.write_text(_runbook(extra="## Repository-specific release train\n\nBlue/green only.\n"), encoding="utf-8")
+    assert document_contracts.check_runbook(path, tmp_path) == []
+
+
+def test_capability_contract_passes_in_a_custom_runbook_home(tmp_path: Path) -> None:
+    path = tmp_path / "engineering/workflows/implementing.md"
+    path.parent.mkdir(parents=True)
+    path.write_text(_capability_runbook(), encoding="utf-8")
+
     assert document_contracts.check_runbook(path, tmp_path) == []
 
 

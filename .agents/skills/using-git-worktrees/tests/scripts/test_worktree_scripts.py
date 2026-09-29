@@ -551,6 +551,73 @@ def test_new_worktree_runs_refresh_installed_skills(tmp_path: Path) -> None:
     assert "Worktree ready" in result.stdout
 
 
+@pytest.mark.parametrize("marketplace_config", [None, {"plugins": []}], ids=["undeclared", "empty"])
+def test_new_worktree_skips_refresh_without_marketplace_configuration(tmp_path: Path, marketplace_config) -> None:
+    """An ambient refresh implementation is not a reason to configure every repo."""
+    repo = _make_repo(tmp_path, "unconfigured-refresh-repo")
+    refresh = (
+        repo
+        / "dist"
+        / "plugins"
+        / "repo-worker-pack"
+        / "skills"
+        / "refreshing-installed-skills"
+        / "scripts"
+        / "refresh_installed_skills.py"
+    )
+    refresh.parent.mkdir(parents=True)
+    refresh.write_text(
+        "from pathlib import Path\nPath('refresh-called.txt').write_text('yes', encoding='utf-8')\n",
+        encoding="utf-8",
+    )
+    if marketplace_config is not None:
+        marketplace = repo / ".agents" / "plugins" / "marketplace.json"
+        marketplace.parent.mkdir(parents=True)
+        marketplace.write_text(json.dumps(marketplace_config), encoding="utf-8")
+    subprocess.run(["git", "add", "-A"], cwd=repo, check=True, capture_output=True)
+    subprocess.run(
+        ["git", "commit", "-m", "add ambient refresh implementation"],
+        cwd=repo,
+        check=True,
+        capture_output=True,
+    )
+
+    worktree_root = tmp_path / "_agent-worktrees" / "unconfigured-refresh-repo" / "feature"
+    result = subprocess.run(
+        [sys.executable, str(NEW_WORKTREE), "feature", "--apply"],
+        cwd=repo,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+    )
+
+    assert result.returncode == 0, result.stderr
+    assert worktree_root.is_dir()
+    assert not (worktree_root / "refresh-called.txt").exists()
+    assert "skipping skill refresh" in result.stdout.lower()
+
+
+def test_new_worktree_reports_invalid_marketplace_configuration(tmp_path: Path) -> None:
+    repo = _make_repo(tmp_path, "invalid-marketplace-repo")
+    marketplace = repo / ".agents" / "plugins" / "marketplace.json"
+    marketplace.parent.mkdir(parents=True)
+    marketplace.write_text("{invalid", encoding="utf-8")
+    subprocess.run(["git", "add", "-A"], cwd=repo, check=True, capture_output=True)
+    subprocess.run(["git", "commit", "-m", "add invalid marketplace config"], cwd=repo, check=True, capture_output=True)
+
+    result = subprocess.run(
+        [sys.executable, str(NEW_WORKTREE), "feature", "--apply"],
+        cwd=repo,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+    )
+
+    assert result.returncode != 0
+    assert "marketplace" in result.stderr.lower()
+    assert "invalid" in result.stderr.lower()
+
+
 def test_new_worktree_initializes_submodules_before_refresh(tmp_path: Path, monkeypatch) -> None:
     """A new worktree must initialize submodules before refreshing skills.
 

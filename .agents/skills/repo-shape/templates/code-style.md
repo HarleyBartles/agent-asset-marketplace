@@ -10,9 +10,21 @@ When `.agents/contracts/markdown-formatting.json` is present, use the installed 
 
 <!-- Name the languages, frameworks, paths, or change classes that activate this playbook. -->
 
-## Required skills
+## Required capabilities
 
-<!-- Name focused language, framework, React, accessibility, writing, or formatting capability skills. -->
+None.
+
+## Optional capabilities
+
+None.
+
+## Required repository-owned skills
+
+None.
+
+## Optional repository-owned skills
+
+None.
 
 ## Composition
 

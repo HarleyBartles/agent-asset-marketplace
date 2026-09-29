@@ -15,7 +15,7 @@ Collect and normalize the off-repo review inputs for the draft PR.
 Run the bootstrap script from the branch worktree:
 
 ```
-py -3 .agents/skills/iterative-review/scripts/start_review.py --pr <pr_number> --apply
+py -3 <runtime-skill-path-for-iterative-review>/scripts/start_review.py --pr <pr_number> --apply
 ```
 
 `start_review.py` does the following and then advances the graph to `normalize-inputs`:
@@ -40,5 +40,5 @@ py -3 .agents/skills/iterative-review/scripts/start_review.py --pr <pr_number> -
 Run the `next_node.py` command printed by `start_review.py`, or:
 
 ```
-py -3 .agents/skills/iterative-review/scripts/next_node.py --state <scratch_dir>/review-state.json
+py -3 <runtime-skill-path-for-iterative-review>/scripts/next_node.py --state <scratch_dir>/review-state.json
 ```

@@ -36,4 +36,12 @@ All skill entries in the five manifests were inspected, along with their source 
 
 The five products remain separate. Superpowers+ composes workflows; Repo Worker Pack supplies general repository-worker capabilities; MCP Usage Pack guides use of MCP tools that are actually exposed; Unslop+ supplies optional quality/profile capabilities; Agent Operating Model offers independently selectable standards and deployment resources. Availability in an agent runtime does not declare a consumer subscription, local directory layout, or standard adoption.
 
+## Implementation follow-through
+
+- Companion-pack findings were addressed in canonical skill sources in Tasks 1 and 2. Bundled helpers resolve from the active skill runtime; consumer skill refresh is conditional on an explicit repository marketplace declaration; MCP guidance checks current tool availability; and portable writing/planning guidance follows declared repository homes.
+- Runbook/playbook contracts now state required and optional capabilities separately from exact repository-owned skills. Exact local names require `repo.local_skills` custody. Required capability absence has a stop-and-report instruction; optional absence can be reported and skipped. The pressure case is `skills/repo-composition/tests/pressure/missing-required-capability.md`.
+- Structural validation follows the runbook/playbook paths in repository policy, verifies exact local-skill custody, and preserves composition graph checks. Legacy `Required skills` is temporarily accepted as a migration form; its names are not treated as proof of runtime availability.
+- Hosted structural checks validate consumer-authored declarations and graph integrity only. They do not claim ambient skills exist in hosted CI.
+- Plan 3 verification: repo-shape suite passed 178 tests; marketplace and installed-skill regeneration/checks passed. These checks establish generated source consistency, not hosted ambient-plugin availability.
+
 The durable role and workflow-contract decision is recorded in [ADR 0007](decisions/0007-ambient-plugin-boundaries-and-capability-workflows.md). Findings above record the source-level audit and are updated with the implementation dispositions before this plan completes.

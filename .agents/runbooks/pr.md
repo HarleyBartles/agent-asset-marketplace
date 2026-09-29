@@ -4,16 +4,28 @@
 
 Use after implementation and review are complete and source needs publication.
 
-## Required skills
+## Required capabilities
 
-- `publishing-source`
-- `repo-worker-base`
-- `verification-before-completion`
-- `completing-planning-artifacts`
+- Publish completed source through the approved repository route.
+- Use the repository worktree, source custody, validation, and publication procedures.
+- Verify the completed tree and report evidence.
+- Maintain plan and specification status through completion.
+
+## Optional capabilities
+
+None.
+
+## Required repository-owned skills
+
+None.
+
+## Optional repository-owned skills
+
+None.
 
 ## Composition
 
-Before Ready, use the `completing-planning-artifacts` completing-slice lane: promote enduring content, mark governed artifacts `completed-awaiting-retirement`, retain them in the PR, and verify the published head contains them. Commit through the tracked hook, push the task branch, open a Draft PR, and verify the published head.
+Before Ready, complete the repository's plan and specification closeout procedure: promote enduring content, mark governed artifacts `completed-awaiting-retirement`, retain them in the PR, and verify the published head contains them. Commit through the tracked hook, push the task branch, open a Draft PR, and verify the published head.
 
 Draft is normally a commercial and CI posture, not evidence that implementation is unfinished. When the agent hands off a fully reviewable Draft, every agent-owned plan item is complete and human-owned Ready or merge actions must not remain unchecked. Keep the plan open only when the Draft is explicitly declared incomplete. Whoever later changes the PR state applies the repository's Ready preflight at that time.
 

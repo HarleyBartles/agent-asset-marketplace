@@ -114,33 +114,35 @@ Run tests only for skills changed in Steps 1-5 using their documented commands a
 
 **Consumes:** Task 1 audit and Task 2 role boundaries.
 
-- [ ] **Step 1: Add failing contract behavior cases**
+- [x] **Step 1: Add failing contract behavior cases**
 
 In `skills/repo-shape/tests/`, cover a valid capability requirement with no exact provider name, a separately declared exact repository-owned skill that resolves through `repo.local_skills`, an invalid ambient skill declaration used as if it were repository-owned, and a required capability with no provider that causes the workflow to stop and report the unmet requirement. Include a consumer with a custom layout so the portable contract does not infer `.agents/runbooks/` or `.agents/playbooks/` from ambient guidance.
 
-- [ ] **Step 2: Specify the portable Markdown syntax and semantics**
+- [x] **Step 2: Specify the portable Markdown syntax and semantics**
 
 Update `repository-runbook-standard.md` and the owning `repo-composition` skill. Define how a runbook/playbook states a required or optional capability, how a repository-owned exact skill is distinguished, how agents inspect and choose from the skills currently available, and the required stop/report behavior. Preserve current runbook/playbook composition graph rules and locally chosen paths.
 
-- [ ] **Step 3: Update starter templates and scaffold behavior**
+- [x] **Step 3: Update starter templates and scaffold behavior**
 
 Change applicable templates and scaffold generators so newly created runbooks/playbooks use capability-oriented requirements. Do not place exact Superpowers+, Repo Worker Pack, MCP Usage Pack, or Unslop+ skill names in required ambient slots. Keep exact names only for local skills when the template clearly identifies them as repository-owned declarations.
 
 Migrate this repository's runbooks and playbooks that currently require exact ambient skill names. Keep exact references only where the workflow has evidence that the named skill is genuinely repository-owned under its declared local-skill custody.
 
-- [ ] **Step 4: Update structural validation for the new contract**
+- [x] **Step 4: Update structural validation for the new contract**
 
 Teach the relevant repository-owned validator to check syntax, required/optional designation, exact local-skill custody, and graph integrity. Keep the legacy manifest path behavior intact unless Task 2 implementation evidence shows a deliberate compatibility adjustment is required. Do not use Marketplace plugin subscription membership as evidence that a capability is provided or that a standard is adopted.
 
-- [ ] **Step 5: Prove missing required capability stops dependent work**
+- [x] **Step 5: Prove missing required capability stops dependent work**
 
 Add a behavior/pressure case in the source skill suite showing that absence of a required provider yields a clear stop before the dependent workflow action, with the capability named in the report; also show that a declared repository-owned exact skill remains selectable. Verify optional capability absence is reported as skipped and does not block unrelated workflow steps. Do not represent hosted structural validation as proof of runtime skill availability.
 
-- [ ] **Step 6: Run focused composition and validator suites**
+- [x] **Step 6: Run focused composition and validator suites**
 
 Run the relevant `repo-composition` and `repo-shape` tests, including graph, scaffold, legacy compatibility, and hosted-hook fixtures affected by the changed contract. Fix failures at the canonical source boundary.
 
 **Task exit:** The canonical contract and all newly scaffolded artifacts are capability-based; a required missing capability has an observable stop; exact names remain supported only for genuine repository-owned skills.
+
+**Task 3 evidence:** Added capability-first contract and runtime stop/report semantics, migrated all marketplace runbooks/playbooks and relevant starter templates, and changed structural validation to honor policy-mapped homes and declared local-skill custody. Legacy `Required skills` remains temporarily accepted but no longer proves runtime availability. Required-missing and optional-skip behavior is captured in `skills/repo-composition/tests/pressure/missing-required-capability.md`. Validation: `py -3 -m pytest skills/repo-shape/tests/scripts -q` passed (177 tests); after adding custom-home surface coverage, `py -3 -m pytest skills/repo-shape/tests/scripts/test_repo_composition.py::test_runbook_surface_validates_declared_custom_home_without_default_directory -q` passed; `git diff --check` passed.
 
 ## Task 4: Regenerate, review, and publish Plan 3
 
@@ -148,15 +150,15 @@ Run the relevant `repo-composition` and `repo-shape` tests, including graph, sca
 
 **Consumes:** Tasks 1-3.
 
-- [ ] **Step 1: Regenerate marketplace and installed skill outputs**
+- [x] **Step 1: Regenerate marketplace and installed skill outputs**
 
 Run `py -3 tools/run.py marketplace --apply` and `py -3 tools/run.py installed-skills --apply`. Do not hand-edit generated output.
 
-- [ ] **Step 2: Check generated products and source ownership**
+- [x] **Step 2: Check generated products and source ownership**
 
 Run `py -3 tools/run.py marketplace --check` and `py -3 tools/run.py installed-skills --check`. Inspect the generated manifests and built plugin trees to confirm expected membership, no unintended plugin subscription or mesh output, and packaging of changed source/test material.
 
-- [ ] **Step 3: Run focused behavior suites and full source inventory review**
+- [x] **Step 3: Run focused behavior suites and full source inventory review**
 
 Run all affected skill suites and focused repository/build/shipping tests implicated by modified files. Review all five source manifests against the audit, and inspect the complete diff for accidental consumer-specific policy or generated-source edits.
 

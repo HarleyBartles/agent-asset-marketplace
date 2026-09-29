@@ -32,20 +32,20 @@ Verify a fix against the originating lens's checklist, tightly scoped to the bla
 7. On `reviewer-fixes: clean`:
    - Do not record the resolution here; `resolved-ledger` is the single authority that records resolutions. Regenerate the metrics file:
      ```bash
-     py -3 .agents/skills/iterative-review/scripts/compile_metrics.py \
+     py -3 <runtime-skill-path-for-iterative-review>/scripts/compile_metrics.py \
          --state <scratch_dir>/review-state.json \
          --metrics <scratch_dir>/review-metrics.json
      ```
    - If the fix should trigger `regression-scan`, pass `--non-trivial` to `next_node.py --propose` and route to `regression-scan`:
      ```bash
-     py -3 .agents/skills/iterative-review/scripts/next_node.py \
+     py -3 <runtime-skill-path-for-iterative-review>/scripts/next_node.py \
          --state <scratch_dir>/review-state.json \
          --propose regression-scan \
          --non-trivial
      ```
    - Otherwise, route to `resolved-ledger`:
      ```bash
-     py -3 .agents/skills/iterative-review/scripts/next_node.py \
+     py -3 <runtime-skill-path-for-iterative-review>/scripts/next_node.py \
          --state <scratch_dir>/review-state.json \
          --propose resolved-ledger
      ```
@@ -53,28 +53,28 @@ Verify a fix against the originating lens's checklist, tightly scoped to the bla
    - Do **not** increment `fix_round` (`finding-fix` owns that on the next pass).
    - If the report shows the original finding is still unresolved, no new record is needed. Regenerate the metrics file and route back to `finding-fix`:
      ```bash
-     py -3 .agents/skills/iterative-review/scripts/compile_metrics.py \
+     py -3 <runtime-skill-path-for-iterative-review>/scripts/compile_metrics.py \
          --state <scratch_dir>/review-state.json \
          --metrics <scratch_dir>/review-metrics.json
-     py -3 .agents/skills/iterative-review/scripts/next_node.py \
+     py -3 <runtime-skill-path-for-iterative-review>/scripts/next_node.py \
          --state <scratch_dir>/review-state.json \
          --propose finding-fix
      ```
    - If a new same-lens issue was found in the blast radius, record it and its relationship to the original finding:
      ```bash
-     py -3 .agents/skills/iterative-review/scripts/record_finding.py \
+     py -3 <runtime-skill-path-for-iterative-review>/scripts/record_finding.py \
          --state <scratch_dir>/review-state.json \
          --data '{"finding_id": "<new_finding_id>", "lens": "<lens>", "discovered_at_node": "reviewer-fixes", "discovered_at_round": <round>, "severity": "<severity>"}'
-     py -3 .agents/skills/iterative-review/scripts/record_regression.py \
+     py -3 <runtime-skill-path-for-iterative-review>/scripts/record_regression.py \
          --state <scratch_dir>/review-state.json \
          --data '{"fix_for": "<original_finding_id>", "new_finding": "<new_finding_id>", "discovered_at_node": "reviewer-fixes", "discovered_at_round": <round>, "regression_class": "same-lens-blast-radius", "severity": "<severity>"}'
      ```
      Then regenerate the metrics file and route to `metrics-track`:
      ```bash
-     py -3 .agents/skills/iterative-review/scripts/compile_metrics.py \
+     py -3 <runtime-skill-path-for-iterative-review>/scripts/compile_metrics.py \
          --state <scratch_dir>/review-state.json \
          --metrics <scratch_dir>/review-metrics.json
-     py -3 .agents/skills/iterative-review/scripts/next_node.py \
+     py -3 <runtime-skill-path-for-iterative-review>/scripts/next_node.py \
          --state <scratch_dir>/review-state.json \
          --propose metrics-track
      ```
@@ -89,7 +89,7 @@ Verify a fix against the originating lens's checklist, tightly scoped to the bla
 ## Next check
 
 ```bash
-py -3 .agents/skills/iterative-review/scripts/next_node.py \
+py -3 <runtime-skill-path-for-iterative-review>/scripts/next_node.py \
     --state <scratch_dir>/review-state.json \
     --propose <next-node>
 ```

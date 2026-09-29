@@ -32,6 +32,10 @@ This marketplace-maintained derivative is based on `obra/superpowers` v6.4.1 com
 
 # Finishing a Development Branch
 
+## Bundled helper paths
+
+Resolve the helper script under this skill's directory supplied by the active runtime. In examples, `<runtime-skill-path-for-finishing-a-development-branch>` means that runtime-provided skill directory. Never infer that this skill is installed under a consumer repository's `.agents/skills/` path.
+
 ## Overview
 
 **Core principle:** Verify state-bound evidence → Detect environment → Present options → Execute choice → Clean up.
@@ -211,8 +215,8 @@ git branch -D <feature-branch>
 **If the host does not own workspace cleanup:** Run the bundled helper from the main checkout. It resolves registered worktrees by full branch ref or absolute path, routinely discards non-authoritative submodule checkout residue, and preserves consumer-owned dirty files unless destructive force was explicitly authorized:
 
 ```bash
-py -3 .agents/skills/finishing-a-development-branch/scripts/remove_worktree.py --check "$WORKTREE_PATH"
-py -3 .agents/skills/finishing-a-development-branch/scripts/remove_worktree.py --apply "$WORKTREE_PATH"
+py -3 <runtime-skill-path-for-finishing-a-development-branch>/scripts/remove_worktree.py --check "$WORKTREE_PATH"
+py -3 <runtime-skill-path-for-finishing-a-development-branch>/scripts/remove_worktree.py --apply "$WORKTREE_PATH"
 ```
 
 **If removal is refused** (`contains modified or untracked files`): the worktree holds files that exist nowhere else — uncommitted plans, notes, or scratch work. Never `--force` on your own initiative. Show your human partner what is at stake and ask:

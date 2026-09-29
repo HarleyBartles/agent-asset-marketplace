@@ -45,7 +45,7 @@ Break large goals into a roadmap of consecutive plans and keep it as a committed
 
 1. Read the spec from brainstorming or the human.
 2. Verify that `brainstorming` completed its planning-handoff review, or treat a human-supplied approved spec as the design authority.
-3. Create `.agents/plans/<epic-name>/roadmap.md` with a plan sequence table.
+3. Create the roadmap in the repository-declared planning home, following its epic organization. Use `.agents/plans/<epic-name>/roadmap.md` only when the repository adopts that convention or declares no other home.
 4. Use `writing-plans` to write Plan 1 with roadmap context and Review Focus.
 5. Run `handoff-gates` plan-readiness.
 6. Ask the human to review the saved plan before execution, preserving any execution method they already supplied.

@@ -25,4 +25,4 @@ Fix deterministic preflight findings and return to the `preflight` node.
 
 ## Next check
 
-py -3 .agents/skills/iterative-review/scripts/next_node.py --metrics \<scratch_dir>/review-metrics.json
+py -3 <runtime-skill-path-for-iterative-review>/scripts/next_node.py --metrics \<scratch_dir>/review-metrics.json

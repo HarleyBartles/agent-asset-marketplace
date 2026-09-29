@@ -31,6 +31,10 @@ This marketplace-maintained derivative is based on `obra/superpowers` v6.4.1 com
 
 # Subagent-Driven Development
 
+## Bundled helper paths
+
+Resolve each helper under its owning skill directory supplied by the active runtime. In examples, `<runtime-skill-path-for-subagent-driven-development>` and `<runtime-skill-path-for-subagent-workspace>` are placeholders for the locations supplied by the runtime. Do not assume either skill is copied into the consumer's `.agents/skills/` directory. If a required helper is unavailable, stop and report it.
+
 Execute plan by dispatching a fresh implementer subagent per task, a task review (spec compliance + code quality) after each, and a broad whole-branch review at the end.
 
 **Why subagents:** You delegate tasks to specialized agents with isolated context. By precisely crafting their instructions and context, you ensure they stay focused and succeed at their task. They should never inherit your session's context or history — you construct exactly what they need. This also preserves your own context for coordination work.
@@ -147,7 +151,7 @@ Ensure the work happens in an isolated workspace: use using-git-worktrees to cre
 
 Conversation memory does not survive compaction. In real sessions, controllers that lost their place have re-dispatched entire completed task sequences — the single most expensive failure observed. Track progress in a ledger file, not only in todos.
 
-- Each plan owns a workspace: at skill start, run `py -3 .agents/skills/subagent-workspace/scripts/workspace.py --apply PLAN_FILE` — it prints the plan's off-repo directory (`<main-checkout>/../_agent-scratch/<repo-name>/<branch>/<plan-basename>/`), home to every artifact for THIS plan: ledger, briefs, reports, review packages. Another plan's directory is never yours to read or write.
+- Each plan owns a workspace: at skill start, run `py -3 <runtime-skill-path-for-subagent-workspace>/scripts/workspace.py --apply PLAN_FILE` — it prints the plan's off-repo directory (`<main-checkout>/../_agent-scratch/<repo-name>/<branch>/<plan-basename>/`), home to every artifact for THIS plan: ledger, briefs, reports, review packages. Another plan's directory is never yours to read or write.
 - Check for this plan's ledger at `<workspace>/progress.md`. If its first line names your plan file, tasks with a `Task <N>: complete` line are DONE — do not re-dispatch them; resume at the first task without one. A task whose last line is a fix round is mid-loop: resume the loop at the next round. A ledger whose first line names a different plan file — or a stray ledger at the old flat path `../_agent-scratch/<branch>/progress.md` — is another plan's progress: leave it in place and start your own, fresh. The off-repo scratch survives `git clean` and is never committed.
 - Create the ledger with its identity as the first line: `# SDD ledger — plan: <plan file path>`.
 - The ledger is your recovery map: the commits it names exist in git even when your context no longer remembers creating them. After compaction, trust the ledger and `git log` over your own recollection.
@@ -187,7 +191,7 @@ Everything you paste into a dispatch prompt — and everything a subagent prints
 
 Record BASE (`git rev-parse HEAD`) before dispatching — the review package and fix-round diffs need it.
 
-- **Task brief:** before dispatching an implementer, run this skill's `py -3 .agents/skills/subagent-workspace/scripts/task_brief.py --apply PLAN_FILE N` — it extracts the task's full text to a uniquely named file and prints the path. Compose the dispatch so the brief stays the single source of requirements. Your dispatch should contain: (1) one line on where this task fits in the project; (2) the brief path, introduced as "read this first — it is your requirements, with the exact values to use verbatim"; (3) interfaces and decisions from earlier tasks that the brief cannot know; (4) your resolution of any ambiguity you noticed in the brief; (5) the report-file path and report contract. Exact values (numbers, magic strings, signatures, test cases) appear only in the brief. Never make a subagent read the whole plan file.
+- **Task brief:** before dispatching an implementer, run this skill's `py -3 <runtime-skill-path-for-subagent-workspace>/scripts/task_brief.py --apply PLAN_FILE N` — it extracts the task's full text to a uniquely named file and prints the path. Compose the dispatch so the brief stays the single source of requirements. Your dispatch should contain: (1) one line on where this task fits in the project; (2) the brief path, introduced as "read this first — it is your requirements, with the exact values to use verbatim"; (3) interfaces and decisions from earlier tasks that the brief cannot know; (4) your resolution of any ambiguity you noticed in the brief; (5) the report-file path and report contract. Exact values (numbers, magic strings, signatures, test cases) appear only in the brief. Never make a subagent read the whole plan file.
 - **Report file:** name the implementer's report file after the brief (brief `…/task-N-brief.md` → report `…/task-N-report.md`) and put it in the dispatch prompt. The implementer writes the full report there and returns only status, commits, a one-line test summary, and concerns.
 - A dispatch prompt describes one task, not the session's history. Do not paste accumulated prior-task summaries ("state after Tasks 1-3") into later dispatches — a real session's dispatch hit 42k chars of which 99% was pasted history. A fresh subagent needs its task, the interfaces it touches, and the global constraints. Nothing else.
 - If an earlier task parked a finding in the area this task touches, carry a pointer to that ledger entry in the dispatch.
@@ -200,7 +204,7 @@ Template: [implementer-prompt.md](implementer-prompt.md)
 
 Implementer subagents report one of four statuses. Handle each appropriately:
 
-**DONE:** Generate the review package (`py -3 .agents/skills/subagent-workspace/scripts/review_package.py --apply PLAN_FILE BASE HEAD` — it prints the unique file path it wrote; BASE is the commit you recorded before dispatching the implementer — never `HEAD~1`, which silently drops all but the last commit of a multi-commit task), then dispatch the task reviewer with the printed path.
+**DONE:** Generate the review package (`py -3 <runtime-skill-path-for-subagent-workspace>/scripts/review_package.py --apply PLAN_FILE BASE HEAD` — it prints the unique file path it wrote; BASE is the commit you recorded before dispatching the implementer — never `HEAD~1`, which silently drops all but the last commit of a multi-commit task), then dispatch the task reviewer with the printed path.
 
 **DONE_WITH_CONCERNS:** The implementer completed the work but flagged doubts. Read the concerns before proceeding. If the concerns are about correctness or scope, address them before review. If they're observations (e.g., "this file is getting large"), note them and proceed to review.
 
@@ -223,7 +227,7 @@ Per-task reviews are task-scoped gates. The broad review happens once, at the fi
 
 Before dispatching the task reviewer, invoke `selecting-a-subagent` to pick the right reviewer profile (`reviewer`, `reviewer-strong`, or `reviewer-fixes`) for the task diff.
 
-- Hand the reviewer its diff as a file: run this skill's `py -3 .agents/skills/subagent-workspace/scripts/review_package.py --apply PLAN_FILE BASE HEAD` and pass the reviewer the file path it prints. The script writes the package as UTF-8 with no BOM. The output never enters your own context, and the reviewer sees the commit list, stat summary, and full diff with context in one `read` call. Use the BASE you recorded before dispatching the implementer — never `HEAD~1`, which silently truncates multi-commit tasks. Never dispatch a task reviewer without a diff file.
+- Hand the reviewer its diff as a file: run this skill's `py -3 <runtime-skill-path-for-subagent-workspace>/scripts/review_package.py --apply PLAN_FILE BASE HEAD` and pass the reviewer the file path it prints. The script writes the package as UTF-8 with no BOM. The output never enters your own context, and the reviewer sees the commit list, stat summary, and full diff with context in one `read` call. Use the BASE you recorded before dispatching the implementer — never `HEAD~1`, which silently truncates multi-commit tasks. Never dispatch a task reviewer without a diff file.
 - **Reviewer inputs:** the task reviewer gets three paths — the same brief file, the report file, and the review package — plus the global constraints that bind the task.
 - The global-constraints block you hand the reviewer is its attention lens. Copy the binding requirements verbatim from the plan's Global Constraints section or the spec: exact values, exact formats, and the stated relationships between components ("same layout as X", "matches Y"). The reviewer's template already carries the process rules (YAGNI, test hygiene, review method) — the constraints block is for what THIS project's spec demands.
 - Do not add open-ended directives like "check all uses" or "run race tests if useful" without a concrete, task-specific reason
@@ -247,7 +251,7 @@ Before the loop starts, two routes leave it immediately:
 
 **Every round, either way:** the implementer fixes, re-runs the tests covering the amended code, appends its fix report to the same report file, and returns the short contract. Before re-dispatching the reviewer, confirm the fix report contains the covering tests, the command run, and the output; dispatch the re-review once all three are present. Name the covering test files in the fix message — a one-line fix does not need the whole suite.
 
-**The re-review is scoped.** Run `py -3 .agents/skills/subagent-workspace/scripts/review_package.py --apply PLAN_FILE FIX_BASE HEAD` where FIX_BASE is the head the previous review saw, and dispatch [re-review-prompt.md](re-review-prompt.md) with the findings list, the brief, the report file, and the printed diff path. The re-reviewer verdicts each finding ADDRESSED or NOT ADDRESSED and flags new breakage in the fix diff only. New Critical/Important breakage in the fix diff joins the open findings list. Out-of-scope observations go to the ledger as deferred minors — they never extend the loop.
+**The re-review is scoped.** Run `py -3 <runtime-skill-path-for-subagent-workspace>/scripts/review_package.py --apply PLAN_FILE FIX_BASE HEAD` where FIX_BASE is the head the previous review saw, and dispatch [re-review-prompt.md](re-review-prompt.md) with the findings list, the brief, the report file, and the printed diff path. The re-reviewer verdicts each finding ADDRESSED or NOT ADDRESSED and flags new breakage in the fix diff only. New Critical/Important breakage in the fix diff joins the open findings list. Out-of-scope observations go to the ledger as deferred minors — they never extend the loop.
 
 **After each round,** append to the ledger: `Task <N>: fix round <R>/5 (<X> addressed, <Y> open — <finding one-liners>; commits <a7>..<b7>)`
 
@@ -276,7 +280,7 @@ Once all task-level reviews are complete, run `handoff-gates` `completion-readin
 
 If the completion-readiness rating meets the floor, dispatch the final whole-branch review with `requesting-code-review`. The skill reviews the full branch diff and reports findings; no additional review package is needed.
 
-If the final whole-branch review returns findings, dispatch ONE fix subagent with the complete findings list — not one fixer per finding. Per-finding fixers each rebuild context and re-run suites; a real session's final-review fix wave cost more than all its tasks combined. Then run exactly one scoped re-review of the fix wave (`py -3 .agents/skills/subagent-workspace/scripts/review_package.py --apply PLAN_FILE FIX_BASE HEAD` over the fix range, [re-review-prompt.md](re-review-prompt.md)). Adjudicate any residual findings as in the task loop's breaker: park with rulings, or stop on load-bearing ones. There is no second fix wave — residual load-bearing findings surface to your human partner when finishing-a-development-branch presents the options.
+If the final whole-branch review returns findings, dispatch ONE fix subagent with the complete findings list — not one fixer per finding. Per-finding fixers each rebuild context and re-run suites; a real session's final-review fix wave cost more than all its tasks combined. Then run exactly one scoped re-review of the fix wave (`py -3 <runtime-skill-path-for-subagent-workspace>/scripts/review_package.py --apply PLAN_FILE FIX_BASE HEAD` over the fix range, [re-review-prompt.md](re-review-prompt.md)). Adjudicate any residual findings as in the task loop's breaker: park with rulings, or stop on load-bearing ones. There is no second fix wave — residual load-bearing findings surface to your human partner when finishing-a-development-branch presents the options.
 
 ## Finish
 
@@ -306,8 +310,8 @@ Use finishing-a-development-branch.
 You: I'm using Subagent-Driven Development to execute this plan.
 
 [Setup: worktree verified]
-[Read plan file once: .agents/plans/feature-plan.md]
-[Resolve workspace: py -3 .agents/skills/subagent-workspace/scripts/workspace.py --apply .agents/plans/feature-plan.md — no ledger inside, fresh start]
+[Read plan file once: <declared-plan-path>]
+[Resolve workspace: py -3 <runtime-skill-path-for-subagent-workspace>/scripts/workspace.py --apply <declared-plan-path> — no ledger inside, fresh start]
 [Create todos for all tasks]
 
 Task 1: Hook installation script

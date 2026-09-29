@@ -4,15 +4,27 @@
 
 Use when approved requirements need an executable repository plan.
 
-## Required skills
+## Required capabilities
 
-- `writing-plans`
-- `handoff-gates`
-- `completing-planning-artifacts`
+- Create a concrete implementation plan from approved requirements.
+- Check readiness at a planning or review handoff.
+- Maintain plan and specification status through completion.
+
+## Optional capabilities
+
+None.
+
+## Required repository-owned skills
+
+None.
+
+## Optional repository-owned skills
+
+None.
 
 ## Composition
 
-After refreshing `main` and creating the slice worktree, run the `completing-planning-artifacts` successor-slice ingress lane before substantive edits. Write the committed, in-flight plan before implementation. Source and overlay edits precede regeneration and validation.
+After refreshing the repository base and creating the slice worktree, complete the repository's plan-ingress procedure before substantive edits. Write the committed, in-flight plan before implementation. Source and overlay edits precede regeneration and validation.
 
 ## Doctrine and contracts
 

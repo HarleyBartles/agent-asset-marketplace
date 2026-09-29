@@ -479,7 +479,6 @@ def _live_markdown_lines(text: str) -> list[str]:
 
 _COMPOSITION_HEADINGS = (
     "When",
-    "Required skills",
     "Composition",
     "Doctrine and contracts",
     "Local commands and paths",
@@ -556,10 +555,9 @@ def _check_composition_graph(
     repo_root: Path, *, include_runbooks: bool = True, include_playbooks: bool = True
 ) -> list[str]:
     """Validate runbook roots, topical playbooks, and their explicit edges."""
-    runbook_dir = repo_root / ".agents" / "runbooks"
-    playbook_dir = repo_root / ".agents" / "playbooks"
-    all_runbooks = _composition_files(runbook_dir)
-    all_playbooks = _composition_files(playbook_dir)
+    mapped_runbooks, mapped_playbooks = skill_link_contract.composition_paths(repo_root)
+    all_runbooks = [path for path in mapped_runbooks if path.is_file() and path.name.lower() != "agents.md"]
+    all_playbooks = [path for path in mapped_playbooks if path.is_file() and path.name.lower() != "agents.md"]
     runbooks = all_runbooks if include_runbooks else []
     playbooks = all_playbooks if include_playbooks else []
     if not runbooks and not playbooks:
@@ -569,12 +567,26 @@ def _check_composition_graph(
     required_by_kind = ((runbooks, "Playbook routing"), (playbooks, "Runbook routing"))
     for paths, kind_heading in required_by_kind:
         for path in paths:
-            live = {line.strip() for line in _live_markdown_lines(path.read_text(encoding="utf-8"))}
-            for heading in (*_COMPOSITION_HEADINGS, kind_heading):
+            live = [line.strip() for line in _live_markdown_lines(path.read_text(encoding="utf-8"))]
+            for heading in _COMPOSITION_HEADINGS + (kind_heading,):
                 if f"## {heading}" not in live:
                     findings.append(
                         f"{path.relative_to(repo_root).as_posix()}: missing '## {heading}' composition section"
                     )
+            new_contract = all(
+                f"## {heading}" in live
+                for heading in (
+                    "Required capabilities",
+                    "Optional capabilities",
+                    "Required repository-owned skills",
+                    "Optional repository-owned skills",
+                )
+            )
+            if not new_contract and "## Required skills" not in live:
+                findings.append(
+                    f"{path.relative_to(repo_root).as_posix()}: missing required capability section "
+                    "(legacy 'Required skills' is temporarily accepted)"
+                )
 
     runbook_set = {path.resolve() for path in all_runbooks}
     playbook_set = {path.resolve() for path in all_playbooks}
@@ -582,9 +594,7 @@ def _check_composition_graph(
     parents: dict[Path, set[Path]] = {
         path.resolve(): set(_section_links(path, "Runbook routing")) for path in playbooks
     }
-    composition_edges = {
-        path.resolve(): _playbook_composition_links(path, repo_root / ".agents" / "playbooks") for path in playbooks
-    }
+    composition_edges = {path.resolve(): _playbook_composition_links(path, path.parent) for path in playbooks}
 
     for runbook, targets in edges.items():
         for target in targets:
@@ -641,6 +651,23 @@ def _check_surface(
     template = _template_path(surface, implementation_root)
     scaffold = _scaffold_script_path(surface, implementation_root)
     full = repo_root / rel
+
+    composition_kind = {"runbook-set": "runbook", "playbook-set": "playbook"}.get(surf_id)
+    if composition_kind and skill_link_contract.has_custom_composition_paths(repo_root):
+        paths = skill_link_contract.composition_paths(repo_root)[0 if composition_kind == "runbook" else 1]
+        required = skill_link_contract.required_composition_paths(repo_root, composition_kind)
+        findings.extend(
+            f"missing required {composition_kind}: {path.relative_to(repo_root).as_posix()}"
+            for path in required
+            if not path.is_file()
+        )
+        validator = (
+            document_contracts.check_runbook if composition_kind == "runbook" else document_contracts.check_playbook
+        )
+        for path in paths:
+            if path.is_file():
+                findings.extend(item.message for item in validator(path, repo_root))
+        return findings
 
     if kind == "command-declaration":
         _, declaration_findings = _check_declared_commands(repo_root)
@@ -714,6 +741,8 @@ def _apply_surface(
 ) -> bool:
     rel = str(surface["path"])
     surf_id = str(surface.get("id", ""))
+    if surf_id in {"runbook-set", "playbook-set"} and skill_link_contract.has_custom_composition_paths(repo_root):
+        return False
     if _surface_is_explicitly_excepted(surface, exceptions):
         return False
     if enabled_surface_ids is not None and surf_id and surf_id not in enabled_surface_ids:

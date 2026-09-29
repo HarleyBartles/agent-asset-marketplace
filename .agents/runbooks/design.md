@@ -4,9 +4,21 @@
 
 Use for repository-backed design and shaping.
 
-## Required skills
+## Required capabilities
 
-- `brainstorming`
+- Shape an uncertain design before committing to implementation.
+
+## Optional capabilities
+
+None.
+
+## Required repository-owned skills
+
+None.
+
+## Optional repository-owned skills
+
+None.
 
 ## Composition
 

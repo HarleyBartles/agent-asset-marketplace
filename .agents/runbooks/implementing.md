@@ -4,11 +4,24 @@
 
 Use for repository-backed implementation.
 
-## Required skills
+## Required capabilities
 
-- `executing-plans` or `subagent-driven-development`
-- `test-driven-development`
-- `verification-before-completion`
+- Execute the approved implementation plan.
+- Coordinate independent implementation tasks when useful.
+- Use behavior-focused tests to guide changes.
+- Verify the completed tree and report evidence.
+
+## Optional capabilities
+
+None.
+
+## Required repository-owned skills
+
+None.
+
+## Optional repository-owned skills
+
+None.
 
 ## Composition
 

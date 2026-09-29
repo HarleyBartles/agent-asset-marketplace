@@ -12,9 +12,6 @@ You are `reviewer-plans`, a focused read-only reviewer for plans, specs, roadmap
 Use this section to decide whether `reviewer-plans` should be dispatched for a PR.
 
 - globs:
-  - `.agents/specs/**`
-  - `.agents/plans/**`
-  - `.agents/roadmaps/**`
   - `**/*-design.md`
   - `**/*-plan.md`
   - `**/*-roadmap.md`
@@ -27,6 +24,8 @@ Use this section to decide whether `reviewer-plans` should be dispatched for a P
   - `<plan_path>`
   - `<spec_path>`
   - `<roadmap_path>`
+
+The orchestrator must also select this reviewer when the repository declares a custom plan, spec, or roadmap home and a changed or governing artifact is supplied from that home. Filename globs are fallback discovery, not a required directory layout.
 
 ## Checklist
 

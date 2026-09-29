@@ -4,15 +4,27 @@
 
 Use when repository standards, doctrine, contracts, routing, or agent-facing policy change.
 
-## Required skills
+## Required capabilities
 
-- `repo-standards`
-- `base-doctrine`
-- `writing-with-clarity`
+- Apply the repository standards that this repository explicitly adopts.
+- Respect cross-project operating invariants and authority boundaries.
+- Write clear human-facing repository guidance.
+
+## Optional capabilities
+
+None.
+
+## Required repository-owned skills
+
+None.
+
+## Optional repository-owned skills
+
+None.
 
 ## Composition
 
-Apply the named capability skills under the binding doctrine and local evidence requirements. This playbook does not own a lifecycle stage.
+Resolve the stated capabilities against skills available at runtime, under the binding doctrine and local evidence requirements. Stop and report if a required capability has no suitable provider. This playbook does not own a lifecycle stage.
 
 ## Doctrine and contracts
 

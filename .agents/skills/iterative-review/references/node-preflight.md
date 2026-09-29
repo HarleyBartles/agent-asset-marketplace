@@ -15,17 +15,17 @@ Run the consumer's canonical preflight on the branch and gate on a clean result.
 1. Run the consumer's canonical preflight on the branch.
 2. For each deterministic finding, record it:
    ```bash
-   py -3 .agents/skills/iterative-review/scripts/record_finding.py \
+   py -3 <runtime-skill-path-for-iterative-review>/scripts/record_finding.py \
        --state <scratch_dir>/review-state.json \
        --data '{"finding_id": "<finding_id>", "lens": "preflight", "discovered_at_node": "preflight", "discovered_at_round": <round>, "severity": "<severity>"}'
    ```
    If the preflight is clean, no new finding is recorded.
 3. Regenerate the metrics file and authorize the next node:
    ```bash
-   py -3 .agents/skills/iterative-review/scripts/compile_metrics.py \
+   py -3 <runtime-skill-path-for-iterative-review>/scripts/compile_metrics.py \
        --state <scratch_dir>/review-state.json \
        --metrics <scratch_dir>/review-metrics.json
-   py -3 .agents/skills/iterative-review/scripts/next_node.py \
+   py -3 <runtime-skill-path-for-iterative-review>/scripts/next_node.py \
        --state <scratch_dir>/review-state.json \
        --propose <next-node>
    ```
@@ -39,7 +39,7 @@ Run the consumer's canonical preflight on the branch and gate on a clean result.
 ## Next check
 
 ```bash
-py -3 .agents/skills/iterative-review/scripts/next_node.py \
+py -3 <runtime-skill-path-for-iterative-review>/scripts/next_node.py \
     --state <scratch_dir>/review-state.json \
     --propose <next-node>
 ```

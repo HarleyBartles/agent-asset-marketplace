@@ -16,13 +16,13 @@ Compare the branch diff to the plan, spec, PR body, and linked issues and reconc
 
 1. Run the concrete scope-honesty check:
    ```
-   py -3 .agents/skills/iterative-review/scripts/check_scope_honesty.py \
+   py -3 <runtime-skill-path-for-iterative-review>/scripts/check_scope_honesty.py \
        --state <scratch_dir>/review-state.json \
        --apply
    ```
    If you have governing documents, pass them:
    ```
-   py -3 .agents/skills/iterative-review/scripts/check_scope_honesty.py \
+   py -3 <runtime-skill-path-for-iterative-review>/scripts/check_scope_honesty.py \
        --state <scratch_dir>/review-state.json \
        --plan <plan_path> \
        --spec <spec_path> \
@@ -40,4 +40,4 @@ Compare the branch diff to the plan, spec, PR body, and linked issues and reconc
 
 ## Next check
 
-py -3 .agents/skills/iterative-review/scripts/next_node.py --state \<scratch_dir>/review-state.json
+py -3 <runtime-skill-path-for-iterative-review>/scripts/next_node.py --state \<scratch_dir>/review-state.json
