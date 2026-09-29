@@ -1,8 +1,10 @@
 # Ambient Operating Model and Selectable Standards Roadmap
 
+**Status:** executing
+
 ## Goal
 
-Make the five intended ambient plugins available as distinct agent capabilities while letting every repository choose its own standards composition, including no Agent Operating Model standards. Ship deployment and validation resources that consumers can run in hosted CI without ambient plugins.
+Make the five intended ambient plugins available as distinct agent capabilities while letting every repository choose its own standards composition, including no Agent Operating Model standards. Ship deployment and validation resources that consumers can run in hosted CI without ambient plugins. Migrate the marketplace repository's own CI and plugin policy to the same boundary.
 
 ## Plan sequence
 
@@ -12,6 +14,7 @@ Make the five intended ambient plugins available as distinct agent capabilities 
 | 2   | Selectable standards and consumer runner bridge        | completed-awaiting-retirement | `2026-09-28-selectable-standards-runner-bridge.md`               | `cc86cd585` | [#338](https://github.com/HarleyBartles/agent-asset-marketplace/pull/338) | -      | Merged in release commit `b5ba27face374e86ca99fcce9da5b61d04c3ea69`. Catalog, consumer composition, selective dispatcher, pinned hosted checkers, and safe refresh migration shipped; no consumer checkout edits.                                                                                                                                                                                     |
 | 3   | Ambient pack boundaries and capability-based workflows | completed-awaiting-retirement | `2026-09-29-ambient-pack-boundaries-and-capability-workflows.md` | `f52203edf` | [#338](https://github.com/HarleyBartles/agent-asset-marketplace/pull/338) | -      | Merged in release commit `b5ba27face374e86ca99fcce9da5b61d04c3ea69`. Capability contract and custom policy-mapped validation shipped; repo-shape suite: 178 passed; marketplace and installed-skill checks and tracked hook passed.                                                                                                                                                                   |
 | 4   | Consumer migration and marketplace release             | completed-awaiting-retirement | `2026-09-29-marketplace-migration-and-source-release.md`         | `b5ba27fac` | [#338](https://github.com/HarleyBartles/agent-asset-marketplace/pull/338) | -      | Released source revision: `b5ba27face374e86ca99fcce9da5b61d04c3ea69`. PR head `679c4bf0f0f1e38fbc573caa6535594ab4c549dd`; fresh review clean; tracked hook passed; hosted marketplace validation run `36513750391` passed. Migration steps: [consumer runner migration guide](../../skills/repo-shape/references/consumer-runner-migration.md). Consumer-specific edits remain with their own agents. |
+| 5   | Marketplace self-subscription and CI cutover           | executing                     | `2026-09-29-marketplace-self-subscription.md`                    | -           | -                                                                         | -      | Adopt selected standards through a pinned repo-owned checker deployment, retain Writing Pack, and remove five ambient pack projections.                                                                                                                                                                                                                                                               |
 
 ## Handoff notes
 
