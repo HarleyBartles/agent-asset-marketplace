@@ -194,10 +194,19 @@ def test_profile_rejects_missing_workflow_and_workflow_without_profile_route(tmp
     assert any("workflow" in finding.lower() for finding in findings)
 
 
-def test_profile_route_requires_an_affirmative_action_not_a_negative_mention(tmp_path: Path) -> None:
+@pytest.mark.parametrize(
+    "route_text",
+    [
+        "Do not use $unslop-profiles for this stage.",
+        "Do not ever use $unslop-profiles for this stage.",
+        "Never, under any circumstances, use $unslop-profiles here.",
+        "Use $unslop-profiles for every task.",
+    ],
+)
+def test_profile_route_requires_an_affirmative_scoped_action(tmp_path: Path, route_text: str) -> None:
     _repo(tmp_path)
     _contract(tmp_path)
-    _workflow(tmp_path, route_text="Do not use `$unslop-profiles` for this stage.")
+    _workflow(tmp_path, route_text=route_text)
     _profile(tmp_path)
 
     findings = _module().validate(tmp_path)
