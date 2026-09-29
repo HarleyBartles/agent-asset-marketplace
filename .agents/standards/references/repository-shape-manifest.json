@@ -14,12 +14,15 @@
     {"id":"playbook-set","path":".agents/playbooks","presence":"required","ownership":"consumer-authored","validator":"playbook-set-contract","apply":"create-or-migrate","force_reset":"unavailable","scaffold":"scaffold_playbooks.py"},
     {"id":"runbooks-agents-md","path":".agents/runbooks/AGENTS.md","presence":"optional","ownership":"consumer-authored","validator":"optional-agents-router-contract","apply":"manual-remediation","force_reset":"unavailable"},
     {"id":"playbooks-agents-md","path":".agents/playbooks/AGENTS.md","presence":"optional","ownership":"consumer-authored","validator":"optional-agents-router-contract","apply":"manual-remediation","force_reset":"unavailable"},
+    {"id":"docs-agents-md","path":"docs/AGENTS.md","presence":"optional","ownership":"consumer-authored","validator":"optional-agents-router-contract","apply":"manual-remediation","force_reset":"unavailable"},
+    {"id":"agent-docs-agents-md","path":".agents/docs/AGENTS.md","presence":"optional","ownership":"consumer-authored","validator":"optional-agents-router-contract","apply":"manual-remediation","force_reset":"unavailable"},
     {"id":"review-entry","path":"REVIEW.md","presence":"required","ownership":"consumer-authored","validator":"review-contract","apply":"create-or-migrate","force_reset":"unavailable","scaffold":"scaffold_review.py"},
     {"id":"contributing-entry","path":"CONTRIBUTING.md","presence":"required","ownership":"consumer-authored","validator":"contributing-contract","apply":"create-or-migrate","force_reset":"unavailable","scaffold":"scaffold_contributing.py"},
     {"id":"root-gitignore","path":".gitignore","presence":"required","ownership":"consumer-authored","validator":"gitignore-contract","apply":"create-or-migrate","force_reset":"unavailable","scaffold":"scaffold_gitignore.py"},
     {"id":"completed-artifacts-doctrine","path":".agents/doctrine/completed-artifacts.md","presence":"required","ownership":"consumer-authored","validator":"completed-artifacts-contract-v1","apply":"create","force_reset":"confirmed-template-restore","seed":"templates/completed-artifacts.md"},
     {"id":"retired-plans-completed-dir","path":".agents/plans/completed","presence":"forbidden","ownership":"consumer-authored","validator":"must-be-absent","apply":"manual-remediation","force_reset":"unavailable"},
     {"id":"retired-specs-completed-dir","path":".agents/specs/completed","presence":"forbidden","ownership":"consumer-authored","validator":"must-be-absent","apply":"manual-remediation","force_reset":"unavailable"},
-    {"id":"retired-roadmaps-completed-dir","path":".agents/roadmaps/completed","presence":"forbidden","ownership":"consumer-authored","validator":"must-be-absent","apply":"manual-remediation","force_reset":"unavailable"}
+    {"id":"retired-roadmaps-completed-dir","path":".agents/roadmaps/completed","presence":"forbidden","ownership":"consumer-authored","validator":"must-be-absent","apply":"manual-remediation","force_reset":"unavailable"},
+    {"id":"unslop-contract","path":".agents/contracts/unslop.json","presence":"optional","ownership":"consumer-authored","validator":"unslop-contract","apply":"create","force_reset":"unavailable","scaffold":"unslop_standard.py"}
   ]
 }

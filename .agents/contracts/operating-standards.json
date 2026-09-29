@@ -4,7 +4,7 @@
     {
       "id": "root-agent-router",
       "origin": "marketplace",
-      "revision": "b75c7e7fe670dd14c7192726a88449bc56cc7906",
+      "revision": "a187844b58a948a6330e1b65d80d7a1413a96cc2",
       "implementation_root": ".agents/standards/root-agent-router",
       "check": [
         "@python",
@@ -28,7 +28,7 @@
     {
       "id": "runbook-composition",
       "origin": "marketplace",
-      "revision": "b75c7e7fe670dd14c7192726a88449bc56cc7906",
+      "revision": "a187844b58a948a6330e1b65d80d7a1413a96cc2",
       "implementation_root": ".agents/standards/runbook-composition",
       "check": [
         "@python",
@@ -52,7 +52,7 @@
     {
       "id": "playbook-composition",
       "origin": "marketplace",
-      "revision": "b75c7e7fe670dd14c7192726a88449bc56cc7906",
+      "revision": "a187844b58a948a6330e1b65d80d7a1413a96cc2",
       "implementation_root": ".agents/standards/playbook-composition",
       "check": [
         "@python",
@@ -76,7 +76,7 @@
     {
       "id": "tracked-validation-hook",
       "origin": "marketplace",
-      "revision": "b75c7e7fe670dd14c7192726a88449bc56cc7906",
+      "revision": "a187844b58a948a6330e1b65d80d7a1413a96cc2",
       "implementation_root": ".agents/standards/tracked-validation-hook",
       "check": [
         "@python",
@@ -100,7 +100,7 @@
     {
       "id": "markdown-formatting",
       "origin": "marketplace",
-      "revision": "b75c7e7fe670dd14c7192726a88449bc56cc7906",
+      "revision": "a187844b58a948a6330e1b65d80d7a1413a96cc2",
       "implementation_root": ".agents/standards/markdown-formatting",
       "check": [
         "@python",
@@ -124,7 +124,7 @@
     {
       "id": "review-entrypoint",
       "origin": "marketplace",
-      "revision": "b75c7e7fe670dd14c7192726a88449bc56cc7906",
+      "revision": "a187844b58a948a6330e1b65d80d7a1413a96cc2",
       "implementation_root": ".agents/standards/review-entrypoint",
       "check": [
         "@python",
@@ -148,7 +148,7 @@
     {
       "id": "contribution-entrypoint",
       "origin": "marketplace",
-      "revision": "b75c7e7fe670dd14c7192726a88449bc56cc7906",
+      "revision": "a187844b58a948a6330e1b65d80d7a1413a96cc2",
       "implementation_root": ".agents/standards/contribution-entrypoint",
       "check": [
         "@python",
@@ -172,7 +172,7 @@
     {
       "id": "root-gitignore-hygiene",
       "origin": "marketplace",
-      "revision": "b75c7e7fe670dd14c7192726a88449bc56cc7906",
+      "revision": "a187844b58a948a6330e1b65d80d7a1413a96cc2",
       "implementation_root": ".agents/standards/root-gitignore-hygiene",
       "check": [
         "@python",
@@ -196,7 +196,7 @@
     {
       "id": "completed-artifact-custody",
       "origin": "marketplace",
-      "revision": "b75c7e7fe670dd14c7192726a88449bc56cc7906",
+      "revision": "a187844b58a948a6330e1b65d80d7a1413a96cc2",
       "implementation_root": ".agents/standards/completed-artifact-custody",
       "check": [
         "@python",
@@ -210,6 +210,30 @@
         ".agents/standards/_runtime/repo_standards.py",
         "--run-standard",
         "completed-artifact-custody",
+        "--apply",
+        "--yes",
+        "@allow-shared-checkout"
+      ],
+      "generated_paths": [],
+      "requires": []
+    },
+    {
+      "id": "unslop",
+      "origin": "marketplace",
+      "revision": "a187844b58a948a6330e1b65d80d7a1413a96cc2",
+      "implementation_root": ".agents/standards/unslop",
+      "check": [
+        "@python",
+        ".agents/standards/_runtime/repo_standards.py",
+        "--run-standard",
+        "unslop",
+        "--check"
+      ],
+      "apply": [
+        "@python",
+        ".agents/standards/_runtime/repo_standards.py",
+        "--run-standard",
+        "unslop",
         "--apply",
         "--yes",
         "@allow-shared-checkout"

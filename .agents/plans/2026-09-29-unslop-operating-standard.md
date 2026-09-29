@@ -190,23 +190,23 @@ In a fresh isolated context, use the engine skill with a single observed mistake
 
 - Generated plugin and deployed-standard outputs are reproducible from `skills/` and `src/plugin-definitions/`.
 
-- [ ] **Step 1: Write focused migration and route behavior tests**
+- [x] **Step 1: Write focused migration and route behavior tests**
 
 Update tests to assert the Marketplace profile lives under `.agents/unslop/`, the standard contract declares that root, standard adoption is explicit, each declared workflow route resolves and names `$unslop-profiles`, and no plugin subscription is required by the standard. Remove assertions that profile presence is checked by generic plugin prerequisite validation.
 
-- [ ] **Step 2: Migrate the Marketplace consumer surfaces and workflow routes**
+- [x] **Step 2: Migrate the Marketplace consumer surfaces and workflow routes**
 
 Move the local profile, add the Unslop contract, and adopt the pinned standard. Update only the workflows whose stage or task scope uses an applicable profile. Keep binding rules in doctrine and profile failure cues/corrections in the profile. Do not add a global always-on instruction that forces profile use for unrelated tasks.
 
-- [ ] **Step 3: Run focused affected test modules**
+- [x] **Step 3: Run focused affected test modules**
 
 Run: `py -3 -m pytest skills/repo-shape/tests/scripts/test_unslop_standard.py skills/repo-shape/tests/scripts/test_operating_model_surface_contracts.py skills/repo-shape/tests/scripts/test_operating_model_plugin_contracts.py skills/repo-shape/tests/scripts/test_operating_standards_catalog.py skills/repo-shape/tests/scripts/test_operating_standards_deployment.py skills/repo-shape/tests/scripts/test_operating_standards_migration.py -q` Expected: PASS; tests cover standard adoption, deployment, opt-in migration, and the contract boundary.
 
-- [ ] **Step 4: Regenerate source-owned Marketplace and standard projections**
+- [x] **Step 4: Regenerate source-owned Marketplace and standard projections**
 
 Run: `py -3 tools/run.py marketplace --apply` Run: `py -3 tools/run.py repo-standards --apply` Expected: generated `dist/plugins/unslop-plus/` matches the canonical skills and plugin definition; `.agents/standards/` includes the pinned `unslop` standard resources and excludes stale profile-root ownership from repo-shape.
 
-- [ ] **Step 5: Verify source, distribution, and repository gates**
+- [x] **Step 5: Verify source, distribution, and repository gates**
 
 Run: `py -3 tools/run.py installed-skills --check` Run: `py -3 tools/build_marketplace.py --check` Run the selected standard directly with `py -3 .agents/standards/_runtime/repo_standards.py --run-standard unslop --check`. For repository-wide validation, stage the intended tree and let the tracked pre-commit hook perform the canonical apply/check gate; use `py -3 tools/run.py ci --apply` followed by `py -3 tools/run.py ci --check --diagnostics` only when diagnosing convergence outside a normal commit. Do not run the full check immediately before or after a successful hooked commit. Expected: source projections are current, the selected standard check passes for this repository, generic legacy consumers remain valid, and the full repository gate passes.
 

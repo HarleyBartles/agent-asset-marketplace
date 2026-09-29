@@ -50,9 +50,9 @@ def _markdown_snapshot(repo_root: Path) -> dict[Path, bytes]:
 
 
 def _check_markdown_outputs(repo_root: Path, before: dict[Path, bytes]) -> None:
-    formatter = repo_root / ".agents/skills/markdown-formatting/scripts/format_markdown.py"
+    formatter = repo_root / ".agents/standards/markdown-formatting/markdown-formatting/scripts/format_markdown.py"
     if not formatter.is_file():
-        formatter = repo_root / ".agents/standards/markdown-formatting/markdown-formatting/scripts/format_markdown.py"
+        formatter = Path(__file__).resolve().parents[2] / "markdown-formatting/scripts/format_markdown.py"
     contract = repo_root / ".agents/contracts/markdown-formatting.json"
     if not formatter.is_file() or not contract.is_file():
         return
@@ -648,6 +648,8 @@ def _check_surface(
         return findings
     if enabled_surface_ids is not None and surf_id and surf_id not in enabled_surface_ids:
         return findings
+    if surf_id == "unslop-contract" and implementation_root is None:
+        return findings
     kind = str(surface.get("kind", "file"))
     optional = bool(surface.get("optional", False))
     template = _template_path(surface, implementation_root)
@@ -709,7 +711,7 @@ def _check_surface(
         findings.extend(_check_hooks_path(repo_root, str(Path(rel).parent).replace("\\", "/")))
         return findings
 
-    if optional and not full.exists():
+    if optional and not full.exists() and surf_id != "unslop-contract":
         return findings
 
     validator = document_contracts.DOCUMENT_VALIDATORS.get(str(surface.get("validator", "")))

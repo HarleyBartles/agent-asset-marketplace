@@ -53,3 +53,7 @@ Do not hand-edit installed `.agents/skills/` projections or implement from the s
 - [Marketplace generation](../playbooks/marketplace-generation.md) - when vendored assets or manifests change.
 - [Skill authoring](../playbooks/skill-authoring.md) - when a skill changes.
 - [Repository doctrine](../playbooks/repo-doctrine.md) - when standards, doctrine, contracts, or routing change.
+
+## Unslop profile routing
+
+During repository implementation and result review, use `$unslop-profiles` when the change involves evidence claims, source-versus-generated ownership, or scope and lifecycle decisions. Keep corrections tied to concrete files or decisions; skip unrelated cues.
