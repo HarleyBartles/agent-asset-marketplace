@@ -89,7 +89,7 @@ def _profile(
         "Applicable workflow paths": f"- [Planning runbook]({workflow})",
         "Doctrine and skill references": f"- [Marketplace worker doctrine]({reference})",
         "Application example": (
-            "In a plan, replace an unsupported quality claim with the exact check and expected result."
+            "In a plan, replace an unsupported 'robust validation' claim with the exact check and expected result."
         ),
     }
     if missing_section:
@@ -152,6 +152,22 @@ def test_duplicate_profile_ids_are_rejected_across_declared_roots(tmp_path: Path
     assert any("duplicate profile id" in finding.lower() for finding in _module().validate(tmp_path))
 
 
+def test_nested_profile_roots_do_not_scan_the_same_file_twice(tmp_path: Path) -> None:
+    _repo(tmp_path)
+    _contract(tmp_path, [".agents/unslop", ".agents/unslop/team"])
+    _workflow(tmp_path)
+    _profile(tmp_path)
+    _profile(
+        tmp_path,
+        name="team/team.md",
+        profile_id="team-pattern",
+        workflow="../../runbooks/planning.md",
+        reference="../../doctrine/marketplace-worker-doctrine.md",
+    )
+
+    assert _module().validate(tmp_path) == []
+
+
 def test_profile_requires_operational_sections(tmp_path: Path) -> None:
     _repo(tmp_path)
     _contract(tmp_path)
@@ -159,6 +175,18 @@ def test_profile_requires_operational_sections(tmp_path: Path) -> None:
     _profile(tmp_path, missing_section="Corrective behavior")
 
     assert any("corrective behavior" in finding.lower() for finding in _module().validate(tmp_path))
+
+
+def test_profile_title_must_be_its_first_heading(tmp_path: Path) -> None:
+    _repo(tmp_path)
+    _contract(tmp_path)
+    _workflow(tmp_path)
+    profile = _profile(tmp_path)
+    text = profile.read_text(encoding="utf-8")
+    text = text.replace("# Unslop Profile: specific-claims", "# Notes\n\n# Unslop Profile: specific-claims", 1)
+    profile.write_text(text, encoding="utf-8")
+
+    assert any("first heading" in finding.lower() for finding in _module().validate(tmp_path))
 
 
 @pytest.mark.parametrize("broken", ["../doctrine/missing.md", "file:///outside/policy.md", "javascript:alert(1)"])
@@ -200,6 +228,9 @@ def test_profile_rejects_missing_workflow_and_workflow_without_profile_route(tmp
         "Do not use $unslop-profiles for this stage.",
         "Do not ever use $unslop-profiles for this stage.",
         "Never, under any circumstances, use $unslop-profiles here.",
+        "When planning, cannot use $unslop-profiles.",
+        "When doing anything, use $unslop-profiles.",
+        "When planning any task, use $unslop-profiles.",
         "Use $unslop-profiles for every task.",
     ],
 )
@@ -217,7 +248,10 @@ def test_valid_profile_can_repeat_its_cue_in_an_intentional_example_without_plug
     _repo(tmp_path)
     _contract(tmp_path)
     _workflow(tmp_path)
-    _profile(tmp_path)
+    profile = _profile(tmp_path)
+    content = profile.read_text(encoding="utf-8")
+    assert "robust validation" in content.split("## Recognition cues", 1)[1].split("## ", 1)[0]
+    assert "robust validation" in content.split("## Application example", 1)[1]
 
     assert not (tmp_path / ".agents/plugins/marketplace.json").exists()
     assert _module().validate(tmp_path) == []
