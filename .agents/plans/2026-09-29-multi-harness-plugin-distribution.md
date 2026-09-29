@@ -187,7 +187,7 @@ Devin-compatible portable plugin packages and starter config are included. Repo-
 
 - [x] **Step 1: Verify source coordinates.** Wild Bunch's local Game Studio manifest identifies `https://github.com/openai/plugins`; the official plugin path is `plugins/game-studio`, and its published branch is `main`. Architecture Pack is at `https://github.com/HarleyBartles/agent-asset-marketplace`, path `dist/plugins/architecture-pack`, branch `main`. Devin source-form proof is deferred.
 
-- [x] **Step 2: Write migration acceptance checks.** Require Codex declarations for only Game Studio and Architecture Pack, no checked-in plugin payloads or plugin-skill projections, repo/worktree-only availability, Marketplace Upgrade refresh to changed branch content, preservation of authored local skills, and an explicit decision about any remaining Marketplace submodule responsibilities.
+- [x] **Step 2: Write migration acceptance checks.** Require Codex declarations for Game Studio and Architecture Pack and preserve other deliberately selected repo plugins. Require no checked-in plugin payloads or plugin-skill projections, repo/worktree-only availability, Marketplace Upgrade refresh to changed branch content, preservation of authored local skills, and an explicit decision about any remaining Marketplace submodule responsibilities.
 
 - [x] **Step 3: Update the spec and plan with verified coordinates.** Recorded repository URLs, subdirectory paths, branches, and the responsible Wild Bunch agent boundary; no plugin content was copied into this repository.
 
@@ -215,7 +215,7 @@ Devin-compatible portable plugin packages and starter config are included. Repo-
 
 - [x] **Step 4: Complete artifact closeout.** No separate decision record is required for this delivery. Mark the spec and plan `completed-awaiting-retirement` for the implementation PR and retain both there.
 
-- [ ] **Step 5: Commit, push, and update the implementation Draft PR.** Let the tracked hook verify the staged snapshot, push the task branch, update existing Draft PR #343, and verify the PR head SHA contains generated packages, the completed spec and plan, and the implementation.
+- [x] **Step 5: Commit, push, and update the implementation Draft PR.** Published implementation commit `3d1f1a8c0` to open Draft PR #343. GitHub confirmed the PR head matched the pushed branch. The tracked staged apply/check gate passed; the completed spec and plan remain in the PR. A final documentation closeout records this publication.
 
 ## Planning-PR Boundary
 

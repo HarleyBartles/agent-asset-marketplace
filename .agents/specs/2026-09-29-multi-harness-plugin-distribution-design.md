@@ -1,6 +1,6 @@
 # Repo-Scoped Plugin Distribution Design
 
-> **Status:** Architectural specification. Codex is the first consumer target: preserve the working Marketplace, let consumer repos declare native repo-scoped Git plugin sources, and rely on the Codex Marketplace Upgrade action to refresh the marketplace snapshot and plugin payload. AOM provides the opt-in subscription standard and validation; it does not manage ambient installs. Devin-compatible portable packages remain in scope, while Devin repo installation and refresh proof is follow-up work. Consumer repos do not vendor plugin files or project plugin skills into `.agents/skills/`. The Wild Bunch migration is handed to an agent working in Wild Bunch. Claude Code packaging is out of scope.
+> **Status:** completed-awaiting-retirement. Codex is the first consumer target: preserve the working Marketplace, let consumer repos declare native repo-scoped Git plugin sources, and rely on the Codex Marketplace Upgrade action to refresh the marketplace snapshot and plugin payload. AOM provides the opt-in subscription standard and validation; it does not manage ambient installs. Devin-compatible portable packages remain in scope, while Devin repo installation and refresh proof is follow-up work. Consumer repos do not vendor plugin files or project plugin skills into `.agents/skills/`. The Wild Bunch migration is handed to an agent working in Wild Bunch. Claude Code packaging is out of scope.
 
 ## Problem
 
