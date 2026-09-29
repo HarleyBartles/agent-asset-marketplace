@@ -9,3 +9,5 @@ This source release separates agent capabilities from consumer repository policy
 - Generated index mesh files and commands have been retired with no replacement.
 
 Consumers should use the exact merged source commit SHA from the release handoff as their `marketplace-source` revision. Follow the [consumer runner migration guide](../skills/repo-shape/references/consumer-runner-migration.md) before removing copied ambient plugins or changing refresh and mesh calls. In particular, keep old subscriptions until the runner and tracked hook have completed the coherent cutover.
+
+For this release, pin marketplace source revision `b5ba27face374e86ca99fcce9da5b61d04c3ea69` (PR #338).
