@@ -33,7 +33,7 @@ Create or revise guidance only when the evidence supports a recurring pattern an
 
 Retire a profile when it has no reader or its useful guidance has been absorbed into an authoritative standard, doctrine, skill, or workflow. Explain the evidence and proposed destination so the consumer can review the retirement.
 
-Follow the adopted Unslop standard's profile shape and contract when working in a consumer repository. See `skills/repo-shape/references/unslop-standard.md` in the Marketplace source for that contract.
+Follow the adopted Unslop standard's profile shape and contract when working in a consumer repository. When the consumer adopts the standard, read its deployed copy at `.agents/standards/unslop/references/unslop-standard.md`. If the consumer has not adopted it, use the operational profile shape described above; do not assume a Marketplace source checkout is present.
 
 ## Validation Boundary
 

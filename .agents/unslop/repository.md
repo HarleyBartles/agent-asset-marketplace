@@ -10,17 +10,15 @@ Agents can mistake remembered, reported, generated, or convenient state for curr
 
 ## Recognition cues
 
-- A claim about a file, test, PR, issue, merge, generated projection, or published state is supported only by memory, a summary, an unverified report, or stale output.
-- Distinct evidence owners are collapsed, such as treating a Linear plan as GitHub implementation proof or a generated projection as canonical source.
-- A proposed cleanup, refactor, publication, or completion claim has no named source seam, validation result, or owning-system evidence.
-- The change adds adjacent work that is not required by the approved issue or plan.
+- A plan, review note, worker return, or PR summary calls an action complete but offers no direct evidence from the changed output or published state.
+- A proposed correction is based on a generated projection or remembered behavior without checking the source or current result.
+- The diff adds adjacent work whose connection to the approved task is not apparent.
 
 ## Corrective behavior
 
-- Inspect the owning source and state the evidence that supports each material claim. Use current tracked files for repository facts, Linear for issue facts, and GitHub for PR facts.
-- Keep planning intent, implementation, generated output, and publication evidence distinct. Use the smallest surface that can prove the claim.
-- Narrow changes to approved scope. For lifecycle actions, obtain evidence from the owning surface and preserve active work.
-- Report what was verified and what remains unverified. Do not label a result complete when the evidence does not support it.
+- Open the specific changed file, test output, generated result, or published record behind the claim. Confirm that it shows the stated outcome.
+- Compare the correction to the approved task and actual diff. If its connection is unclear, remove the adjacent change or explain why it is required.
+- When direct evidence is unavailable, label the claim unverified and leave dependent completion or lifecycle decisions open.
 
 ## False-positive and override boundaries
 

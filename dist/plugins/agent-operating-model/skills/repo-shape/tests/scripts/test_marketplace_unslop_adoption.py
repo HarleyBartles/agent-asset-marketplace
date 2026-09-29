@@ -39,4 +39,4 @@ def test_marketplace_profile_routes_only_its_declared_workflows() -> None:
         assert f"](../runbooks/{workflow.name})" in text
         content = workflow.read_text(encoding="utf-8")
         section = content.split("## Unslop profile routing", 1)[1].split("\n## ", 1)[0]
-        assert "$unslop-profiles" in section
+        assert unslop_standard._routes_to_profile(section)

@@ -53,10 +53,16 @@ def _contract(root: Path, roots: list[str] | None = None) -> Path:
     return path
 
 
-def _workflow(root: Path, path: str = ".agents/runbooks/planning.md", *, routed: bool = True) -> None:
+def _workflow(
+    root: Path,
+    path: str = ".agents/runbooks/planning.md",
+    *,
+    routed: bool = True,
+    route_text: str | None = None,
+) -> None:
     target = root / path
     target.parent.mkdir(parents=True, exist_ok=True)
-    guidance = (
+    guidance = route_text or (
         "Use $unslop-profiles to find and apply the relevant profile during planning." if routed else "Plan the work."
     )
     target.write_text(f"# Planning\n\n## Unslop profile routing\n\n{guidance}\n", encoding="utf-8")
@@ -155,7 +161,7 @@ def test_profile_requires_operational_sections(tmp_path: Path) -> None:
     assert any("corrective behavior" in finding.lower() for finding in _module().validate(tmp_path))
 
 
-@pytest.mark.parametrize("broken", ["../doctrine/missing.md"])
+@pytest.mark.parametrize("broken", ["../doctrine/missing.md", "file:///outside/policy.md", "javascript:alert(1)"])
 def test_profile_rejects_broken_local_references(tmp_path: Path, broken: str) -> None:
     _repo(tmp_path)
     _contract(tmp_path)
@@ -163,6 +169,15 @@ def test_profile_rejects_broken_local_references(tmp_path: Path, broken: str) ->
     _profile(tmp_path, reference=broken)
 
     assert any("reference" in finding.lower() or "link" in finding.lower() for finding in _module().validate(tmp_path))
+
+
+def test_profile_allows_external_http_authority_reference(tmp_path: Path) -> None:
+    _repo(tmp_path)
+    _contract(tmp_path)
+    _workflow(tmp_path)
+    _profile(tmp_path, reference="https://example.invalid/authoritative-policy")
+
+    assert _module().validate(tmp_path) == []
 
 
 def test_profile_rejects_missing_workflow_and_workflow_without_profile_route(tmp_path: Path) -> None:
@@ -177,6 +192,16 @@ def test_profile_rejects_missing_workflow_and_workflow_without_profile_route(tmp
     _profile(tmp_path, workflow="../runbooks/missing.md")
     findings = _module().validate(tmp_path)
     assert any("workflow" in finding.lower() for finding in findings)
+
+
+def test_profile_route_requires_an_affirmative_action_not_a_negative_mention(tmp_path: Path) -> None:
+    _repo(tmp_path)
+    _contract(tmp_path)
+    _workflow(tmp_path, route_text="Do not use `$unslop-profiles` for this stage.")
+    _profile(tmp_path)
+
+    findings = _module().validate(tmp_path)
+    assert any("route" in finding.lower() or "unslop-profiles" in finding.lower() for finding in findings)
 
 
 def test_valid_profile_can_repeat_its_cue_in_an_intentional_example_without_plugin_installation(tmp_path: Path) -> None:

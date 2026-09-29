@@ -81,14 +81,27 @@ def _links(section: str) -> list[str]:
 
 def _resolve_local_link(repo_root: Path, document: Path, target: str, *, label: str) -> Path | None:
     parts = urlsplit(target)
-    if parts.scheme or parts.netloc or not parts.path:
+    if parts.scheme.lower() in {"http", "https"} and parts.netloc:
         return None
+    if parts.scheme or parts.netloc or not parts.path:
+        raise ValueError(f"{label} must be repository-relative or an HTTP(S) URL: {target}")
     candidate = (document.parent / unquote(parts.path)).resolve()
     if not _contained(repo_root, candidate, label=label):
         raise ValueError(f"{label} escapes the repository: {target}")
     if not candidate.is_file():
         raise ValueError(f"{label} does not resolve: {target}")
     return candidate
+
+
+def _routes_to_profile(section: str) -> bool:
+    """Require an affirmative workflow action rather than a bare skill mention."""
+    action = re.compile(r"\b(?:use|invoke|read|apply|consult)\s+`?\$unslop-profiles`?\b", re.IGNORECASE)
+    negation = re.compile(r"\b(?:do\s+not|don't|never|must\s+not|should\s+not|avoid)\s+$", re.IGNORECASE)
+    for line in section.splitlines():
+        for match in action.finditer(line):
+            if not negation.search(line[: match.start()]):
+                return True
+    return False
 
 
 def _tracked(repo_root: Path, path: Path) -> bool:
@@ -155,9 +168,9 @@ def _profile_findings(repo_root: Path, path: Path, seen_ids: set[str]) -> list[s
             continue
         _, workflow_sections = _sections(workflow.read_text(encoding="utf-8"))
         route = workflow_sections.get("Unslop profile routing", "")
-        if "$unslop-profiles" not in route:
+        if not _routes_to_profile(route):
             findings.append(
-                f"workflow lacks $unslop-profiles in its 'Unslop profile routing' section "
+                f"workflow must direct the agent to use $unslop-profiles in its 'Unslop profile routing' section "
                 f"({workflow.relative_to(repo_root).as_posix()})"
             )
     return findings
