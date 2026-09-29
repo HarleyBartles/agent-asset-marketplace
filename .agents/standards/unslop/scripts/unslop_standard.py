@@ -96,9 +96,17 @@ def _resolve_local_link(repo_root: Path, document: Path, target: str, *, label: 
 def _routes_to_profile(section: str) -> bool:
     """Require an affirmative, task-scoped workflow action rather than a mention."""
     action = re.compile(r"\b(?:use|invoke|read|apply|consult)\s+`?\$unslop-profiles`?\b", re.IGNORECASE)
-    negation = re.compile(r"\b(?:do\s+not|don't|never|must\s+not|should\s+not)\b.*$", re.IGNORECASE)
+    negation = re.compile(
+        r"\b(?:do\s+not|don't|dont|never|must\s+not|mustn't|should\s+not|shouldn't|"
+        r"cannot|can't|can\s+not|may\s+not|will\s+not|won't|avoid)\b.*$",
+        re.IGNORECASE,
+    )
     scope = re.compile(r"\b(?:when|where|while|during|if|for)\b", re.IGNORECASE)
-    global_scope = re.compile(r"\b(?:every|all|any)\s+(?:tasks?|requests?|workflows?|work)\b", re.IGNORECASE)
+    global_scope = re.compile(
+        r"\b(?:every|all|any)\b[^.;:!?]{0,50}\b(?:tasks?|requests?|workflows?|work|changes?|cases?|reviews?)\b"
+        r"|\b(?:anything|everything)\b|\ball\s+the\s+time\b",
+        re.IGNORECASE,
+    )
     for line in section.splitlines():
         for clause in re.split(r"[.!?;]+", line):
             for match in action.finditer(clause):
@@ -128,9 +136,10 @@ def _profile_findings(repo_root: Path, path: Path, seen_ids: set[str]) -> list[s
     except (OSError, UnicodeError) as exc:
         return [f"profile cannot be read ({relative}): {exc}"]
     markdown, sections = _sections(text)
-    match = PROFILE_TITLE.search(markdown)
+    first_heading = re.search(r"(?m)^#{1,6}\s+.+?\s*$", markdown)
+    match = PROFILE_TITLE.fullmatch(first_heading.group(0)) if first_heading else None
     if not match:
-        findings.append(f"profile requires '# Unslop Profile: <stable-id>' title ({relative})")
+        findings.append(f"profile requires '# Unslop Profile: <stable-id>' as its first heading ({relative})")
         profile_id = ""
     else:
         profile_id = match.group(1)
@@ -207,7 +216,7 @@ def validate(repo_root: Path) -> list[str]:
             findings.append(str(exc))
     if len(normalized_roots) != len(set(normalized_roots)):
         findings.append("profile_roots contains duplicate paths")
-    profile_paths: list[tuple[Path, Path]] = []
+    profile_paths: dict[Path, tuple[Path, Path]] = {}
     for root_value in normalized_roots:
         profile_root = (repo_root / root_value).resolve()
         if not _contained(repo_root, profile_root, label="profile root"):
@@ -219,11 +228,12 @@ def validate(repo_root: Path) -> list[str]:
         if not profile_root.exists():
             continue
         try:
-            profile_paths.extend((profile_root, path) for path in profile_root.rglob("*.md"))
+            for path in profile_root.rglob("*.md"):
+                profile_paths.setdefault(path.resolve(), (profile_root, path))
         except OSError as exc:
             findings.append(f"profile root cannot be read ({root_value}): {exc}")
     seen_ids: set[str] = set()
-    for profile_root, profile in sorted(profile_paths, key=lambda item: item[1]):
+    for profile_root, profile in sorted(profile_paths.values(), key=lambda item: item[1]):
         escapes_root = not _contained(profile_root, profile, label="profile")
         escapes_repo = not _contained(repo_root, profile, label="profile")
         if escapes_root or escapes_repo:
