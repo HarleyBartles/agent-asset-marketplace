@@ -94,12 +94,17 @@ def _resolve_local_link(repo_root: Path, document: Path, target: str, *, label: 
 
 
 def _routes_to_profile(section: str) -> bool:
-    """Require an affirmative workflow action rather than a bare skill mention."""
+    """Require an affirmative, task-scoped workflow action rather than a mention."""
     action = re.compile(r"\b(?:use|invoke|read|apply|consult)\s+`?\$unslop-profiles`?\b", re.IGNORECASE)
-    negation = re.compile(r"\b(?:do\s+not|don't|never|must\s+not|should\s+not|avoid)\s+$", re.IGNORECASE)
+    negation = re.compile(r"\b(?:do\s+not|don't|never|must\s+not|should\s+not)\b.*$", re.IGNORECASE)
+    scope = re.compile(r"\b(?:when|where|while|during|if|for)\b", re.IGNORECASE)
+    global_scope = re.compile(r"\b(?:every|all|any)\s+(?:tasks?|requests?|workflows?|work)\b", re.IGNORECASE)
     for line in section.splitlines():
-        for match in action.finditer(line):
-            if not negation.search(line[: match.start()]):
+        for clause in re.split(r"[.!?;]+", line):
+            for match in action.finditer(clause):
+                prefix = clause[: match.start()]
+                if negation.search(prefix) or global_scope.search(clause) or not scope.search(clause):
+                    continue
                 return True
     return False
 
