@@ -257,13 +257,19 @@ def test_hosted_hook_reconstructs_commit_as_staged_snapshot(tmp_path: Path) -> N
     subprocess.run(["git", "add", "retired-plan.md"], cwd=repo, check=True)
     subprocess.run(["git", "commit", "--no-verify", "-m", "add completed plan"], cwd=repo, check=True)
     _install_repo_standards(repo)
+    assert not (repo / ".agents/skills").exists()
+    (repo / ".agents/plugins/marketplace.json").unlink()
+    assert not (repo / ".agents/plugins/marketplace.json").exists()
     tools = repo / "tools"
     tools.mkdir(exist_ok=True)
     (tools / "run.py").write_text(
         """import os
 import subprocess
 import sys
+from pathlib import Path
 
+if Path(".agents/skills").exists() or Path(".agents/plugins/marketplace.json").exists():
+    raise SystemExit("ambient plugin projections are not part of hosted validation")
 if os.environ.get("REPO_STANDARDS_STAGED_SNAPSHOT") != "1":
     raise SystemExit("missing staged-snapshot marker")
 changed = subprocess.run(
@@ -372,7 +378,7 @@ def test_command_declaration_exposes_generated_paths(tmp_path: Path) -> None:
             {
                 "apply": ["@python", "tools/run.py", "ci", "--apply"],
                 "check": ["@python", "tools/run.py", "ci", "--check"],
-                "generated_paths": [".agents/skills/**", "**/INDEX.md"],
+                "generated_paths": [".agents/skills/**", "dist/**"],
             }
         ),
         encoding="utf-8",
@@ -380,7 +386,7 @@ def test_command_declaration_exposes_generated_paths(tmp_path: Path) -> None:
     declaration, findings = repo_standards._check_declared_commands(tmp_path)
     assert findings == []
     assert declaration is not None
-    assert declaration.generated_paths == (".agents/skills/**", "**/INDEX.md")
+    assert declaration.generated_paths == (".agents/skills/**", "dist/**")
 
 
 @pytest.mark.parametrize(

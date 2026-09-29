@@ -77,11 +77,9 @@ def test_allow_shared_checkout_requires_apply():
 def test_resolve_ci_order():
     assert run.resolve_targets(["ci"]) == ["ci"]
     targets = run._resolve_ci_deps()
-    assert targets.index("lint") < targets.index("repo-standards") < targets.index("marketplace")
-    assert targets.index("inventory") < targets.index("installed-skills")
-    assert targets.index("installed-skills") < targets.index("repo-index")
-    assert targets.index("repo-index") < targets.index("mesh")
-    assert targets.index("mesh") < targets.index("validate")
+    assert targets.index("lint") < targets.index("repo-standards") < targets.index("validate")
+    assert "installed-skills" not in targets
+    assert not {"repo-index", "mesh", "index-mesh"}.intersection(targets)
     assert "archive-links" not in targets
 
 
@@ -93,6 +91,7 @@ def test_ci_runs_only_the_three_repository_owned_test_suites(monkeypatch):
         calls.append((cmd, env))
 
     monkeypatch.setattr(run, "_run", fake_run)
+    monkeypatch.setattr(run, "_check_tracked_line_endings", lambda: None)
     ctx = run.Ctx(mode="check", base_ref=None, allow_shared=False, verbose=False)
 
     run.run_targets(["ci"], ctx)
@@ -115,31 +114,9 @@ def test_resolve_all_aliases_to_ci():
 
 
 def test_resolve_multiple_targets_deduped():
-    targets = run.resolve_targets(["mesh", "installed-skills"])
-    assert "mesh" in targets
+    targets = run.resolve_targets(["installed-skills", "validate"])
     assert "installed-skills" in targets
-    assert targets.index("installed-skills") < targets.index("repo-index") < targets.index("mesh")
-
-
-def test_runner_forwards_allow_shared_checkout(monkeypatch):
-    calls = []
-
-    def fake_run(cmd, ctx):
-        calls.append(cmd)
-
-    monkeypatch.setattr(run, "_run", fake_run)
-    monkeypatch.setattr(run, "_git_diff_check", lambda ctx: None)
-    monkeypatch.setattr(run, "_git_diff_exit_code", lambda ctx: None)
-
-    ctx = run.Ctx(mode="apply", base_ref=None, allow_shared=True, verbose=False)
-    run.run_targets(["mesh"], ctx)
-
-    mesh_cmd = next(
-        (c for c in calls if "generate_index_mesh.py" in " ".join(c) and "--apply" in c),
-        None,
-    )
-    assert mesh_cmd is not None
-    assert "--allow-shared-checkout" in mesh_cmd
+    assert "validate" in targets
 
 
 def test_runner_check_mode_no_allow_shared(monkeypatch):
@@ -151,9 +128,10 @@ def test_runner_check_mode_no_allow_shared(monkeypatch):
     monkeypatch.setattr(run, "_run", fake_run)
     monkeypatch.setattr(run, "_git_diff_check", lambda ctx: None)
     monkeypatch.setattr(run, "_git_diff_exit_code", lambda ctx: None)
+    monkeypatch.setattr(run, "_check_tracked_line_endings", lambda: None)
 
     ctx = run.Ctx(mode="check", base_ref=None, allow_shared=True, verbose=False)
-    run.run_targets(["repo-standards", "mesh"], ctx)
+    run.run_targets(["repo-standards", "validate"], ctx)
 
     for cmd in calls:
         assert "--allow-shared-checkout" not in " ".join(cmd)
@@ -304,6 +282,7 @@ def test_ci_apply_does_not_run_manual_review_preflight(monkeypatch):
     monkeypatch.setattr(run, "_run", fake_run)
     monkeypatch.setattr(run, "_git_diff_check", lambda ctx: None)
     monkeypatch.setattr(run, "_git_diff_exit_code", lambda ctx: None)
+    monkeypatch.setattr(run, "_check_tracked_line_endings", lambda: None)
 
     ctx = run.Ctx(mode="apply", base_ref=None, allow_shared=True, verbose=False)
     run.run_targets(run.resolve_targets(["ci"]), ctx)
@@ -319,6 +298,7 @@ def test_validate_does_not_call_git_diff_exit_code(monkeypatch):
 
     monkeypatch.setattr(run, "_git_diff_exit_code", fake_git_diff_exit_code)
     monkeypatch.setattr(run, "_git_diff_check", lambda ctx: None)
+    monkeypatch.setattr(run, "_check_tracked_line_endings", lambda: None)
     monkeypatch.setattr(run, "_run", lambda cmd, ctx: None)
 
     ctx = run.Ctx(mode="check", base_ref=None, allow_shared=False, verbose=False)
@@ -327,40 +307,28 @@ def test_validate_does_not_call_git_diff_exit_code(monkeypatch):
     assert "git_diff_exit_code" not in calls
 
 
-def test_index_mesh_target_delegates_to_bundled(monkeypatch):
+@pytest.mark.parametrize("target", [("validate",), ("ci",)])
+def test_validation_targets_run_the_focused_markdown_link_validator(monkeypatch, target):
     calls = []
 
-    def fake_run(cmd, ctx):
+    def fake_run(cmd, ctx, *, env=None):
         calls.append(cmd)
 
     monkeypatch.setattr(run, "_run", fake_run)
+    monkeypatch.setattr(run, "_git_diff_check", lambda ctx: None)
+    monkeypatch.setattr(run, "_git_diff_exit_code", lambda ctx: None)
+    monkeypatch.setattr(run, "_check_tracked_line_endings", lambda: None)
 
-    ctx = run.Ctx(mode="apply", base_ref=None, allow_shared=False, verbose=False)
-    run.run_targets(["index-mesh"], ctx)
+    ctx = run.Ctx(mode="check", base_ref=None, allow_shared=False, verbose=False)
+    run.run_targets(list(target), ctx)
 
-    mesh_cmd = next(
-        (c for c in calls if "generate_index_mesh.py" in " ".join(c) and "--apply" in c),
-        None,
-    )
-    assert mesh_cmd is not None
+    assert [sys.executable, "tools/validate_markdown_links.py", "--check"] in calls
 
 
-def test_index_mesh_target_forwards_allow_shared_checkout(monkeypatch):
-    calls = []
-
-    def fake_run(cmd, ctx):
-        calls.append(cmd)
-
-    monkeypatch.setattr(run, "_run", fake_run)
-
-    ctx = run.Ctx(mode="apply", base_ref=None, allow_shared=True, verbose=False)
-    run.run_targets(["index-mesh"], ctx)
-
-    mesh_cmd = next(
-        (c for c in calls if "generate_index_mesh.py" in " ".join(c) and "--allow-shared-checkout" in c),
-        None,
-    )
-    assert mesh_cmd is not None
+@pytest.mark.parametrize("target", ["repo-index", "mesh", "index-mesh"])
+def test_retired_index_targets_are_rejected(target: str) -> None:
+    with pytest.raises(ValueError, match="unknown target"):
+        run.resolve_targets([target])
 
 
 def test_refresh_skills_target_delegates_to_bundled(monkeypatch):
@@ -379,3 +347,25 @@ def test_refresh_skills_target_delegates_to_bundled(monkeypatch):
         None,
     )
     assert refresh_cmd is not None
+
+
+@pytest.mark.parametrize("phase", ["inventory", "project", "shared-references", "all"])
+def test_marketplace_validator_retains_non_index_phases(phase: str) -> None:
+    result = subprocess.run(
+        [sys.executable, str(ROOT / "tools" / "validate_marketplace.py"), "--phase", phase],
+        cwd=ROOT,
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode == 0, result.stderr
+
+
+def test_marketplace_validator_rejects_retired_index_phase() -> None:
+    result = subprocess.run(
+        [sys.executable, str(ROOT / "tools" / "validate_marketplace.py"), "--phase", "index"],
+        cwd=ROOT,
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode == 2
+    assert "invalid choice" in result.stderr

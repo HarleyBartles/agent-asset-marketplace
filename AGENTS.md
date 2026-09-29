@@ -4,7 +4,7 @@
 
 This repository is the source of truth for agent-facing assets. It is an agent asset marketplace, not just a research ledger.
 
-The primary durable output is market-consumable assets; support surfaces exist to help them, not substitute for them. Codex plugin first; generated GPT-safe skill zips second. The tracked agent mesh lives under `.agents/`. Root `AGENTS.md` is the local law node; `.agents/doctrine/mesh-policy.md` is the canonical mesh statement.
+The primary durable output is market-consumable assets; support surfaces exist to help them, not substitute for them. Codex plugin first; generated GPT-safe skill zips second. Root `AGENTS.md` is the local law node; scoped `AGENTS.md` files route repository guidance.
 
 ## Source-of-truth split
 
@@ -24,7 +24,7 @@ Canonical skill source lives under `skills/`; reusable authored material lives u
 
 `src/marketplace/` implements definition validation and package assembly. `src/packages/` holds separately built Python package source. `dist/` is the committed distribution output: self-contained plugins under `dist/plugins/`, wheels under `dist/wheels/`, and generated product metadata in `dist/manifest.json` and `dist/plugin-roots.json`. Do not edit built plugin trees to change behavior.
 
-Skill tests live with their source in each skill's `tests/` directory, including script tests and pressure cases. The build copies ship-ready test material with each installed skill; evaluator-only material and run results stay out of the package. Repository, build, shipped-plugin, and evaluation-harness suites have distinct homes under `tests/`. CI runs the first three suites as separate targets. `.agents/skills/` is this repository's installed operating mesh, not marketplace source. Inspect `src/plugin-definitions/` for product membership and the generated marketplace inventory for shipped products.
+Skill tests live with their source in each skill's `tests/` directory, including script tests and pressure cases. The build copies ship-ready test material with each installed skill; evaluator-only material and run results stay out of the package. Repository, build, shipped-plugin, and evaluation-harness suites have distinct homes under `tests/`. CI runs the first three suites as separate targets. `.agents/skills/` is this repository's installed operating guidance, not marketplace source. Inspect `src/plugin-definitions/` for product membership and the marketplace manifests for shipped products.
 
 ## Publication proof for repo work
 
@@ -50,11 +50,10 @@ Security review must apply the relevant profile and the repository lenses in `.a
 
 ## Routing pointers
 
-- [Mesh policy](.agents/doctrine/mesh-policy.md)
 - Scoped law lives in `.devin/rules/*.md` (including [PR workflow](.devin/rules/pr.md))
 - [Worker guidance](.agents/playbooks/repo-doctrine.md) and [implementing workflow](.agents/runbooks/implementing.md)
-- [Runbook inventory](.agents/runbooks/INDEX.md), [runbook stage routing](.agents/runbooks/AGENTS.md), and [repo runbook policy](.agents/doctrine/repo-runbook-policy.md)
-- [Playbook inventory](.agents/playbooks/INDEX.md) and [playbook routing](.agents/playbooks/AGENTS.md)
+- [Runbook stage routing](.agents/runbooks/AGENTS.md), [implementation runbook](.agents/runbooks/implementing.md), and [repo runbook policy](.agents/doctrine/repo-runbook-policy.md)
+- [Playbook routing](.agents/playbooks/AGENTS.md), [testing playbook](.agents/playbooks/testing.md), and [security considerations](.agents/playbooks/security.md)
 - [Testing instructions](.agents/playbooks/testing.md), [code style guidelines](.agents/playbooks/code-style.md), [review guidelines](.agents/runbooks/code-review.md), and [PR instructions](.agents/runbooks/pr.md)
 - [Contributing](CONTRIBUTING.md) and [security considerations](.agents/playbooks/security.md)
 - [Completed-artifact custody](.agents/doctrine/completed-artifacts.md) and the [ADR log](docs/decisions/README.md) for the in-flight, removal, and durable-decision boundary

@@ -40,7 +40,10 @@ def test_scaffold_runbooks_stub_is_stage_composition_root(tmp_path: Path) -> Non
     content = mod._runbook_content("implementing.md")
     for heading in (
         "## When",
-        "## Required skills",
+        "## Required capabilities",
+        "## Optional capabilities",
+        "## Required repository-owned skills",
+        "## Optional repository-owned skills",
         "## Composition",
         "## Doctrine and contracts",
         "## Local commands and paths",
@@ -52,6 +55,37 @@ def test_scaffold_runbooks_stub_is_stage_composition_root(tmp_path: Path) -> Non
     assert "completing-plans.md" not in mod.RUNBOOK_TITLES
 
 
+def test_runbook_scaffold_routes_only_to_available_playbooks() -> None:
+    spec = importlib.util.spec_from_file_location("scaffold_runbooks_routes_test", SKILL_ROOT / "scaffold_runbooks.py")
+    mod = importlib.util.module_from_spec(spec)
+    assert spec.loader is not None
+    spec.loader.exec_module(mod)
+
+    without_playbooks = mod._runbook_content("implementing.md", set())
+    with_code_style = mod._runbook_content("implementing.md", {"code-style.md"})
+
+    assert "## Playbook routing\n\nNone." in without_playbooks
+    assert "../playbooks/" not in without_playbooks
+    assert "[Code style](../playbooks/code-style.md)" in with_code_style
+    assert "../playbooks/testing.md" not in with_code_style
+
+
+def test_playbook_scaffold_omits_runbook_routes_when_runbook_standard_is_unselected() -> None:
+    spec = importlib.util.spec_from_file_location(
+        "scaffold_playbooks_routes_test", SKILL_ROOT / "scaffold_playbooks.py"
+    )
+    mod = importlib.util.module_from_spec(spec)
+    assert spec.loader is not None
+    spec.loader.exec_module(mod)
+
+    standalone = mod._playbook_content("code-style.md", include_runbook_routes=False)
+    composed = mod._playbook_content("code-style.md", include_runbook_routes=True)
+
+    assert "## Runbook routing\n\nNone." in standalone
+    assert "../runbooks/" not in standalone
+    assert "[Implementation](../runbooks/implementing.md)" in composed
+
+
 def test_scaffold_playbooks_stub_is_topical_composition(tmp_path: Path) -> None:
     spec = importlib.util.spec_from_file_location("scaffold_playbooks_under_test", SKILL_ROOT / "scaffold_playbooks.py")
     mod = importlib.util.module_from_spec(spec)
@@ -60,7 +94,10 @@ def test_scaffold_playbooks_stub_is_topical_composition(tmp_path: Path) -> None:
     content = mod._playbook_content("testing.md")
     for heading in (
         "## When",
-        "## Required skills",
+        "## Required capabilities",
+        "## Optional capabilities",
+        "## Required repository-owned skills",
+        "## Optional repository-owned skills",
         "## Composition",
         "## Doctrine and contracts",
         "## Local commands and paths",
@@ -75,7 +112,10 @@ def test_scaffold_playbooks_stub_is_topical_composition(tmp_path: Path) -> None:
 def _composition_document(extra_heading: str, links: str = "") -> str:
     headings = (
         "When",
-        "Required skills",
+        "Required capabilities",
+        "Optional capabilities",
+        "Required repository-owned skills",
+        "Optional repository-owned skills",
         "Composition",
         "Doctrine and contracts",
         "Local commands and paths",
@@ -91,7 +131,7 @@ def test_runbook_composition_reports_missing_required_sections(tmp_path: Path) -
     runbooks.mkdir(parents=True)
     (runbooks / "testing.md").write_text("# Testing\n\nLocal commands only.\n", encoding="utf-8")
     findings = repo_standards._check_composition_graph(tmp_path)
-    assert any("testing.md" in finding and "Required skills" in finding for finding in findings)
+    assert any("testing.md" in finding and "Required capabilities" in finding for finding in findings)
 
 
 def test_composition_graph_accepts_reciprocal_playbook_route(tmp_path: Path) -> None:
@@ -240,10 +280,24 @@ def test_runbook_composition_ignores_agents_md_and_absent_dir(tmp_path: Path) ->
     assert repo_standards._check_composition_graph(tmp_path) == []
 
 
-def test_runbook_composition_ignores_generated_index(tmp_path: Path) -> None:
+def test_runbook_composition_works_without_generated_index(tmp_path: Path) -> None:
     runbooks = tmp_path / ".agents" / "runbooks"
     runbooks.mkdir(parents=True)
-    (runbooks / "INDEX.md").write_text("# Index\n", encoding="utf-8")
+    (runbooks / "implementing.md").write_text(
+        "# Implementing\n\n"
+        "## When\n\nUse it.\n\n"
+        "## Required capabilities\n\nNone.\n\n"
+        "## Optional capabilities\n\nNone.\n\n"
+        "## Required repository-owned skills\n\nNone.\n\n"
+        "## Optional repository-owned skills\n\nNone.\n\n"
+        "## Composition\n\nCompose it.\n\n"
+        "## Doctrine and contracts\n\nRead doctrine.\n\n"
+        "## Local commands and paths\n\nRun commands.\n\n"
+        "## Evidence contract\n\nRecord evidence.\n\n"
+        "## Prohibited combinations\n\nNone.\n\n"
+        "## Playbook routing\n\nNone.\n",
+        encoding="utf-8",
+    )
     assert repo_standards._check_composition_graph(tmp_path) == []
 
 
@@ -279,7 +333,10 @@ def test_scaffold_pr_template_carries_composition_sections() -> None:
     content = mod._runbook_content("pr.md")
     for heading in (
         "## When",
-        "## Required skills",
+        "## Required capabilities",
+        "## Optional capabilities",
+        "## Required repository-owned skills",
+        "## Optional repository-owned skills",
         "## Composition",
         "## Doctrine and contracts",
         "## Local commands and paths",
@@ -287,3 +344,71 @@ def test_scaffold_pr_template_carries_composition_sections() -> None:
         "## Prohibited combinations",
     ):
         assert heading in content
+
+
+def test_composition_graph_uses_policy_mapped_custom_homes(tmp_path: Path) -> None:
+    workflows = tmp_path / "engineering" / "workflows"
+    topics = tmp_path / "engineering" / "topics"
+    workflows.mkdir(parents=True)
+    topics.mkdir(parents=True)
+    (workflows / "implementing.md").write_text(
+        _composition_document("Playbook routing", "- [Testing](../topics/missing.md)"), encoding="utf-8"
+    )
+    (topics / "testing.md").write_text(
+        _composition_document("Runbook routing", "- [Implementation](../workflows/implementing.md)"), encoding="utf-8"
+    )
+    (tmp_path / ".agents" / "doctrine").mkdir(parents=True)
+    (tmp_path / ".agents" / "doctrine" / "repo-runbook-policy.md").write_text(
+        "# Policy\n\n## Standard runbooks\n\n"
+        "| Standard runbook | Local path | Status |\n| --- | --- | --- |\n"
+        "| implementing.md | `engineering/workflows/implementing.md` | required |\n\n"
+        "## Standard playbooks\n\n"
+        "| Standard playbook | Local path | Status |\n| --- | --- | --- |\n"
+        "| testing.md | `engineering/topics/testing.md` | required |\n",
+        encoding="utf-8",
+    )
+    findings = repo_standards._check_composition_graph(tmp_path)
+    assert any("missing.md" in finding and "does not resolve" in finding for finding in findings)
+
+
+def test_runbook_surface_validates_declared_custom_home_without_default_directory(tmp_path: Path) -> None:
+    workflows = tmp_path / "engineering" / "workflows"
+    topics = tmp_path / "engineering" / "topics"
+    workflows.mkdir(parents=True)
+    topics.mkdir(parents=True)
+    (workflows / "implementing.md").write_text(
+        _capability_composition_document("Playbook routing", "- [Testing](../topics/testing.md)"), encoding="utf-8"
+    )
+    (topics / "testing.md").write_text(
+        _capability_composition_document("Runbook routing", "- [Implementation](../workflows/implementing.md)"),
+        encoding="utf-8",
+    )
+    policy = tmp_path / ".agents/doctrine/repo-runbook-policy.md"
+    policy.parent.mkdir(parents=True)
+    policy.write_text(
+        "## Standard runbooks\n\n| Name | Local path | Status |\n| --- | --- | --- |\n"
+        "| implementing.md | `engineering/workflows/implementing.md` | required |\n\n"
+        "## Standard playbooks\n\n| Name | Local path | Status |\n| --- | --- | --- |\n"
+        "| testing.md | `engineering/topics/testing.md` | required |\n",
+        encoding="utf-8",
+    )
+    surface = {"id": "runbook-set", "path": ".agents/runbooks", "kind": "directory"}
+
+    assert repo_standards._check_surface(tmp_path, surface, set()) == []
+    assert not (tmp_path / ".agents/runbooks").exists()
+
+
+def _capability_composition_document(route_heading: str, routes: str) -> str:
+    return (
+        "# Workflow\n\n## When\n\nUse this workflow.\n\n"
+        "## Required capabilities\n\n- Verify the changed behavior.\n\n"
+        "## Optional capabilities\n\nNone.\n\n"
+        "## Required repository-owned skills\n\nNone.\n\n"
+        "## Optional repository-owned skills\n\nNone.\n\n"
+        "## Composition\n\nSelect suitable runtime providers.\n\n"
+        "## Doctrine and contracts\n\nUse declared policy.\n\n"
+        "## Local commands and paths\n\nUse declared paths.\n\n"
+        "## Evidence contract\n\nRecord evidence.\n\n"
+        "## Prohibited combinations\n\nNone.\n\n"
+        f"## {route_heading}\n\n{routes}\n"
+    )

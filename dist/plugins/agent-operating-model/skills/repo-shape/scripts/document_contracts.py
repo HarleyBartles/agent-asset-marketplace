@@ -63,7 +63,6 @@ def _require_sections(path: Path, names: tuple[str, ...]) -> list[Finding]:
 
 _COMPOSITION = (
     "When",
-    "Required skills",
     "Composition",
     "Doctrine and contracts",
     "Local commands and paths",
@@ -71,15 +70,84 @@ _COMPOSITION = (
     "Prohibited combinations",
 )
 
+_CAPABILITY_REQUIREMENTS = (
+    "Required capabilities",
+    "Optional capabilities",
+    "Required repository-owned skills",
+    "Optional repository-owned skills",
+)
+
+
+def _check_composition_document(path: Path, route_heading: str) -> list[Finding]:
+    if not path.is_file():
+        return [
+            _finding("missing-document", path, f"missing document: {path}", "create the required consumer document")
+        ]
+    sections = _sections(path)
+    findings = [
+        _finding(
+            "empty-" + name.lower().replace(" ", "-"),
+            path,
+            f"section has no live content: {name}",
+            f"write repository-owned {name} content",
+        )
+        for name in (*_COMPOSITION, route_heading)
+        if not sections.get(name) or _PLACEHOLDER.fullmatch(sections.get(name, "").strip("- \t."))
+    ]
+    has_new_contract = any(name in sections for name in _CAPABILITY_REQUIREMENTS)
+    has_legacy_contract = "Required skills" in sections
+    if has_new_contract and has_legacy_contract:
+        findings.append(
+            _finding(
+                "mixed-skill-contracts",
+                path,
+                "document mixes legacy Required skills with capability requirements",
+                "remove Required skills and use capability and repository-owned skill sections",
+            )
+        )
+    elif has_new_contract:
+        for name in _CAPABILITY_REQUIREMENTS:
+            body = sections.get(name, "")
+            if not body or _PLACEHOLDER.fullmatch(body.strip("- \t.")):
+                findings.append(
+                    _finding(
+                        "empty-" + name.lower().replace(" ", "-"),
+                        path,
+                        f"section has no live content: {name}",
+                        f"list capabilities or write None. in {name}",
+                    )
+                )
+    elif has_legacy_contract:
+        body = sections.get("Required skills", "")
+        if not body or _PLACEHOLDER.fullmatch(body.strip("- \t.")):
+            findings.append(
+                _finding(
+                    "empty-required-skills",
+                    path,
+                    "section has no live content: Required skills",
+                    "migrate required workflow needs to capability requirements",
+                )
+            )
+    else:
+        findings.append(
+            _finding(
+                "missing-capability-contract",
+                path,
+                "document has no capability requirement sections",
+                "add required/optional capability and repository-owned skill sections",
+            )
+        )
+    return findings
+
 
 def check_runbook(path: Path, repo_root: Path) -> list[Finding]:
     del repo_root
-    return _require_sections(path, (*_COMPOSITION, "Playbook routing"))
+    return _check_composition_document(path, "Playbook routing")
 
 
 def check_playbook(path: Path, repo_root: Path) -> list[Finding]:
     del repo_root
-    return _require_sections(path, (*_COMPOSITION, "Runbook routing"))
+    return _check_composition_document(path, "Runbook routing")
 
 
 def check_review(path: Path, repo_root: Path) -> list[Finding]:
@@ -153,7 +221,7 @@ def check_runbook_set(path: Path, repo_root: Path) -> list[Finding]:
     return [
         finding
         for item in sorted(path.glob("*.md"))
-        if item.name not in {"AGENTS.md", "INDEX.md"}
+        if item.name != "AGENTS.md"
         for finding in check_runbook(item, repo_root)
     ]
 
@@ -166,7 +234,7 @@ def check_playbook_set(path: Path, repo_root: Path) -> list[Finding]:
     return [
         finding
         for item in sorted(path.glob("*.md"))
-        if item.name not in {"AGENTS.md", "INDEX.md"}
+        if item.name != "AGENTS.md"
         for finding in check_playbook(item, repo_root)
     ]
 

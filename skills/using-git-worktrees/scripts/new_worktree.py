@@ -177,9 +177,23 @@ def _find_refresh_script(worktree_root: Path) -> Optional[Path]:
     return _find_skill_core(worktree_root, "refreshing-installed-skills", "refresh_installed_skills.py")
 
 
-def _find_mesh_script(worktree_root: Path) -> Optional[Path]:
-    """Return the path to the new worktree's generate-index-mesh script."""
-    return _find_skill_core(worktree_root, "generating-agent-mesh", "generate_index_mesh.py")
+def _has_marketplace_skill_configuration(repo_root: Path) -> bool:
+    """Whether this repository explicitly configures marketplace-installed skills."""
+    marketplace = repo_root / ".agents" / "plugins" / "marketplace.json"
+    if not marketplace.is_file():
+        return False
+    try:
+        data = json.loads(marketplace.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        raise RuntimeError(f"marketplace skill configuration is unreadable: {marketplace}") from exc
+    if not isinstance(data, dict) or not isinstance(data.get("plugins"), list):
+        raise RuntimeError(f"marketplace skill configuration has no valid plugins list: {marketplace}")
+    return any(
+        isinstance(plugin, dict)
+        and isinstance(plugin.get("policy"), dict)
+        and plugin["policy"].get("installation") == "INSTALLED_BY_DEFAULT"
+        for plugin in data.get("plugins", [])
+    )
 
 
 def _find_command_bus(repo_root: Path) -> Optional[Path]:
@@ -481,7 +495,7 @@ def _configure_worktree(
     main_repo_root: Path,
     no_skill_refresh: bool,
 ) -> int:
-    """Refresh skills and regenerate the index mesh inside the new worktree.
+    """Refresh installed skills inside the new worktree.
 
     Returns an exit code; the caller is responsible for removing the worktree
     when this returns non-zero.
@@ -491,52 +505,41 @@ def _configure_worktree(
         if exit_code != 0:
             return exit_code
 
-        exit_code = _roll_submodules_to_origin_main(worktree_root)
-        if exit_code != 0:
-            return exit_code
+        try:
+            has_marketplace_skills = _has_marketplace_skill_configuration(worktree_root)
+        except RuntimeError as exc:
+            print(f"error: {exc}", file=sys.stderr)
+            return 1
 
-        # Prefer the repo-owned command bus for cross-skill capabilities.
-        exit_code = _dispatch_capability(worktree_root, "refresh-skills", "--apply")
-        if exit_code is None:
-            refresh_script = _find_refresh_script(worktree_root)
-            if refresh_script:
-                refresh_args = [str(refresh_script), "--apply"]
-                result = subprocess.run(
-                    [sys.executable, *refresh_args],
-                    cwd=worktree_root,
-                    env=_stripped_env(),
-                )
-                exit_code = result.returncode
-            else:
-                print(
-                    "warning: refreshing-installed-skills not found; worktree created but skills were not refreshed",
-                    file=sys.stderr,
-                )
-                exit_code = 0
-        if exit_code != 0:
-            print(f"error: refreshing installed skills failed in {worktree_root}", file=sys.stderr)
-            return exit_code
+        if has_marketplace_skills:
+            exit_code = _roll_submodules_to_origin_main(worktree_root)
+            if exit_code != 0:
+                return exit_code
 
-        exit_code = _dispatch_capability(worktree_root, "index-mesh", "--apply")
-        if exit_code is None:
-            mesh_script = _find_mesh_script(worktree_root)
-            if mesh_script:
-                mesh_args = [str(mesh_script), "--apply"]
-                result = subprocess.run(
-                    [sys.executable, *mesh_args],
-                    cwd=worktree_root,
-                    env=_stripped_env(),
-                )
-                exit_code = result.returncode
-            else:
-                print(
-                    "warning: generate-index-mesh not found; worktree created but index mesh was not regenerated",
-                    file=sys.stderr,
-                )
-                exit_code = 0
-        if exit_code != 0:
-            print(f"error: generating index mesh failed in {worktree_root}", file=sys.stderr)
-            return exit_code
+            # Prefer the repo-owned command bus for cross-skill capabilities.
+            exit_code = _dispatch_capability(worktree_root, "refresh-skills", "--apply")
+            if exit_code is None:
+                refresh_script = _find_refresh_script(worktree_root)
+                if refresh_script:
+                    refresh_args = [str(refresh_script), "--apply"]
+                    result = subprocess.run(
+                        [sys.executable, *refresh_args],
+                        cwd=worktree_root,
+                        env=_stripped_env(),
+                    )
+                    exit_code = result.returncode
+                else:
+                    print(
+                        "warning: refreshing-installed-skills not found; worktree created but skills were not "
+                        "refreshed",
+                        file=sys.stderr,
+                    )
+                    exit_code = 0
+            if exit_code != 0:
+                print(f"error: refreshing installed skills failed in {worktree_root}", file=sys.stderr)
+                return exit_code
+        else:
+            print("No marketplace skills configured; skipping skill refresh")
 
     # Make the worktree runnable by installing dependencies. A repo can own
     # this via the command bus; otherwise the bundled default detects common

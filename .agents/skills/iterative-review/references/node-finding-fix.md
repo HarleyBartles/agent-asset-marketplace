@@ -38,10 +38,10 @@ Verify and fix a single `blocking/important` lens finding.
    - For inline/orchestrator fixes, record the RED/GREEN commands and output in `review-log-finding-fix.md`.
 6. After the fix is committed, do not hand-edit `review-metrics.json`. Regenerate the metrics file and authorize `re-preflight`:
    ```bash
-   py -3 .agents/skills/iterative-review/scripts/compile_metrics.py \
+   py -3 <runtime-skill-path-for-iterative-review>/scripts/compile_metrics.py \
        --state <scratch_dir>/review-state.json \
        --metrics <scratch_dir>/review-metrics.json
-   py -3 .agents/skills/iterative-review/scripts/next_node.py \
+   py -3 <runtime-skill-path-for-iterative-review>/scripts/next_node.py \
        --state <scratch_dir>/review-state.json \
        --propose re-preflight
    ```
@@ -63,7 +63,7 @@ Verify and fix a single `blocking/important` lens finding.
 ## Next check
 
 ```bash
-py -3 .agents/skills/iterative-review/scripts/next_node.py \
+py -3 <runtime-skill-path-for-iterative-review>/scripts/next_node.py \
     --state <scratch_dir>/review-state.json \
     --propose re-preflight
 ```

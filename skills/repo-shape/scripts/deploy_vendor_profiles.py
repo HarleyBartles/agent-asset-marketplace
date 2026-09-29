@@ -23,9 +23,6 @@ from pathlib import Path
 from typing import Any
 
 
-NON_PROFILE_MD_NAMES = {"INDEX.md"}
-
-
 def _stripped_env() -> dict[str, str]:
     env = os.environ.copy()
     env.pop("GIT_DIR", None)
@@ -57,7 +54,7 @@ def _is_submodule(repo_root: Path) -> bool:
 
 
 def _is_vendor_profile_file(path: Path) -> bool:
-    return path.is_file() and path.suffix.lower() == ".md" and path.name not in NON_PROFILE_MD_NAMES
+    return path.is_file() and path.suffix.lower() == ".md"
 
 
 def _load_marketplace_plugins(marketplace_path: Path) -> list[dict[str, Any]]:

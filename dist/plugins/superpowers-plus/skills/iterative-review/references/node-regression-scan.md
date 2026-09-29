@@ -16,10 +16,10 @@ Widen review to the touched area for non-trivial or cross-cutting fixes to catch
 1. Dispatch `reviewer-strong` on the touched area with `<log_path>` set to `$scratch/review-log-strong.md`.
 2. If the scan is clean, regenerate the metrics file and go to `resolved-ledger`:
    ```bash
-   py -3 .agents/skills/iterative-review/scripts/compile_metrics.py \
+   py -3 <runtime-skill-path-for-iterative-review>/scripts/compile_metrics.py \
        --state <scratch_dir>/review-state.json \
        --metrics <scratch_dir>/review-metrics.json
-   py -3 .agents/skills/iterative-review/scripts/next_node.py \
+   py -3 <runtime-skill-path-for-iterative-review>/scripts/next_node.py \
        --state <scratch_dir>/review-state.json \
        --propose resolved-ledger
    ```
@@ -29,19 +29,19 @@ Widen review to the touched area for non-trivial or cross-cutting fixes to catch
    - `outside-blast-radius` if outside the blast radius
 4. Record the new finding and its regression relationship:
    ```bash
-   py -3 .agents/skills/iterative-review/scripts/record_finding.py \
+   py -3 <runtime-skill-path-for-iterative-review>/scripts/record_finding.py \
        --state <scratch_dir>/review-state.json \
        --data '{"finding_id": "<new_finding_id>", "lens": "<lens>", "discovered_at_node": "regression-scan", "discovered_at_round": <round>, "severity": "<severity>"}'
-   py -3 .agents/skills/iterative-review/scripts/record_regression.py \
+   py -3 <runtime-skill-path-for-iterative-review>/scripts/record_regression.py \
        --state <scratch_dir>/review-state.json \
        --data '{"fix_for": "<original_finding_id>", "new_finding": "<new_finding_id>", "discovered_at_node": "regression-scan", "discovered_at_round": <round>, "regression_class": "<regression_class>", "severity": "<severity>"}'
    ```
 5. Regenerate the metrics file and return to `metrics-track`:
    ```bash
-   py -3 .agents/skills/iterative-review/scripts/compile_metrics.py \
+   py -3 <runtime-skill-path-for-iterative-review>/scripts/compile_metrics.py \
        --state <scratch_dir>/review-state.json \
        --metrics <scratch_dir>/review-metrics.json
-   py -3 .agents/skills/iterative-review/scripts/next_node.py \
+   py -3 <runtime-skill-path-for-iterative-review>/scripts/next_node.py \
        --state <scratch_dir>/review-state.json \
        --propose metrics-track
    ```
@@ -54,7 +54,7 @@ Widen review to the touched area for non-trivial or cross-cutting fixes to catch
 ## Next check
 
 ```bash
-py -3 .agents/skills/iterative-review/scripts/next_node.py \
+py -3 <runtime-skill-path-for-iterative-review>/scripts/next_node.py \
     --state <scratch_dir>/review-state.json \
     --propose <next-node>
 ```

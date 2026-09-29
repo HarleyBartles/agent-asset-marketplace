@@ -37,12 +37,12 @@ At the start of a new substantive slice, after refreshing the required base and 
 | Running or changing a mutation script                                          | [mutation-script-safety.md](references/mutation-script-safety.md)                 |
 | Creating an agent-facing script                                                | [script-entrypoint-contract.md](references/script-entrypoint-contract.md)         |
 | Focused validation, hooked commit proof, Draft/Ready publication, or CI parity | [repository-validation-contract.md](references/repository-validation-contract.md) |
-| Changing README, AGENTS.md, INDEX.md, doctrine, docs, plans, or mesh           | [repository-layout-and-mesh.md](references/repository-layout-and-mesh.md)         |
-| Finding or creating a repository-local stage runbook                           | [stage-guide-contract.md](references/stage-guide-contract.md)                     |
+| Changing README, AGENTS.md, doctrine, docs, plans, or specifications           | [repository-layout.md](references/repository-layout.md)                           |
+| Finding or creating a repository-local stage guide                             | [stage-guide-contract.md](references/stage-guide-contract.md)                     |
 
 Read the consuming repository's local hygiene/layout policy whenever it exists. That local policy is the authority for repository-specific paths, commands, exclusions, CI, and exceptions; this skill does not replace it.
 
-For Superpowers lane composition and stage routing, see [`using-superpowers-plus/references/bootstrap-routing.md`](/.agents/skills/using-superpowers-plus/references/bootstrap-routing.md) and [`using-superpowers-plus/references/superpowers-composition.md`](/.agents/skills/using-superpowers-plus/references/superpowers-composition.md). Each stage skill owns its own baseline reference and reads it as part of its own first step.
+When workflow-composition guidance is available in the current agent runtime, use it for lane selection and stage routing. This worker capability does not require a consumer to subscribe to or install that guidance. Each invoked workflow skill owns its own baseline references.
 
 ## Supporting owners
 

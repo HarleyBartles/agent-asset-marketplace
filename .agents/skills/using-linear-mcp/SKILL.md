@@ -19,6 +19,10 @@ license: MIT
 
 Use this skill to pick the right Linear connector surface from the task intent, then open the matching reference.
 
+## Runtime availability
+
+Inspect the tools exposed in the current runtime before calling Linear. The consuming repository does not need a Linear plugin subscription. If a required Linear tool is absent, report the missing capability and stop the dependent Linear action; do not assume repository configuration can expose an unavailable tool.
+
 ## Router
 
 | Intent                                                                   | Read first                                                     |

@@ -23,6 +23,10 @@ license: MIT
 
 Use this skill to decide when and how to call the `deepwiki` MCP server for a GitHub repo, with good question phrasing, current-repo detection, multi-repo support, and safe verification.
 
+## Runtime availability
+
+Inspect the tools exposed in the current runtime before calling this server. This skill and its plugin do not need to be subscribed to by the repository. If DeepWiki is absent, use another documented source only when it can answer the same question; otherwise report that the requested orientation capability is unavailable. Do not claim that a missing server was queried.
+
 ## When to use
 
 - You need a map of a repo's architecture, conventions, or release process.

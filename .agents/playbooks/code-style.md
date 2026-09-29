@@ -4,14 +4,26 @@
 
 Use when Python, Markdown, or agent-facing prose changes.
 
-## Required skills
+## Required capabilities
 
-- `writing-with-clarity` for human-facing prose.
-- `writing-skills` for skill authoring conventions.
+- Write clear human-facing repository guidance.
+- Create or update reusable skills with appropriate scope and supporting resources.
+
+## Optional capabilities
+
+None.
+
+## Required repository-owned skills
+
+None.
+
+## Optional repository-owned skills
+
+None.
 
 ## Composition
 
-Apply the named capability skills under the binding doctrine and local evidence requirements. This playbook does not own a lifecycle stage.
+Resolve the stated capabilities against skills available at runtime, under the binding doctrine and local evidence requirements. Stop and report if a required capability has no suitable provider. This playbook does not own a lifecycle stage.
 
 ## Doctrine and contracts
 

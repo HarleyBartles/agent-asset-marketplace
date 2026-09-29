@@ -15,7 +15,7 @@ The canonical task runner is `tools/run`. It composes the individual generator a
 - `tools/run --help` / `tools/run.ps1 --help` lists all targets and flags.
 - `py -3 tools/run.py` or `python tools/run.py` works on any platform as a fallback.
 
-Targets are: `inventory`, `marketplace`, `installed-skills`, `refresh-skills`, `repo-index`, `mesh`, `index-mesh`, `validate`, `review-preflight`, `runtime-agents`, `lint`, `repo-standards`, `ci`, `all`.
+Targets are: `inventory`, `marketplace`, `installed-skills`, `refresh-skills`, `validate`, `review-preflight`, `runtime-agents`, `lint`, `repo-standards`, `ci`, `all`.
 
 Codex plugin first.
 
@@ -35,7 +35,7 @@ Use `--check` to validate the current generated surface without rewriting it. `-
 - Both commands must be aligned so check mode fails if regeneration would be needed and write mode still performs the actual regeneration locally.
 - If a worker cannot run the full stack, it must say so explicitly instead of assuming CI will catch the missing regeneration.
 
-Deterministic pack rule: if a plugin pack lacks a manifest-driven generator/validator path, add one to `tools/` and wire it into the standard `tools/run` update/check entrypoints. Do not paper over missing pipeline support with a pack-specific one-off script or a hand-edited output surface. The editable source custody for marketplace generation is the canonical plugin skill trees, adapter overlays, provenance records, and bundle manifests. Treat generated marketplace manifests, bundle manifests, repo index, index mesh, and installed skill surfaces as derived outputs only. If a convention can be expressed in the plugin metadata and generator, do that instead of hand-rolling per-pack output conventions in the generated surfaces.
+Deterministic pack rule: if a plugin pack lacks a manifest-driven generator/validator path, add one to `tools/` and wire it into the standard `tools/run` update/check entrypoints. Do not paper over missing pipeline support with a pack-specific one-off script or a hand-edited output surface. The editable source custody for marketplace generation is the canonical plugin skill trees, adapter overlays, provenance records, and bundle manifests. Treat generated marketplace manifests, bundle manifests, and installed skill surfaces as derived outputs only. If a convention can be expressed in the plugin metadata and generator, do that instead of hand-rolling per-pack output conventions in the generated surfaces.
 
 ## Line-ending policy for generated files
 

@@ -56,21 +56,6 @@
       }
     },
     {
-      "name": "generating-agent-mesh",
-      "source": "generating-agent-mesh",
-      "provenance": {
-        "source_category": "first_party",
-        "content_mode": "verbatim",
-        "source_family": "first_party",
-        "copy_expectation": "byte_identical",
-        "provenance_note": "First-party skill bundled verbatim into the repo-worker-pack. Runs the repo's generate_index_mesh.py command.",
-        "lane": "Worker",
-        "source_author": "Harley Bartles",
-        "source_license": "MIT",
-        "source_repo": "https://github.com/HarleyBartles/agent-asset-marketplace"
-      }
-    },
-    {
       "name": "linear-issue-shaping",
       "source": "linear-issue-shaping",
       "provenance": {
@@ -89,7 +74,7 @@
         "content_mode": "verbatim",
         "source_family": "first_party",
         "copy_expectation": "byte_identical",
-        "provenance_note": "First-party skill bundled verbatim into the repo-worker-pack. Refreshes installed skills from the plugin source and regenerates the index mesh.",
+        "provenance_note": "First-party skill bundled verbatim into the repo-worker-pack. Refreshes installed skills from the plugin source.",
         "lane": "Worker",
         "source_author": "Harley Bartles",
         "source_license": "MIT",

@@ -8,7 +8,7 @@
     "writing-pack",
     "agent-operating-model"
   ],
-  "syncedSkills": 53,
+  "syncedSkills": 52,
   "localSkills": [],
   "marketplace": {
     "source": "HarleyBartles/agent-asset-marketplace",
@@ -48,5 +48,5 @@
   ],
   "marketplaceFile": ".agents/plugins/marketplace.json",
   "vendorProfiles": [],
-  "syncedAt": "2026-09-28T18:49:57.204189"
+  "syncedAt": "2026-09-29T03:26:27.447881"
 }

@@ -18,10 +18,10 @@ Flip the PR from draft to ready after the review loop is complete.
 4. Do not merge until the PR is green.
 5. Regenerate the final metrics file and commit the `ready` state:
    ```bash
-   py -3 .agents/skills/iterative-review/scripts/compile_metrics.py \
+   py -3 <runtime-skill-path-for-iterative-review>/scripts/compile_metrics.py \
        --state <scratch_dir>/review-state.json \
        --metrics <scratch_dir>/review-metrics.json
-   py -3 .agents/skills/iterative-review/scripts/next_node.py \
+   py -3 <runtime-skill-path-for-iterative-review>/scripts/next_node.py \
        --state <scratch_dir>/review-state.json \
        --propose ready
    ```
@@ -34,7 +34,7 @@ Flip the PR from draft to ready after the review loop is complete.
 ## Next check
 
 ```bash
-py -3 .agents/skills/iterative-review/scripts/next_node.py \
+py -3 <runtime-skill-path-for-iterative-review>/scripts/next_node.py \
     --state <scratch_dir>/review-state.json \
     --propose <next-node>
 ```

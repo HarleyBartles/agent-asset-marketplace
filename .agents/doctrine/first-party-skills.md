@@ -46,4 +46,3 @@ Use these rules when editing or adding a first-party skill in a Codex plugin.
 - Plugin builders read the canonical source and assemble self-contained skill copies.
 - Active generated surfaces must stay in sync with the canonical source.
 - Preserve upstream attribution and license obligations even when an adapted skill is first-party maintained.
-- Skill-root `INDEX.md` files do not belong in this tree.

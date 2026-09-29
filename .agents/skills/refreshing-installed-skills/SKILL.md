@@ -1,6 +1,6 @@
 ---
 name: refreshing-installed-skills
-description: Use when a worktree is initialized or .agents/skills/ is stale from the plugin source.
+description: Use when a repository has deliberately configured marketplace skills and its projections need refreshing.
 metadata:
   source-id: refreshing-installed-skills
   source-path: skills/refreshing-installed-skills/SKILL.md
@@ -8,35 +8,29 @@ metadata:
   source-category: first_party
   status: active
   owner: Harley Bartles
-  scope: Install or refresh .agents/skills/ from the plugin source.
+  scope: Install or refresh repository-configured marketplace skills.
   use_when:
-    - creating a new worktree.
+    - creating a new worktree in a repository that configures marketplace skills.
     - the marketplace-source submodule has been updated.
     - .agents/skills/ appears stale.
-  do_not_use_when:
-    - only the INDEX.md mesh is stale without any skill changes; use generating-agent-mesh instead.
   related_skills:
-    - generating-agent-mesh
     - using-git-worktrees
 license: MIT
 ---
 
 # Refreshing Installed Skills
 
-Install or refresh `.agents/skills/` from the plugin source.
+Install or refresh the marketplace skills that the consuming repository explicitly configures. Availability of this capability does not require the repository to configure any skills.
 
 ## When to Use
 
-- After creating a new worktree.
+- After creating a new worktree in a repository with marketplace skills configured.
 - After updating the `marketplace-source` submodule in a consumer repo.
 - When `.agents/skills/` appears stale.
 
 ## Usage
 
-```bash
-py -3 .agents/skills/refreshing-installed-skills/scripts/refresh_installed_skills.py --apply
-py -3 .agents/skills/refreshing-installed-skills/scripts/refresh_installed_skills.py --check
-```
+Resolve `refresh_installed_skills.py` relative to this skill's active runtime directory, then use `--check` or `--apply` as appropriate. Do not assume this skill has been copied into the consumer's `.agents/skills/` directory. A consumer canonical runner may invoke the same utility from its pinned marketplace-source checkout when that runner explicitly owns skill refresh.
 
 This skill runs the bundled `refresh_installed_skills.py` core, which installs/refreshes `.agents/skills/` from the plugins declared in `.agents/plugins/marketplace.json`. When a `marketplace-source` submodule is present, `--apply` fetches it and resets it to `origin/main` before syncing, and `--check` reports if the submodule is behind its remote. It defaults to `--check` mode; pass `--apply` to write files in a linked worktree. `--allow-shared-checkout` is required only when intentionally applying in the main shared checkout, regardless of its current branch; it is an explicit acknowledgment of that location, not a worktree flag. Pass `--no-roll-marketplace-source` to skip the submodule roll.
 

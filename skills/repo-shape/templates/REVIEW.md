@@ -10,7 +10,7 @@ This file is the repo's review entry point. Code-review agents discover it autom
 
 ## Workflow routing
 
-Invoke `using-superpowers-plus` once and follow its review-stage handoff.
+Use the available workflow-routing capability to identify the review-stage owner and follow its handoff.
 
 ## First-class review concerns
 

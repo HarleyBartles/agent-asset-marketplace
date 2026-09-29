@@ -19,10 +19,13 @@ Runbooks and playbooks are different artifacts, not interchangeable names.
 
 A runbook owns one repository lifecycle stage. It is entered through its stage/workflow skill and is the local composition root for that stage. The standard stage set is `design.md`, `planning.md`, `implementing.md`, `code-review.md`, and `pr.md`.
 
-Every runbook contains these exact second-level sections:
+Every runbook contains these second-level sections:
 
 - `When`
-- `Required skills`
+- `Required capabilities`
+- `Optional capabilities`
+- `Required repository-owned skills`
+- `Optional repository-owned skills`
 - `Composition`
 - `Doctrine and contracts`
 - `Local commands and paths`
@@ -30,24 +33,28 @@ Every runbook contains these exact second-level sections:
 - `Prohibited combinations`
 - `Playbook routing`
 
-`Playbook routing` links each applicable `.agents/playbooks/*.md` file and states the condition that activates it. Use `none` only when the stage has no topical composition.
+`Playbook routing` links each applicable playbook using the paths declared by repository policy and states the condition that activates it. Use `None.` only when the stage has no topical composition.
+
+Capabilities describe the workflow need in ordinary language, never a required ambient skill name. A required capability must have a suitable provider among the skills exposed in the current runtime. The agent inspects that available skill set, selects a suitable skill, and follows its instructions. If none is suitable, stop before dependent work and report the unmet capability. Optional capability absence may be reported and skipped when unrelated work can continue.
+
+Exact skill names belong only in the repository-owned skill sections. Each name must be declared in `repo.local_skills` and resolve to that repository-owned skill. Marketplace plugin membership and installed projections do not establish repository ownership or capability availability.
 
 ## Playbooks
 
 A playbook owns a topical workflow available to an agent whenever that concern applies. A runbook may route to a playbook, but runbook selection is not a prerequisite for using one. Common playbooks include `code-style.md`, `testing.md`, `security.md`, `skill-authoring.md`, and `marketplace-generation.md`. Mandatory cross-repository capabilities belong in portable skills; repository runbooks bind those capabilities to local lifecycle stages, commands, and evidence.
 
-Every playbook contains the same seven common composition sections as a runbook, followed by `Runbook routing`. That section optionally links stage runbooks that commonly route to it; `None.` is valid for a standalone playbook.
+Every playbook contains the same composition sections as a runbook, followed by `Runbook routing`. That section optionally links stage runbooks that commonly route to it; `None.` is valid for a standalone playbook.
 
-Playbooks name and sequence capability skills, doctrine, contracts, commands, and evidence. Durable architecture and policy belong in doctrine; reusable language or framework technique belongs in capability skills. A playbook binds those owners to repository-specific triggers and proof.
+Playbooks describe capability needs and compose them with doctrine, contracts, commands, and evidence. Durable architecture and policy belong in doctrine; reusable language or framework technique belongs in capability skills. A playbook binds those owners to repository-specific triggers and proof.
 
 ## Dependency direction
 
 The lifecycle and topical composition relationships are:
 
 ```text
-using-superpowers-plus -> stage skill -> runbook
+stage selection -> runbook
 runbook -> playbook
-playbook -> playbook or doctrine/contracts/capability skills
+playbook -> playbook or doctrine/contracts/capabilities
 ```
 
 - Agents may invoke playbooks directly, and runbooks may route to playbooks.
@@ -61,12 +68,12 @@ Declared runbook/playbook references must resolve, and reciprocal declarations m
 
 ## Local policy
 
-Each consumer keeps `.agents/doctrine/repo-runbook-policy.md` with separate `Standard runbooks` and `Standard playbooks` tables. The tables map standard names to local paths, state required/optional status, and record explicit exceptions.
+Each consumer may keep a repository policy with separate `Standard runbooks` and `Standard playbooks` tables. These tables map selected standards to local paths, state required/optional status, and record explicit exceptions. Paths in the mapping determine the local composition homes. `.agents/runbooks/` and `.agents/playbooks/` are defaults for repositories that adopt those standards, not ambient requirements.
 
 ## Workflow order
 
-The canonical lifecycle is `design -> planning -> implementing -> review -> pull request`. `using-superpowers-plus` selects the hygiene and stage owner. The stage owner reads its baseline and matching runbook. The agent uses any applicable playbook, whether discovered directly or through runbook routing.
+The canonical lifecycle is `design -> planning -> implementing -> review -> pull request`. The stage owner reads its baseline and matching runbook. The agent uses any applicable playbook, whether discovered directly or through runbook routing. Hosted structural validation checks declared documents, path mappings, local-skill custody, and graph integrity. It does not prove that an ambient runtime skill is available; the runtime stop/report rule provides that boundary.
 
 ## Migration
 
-Repositories adopting this version move lifecycle roots to `.agents/runbooks/` and topical workflow compositions to `.agents/playbooks/`. A topical file left in the runbook mapping is structural drift; a standalone playbook with no runbook edge is valid.
+Repositories adopting this version migrate legacy `Required skills` lists into capability descriptions, and move exact names to repository-owned sections only when they have declared local custody. Existing local path mappings remain authoritative. A topical file left in the runbook mapping is structural drift; a standalone playbook with no runbook edge is valid.

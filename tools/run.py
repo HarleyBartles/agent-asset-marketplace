@@ -240,80 +240,11 @@ def _check_installed_skills(ctx: Ctx) -> None:
     )
 
 
-def _apply_repo_index(ctx: Ctx) -> None:
-    _run([sys.executable, "tools/generate_repo_index.py", "--apply"], ctx)
-    _validate_marketplace_phase_step("index", ctx)
-
-
-def _check_repo_index(ctx: Ctx) -> None:
-    _run([sys.executable, "tools/generate_repo_index.py", "--check"], ctx)
-    _validate_marketplace_phase_step("index", ctx)
-
-
-def _apply_mesh(ctx: Ctx) -> None:
-    cmd = [
-        sys.executable,
-        ".agents/skills/generating-agent-mesh/scripts/generate_index_mesh.py",
-        "--apply",
-    ]
-    if ctx.allow_shared:
-        cmd.append("--allow-shared-checkout")
-    _run(cmd, ctx)
-    _run(
-        [
-            sys.executable,
-            ".agents/skills/generating-agent-mesh/scripts/validate_agent_mesh.py",
-            "--check",
-        ],
-        ctx,
-    )
-
-
-def _check_mesh(ctx: Ctx) -> None:
-    _run(
-        [
-            sys.executable,
-            ".agents/skills/generating-agent-mesh/scripts/generate_index_mesh.py",
-            "--check",
-        ],
-        ctx,
-    )
-    _run(
-        [
-            sys.executable,
-            ".agents/skills/generating-agent-mesh/scripts/validate_agent_mesh.py",
-            "--check",
-        ],
-        ctx,
-    )
-
-
-def _apply_index_mesh(ctx: Ctx) -> None:
-    cmd = [
-        sys.executable,
-        ".agents/skills/generating-agent-mesh/scripts/generate_index_mesh.py",
-        "--apply",
-    ]
-    if ctx.allow_shared:
-        cmd.append("--allow-shared-checkout")
-    _run(cmd, ctx)
-
-
-def _check_index_mesh(ctx: Ctx) -> None:
-    _run(
-        [
-            sys.executable,
-            ".agents/skills/generating-agent-mesh/scripts/generate_index_mesh.py",
-            "--check",
-        ],
-        ctx,
-    )
-
-
 def _run_validate(ctx: Ctx) -> None:
     _check_tracked_line_endings()
     _run([sys.executable, "tools/validate_authority_assets.py"], ctx)
     _run([sys.executable, "tools/validate_agents_md.py"], ctx)
+    _run([sys.executable, "tools/validate_markdown_links.py", "--check"], ctx)
     _run([sys.executable, "tools/validate_tool_cli.py"], ctx)
     if ctx.mode == "check":
         _git_diff_check(ctx)
@@ -537,30 +468,12 @@ _TASKS: dict[str, Task] = {
         check=(_check_installed_skills,),
         fix="tools/run installed-skills --apply",
     ),
-    "repo-index": Task(
-        deps=("installed-skills",),
-        apply=(_apply_repo_index,),
-        check=(_check_repo_index,),
-        fix="tools/run repo-index --apply",
-    ),
-    "mesh": Task(
-        deps=("repo-index",),
-        apply=(_apply_mesh,),
-        check=(_check_mesh,),
-        fix="tools/run mesh --apply",
-    ),
-    "index-mesh": Task(
-        apply=(_apply_index_mesh,),
-        check=(_check_index_mesh,),
-        fix="tools/run index-mesh --apply",
-    ),
     "refresh-skills": Task(
         apply=(_apply_installed_skills,),
         check=(_check_installed_skills,),
         fix="tools/run refresh-skills --apply",
     ),
     "validate": Task(
-        deps=("mesh",),
         apply=(_run_validate,),
         check=(_run_validate,),
         fix="tools/run validate --apply",

@@ -226,9 +226,9 @@ def test_runbook_scaffolds_bind_planning_artifact_lifecycle(tmp_path: Path) -> N
     assert result.returncode == 0, result.stderr
     planning = (repo / ".agents" / "runbooks" / "planning.md").read_text(encoding="utf-8").lower()
     publication = (repo / ".agents" / "runbooks" / "pr.md").read_text(encoding="utf-8").lower()
-    assert "completing-planning-artifacts" in planning
+    assert "plan-ingress procedure" in planning
     assert "successor-slice" in planning
-    assert "completing-planning-artifacts" in publication
+    assert "closeout procedure" in publication
     assert "completed-awaiting-retirement" in publication
 
 
@@ -268,8 +268,8 @@ def test_scaffold_agents_md_creates_agents_md(tmp_path: Path) -> None:
     text = agents.read_text(encoding="utf-8")
     assert "## Repository purpose" in text
     assert "## Routing pointers" in text
-    assert ".agents/runbooks/INDEX.md" in text
-    assert ".agents/playbooks/INDEX.md" in text
+    assert ".agents/runbooks/publication.md" in text
+    assert ".agents/playbooks/testing.md" in text
 
 
 def test_scaffold_agents_md_check_valid_passes(tmp_path: Path) -> None:
@@ -295,8 +295,6 @@ def test_scaffold_agents_md_check_valid_passes(tmp_path: Path) -> None:
         "security.md": "# Security considerations\n",
     }.items():
         (playbooks / name).write_text(content, encoding="utf-8", newline="\n")
-    (runbooks / "INDEX.md").write_text("# Runbook inventory\n", encoding="utf-8", newline="\n")
-    (playbooks / "INDEX.md").write_text("# Playbook inventory\n", encoding="utf-8", newline="\n")
     (repo / "CONTRIBUTING.md").write_text("# Contributing\n", encoding="utf-8", newline="\n")
 
     agents = repo / "AGENTS.md"
@@ -316,8 +314,6 @@ def test_scaffold_agents_md_check_valid_passes(tmp_path: Path) -> None:
         "- [PR instructions](.agents/runbooks/pr.md)\n"
         "- [Contributing](CONTRIBUTING.md)\n"
         "- [Security considerations](.agents/playbooks/security.md)\n"
-        "- [Runbook inventory](.agents/runbooks/INDEX.md)\n"
-        "- [Playbook inventory](.agents/playbooks/INDEX.md)\n"
         "- [Routing pointers](AGENTS.md)\n"
         "- [Maintenance responsibility](AGENTS.md)\n\n"
         "## Maintenance responsibility\n\nMaintainer.\n",
@@ -336,15 +332,31 @@ def test_scaffold_agents_md_check_valid_passes(tmp_path: Path) -> None:
     assert "OK" in result.stdout
 
 
-def test_agents_router_requires_direct_runbook_and_playbook_inventory_links(tmp_path: Path) -> None:
+def test_agents_router_does_not_require_generated_inventory_files(tmp_path: Path) -> None:
     repo = tmp_path / "missing-workflow-inventories"
     repo.mkdir()
     _init_git_repo(repo)
     (repo / "CONTRIBUTING.md").write_text("# Contributing\n", encoding="utf-8", newline="\n")
-    for directory, title in (("runbooks", "Runbook inventory"), ("playbooks", "Playbook inventory")):
+    for directory, title in (("runbooks", "Runbooks"), ("playbooks", "Playbooks")):
         path = repo / ".agents" / directory
         path.mkdir(parents=True)
-        (path / "INDEX.md").write_text(f"# {title}\n", encoding="utf-8", newline="\n")
+        (path / "AGENTS.md").write_text(f"# {title}\n", encoding="utf-8", newline="\n")
+    (repo / ".agents" / "runbooks" / "publication.md").write_text(
+        "# Publication proof\n", encoding="utf-8", newline="\n"
+    )
+    (repo / ".agents" / "playbooks" / "testing.md").write_text(
+        "# Testing instructions\n", encoding="utf-8", newline="\n"
+    )
+    (repo / ".agents" / "runbooks" / "code-review.md").write_text(
+        "# Review guidelines\n", encoding="utf-8", newline="\n"
+    )
+    (repo / ".agents" / "runbooks" / "pr.md").write_text("# PR instructions\n", encoding="utf-8", newline="\n")
+    (repo / ".agents" / "playbooks" / "code-style.md").write_text(
+        "# Code style guidelines\n", encoding="utf-8", newline="\n"
+    )
+    (repo / ".agents" / "playbooks" / "security.md").write_text(
+        "# Security considerations\n", encoding="utf-8", newline="\n"
+    )
 
     agents = repo / "AGENTS.md"
     agents.write_text(
@@ -354,6 +366,12 @@ def test_agents_router_requires_direct_runbook_and_playbook_inventory_links(tmp_
         "## Build and test commands\n\nCommands.\n\n"
         "## Routing pointers\n\n"
         "- [Routing pointers](AGENTS.md)\n"
+        "- [Publication proof](.agents/runbooks/publication.md)\n"
+        "- [Testing instructions](.agents/playbooks/testing.md)\n"
+        "- [Code style guidelines](.agents/playbooks/code-style.md)\n"
+        "- [Review guidelines](.agents/runbooks/code-review.md)\n"
+        "- [PR instructions](.agents/runbooks/pr.md)\n"
+        "- [Security considerations](.agents/playbooks/security.md)\n"
         "- [Contributing](CONTRIBUTING.md)\n\n"
         "## Maintenance responsibility\n\nMaintainer.\n",
         encoding="utf-8",
@@ -369,9 +387,7 @@ def test_agents_router_requires_direct_runbook_and_playbook_inventory_links(tmp_
     )
     combined = result.stdout + result.stderr
 
-    assert result.returncode != 0
-    assert "AGENTS.md missing direct runbook inventory link: .agents/runbooks/INDEX.md" in combined
-    assert "AGENTS.md missing direct playbook inventory link: .agents/playbooks/INDEX.md" in combined
+    assert result.returncode == 0, combined
 
 
 def test_scaffold_agents_md_check_missing_core_section(tmp_path: Path) -> None:

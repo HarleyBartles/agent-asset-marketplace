@@ -88,7 +88,7 @@ def _package_files(root: Path) -> dict[str, bytes]:
         for package in sorted(root.iterdir())
         if package.is_dir()
         for path in sorted(package.rglob("*"))
-        if path.is_file() and path.name != "INDEX.md"
+        if path.is_file()
     }
 
 

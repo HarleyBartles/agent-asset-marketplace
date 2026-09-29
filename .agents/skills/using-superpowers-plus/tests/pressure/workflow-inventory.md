@@ -7,7 +7,6 @@ Inventory captured from the live repository at the MARK-373 evaluation checkpoin
 | `.github/workflows/marketplace-validation.yml` | `pull_request`: opened, synchronize, reopened, ready_for_review | PR; job guard requires `draft == false` | yes        | yes              | no                              | canonical hosted validation; Draft PR events are filtered by the job condition |
 | `.github/workflows/marketplace-validation.yml` | `push`                                                          | `main` only                             | yes        | yes              | n/a                             | post-merge/main validation                                                     |
 | `.github/workflows/marketplace-validation.yml` | `workflow_dispatch`                                             | manually selected ref                   | no         | yes              | only when explicitly dispatched | explicit manual operation, not Draft iteration                                 |
-| `.github/workflows/INDEX.md`                   | none                                                            | documentation index                     | no         | no               | no                              | generated non-executable inventory surface                                     |
 
 ## Workflow definition facts
 

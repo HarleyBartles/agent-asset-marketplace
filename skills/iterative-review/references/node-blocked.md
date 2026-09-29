@@ -13,13 +13,13 @@ Record an unresolvable blocker and hand the review to a human.
 
 1. Record the blocker, then regenerate the metrics file and commit the `blocked` state:
    ```bash
-   py -3 .agents/skills/iterative-review/scripts/record_blocker.py \
+   py -3 <runtime-skill-path-for-iterative-review>/scripts/record_blocker.py \
        --state <scratch_dir>/review-state.json \
        --data '{"finding_id": "<finding_id>", "blocker_class": "<contested|tool-blocked>"}'
-   py -3 .agents/skills/iterative-review/scripts/compile_metrics.py \
+   py -3 <runtime-skill-path-for-iterative-review>/scripts/compile_metrics.py \
        --state <scratch_dir>/review-state.json \
        --metrics <scratch_dir>/review-metrics.json
-   py -3 .agents/skills/iterative-review/scripts/next_node.py \
+   py -3 <runtime-skill-path-for-iterative-review>/scripts/next_node.py \
        --state <scratch_dir>/review-state.json \
        --propose blocked
    ```
@@ -34,7 +34,7 @@ Record an unresolvable blocker and hand the review to a human.
 ## Next check
 
 ```bash
-py -3 .agents/skills/iterative-review/scripts/next_node.py \
+py -3 <runtime-skill-path-for-iterative-review>/scripts/next_node.py \
     --state <scratch_dir>/review-state.json \
     --propose <next-node>
 ```

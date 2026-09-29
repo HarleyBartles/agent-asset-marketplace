@@ -18,11 +18,11 @@ Dispatch the matching deep lens reviewers.
 
 1. Run `select_lenses.py` to discover matching deep lenses. `reviewer-fast` is no longer selected here; it is dispatched by the `reviewer-fast` node.
    ```
-   py -3 .agents/skills/iterative-review/scripts/select_lenses.py --state <scratch_dir>/review-state.json --apply
+   py -3 <runtime-skill-path-for-iterative-review>/scripts/select_lenses.py --state <scratch_dir>/review-state.json --apply
    ```
 2. Run `diff_slicer.py` to generate a scoped diff for each selected deep lens:
    ```
-   py -3 .agents/skills/iterative-review/scripts/diff_slicer.py --state <scratch_dir>/review-state.json --apply
+   py -3 <runtime-skill-path-for-iterative-review>/scripts/diff_slicer.py --state <scratch_dir>/review-state.json --apply
    ```
 3. Read `<scratch_dir>/lenses.jsonl`; each line now includes a `diff_path`. Build the common input package: `<pr_description>`, `<scan_findings>`, and `review-log-reviewer-fast.md` from the pre-lens pass. Use the lens's `diff_path` for the scoped diff. If the lens's `## Inputs` section calls for `<plan_path>`, `<spec_path>`, or `<roadmap_path>`, add the requested file to that lens's package.
 4. `run_subagent` each deep lens from `lenses.jsonl` with its `profile_path`, `output_path`, and the lens-specific input package.
@@ -38,4 +38,4 @@ Dispatch the matching deep lens reviewers.
 
 ## Next check
 
-py -3 .agents/skills/iterative-review/scripts/next_node.py --state \<scratch_dir>/review-state.json
+py -3 <runtime-skill-path-for-iterative-review>/scripts/next_node.py --state \<scratch_dir>/review-state.json

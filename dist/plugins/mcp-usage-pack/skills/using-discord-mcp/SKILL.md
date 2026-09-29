@@ -22,6 +22,10 @@ license: MIT
 
 Use this skill to pick the right `discord` MCP tool and to stay inside the bot's current read-only scope.
 
+## Runtime availability
+
+Inspect the tools exposed in the current runtime before calling this server. The consuming repository does not need a Discord plugin subscription. If the required Discord tool is absent, report the missing capability and do not imply that a repository configuration can make an unavailable runtime tool callable.
+
 ## Server context
 
 - **MCP server name:** `discord`

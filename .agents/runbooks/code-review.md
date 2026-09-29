@@ -4,11 +4,23 @@
 
 Use for final whole-branch review and focused review of repository changes.
 
-## Required skills
+## Required capabilities
 
-- `requesting-code-review`
-- `receiving-code-review`
-- `unslop-profiles`
+- Obtain an independent review of consequential changes.
+- Evaluate review findings against current source and evidence.
+- Apply relevant anti-slop guidance to prose and implementation.
+
+## Optional capabilities
+
+None.
+
+## Required repository-owned skills
+
+None.
+
+## Optional repository-owned skills
+
+None.
 
 ## Composition
 

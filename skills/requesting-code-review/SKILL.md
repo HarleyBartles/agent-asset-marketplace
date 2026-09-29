@@ -32,6 +32,10 @@ This marketplace-maintained derivative is based on `obra/superpowers` v6.4.1 com
 
 # Requesting Code Review
 
+## Bundled helper paths
+
+Resolve helpers owned by subagent-workspace from that skill's active runtime location. In examples, `<runtime-skill-path-for-subagent-workspace>` is a placeholder for the location supplied by the runtime, not a consumer `.agents/skills/` path. If the required helper is not available, stop and report it.
+
 Dispatch a code reviewer subagent to catch issues before they cascade. The reviewer gets precisely crafted context for evaluation — never your session's history.
 
 **Core principle:** Review early, review often.
@@ -84,7 +88,7 @@ Describe the review needed, then consult `selecting-a-subagent` before every rev
 When the code-review request is about a branch or PR diff, the orchestrator (this session) prepares the review inputs; the reviewer subagent only reads the prepared diff and description.
 
 1. Determine the base ref (`<base>`) and branch (`<branch>`).
-2. Generate the review package as UTF-8 without a BOM with `py -3 .agents/skills/subagent-workspace/scripts/review_package.py --apply - <base> <branch> <diff_path>`. Use `-` for no plan file; `diff_path` is optional and the script prints the path it wrote.
+2. Generate the review package as UTF-8 without a BOM with `py -3 <runtime-skill-path-for-subagent-workspace>/scripts/review_package.py --apply - <base> <branch> <diff_path>`. Use `-` for no plan file; `diff_path` is optional and the script prints the path it wrote.
 3. If the review object is a PR, capture the PR title and body into `<pr_description>` (e.g. with `gh pr view <number> --json title,body` or `mcp_call_tool`).
 4. Describe whether the review covers the whole branch or PR, an ordinary change, or a focused fix. Consult `selecting-a-subagent` before every reviewer dispatch to choose the active runtime's route, then dispatch with the prepared inputs. A request for a strong or whole-branch review does not itself select a profile, model, or reasoning level.
 
@@ -110,7 +114,7 @@ HEAD_SHA=$(git rev-parse HEAD)
 
 [Dispatch code reviewer subagent]
   DESCRIPTION: Added verifyIndex() and repairIndex() with 4 issue types
-  PLAN_OR_REQUIREMENTS: Task 2 from .agents/plans/deployment-plan.md
+  PLAN_OR_REQUIREMENTS: the task from `<repository-declared plan path>`
   BASE_SHA: a7981ec
   HEAD_SHA: 3df7661
 

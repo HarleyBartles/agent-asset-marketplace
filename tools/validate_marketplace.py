@@ -15,12 +15,10 @@ from marketplace_utils import (
     MARKETPLACE_PATH,
     MARKETPLACE_PLUGIN_SPECS,
     PLUGIN_ROOT_INVENTORY_PATH,
-    REPO_INDEX_PATH,
     build_marketplace_manifest,
     load_json,
     _installation_policy_for_plugin,
 )
-from validate_repo_index import validate_repo_index
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -195,7 +193,7 @@ def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     )
     parser.add_argument(
         "--phase",
-        choices=("inventory", "project", "index", "shared-references", "all"),
+        choices=("inventory", "project", "shared-references", "all"),
         default="all",
         help="Validate only one phase. Default: all",
     )
@@ -204,8 +202,7 @@ def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         action="store_true",
         help=(
             "Skip freshness checks already covered by an upstream step "
-            "(generate_plugin_root_inventory --check and pack manifests). "
-            "Metadata validation (validate_repo_index) still runs."
+            "(generate_plugin_root_inventory --check and pack manifests)."
         ),
     )
     return parser.parse_args()
@@ -262,19 +259,6 @@ def validate_project(*, skip_freshness: bool = False) -> None:
     print("OK validate_marketplace: project")
 
 
-def validate_index(*, skip_freshness: bool = False) -> None:
-    _ = skip_freshness
-    root = check_json(REPO_INDEX_PATH)
-    for zone in root.get("zones", []):
-        index_json = zone.get("index_json")
-        if index_json:
-            if Path(index_json).is_absolute():
-                raise ValueError(f"index_json must be a relative path: {index_json}")
-            check_json(ROOT / index_json)
-    validate_repo_index()
-    print("OK validate_marketplace: index")
-
-
 def validate_shared_references(*, skip_freshness: bool = False) -> None:
     _ = skip_freshness
     _run_tool_check(
@@ -287,7 +271,6 @@ def validate_shared_references(*, skip_freshness: bool = False) -> None:
 def validate_all(*, skip_freshness: bool = False) -> None:
     validate_inventory(skip_freshness=skip_freshness)
     validate_project(skip_freshness=skip_freshness)
-    validate_index(skip_freshness=skip_freshness)
     validate_shared_references(skip_freshness=skip_freshness)
 
 
@@ -296,7 +279,6 @@ def main(argv: list[str] | None = None) -> int:
     phase_runners = {
         "inventory": lambda: validate_inventory(skip_freshness=args.skip_freshness_checks),
         "project": lambda: validate_project(skip_freshness=args.skip_freshness_checks),
-        "index": lambda: validate_index(skip_freshness=args.skip_freshness_checks),
         "shared-references": lambda: validate_shared_references(skip_freshness=args.skip_freshness_checks),
         "all": lambda: validate_all(skip_freshness=args.skip_freshness_checks),
     }

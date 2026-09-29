@@ -8,6 +8,7 @@ otherwise it falls back to the standard runbook names under .agents/runbooks/.
 from __future__ import annotations
 
 import argparse
+import json
 import os
 import re
 import subprocess
@@ -42,6 +43,17 @@ def _repo_root() -> Path:
     return Path(result.stdout.strip())
 
 
+def _selected_standard_ids(repo_root: Path) -> set[str] | None:
+    contract = repo_root / ".agents" / "contracts" / "operating-standards.json"
+    if not contract.is_file():
+        return None
+    data = json.loads(contract.read_text(encoding="utf-8"))
+    standards = data.get("standards") if isinstance(data, dict) else None
+    if not isinstance(standards, list):
+        raise ValueError("operating-standards contract must declare a standards list")
+    return {entry["id"] for entry in standards if isinstance(entry, dict) and isinstance(entry.get("id"), str)}
+
+
 def _parse_repo_runbook_policy(policy_path: Path) -> dict[str, Path] | None:
     if not policy_path.is_file():
         return None
@@ -64,7 +76,7 @@ def _template_dir() -> Path:
     return Path(__file__).resolve().parent.parent / "templates"
 
 
-def _runbook_content(name: str) -> str:
+def _runbook_content(name: str, available_playbooks: set[str] | None = None) -> str:
     template = _template_dir() / name
     if template.is_file():
         return re.sub(
@@ -74,23 +86,40 @@ def _runbook_content(name: str) -> str:
             flags=re.DOTALL,
         )
     title = RUNBOOK_TITLES.get(name, name.replace("-", " ").title())
-    playbook_routing = {
-        "implementing.md": (
-            "- [Code style](../playbooks/code-style.md) - when code or technical prose changes.\n"
-            "- [Testing](../playbooks/testing.md) - when behavior changes or validation is required."
-        ),
-        "code-review.md": (
-            "- [Code style](../playbooks/code-style.md) - when reviewing code or technical prose.\n"
-            "- [Testing](../playbooks/testing.md) - when reviewing behavior or validation evidence."
-        ),
-    }.get(name, "None.")
+    default_targets = {
+        "implementing.md": {
+            "code-style.md": "when code or technical prose changes",
+            "testing.md": "when behavior changes or validation is required",
+        },
+        "code-review.md": {
+            "code-style.md": "when reviewing code or technical prose",
+            "testing.md": "when reviewing behavior or validation evidence",
+        },
+    }.get(name, {})
+    playbook_routing = "None."
+    if available_playbooks is None:
+        available_playbooks = set(default_targets)
+    routes = [
+        f"- [{title}](../playbooks/{filename}) - {when}"
+        for filename, when in default_targets.items()
+        if filename in available_playbooks
+        for title in ("Code style" if filename == "code-style.md" else "Testing",)
+    ]
+    if routes:
+        playbook_routing = "\n".join(routes)
     return (
         f"# {title}\n\n"
         "This starter runbook binds the repository's lifecycle workflow.\n\n"
         "## When\n\n"
         "Use for the lifecycle stage named by this runbook.\n\n"
-        "## Required skills\n\n"
-        "None until the repository binds a focused capability.\n\n"
+        "## Required capabilities\n\n"
+        "None.\n\n"
+        "## Optional capabilities\n\n"
+        "None.\n\n"
+        "## Required repository-owned skills\n\n"
+        "None.\n\n"
+        "## Optional repository-owned skills\n\n"
+        "None.\n\n"
         "## Composition\n\n"
         "Follow repository doctrine, then execute the local commands and collect evidence.\n\n"
         "## Doctrine and contracts\n\n"
@@ -143,6 +172,14 @@ exit codes:
     repo_root = _repo_root()
     policy_path = repo_root / ".agents" / "doctrine" / "repo-runbook-policy.md"
     mapping = _parse_repo_runbook_policy(policy_path) or _default_mapping()
+    selected_standards = _selected_standard_ids(repo_root)
+    if selected_standards is None:
+        available_playbooks = None
+    elif "playbook-composition" in selected_standards:
+        available_playbooks = {"code-style.md", "testing.md"}
+    else:
+        playbook_dir = repo_root / ".agents" / "playbooks"
+        available_playbooks = {path.name for path in playbook_dir.glob("*.md")} if playbook_dir.is_dir() else set()
 
     missing: list[str] = []
     written: list[str] = []
@@ -158,7 +195,7 @@ exit codes:
             continue
         runbook_path.parent.mkdir(parents=True, exist_ok=True)
         with runbook_path.open("w", encoding="utf-8", newline="\n") as f:
-            f.write(_runbook_content(standard_name))
+            f.write(_runbook_content(standard_name, available_playbooks))
         written.append(local_path.as_posix())
 
     if args.check:

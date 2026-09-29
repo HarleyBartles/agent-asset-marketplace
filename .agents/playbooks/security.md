@@ -4,15 +4,27 @@
 
 Use when changes affect secrets, permissions, connector mutations, dependencies, or trust boundaries.
 
-## Required skills
+## Required capabilities
 
-- `risk-gates`
-- `connector-safety`
-- `unslop-profiles`
+- Check consequential actions against scope, authority, and evidence.
+- Use connected tools within their available and authorized boundaries.
+- Apply relevant anti-slop guidance to prose and implementation.
+
+## Optional capabilities
+
+None.
+
+## Required repository-owned skills
+
+None.
+
+## Optional repository-owned skills
+
+None.
 
 ## Composition
 
-Apply the named capability skills under the binding doctrine and local evidence requirements. This playbook does not own a lifecycle stage.
+Resolve the stated capabilities against skills available at runtime, under the binding doctrine and local evidence requirements. Stop and report if a required capability has no suitable provider. This playbook does not own a lifecycle stage.
 
 ## Doctrine and contracts
 

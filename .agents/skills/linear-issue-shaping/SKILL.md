@@ -66,7 +66,7 @@ Use the route-state block and compact packet shape to check or repair the implem
 
 For route-state blocks, allow investigation seams and understanding questions plus the compact route-state block. The route-state block is a control/index surface for workflow phase classification, not the implementation plan. Route-state blocks must not become the full implementation plan.
 
-Approved plans live in the repo under `.agents/plans/`. After a plan merges, plan-only PRs and implementation PRs are separate by default unless the issue explicitly authorizes a combined PR.
+Approved plans live at the repository-declared in-flight plan location. Use `.agents/plans/` only when the repository adopts it or declares no other location. After a plan merges, plan-only PRs and implementation PRs are separate by default unless the issue explicitly authorizes a combined PR.
 
 If the approved plan is stale but the drift is repairable and stays inside the approved scope, repair the repo-resident plan in the execution branch, keep the route-state block current, and include the repaired plan in the execution PR. If the drift changes scope materially, invalidates the approved direction, or makes execution unsafe, stop for human review.
 

@@ -43,7 +43,7 @@ Assume they are a skilled developer, but know almost nothing about our toolset o
 
 **Context:** If working in an isolated worktree, it should have been created via the `using-git-worktrees` skill at execution time.
 
-**Save plans to:** `.agents/plans/YYYY-MM-DD-<feature-name>.md`
+**Save plans to:** the repository-declared in-flight plan home. Use `.agents/plans/` only when the repository adopts it or declares no other home.
 
 - (User preferences for plan location override this default)
 
@@ -68,7 +68,7 @@ If a single missing fact blocks the next step, invoke `asking-clarifying-questio
 
 Plans are committed, in-flight execution artifacts. The active plan governs the work across sessions, but it is not durable repository truth.
 
-- **In-flight home:** `.agents/plans/YYYY-MM-DD-<feature-name>.md` (or `.agents/plans/<epic-name>/YYYY-MM-DD-<feature-name>.md` for epic plans). Off-repo scratch is for transient session artifacts only; the plan itself always lives in the in-flight plan home.
+- **In-flight home:** the repository-declared plan location, preserving its conventions for ordinary and epic plans. If no location is declared, use `.agents/plans/`. Off-repo scratch is for transient session artifacts only; the plan itself lives in the in-flight plan home.
 - **Commit before handoff:** A plan must exist and be committed before it can be handed to `executing-plans` or `subagent-driven-development`. Execution skills read the saved, committed file, not unsaved editor state.
 - **Completion:** **REQUIRED SUB-SKILL:** Use `completing-planning-artifacts`. Promote enduring decisions, mark the plan `completed-awaiting-retirement`, and retain it through the completing PR so squash-merged `main` records it. The next substantive slice removes it in that slice's first commit.
 - **Completion boundary:** Checklist items describe work the executing agent can finish in the current slice. Human-owned post-handoff actions such as final approval, changing a PR from Draft to Ready, or merge must not remain as unchecked plan items. When the requested handoff is a fully reviewable Draft PR, complete the agent-owned publication and verification items and close the plan; record later human actions in the handoff or PR state instead. A Draft may keep a plan open only when the work is explicitly declared incomplete.
@@ -230,7 +230,7 @@ If you find issues during the self-review, fix them inline and re-run the plan-r
 
 After the saved plan meets the readiness floor and its `Execution Strategy` field matches the gate's plan-specific recommendation, link the saved plan for human review before implementation. If the human already explicitly supplied an execution method, preserve it: ask them to review the saved plan and confirm that it captures what they want, without reopening lane selection. Otherwise, report the lane selected by the gate, its nearest alternative, the plan evidence and trade-off, and the execution cost:
 
-> "Plan complete and saved to `.agents/plans/<filename>.md`. Plan-readiness selected `<strategy>` over `<alternative>` because `<plan-specific evidence and trade-off>`. The plan-readiness rating is `<X>/10`. Do you want to proceed with the selected strategy, or switch to another lane?"
+> "Plan complete and saved to `<declared plan path>`. Plan-readiness selected `<strategy>` over `<alternative>` because `<plan-specific evidence and trade-off>`. The plan-readiness rating is `<X>/10`. Do you want to proceed with the selected strategy, or switch to another lane?"
 
 Describe the choice accurately: `subagent-driven-development` buys a fresh implementer and reviewer per task plus whole-branch review; Native `executing-plans` keeps implementation inline and buys one fresh whole-branch review. Recommend from task coupling, consequence, and verification burden—not from a blanket preference for either lane.
 

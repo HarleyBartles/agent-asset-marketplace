@@ -6,10 +6,22 @@ This topical composition is selected when behavior changes or validation evidenc
 
 <!-- Name the change classes and paths that require tests or validation. -->
 
-## Required skills
+## Required capabilities
 
-- `test-driven-development`
-- `verification-before-completion`
+- Use behavior-focused tests to guide implementation.
+- Verify current source and validation evidence before claiming completion.
+
+## Optional capabilities
+
+None.
+
+## Required repository-owned skills
+
+None.
+
+## Optional repository-owned skills
+
+None.
 
 ## Composition
 
