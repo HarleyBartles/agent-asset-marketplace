@@ -1,6 +1,6 @@
 # Ambient Pack Boundaries and Capability-Based Workflows
 
-**Status:** executing
+**Status:** completed-awaiting-retirement
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use `subagent-driven-development` (recommended) or `executing-plans` to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
@@ -162,15 +162,17 @@ Run `py -3 tools/run.py marketplace --check` and `py -3 tools/run.py installed-s
 
 Run all affected skill suites and focused repository/build/shipping tests implicated by modified files. Review all five source manifests against the audit, and inspect the complete diff for accidental consumer-specific policy or generated-source edits.
 
-- [ ] **Step 4: Update roadmap and mark plan complete**
+- [x] **Step 4: Update roadmap and mark plan complete**
 
 Record the actual commit, PR, local hook evidence, and any hosted-check limitation in the roadmap. Mark this plan `completed-awaiting-retirement` and complete all agent-owned checklist steps before handoff. Do not leave human-owned PR readiness or merge actions as unchecked plan steps.
 
-- [ ] **Step 5: Commit through the canonical hook, push, and verify PR**
+- [x] **Step 5: Commit through the canonical hook, push, and verify PR**
 
 Stage the intended files and commit normally. The tracked pre-commit hook runs the canonical apply/check gate; do not run the full CI check immediately before or after a successful hooked commit. Push the existing roadmap branch and verify PR #338 head, draft state, mergeability, and hosted-check status. Keep the PR Draft while later roadmap work remains.
 
 **Task exit:** The PR includes the source audit, capability-based workflow contract, focused behavior evidence, and regenerated product output, all published at a verified PR head.
+
+**Plan 3 publication evidence:** Commit `f52203edfed23a952aa21d1895931dfea1d1a87e` is published to Draft PR [#338](https://github.com/HarleyBartles/agent-asset-marketplace/pull/338). The tracked pre-commit hook passed its apply/check gate, including lint, repo standards, build, repository, shipping, and validation targets. Marketplace and installed-skill apply/check commands passed; the repo-shape suite passed 178 tests. The PR is open and mergeable; hosted marketplace validation is skipped while the PR is Draft, so this is not hosted ambient-plugin evidence.
 
 ## Review focus
 
