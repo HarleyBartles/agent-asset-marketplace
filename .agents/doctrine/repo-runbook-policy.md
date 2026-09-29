@@ -1,6 +1,6 @@
 # Repository Runbook and Playbook Policy
 
-This repository follows `repo-standards`. Lifecycle stages are runbooks; available topical workflows are playbooks.
+This repository enforces the standards selected in `.agents/contracts/operating-standards.json`. Lifecycle stages are runbooks; available topical workflows are playbooks.
 
 ## Standard runbooks
 
