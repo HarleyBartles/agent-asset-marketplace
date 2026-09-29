@@ -20,22 +20,24 @@ The example contract below is a portable fixture for the runner boundary. Preser
 
 ### 1. Record the starting state
 
-Commit or otherwise preserve the current consumer state. Record the marketplace-source gitlink revision, the current standards contract, plugin subscriptions, runner command map, tracked hook, hosted workflow, and generated index files. Confirm the check/apply outer commands and hosted staged-snapshot behavior before changing their internals.
+Commit or otherwise preserve the current consumer state. Record the marketplace-source gitlink revision, current standards contract, plugin subscriptions, runner command map, tracked hook, hosted workflow, and generated index files. Confirm the check/apply outer commands and hosted staged-snapshot behavior before changing internals.
 
-Do not update the marketplace-source pin and remove mesh calls in separate unvalidated steps. The pinned revision after Plan 1 has no mesh generator, validator, skill, or generated index files.
+Keep the ambient plugin subscriptions and installed projections during preparation. The old runner still calls the installed refresh and mesh scripts, and the old pinned repo-shape checker may still enforce its bootstrap plugin prerequisites. Do not remove those inputs yet.
 
-### 2. Preview and deploy only selected standards
+### 2. Pin the compatibility source and prepare selected standards
 
-From the consumer's pinned marketplace-source checkout, review the legacy selection and deployment previews:
+Advance the marketplace-source gitlink to the published source SHA containing the no-op ambient plugin prerequisite check, deployable standards catalog, pinned checker resources, capability-based runbook contract, and retired mesh source. Do not run skill refresh from the old runner after this pin changes.
+
+From the pinned checkout, preview the legacy selection and deployment:
 
 ```powershell
 py -3 .agents/plugins/marketplace-source/skills/repo-shape/scripts/migrate_operating_standards.py --check
 py -3 .agents/plugins/marketplace-source/skills/repo-shape/scripts/deploy_operating_standards.py --prepare-migration --check
 ```
 
-Review the proposed standards against the consumer's actual policy. The migration preview derives the selection from the legacy operating-model surface exceptions. Edit the proposed composition deliberately if the repository wants a smaller set or no marketplace standards. Marketplace plugin subscriptions do not select standards.
+Review the proposed standards against the repository's actual policy. The migration preview derives a proposal from legacy operating-model surface exceptions. Edit the composition deliberately so it contains only standards the repository adopts, including an empty marketplace selection when appropriate. Plugin subscriptions do not select standards.
 
-After approving the composition, deploy its selected, pinned resources before activating the new contract:
+Prepare the selected resources and migrate the contract by invoking the scripts in the pinned checkout:
 
 ```powershell
 py -3 .agents/plugins/marketplace-source/skills/repo-shape/scripts/deploy_operating_standards.py --prepare-migration --apply --yes
@@ -43,52 +45,29 @@ py -3 .agents/plugins/marketplace-source/skills/repo-shape/scripts/migrate_opera
 py -3 .agents/plugins/marketplace-source/skills/repo-shape/scripts/deploy_operating_standards.py --check
 ```
 
-Run the consumer's current canonical check while it still uses its existing runner. Resolve deployment or validation errors before changing the runner. Deployment writes only the selected standard implementations, the generic dispatcher needed for those selections, and their provenance. An empty marketplace selection does not require marketplace runtime files.
+Migrate runbooks and playbooks to `Required capabilities`, `Optional capabilities`, `Required repository-owned skills`, and `Optional repository-owned skills`. Describe ambient needs as capabilities and select suitable providers from skills exposed at runtime. Put exact names only for genuine local skills declared in `repo.local_skills`. A missing required capability must stop dependent work and be reported; an unavailable optional capability may be reported and skipped. Legacy `Required skills` remains a temporary compatibility form, not evidence that an ambient provider exists.
 
-### 3. Point selected-standard checks at deployed inputs
+Do not run the complete old `tools/run.py ci` after advancing the pin and before the runner cutover. It still calls the old projection-based refresh and mesh scripts.
 
-Update the consumer's internal standards command to invoke the deployed dispatcher at `.agents/standards/_runtime/repo_standards.py`. The dispatcher reads `.agents/contracts/operating-standards.json` and runs only declared standards and dependencies. Keep repository-owned standards in their own declared implementation roots.
+### 3. Cut over the runner and mesh calls together
 
-The hosted workflow must run the same canonical `ci --check` command through the tracked hook with its existing staged-snapshot marker. Its clean checkout needs the composition, deployed selected resources, and pinned marketplace-source gitlink. It must not need Codex, ambient plugin installation, `.agents/skills/`, or `.agents/plugins/marketplace.json`.
+In one consumer change, keep the outer `tools/run.py ci --apply` and `tools/run.py ci --check` commands but update all internal calls:
 
-Run the consumer's full check and hosted-hook parity fixture before removing any plugin subscription. Check that the hook still applies only generated surfaces owned by the consumer and checks the exact staged snapshot.
+- Run selected standards through `.agents/standards/_runtime/repo_standards.py`.
+- Run refresh from `.agents/plugins/marketplace-source/skills/refreshing-installed-skills/scripts/refresh_installed_skills.py` with `--no-roll-marketplace-source`.
+- Remove mesh generation and validation targets and every runner, hook, or workflow call to them.
+- Remove any tool-specific mesh validator and tracked generated `INDEX.md` and `INDEX.json` artifacts.
+- Preserve unrelated local checks, consumer-owned standards, and the staged-snapshot hook contract.
 
-### 4. Move skill refresh to the pinned marketplace source
+Do not invoke refresh while the old runner still calls mesh scripts. Stage the source pin, standard composition and deployed resources, runner, hooks, and mesh removal as a coherent cutover. Run `tools/run.py ci --apply` and `tools/run.py ci --check` only after that complete runner change is present. The refresh can then update projections without removing a script that the active runner still needs. Verify standard provenance does not change during skill refresh.
 
-Change the refresh implementation path from:
+Hosted CI must run the same consumer-owned command and deployed selected checkers from the pinned source. It must not need Codex, ambient plugin installations, or copied ambient skill projections. Keep `.agents/plugins/marketplace.json` when the refresh utility needs it to declare the plugin list and genuine `repo.local_skills`; the plugin list may be empty, and its contents do not prove that any ambient runtime capability is available.
 
-```text
-.agents/skills/refreshing-installed-skills/scripts/refresh_installed_skills.py
-```
+### 4. Remove copied ambient subscriptions only after cutover passes
 
-to:
+After the updated tracked hook and hosted validation pass, remove subscriptions and copied skill/plugin material whose only purpose was to supply ambient workflow, standards, refresh, or mesh implementation. Preserve unrelated plugins and genuine repository-owned skills. Refresh installed projections with the new runner and rerun the canonical check and tracked hook with the ambient plugin list empty. Keep only the standards explicitly declared in the operating-standards composition.
 
-```text
-.agents/plugins/marketplace-source/skills/refreshing-installed-skills/scripts/refresh_installed_skills.py
-```
-
-Pass `--no-roll-marketplace-source` in deterministic CI so the runner consumes the committed gitlink instead of trying to advance it. Preserve explicit mutation safeguards for local apply. A shared checkout must pass `--allow-shared-checkout` together with `--apply`; a linked worktree follows the utility's normal apply path. Do not invoke a copied Repo Worker Pack refresh script.
-
-Run both existing outer commands after the path change:
-
-```powershell
-py -3 tools/run.py ci --check
-py -3 tools/run.py ci --apply
-```
-
-Then verify skill refresh changes only the consumer's installed skill projection and its skill provenance. The operating-standards composition, deployed checkers, and standards provenance must remain unchanged.
-
-### 5. Remove index-mesh calls and artifacts
-
-Remove the consumer's mesh generation and validation targets and every runner, hook, or workflow call to them. Delete tracked generated `INDEX.md` and `INDEX.json` files owned by the retired mesh. Remove mesh-specific checks and documentation. There is no replacement mesh command or generated index surface.
-
-Run the full consumer check, then search tracked files and runner targets for mesh calls and generated index artifacts. A migration is incomplete if any hook or hosted workflow still invokes a retired mesh command.
-
-### 6. Remove ambient subscriptions that are no longer needed
-
-Only after steps 2 through 5 pass, remove subscriptions and copied skill/plugin material that existed solely to supply refresh, mesh, or standards implementation files. Keep genuinely useful ambient plugins available to agents if desired. Their presence or absence does not change the repository's declared standards.
-
-Run the canonical check and tracked hook with ambient skill projections and marketplace plugin configuration absent in the hosted fixture. Confirm the outer command contract remains `ci --apply` and `ci --check`.
+A subscription or skill projection is not a standard adoption declaration. Removing the five ambient plugin subscriptions does not remove a standard that the repository explicitly selected and deployed.
 
 ## Recovery
 

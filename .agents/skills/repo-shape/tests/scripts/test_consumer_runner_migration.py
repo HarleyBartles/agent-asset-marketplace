@@ -84,9 +84,9 @@ def _consumer(root: Path) -> tuple[Path, Path]:
         ),
         encoding="utf-8",
     )
+    (root / ".gitignore").write_text("", encoding="utf-8")
     (root / ".agents/plugins/marketplace.json").parent.mkdir(parents=True, exist_ok=True)
     (root / ".agents/plugins/marketplace.json").write_text('{"plugins": []}\n', encoding="utf-8")
-    (root / ".gitignore").write_text("", encoding="utf-8")
     return source, contract
 
 
@@ -101,6 +101,8 @@ def test_runner_migrates_refresh_and_selected_standard_off_ambient_projection(tm
     runner_contract = json.loads(contract_match.group(1))
 
     source, _ = _consumer(tmp_path)
+    marketplace_config = json.loads((tmp_path / ".agents/plugins/marketplace.json").read_text(encoding="utf-8"))
+    assert marketplace_config["plugins"] == []
     old_refresh = tmp_path / ".agents/skills/refreshing-installed-skills/scripts/refresh_installed_skills.py"
     new_refresh = tmp_path / runner_contract["refresh_script"]
     runtime = tmp_path / runner_contract["standards_dispatcher"]

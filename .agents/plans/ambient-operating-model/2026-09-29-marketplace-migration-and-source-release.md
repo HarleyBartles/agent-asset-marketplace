@@ -39,21 +39,21 @@ ______________________________________________________________________
 
 **Consumes:** Plan 2 runner bridge, Plan 3 capability contract, current Rooms runner and pinned source evidence.
 
-- [ ] **Step 1: Confirm the migration test covers zero ambient projections**
+- [x] **Step 1: Confirm the migration test covers zero ambient projections**
 
 Run `py -3 -m pytest skills/repo-shape/tests/scripts/test_consumer_runner_migration.py skills/repo-shape/tests/scripts/test_operating_model_plugin_contracts.py -q`.
 
 Expected: the consumer migration fixture passes with an empty plugin subscription list and without `.agents/skills/`; the standards dispatcher and refresh script resolve from the pinned source.
 
-- [ ] **Step 2: Rewrite the runner cutover order**
+- [x] **Step 2: Rewrite the runner cutover order**
 
 Update the guide so consumers first preserve current state, preview and deploy their declared standards, and prepare capability-based runbook/playbook requirements. Then make one runner cutover that points standards checks and refresh to pinned resources and removes all mesh targets/calls before any refresh can delete copied mesh scripts. Keep existing plugin subscriptions during that cutover. Only after the new tracked hook passes should the consumer remove subscriptions and skill copies whose sole purpose was runner implementation, then rerun local and hosted validation without ambient projections.
 
-- [ ] **Step 3: Document rollback and exact release pin use**
+- [x] **Step 3: Document rollback and exact release pin use**
 
 State that rollback restores the whole pre-cutover state, including the prior source gitlink, runner, hook, standards declaration, subscriptions, and generated outputs. Tell consumers to pin the published marketplace source SHA and never restore mesh calls against the post-retirement source.
 
-- [ ] **Step 4: Verify migration behavior**
+- [x] **Step 4: Verify migration behavior**
 
 Run the Task 1 command again. Confirm the fixture proves the runner can use the selected deployed standard and pinned refresh resource with an empty plugin marketplace and no skill projection.
 
@@ -65,11 +65,11 @@ Run the Task 1 command again. Confirm the fixture proves the runner can use the 
 
 **Consumes:** Task 1 and live repository release evidence: the repository has no semantic release tags or GitHub Releases, while consumer contracts pin marketplace resources by immutable source revision.
 
-- [ ] **Step 1: Add the immutable source revision convention**
+- [x] **Step 1: Add the immutable source revision convention**
 
 Document that consumers use the merged marketplace source commit SHA as the released version for their `marketplace-source` gitlink and deployed standard revisions. Distinguish this revision from plugin metadata's `version` field and from installed skill provenance; do not change plugin versions or create a new tag scheme in this plan.
 
-- [ ] **Step 2: Prepare the migration release note**
+- [x] **Step 2: Prepare the migration release note**
 
 Add a concise release note under `docs/` summarizing the five ambient product roles, selectable standard adoption, capability-based runbook requirements, the required missing-capability stop, hosted validation boundary, mesh removal, and ordered runner migration. Link the consumer migration guide and leave exact source SHA reporting to the publication handoff after merge.
 
@@ -81,7 +81,7 @@ Add a concise release note under `docs/` summarizing the five ambient product ro
 
 **Consumes:** Tasks 1 and 2.
 
-- [ ] **Step 1: Regenerate and verify owned outputs**
+- [x] **Step 1: Regenerate and verify owned outputs**
 
 Run `py -3 tools/run.py marketplace --apply` and `py -3 tools/run.py installed-skills --apply`, then run both corresponding `--check` commands. Do not hand-edit generated products.
 
@@ -106,7 +106,7 @@ Set this plan to `completed-awaiting-retirement`, update the roadmap with the me
 ## Review Focus
 
 - The consumer runner never refreshes away a mesh helper before mesh calls are removed.
-- `repo-standards` accepts the new pinned compatibility source without Superpowers+, Repo Worker Pack, Agent Operating Model, or `.agents/skills/` subscriptions.
+- `repo-standards` accepts the new pinned compatibility source without Superpowers+, Repo Worker Pack, Agent Operating Model, or installed ambient skill projections. The marketplace manifest may remain for plugin-list and local-skill custody data, with an empty ambient plugin list.
 - The migration retains only individually selected standards and genuinely repository-owned exact skills.
 - The release SHA is the merged marketplace source revision used by consumer gitlinks and standard provenance.
 - No consumer checkout is edited or claimed as migrated by this marketplace release.
