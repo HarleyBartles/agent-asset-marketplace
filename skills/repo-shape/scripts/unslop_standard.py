@@ -16,7 +16,7 @@ CONTRACT = Path(".agents/contracts/unslop.json")
 DEFAULT_ROOTS = [".agents/unslop"]
 PROFILE_ID = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
 PROFILE_TITLE = re.compile(r"(?m)^#\s+Unslop Profile:\s*([a-z0-9]+(?:-[a-z0-9]+)*)\s*$")
-LINK = re.compile(r"(?<!!)\[[^\]]+\]\(([^)]+)\)")
+LINK = re.compile(r"(?<!!)\[[^\]]+\]\((<[^>]+>|(?:\\.|[^)])+)\)")
 REQUIRED_SECTIONS = (
     "Task trigger and scope",
     "Recurring failure pattern",
