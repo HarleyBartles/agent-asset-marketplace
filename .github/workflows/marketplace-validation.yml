@@ -35,6 +35,9 @@ jobs:
       - name: Fetch origin/main
         run: git fetch origin main
 
+      - name: Detach checked out commit for hosted parity
+        run: git -c advice.detachedHead=false checkout --detach HEAD
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
