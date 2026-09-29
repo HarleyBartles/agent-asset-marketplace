@@ -225,6 +225,30 @@ def test_profile_resolves_angle_bracketed_local_reference_with_spaces_and_parent
     assert _module().validate(tmp_path) == []
 
 
+@pytest.mark.parametrize(
+    ("filename", "reference"),
+    [
+        ("policy(draft).md", "../doctrine/policy(draft).md"),
+        ("policy(draft).md", r"../doctrine/policy\(draft\).md"),
+    ],
+)
+def test_profile_resolves_bare_local_references_with_parentheses(tmp_path: Path, filename: str, reference: str) -> None:
+    _repo(tmp_path)
+    _contract(tmp_path)
+    _workflow(tmp_path)
+    doctrine = tmp_path / ".agents/doctrine" / filename
+    doctrine.write_text("# Team policy\n", encoding="utf-8")
+    subprocess.run(
+        ["git", "add", f".agents/doctrine/{filename}"],
+        cwd=tmp_path,
+        check=True,
+        capture_output=True,
+    )
+    _profile(tmp_path, reference=reference)
+
+    assert _module().validate(tmp_path) == []
+
+
 def test_profile_rejects_missing_workflow_and_workflow_without_profile_route(tmp_path: Path) -> None:
     _repo(tmp_path)
     _contract(tmp_path)

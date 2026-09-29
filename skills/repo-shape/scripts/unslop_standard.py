@@ -16,7 +16,7 @@ CONTRACT = Path(".agents/contracts/unslop.json")
 DEFAULT_ROOTS = [".agents/unslop"]
 PROFILE_ID = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
 PROFILE_TITLE = re.compile(r"(?m)^#\s+Unslop Profile:\s*([a-z0-9]+(?:-[a-z0-9]+)*)\s*$")
-LINK = re.compile(r"(?<!!)\[[^\]]+\]\((<[^>]+>|(?:\\.|[^)])+)\)")
+LINK_START = re.compile(r"(?<!!)\[[^\]]+\]\(")
 REQUIRED_SECTIONS = (
     "Task trigger and scope",
     "Recurring failure pattern",
@@ -77,14 +77,38 @@ def _sections(text: str) -> tuple[str, dict[str, str]]:
 
 def _links(section: str) -> list[str]:
     destinations: list[str] = []
-    for match in LINK.finditer(section):
-        target = match.group(1).strip()
-        if target.startswith("<"):
-            closing = target.find(">")
-            if closing >= 0:
-                destinations.append(target[1:closing])
+    for match in LINK_START.finditer(section):
+        index = match.end()
+        angle_bracketed = index < len(section) and section[index] == "<"
+        if angle_bracketed:
+            index += 1
+        target: list[str] = []
+        depth = 0
+        closed = False
+        while index < len(section):
+            char = section[index]
+            if char == "\\" and index + 1 < len(section):
+                target.append(section[index + 1])
+                index += 2
                 continue
-        destinations.append(target.split(maxsplit=1)[0].strip("<>"))
+            if angle_bracketed:
+                if char == ">":
+                    closed = True
+                    break
+            elif char == "(":
+                depth += 1
+            elif char == ")":
+                if depth == 0:
+                    closed = True
+                    break
+                depth -= 1
+            elif char.isspace() and depth == 0:
+                closed = True
+                break
+            target.append(char)
+            index += 1
+        if closed and target:
+            destinations.append("".join(target))
     return destinations
 
 
