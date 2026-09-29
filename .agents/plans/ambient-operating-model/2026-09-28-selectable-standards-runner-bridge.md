@@ -1,5 +1,7 @@
 # Selectable Standards and Consumer Runner Bridge Implementation Plan
 
+**Status:** completed-awaiting-retirement
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use `subagent-driven-development` (recommended) or `executing-plans` to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Let each consumer explicitly select independently adoptable marketplace standards, keep repository-owned standards independent, execute only declared checks and scaffolds, and validate deployed checkers in hosted CI without ambient plugins.
@@ -331,11 +333,11 @@ Expected: Agent Operating Model ships the selectable catalog and deployment tool
 
 Review the complete branch diff against the approved spec. Confirm every prior fixed surface has a catalog classification; subscriptions do not select standards; chosen standards alone run; hosted behavior works without ambient skills; refresh is submodule-pinned; no mesh generator or index artifact has returned; and all copied/deployed resources have ownership and source revision evidence.
 
-- [ ] **Step 4: Run canonical validation and commit through the hook**
+- [x] **Step 4: Run canonical validation and commit through the hook**
 
 Stage the intended tree and commit normally. The tracked pre-commit hook is the complete canonical apply/check gate. Do not run the complete CI check immediately before or after a successful hooked commit.
 
-- [ ] **Step 5: Push and verify the Draft PR**
+- [x] **Step 5: Push and verify the Draft PR**
 
 Push the same roadmap branch and verify the PR head SHA and hosted checks. The draft workflow may skip validation; record the local hook evidence and any hosted-check limitation. Keep the existing PR draft while later roadmap plans remain in progress.
 
