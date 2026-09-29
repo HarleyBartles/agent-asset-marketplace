@@ -12,7 +12,7 @@
 
 **Execution Strategy:** `executing-plans` because deployment, runner cutover, and projection removal are sequential.
 
-**Status:** executing
+**Status:** completed-awaiting-retirement
 
 **Goal:** Make this marketplace repository declare the Agent Operating Model standards it enforces, run their deployed checker resources through its own CI command bus, and stop installing copies of the five ambient plugins into `.agents/skills/`.
 
@@ -34,10 +34,14 @@
 
 ## Task 3: Prove CI and publish a Draft PR
 
-- [ ] Verify selected standard checks, registry generation, and installed projection refresh on the changed tree. Confirm the canonical source and shipped ambient products remain present.
-- [ ] Commit through the tracked hook and inspect the staged-snapshot apply/check result. Review the final diff for ambient runtime dependencies and accidental loss of existing checks.
-- [ ] Push and open a Draft PR with the exact head, validation evidence, and the remaining hosted-CI boundary. Leave the PR Draft for review.
+- [x] Verify selected standard checks, registry generation, and installed projection refresh on the changed tree. Confirm the canonical source and shipped ambient products remain present.
+- [x] Commit through the tracked hook and inspect the staged-snapshot apply/check result. Review the final diff for ambient runtime dependencies and accidental loss of existing checks.
+- [x] Push and open a Draft PR with the exact head, validation evidence, and the remaining hosted-CI boundary. Leave the PR Draft for review.
 
 ## Handoff
 
 Use the existing `codex/remove-ambient-plugin-projections` worktree. The canonical marketplace source under `skills/` remains first-party product source; `.agents/standards/` is the repo-controlled deployed checker surface; `.agents/skills/` is an installed projection. The selected standards and local registry/projection checks must run in hosted CI without Codex ambient plugins.
+
+## Completion evidence
+
+Draft PR [#340](https://github.com/HarleyBartles/agent-asset-marketplace/pull/340) contains the cutover. The tracked hook passed on the implementation commits, and hosted [Marketplace validation run 36535535212](https://github.com/HarleyBartles/agent-asset-marketplace/actions/runs/36535535212) passed on `173dceee8` without ambient Codex plugins.
