@@ -147,7 +147,7 @@
     "path": ".agents/runbooks/implementing.md",
     "line": 24,
     "pattern": "portable-repo-command",
-    "context": "Canonical plugin source lives under `dist/plugins/<plugin>/skills/`. Use `py -3 tools/run.py marketplace --apply` after source changes, then `py -3 tools/run.py installed-skills --apply` to refresh installed projections.",
+    "context": "Canonical plugin source lives under `skills/` and plugin definitions. Use `py -3 tools/run.py marketplace --apply` after source changes; Codex fetches consumer plugin payloads from their Git sources.",
     "classification": "repo-local",
     "owner": "runbook-playbook contract",
     "reason": "Repository-local composition guidance required by the approved runbook and playbook contract."
@@ -174,7 +174,7 @@
     "path": ".agents/playbooks/marketplace-generation.md",
     "line": 23,
     "pattern": "portable-repo-command",
-    "context": "Run `py -3 tools/run.py marketplace --apply` after changes to canonical plugin skills, per-pack provenance, bundle manifests, or plugin manifests. Then run `py -3 tools/run.py installed-skills --apply` for installed projections when needed. There is no index-mesh apply target.",
+    "context": "Run `py -3 tools/run.py marketplace --apply` after changes to canonical plugin skills, per-pack provenance, bundle manifests, or plugin manifests. Consumer plugins are updated through Codex Marketplace Upgrade; there is no consumer skill projection step.",
     "classification": "repo-local",
     "owner": "runbook-playbook contract",
     "reason": "Repository-local composition guidance required by the approved runbook and playbook contract."

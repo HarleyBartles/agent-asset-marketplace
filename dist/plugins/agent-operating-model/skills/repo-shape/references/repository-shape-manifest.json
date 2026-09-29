@@ -1,6 +1,7 @@
 {
   "version": 3,
   "surfaces": [
+    {"id":"repo-plugin-subscriptions","path":".agents/plugins/marketplace.json","presence":"optional","ownership":"consumer-authored","validator":"repo-plugin-subscriptions-contract","apply":"create","force_reset":"unavailable","scaffold":"repo_plugin_subscriptions.py"},
     {"id":"marketplace-source-submodule","path":".agents/plugins/marketplace-source","presence":"required","ownership":"consumer-authored","validator":"submodule-contract","apply":"manual-remediation","force_reset":"unavailable"},
     {"id":"marketplace-json","path":".agents/plugins/marketplace.json","presence":"required","ownership":"consumer-authored","validator":"marketplace-json-contract","apply":"create-or-migrate","force_reset":"unavailable","scaffold":"scaffold_marketplace_json.py"},
     {"id":"operating-model-contract","path":".agents/contracts/agent-operating-model.json","presence":"required","ownership":"consumer-authored","validator":"operating-model-contract","apply":"create","force_reset":"unavailable","seed":"templates/agent-operating-model.json","scaffold":"scaffold_operating_model_contract.py"},

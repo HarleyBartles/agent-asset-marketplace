@@ -10,6 +10,6 @@ Canonical skill source lives under `skills/<skill-id>/`; plugin membership is de
 
 Do not edit generated plugin packages or create local copies under `.agents/skills/` as a substitute for ambient capabilities.
 
-## Projection invariant
+## Repo-local skills
 
-The repository-owned `refresh-skills` check verifies the declared installation policy and removes stale projections when explicitly applied. With no subscribed plugins and no local skills, apply leaves `.agents/skills/` absent; check mode reports stale projection or provenance without writing.
+This repository authors canonical skills under `skills/` and packages them through plugin definitions. It has no repo-local skills and no `.agents/skills/` projections. Consumers that need plugins should declare them in native repo configuration; the Marketplace projection updater is retired.

@@ -36,6 +36,9 @@ def _repo_root() -> Path:
 
 
 def _source_root(repo_root: Path) -> Path:
+    bundled_root = _SKILL_ROOT.parent.parent
+    if _CATALOG_PATH.is_file() and _MANIFEST_PATH.is_file():
+        return bundled_root
     submodule = repo_root / ".agents/plugins/marketplace-source"
     if (submodule / "skills/repo-shape").is_dir():
         return submodule

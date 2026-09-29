@@ -1,6 +1,6 @@
 ---
 name: repo-agent-assets
-description: Use when changing repository plugin subscriptions, local skill declarations, installed skill projections, provenance, or orphan cleanup.
+description: Use when changing repository plugin subscriptions, local skill declarations, provenance, or orphan cleanup.
 metadata:
   source-id: repo-agent-assets
   source-path: skills/repo-agent-assets/SKILL.md
@@ -13,8 +13,8 @@ license: MIT
 
 # Repo Agent Assets
 
-Canonical marketplace skills live in their plugin source trees. Repository installed skills are generated projections, never a second authoring home.
+Canonical marketplace skills live in their plugin source trees. A repository may opt into repo-scoped plugin subscriptions through the `repo-plugin-subscriptions` operating standard, which uses native harness configuration and does not copy plugin payloads or project plugin skills into `.agents/skills/`.
 
-The repository declares installed plugins and exact local skills, refreshes through its canonical installer, records source provenance, and removes orphans. A move changes canonical custody first, then bundle manifests, marketplace exports, installed projections, indexes, and mesh surfaces.
+Repository-authored skills remain owned by the consumer. Keep exact local skill names in `repo.local_skills`, validate their `SKILL.md` frontmatter, and preserve them during Marketplace updates. Plugin availability does not select AOM standards or create repository-local skill ownership.
 
-Marketplace publication remains outside this skill. This skill owns only the consumer repository's capability subscription and projection boundary.
+Marketplace publication remains outside this skill. This skill owns the consumer repository's local-skill declaration and the boundary between local skills and repo-scoped native plugin dependencies.

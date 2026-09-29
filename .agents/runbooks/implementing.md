@@ -44,7 +44,7 @@ Focused tests pass, generated marketplace surfaces are current, and the normal h
 
 ## Prohibited combinations
 
-Do not hand-edit installed `.agents/skills/` projections or implement from the shared checkout.
+Do not copy plugin skills into `.agents/skills/`; use native repo plugin declarations and work from an isolated worktree.
 
 ## Playbook routing
 

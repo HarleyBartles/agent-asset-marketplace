@@ -19,9 +19,9 @@ A composition in `.agents/contracts/operating-standards.json` is the complete st
 
 Both commands run from the pinned `.agents/plugins/marketplace-source/skills/repo-shape/scripts/` path. Migration apply refuses activation until the selected implementation roots and generic runtime exist. Deployment records the source revision and hashes for every selected resource in `.agents/standards/provenance.json`; checks compare deployed bytes with that record. Repositories with no marketplace standards need no deployed marketplace runtime or deployment provenance.
 
-Hosted CI invokes the repository's canonical runner against the checked-in composition and deployed selected resources. It does not install Codex, marketplace plugins, or `.agents/skills/` projections. Refreshing ambient skill projections owns only `.agents/skills/` and its skill provenance; it does not rewrite standards selections or deployments.
+Hosted CI invokes the repository's canonical runner against the checked-in composition and deployed selected resources. It does not install Codex, marketplace plugins, or `.agents/skills/` projections. Repo-scoped plugin availability is controlled by the harness's native configuration and does not rewrite standards selections or deployments.
 
-For migration from installed ambient refresh scripts or the retired index mesh, follow [Consumer runner migration](consumer-runner-migration.md). Invoke refresh from the pinned `.agents/plugins/marketplace-source` checkout with `--no-roll-marketplace-source`; mesh generation and validation have no replacement.
+For consumers replacing copied plugin skill projections, follow [Consumer plugin migration](consumer-runner-migration.md). Codex Marketplace Upgrade refreshes plugin payloads; no consumer-side plugin copier is required.
 
 ## Consumer preflight
 

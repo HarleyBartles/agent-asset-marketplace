@@ -57,6 +57,7 @@ Use these idempotent scripts to create missing user-content surfaces. The agent 
 - `scaffold-agents-md` scaffolds or validates root `AGENTS.md` as a router.
 - `scaffold-marketplace-json` scaffolds or validates `.agents/plugins/marketplace.json` with `repo.local_skills`.
 - `scaffold-operating-model-contract` creates a missing conformance contract and validates existing consumer-owned content without rewriting it.
+- `repo-plugin-subscriptions.py` scaffolds missing native Codex and Devin config files and validates the repo-scoped plugin declaration when `repo-plugin-subscriptions` is explicitly adopted.
 - `scaffold-all` runs the above in sequence.
 
 `repo-standards --apply` also invokes the appropriate scaffold when a surface has `scaffold` set in the manifest.
@@ -73,7 +74,9 @@ Repos record justified surface exceptions as `{id, reason}` objects in `.agents/
 
 ## Local overrides
 
-Each repo supplies its own `repo.local_skills` in `.agents/plugins/marketplace.json` so local skills are not pruned by `refreshing-installed-skills`. Entries are complete skill directory/frontmatter names and are matched exactly. Legacy `local_skill_prefixes` input is accepted only by `scaffold-marketplace-json`, which expands matching directories into explicit names before removing the legacy key.
+Each repo supplies its own `repo.local_skills` in `.agents/plugins/marketplace.json` to declare consumer-owned skills. Entries are complete skill directory/frontmatter names and are matched exactly. This declaration is validated without projecting Marketplace plugin skills into `.agents/skills/`. Legacy `local_skill_prefixes` input is accepted only by `scaffold-marketplace-json`, which expands matching directories into explicit names before removing the legacy key.
+
+Repo-scoped plugin dependencies are a separate opt-in declared through `.agents/contracts/operating-standards.json`. The `repo-plugin-subscriptions` standard uses the harness's native config and does not project plugin skills into `.agents/skills/`; see [repo-plugin-subscriptions-standard.md](repo-plugin-subscriptions-standard.md).
 
 ## SDD scratch
 

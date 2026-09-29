@@ -1,17 +1,16 @@
 #!/usr/bin/env python3
-"""Create a git worktree at the canonical sibling location and refresh skills.
+"""Create a git worktree at the canonical sibling location and prepare dependencies.
 
 This script follows the skill-bundled CLI contract:
 - `--help` prints usage and classifies each flag.
 - `--check` (the default) reports what the script would do and exits 0 when
   the requested worktree already exists, otherwise 1.
-- `--apply` performs the creation and skill refresh.
+- `--apply` creates the worktree, initializes pinned submodules, and installs dependencies.
 """
 
 from __future__ import annotations
 
 import argparse
-import json
 import os
 import re
 import shutil
@@ -131,69 +130,6 @@ def _is_under_repo(repo_root: Path, candidate: Path) -> bool:
     except ValueError:
         return False
     return True
-
-
-def _find_skill_core(repo_root: Path, skill_name: str, core_name: str) -> Optional[Path]:
-    """Return the path to a skill's core script, searching installed plugins first.
-
-    This helper is intentionally self-contained in each skill script so the
-    skills remain independent; do not share a module between installed skills.
-    """
-    fast_path = repo_root / ".agents" / "skills" / skill_name / "scripts" / core_name
-    if fast_path.is_file() and _is_under_repo(repo_root, fast_path):
-        return fast_path
-
-    marketplace = repo_root / ".agents" / "plugins" / "marketplace.json"
-    if marketplace.is_file():
-        try:
-            data = json.loads(marketplace.read_text(encoding="utf-8"))
-        except json.JSONDecodeError:
-            data = {}
-        for plugin in data.get("plugins", []):
-            if plugin.get("policy", {}).get("installation") != "INSTALLED_BY_DEFAULT":
-                continue
-            source_path = plugin.get("source", {}).get("path")
-            if not source_path:
-                continue
-            plugin_path = Path(source_path)
-            if not plugin_path.is_absolute():
-                plugin_path = (repo_root / plugin_path).resolve()
-            candidate = plugin_path / "skills" / skill_name / "scripts" / core_name
-            if candidate.is_file() and _is_under_repo(repo_root, candidate):
-                return candidate
-
-    for pattern in [
-        f"dist/plugins/*/skills/{skill_name}/scripts/{core_name}",
-        f".agents/plugins/marketplace-source/dist/plugins/*/skills/{skill_name}/scripts/{core_name}",
-    ]:
-        for candidate in sorted(repo_root.glob(pattern)):
-            if candidate.is_file() and _is_under_repo(repo_root, candidate):
-                return candidate
-    return None
-
-
-def _find_refresh_script(worktree_root: Path) -> Optional[Path]:
-    """Return the path to the new worktree's refreshing-installed-skills script."""
-    return _find_skill_core(worktree_root, "refreshing-installed-skills", "refresh_installed_skills.py")
-
-
-def _has_marketplace_skill_configuration(repo_root: Path) -> bool:
-    """Whether this repository explicitly configures marketplace-installed skills."""
-    marketplace = repo_root / ".agents" / "plugins" / "marketplace.json"
-    if not marketplace.is_file():
-        return False
-    try:
-        data = json.loads(marketplace.read_text(encoding="utf-8"))
-    except (OSError, json.JSONDecodeError) as exc:
-        raise RuntimeError(f"marketplace skill configuration is unreadable: {marketplace}") from exc
-    if not isinstance(data, dict) or not isinstance(data.get("plugins"), list):
-        raise RuntimeError(f"marketplace skill configuration has no valid plugins list: {marketplace}")
-    return any(
-        isinstance(plugin, dict)
-        and isinstance(plugin.get("policy"), dict)
-        and plugin["policy"].get("installation") == "INSTALLED_BY_DEFAULT"
-        for plugin in data.get("plugins", [])
-    )
 
 
 def _find_command_bus(repo_root: Path) -> Optional[Path]:
@@ -388,11 +324,8 @@ def _install_dependencies(repo_root: Path) -> int:
 def _init_submodules(worktree_root: Path) -> int:
     """Initialize and update submodules in the new worktree.
 
-    A linked worktree does not automatically populate submodule checkouts,
-    so any skill source that lives in a submodule (e.g. ``marketplace-source``)
-    would be missing when ``refreshing-installed-skills`` runs and its skills
-    would be deleted as orphans. Run ``git submodule update --init --recursive``
-    before the refresh to avoid that.
+    A linked worktree does not automatically populate submodule checkouts.
+    Initialize the consumer-pinned revisions without fetching or advancing them.
     """
     gitmodules = worktree_root / ".gitmodules"
     if not gitmodules.is_file():
@@ -411,139 +344,14 @@ def _init_submodules(worktree_root: Path) -> int:
     return 0
 
 
-def _submodule_paths(worktree_root: Path) -> list[str]:
-    """Return the list of submodule paths declared in .gitmodules."""
-    result = subprocess.run(
-        ["git", "config", "--file", ".gitmodules", "--get-regexp", r"^submodule\..*\.path$"],
-        cwd=worktree_root,
-        env=_stripped_env(),
-        capture_output=True,
-        text=True,
-    )
-    if result.returncode != 0:
-        return []
-    paths: list[str] = []
-    for line in result.stdout.splitlines():
-        parts = line.strip().split(maxsplit=1)
-        if len(parts) == 2:
-            paths.append(parts[1])
-    return paths
-
-
-def _roll_submodules_to_origin_main(worktree_root: Path) -> int:
-    """Roll each initialized submodule to origin/main.
-
-    ``git submodule update --init`` populates the checkout, but it does not
-    advance to the latest upstream commit. Fetch origin inside each submodule
-    and hard-reset to ``origin/main`` so the new worktree starts from the
-    latest marketplace source before refreshing skills.
-    """
-    for path in _submodule_paths(worktree_root):
-        submodule = worktree_root / path
-        if not (submodule / ".git").exists() and not (submodule / ".git").is_file():
-            # not yet initialized; skip silently
-            continue
-
-        fetch = subprocess.run(
-            ["git", "-C", str(submodule), "fetch", "origin"],
-            cwd=worktree_root,
-            env=_stripped_env(),
-            capture_output=True,
-            text=True,
-        )
-        if fetch.returncode != 0:
-            print(
-                f"error: failed to fetch origin in submodule {path}: {fetch.stderr.strip()}",
-                file=sys.stderr,
-            )
-            return fetch.returncode
-
-        verify = subprocess.run(
-            ["git", "-C", str(submodule), "rev-parse", "--verify", "origin/main"],
-            cwd=worktree_root,
-            env=_stripped_env(),
-            capture_output=True,
-            text=True,
-        )
-        if verify.returncode != 0:
-            print(
-                f"error: submodule {path} does not have origin/main; cannot roll forward",
-                file=sys.stderr,
-            )
-            return 1
-
-        reset = subprocess.run(
-            ["git", "-C", str(submodule), "reset", "--hard", "origin/main"],
-            cwd=worktree_root,
-            env=_stripped_env(),
-            capture_output=True,
-            text=True,
-        )
-        if reset.returncode != 0:
-            print(
-                f"error: failed to reset {path} to origin/main: {reset.stderr.strip()}",
-                file=sys.stderr,
-            )
-            return reset.returncode
-
-        print(f"Rolled submodule {path} to origin/main")
-    return 0
-
-
 def _configure_worktree(
     worktree_root: Path,
-    main_repo_root: Path,
-    no_skill_refresh: bool,
 ) -> int:
-    """Refresh installed skills inside the new worktree.
+    """Initialize generic submodules and repository dependencies in the new worktree."""
+    exit_code = _init_submodules(worktree_root)
+    if exit_code != 0:
+        return exit_code
 
-    Returns an exit code; the caller is responsible for removing the worktree
-    when this returns non-zero.
-    """
-    if not no_skill_refresh:
-        exit_code = _init_submodules(worktree_root)
-        if exit_code != 0:
-            return exit_code
-
-        try:
-            has_marketplace_skills = _has_marketplace_skill_configuration(worktree_root)
-        except RuntimeError as exc:
-            print(f"error: {exc}", file=sys.stderr)
-            return 1
-
-        if has_marketplace_skills:
-            exit_code = _roll_submodules_to_origin_main(worktree_root)
-            if exit_code != 0:
-                return exit_code
-
-            # Prefer the repo-owned command bus for cross-skill capabilities.
-            exit_code = _dispatch_capability(worktree_root, "refresh-skills", "--apply")
-            if exit_code is None:
-                refresh_script = _find_refresh_script(worktree_root)
-                if refresh_script:
-                    refresh_args = [str(refresh_script), "--apply"]
-                    result = subprocess.run(
-                        [sys.executable, *refresh_args],
-                        cwd=worktree_root,
-                        env=_stripped_env(),
-                    )
-                    exit_code = result.returncode
-                else:
-                    print(
-                        "warning: refreshing-installed-skills not found; worktree created but skills were not "
-                        "refreshed",
-                        file=sys.stderr,
-                    )
-                    exit_code = 0
-            if exit_code != 0:
-                print(f"error: refreshing installed skills failed in {worktree_root}", file=sys.stderr)
-                return exit_code
-        else:
-            print("No marketplace skills configured; skipping skill refresh")
-
-    # Make the worktree runnable by installing dependencies. A repo can own
-    # this via the command bus; otherwise the bundled default detects common
-    # package manager manifests and runs the appropriate installer.
     exit_code = _dispatch_capability(worktree_root, "install-deps", "--apply")
     if exit_code is None:
         exit_code = _install_dependencies(worktree_root)
@@ -623,7 +431,6 @@ def _apply_worktree(
     main_repo_root: Path,
     branch: str,
     base_ref: str,
-    no_skill_refresh: bool,
 ) -> int:
     worktree_root = _validate_worktree_root(main_repo_root, branch)
 
@@ -644,7 +451,7 @@ def _apply_worktree(
     if result.returncode != 0:
         return result.returncode
 
-    exit_code = _configure_worktree(worktree_root, main_repo_root, no_skill_refresh)
+    exit_code = _configure_worktree(worktree_root)
     if exit_code != 0:
         return exit_code
 
@@ -672,7 +479,7 @@ def _build_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--no-skill-refresh",
         action="store_true",
-        help="skip refreshing installed skills in the new worktree (mutating, used with --apply)",
+        help="deprecated compatibility flag; repo plugins load from native worktree config",
     )
     parser.add_argument(
         "--allow-shared-checkout",
@@ -690,7 +497,7 @@ def _build_parser() -> argparse.ArgumentParser:
     mode.add_argument(
         "--apply",
         action="store_true",
-        help="create the worktree and refresh skills (mutating)",
+        help="create the worktree, initialize submodules, and install dependencies (mutating)",
     )
     return parser
 
@@ -714,7 +521,6 @@ def main(argv: Optional[list[str]] = None) -> int:
             main_repo_root,
             branch,
             base_ref,
-            args.no_skill_refresh,
         )
 
     # Default / --check mode

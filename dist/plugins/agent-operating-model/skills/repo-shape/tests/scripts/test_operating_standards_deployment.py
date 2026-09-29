@@ -143,6 +143,34 @@ def test_noop_redeployment_preserves_composition_and_deployed_provenance(tmp_pat
     assert (contract.read_bytes(), provenance.read_bytes(), deployed_file.read_bytes()) == before
 
 
+def test_marketplace_cache_is_a_source_without_a_consumer_submodule(tmp_path: Path, monkeypatch) -> None:
+    repo = tmp_path / "consumer"
+    (repo / ".agents/plugins").mkdir(parents=True)
+    (repo / ".agents/plugins/marketplace.json").write_text(
+        json.dumps(
+            {
+                "name": "wild-bunch",
+                "plugins": [{"source": {"url": "https://github.com/HarleyBartles/agent-asset-marketplace.git"}}],
+            }
+        ),
+        encoding="utf-8",
+    )
+    cache = tmp_path / "codex-home/.tmp/marketplaces/agent-asset-marketplace"
+    (cache / ".agents/plugins").mkdir(parents=True)
+    (cache / ".agents/plugins/marketplace.json").write_text(
+        json.dumps({"name": "agent-asset-marketplace", "plugins": []}), encoding="utf-8"
+    )
+    _git(cache, "init")
+    _git(cache, "config", "user.name", "Marketplace Fixture")
+    _git(cache, "config", "user.email", "marketplace-fixture@example.invalid")
+    _git(cache, "remote", "add", "origin", "https://github.com/HarleyBartles/agent-asset-marketplace.git")
+    _git(cache, "add", ".")
+    _git(cache, "commit", "-m", "marketplace snapshot")
+    monkeypatch.setenv("CODEX_HOME", str(tmp_path / "codex-home"))
+
+    assert deploy_operating_standards._resolve_marketplace_source(repo) == cache
+
+
 def test_deployed_runner_checks_selected_standard_without_ambient_projection(tmp_path: Path) -> None:
     source, revision = _source_fixture(tmp_path)
     _consumer(tmp_path, revision)

@@ -6,4 +6,6 @@ Use `py -3 tools/run.py marketplace --apply` to build the packages and catalog, 
 
 The root `.agents/plugins/marketplace.json` is Codex's catalog entry point and points at products in `dist/plugins/`. This repository declares no skill subscriptions, so `.agents/skills/` is absent; runtime ambient plugin availability does not change repository policy.
 
-Consumers pin marketplace source by immutable Git commit SHA in the `marketplace-source` submodule and in selected standard revisions. Plugin package versions are not source revisions. This repository does not publish semantic-version tags or GitHub Releases; use the merged source SHA reported for a completed release. For consumers migrating from copied ambient plugins or the retired index mesh, see the [consumer runner migration guide](../../skills/repo-shape/references/consumer-runner-migration.md).
+Codex consumers subscribe to plugins through repo-native Git sources. Marketplace plugin declarations track the published `main` branch by default, and Codex's Marketplace Upgrade action refreshes the marketplace snapshot and installed plugin payload. Consumers do not need a Marketplace source submodule to install plugins. Selected deployable standards may record the source revision used to scaffold their repo-owned implementation. Plugin package versions are not source revisions; this repository does not publish semantic-version tags or GitHub Releases.
+
+For consumer migration, see the [repo plugin migration guide](../../skills/repo-shape/references/consumer-runner-migration.md).

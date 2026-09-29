@@ -15,7 +15,7 @@ The canonical task runner is `tools/run`. It composes the individual generator a
 - `tools/run --help` / `tools/run.ps1 --help` lists all targets and flags.
 - `py -3 tools/run.py` or `python tools/run.py` works on any platform as a fallback.
 
-Targets are: `inventory`, `marketplace`, `installed-skills`, `refresh-skills`, `validate`, `review-preflight`, `runtime-agents`, `lint`, `repo-standards`, `ci`, `all`.
+Targets are: `inventory`, `marketplace`, `validate`, `review-preflight`, `runtime-agents`, `lint`, `repo-standards`, `ci`, `all`.
 
 Codex plugin first.
 
@@ -26,7 +26,7 @@ Use `--check` to validate the current generated surface without rewriting it. `-
 ## Policy for agent work
 
 - Any change to canonical plugin skills, bundle manifests, adapter files, or plugin manifests requires a full market regeneration followed by validation before a PR may be called green.
-- The canonical completion path is the full regeneration stack, not a partial refresh.
+- The canonical completion path is the full Marketplace regeneration stack.
 - Partial regeneration paths are fallback-only repair tools and should not be advertised as a normal completion route.
 - The expected local green-path proof is `tools/run marketplace --apply`.
 - The expected CI green-path proof is `tools/run ci --check`.
@@ -35,7 +35,7 @@ Use `--check` to validate the current generated surface without rewriting it. `-
 - Both commands must be aligned so check mode fails if regeneration would be needed and write mode still performs the actual regeneration locally.
 - If a worker cannot run the full stack, it must say so explicitly instead of assuming CI will catch the missing regeneration.
 
-Deterministic pack rule: if a plugin pack lacks a manifest-driven generator/validator path, add one to `tools/` and wire it into the standard `tools/run` update/check entrypoints. Do not paper over missing pipeline support with a pack-specific one-off script or a hand-edited output surface. The editable source custody for marketplace generation is the canonical plugin skill trees, adapter overlays, provenance records, and bundle manifests. Treat generated marketplace manifests, bundle manifests, and installed skill surfaces as derived outputs only. If a convention can be expressed in the plugin metadata and generator, do that instead of hand-rolling per-pack output conventions in the generated surfaces.
+Deterministic pack rule: if a plugin pack lacks a manifest-driven generator/validator path, add one to `tools/` and wire it into the standard `tools/run` update/check entrypoints. Do not paper over missing pipeline support with a pack-specific one-off script or a hand-edited output surface. The editable source custody for Marketplace generation is the canonical plugin skill trees, adapter overlays, provenance records, and bundle manifests. Treat generated Marketplace manifests and bundle manifests as derived outputs. Consumer plugin payloads are fetched and cached by the harness, not copied into `.agents/skills/`.
 
 ## Line-ending policy for generated files
 
@@ -64,4 +64,4 @@ Do not add CRLF detection or preservation logic to generators. Always write LF.
 
 ## Maintenance responsibility
 
-This file must stay aligned with the repo's validation and generation tooling. When tooling paths change, new validation scripts are added, or worker-facing commands evolve, review and update this file to reflect current expectations. The skill-update path, marketplace inventory source, and drift validation references must stay accurate—when those change, this file should be updated to prevent drift.
+This file must stay aligned with the repo's validation and generation tooling. When tooling paths change, new validation scripts are added, or worker-facing commands evolve, review and update this file to reflect current expectations.

@@ -53,7 +53,7 @@
       "content_mode": "verbatim",
       "source_family": "first_party",
       "copy_expectation": "byte_identical",
-      "provenance_note": "Canonical first-party repo-agent-assets skill. (Repo Agent Assets first-party skill)",
+      "provenance_note": "Canonical guidance for consumer-owned skills and native repo plugin subscriptions. (Repo Agent Assets first-party skill)",
       "canonical_source_path": "skills/repo-agent-assets",
       "local_path": "skills/repo-agent-assets",
       "source_path": "skills/repo-agent-assets/SKILL.md"
