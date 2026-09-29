@@ -28,11 +28,11 @@ def _git(root: Path, *args: str) -> str:
     return result.stdout.strip()
 
 
-def _source_fixture(root: Path) -> tuple[Path, str]:
+def _source_fixture(root: Path, standard_id: str = STANDARD_ID) -> tuple[Path, str]:
     source = root / ".agents/plugins/marketplace-source"
     resources = set(deploy_operating_standards.RUNTIME_RESOURCES)
     resources.update(deploy_operating_standards.RUNTIME_REFERENCES)
-    standard = next(item for item in CATALOG.standards if item.id == STANDARD_ID)
+    standard = next(item for item in CATALOG.standards if item.id == standard_id)
     resources.update(standard.resources)
     for resource in resources:
         source_file = ROOT / resource
@@ -47,30 +47,31 @@ def _source_fixture(root: Path) -> tuple[Path, str]:
     return source, _git(source, "rev-parse", "HEAD")
 
 
-def _entry(revision: str) -> dict[str, object]:
+def _entry(revision: str, standard_id: str = STANDARD_ID) -> dict[str, object]:
+    standard = next(item for item in CATALOG.standards if item.id == standard_id)
     return {
-        "id": STANDARD_ID,
+        "id": standard_id,
         "origin": "marketplace",
         "revision": revision,
-        "implementation_root": f".agents/standards/{STANDARD_ID}",
+        "implementation_root": f".agents/standards/{standard_id}",
         "check": [
             "@python",
             ".agents/standards/_runtime/repo_standards.py",
             "--run-standard",
-            STANDARD_ID,
+            standard_id,
             "--check",
         ],
         "apply": [
             "@python",
             ".agents/standards/_runtime/repo_standards.py",
             "--run-standard",
-            STANDARD_ID,
+            standard_id,
             "--apply",
             "--yes",
             "@allow-shared-checkout",
         ],
         "generated_paths": [],
-        "requires": [],
+        "requires": list(standard.requires),
     }
 
 
@@ -206,3 +207,50 @@ def test_deployment_refuses_modified_worktree_resource_at_pinned_revision(tmp_pa
         deploy_operating_standards.deploy(tmp_path, source, CATALOG, apply=True)
 
     assert not (tmp_path / ".agents/standards").exists()
+
+
+def test_runbook_standard_dispatch_validates_its_selected_composition_graph(tmp_path: Path) -> None:
+    standard_id = "runbook-composition"
+    source, revision = _source_fixture(tmp_path, standard_id)
+    _git(tmp_path, "init", "-b", "codex/runbook-standard")
+    _consumer(tmp_path, revision)
+    contract = tmp_path / ".agents/contracts/operating-standards.json"
+    contract.write_text(json.dumps({"version": 1, "standards": [_entry(revision, standard_id)]}), encoding="utf-8")
+    deploy_operating_standards.deploy(tmp_path, source, CATALOG, apply=True)
+
+    runtime = tmp_path / ".agents/standards/_runtime/repo_standards.py"
+    apply_result = subprocess.run(
+        [
+            sys.executable,
+            str(runtime),
+            "--run-standard",
+            standard_id,
+            "--apply",
+            "--yes",
+            "--allow-shared-checkout",
+        ],
+        cwd=tmp_path,
+        capture_output=True,
+        text=True,
+    )
+    assert apply_result.returncode == 0, apply_result.stdout + apply_result.stderr
+    runbooks = tmp_path / ".agents/runbooks"
+    implementing = runbooks / "implementing.md"
+    section = "## Playbook routing\n\nNone."
+    implementing.write_text(
+        implementing.read_text(encoding="utf-8").replace(
+            section, "## Playbook routing\n\n- [Missing](../playbooks/missing.md)"
+        ),
+        encoding="utf-8",
+    )
+    (tmp_path / ".agents/plugins/marketplace.json").unlink(missing_ok=True)
+
+    result = subprocess.run(
+        [sys.executable, str(runtime), "--run-standard", standard_id, "--check"],
+        cwd=tmp_path,
+        capture_output=True,
+        text=True,
+    )
+
+    assert result.returncode == 1
+    assert "playbook target does not resolve" in result.stdout + result.stderr

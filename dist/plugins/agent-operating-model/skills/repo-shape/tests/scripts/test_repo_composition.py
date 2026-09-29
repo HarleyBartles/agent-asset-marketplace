@@ -52,6 +52,37 @@ def test_scaffold_runbooks_stub_is_stage_composition_root(tmp_path: Path) -> Non
     assert "completing-plans.md" not in mod.RUNBOOK_TITLES
 
 
+def test_runbook_scaffold_routes_only_to_available_playbooks() -> None:
+    spec = importlib.util.spec_from_file_location("scaffold_runbooks_routes_test", SKILL_ROOT / "scaffold_runbooks.py")
+    mod = importlib.util.module_from_spec(spec)
+    assert spec.loader is not None
+    spec.loader.exec_module(mod)
+
+    without_playbooks = mod._runbook_content("implementing.md", set())
+    with_code_style = mod._runbook_content("implementing.md", {"code-style.md"})
+
+    assert "## Playbook routing\n\nNone." in without_playbooks
+    assert "../playbooks/" not in without_playbooks
+    assert "[Code style](../playbooks/code-style.md)" in with_code_style
+    assert "../playbooks/testing.md" not in with_code_style
+
+
+def test_playbook_scaffold_omits_runbook_routes_when_runbook_standard_is_unselected() -> None:
+    spec = importlib.util.spec_from_file_location(
+        "scaffold_playbooks_routes_test", SKILL_ROOT / "scaffold_playbooks.py"
+    )
+    mod = importlib.util.module_from_spec(spec)
+    assert spec.loader is not None
+    spec.loader.exec_module(mod)
+
+    standalone = mod._playbook_content("code-style.md", include_runbook_routes=False)
+    composed = mod._playbook_content("code-style.md", include_runbook_routes=True)
+
+    assert "## Runbook routing\n\nNone." in standalone
+    assert "../runbooks/" not in standalone
+    assert "[Implementation](../runbooks/implementing.md)" in composed
+
+
 def test_scaffold_playbooks_stub_is_topical_composition(tmp_path: Path) -> None:
     spec = importlib.util.spec_from_file_location("scaffold_playbooks_under_test", SKILL_ROOT / "scaffold_playbooks.py")
     mod = importlib.util.module_from_spec(spec)

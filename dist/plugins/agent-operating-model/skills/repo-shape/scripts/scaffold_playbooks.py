@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import json
 import os
 import re
 import subprocess
@@ -34,6 +35,26 @@ def _repo_root() -> Path:
     return Path(result.stdout.strip())
 
 
+def _selected_standard_ids(repo_root: Path) -> set[str] | None:
+    contract = repo_root / ".agents" / "contracts" / "operating-standards.json"
+    if not contract.is_file():
+        return None
+    data = json.loads(contract.read_text(encoding="utf-8"))
+    standards = data.get("standards") if isinstance(data, dict) else None
+    if not isinstance(standards, list):
+        raise ValueError("operating-standards contract must declare a standards list")
+    return {entry["id"] for entry in standards if isinstance(entry, dict) and isinstance(entry.get("id"), str)}
+
+
+def _without_runbook_routes(content: str) -> str:
+    lines = content.splitlines()
+    start = next((index for index, line in enumerate(lines) if line.strip() == "## Runbook routing"), None)
+    if start is None:
+        return content
+    end = next((index for index in range(start + 1, len(lines)) if lines[index].startswith("## ")), len(lines))
+    return "\n".join([*lines[: start + 1], "", "None.", *lines[end:]]) + "\n"
+
+
 def _parse_policy(path: Path) -> dict[str, Path] | None:
     if not path.is_file():
         return None
@@ -58,15 +79,16 @@ def _default_mapping() -> dict[str, Path]:
     }
 
 
-def _playbook_content(name: str) -> str:
+def _playbook_content(name: str, *, include_runbook_routes: bool = True) -> str:
     template = Path(__file__).resolve().parent.parent / "templates" / name
     if template.is_file():
-        return re.sub(
+        content = re.sub(
             r"<!--.*?-->",
             "Repository-specific binding may extend this required section.",
             template.read_text(encoding="utf-8"),
             flags=re.DOTALL,
         )
+        return content if include_runbook_routes else _without_runbook_routes(content)
     title = PLAYBOOK_TITLES.get(name, name.replace("-", " ").title())
     sections = (
         ("When", "The class of change or trigger this playbook covers."),
@@ -84,6 +106,8 @@ def _playbook_content(name: str) -> str:
     )
     body = f"# {title}\n\nThis starter playbook composes the named repository concern.\n"
     for heading, prompt in sections:
+        if heading == "Runbook routing" and not include_runbook_routes:
+            prompt = "None."
         body += f"\n## {heading}\n\n{prompt}\n"
     return body
 
@@ -98,6 +122,8 @@ def main(argv: list[str] | None = None) -> int:
         return 1
     root = _repo_root()
     mapping = _parse_policy(root / ".agents/doctrine/repo-runbook-policy.md") or _default_mapping()
+    selected_standards = _selected_standard_ids(root)
+    include_runbook_routes = selected_standards is None or "runbook-composition" in selected_standards
     missing: list[str] = []
     written: list[str] = []
     for name, relative in mapping.items():
@@ -109,7 +135,7 @@ def main(argv: list[str] | None = None) -> int:
             continue
         path.parent.mkdir(parents=True, exist_ok=True)
         with path.open("w", encoding="utf-8", newline="\n") as handle:
-            handle.write(_playbook_content(name))
+            handle.write(_playbook_content(name, include_runbook_routes=include_runbook_routes))
         written.append(relative.as_posix())
     if missing:
         for path in missing:

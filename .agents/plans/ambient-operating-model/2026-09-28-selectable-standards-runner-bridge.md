@@ -291,7 +291,7 @@ Run: `py -3 -m pytest skills/repo-shape/tests/scripts/test_consumer_runner_migra
 
 Expected: PASS with no Repo Worker Pack or Agent Operating Model skill projection, no mesh calls, selected deployed standards active, and unchanged outer apply/check intent.
 
-- [ ] **Step 5: Commit the runner migration contract**
+- [x] **Step 5: Commit the runner migration contract**
 
 ```powershell
 git add skills/repo-shape/references/consumer-runner-migration.md skills/repo-shape/references/ci-validation-pipeline.md skills/repo-shape/scripts/deploy_operating_standards.py skills/repo-shape/tests/scripts/test_consumer_runner_migration.py skills/repo-shape/tests/scripts/test_repo_standards_hooks.py
@@ -310,11 +310,11 @@ git commit -m "feat: add ambient-pack runner migration path"
 
 - Review: all source and generated output from Tasks 1-5
 
-- [ ] **Step 1: Run focused source tests**
+- [x] **Step 1: Run focused source tests**
 
 Run the tests introduced or modified in Tasks 1-5, plus the existing repo-shape, repo-standards, operating-model plugin contract, refresh, and hosted-hook suites.
 
-- [ ] **Step 2: Regenerate and validate projections**
+- [x] **Step 2: Regenerate and validate projections**
 
 Run:
 
@@ -327,7 +327,7 @@ py -3 tools/run.py installed-skills --check
 
 Expected: Agent Operating Model ships the selectable catalog and deployment tools. Consumer-facing templates do not silently select standards, and generated output contains no index mesh artifacts.
 
-- [ ] **Step 3: Review source and generated outputs**
+- [x] **Step 3: Review source and generated outputs**
 
 Review the complete branch diff against the approved spec. Confirm every prior fixed surface has a catalog classification; subscriptions do not select standards; chosen standards alone run; hosted behavior works without ambient skills; refresh is submodule-pinned; no mesh generator or index artifact has returned; and all copied/deployed resources have ownership and source revision evidence.
 

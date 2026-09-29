@@ -257,14 +257,23 @@ def _check_surface_content(repo_root: Path, rel: str, template: Path | None) -> 
     return findings
 
 
-def _run_scaffold_check(scaffold: Path, repo_root: Path) -> list[str]:
+def _scaffold_environment(repo_root: Path, implementation_root: Path | None) -> dict[str, str]:
+    env = _stripped_env()
+    if implementation_root is not None:
+        runtime = repo_root / ".agents" / "standards" / "_runtime"
+        if runtime.is_dir():
+            env["PYTHONPATH"] = os.pathsep.join(value for value in (str(runtime), env.get("PYTHONPATH", "")) if value)
+    return env
+
+
+def _run_scaffold_check(scaffold: Path, repo_root: Path, implementation_root: Path | None = None) -> list[str]:
     findings: list[str] = []
     result = subprocess.run(
         [sys.executable, str(scaffold), "--check"],
         cwd=repo_root,
         capture_output=True,
         text=True,
-        env=_stripped_env(),
+        env=_scaffold_environment(repo_root, implementation_root),
     )
     output = result.stdout + result.stderr
     for line in output.splitlines():
@@ -543,10 +552,16 @@ def _find_composition_cycle(edges: dict[Path, set[Path]]) -> list[Path] | None:
     return None
 
 
-def _check_composition_graph(repo_root: Path) -> list[str]:
+def _check_composition_graph(
+    repo_root: Path, *, include_runbooks: bool = True, include_playbooks: bool = True
+) -> list[str]:
     """Validate runbook roots, topical playbooks, and their explicit edges."""
-    runbooks = _composition_files(repo_root / ".agents" / "runbooks")
-    playbooks = _composition_files(repo_root / ".agents" / "playbooks")
+    runbook_dir = repo_root / ".agents" / "runbooks"
+    playbook_dir = repo_root / ".agents" / "playbooks"
+    all_runbooks = _composition_files(runbook_dir)
+    all_playbooks = _composition_files(playbook_dir)
+    runbooks = all_runbooks if include_runbooks else []
+    playbooks = all_playbooks if include_playbooks else []
     if not runbooks and not playbooks:
         return []
 
@@ -561,8 +576,8 @@ def _check_composition_graph(repo_root: Path) -> list[str]:
                         f"{path.relative_to(repo_root).as_posix()}: missing '## {heading}' composition section"
                     )
 
-    runbook_set = {path.resolve() for path in runbooks}
-    playbook_set = {path.resolve() for path in playbooks}
+    runbook_set = {path.resolve() for path in all_runbooks}
+    playbook_set = {path.resolve() for path in all_playbooks}
     edges: dict[Path, set[Path]] = {path.resolve(): set(_section_links(path, "Playbook routing")) for path in runbooks}
     parents: dict[Path, set[Path]] = {
         path.resolve(): set(_section_links(path, "Runbook routing")) for path in playbooks
@@ -577,7 +592,7 @@ def _check_composition_graph(repo_root: Path) -> list[str]:
                 findings.append(
                     f"{runbook.relative_to(repo_root).as_posix()}: playbook target does not resolve: {target}"
                 )
-            elif runbook not in parents.get(target, set()):
+            elif include_playbooks and runbook not in parents.get(target, set()):
                 findings.append(
                     f"{target.relative_to(repo_root).as_posix()}: missing reciprocal Runbook routing link to "
                     f"{runbook.relative_to(repo_root).as_posix()}"
@@ -588,7 +603,7 @@ def _check_composition_graph(repo_root: Path) -> list[str]:
                 findings.append(
                     f"{playbook.relative_to(repo_root).as_posix()}: runbook target does not resolve: {source}"
                 )
-            elif playbook not in edges.get(source, set()):
+            elif include_runbooks and playbook not in edges.get(source, set()):
                 findings.append(
                     f"{source.relative_to(repo_root).as_posix()}: missing reciprocal Playbook routing link to "
                     f"{playbook.relative_to(repo_root).as_posix()}"
@@ -671,7 +686,7 @@ def _check_surface(
     validator = document_contracts.DOCUMENT_VALIDATORS.get(str(surface.get("validator", "")))
 
     if scaffold is not None and scaffold.is_file():
-        findings.extend(_run_scaffold_check(scaffold, repo_root))
+        findings.extend(_run_scaffold_check(scaffold, repo_root, implementation_root))
         if validator is not None and surf_id not in {"review-entry", "contributing-entry", "repo-runbook-policy"}:
             findings.extend(item.message for item in validator(full, repo_root))
         return findings
@@ -712,7 +727,7 @@ def _apply_surface(
             cwd=repo_root,
             capture_output=True,
             text=True,
-            env=_stripped_env(),
+            env=_scaffold_environment(repo_root, implementation_root),
         )
         if result.returncode != 0:
             print(f"error applying {rel}: {result.stderr or result.stdout}", file=sys.stderr)
@@ -867,6 +882,11 @@ while the contract is absent."""
             by_id = {surface.id: _coordinator_surface(surface) for surface in manifest.surfaces}
             selected_surfaces = [by_id[surface_id] for surface_id in standard.surfaces]
             selected_ids = set(standard.surfaces)
+            composition_findings = _check_composition_graph(
+                repo_root,
+                include_runbooks=bool({"runbook-set", "runbooks-agents-md"} & selected_ids),
+                include_playbooks=bool({"playbook-set", "playbooks-agents-md"} & selected_ids),
+            )
             if args.apply and not args.yes:
                 print("error: --apply requires --yes", file=sys.stderr)
                 return 1
@@ -874,9 +894,12 @@ while the contract is absent."""
                 return 1
             if args.check:
                 findings = [
-                    finding
-                    for surface in selected_surfaces
-                    for finding in _check_surface(repo_root, surface, set(), selected_ids, implementation_root)
+                    *composition_findings,
+                    *[
+                        finding
+                        for surface in selected_surfaces
+                        for finding in _check_surface(repo_root, surface, set(), selected_ids, implementation_root)
+                    ],
                 ]
                 for finding in findings:
                     print(f"DRIFT: [{args.run_standard}] {finding}")
@@ -885,6 +908,26 @@ while the contract is absent."""
             for surface in selected_surfaces:
                 if _check_surface(repo_root, surface, set(), selected_ids, implementation_root):
                     applied += int(_apply_surface(repo_root, surface, set(), False, selected_ids, implementation_root))
+            counterpart_id = (
+                "playbook-composition" if args.run_standard == "runbook-composition" else "runbook-composition"
+            )
+            counterpart_selected = counterpart_id in entries
+            unresolved = (
+                []
+                if counterpart_selected
+                else _check_composition_graph(
+                    repo_root,
+                    include_runbooks=bool({"runbook-set", "runbooks-agents-md"} & selected_ids),
+                    include_playbooks=bool({"playbook-set", "playbooks-agents-md"} & selected_ids),
+                )
+            )
+            for surface in selected_surfaces:
+                unresolved.extend(_check_surface(repo_root, surface, set(), selected_ids, implementation_root))
+            if unresolved:
+                for finding in dict.fromkeys(unresolved):
+                    print(f"DRIFT: [{args.run_standard}] {finding}")
+                print("error: repo-standards apply did not converge", file=sys.stderr)
+                return 1
             print(f"OK repo-standards: applied standard {args.run_standard} ({applied} surface(s))")
             return 0
         except (OSError, ValueError, json.JSONDecodeError, KeyError, StopIteration) as exc:
@@ -911,8 +954,23 @@ while the contract is absent."""
                 standard_id=args.standard,
                 allow_shared_checkout=args.allow_shared_checkout,
             )
+            selected_surface_ids = {
+                surface_id
+                for standard in catalog.standards
+                if standard.id in completed
+                for surface_id in standard.surfaces
+            }
+            composition_findings = _check_composition_graph(
+                repo_root,
+                include_runbooks=bool({"runbook-set", "runbooks-agents-md"} & selected_surface_ids),
+                include_playbooks=bool({"playbook-set", "playbooks-agents-md"} & selected_surface_ids),
+            )
         except (OSError, ValueError) as exc:
             print(f"DRIFT: [operating-standards] {exc}", file=sys.stderr)
+            return 1
+        if composition_findings:
+            for finding in composition_findings:
+                print(f"DRIFT: {finding}")
             return 1
         verb = "applied" if args.apply else "checked"
         print(f"OK repo-standards: {verb} {len(completed)} declared standard(s)")
@@ -980,8 +1038,7 @@ while the contract is absent."""
     enabled_surface_ids = _enabled_surface_ids(surfaces, exceptions)
     dependency_findings = _required_with_findings(surfaces, exceptions)
 
-    composition_surfaces = {"runbook-set", "playbook-set", "runbooks-agents-md", "playbooks-agents-md"}
-    graph_findings = _check_composition_graph(repo_root) if composition_surfaces & enabled_surface_ids else []
+    graph_findings = _check_composition_graph(repo_root)
     findings: list[str] = [*dependency_findings, *graph_findings]
     for surface in surfaces:
         findings.extend(_check_surface(repo_root, surface, exceptions, enabled_surface_ids))
@@ -1059,7 +1116,7 @@ while the contract is absent."""
         refreshed_contract = plugin_contracts.ConsumerContract(tuple(exceptions), ())
         refreshed_exceptions = set(exceptions)
     refreshed_enabled = _enabled_surface_ids(surfaces, refreshed_exceptions)
-    refreshed_graph = _check_composition_graph(repo_root) if composition_surfaces & refreshed_enabled else []
+    refreshed_graph = _check_composition_graph(repo_root)
     unresolved = [*_required_with_findings(surfaces, refreshed_exceptions), *refreshed_graph]
     for surface in surfaces:
         unresolved.extend(_check_surface(repo_root, surface, refreshed_exceptions, refreshed_enabled))
