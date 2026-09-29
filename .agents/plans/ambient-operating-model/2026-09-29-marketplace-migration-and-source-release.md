@@ -1,5 +1,7 @@
 # Marketplace Migration and Source Release Implementation Plan
 
+> Status: completed-awaiting-retirement
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use `subagent-driven-development` (recommended) or `executing-plans` to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Publish an unambiguous marketplace source revision and a safe consumer migration guide for selectable standards, ambient capabilities, and the retired index mesh.
@@ -85,21 +87,21 @@ Add a concise release note under `docs/` summarizing the five ambient product ro
 
 Run `py -3 tools/run.py marketplace --apply` and `py -3 tools/run.py installed-skills --apply`, then run both corresponding `--check` commands. Do not hand-edit generated products.
 
-- [ ] **Step 2: Run focused and complete validation**
+- [x] **Step 2: Run focused and complete validation**
 
 Run the consumer-runner migration and plugin-contract suites, then review the source and generated diff. Commit normally so the tracked hook runs the complete canonical apply/check gate. Do not run the full CI check immediately before or after a successful hooked commit.
 
-- [ ] **Step 3: Request a fresh code review and resolve findings**
+- [x] **Step 3: Request a fresh code review and resolve findings**
 
 Review the final branch against the migration order, no-subscription contract, source revision semantics, and hosted validation boundary. Fix confirmed findings and repeat review after corrections.
 
-- [ ] **Step 4: Publish and record the released source version**
+- [x] **Step 4: Publish and record the released source version**
 
 Push the branch, verify the exact PR head and checks, move the PR from Draft to Ready only after self-review and hook evidence are current, and merge the authorized PR. Record the merged commit SHA in the roadmap and final migration handoff as the immutable released source version. Hosted marketplace validation may remain skipped for Draft commits; verify the post-Ready checks before merge.
 
-- [ ] **Step 5: Mark the plan complete**
+- [x] **Step 5: Mark the plan complete**
 
-Set this plan to `completed-awaiting-retirement`, update the roadmap with the merged source SHA, PR URL, local hook evidence, hosted checks, and migration guide, and commit those records through the tracked hook.
+Set this plan to `completed-awaiting-retirement`, update the roadmap with the merged source SHA, PR URL, local hook evidence, hosted checks, and migration guide, and commit those records through the tracked hook. The release commit is `b5ba27face374e86ca99fcce9da5b61d04c3ea69`, the merge commit for PR #338. Reviewed PR head `679c4bf0f0f1e38fbc573caa6535594ab4c549dd` is its ancestor. The post-Ready hosted marketplace validation passed in run `36513750391`; the fresh branch review found no actionable defects. The tracked pre-commit hook passed on the reviewed PR head.
 
 **Task exit:** The marketplace changes are merged, the release is named by its immutable source SHA, and consumers have a tested migration sequence that preserves their runner and hosted validation boundary.
 
