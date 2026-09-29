@@ -96,19 +96,19 @@ Run: `py -3 -m pytest skills/repo-shape/tests/scripts/test_unslop_standard.py sk
 
 - Legacy consumers without the `unslop` standard remain valid and do not need Unslop contracts, profile directories, or plugin subscriptions. Migration never selects `unslop` based only on the optional repo-shape surface; explicit adoption occurs in the consumer's operating-standards composition.
 
-- [ ] **Step 1: Update focused tests for the general contract and migration boundary**
+- [x] **Step 1: Update focused tests for the general contract and migration boundary**
 
 Change tests so an operating-model contract with no Unslop field is valid; obsolete `unslop_profile_roots` is reported as unsupported drift rather than silently treated as current configuration; plugin contract discovery does not inspect or require consumer profiles; and a legacy migration fixture with the new optional surface enabled does not adopt `unslop` or create a profile requirement implicitly.
 
-- [ ] **Step 2: Run the focused repo-shape contract tests and observe the expected failures**
+- [x] **Step 2: Run the focused repo-shape contract tests and observe the expected failures**
 
 Run: `py -3 -m pytest skills/repo-shape/tests/scripts/test_operating_model_surface_contracts.py skills/repo-shape/tests/scripts/test_operating_model_plugin_contracts.py skills/repo-shape/tests/scripts/test_operating_standards_migration.py -q` Expected: FAIL against the old required `unslop_profile_roots` behavior.
 
-- [ ] **Step 3: Remove Unslop configuration from the generic operating-model contract**
+- [x] **Step 3: Remove Unslop configuration from the generic operating-model contract**
 
 Update its template/scaffold validation and plugin prerequisite code, remove the field from this repository's own contract, and revise contract custody doctrine so profiles are operational guidance under `.agents/unslop/`. Adoption and profile-root checks belong exclusively to the new standard. Honor the catalog's explicit-only legacy migration policy for `unslop`; existing inferred-standard migration behavior remains unchanged for every other standard.
 
-- [ ] **Step 4: Run the focused contract and migration tests**
+- [x] **Step 4: Run the focused contract and migration tests**
 
 Run the command from Step 2. Expected: PASS with both current contracts and legacy migration behavior covered.
 
