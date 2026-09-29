@@ -14,13 +14,13 @@ Ensure `review-metrics.json` is generated from the recorded logs and current sta
 1. Confirm the upstream node has already recorded any new finding, resolution, regression, or blocker events with the appropriate `record_*.py` scripts.
 2. Regenerate the metrics file:
    ```bash
-   py -3 .agents/skills/iterative-review/scripts/compile_metrics.py \
+   py -3 <runtime-skill-path-for-iterative-review>/scripts/compile_metrics.py \
        --state <scratch_dir>/review-state.json \
        --metrics <scratch_dir>/review-metrics.json
    ```
 3. Authorize the next node:
    ```bash
-   py -3 .agents/skills/iterative-review/scripts/next_node.py \
+   py -3 <runtime-skill-path-for-iterative-review>/scripts/next_node.py \
        --state <scratch_dir>/review-state.json \
        --propose finding-fix
    ```
@@ -32,7 +32,7 @@ Ensure `review-metrics.json` is generated from the recorded logs and current sta
 ## Next check
 
 ```bash
-py -3 .agents/skills/iterative-review/scripts/next_node.py \
+py -3 <runtime-skill-path-for-iterative-review>/scripts/next_node.py \
     --state <scratch_dir>/review-state.json \
     --propose finding-fix
 ```

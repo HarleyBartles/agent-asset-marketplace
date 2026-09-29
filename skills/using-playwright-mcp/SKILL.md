@@ -19,6 +19,10 @@ license: MIT
 
 Use this skill to pick the right `mcp-playwright` tool for browser automation or web inspection, and to fall back safely to other Playwright surfaces when the MCP does not have what you need.
 
+## Runtime availability
+
+Inspect the tools exposed in the current runtime before calling MCP. This capability is available independently of repository subscriptions. If the MCP surface is absent or lacks the needed action, use a documented Playwright alternative only when it is actually available; otherwise report the missing capability and stop the dependent browser action.
+
 ## Router
 
 | Intent                                                                                     | Read first                                                                         |

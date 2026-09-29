@@ -513,12 +513,13 @@ def main(argv: list[str] | None = None) -> int:
         else:
             print(f"{node}\n# {reason}")
             if node not in ("ready", "blocked"):
-                node_path = f".agents/skills/iterative-review/references/node-{node}.md"
+                script_path = Path(__file__).resolve()
+                skill_root = script_path.parent.parent
+                node_path = skill_root / "references" / f"node-{node}.md"
                 state_path_for_hint = state_path or Path(args.metrics).with_name("review-state.json")
                 print(f"# recipe: {node_path}")
                 print(
-                    "# authorize: py -3 .agents/skills/iterative-review/scripts/next_node.py "
-                    f"--propose {node} --state {state_path_for_hint}"
+                    f'# authorize: "{sys.executable}" "{script_path}" --propose {node} --state "{state_path_for_hint}"'
                 )
     elif state_path is not None and args.propose == node:
         ok, missing = _artifacts_present(args.propose, state)

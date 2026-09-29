@@ -165,7 +165,7 @@
     "path": ".agents/runbooks/planning.md",
     "line": 24,
     "pattern": "portable-repo-command",
-    "context": "Plans live under `.agents/plans/`. Use `py -3 tools/run.py mesh --apply` after adding one.",
+    "context": "Plans follow the repository-declared planning location. No index-mesh command is required after adding one.",
     "classification": "repo-local",
     "owner": "runbook-playbook contract",
     "reason": "Repository-local composition guidance required by the approved runbook and playbook contract."
@@ -174,7 +174,7 @@
     "path": ".agents/playbooks/marketplace-generation.md",
     "line": 23,
     "pattern": "portable-repo-command",
-    "context": "Run `py -3 tools/run.py marketplace --apply` after changes to canonical plugin skills, per-pack provenance, bundle manifests, or plugin manifests. Then run `py -3 tools/run.py installed-skills --apply` for installed projections and the repository-owned index/mesh apply targets when files move.",
+    "context": "Run `py -3 tools/run.py marketplace --apply` after changes to canonical plugin skills, per-pack provenance, bundle manifests, or plugin manifests. Then run `py -3 tools/run.py installed-skills --apply` for installed projections when needed. There is no index-mesh apply target.",
     "classification": "repo-local",
     "owner": "runbook-playbook contract",
     "reason": "Repository-local composition guidance required by the approved runbook and playbook contract."

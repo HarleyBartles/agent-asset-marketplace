@@ -76,33 +76,35 @@ Compare the audit coverage against all skill names in the five current manifests
 
 **Consumes:** completed Task 1 audit.
 
-- [ ] **Step 1: Preserve repository-guidance discovery without fixed layout assumptions**
+- [x] **Step 1: Preserve repository-guidance discovery without fixed layout assumptions**
 
 Review the current PR #334 Superpowers+ correction and every other repo-backed workflow bootstrap and workflow contract in the pack. Keep guidance discovery conditional on repository declarations and follow local entrypoints when present. Remove any remaining claim that consumers must provide a particular inventory or `.agents` path merely to use an ambient workflow. Audit plan/spec destinations and discovery in `writing-plans`, `writing-roadmaps`, `brainstorming`, `linear-issue-shaping`, `selecting-a-subagent`, `requesting-code-review`, and `iterative-review`; respect repository-declared homes, using `.agents/plans/` or `.agents/specs/` only when the repository adopts that convention or has no conflicting declared practice.
 
-- [ ] **Step 2: Keep Repo Worker Pack general-purpose and subscription-independent**
+- [x] **Step 2: Keep Repo Worker Pack general-purpose and subscription-independent**
 
 Review every Repo Worker Pack skill that mentions local doctrine, marketplace plugins, installed skills, runbooks/playbooks, or runner commands. State that repository guidance is a relevant overlay only when declared by that repository. Replace the fixed `.agents/runbooks/` and `.agents/playbooks/` prescription in `repo-worker-base/references/stage-guide-contract.md` with discovery of the consumer's declared stage-guide homes. Keep refresh commands in consumer canonical runners on the pinned marketplace-source path from Plan 2. Make worktree setup refresh consumer skills only when that repository declares marketplace-skill configuration; a repository with no such composition must remain lean. Recast the plugin metadata and README as a general ambient worker-capability pack, not a pack for one workspace. Ensure ambient worker capabilities do not require the consumer to subscribe to the pack, copy the pack, or install its projection, and do not claim ownership of Superpowers+ routing or Agent Operating Model standards. Remove stale index-mesh invocation from refresh skill metadata.
 
-- [ ] **Step 3: Make MCP usage conditional on the actual tool surface**
+- [x] **Step 3: Make MCP usage conditional on the actual tool surface**
 
 For each MCP wrapper, preserve its owning server/tool guidance while requiring runtime discovery of the actual available connector surface. Keep explicit safe handling when the requested tool is unavailable. Remove instructions that imply a consumer must configure a connector or subscribe to MCP Usage Pack for the agent to use an already available MCP tool. In `using-github-mcp`, discover repository-declared PR policy at its own path; do not hard-code `.agents/runbooks/pr.md` as universal.
 
-- [ ] **Step 4: Separate Unslop+ availability from profile adoption**
+- [x] **Step 4: Separate Unslop+ availability from profile adoption**
 
 Audit profile discovery, evaluation, and deployment instructions. Make clear that an ambient agent can use the quality guidance when suitable, while consumer enforcement or repository-owned profile deployment is an explicit local choice. Keep profile validation scoped to profiles the consumer deliberately owns or deploys.
 
-- [ ] **Step 5: Remove ambient command dependence on consumer skill projections**
+- [x] **Step 5: Remove ambient command dependence on consumer skill projections**
 
 Search all canonical source members of the four companion packs for commands or helper logic that resolve bundled scripts/references through `.agents/skills/<skill>/`. Update ambient agent instructions to resolve bundled files relative to the active skill's runtime-provided `SKILL.md` path. For consumer canonical runners, retain only the explicitly pinned marketplace-source invocation where the runner contract requires it. Update `using-git-worktrees/scripts/new_worktree.py` so an unconfigured consumer does not attempt marketplace-skill refresh, while a consumer that declared marketplace skills retains its refresh behavior. Do not rewrite paths owned by an explicitly adopted Agent Operating Model checker or repository policy. Remove stale `generating-agent-mesh` and index-mesh commands from all four packs.
 
-- [ ] **Step 6: Add behavior evidence for each changed assumption**
+- [x] **Step 6: Add behavior evidence for each changed assumption**
 
-Add or extend skill tests/pressure cases at the owning skills. Cover a consumer with custom plan/runbook homes, no ambient plugin subscriptions, and only a subset of MCP tools; a consumer-owned exact skill remains selectable; an optional Unslop profile is absent; an agent runs an ambient helper with no consumer `.agents/skills/` projection; and worktree creation skips skill refresh for a repository that declared no marketplace-skill configuration but preserves refresh for configured consumers. Assert the intended workflow decision and failure/reporting behavior, not text presence alone.
+Add or extend skill tests/pressure cases at the owning skills. Cover a consumer with custom plan/runbook homes, no ambient plugin subscriptions, and only a subset of MCP tools; an optional Unslop profile is absent; an agent runs an ambient helper with no consumer `.agents/skills/` projection; and worktree creation skips skill refresh for a repository that declared no marketplace-skill configuration but preserves refresh for configured consumers. The consumer-owned exact-skill selection case belongs with the runbook/playbook composition behavior in Task 3. Assert the intended workflow decision and failure/reporting behavior, not text presence alone.
 
-- [ ] **Step 7: Run focused source-skill suites**
+- [x] **Step 7: Run focused source-skill suites**
 
 Run tests only for skills changed in Steps 1-5 using their documented commands and the repository's active Python runtime. Record the test commands and results in the plan as execution proceeds.
+
+**Execution evidence:** `py -3 -m pytest skills/using-git-worktrees/tests/scripts/test_worktree_scripts.py -q` passed (41 passed); `py -3 -m pytest skills/iterative-review/tests -q` passed (663 passed, 5 skipped). The runtime-path and marketplace-refresh behavior cases each produced an intended RED before implementation and passed after the source change. Pressure inputs for custom repository homes, absent MCP tools, and an absent optional writing provider are committed as test material; they are not claimed as executed model trials.
 
 **Task exit:** Companion packs remain distinct and usable as ambient guidance without imposing consumer subscriptions or assumed repository layouts; changed behavior has focused evidence at the source skill.
 
@@ -132,7 +134,7 @@ Teach the relevant repository-owned validator to check syntax, required/optional
 
 - [ ] **Step 5: Prove missing required capability stops dependent work**
 
-Add a behavior/pressure case in the source skill suite showing that absence of a required provider yields a clear stop before the dependent workflow action, with the capability named in the report. Verify optional capability absence is reported as skipped and does not block unrelated workflow steps. Do not represent hosted structural validation as proof of runtime skill availability.
+Add a behavior/pressure case in the source skill suite showing that absence of a required provider yields a clear stop before the dependent workflow action, with the capability named in the report; also show that a declared repository-owned exact skill remains selectable. Verify optional capability absence is reported as skipped and does not block unrelated workflow steps. Do not represent hosted structural validation as proof of runtime skill availability.
 
 - [ ] **Step 6: Run focused composition and validator suites**
 

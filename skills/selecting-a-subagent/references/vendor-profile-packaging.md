@@ -21,7 +21,7 @@ Third-party marketplace packs may also ship `.md` profile assets under their own
 First-party portable profiles are installed to the Devin Desktop user-global agents directory by `install_profiles.py`:
 
 ```bash
-py -3 .agents/skills/selecting-a-subagent/scripts/install_profiles.py --apply
+py -3 <runtime-skill-path-for-selecting-a-subagent>/scripts/install_profiles.py --apply
 ```
 
 The default target is `~/.config/devin/agents/` on macOS/Linux and `%APPDATA%\devin\agents\` on Windows. Use `--target <dir>` to install to a different path. Do not commit the user-global directory to a repo.

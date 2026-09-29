@@ -11,22 +11,22 @@ Normalize lens reports and classify every finding into a severity-based routing 
 
 ## Recipe
 
-1. Run `py -3 .agents/skills/iterative-review/scripts/normalize_review_inputs.py --apply <scratch_dir>` to ensure all lens reports are plain UTF-8.
+1. Run `py -3 <runtime-skill-path-for-iterative-review>/scripts/normalize_review_inputs.py --apply <scratch_dir>` to ensure all lens reports are plain UTF-8.
 2. Classify every finding from the lens reports. For each finding, call:
    ```bash
-   py -3 .agents/skills/iterative-review/scripts/record_finding.py \
+   py -3 <runtime-skill-path-for-iterative-review>/scripts/record_finding.py \
        --state <scratch_dir>/review-state.json \
        --data '{"finding_id": "<finding_id>", "lens": "<lens>", "discovered_at_node": "lens-triage", "discovered_at_round": <round>, "severity": "<severity>", "contested": <true|false>}'
    ```
    Then regenerate the metrics file:
    ```bash
-   py -3 .agents/skills/iterative-review/scripts/compile_metrics.py \
+   py -3 <runtime-skill-path-for-iterative-review>/scripts/compile_metrics.py \
        --state <scratch_dir>/review-state.json \
        --metrics <scratch_dir>/review-metrics.json
    ```
 3. Classify each finding. If a finding is determined to be a false positive or otherwise requires no fix, record that resolution at `lens-triage`:
    ```bash
-   py -3 .agents/skills/iterative-review/scripts/record_resolution.py \
+   py -3 <runtime-skill-path-for-iterative-review>/scripts/record_resolution.py \
        --state <scratch_dir>/review-state.json \
        --data '{"finding_id": "<finding_id>", "resolved_at_node": "lens-triage", "resolved_at_round": <round>}'
    ```
@@ -44,7 +44,7 @@ Normalize lens reports and classify every finding into a severity-based routing 
 ## Next check
 
 ```bash
-py -3 .agents/skills/iterative-review/scripts/next_node.py \
+py -3 <runtime-skill-path-for-iterative-review>/scripts/next_node.py \
     --state <scratch_dir>/review-state.json \
     --propose <next-node>
 ```

@@ -8,7 +8,7 @@ The hosted workflow `.github/workflows/marketplace-validation.yml` runs:
 REPO_STANDARDS_HOSTED_COMMIT=HEAD githooks/pre-commit
 ```
 
-The hook reads `.agents/contracts/repo-standards-commands.json`, whose apply and check vectors both use the shared `_TASKS["ci"]` registry in `tools/run.py`. Its dependency list is exactly `lint`, `repo-standards`, and `validate`; normal DAG resolution adds the transitive `mesh` dependency of `validate`.
+The hook reads `.agents/contracts/repo-standards-commands.json`, whose apply and check vectors both use the shared `_TASKS["ci"]` registry in `tools/run.py`. Its dependency list is exactly `lint`, `repo-standards`, and `validate`; the validation DAG contains no index-mesh target.
 
 ## Local and hosted sequences
 

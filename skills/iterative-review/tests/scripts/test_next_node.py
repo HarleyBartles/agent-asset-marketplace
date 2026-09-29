@@ -50,6 +50,27 @@ def _propose(state: Path, node: str, extra: list[str] | None = None) -> subproce
 
 
 class TestNextNodePropose(unittest.TestCase):
+    def test_recipe_hint_resolves_from_runtime_skill_location(self):
+        with tempfile.TemporaryDirectory() as td:
+            runtime_root = Path(td) / "runtime" / "iterative-review"
+            (runtime_root / "scripts").mkdir(parents=True)
+            (runtime_root / "references").mkdir()
+            copied_script = runtime_root / "scripts" / "next_node.py"
+            copied_script.write_bytes(NEXT_NODE.read_bytes())
+            (runtime_root / "references" / "node-normalize-inputs.md").write_text("recipe\n", encoding="utf-8")
+            scratch = Path(td) / "scratch"
+            scratch.mkdir()
+            state = _write_state(scratch)
+            result = subprocess.run(
+                [sys.executable, str(copied_script), "--state", str(state)],
+                capture_output=True,
+                text=True,
+            )
+
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertIn(str(runtime_root / "references" / "node-normalize-inputs.md"), result.stdout)
+            self.assertNotIn(".agents/skills/iterative-review", result.stdout)
+
     def test_propose_setup_allows_normalize_inputs(self):
         with tempfile.TemporaryDirectory() as td:
             scratch = Path(td)

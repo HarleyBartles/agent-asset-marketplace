@@ -57,7 +57,7 @@ After the entry gate permits use, do not read the whole graph reference before s
 1. Identify the PR number.
 2. From the branch worktree, run:
    ```
-   py -3 .agents/skills/iterative-review/scripts/start_review.py --pr <pr_number> --apply
+   py -3 <runtime-skill-path-for-iterative-review>/scripts/start_review.py --pr <pr_number> --apply
    ```
 3. The script prints the one allowed next node, the recipe file to read, and the command to authorize it.
 4. Open that one `references/node-<node>.md` file and follow it.
@@ -67,6 +67,10 @@ After the entry gate permits use, do not read the whole graph reference before s
 `start_review.py` performs the `setup` and `normalize-inputs` nodes and leaves the graph pointing at `preflight`.
 
 # Iterative Review
+
+## Bundled helper paths
+
+Resolve scripts and references under the skill directory supplied by the active runtime. In examples, `<runtime-skill-path-for-iterative-review>` means that runtime-provided directory. Never infer a consumer `.agents/skills/` projection. When the runtime provides no usable location for a helper required by this workflow, stop and report the unavailable helper instead of assuming a consumer copy exists.
 
 Run the legacy review-assistance graph on a draft PR only after the mandatory entry gate permits it.
 
@@ -94,14 +98,14 @@ The Devin Desktop agents search path is: user-global `~/.config/devin/agents/` (
 1. Run `start_review.py --pr <pr_number> --apply` from the branch worktree. It creates the off-repo scratch workspace, materializes the diff and PR context, runs `normalize-inputs`, and advances `review-state.json` to `normalize-inputs`.
 2. Run `next_node.py` to discover the single allowed next node:
    ```
-   py -3 .agents/skills/iterative-review/scripts/next_node.py --state <scratch_dir>/review-state.json
+   py -3 <runtime-skill-path-for-iterative-review>/scripts/next_node.py --state <scratch_dir>/review-state.json
    ```
    Capture the first line of output as `<node>`.
 3. Open `references/node-<node>.md` and follow that one recipe.
 4. When the recipe says "next check", run `next_node.py` again.
 5. Validate and advance the router to the discovered node before running its recipe:
    ```
-   py -3 .agents/skills/iterative-review/scripts/next_node.py --propose <node> --state <scratch_dir>/review-state.json
+   py -3 <runtime-skill-path-for-iterative-review>/scripts/next_node.py --propose <node> --state <scratch_dir>/review-state.json
    ```
 6. Stop when `next_node.py` prints `ready` or `blocked`; neither value proves exhaustive review, and `ready` does not itself authorize a green claim.
 
