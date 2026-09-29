@@ -1,5 +1,7 @@
 # Unslop Operating Standard and Profile Workflows Implementation Plan
 
+> **Artifact status:** `completed-awaiting-retirement` - implementation is committed and handed off in Draft PR #342; retire this plan from the repository in the successor slice.
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use `subagent-driven-development` (recommended) or `executing-plans` to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Make consumer-owned Unslop profiles an opt-in, checkable Operating Model standard while Unslop+ supplies ambient profile application and profile maintenance capabilities.
@@ -210,6 +212,6 @@ Run: `py -3 tools/run.py marketplace --apply` Run: `py -3 tools/run.py repo-stan
 
 Run: `py -3 tools/run.py installed-skills --check` Run: `py -3 tools/build_marketplace.py --check` Run the selected standard directly with `py -3 .agents/standards/_runtime/repo_standards.py --run-standard unslop --check`. For repository-wide validation, stage the intended tree and let the tracked pre-commit hook perform the canonical apply/check gate; use `py -3 tools/run.py ci --apply` followed by `py -3 tools/run.py ci --check --diagnostics` only when diagnosing convergence outside a normal commit. Do not run the full check immediately before or after a successful hooked commit. Expected: source projections are current, the selected standard check passes for this repository, generic legacy consumers remain valid, and the full repository gate passes.
 
-- [ ] **Step 6: Review, commit, and hand off the implementation branch**
+- [x] **Step 6: Review, commit, and hand off the implementation branch**
 
 Review the final diff against the approved letter and this plan. Confirm no generated output was hand-edited, no profile is presented as binding doctrine, and no validator makes an adherence claim. Commit through the tracked hook, push the branch, open a Draft PR, attach the PR artifact, and verify the published head and required checks before handing off.
