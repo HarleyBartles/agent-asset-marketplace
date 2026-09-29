@@ -14,7 +14,6 @@
     "jev-mcp"
   ],
   "skills": "./skills/",
-  "mcpServers": "./.mcp.json",
   "interface": {
     "displayName": "Jev MCP",
     "shortDescription": "Typed decision tools for model routing and other bounded judgments.",

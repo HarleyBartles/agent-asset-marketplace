@@ -71,7 +71,7 @@ ______________________________________________________________________
 
 - [x] **Step 5: Record and gate.** Codex CLI `0.158.0-alpha.2.1`; marketplace source `https://127.0.0.1:9419/consumer-marketplace.git#main`; plugin source `https://127.0.0.1:9419/source.git`, path `./plugins/proof-plugin`, `ref: main`; project activation `[plugins."proof-plugin@proof-marketplace"] enabled = true`; refresh command `codex plugin marketplace upgrade proof-marketplace`. The managed marketplace root appeared under `<CODEX_HOME>/.tmp/marketplaces/proof-marketplace`, and the installed plugin under `<CODEX_HOME>/plugins/cache/proof-marketplace/proof-plugin/1.0.0`. The moving ref refreshed, and enablement followed repo/worktree config while the unrelated repo remained disabled. The proof used an isolated Codex profile and a local HTTPS Git fixture; certificate verification was disabled only for that disposable local fixture. The CLI's `debug prompt-input` diagnostic did not list plugin skills, so it is not treated as a skill invocation test.
 
-- [ ] **Step 6: Commit the proof update.** Commit only the plan's proof result and any approved spec correction; let the tracked hook run.
+- [x] **Step 6: Commit the proof update.** Committed the plan's proof result as `4fe4ea632`; the tracked hook and `git diff --check` passed.
 
 ### Task 2: Publish portable plugin packages for Devin and preserve Codex identity
 
@@ -88,15 +88,15 @@ ______________________________________________________________________
 
 - Produces: packages with root Agent Plugins `plugin.json` and `skills/` accepted by both Codex and Devin; preserve `.codex-plugin/plugin.json` only if needed as the documented Codex compatibility fallback. Codex marketplace plugin key stays `repo-worker-pack`; displayed name is `Agent Capability Pack`.
 
-- [ ] **Step 1: Add package-shape tests.** Extend build/shipping tests to require the portable root manifest, expected skill directories, and current catalog key; assert no Claude-specific package directory is generated.
+- [x] **Step 1: Add package-shape tests.** Build and shipping tests require the portable root manifest, bundled skills, the stable Codex compatibility overlay, and no Claude-specific package directory.
 
-- [ ] **Step 2: Confirm the red state.** Run `py -3 -m pytest tests/build tests/shipping -q` and confirm the new package assertions fail against current output.
+- [x] **Step 2: Confirm the red state.** Ran `py -3 -m pytest tests/build tests/shipping -q`; the new package-shape assertions failed against the old `.codex-plugin`-only output as expected.
 
-- [ ] **Step 3: Implement manifest generation.** Extend the existing generator from canonical definitions to emit the portable root manifest and required Codex compatibility metadata. Keep shared fields sourced once and prevent Codex-only extension fields from leaking outside their extension namespace.
+- [x] **Step 3: Implement manifest generation.** Canonical definitions now use Agent Plugins `plugin.json` with Codex presentation under `extensions.com.openai`. The build emits the portable root manifest and derives the legacy Codex overlay from it, avoiding a second authored manifest. Codex-only fields remain namespaced in the portable file.
 
-- [ ] **Step 4: Update ACP display metadata.** Change the visible name and descriptions to Agent Capability Pack without changing `name`, catalog key, plugin path, or adding an alias.
+- [x] **Step 4: Update ACP display metadata.** Changed the visible display name and descriptions to Agent Capability Pack while preserving machine name `repo-worker-pack`, catalog identity, and plugin path.
 
-- [ ] **Step 5: Regenerate and verify.** Run `py -3 tools/run.py marketplace --apply`, then `py -3 -m pytest tests/build tests/shipping -q`. Inspect one skill-only plugin and one plugin with optional resources in both generated manifests.
+- [x] **Step 5: Regenerate and verify.** Ran `py -3 tools/run.py marketplace --apply` and `py -3 -m pytest tests/build tests/shipping -q` (15 passed). Inspected the skill-only Architecture Pack and the Jev MCP package with portable root manifests; Jev's MCP server uses root `mcp.json`.
 
 - [ ] **Step 6: Commit the package slice.** Stage source and generated output together; let the tracked hook run.
 

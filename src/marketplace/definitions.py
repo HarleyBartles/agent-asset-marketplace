@@ -12,6 +12,11 @@ class DefinitionError(ValueError):
     """A marketplace definition is invalid or points outside its source roots."""
 
 
+AGENT_PLUGIN_SCHEMA = "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json"
+OPENAI_EXTENSION = "com.openai"
+LEGACY_MANIFEST_FIELDS = frozenset({"skills", "mcpServers", "interface"})
+
+
 @dataclass(frozen=True)
 class Resource:
     name: str
@@ -101,6 +106,15 @@ def load_marketplace(root: Path) -> Marketplace:
         manifest = _read_json(directory / "plugin.json")
         if not isinstance(manifest, dict) or not isinstance(manifest.get("name"), str) or not manifest["name"].strip():
             raise DefinitionError(f"{directory / 'plugin.json'}: name must be a non-empty string")
+        if manifest.get("$schema") != AGENT_PLUGIN_SCHEMA:
+            raise DefinitionError(f"{directory / 'plugin.json'}: Agent Plugins schema is required")
+        if LEGACY_MANIFEST_FIELDS.intersection(manifest):
+            raise DefinitionError(
+                f"{directory / 'plugin.json'}: OpenAI-specific fields belong under extensions.{OPENAI_EXTENSION}"
+            )
+        extensions = manifest.get("extensions", {})
+        if not isinstance(extensions, dict) or any(not isinstance(value, dict) for value in extensions.values()):
+            raise DefinitionError(f"{directory / 'plugin.json'}: extensions must map namespaces to objects")
         name = manifest["name"]
         if name in plugins:
             raise DefinitionError(f"duplicate plugin name: {name}")

@@ -15,17 +15,30 @@ def _write(root: Path, relative: str, content: str) -> None:
 
 def assert_plugin_is_self_contained(plugin: Path) -> None:
     """Reject symlinks that depend on the source checkout after installation."""
-    assert (plugin / ".codex-plugin/plugin.json").is_file()
+    assert (plugin / "plugin.json").is_file()
+    assert not (plugin / ".claude-plugin").exists()
     for path in plugin.rglob("*"):
         assert not path.is_symlink(), f"installed plugin contains a filesystem dependency: {path}"
 
 
 def test_built_plugin_can_be_inspected_as_an_isolated_install(tmp_path: Path) -> None:
     _write(tmp_path, "skills/guide/SKILL.md", "# Guide\n")
-    _write(tmp_path, "src/plugin-definitions/guide/plugin.json", json.dumps({"name": "guide", "version": "1.0.0"}))
+    _write(
+        tmp_path,
+        "src/plugin-definitions/guide/plugin.json",
+        json.dumps(
+            {
+                "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+                "name": "guide",
+                "version": "1.0.0",
+            }
+        ),
+    )
     _write(tmp_path, "src/plugin-definitions/guide/contents.json", json.dumps({"skills": [{"name": "guide"}]}))
     _write(tmp_path, "resources.json", "{}")
     (tmp_path / "shared").mkdir()
 
     build_marketplace(tmp_path, apply=True)
-    assert_plugin_is_self_contained(tmp_path / "dist/plugins/guide")
+    plugin = tmp_path / "dist/plugins/guide"
+    assert_plugin_is_self_contained(plugin)
+    assert (plugin / "skills/guide/SKILL.md").is_file()

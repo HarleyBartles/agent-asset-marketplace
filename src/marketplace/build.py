@@ -7,7 +7,7 @@ import shutil
 import tempfile
 from pathlib import Path
 
-from marketplace.definitions import DefinitionError, load_marketplace
+from marketplace.definitions import DefinitionError, OPENAI_EXTENSION, load_marketplace
 
 
 class BuildError(RuntimeError):
@@ -41,6 +41,17 @@ def _copy_source(
             shutil.copyfile(path, target)
 
 
+def _codex_compatibility_manifest(manifest: dict) -> dict:
+    """Generate Codex's older overlay from the portable source manifest."""
+    compatibility = {key: value for key, value in manifest.items() if key not in {"$schema", "extensions"}}
+    compatibility["skills"] = "./skills/"
+    openai = manifest.get("extensions", {}).get(OPENAI_EXTENSION, {})
+    for key in ("interface", "apps", "hooks"):
+        if key in openai:
+            compatibility[key] = openai[key]
+    return compatibility
+
+
 def _expected_plugins(root: Path, staging: Path) -> None:
     marketplace = load_marketplace(root)
     definitions = root / "src/plugin-definitions"
@@ -51,7 +62,8 @@ def _expected_plugins(root: Path, staging: Path) -> None:
         files = definitions / name / "files"
         if files.exists():
             _copy_source(files, package, definitions / name)
-        _write_json(package / ".codex-plugin/plugin.json", plugin.manifest)
+        _write_json(package / "plugin.json", plugin.manifest)
+        _write_json(package / ".codex-plugin/plugin.json", _codex_compatibility_manifest(plugin.manifest))
         if plugin.bundle is not None:
             entries = []
             for skill in plugin.skills:

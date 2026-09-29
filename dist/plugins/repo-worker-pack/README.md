@@ -1,6 +1,6 @@
-# Repo Worker Pack
+# Agent Capability Pack
 
-This ambient bundle makes first-party repository-worker capabilities available to agents across repositories. It is not a repository subscription and does not impose a directory layout, runbook inventory, or operating standard.
+This ambient bundle makes first-party agent capabilities available across projects. It does not impose a project directory layout, runbook inventory, or operating standard.
 
 ## Bundle contents
 
@@ -16,4 +16,4 @@ This ambient bundle makes first-party repository-worker capabilities available t
 
 ## Install shape
 
-When a repository deliberately configures marketplace skill installation, the refresh utility projects selected skills from their declared sources. Runtime availability of this ambient bundle does not imply that repository configuration.
+The package is installed and updated by the agent harness. Its presence in a harness does not opt a project into any repository standards.

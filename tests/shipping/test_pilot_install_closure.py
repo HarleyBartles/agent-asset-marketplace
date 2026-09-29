@@ -26,7 +26,8 @@ def test_shared_skill_and_reference_resolve_after_each_plugin_isolated(tmp_path:
         package = installed / name
         shutil.copytree(source, package)
 
-        assert (package / ".codex-plugin/plugin.json").is_file()
+        assert (package / "plugin.json").is_file()
+        assert not (package / ".claude-plugin").exists()
         assert (package / "LICENSE").is_file()
         skill = package / "skills/feature-sliced-design"
         frontmatter = yaml.safe_load((skill / "SKILL.md").read_text(encoding="utf-8").split("---", 2)[1])
