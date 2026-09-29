@@ -6,4 +6,6 @@ For Codex consumers, adopt the optional `repo-plugin-subscriptions` AOM standard
 
 The consuming repository owns its `.agents/contracts/operating-standards.json` opt-in and its native plugin configuration. Preserve genuine repo-authored `.agents/skills/` and `repo.local_skills` entries; the plugin subscription standard does not copy, rewrite, or delete local skills.
 
-For Wild Bunch, use the migration handoff in the active multi-harness plugin distribution plan and perform the consumer migration in that repository.
+Codex consumers must register their catalog in `.codex/config.toml` with `[marketplaces.<catalog-name>]`, `source_type = "git"`, and the Git source containing the catalog. Activation keys alone do not register it, and native Upgrade requires a Git-backed marketplace. The scaffold uses the consumer's `origin` and `main` for new configs; publish the catalog there, or temporarily override the catalog ref to the migration branch for field testing.
+
+Perform consumer migrations in the consuming repository using the [repo plugin subscription standard](repo-plugin-subscriptions-standard.md).

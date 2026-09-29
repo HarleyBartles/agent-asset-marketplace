@@ -2,7 +2,9 @@ from __future__ import annotations
 
 import importlib.util
 import json
+import subprocess
 import sys
+import tomllib
 from pathlib import Path
 
 import pytest
@@ -50,7 +52,12 @@ def _consumer(root: Path) -> None:
     )
     config = root / ".codex/config.toml"
     config.parent.mkdir(parents=True)
-    config.write_text('[plugins."architecture-pack@wild-bunch-marketplace"]\nenabled = true\n', encoding="utf-8")
+    config.write_text(
+        '[plugins."architecture-pack@wild-bunch-marketplace"]\nenabled = true\n'
+        '[marketplaces.wild-bunch-marketplace]\nsource_type = "git"\n'
+        'source = "https://github.com/example/wild-bunch.git"\nref = "main"\n',
+        encoding="utf-8",
+    )
     local_skill = root / ".agents/skills/repo-local-skill/SKILL.md"
     local_skill.parent.mkdir(parents=True)
     local_skill.write_text("---\nname: repo-local-skill\ndescription: local\n---\n", encoding="utf-8")
@@ -61,6 +68,62 @@ def test_accepts_codex_floating_ref_and_preserves_local_skills(tmp_path: Path) -
 
     assert subscriptions.validate(tmp_path) == []
     assert (tmp_path / ".agents/skills/repo-local-skill/SKILL.md").is_file()
+
+
+@pytest.mark.parametrize(
+    "registration",
+    [
+        "",
+        '[marketplaces.other]\nsource_type = "git"\nsource = "https://github.com/example/wild-bunch.git"\n',
+        '[marketplaces.wild-bunch-marketplace]\nsource_type = "local"\nsource = ".agents/plugins/marketplace.json"\n',
+        '[marketplaces.wild-bunch-marketplace]\nsource_type = "git"\n',
+        '[marketplaces.wild-bunch-marketplace]\nsource_type = "git"\nsource = "C:/catalog"\n',
+        '[marketplaces.wild-bunch-marketplace]\nsource_type = "git"\nsource = "https:///repo.git"\n',
+    ],
+)
+def test_rejects_missing_or_non_git_marketplace_registration(tmp_path: Path, registration: str) -> None:
+    _consumer(tmp_path)
+    config = tmp_path / ".codex/config.toml"
+    config.write_text(
+        '[plugins."architecture-pack@wild-bunch-marketplace"]\nenabled = true\n' + registration,
+        encoding="utf-8",
+    )
+
+    assert any("marketplaces" in finding for finding in subscriptions.validate(tmp_path))
+
+
+@pytest.mark.parametrize(
+    "path",
+    [
+        "/plugins/game-studio",
+        "C:/plugins/game-studio",
+        ".//plugins/game-studio",
+        "./C:/plugins/game-studio",
+        "./C:plugins/game-studio",
+        "./\\plugins/game-studio",
+        "./\\\\server\\share\\plugins",
+        "./plugins\\..\\escape",
+    ],
+)
+def test_rejects_rooted_or_escaping_paths_in_both_path_syntaxes(tmp_path: Path, path: str) -> None:
+    _consumer(tmp_path)
+    catalog = tmp_path / ".agents/plugins/marketplace.json"
+    data = json.loads(catalog.read_text(encoding="utf-8"))
+    data["plugins"][0]["source"]["path"] = path
+    catalog.write_text(json.dumps(data), encoding="utf-8")
+
+    assert any("plugin-relative path" in finding for finding in subscriptions.validate(tmp_path))
+
+
+@pytest.mark.parametrize("path", ["./plugins/game-studio", "./dist/plugins/architecture-pack"])
+def test_accepts_relative_plugin_paths_with_git_registration(tmp_path: Path, path: str) -> None:
+    _consumer(tmp_path)
+    catalog = tmp_path / ".agents/plugins/marketplace.json"
+    data = json.loads(catalog.read_text(encoding="utf-8"))
+    data["plugins"][0]["source"]["path"] = path
+    catalog.write_text(json.dumps(data), encoding="utf-8")
+
+    assert subscriptions.validate(tmp_path) == []
 
 
 @pytest.mark.parametrize(
@@ -100,6 +163,12 @@ def test_rejects_duplicate_plugin_identity_and_unmatched_activation(tmp_path: Pa
 
 
 def test_scaffold_creates_missing_native_files_without_overwriting_local_configs(tmp_path: Path) -> None:
+    subprocess.run(["git", "init", str(tmp_path)], check=True, capture_output=True)
+    subprocess.run(
+        ["git", "-C", str(tmp_path), "remote", "add", "origin", "https://github.com/example/consumer.git"],
+        check=True,
+        capture_output=True,
+    )
     (tmp_path / ".agents/plugins").mkdir(parents=True)
     existing = tmp_path / ".agents/plugins/marketplace.json"
     existing.write_text('{"name":"consumer","plugins":[],"repo":{"local_skills":["mine"]}}\n', encoding="utf-8")
@@ -110,6 +179,13 @@ def test_scaffold_creates_missing_native_files_without_overwriting_local_configs
     assert existing.read_text(encoding="utf-8").endswith('"mine"]}}\n')
     assert (tmp_path / ".codex/config.toml").is_file()
     assert (tmp_path / ".devin/config.json").is_file()
+    config = tomllib.loads((tmp_path / ".codex/config.toml").read_text(encoding="utf-8"))
+    assert config["marketplaces"]["consumer"] == {
+        "source_type": "git",
+        "source": "https://github.com/example/consumer.git",
+        "ref": "main",
+    }
+    assert subscriptions.validate(tmp_path) == []
 
 
 def test_operating_standard_catalog_resolves_from_installed_plugin_without_submodule(
@@ -128,3 +204,41 @@ def test_operating_standard_catalog_resolves_from_installed_plugin_without_submo
     monkeypatch.setattr(scaffold, "_MANIFEST_PATH", manifest_path)
 
     assert scaffold._source_root(tmp_path / "consumer") == plugin_root
+
+
+def test_scaffold_requires_origin_before_creating_files(tmp_path: Path) -> None:
+    subprocess.run(["git", "init", str(tmp_path)], check=True, capture_output=True)
+
+    with pytest.raises(ValueError, match="Git origin"):
+        subscriptions.scaffold(tmp_path)
+
+    assert not (tmp_path / ".agents/plugins/marketplace.json").exists()
+    assert not (tmp_path / ".codex/config.toml").exists()
+
+
+def test_scaffold_registers_a_new_catalog_from_git_origin(tmp_path: Path) -> None:
+    subprocess.run(["git", "init", str(tmp_path)], check=True, capture_output=True)
+    subprocess.run(
+        ["git", "-C", str(tmp_path), "remote", "add", "origin", "git@example.com:consumer.git"],
+        check=True,
+        capture_output=True,
+    )
+
+    assert subscriptions.scaffold(tmp_path) == [
+        ".agents/plugins/marketplace.json",
+        ".codex/config.toml",
+        ".devin/config.json",
+    ]
+    config = tomllib.loads((tmp_path / ".codex/config.toml").read_text(encoding="utf-8"))
+    assert config["marketplaces"]["consumer-repo"]["source"] == "git@example.com:consumer.git"
+    assert subscriptions.validate(tmp_path) == []
+
+
+def test_scaffold_preserves_existing_codex_configuration(tmp_path: Path) -> None:
+    _consumer(tmp_path)
+    config = tmp_path / ".codex/config.toml"
+    before = config.read_bytes()
+
+    assert subscriptions.scaffold(tmp_path) == [".devin/config.json"]
+    assert config.read_bytes() == before
+    assert subscriptions.validate(tmp_path) == []
