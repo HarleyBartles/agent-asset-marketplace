@@ -12,6 +12,10 @@ Document custody and placement across root `docs/`, `.agents/docs/`, active plan
 
 Before creating a tracked document, decide its audience, expected lifetime, and canonical owner. If it records one task's findings or a release's specific revision, put it in scratch. If it states current repository truth for people working on the repository, use `docs/`; if it is stable guidance specifically for agents, use `.agents/docs/`. Split mixed documents when their parts have different lifetimes or owners.
 
+## README and AGENTS overlap
+
+`README.md` is human-facing repository orientation; agents can use it for the same overview without copying it into always-on instructions. When an `AGENTS.md` needs information already stated in the README, link to the README instead of repeating that information. Keep agent-specific routing or instructions that the README does not provide, and route operative policy to its canonical doctrine, contract, runbook, or playbook.
+
 ## Review guidelines
 
 - Reject transient reports and dated handoffs from both docs trees, even when they are useful in the current task.
