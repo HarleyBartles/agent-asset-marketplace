@@ -7,11 +7,6 @@
     "authentication": "ON_INSTALL"
   },
   "install_defaults": [
-    "agent-operating-model",
-    "mcp-usage-pack",
-    "repo-worker-pack",
-    "superpowers-plus",
-    "unslop-plus",
     "writing-pack"
   ],
   "category_overrides": {},

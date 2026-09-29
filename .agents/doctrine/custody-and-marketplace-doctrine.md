@@ -11,7 +11,7 @@ This document defines source custody, product composition, and generated package
 - `dist/plugins/` contains generated, self-contained installable plugin packages. Never edit shipped output to change source behavior.
 - `src/marketplace/` owns reusable definition validation and build implementation. `tools/` owns command entry points and repository tooling.
 - Skill tests remain beside source under `skills/<skill-id>/tests/` and ship with the skill except evaluator-only material and run results. Build tests live in `tests/build/`; installed product contracts live in `tests/shipping/`. Repository tests live in `tests/repository/`.
-- `.agents/skills/` remains the installed operating mesh for this repository, not marketplace source.
+- `.agents/skills/` contains only this repository's subscribed plugin projections and local skills; `.agents/standards/` contains the pinned resources for declared standards.
 
 ## Composition and build
 

@@ -32,19 +32,20 @@ The installer validates and preserves every valid skill named in `repo.local_ski
 
 ## Source of Truth
 
-For marketplace-derived skills, canonical source is under `skills/<skill-id>/`; the installed plugin copy under `dist/plugins/<plugin>/skills/` is generated and should not be edited directly.
+For marketplace-derived skills, canonical source is under `skills/<skill-id>/` in this repository; the installed plugin copy under `dist/plugins/<plugin>/skills/` is generated and should not be edited directly. Ambient plugins are available to agents through the runtime and are not installed in `.agents/skills/` here.
 
 For repository-local skills declared in `repo.local_skills`, the source of truth is the tracked local directory under `.agents/skills/`. Those skills are local custody and may be edited directly; they are not regenerated from marketplace content or included in marketplace provenance.
 
 ## Regeneration
 
-When marketplace plugins are updated, run the full marketplace rebuild to refresh installed skills:
+When marketplace plugins are updated, rebuild the packages and then refresh this repository's subscribed installed skills:
 
 ```bash
 tools/run marketplace --apply
+tools/run refresh-skills --apply
 ```
 
-This will regenerate marketplace bundles and refresh installed skills automatically.
+The refresh updates only plugins listed as installed by default in `.agents/plugins/marketplace.json`.
 
 ## Manual Refresh
 

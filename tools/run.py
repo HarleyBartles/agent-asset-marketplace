@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import os
 import shlex
@@ -221,7 +222,7 @@ def _check_inventory(ctx: Ctx) -> None:
 def _apply_installed_skills(ctx: Ctx) -> None:
     cmd = [
         sys.executable,
-        ".agents/skills/refreshing-installed-skills/scripts/refresh_installed_skills.py",
+        "skills/refreshing-installed-skills/scripts/refresh_installed_skills.py",
         "--apply",
     ]
     if ctx.allow_shared:
@@ -233,7 +234,7 @@ def _check_installed_skills(ctx: Ctx) -> None:
     _run(
         [
             sys.executable,
-            ".agents/skills/refreshing-installed-skills/scripts/refresh_installed_skills.py",
+            "skills/refreshing-installed-skills/scripts/refresh_installed_skills.py",
             "--check",
         ],
         ctx,
@@ -276,7 +277,7 @@ def _apply_marketplace(ctx: Ctx) -> None:
     _run([sys.executable, "tools/build_marketplace.py", "--apply"], ctx)
     _run([sys.executable, "tools/generate_marketplace.py", "--apply"], ctx)
     _run([sys.executable, "tools/validate_marketplace.py", "--phase", "all"], ctx)
-    _run([sys.executable, ".agents/skills/repo-shape/scripts/deploy_vendor_profiles.py", "--apply"], ctx)
+    _run([sys.executable, "skills/repo-shape/scripts/deploy_vendor_profiles.py", "--apply"], ctx)
 
 
 def _check_marketplace(ctx: Ctx) -> None:
@@ -311,19 +312,43 @@ def _validate_skill_scripts(ctx: Ctx) -> None:
     _run(
         [
             sys.executable,
-            ".agents/skills/repo-shape/scripts/validate_skill_scripts.py",
+            "skills/repo-shape/scripts/validate_skill_scripts.py",
             "--check",
         ],
         ctx,
     )
 
 
+def _check_standard_deployment() -> None:
+    """Require every deployed checker to match its recorded pinned bytes."""
+    contract = json.loads((ROOT / ".agents/contracts/operating-standards.json").read_text(encoding="utf-8"))
+    provenance = json.loads((ROOT / ".agents/standards/provenance.json").read_text(encoding="utf-8"))
+    revisions = {entry["revision"] for entry in contract["standards"] if entry["origin"] == "marketplace"}
+    if revisions != {provenance["revision"]}:
+        raise ValueError("selected marketplace standards do not match the deployed source revision")
+    resources = provenance["resources"]
+    deployed_root = ROOT / ".agents/standards"
+    actual = {
+        path.relative_to(ROOT).as_posix()
+        for path in deployed_root.rglob("*")
+        if path.is_file() and path.name != "provenance.json" and "__pycache__" not in path.parts
+    }
+    if actual != set(resources):
+        raise ValueError("deployed standard resources differ from provenance")
+    for relative, record in resources.items():
+        path = ROOT / relative
+        if path.is_symlink() or hashlib.sha256(path.read_bytes()).hexdigest() != record["sha256"]:
+            raise ValueError(f"deployed standard resource differs from provenance: {relative}")
+    print(f"OK deployed standards: {len(resources)} pinned resources")
+
+
 def _run_repo_standards(ctx: Ctx) -> None:
+    _check_standard_deployment()
     if ctx.mode == "check":
         _run(
             [
                 sys.executable,
-                ".agents/skills/repo-shape/scripts/repo_standards.py",
+                ".agents/standards/_runtime/repo_standards.py",
                 "--check",
             ],
             ctx,
@@ -332,7 +357,7 @@ def _run_repo_standards(ctx: Ctx) -> None:
     else:
         cmd = [
             sys.executable,
-            ".agents/skills/repo-shape/scripts/repo_standards.py",
+            ".agents/standards/_runtime/repo_standards.py",
             "--apply",
             "--yes",
         ]

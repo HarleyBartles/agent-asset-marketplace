@@ -73,7 +73,8 @@
       "resources": [
         "skills/repo-shape/scripts/scaffold_markdown_formatting.py",
         "skills/repo-shape/templates/markdown-formatting.json",
-        "skills/markdown-formatting/scripts/format_markdown.py"
+        "skills/markdown-formatting/scripts/format_markdown.py",
+        "skills/markdown-formatting/requirements.txt"
       ],
       "check": true,
       "apply": true,

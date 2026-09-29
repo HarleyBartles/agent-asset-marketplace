@@ -5,14 +5,14 @@ This policy defines the standards for first-party skills in the agent-asset-mark
 This policy is stricter than upstream sources where noted; otherwise the upstream sources apply.
 
 - The [agentskills.io specification](https://agentskills.io/specification) defines the base `SKILL.md` frontmatter format.
-- The installed `superpowers-plus:writing-skills` plugin skill defines the TDD-based approach to skill creation and discovery optimization.
+- Resolve a suitable ambient skill-authoring capability at runtime for the TDD-based approach to skill creation and discovery optimization.
 
 The first-party [`writing-skills`](../../skills/writing-skills/SKILL.md) skill owns skill-authoring lanes, custody-aware scaffolding, authority evidence, scholarly citations, and clean-room boundaries. See `writing-skills/references/local-and-marketplace-custody.md` and `writing-skills/references/source-grounded-authoring.md` for the authoring lanes and `writing-skills/scripts/new_skill.py` for the scaffolder.
 
 ## External references
 
 - [agentskills.io specification](https://agentskills.io/specification)
-- `superpowers-plus:writing-skills`
+- An available ambient skill-authoring capability
 - `.agents/contracts/skill-frontmatter.md`
 - `.agents/contracts/openai-agent-yaml.md`
 - `.agents/contracts/skill-tests.md`

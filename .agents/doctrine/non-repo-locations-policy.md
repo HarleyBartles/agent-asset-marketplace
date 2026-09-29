@@ -1,6 +1,6 @@
 # Non-repo locations policy
 
-This policy binds this repo's canonical off-repo locations. Canonical layout, sanitization, and cleanup rules live in `repo-standards` `references/scratch-workspace-policy.md` and `repo-worker-base` `references/worktree-and-branch-policy.md`; `subagent-workspace` resolves paths inside the layout.
+This policy binds this repo's canonical off-repo locations. Use the available ambient repository workflow capability for layout, sanitization, and cleanup methods; this file sets this repository's locations.
 
 ## Locations
 
@@ -12,11 +12,7 @@ Do not store canonical source, generated outputs, or long-lived repo assets in e
 
 ## Subagent profile runtime staging
 
-Portable subagent profiles shipped with the `selecting-a-subagent` skill are installed to the Devin Desktop user-global agents directory:
-
-```
-py -3 .agents/skills/selecting-a-subagent/scripts/install_profiles.py --apply
-```
+Install portable subagent profiles from an available ambient workflow capability to the Devin Desktop user-global agents directory.
 
 The runtime searches the user-global directory first, so portable profiles do not need `runtime-agents` staging and should not be placed in `.agents/agents/`.
 
