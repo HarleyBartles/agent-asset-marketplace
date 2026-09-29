@@ -208,6 +208,23 @@ def test_profile_allows_external_http_authority_reference(tmp_path: Path) -> Non
     assert _module().validate(tmp_path) == []
 
 
+def test_profile_resolves_angle_bracketed_local_reference_with_spaces(tmp_path: Path) -> None:
+    _repo(tmp_path)
+    _contract(tmp_path)
+    _workflow(tmp_path)
+    doctrine = tmp_path / ".agents/doctrine/team policy.md"
+    doctrine.write_text("# Team policy\n", encoding="utf-8")
+    subprocess.run(
+        ["git", "add", ".agents/doctrine/team policy.md"],
+        cwd=tmp_path,
+        check=True,
+        capture_output=True,
+    )
+    _profile(tmp_path, reference="<../doctrine/team policy.md>")
+
+    assert _module().validate(tmp_path) == []
+
+
 def test_profile_rejects_missing_workflow_and_workflow_without_profile_route(tmp_path: Path) -> None:
     _repo(tmp_path)
     _contract(tmp_path)

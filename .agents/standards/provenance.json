@@ -1,7 +1,7 @@
 {
   "version": 1,
   "repository": "https://github.com/HarleyBartles/agent-asset-marketplace.git",
-  "revision": "cdb6f4ff131b298ce28169e1114bf95d5f6ec4cd",
+  "revision": "e4ae3f2f4fcb255ebb4da456b1f2c50d745a6021",
   "resources": {
     ".agents/standards/_runtime/repo_standards.py": {
       "source": "skills/repo-shape/scripts/repo_standards.py",
@@ -210,7 +210,7 @@
     },
     ".agents/standards/unslop/scripts/unslop_standard.py": {
       "source": "skills/repo-shape/scripts/unslop_standard.py",
-      "sha256": "3c145250c0d77f033b0cb4d1c6bff39f91b217207dc08f986593f5640d89f501",
+      "sha256": "fbc960ae00ad125a65b16e562a78ab5dc9eaa003f28d165e748fca7808c506f2",
       "standard_id": "unslop"
     }
   }
