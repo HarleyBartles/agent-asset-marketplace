@@ -249,6 +249,28 @@ def test_profile_resolves_bare_local_references_with_parentheses(tmp_path: Path,
     assert _module().validate(tmp_path) == []
 
 
+def test_profile_rejects_malformed_reference_and_workflow_links_even_with_valid_links(tmp_path: Path) -> None:
+    _repo(tmp_path)
+    _contract(tmp_path)
+    _workflow(tmp_path)
+    profile = _profile(tmp_path)
+    content = profile.read_text(encoding="utf-8")
+    content = content.replace(
+        "- [Marketplace worker doctrine](../doctrine/marketplace-worker-doctrine.md)",
+        "- [Marketplace worker doctrine](../doctrine/marketplace-worker-doctrine.md)\n"
+        "- [Incomplete doctrine](<../doctrine/marketplace-worker-doctrine.md>",
+    )
+    content = content.replace(
+        "- [Planning runbook](../runbooks/planning.md)",
+        "- [Planning runbook](../runbooks/planning.md)\n- [Incomplete workflow](<../runbooks/planning.md>",
+    )
+    profile.write_text(content, encoding="utf-8")
+
+    findings = _module().validate(tmp_path)
+    assert any("malformed doctrine or skill reference link" in finding for finding in findings)
+    assert any("malformed workflow link" in finding for finding in findings)
+
+
 def test_profile_rejects_missing_workflow_and_workflow_without_profile_route(tmp_path: Path) -> None:
     _repo(tmp_path)
     _contract(tmp_path)
