@@ -58,6 +58,8 @@ def validate(repo_root: Path) -> list[str]:
             if not isinstance(source, dict) or source.get("source") != "git-subdir":
                 raise ValueError(f"{label}.source.source must be 'git-subdir'")
             url = source.get("url")
+            if isinstance(url, str) and any(character.isspace() for character in url):
+                raise ValueError(f"{label}.source.url must be a Git repository URL")
             parsed = urlsplit(url) if isinstance(url, str) else None
             scp_url = isinstance(url, str) and re.fullmatch(r"[^@/\s]+@[^:/\s]+:.+", url)
             if not scp_url and (

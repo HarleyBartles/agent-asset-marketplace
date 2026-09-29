@@ -71,6 +71,7 @@ def test_accepts_codex_floating_ref_and_preserves_local_skills(tmp_path: Path) -
         (lambda source: (source.pop("ref"), source.update(sha="not-a-commit")), "full hexadecimal Git commit"),
         (lambda source: source.update(url="https://example.com/archive.zip"), "Git repository URL"),
         (lambda source: source.update(url="https:///repo.git"), "Git repository URL"),
+        (lambda source: source.update(url="https:// /repo.git"), "Git repository URL"),
     ],
 )
 def test_rejects_invalid_plugin_source(tmp_path: Path, mutate, message: str) -> None:
