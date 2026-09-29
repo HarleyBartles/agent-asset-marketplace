@@ -648,6 +648,8 @@ def _check_surface(
         return findings
     if enabled_surface_ids is not None and surf_id and surf_id not in enabled_surface_ids:
         return findings
+    if surf_id == "unslop-contract" and implementation_root is None:
+        return findings
     kind = str(surface.get("kind", "file"))
     optional = bool(surface.get("optional", False))
     template = _template_path(surface, implementation_root)
@@ -709,7 +711,7 @@ def _check_surface(
         findings.extend(_check_hooks_path(repo_root, str(Path(rel).parent).replace("\\", "/")))
         return findings
 
-    if optional and not full.exists():
+    if optional and not full.exists() and surf_id != "unslop-contract":
         return findings
 
     validator = document_contracts.DOCUMENT_VALIDATORS.get(str(surface.get("validator", "")))

@@ -135,15 +135,15 @@ Run the command from Step 2. Expected: PASS with both current contracts and lega
 
 - The skill skips profile use when no profile fits, and handles intentional cue use or justified terminology as false positives rather than keyword violations.
 
-- [ ] **Step 1: Add pressure scenarios for local discovery, precedence, boundaries, and skip behavior**
+- [x] **Step 1: Add pressure scenarios for local discovery, precedence, boundaries, and skip behavior**
 
 Write scenarios proving that the skill reads a declared consumer profile before use; can apply consumer and generic profiles without conflating their authority; names a concrete observed decision/output before recommending a correction; preserves justified terminology and intentional examples; and skips when no profile matches. Keep the existing optional-provider scenario and clarify that absence of writing-pack does not block applicable Unslop profile use.
 
-- [ ] **Step 2: Update the skill instructions and package descriptions**
+- [x] **Step 2: Update the skill instructions and package descriptions**
 
 Replace the static task-to-bundled-file-only router with a discovery and application workflow. Require reading the profile, using it during work and review, grounding findings in concrete evidence, correcting proportionately, and respecting false positives and doctrine precedence. Describe consumer profiles as operational guidance. Update plugin metadata and README/SOURCE so package discovery no longer promises only the current built-in task table.
 
-- [ ] **Step 3: Review the resulting skill instructions against each pressure scenario**
+- [x] **Step 3: Review the resulting skill instructions against each pressure scenario**
 
 Evaluate each skill-owned pressure scenario in a fresh isolated context using the prompt in the scenario and the built `unslop-profiles` skill. Record the scenario and observed pass/fail findings in the implementation handoff; keep transcripts and run metadata out of Git. Expected: each scenario follows the correct discovery, apply, and skip behavior without a mechanical keyword ban.
 
