@@ -828,10 +828,11 @@ def main(argv: list[str] | None = None) -> int:
             }
         )
 
-    # Delegate vendor profile deployment to repo-shape and capture whether any
-    # work is needed. A newly enabled plugin is not installed yet, so bootstrap
-    # from its canonical source on that first refresh.
-    deploy_script = ROOT / ".agents" / "skills" / "repo-shape" / "scripts" / "deploy_vendor_profiles.py"
+    # The marketplace source repository keeps the deployer in canonical source;
+    # consumers may bootstrap it from the packaged plugin before installation.
+    deploy_script = ROOT / "skills" / "repo-shape" / "scripts" / "deploy_vendor_profiles.py"
+    if not deploy_script.is_file():
+        deploy_script = ROOT / ".agents" / "skills" / "repo-shape" / "scripts" / "deploy_vendor_profiles.py"
     if not deploy_script.is_file():
         deploy_script = (
             ROOT

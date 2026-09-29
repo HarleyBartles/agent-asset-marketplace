@@ -51,6 +51,8 @@ def _markdown_snapshot(repo_root: Path) -> dict[Path, bytes]:
 
 def _check_markdown_outputs(repo_root: Path, before: dict[Path, bytes]) -> None:
     formatter = repo_root / ".agents/skills/markdown-formatting/scripts/format_markdown.py"
+    if not formatter.is_file():
+        formatter = repo_root / ".agents/standards/markdown-formatting/markdown-formatting/scripts/format_markdown.py"
     contract = repo_root / ".agents/contracts/markdown-formatting.json"
     if not formatter.is_file() or not contract.is_file():
         return

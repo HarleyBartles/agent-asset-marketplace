@@ -11,14 +11,10 @@ import sys
 from pathlib import Path
 
 
-FORMATTER_VECTOR = [
-    "@python",
-    ".agents/skills/markdown-formatting/scripts/format_markdown.py",
-]
 GUIDANCE = (
     "## Markdown formatting\n\n"
-    "When `.agents/contracts/markdown-formatting.json` is present, use the installed "
-    "`markdown-formatting` skill command for repository-wide check/apply and for producer-scoped checks. "
+    "When `.agents/contracts/markdown-formatting.json` is present, use the repository's "
+    "declared formatter command for repository-wide check/apply and for producer-scoped checks. "
     "Generated Markdown must be formatter-clean at its producer.\n"
 )
 
@@ -31,11 +27,12 @@ def _root() -> Path:
 def _formatter(root: Path):
     candidates = [
         root / ".agents/skills/markdown-formatting/scripts/format_markdown.py",
+        Path(__file__).resolve().parents[1] / "markdown-formatting/scripts/format_markdown.py",
         Path(__file__).resolve().parents[2] / "markdown-formatting/scripts/format_markdown.py",
     ]
     path = next((candidate for candidate in candidates if candidate.is_file()), None)
     if path is None:
-        raise RuntimeError("installed markdown-formatting skill is missing")
+        raise RuntimeError("declared Markdown formatter is missing")
     spec = importlib.util.spec_from_file_location("markdown_formatter_contract", path)
     assert spec and spec.loader
     module = importlib.util.module_from_spec(spec)
@@ -64,7 +61,7 @@ def _check(root: Path) -> list[str]:
     if not contract_path.is_file():
         return ["markdown formatting contract missing"]
     try:
-        formatter, _ = _formatter(root)
+        formatter, formatter_path = _formatter(root)
         contract = formatter.load_contract(root)
         formatter.verify_configuration(root)
         formatter.verify_toolchain()
@@ -84,9 +81,10 @@ def _check(root: Path) -> list[str]:
         except Exception as exc:
             findings.append(str(exc))
         else:
-            if [*FORMATTER_VECTOR, "--apply"] not in apply:
+            formatter_vector = ["@python", formatter_path.relative_to(root).as_posix()]
+            if [*formatter_vector, "--apply"] not in apply:
                 findings.append("enforced Markdown formatter apply command missing")
-            if [*FORMATTER_VECTOR, "--check"] not in check:
+            if [*formatter_vector, "--check"] not in check:
                 findings.append("enforced Markdown formatter check command missing")
     return findings
 
@@ -130,8 +128,9 @@ def _enforce(root: Path) -> None:
             raise RuntimeError("Markdown formatting check failed after apply")
         contract = json.loads(contract_path.read_text(encoding="utf-8"))
         contract["state"] = "enforced"
-        apply_vector = [*FORMATTER_VECTOR, "--apply"]
-        check_vector = [*FORMATTER_VECTOR, "--check"]
+        formatter_vector = ["@python", formatter_path.relative_to(root).as_posix()]
+        apply_vector = [*formatter_vector, "--apply"]
+        check_vector = [*formatter_vector, "--check"]
         if apply_vector not in apply:
             apply.insert(0, apply_vector)
         if check_vector not in check:
