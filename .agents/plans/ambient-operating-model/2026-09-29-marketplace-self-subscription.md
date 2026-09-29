@@ -22,15 +22,15 @@
 
 ## Task 1: Record explicit standards adoption
 
-- [ ] Declare the marketplace standards corresponding to the repo's currently enforced surfaces, excluding the self-submodule standard that cannot apply here. Declare repository-owned marketplace registry and skill projection checks separately.
-- [ ] Deploy only selected checker resources into `.agents/standards/` with provenance tied to an immutable marketplace source commit. Preserve the source repo's self-submodule exception.
-- [ ] Route `tools/run.py repo-standards` to the deployed dispatcher and verify the declared selection executes without an installed Agent Operating Model skill.
+- [x] Declare the marketplace standards corresponding to the repo's currently enforced surfaces, excluding the self-submodule standard that cannot apply here. Declare repository-owned marketplace registry and skill projection checks separately.
+- [x] Deploy only selected checker resources into `.agents/standards/` with provenance tied to an immutable marketplace source commit. Preserve the source repo's self-submodule exception.
+- [x] Route `tools/run.py repo-standards` to the deployed dispatcher and verify the declared selection executes without an installed Agent Operating Model skill.
 
 ## Task 2: Retire ambient plugin projections
 
-- [ ] Change `src/plugin-definitions/marketplace-policy.json` so the five ambient products are `AVAILABLE` rather than installed by default; keep `writing-pack` installed by default.
-- [ ] Regenerate `.agents/plugins/marketplace.json`, `dist/manifest.json`, and `.agents/skills/` through their owners. Verify provenance lists only `writing-pack` and no ambient skill directories remain.
-- [ ] Move repository runner and instruction references away from removed installed skill paths. Keep hosted and local check/apply commands owned by this repository.
+- [x] Change `src/plugin-definitions/marketplace-policy.json` so the five ambient products are `AVAILABLE` rather than installed by default; keep `writing-pack` installed by default.
+- [x] Regenerate `.agents/plugins/marketplace.json`, `dist/manifest.json`, and `.agents/skills/` through their owners. Verify provenance lists only `writing-pack` and no ambient skill directories remain.
+- [x] Move repository runner and instruction references away from removed installed skill paths. Keep hosted and local check/apply commands owned by this repository.
 
 ## Task 3: Prove CI and publish a Draft PR
 

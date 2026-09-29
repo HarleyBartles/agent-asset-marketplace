@@ -16,7 +16,7 @@ Generated artifacts are downstream outputs unless the repo explicitly says other
 
 ## Cross-repo standards alignment
 
-This repo ships portable skills and runbooks to consumer repos under `.agents/skills/`. Ask: *Is this change a repo-local fix or a standard consumer repos will inherit?* If the latter, update the source skill or reference, not only the installed copy.
+This repo ships portable skills and standards resources to consumer repos. Ask: *Is this change a repo-local fix or a standard consumer repos will inherit?* If the latter, update the canonical source, not only a deployed or installed copy.
 
 ## Marketplace source and output
 
@@ -24,7 +24,7 @@ Canonical skill source lives under `skills/`; reusable authored material lives u
 
 `src/marketplace/` implements definition validation and package assembly. `src/packages/` holds separately built Python package source. `dist/` is the committed distribution output: self-contained plugins under `dist/plugins/`, wheels under `dist/wheels/`, and generated product metadata in `dist/manifest.json` and `dist/plugin-roots.json`. Do not edit built plugin trees to change behavior.
 
-Skill tests live with their source in each skill's `tests/` directory, including script tests and pressure cases. The build copies ship-ready test material with each installed skill; evaluator-only material and run results stay out of the package. Repository, build, shipped-plugin, and evaluation-harness suites have distinct homes under `tests/`. CI runs the first three suites as separate targets. `.agents/skills/` is this repository's installed operating guidance, not marketplace source. Inspect `src/plugin-definitions/` for product membership and the marketplace manifests for shipped products.
+Skill tests live with their source in each skill's `tests/` directory, including script tests and pressure cases. The build copies ship-ready test material with each installed skill; evaluator-only material and run results stay out of the package. Repository, build, shipped-plugin, and evaluation-harness suites have distinct homes under `tests/`. CI runs the first three suites as separate targets. `.agents/contracts/operating-standards.json` declares this repo's selected standards; `.agents/standards/` holds pinned checkers for hosted CI. `.agents/skills/` is the installed projection for the remaining Writing Pack subscription, not marketplace source. Inspect `src/plugin-definitions/` for product membership and the marketplace manifests for shipped products.
 
 ## Publication proof for repo work
 
@@ -42,11 +42,11 @@ Open pull requests as **draft**; keep them in draft while iterating and validati
 
 ## Build and test commands
 
-Canonical: `py -3 tools/run.py ci --check`, `py -3 tools/run.py ci --apply`, and `py -3 tools/run.py marketplace --apply`. For a normal commit, stage the intended tree and let the tracked pre-commit hook materialize the staged snapshot, run `py -3 tools/run.py ci --apply`, and then run `py -3 tools/run.py ci --check --diagnostics` as the single complete local gate. Do not run `py -3 tools/run.py ci --check` immediately before a normal commit or immediately after a successful hooked commit; run it only for an uncommitted verification, when diagnosing the pipeline, or when explicitly proving CI parity. Use `py -3 .agents/skills/selecting-a-subagent/scripts/install_profiles.py --apply` to install portable subagent profiles to the user-global agents directory; use `py -3 tools/run.py runtime-agents --apply --allow-shared-checkout` only for repo-local `.agents/agents/` profiles when working in a worktree; see `.agents/doctrine/non-repo-locations-policy.md`.
+Canonical: `py -3 tools/run.py ci --check`, `py -3 tools/run.py ci --apply`, and `py -3 tools/run.py marketplace --apply`. For a normal commit, stage the intended tree and let the tracked pre-commit hook materialize the staged snapshot, run `py -3 tools/run.py ci --apply`, and then run `py -3 tools/run.py ci --check --diagnostics` as the single complete local gate. Do not run `py -3 tools/run.py ci --check` immediately before a normal commit or immediately after a successful hooked commit; run it only for an uncommitted verification, when diagnosing the pipeline, or when explicitly proving CI parity. Install portable subagent profiles through the available ambient workflow capability; use `py -3 tools/run.py runtime-agents --apply --allow-shared-checkout` only for repo-local `.agents/agents/` profiles when working in a worktree; see `.agents/doctrine/non-repo-locations-policy.md`.
 
 ## Security considerations
 
-Security review must apply the relevant profile and the repository lenses in `.agents/playbooks/security.md`; `using-superpowers-plus` selects the owning workflow.
+Security review must apply the relevant profile and the repository lenses in `.agents/playbooks/security.md`; compose an available ambient workflow capability for the review.
 
 ## Routing pointers
 

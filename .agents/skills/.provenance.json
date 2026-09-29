@@ -1,14 +1,9 @@
 {
-  "manifestSha": "91b2a354deacc19db8ab656ddfbb97fc9a6c6fe5abc8ab3ab5121a6b50cb2698",
+  "manifestSha": "4955cb373027353afb71da865402a0cbc639454932f3ce9c3ddd0e499e87d4ff",
   "syncedPlugins": [
-    "mcp-usage-pack",
-    "repo-worker-pack",
-    "superpowers-plus",
-    "unslop-plus",
-    "writing-pack",
-    "agent-operating-model"
+    "writing-pack"
   ],
-  "syncedSkills": 52,
+  "syncedSkills": 4,
   "localSkills": [],
   "marketplace": {
     "source": "HarleyBartles/agent-asset-marketplace",
@@ -16,37 +11,12 @@
   },
   "localPlugins": [
     {
-      "name": "mcp-usage-pack",
-      "path": "./dist/plugins/mcp-usage-pack",
-      "source": "local"
-    },
-    {
-      "name": "repo-worker-pack",
-      "path": "./dist/plugins/repo-worker-pack",
-      "source": "local"
-    },
-    {
-      "name": "superpowers-plus",
-      "path": "./dist/plugins/superpowers-plus",
-      "source": "local"
-    },
-    {
-      "name": "unslop-plus",
-      "path": "./dist/plugins/unslop-plus",
-      "source": "local"
-    },
-    {
       "name": "writing-pack",
       "path": "./dist/plugins/writing-pack",
-      "source": "local"
-    },
-    {
-      "name": "agent-operating-model",
-      "path": "./dist/plugins/agent-operating-model",
       "source": "local"
     }
   ],
   "marketplaceFile": ".agents/plugins/marketplace.json",
   "vendorProfiles": [],
-  "syncedAt": "2026-09-29T03:26:27.447881"
+  "syncedAt": "2026-09-29T08:06:27.155930"
 }

@@ -1,1 +1,0 @@
-A requested feature cannot be implemented until the retention policy is known: records may need to be retained or discarded, and the repository sources do not resolve which. The user has not chosen between those outcomes.

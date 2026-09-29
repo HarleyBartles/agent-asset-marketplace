@@ -189,31 +189,6 @@
     },
     {
       "kind": "tree",
-      "path": ".agents/skills/handoff-gates/assets/authority",
-      "reason": "Preserve the installed projection of vendored authority evidence byte-for-byte for provenance review."
-    },
-    {
-      "kind": "tree",
-      "path": ".agents/skills/python/assets/authority",
-      "reason": "Preserve the installed projection of vendored authority evidence byte-for-byte for provenance review."
-    },
-    {
-      "kind": "tree",
-      "path": ".agents/skills/risk-gates/assets/authority",
-      "reason": "Preserve the installed projection of vendored authority evidence byte-for-byte for provenance review."
-    },
-    {
-      "kind": "tree",
-      "path": ".agents/skills/unslop-engine/assets/authority",
-      "reason": "Preserve the installed projection of vendored authority evidence byte-for-byte for provenance review."
-    },
-    {
-      "kind": "tree",
-      "path": ".agents/skills/writing-roadmaps/assets/authority",
-      "reason": "Preserve the installed projection of vendored authority evidence byte-for-byte for provenance review."
-    },
-    {
-      "kind": "tree",
       "path": ".agents/skills/writing-style/assets/authority",
       "reason": "Preserve the installed projection of vendored authority evidence byte-for-byte for provenance review."
     },
@@ -231,11 +206,6 @@
       "kind": "file",
       "path": "skills/writing-skills/templates/skill/SKILL.md",
       "reason": "Preserve the canonical unrendered {metadata} insertion token before the scaffold is materialized."
-    },
-    {
-      "kind": "file",
-      "path": ".agents/skills/writing-skills/templates/skill/SKILL.md",
-      "reason": "Preserve the installed projection of the unrendered {metadata} insertion token; the frontmatter becomes valid only when the scaffold is materialized."
     },
     {
       "kind": "tree",

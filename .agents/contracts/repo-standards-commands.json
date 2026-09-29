@@ -1,10 +1,10 @@
 {
   "apply": [
-    ["@python", ".agents/skills/markdown-formatting/scripts/format_markdown.py", "--apply"],
+    ["@python", ".agents/standards/markdown-formatting/markdown-formatting/scripts/format_markdown.py", "--apply"],
     ["@python", "tools/run.py", "ci", "--apply", "--allow-shared-checkout"]
   ],
   "check": [
-    ["@python", ".agents/skills/markdown-formatting/scripts/format_markdown.py", "--check"],
+    ["@python", ".agents/standards/markdown-formatting/markdown-formatting/scripts/format_markdown.py", "--check"],
     ["@python", "tools/run.py", "ci", "--check", "--diagnostics"]
   ],
   "generated_paths": [

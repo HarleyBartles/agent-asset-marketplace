@@ -1,1 +1,0 @@
-The user has approved an architectural specification and explicitly requested Native inline execution. You have now written and self-reviewed the implementation plan. Show the handoff immediately before implementation; do not execute the plan.

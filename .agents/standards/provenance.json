@@ -1,0 +1,197 @@
+{
+  "version": 1,
+  "repository": "https://github.com/HarleyBartles/agent-asset-marketplace.git",
+  "revision": "b75c7e7fe670dd14c7192726a88449bc56cc7906",
+  "resources": {
+    ".agents/standards/_runtime/repo_standards.py": {
+      "source": "skills/repo-shape/scripts/repo_standards.py",
+      "sha256": "ae59689bdb6ab7661439451d6f910310ee9b9fea5f578605356ecc8a9d9a4dc2",
+      "standard_id": "_runtime"
+    },
+    ".agents/standards/_runtime/operating_standards_dispatch.py": {
+      "source": "skills/repo-shape/scripts/operating_standards_dispatch.py",
+      "sha256": "16e526df2df318e234cdf79fb9c99926ee689d4dfc8563bd0349622392fecd90",
+      "standard_id": "_runtime"
+    },
+    ".agents/standards/_runtime/operating_standards_catalog.py": {
+      "source": "skills/repo-shape/scripts/operating_standards_catalog.py",
+      "sha256": "3d92a2e1e64cd84cc8313b6b3a53b3cefe5d7b654a65e245c4fa4821cc83bd19",
+      "standard_id": "_runtime"
+    },
+    ".agents/standards/_runtime/surface_contracts.py": {
+      "source": "skills/repo-shape/scripts/surface_contracts.py",
+      "sha256": "eef9a1e2ffb2519a983dccadef3e03d8417d535c8beed0aa1dbef579afc75b42",
+      "standard_id": "_runtime"
+    },
+    ".agents/standards/_runtime/document_contracts.py": {
+      "source": "skills/repo-shape/scripts/document_contracts.py",
+      "sha256": "120d30952430727ae46557b8f4ed25610826d0af071199004d6b9d37301da49c",
+      "standard_id": "_runtime"
+    },
+    ".agents/standards/_runtime/plugin_contracts.py": {
+      "source": "skills/repo-shape/scripts/plugin_contracts.py",
+      "sha256": "0ed583ef490613980c34431c53538568dc255ada22d715ce8c70b1702934c70e",
+      "standard_id": "_runtime"
+    },
+    ".agents/standards/_runtime/skill_link_contract.py": {
+      "source": "skills/repo-shape/scripts/skill_link_contract.py",
+      "sha256": "5ac6a229824b55e88f0ef45367816b0eaf2d08ee922683b6c8554c6c9caf8a95",
+      "standard_id": "_runtime"
+    },
+    ".agents/standards/_runtime/shared_checkout.py": {
+      "source": "skills/repo-shape/scripts/shared_checkout.py",
+      "sha256": "ec342fb233e82c295c5aa2f70c19f64baa37e9d3a6b8a7ee82109c9a25110be4",
+      "standard_id": "_runtime"
+    },
+    ".agents/standards/_runtime/_agents_md.py": {
+      "source": "skills/repo-shape/scripts/_agents_md.py",
+      "sha256": "0a734835a9501af9bade3b29e7afc2ce94f89e538264514750bb4a1d256bd92c",
+      "standard_id": "_runtime"
+    },
+    ".agents/standards/_runtime/completed_artifact_contract.py": {
+      "source": "skills/repo-shape/scripts/completed_artifact_contract.py",
+      "sha256": "0940097e75084afe8079a64165ff0df666b040cf7a63333cf3392d6a16d5fd4b",
+      "standard_id": "_runtime"
+    },
+    ".agents/standards/references/repository-shape-manifest.json": {
+      "source": "skills/repo-shape/references/repository-shape-manifest.json",
+      "sha256": "be8a38291ab3689bf578e34cc970c73d3f6c204df063b412be3039b28620ceac",
+      "standard_id": "_runtime"
+    },
+    ".agents/standards/references/repository-shape-manifest.schema.json": {
+      "source": "skills/repo-shape/references/repository-shape-manifest.schema.json",
+      "sha256": "b7053c6d86035e1859bc6c7b2181f11b5b1beaf6f97765555074b08595b99870",
+      "standard_id": "_runtime"
+    },
+    ".agents/standards/references/operating-standards-catalog.json": {
+      "source": "skills/repo-shape/references/operating-standards-catalog.json",
+      "sha256": "64fc3e7042412eacc9541da4ceb09fca57a4d6e45f98ce8a4a78677ae76883a9",
+      "standard_id": "_runtime"
+    },
+    ".agents/standards/references/operating-standards-catalog.schema.json": {
+      "source": "skills/repo-shape/references/operating-standards-catalog.schema.json",
+      "sha256": "3b68fa0b4d7da733e36069d479e6d158d01944ec4d6091d159df37d9a14c84e1",
+      "standard_id": "_runtime"
+    },
+    ".agents/standards/root-agent-router/scripts/_agents_md.py": {
+      "source": "skills/repo-shape/scripts/_agents_md.py",
+      "sha256": "0a734835a9501af9bade3b29e7afc2ce94f89e538264514750bb4a1d256bd92c",
+      "standard_id": "root-agent-router"
+    },
+    ".agents/standards/root-agent-router/scripts/scaffold_agents_md.py": {
+      "source": "skills/repo-shape/scripts/scaffold_agents_md.py",
+      "sha256": "85a2f0e9abb96e747e48f3a39525aaa7a2b07439360b68397393cae0685dba13",
+      "standard_id": "root-agent-router"
+    },
+    ".agents/standards/root-agent-router/templates/agents-md.template.md": {
+      "source": "skills/repo-shape/templates/agents-md.template.md",
+      "sha256": "7f94cb2c8c876cf5f3cdb2e9b95e4af103c5b042f34ff156c32c86de605b9d7b",
+      "standard_id": "root-agent-router"
+    },
+    ".agents/standards/runbook-composition/scripts/document_contracts.py": {
+      "source": "skills/repo-shape/scripts/document_contracts.py",
+      "sha256": "120d30952430727ae46557b8f4ed25610826d0af071199004d6b9d37301da49c",
+      "standard_id": "runbook-composition"
+    },
+    ".agents/standards/runbook-composition/scripts/scaffold_repo_runbook_policy.py": {
+      "source": "skills/repo-shape/scripts/scaffold_repo_runbook_policy.py",
+      "sha256": "adb2f68fc354482d2ec4c958e1054b58cae4afc87fd7186a779ca8d40ae58b18",
+      "standard_id": "runbook-composition"
+    },
+    ".agents/standards/runbook-composition/scripts/scaffold_runbooks.py": {
+      "source": "skills/repo-shape/scripts/scaffold_runbooks.py",
+      "sha256": "5fac0b15ad071abb568b0d8bf9f125b0d10192a556afca5d5df214c0728bbf8a",
+      "standard_id": "runbook-composition"
+    },
+    ".agents/standards/runbook-composition/references/repository-runbook-standard.md": {
+      "source": "skills/repo-shape/references/repository-runbook-standard.md",
+      "sha256": "22dd0852a6b1d5b5f8b3819fed3569477ab9cec76c62e903652d9aab53ad16c9",
+      "standard_id": "runbook-composition"
+    },
+    ".agents/standards/runbook-composition/templates/repo-runbook-policy.md": {
+      "source": "skills/repo-shape/templates/repo-runbook-policy.md",
+      "sha256": "0fd015b60143ac3244147a724d58bc8d21e1e4c5662b1e15c3ab8dd8b68c39eb",
+      "standard_id": "runbook-composition"
+    },
+    ".agents/standards/playbook-composition/scripts/document_contracts.py": {
+      "source": "skills/repo-shape/scripts/document_contracts.py",
+      "sha256": "120d30952430727ae46557b8f4ed25610826d0af071199004d6b9d37301da49c",
+      "standard_id": "playbook-composition"
+    },
+    ".agents/standards/playbook-composition/scripts/scaffold_playbooks.py": {
+      "source": "skills/repo-shape/scripts/scaffold_playbooks.py",
+      "sha256": "549e717687d8c195992d573dc1fc3acc0913e18f0dff50461f54c4fe852f49a8",
+      "standard_id": "playbook-composition"
+    },
+    ".agents/standards/tracked-validation-hook/scripts/repo_standards.py": {
+      "source": "skills/repo-shape/scripts/repo_standards.py",
+      "sha256": "ae59689bdb6ab7661439451d6f910310ee9b9fea5f578605356ecc8a9d9a4dc2",
+      "standard_id": "tracked-validation-hook"
+    },
+    ".agents/standards/tracked-validation-hook/scripts/shared_checkout.py": {
+      "source": "skills/repo-shape/scripts/shared_checkout.py",
+      "sha256": "ec342fb233e82c295c5aa2f70c19f64baa37e9d3a6b8a7ee82109c9a25110be4",
+      "standard_id": "tracked-validation-hook"
+    },
+    ".agents/standards/tracked-validation-hook/templates/pre-commit": {
+      "source": "skills/repo-shape/templates/pre-commit",
+      "sha256": "0a1f6bcb5463e7c51e001755b69621377440214d515ff71c510169885e6b5488",
+      "standard_id": "tracked-validation-hook"
+    },
+    ".agents/standards/markdown-formatting/scripts/scaffold_markdown_formatting.py": {
+      "source": "skills/repo-shape/scripts/scaffold_markdown_formatting.py",
+      "sha256": "114e43789cafe531165c5b29311b7be6fba40e63639f2afcfe740a458f681993",
+      "standard_id": "markdown-formatting"
+    },
+    ".agents/standards/markdown-formatting/templates/markdown-formatting.json": {
+      "source": "skills/repo-shape/templates/markdown-formatting.json",
+      "sha256": "2e89c15d0d25ef9728e53013ddf8afff9527441e3119307c30b6eac4fd7aa4db",
+      "standard_id": "markdown-formatting"
+    },
+    ".agents/standards/markdown-formatting/markdown-formatting/scripts/format_markdown.py": {
+      "source": "skills/markdown-formatting/scripts/format_markdown.py",
+      "sha256": "5713e781c14a26feb6957be6f83a1d76a2d926fc977fed65771fb1fd03b7fed2",
+      "standard_id": "markdown-formatting"
+    },
+    ".agents/standards/markdown-formatting/markdown-formatting/requirements.txt": {
+      "source": "skills/markdown-formatting/requirements.txt",
+      "sha256": "925e625a08ec205c76288c3c0b57a7ae54ca11e05817140098d960472aa5a153",
+      "standard_id": "markdown-formatting"
+    },
+    ".agents/standards/review-entrypoint/scripts/scaffold_review.py": {
+      "source": "skills/repo-shape/scripts/scaffold_review.py",
+      "sha256": "a3e419aaf2f77628f80e76987f46249c008bcc04935f9f7ff9a56455f1928f19",
+      "standard_id": "review-entrypoint"
+    },
+    ".agents/standards/review-entrypoint/templates/REVIEW.md": {
+      "source": "skills/repo-shape/templates/REVIEW.md",
+      "sha256": "e16440259a9437646d7465b80adafc5f83ee74f3fce1462a85ff9e35aa1e2af3",
+      "standard_id": "review-entrypoint"
+    },
+    ".agents/standards/contribution-entrypoint/scripts/scaffold_contributing.py": {
+      "source": "skills/repo-shape/scripts/scaffold_contributing.py",
+      "sha256": "51368134d76a30741d7755e9271f3b6f72c09909fc837d97213de1f15bfa1853",
+      "standard_id": "contribution-entrypoint"
+    },
+    ".agents/standards/contribution-entrypoint/templates/contributing-template.md": {
+      "source": "skills/repo-shape/templates/contributing-template.md",
+      "sha256": "168bb471533aa927c393f69dc00264cf0daae9faff585a3a445b31834f459aea",
+      "standard_id": "contribution-entrypoint"
+    },
+    ".agents/standards/root-gitignore-hygiene/scripts/scaffold_gitignore.py": {
+      "source": "skills/repo-shape/scripts/scaffold_gitignore.py",
+      "sha256": "670c7ffea951e574bd1e6a4f56af1a32ed912bf300a024e7c0880505e0d8281c",
+      "standard_id": "root-gitignore-hygiene"
+    },
+    ".agents/standards/completed-artifact-custody/scripts/completed_artifact_contract.py": {
+      "source": "skills/repo-shape/scripts/completed_artifact_contract.py",
+      "sha256": "0940097e75084afe8079a64165ff0df666b040cf7a63333cf3392d6a16d5fd4b",
+      "standard_id": "completed-artifact-custody"
+    },
+    ".agents/standards/completed-artifact-custody/templates/completed-artifacts.md": {
+      "source": "skills/repo-shape/templates/completed-artifacts.md",
+      "sha256": "94d02f7d0d2844baa56dd535124e9b55ee718d65445d9ca80be6ce2dcd7f6e02",
+      "standard_id": "completed-artifact-custody"
+    }
+  }
+}
