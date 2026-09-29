@@ -31,9 +31,9 @@ Resolve the stated capabilities against skills available at runtime, under the b
 
 ## Local commands and paths
 
-Run `py -3 tools/run.py marketplace --apply` after changes to `skills/`, `shared/`, or `src/plugin-definitions/`. Then refresh installed skills when their source or membership changes.
+Run `py -3 tools/run.py marketplace --apply` after changes to `skills/`, `shared/`, or `src/plugin-definitions/`.
 
-Editable inputs are canonical skills under `skills/`, reusable resources under `shared/`, and plugin definitions under `src/plugin-definitions/`. `py -3 tools/build_marketplace.py --apply` assembles complete plugin packages under `dist/plugins/`; the marketplace target also updates catalog and inventory surfaces. Manifests, bundle manifests, built plugin trees, and `.agents/skills/` stay generator-owned. `py -3 tools/run.py ci --apply` is the full reconciliation route used by the commit hook.
+Editable inputs are canonical skills under `skills/`, reusable resources under `shared/`, and plugin definitions under `src/plugin-definitions/`. `py -3 tools/build_marketplace.py --apply` assembles complete plugin packages under `dist/plugins/`; the marketplace target also updates catalog and inventory surfaces. Manifests, bundle manifests, and built plugin trees stay generator-owned. Consumer plugin payloads are fetched and cached by the harness, not copied into `.agents/skills/`. `py -3 tools/run.py ci --apply` is the full reconciliation route used by the commit hook.
 
 ## Evidence contract
 

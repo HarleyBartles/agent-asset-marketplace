@@ -17,6 +17,6 @@ The canonical hook is tracked at `githooks/pre-commit` and activated through `co
 
 Hosted CI invokes the same hook against the checked-out commit with `REPO_STANDARDS_HOSTED_COMMIT=HEAD`. The portable hook never hard-codes Python, Ruff, or a repository-specific command bus.
 
-`REPO_STANDARDS_STAGED_SNAPSHOT=1` identifies the candidate tree under validation. It does not alter consumer command semantics, marketplace-source rolling, refresh behavior, or any other workflow policy unless the consumer's owning contract explicitly declares otherwise. Tree-selection mechanics do not acquire policy meaning merely because they are visible to a command.
+`REPO_STANDARDS_STAGED_SNAPSHOT=1` identifies the candidate tree under validation. It does not alter consumer command semantics or any other workflow policy unless the consumer's owning contract explicitly declares otherwise. Tree-selection mechanics do not acquire policy meaning merely because they are visible to a command.
 
 The compatibility hook template remains under `repo-shape/templates/` while the coordinator installs it; this skill owns its contract.

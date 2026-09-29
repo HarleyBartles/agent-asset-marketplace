@@ -333,6 +333,61 @@ def _repo_root() -> Path:
     return Path(result.stdout.strip())
 
 
+def _resolve_marketplace_source(repo_root: Path) -> Path:
+    """Resolve the upgraded Codex marketplace snapshot without requiring a consumer submodule."""
+    submodule = repo_root / ".agents/plugins/marketplace-source"
+    if (submodule / ".git").exists():
+        return submodule
+    declaration = repo_root / ".agents/plugins/marketplace.json"
+    marketplace_name = ""
+    source_urls: set[str] = set()
+    if declaration.is_file():
+        try:
+            manifest = json.loads(declaration.read_text(encoding="utf-8"))
+            marketplace_name = manifest.get("name", "")
+            source_urls = {
+                url
+                for plugin in manifest.get("plugins", [])
+                if isinstance(plugin, dict)
+                and isinstance(plugin.get("source"), dict)
+                and isinstance((url := plugin["source"].get("url")), str)
+                and url
+            }
+        except (OSError, json.JSONDecodeError):
+            pass
+    codex_home = Path(os.environ.get("CODEX_HOME", Path.home() / ".codex"))
+    snapshots = codex_home / ".tmp/marketplaces"
+    if marketplace_name and snapshots.is_dir():
+        for candidate in snapshots.iterdir():
+            if not candidate.is_dir():
+                continue
+            config = candidate / ".agents/plugins/marketplace.json"
+            if not config.is_file():
+                continue
+            try:
+                name = json.loads(config.read_text(encoding="utf-8")).get("name")
+            except (OSError, json.JSONDecodeError):
+                continue
+            try:
+                remote = _source_repository(candidate)
+            except (OSError, subprocess.CalledProcessError):
+                remote = ""
+
+            def normalize(value: str) -> str:
+                return value.lower().removesuffix(".git").rstrip("/")
+
+            if name == marketplace_name or normalize(remote) in {normalize(url) for url in source_urls}:
+                try:
+                    _source_revision(candidate)
+                    return candidate
+                except (OSError, ValueError, subprocess.CalledProcessError):
+                    continue
+    raise ValueError(
+        "Marketplace source unavailable: add the marketplace in Codex and upgrade it, "
+        "or initialize .agents/plugins/marketplace-source for development"
+    )
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Deploy selected pinned operating standards. (mixed)")
     modes = parser.add_mutually_exclusive_group()
@@ -347,7 +402,7 @@ def main(argv: list[str] | None = None) -> int:
         return 1
     try:
         root = _repo_root()
-        source = root / ".agents/plugins/marketplace-source"
+        source = _resolve_marketplace_source(root)
         skill = source / "skills/repo-shape"
         catalog = operating_standards_catalog.load_catalog(
             skill / "references/operating-standards-catalog.json",

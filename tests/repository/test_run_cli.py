@@ -114,8 +114,8 @@ def test_resolve_all_aliases_to_ci():
 
 
 def test_resolve_multiple_targets_deduped():
-    targets = run.resolve_targets(["installed-skills", "validate"])
-    assert "installed-skills" in targets
+    targets = run.resolve_targets(["marketplace", "validate"])
+    assert "marketplace" in targets
     assert "validate" in targets
 
 
@@ -331,22 +331,10 @@ def test_retired_index_targets_are_rejected(target: str) -> None:
         run.resolve_targets([target])
 
 
-def test_refresh_skills_target_delegates_to_bundled(monkeypatch):
-    calls = []
-
-    def fake_run(cmd, ctx):
-        calls.append(cmd)
-
-    monkeypatch.setattr(run, "_run", fake_run)
-
-    ctx = run.Ctx(mode="apply", base_ref=None, allow_shared=False, verbose=False)
-    run.run_targets(["refresh-skills"], ctx)
-
-    refresh_cmd = next(
-        (c for c in calls if "refresh_installed_skills.py" in " ".join(c) and "--apply" in c),
-        None,
-    )
-    assert refresh_cmd is not None
+@pytest.mark.parametrize("target", ["installed-skills", "refresh-skills"])
+def test_retired_skill_projection_targets_are_rejected(target: str) -> None:
+    with pytest.raises(ValueError, match="unknown target"):
+        run.resolve_targets([target])
 
 
 @pytest.mark.parametrize("phase", ["inventory", "project", "shared-references", "all"])

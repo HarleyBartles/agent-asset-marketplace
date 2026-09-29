@@ -260,30 +260,6 @@
         "dist/manifest.json"
       ],
       "requires": []
-    },
-    {
-      "id": "installed-skill-projections",
-      "origin": "repository",
-      "implementation_root": "tools",
-      "check": [
-        "@python",
-        "tools/run.py",
-        "refresh-skills",
-        "--check"
-      ],
-      "apply": [
-        "@python",
-        "tools/run.py",
-        "refresh-skills",
-        "--apply",
-        "@allow-shared-checkout"
-      ],
-      "generated_paths": [
-        ".agents/skills"
-      ],
-      "requires": [
-        "marketplace-registry"
-      ]
     }
   ]
 }

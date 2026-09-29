@@ -1,7 +1,7 @@
 {
-  "name": "@harleybartles/repo-worker-pack",
+  "name": "@harleybartles/agent-capability-pack",
   "version": "1.0.0",
-  "description": "Portable repository-worker capabilities for agents in any repository.",
+  "description": "Ambient agent capabilities for work across software projects.",
   "author": {
     "name": "Harley Bartles"
   },
@@ -25,9 +25,9 @@
   "skills": "./skills/",
   "interface": {
     "type": "cli",
-    "displayName": "Repo Worker Pack",
-    "shortDescription": "Portable repository-worker capabilities for agents.",
-    "longDescription": "First-party ambient capabilities for repository work, including worktree hygiene, source custody, validation evidence, and publication reporting. Consumer repositories choose their own paths, policies, and standards.",
+    "displayName": "Agent Capability Pack",
+    "shortDescription": "Ambient capabilities for agents doing software work.",
+    "longDescription": "First-party capabilities for source custody, worktree hygiene, validation evidence, and publication reporting. Standards, workflows, and repo-specific policies remain with their owning packs and projects.",
     "developerName": "Harley Bartles",
     "category": "Productivity",
     "capabilities": [],

@@ -41,4 +41,4 @@ No skill should create or pressure a consumer to create `.devin/agents/`.
 
 - First-party portable profiles are source-custodied in the `selecting-a-subagent` pack `assets/` directory.
 - Pack `assets/profiles/` is reserved for third-party vendor profiles.
-- The `install_profiles.py` installer records no provenance entry for first-party profiles; the canonical source is the pack tree. Other marketplace tooling that stages vendor profiles into `.agents/agents/` may track them in the consumer's `.agents/skills/.provenance.json` under a `vendorProfiles` array.
+- The `install_profiles.py` installer records no provenance entry for first-party profiles; the canonical source is the pack tree. Repo-shape may separately deploy vendor profiles into `.agents/agents/` from Marketplace products selected by that repository.

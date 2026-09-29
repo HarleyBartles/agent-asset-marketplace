@@ -4,7 +4,7 @@
 
 `repo-standards/scripts/deploy_vendor_profiles.py` owns the one-shot deployment of `dist/plugins/*/assets/profiles/*.md` into `.agents/agents/`.
 
-`refreshing-installed-skills` still records the `vendorProfiles` provenance field in `.agents/skills/.provenance.json`, but it delegates the actual copy and orphan removal to the `repo-standards` script.
+Vendor profile deployment is independent of plugin skill discovery and is run by the repository standards workflow.
 
 ## How it works
 
@@ -20,7 +20,7 @@ py -3 dist/plugins/agent-operating-model/skills/repo-shape/scripts/deploy_vendor
 py -3 dist/plugins/agent-operating-model/skills/repo-shape/scripts/deploy_vendor_profiles.py --apply
 ```
 
-`refreshing-installed-skills` calls the script automatically; do not run it directly unless you are testing or debugging.
+The Marketplace build workflow calls this script automatically; do not run it directly unless you are testing or debugging.
 
 ## Local overrides
 

@@ -646,6 +646,9 @@ def _check_surface(
     surf_id = str(surface.get("id", ""))
     if _surface_is_explicitly_excepted(surface, exceptions):
         return findings
+    opted_in = (repo_root / ".agents/contracts/operating-standards.json").is_file()
+    if surf_id == "repo-plugin-subscriptions" and not opted_in:
+        return findings
     if enabled_surface_ids is not None and surf_id and surf_id not in enabled_surface_ids:
         return findings
     if surf_id == "unslop-contract" and implementation_root is None:
@@ -748,6 +751,9 @@ def _apply_surface(
     if surf_id in {"runbook-set", "playbook-set"} and skill_link_contract.has_custom_composition_paths(repo_root):
         return False
     if _surface_is_explicitly_excepted(surface, exceptions):
+        return False
+    opted_in = (repo_root / ".agents/contracts/operating-standards.json").is_file()
+    if surf_id == "repo-plugin-subscriptions" and not opted_in:
         return False
     if enabled_surface_ids is not None and surf_id and surf_id not in enabled_surface_ids:
         return False

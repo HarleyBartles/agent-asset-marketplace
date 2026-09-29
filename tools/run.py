@@ -219,28 +219,6 @@ def _check_inventory(ctx: Ctx) -> None:
     _validate_marketplace_phase_step("inventory", ctx)
 
 
-def _apply_installed_skills(ctx: Ctx) -> None:
-    cmd = [
-        sys.executable,
-        "skills/refreshing-installed-skills/scripts/refresh_installed_skills.py",
-        "--apply",
-    ]
-    if ctx.allow_shared:
-        cmd.append("--allow-shared-checkout")
-    _run(cmd, ctx)
-
-
-def _check_installed_skills(ctx: Ctx) -> None:
-    _run(
-        [
-            sys.executable,
-            "skills/refreshing-installed-skills/scripts/refresh_installed_skills.py",
-            "--check",
-        ],
-        ctx,
-    )
-
-
 def _run_validate(ctx: Ctx) -> None:
     _check_tracked_line_endings()
     _run([sys.executable, "tools/validate_authority_assets.py"], ctx)
@@ -488,17 +466,6 @@ _TASKS: dict[str, Task] = {
         apply=(_apply_marketplace,),
         check=(_check_marketplace,),
         fix="tools/run marketplace --apply",
-    ),
-    "installed-skills": Task(
-        deps=("marketplace",),
-        apply=(_apply_installed_skills,),
-        check=(_check_installed_skills,),
-        fix="tools/run installed-skills --apply",
-    ),
-    "refresh-skills": Task(
-        apply=(_apply_installed_skills,),
-        check=(_check_installed_skills,),
-        fix="tools/run refresh-skills --apply",
     ),
     "validate": Task(
         apply=(_run_validate,),

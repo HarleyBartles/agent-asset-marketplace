@@ -22,7 +22,14 @@ def _fixture(root: Path) -> None:
         _write(
             root,
             f"src/plugin-definitions/{plugin}/plugin.json",
-            json.dumps({"name": plugin, "version": "1.0.0", "license": "MIT"}),
+            json.dumps(
+                {
+                    "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+                    "name": plugin,
+                    "version": "1.0.0",
+                    "license": "MIT",
+                }
+            ),
         )
         _write(
             root,
@@ -99,3 +106,38 @@ def test_source_paths_cannot_escape_their_declared_roots(tmp_path: Path) -> None
 
     with pytest.raises(DefinitionError, match="escapes shared root"):
         load_marketplace(tmp_path)
+
+
+@pytest.mark.parametrize(
+    ("manifest", "message"),
+    [
+        ({"name": "alpha", "version": "1.0.0"}, "Agent Plugins schema"),
+        (
+            {
+                "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+                "name": "alpha",
+                "version": "1.0.0",
+                "interface": {},
+            },
+            "OpenAI-specific fields belong under extensions.com.openai",
+        ),
+    ],
+)
+def test_plugin_definition_rejects_nonportable_or_unscoped_metadata(
+    tmp_path: Path, manifest: dict, message: str
+) -> None:
+    _fixture(tmp_path)
+    (tmp_path / "src/plugin-definitions/alpha/plugin.json").write_text(json.dumps(manifest), encoding="utf-8")
+
+    with pytest.raises(DefinitionError, match=message):
+        load_marketplace(tmp_path)
+
+
+def test_published_definitions_use_portable_manifest_with_openai_overlay() -> None:
+    root = Path(__file__).resolve().parents[2]
+    for path in sorted((root / "src/plugin-definitions").glob("*/plugin.json")):
+        manifest = json.loads(path.read_text(encoding="utf-8"))
+        assert manifest["$schema"] == "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json", path
+        assert "name" in manifest and "version" in manifest, path
+        assert not {"skills", "mcpServers", "interface"}.intersection(manifest), path
+        assert "interface" in manifest["extensions"]["com.openai"], path

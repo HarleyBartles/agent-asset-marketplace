@@ -22,7 +22,19 @@ def _source(root: Path) -> None:
     _write(root, "shared/references/guide.md", "# Guide\nExact source bytes.\n")
     for name in ("alpha", "beta"):
         definition = root / "src/plugin-definitions" / name
-        _write(definition, "plugin.json", json.dumps({"name": name, "version": "1.0.0", "license": "MIT"}))
+        _write(
+            definition,
+            "plugin.json",
+            json.dumps(
+                {
+                    "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+                    "name": name,
+                    "version": "1.0.0",
+                    "license": "MIT",
+                    "extensions": {"com.openai": {"interface": {"displayName": name}}},
+                }
+            ),
+        )
         _write(definition, "bundle.json", json.dumps({"bundle_name": name, "source_families": ["first_party"]}))
         _write(definition, "files/LICENSE", "MIT notice\n")
         _write(
@@ -56,6 +68,15 @@ def test_build_packages_complete_copies_and_check_mode_is_read_only(tmp_path: Pa
     output = tmp_path / "dist/plugins"
     for name in ("alpha", "beta"):
         package = output / name
+        manifest = json.loads((package / "plugin.json").read_text(encoding="utf-8"))
+        assert manifest["$schema"] == "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json"
+        assert manifest["name"] == name
+        assert "skills" not in manifest and "interface" not in manifest
+        assert manifest["extensions"]["com.openai"]["interface"]
+        compatibility = json.loads((package / ".codex-plugin/plugin.json").read_text(encoding="utf-8"))
+        assert compatibility["skills"] == "./skills/"
+        assert compatibility["interface"] == manifest["extensions"]["com.openai"]["interface"]
+        assert not (package / ".claude-plugin").exists()
         assert (package / "LICENSE").read_bytes() == (
             tmp_path / "src/plugin-definitions" / name / "files/LICENSE"
         ).read_bytes()
@@ -96,9 +117,22 @@ def test_check_mode_reports_stale_output_without_mutating_it(tmp_path: Path) -> 
 def test_empty_plugin_is_built_without_skills(tmp_path: Path) -> None:
     _source(tmp_path)
     definition = tmp_path / "src/plugin-definitions/empty"
-    _write(definition, "plugin.json", json.dumps({"name": "empty", "version": "1.0.0"}))
+    _write(
+        definition,
+        "plugin.json",
+        json.dumps(
+            {
+                "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+                "name": "empty",
+                "version": "1.0.0",
+            }
+        ),
+    )
     _write(definition, "contents.json", json.dumps({"skills": []}))
 
     build_marketplace(tmp_path, apply=True)
 
-    assert (tmp_path / "dist/plugins/empty/.codex-plugin/plugin.json").is_file()
+    package = tmp_path / "dist/plugins/empty"
+    assert json.loads((package / "plugin.json").read_text(encoding="utf-8"))["name"] == "empty"
+    assert (package / ".codex-plugin/plugin.json").is_file()
+    assert not (package / ".claude-plugin").exists()

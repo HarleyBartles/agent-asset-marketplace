@@ -26,199 +26,41 @@ def _make_repo(tmp_path: Path, name: str) -> Path:
     return repo
 
 
-def _copy_shared_checkout_into_skill(skill_root: Path) -> None:
-    """Place a copy of the canonical shared_checkout.py next to skill scripts that need it."""
-    scripts = skill_root / "scripts"
-    if not scripts.is_dir():
-        return
-    canonical = REPO_ROOT / "tools" / "shared_checkout.py"
-    target = scripts / "shared_checkout.py"
-    needs = any(
-        p.suffix == ".py" and p.name != "shared_checkout.py" and "shared_checkout" in p.read_text(encoding="utf-8")
-        for p in scripts.iterdir()
-        if p.is_file()
-    )
-    if needs:
-        shutil.copy2(canonical, target)
-
-
-def _copy_current_skill_sources(repo: Path, skill_names: tuple[str, ...]) -> list[str]:
-    """Copy requested skills using the live bundle manifests as custody truth."""
-    plugins_root = REPO_ROOT / "dist" / "plugins"
-    owners: dict[str, tuple[str, Path]] = {}
-    for manifest_path in plugins_root.glob("*/references/bundle-manifest.json"):
-        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
-        plugin_name = manifest["bundle_name"]
-        for entry in manifest.get("entries", []):
-            skill_name = entry["canonical_name"]
-            if skill_name not in skill_names:
-                continue
-            source = REPO_ROOT / entry["canonical_source_path"]
-            if skill_name in owners:
-                raise AssertionError(f"ambiguous canonical skill {skill_name!r}")
-            owners[skill_name] = (plugin_name, source)
-
-    copied_plugins: set[str] = set()
-    for skill_name in skill_names:
-        if skill_name not in owners:
-            raise AssertionError(f"canonical skill {skill_name!r} not found in bundle manifests")
-        plugin_name, source = owners[skill_name]
-        target = repo / "dist" / "plugins" / plugin_name / "skills" / skill_name
-        shutil.copytree(source, target, ignore=shutil.ignore_patterns("__pycache__", "*.pyc"))
-        _copy_shared_checkout_into_skill(target)
-        copied_plugins.add(plugin_name)
-
-    return sorted(copied_plugins)
-
-
 def _make_repo_with_bundled_refresh(tmp_path: Path, name: str) -> Path:
-    """Create a temporary consumer repo resolved from current marketplace metadata."""
-    repo = _make_repo(tmp_path, name)
-    # Provide the canonical shared_checkout.py at the repo root so installed
-    # skill refresh scripts can find it inside the new worktree.
-    repo_tools = repo / "tools"
-    repo_tools.mkdir(parents=True, exist_ok=True)
-    shutil.copy2(REPO_ROOT / "tools" / "shared_checkout.py", repo_tools / "shared_checkout.py")
-
-    plugin_names = _copy_current_skill_sources(
-        repo,
-        ("refreshing-installed-skills", "repo-standards", "repo-shape"),
-    )
-    (repo / ".agents" / "plugins").mkdir(parents=True)
-    marketplace = {
-        "plugins": [
-            {
-                "name": plugin_name,
-                "source": {"source": "local", "path": f"./dist/plugins/{plugin_name}"},
-                "policy": {"installation": "INSTALLED_BY_DEFAULT", "authentication": "ON_INSTALL"},
-            }
-            for plugin_name in plugin_names
-        ]
-    }
-    (repo / ".agents" / "plugins" / "marketplace.json").write_text(
-        json.dumps(marketplace, indent=2) + "\n", encoding="utf-8"
-    )
-    subprocess.run(["git", "add", "-A"], cwd=repo, check=True, capture_output=True)
-    subprocess.run(["git", "commit", "-m", "add refresh scaffolding"], cwd=repo, check=True, capture_output=True)
-    return repo
+    """Compatibility fixture name for repos that now use native repo plugins."""
+    return _make_repo(tmp_path, name)
 
 
 def _make_repo_with_failing_refresh(tmp_path: Path, name: str) -> Path:
-    """Create a temporary consumer repo whose refresh script writes then fails."""
-    repo = _make_repo(tmp_path, name)
-    # Provide the canonical shared_checkout.py at the repo root so installed
-    # skill refresh scripts can find it inside the new worktree.
-    repo_tools = repo / "tools"
-    repo_tools.mkdir(parents=True, exist_ok=True)
-    shutil.copy2(REPO_ROOT / "tools" / "shared_checkout.py", repo_tools / "shared_checkout.py")
-
-    plugin_names = _copy_current_skill_sources(
-        repo,
-        ("refreshing-installed-skills", "repo-standards", "repo-shape"),
-    )
-
-    # Replace the refresh script with one that writes a marker and exits non-zero.
-    fake_refresh = (
-        repo
-        / "dist"
-        / "plugins"
-        / "repo-worker-pack"
-        / "skills"
-        / "refreshing-installed-skills"
-        / "scripts"
-        / "refresh_installed_skills.py"
-    )
-    fake_refresh.write_text(
-        "import sys\nfrom pathlib import Path\n"
-        "Path('marker.txt').write_text('failed', encoding='utf-8')\n"
-        "print('refresh failed', file=sys.stderr)\n"
-        "sys.exit(1)\n",
-        encoding="utf-8",
-    )
-
-    (repo / ".agents" / "plugins").mkdir(parents=True)
-    marketplace = {
-        "plugins": [
-            {
-                "name": plugin_name,
-                "source": {"source": "local", "path": f"./dist/plugins/{plugin_name}"},
-                "policy": {"installation": "INSTALLED_BY_DEFAULT", "authentication": "ON_INSTALL"},
-            }
-            for plugin_name in plugin_names
-        ]
-    }
-    (repo / ".agents" / "plugins" / "marketplace.json").write_text(
-        json.dumps(marketplace, indent=2) + "\n", encoding="utf-8"
-    )
-    subprocess.run(["git", "add", "-A"], cwd=repo, check=True, capture_output=True)
-    subprocess.run(["git", "commit", "-m", "add failing refresh"], cwd=repo, check=True, capture_output=True)
-    return repo
+    """Compatibility fixture name; worktree setup no longer refreshes plugin skills."""
+    return _make_repo(tmp_path, name)
 
 
 def _make_repo_with_marketplace_source_submodule(tmp_path: Path, name: str) -> Path:
-    """Create a repo whose skills include one from a marketplace-source submodule.
+    """Create a repo with a generic pinned submodule for worktree initialization coverage."""
+    repo = _make_repo(tmp_path, name)
+    submodule_bare = tmp_path / f"{name}-submodule-bare"
+    submodule_bare.mkdir()
+    subprocess.run(["git", "init", "--bare"], cwd=submodule_bare, check=True, capture_output=True)
 
-    The pre-existing skill in ``.agents/skills/`` must survive a new worktree when
-    the submodule is initialized before ``refreshing-installed-skills`` runs.
-    """
-    repo = _make_repo_with_bundled_refresh(tmp_path, name)
+    submodule_work = tmp_path / f"{name}-submodule-work"
+    subprocess.run(["git", "clone", str(submodule_bare), str(submodule_work)], check=True, capture_output=True)
+    subprocess.run(["git", "config", "user.email", "test@test"], cwd=submodule_work, check=True, capture_output=True)
+    subprocess.run(["git", "config", "user.name", "Test"], cwd=submodule_work, check=True, capture_output=True)
+    (submodule_work / "payload.txt").write_text("consumer-pinned content\\n", encoding="utf-8")
+    subprocess.run(["git", "add", "payload.txt"], cwd=submodule_work, check=True, capture_output=True)
+    subprocess.run(["git", "commit", "-m", "add payload"], cwd=submodule_work, check=True, capture_output=True)
+    subprocess.run(["git", "push", "origin", "HEAD:main"], cwd=submodule_work, check=True, capture_output=True)
 
-    # Build a bare repository to act as the marketplace-source remote.
-    submod_bare = (tmp_path / f"{name}-submodule-bare").resolve()
-    submod_bare.mkdir()
-    subprocess.run(["git", "init", "--bare"], cwd=submod_bare, check=True, capture_output=True)
-
-    # Create the submodule content in a temporary clone, then push to the bare remote.
-    submod_work = tmp_path / f"{name}-submodule-work"
-    subprocess.run(["git", "clone", str(submod_bare), str(submod_work)], check=True, capture_output=True)
-    subprocess.run(["git", "config", "user.email", "test@test"], cwd=submod_work, check=True, capture_output=True)
-    subprocess.run(["git", "config", "user.name", "Test"], cwd=submod_work, check=True, capture_output=True)
-    pack = submod_work / "dist" / "plugins" / "remote-pack" / "skills"
-    pack.mkdir(parents=True)
-    skill = pack / "submod-skill"
-    skill.mkdir()
-    (skill / "SKILL.md").write_text("---\nname: submod-skill\n---\n", encoding="utf-8")
-    subprocess.run(["git", "add", "-A"], cwd=submod_work, check=True, capture_output=True)
-    subprocess.run(["git", "commit", "-m", "add submod-skill"], cwd=submod_work, check=True, capture_output=True)
-    subprocess.run(["git", "push", "origin", "HEAD:main"], cwd=submod_work, check=True, capture_output=True)
-
-    # Add the bare repo as a submodule at the canonical marketplace-source path.
-    # The file:// URI and -b main are needed for the bare test remote; the
-    # calling test sets GIT_CONFIG_GLOBAL to allow the file protocol.
     subprocess.run(
-        ["git", "submodule", "add", "-b", "main", submod_bare.as_uri(), ".agents/plugins/marketplace-source"],
+        ["git", "submodule", "add", "-b", "main", submodule_bare.as_uri(), "vendor/dependency"],
         cwd=repo,
         check=True,
         capture_output=True,
     )
     subprocess.run(["git", "submodule", "update", "--init"], cwd=repo, check=True, capture_output=True)
-
-    # Update the marketplace to include the remote plugin and commit the pre-existing skill.
-    marketplace = json.loads((repo / ".agents" / "plugins" / "marketplace.json").read_text(encoding="utf-8"))
-    marketplace["plugins"].append(
-        {
-            "name": "remote-pack",
-            "source": {
-                "source": "github",
-                "owner": "test",
-                "repo": "test",
-                "path": "dist/plugins/remote-pack",
-            },
-            "policy": {"installation": "INSTALLED_BY_DEFAULT", "authentication": "ON_INSTALL"},
-        }
-    )
-    (repo / ".agents" / "plugins" / "marketplace.json").write_text(
-        json.dumps(marketplace, indent=2) + "\n", encoding="utf-8"
-    )
-
-    skill_dir = repo / ".agents" / "skills" / "submod-skill"
-    skill_dir.mkdir(parents=True)
-    (skill_dir / "SKILL.md").write_text("---\nname: submod-skill\n---\n", encoding="utf-8")
-
     subprocess.run(["git", "add", "-A"], cwd=repo, check=True, capture_output=True)
-    subprocess.run(
-        ["git", "commit", "-m", "add marketplace-source and skill"], cwd=repo, check=True, capture_output=True
-    )
+    subprocess.run(["git", "commit", "-m", "add pinned dependency"], cwd=repo, check=True, capture_output=True)
     return repo
 
 
@@ -238,7 +80,7 @@ def test_new_help_exits_zero() -> None:
 
 def test_installed_new_worktree_runs_without_repo_tools(tmp_path: Path) -> None:
     """The installed skill script must be self-contained and not rely on repo tools/."""
-    installed_scripts = REPO_ROOT / ".agents" / "skills" / "using-git-worktrees" / "scripts"
+    installed_scripts = REPO_ROOT / "skills" / "using-git-worktrees" / "scripts"
     isolated = tmp_path / "installed-skill"
     shutil.copytree(installed_scripts, isolated)
     isolated_script = isolated / "new_worktree.py"
@@ -534,55 +376,39 @@ def test_new_worktree_fails_when_target_path_already_exists(tmp_path: Path) -> N
     assert "directory" in result.stderr.lower()
 
 
-def test_new_worktree_runs_refresh_installed_skills(tmp_path: Path) -> None:
-    repo = _make_repo_with_bundled_refresh(tmp_path, "refresh-repo")
-    worktree_root = tmp_path / "_agent-worktrees" / "refresh-repo" / "feature"
-    result = subprocess.run(
-        [sys.executable, str(NEW_WORKTREE), "feature", "--apply"],
-        cwd=repo,
-        env=_stripped_env(),
-        capture_output=True,
-        text=True,
-    )
-    assert result.returncode == 0, result.stderr
-    assert worktree_root.is_dir()
-    assert "Worktree ready" in result.stdout
-    assert "Installed skill" in result.stdout
-    assert "Worktree ready" in result.stdout
-
-
-@pytest.mark.parametrize("marketplace_config", [None, {"plugins": []}], ids=["undeclared", "empty"])
-def test_new_worktree_skips_refresh_without_marketplace_configuration(tmp_path: Path, marketplace_config) -> None:
-    """An ambient refresh implementation is not a reason to configure every repo."""
-    repo = _make_repo(tmp_path, "unconfigured-refresh-repo")
-    refresh = (
-        repo
-        / "dist"
-        / "plugins"
-        / "repo-worker-pack"
-        / "skills"
-        / "refreshing-installed-skills"
-        / "scripts"
-        / "refresh_installed_skills.py"
-    )
-    refresh.parent.mkdir(parents=True)
-    refresh.write_text(
-        "from pathlib import Path\nPath('refresh-called.txt').write_text('yes', encoding='utf-8')\n",
+def test_new_worktree_preserves_native_plugin_config_and_local_skills(tmp_path: Path) -> None:
+    repo = _make_repo(tmp_path, "repo-plugin-repo")
+    marketplace = repo / ".agents/plugins/marketplace.json"
+    marketplace.parent.mkdir(parents=True)
+    marketplace.write_text(
+        json.dumps(
+            {
+                "name": "repo-plugin-repo",
+                "plugins": [
+                    {
+                        "name": "architecture-pack",
+                        "source": {
+                            "source": "git-subdir",
+                            "url": "https://github.com/example/marketplace.git",
+                            "path": "./dist/plugins/architecture-pack",
+                            "ref": "main",
+                        },
+                    }
+                ],
+            }
+        ),
         encoding="utf-8",
     )
-    if marketplace_config is not None:
-        marketplace = repo / ".agents" / "plugins" / "marketplace.json"
-        marketplace.parent.mkdir(parents=True)
-        marketplace.write_text(json.dumps(marketplace_config), encoding="utf-8")
+    codex = repo / ".codex/config.toml"
+    codex.parent.mkdir(parents=True)
+    codex.write_text('[plugins."architecture-pack@repo-plugin-repo"]\nenabled = true\n', encoding="utf-8")
+    local_skill = repo / ".agents/skills/local-domain/SKILL.md"
+    local_skill.parent.mkdir(parents=True)
+    local_skill.write_text("---\nname: local-domain\ndescription: local\n---\n", encoding="utf-8")
     subprocess.run(["git", "add", "-A"], cwd=repo, check=True, capture_output=True)
-    subprocess.run(
-        ["git", "commit", "-m", "add ambient refresh implementation"],
-        cwd=repo,
-        check=True,
-        capture_output=True,
-    )
+    subprocess.run(["git", "commit", "-m", "declare repo plugin"], cwd=repo, check=True, capture_output=True)
 
-    worktree_root = tmp_path / "_agent-worktrees" / "unconfigured-refresh-repo" / "feature"
+    worktree_root = tmp_path / "_agent-worktrees" / "repo-plugin-repo" / "feature"
     result = subprocess.run(
         [sys.executable, str(NEW_WORKTREE), "feature", "--apply"],
         cwd=repo,
@@ -592,38 +418,13 @@ def test_new_worktree_skips_refresh_without_marketplace_configuration(tmp_path: 
     )
 
     assert result.returncode == 0, result.stderr
-    assert worktree_root.is_dir()
-    assert not (worktree_root / "refresh-called.txt").exists()
-    assert "skipping skill refresh" in result.stdout.lower()
+    assert (worktree_root / ".agents/plugins/marketplace.json").is_file()
+    assert (worktree_root / ".codex/config.toml").is_file()
+    assert (worktree_root / ".agents/skills/local-domain/SKILL.md").is_file()
+    assert not (worktree_root / ".agents/skills/architecture-pack").exists()
 
 
-def test_new_worktree_reports_invalid_marketplace_configuration(tmp_path: Path) -> None:
-    repo = _make_repo(tmp_path, "invalid-marketplace-repo")
-    marketplace = repo / ".agents" / "plugins" / "marketplace.json"
-    marketplace.parent.mkdir(parents=True)
-    marketplace.write_text("{invalid", encoding="utf-8")
-    subprocess.run(["git", "add", "-A"], cwd=repo, check=True, capture_output=True)
-    subprocess.run(["git", "commit", "-m", "add invalid marketplace config"], cwd=repo, check=True, capture_output=True)
-
-    result = subprocess.run(
-        [sys.executable, str(NEW_WORKTREE), "feature", "--apply"],
-        cwd=repo,
-        env=_stripped_env(),
-        capture_output=True,
-        text=True,
-    )
-
-    assert result.returncode != 0
-    assert "marketplace" in result.stderr.lower()
-    assert "invalid" in result.stderr.lower()
-
-
-def test_new_worktree_initializes_submodules_before_refresh(tmp_path: Path, monkeypatch) -> None:
-    """A new worktree must initialize submodules before refreshing skills.
-
-    If the marketplace-source submodule is not populated, ``refreshing-installed-skills``
-    cannot find the skills declared by ``github`` plugins and removes them as orphans.
-    """
+def test_new_worktree_initializes_generic_submodule_without_skill_projection(tmp_path: Path, monkeypatch) -> None:
     gitconfig = tmp_path / "gitconfig"
     gitconfig.write_text('[protocol "file"]\n\tallow = always\n', encoding="utf-8")
     monkeypatch.setenv("GIT_CONFIG_GLOBAL", str(gitconfig))
@@ -637,45 +438,11 @@ def test_new_worktree_initializes_submodules_before_refresh(tmp_path: Path, monk
         capture_output=True,
         text=True,
     )
+
     assert result.returncode == 0, result.stderr
-    assert worktree_root.is_dir()
+    assert (worktree_root / "vendor/dependency/payload.txt").read_text(encoding="utf-8") == "consumer-pinned content\\n"
+    assert not (worktree_root / ".agents/skills").exists()
     assert "Worktree ready" in result.stdout
-    assert (worktree_root / ".agents" / "plugins" / "marketplace-source").is_dir()
-    assert (
-        worktree_root
-        / ".agents"
-        / "plugins"
-        / "marketplace-source"
-        / "dist"
-        / "plugins"
-        / "remote-pack"
-        / "skills"
-        / "submod-skill"
-    ).is_dir()
-    assert (worktree_root / ".agents" / "skills" / "submod-skill").is_dir()
-
-
-def test_new_worktree_keeps_dangling_worktree_on_refresh_failure(tmp_path: Path) -> None:
-    """A failed post-creation refresh keeps the worktree so an agent can inspect."""
-    repo = _make_repo_with_failing_refresh(tmp_path, "failing-refresh-repo")
-    worktree_root = tmp_path / "_agent-worktrees" / "failing-refresh-repo" / "feature"
-    result = subprocess.run(
-        [sys.executable, str(NEW_WORKTREE), "feature", "--apply"],
-        cwd=repo,
-        env=_stripped_env(),
-        capture_output=True,
-        text=True,
-    )
-    assert result.returncode != 0, result.stdout
-    assert worktree_root.is_dir()
-    list_result = subprocess.run(
-        ["git", "worktree", "list", "--porcelain"],
-        cwd=repo,
-        capture_output=True,
-        text=True,
-        check=True,
-    )
-    assert worktree_root.as_posix() in list_result.stdout
 
 
 def test_new_worktree_from_linked_worktree_succeeds_without_flag(tmp_path: Path) -> None:
@@ -700,29 +467,6 @@ def test_new_worktree_from_linked_worktree_succeeds_without_flag(tmp_path: Path)
     assert result.returncode == 0, result.stderr
     assert target_root.is_dir()
     assert "Worktree ready" in result.stdout
-
-
-def test_new_worktree_keeps_branch_on_refresh_failure(tmp_path: Path) -> None:
-    """A failed post-creation refresh keeps the branch and worktree for inspection."""
-    repo = _make_repo_with_failing_refresh(tmp_path, "failing-branch-repo")
-    worktree_root = tmp_path / "_agent-worktrees" / "failing-branch-repo" / "feature"
-    result = subprocess.run(
-        [sys.executable, str(NEW_WORKTREE), "feature", "--apply"],
-        cwd=repo,
-        env=_stripped_env(),
-        capture_output=True,
-        text=True,
-    )
-    assert result.returncode != 0, result.stdout
-    assert worktree_root.is_dir()
-    branch_result = subprocess.run(
-        ["git", "branch", "--list", "feature"],
-        cwd=repo,
-        capture_output=True,
-        text=True,
-        check=True,
-    )
-    assert "feature" in branch_result.stdout
 
 
 def test_new_worktree_from_main_succeeds_without_flag(tmp_path: Path) -> None:
@@ -906,7 +650,6 @@ def main():
         return 2
     capability = sys.argv[1]
     markers = {
-        "refresh-skills": "refresh-bus-marker.txt",
         "install-deps": "install-deps-bus-marker.txt",
     }
     if capability not in markers:
@@ -932,15 +675,14 @@ def test_new_worktree_dispatches_through_command_bus_when_present(tmp_path: Path
     )
     assert result.returncode == 0, result.stderr
     assert worktree_root.is_dir()
-    assert (worktree_root / "refresh-bus-marker.txt").is_file()
     assert (worktree_root / "install-deps-bus-marker.txt").is_file()
-    assert "Installed skill" not in result.stdout
+    assert not (worktree_root / ".agents/skills").exists()
 
 
-def test_new_worktree_fails_and_keeps_worktree_when_command_bus_fails(tmp_path: Path) -> None:
+def test_new_worktree_fails_and_keeps_worktree_when_dependency_command_fails(tmp_path: Path) -> None:
     failing_bus = """\
 import sys
-print("repo-owned refresh-skills failed", file=sys.stderr)
+print("repo-owned install-deps failed", file=sys.stderr)
 sys.exit(1)
 """
     repo = _make_repo_with_command_bus(tmp_path, "fail-bus-repo", failing_bus)
@@ -954,7 +696,7 @@ sys.exit(1)
     )
     assert result.returncode != 0, result.stdout
     assert worktree_root.is_dir()
-    assert "repo-owned refresh-skills failed" in result.stderr
+    assert "repo-owned install-deps failed" in result.stderr
 
 
 def test_new_worktree_falls_back_to_bundled_for_unknown_bus_capability(tmp_path: Path) -> None:
@@ -974,7 +716,8 @@ sys.exit(2)
     )
     assert result.returncode == 0, result.stderr
     assert worktree_root.is_dir()
-    assert "Installed skill" in result.stdout
+    assert "Worktree ready" in result.stdout
+    assert not (worktree_root / ".agents/skills").exists()
 
 
 @pytest.mark.skipif(shutil.which("bash") is None, reason="bash not available")
@@ -989,7 +732,7 @@ def test_new_worktree_dispatches_through_bash_shell_wrapper(tmp_path: Path) -> N
         "set -euo pipefail\n"
         'capability="$1"\n'
         'case "$capability" in\n'
-        '  refresh-skills) echo "refresh-skills called" > refresh-bus-marker.txt ;;\n'
+        '  install-deps) echo "install-deps called" > install-deps-marker.txt ;;\n'
         '  *) echo "invalid choice: $capability" >&2; exit 2 ;;\n'
         "esac\n",
         encoding="utf-8",
@@ -1009,8 +752,8 @@ def test_new_worktree_dispatches_through_bash_shell_wrapper(tmp_path: Path) -> N
     )
     assert result.returncode == 0, result.stderr
     assert worktree_root.is_dir()
-    assert (worktree_root / "refresh-bus-marker.txt").is_file()
-    assert "Installed skill" not in result.stdout
+    assert (worktree_root / "install-deps-marker.txt").is_file()
+    assert not (worktree_root / ".agents/skills").exists()
 
 
 def _make_fake_package_manager(bin_dir: Path, name: str) -> None:

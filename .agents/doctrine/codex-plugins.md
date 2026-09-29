@@ -12,7 +12,7 @@ All marketplace source is first-party maintained, including open-source adaptati
 
 - Run `py -3 tools/run.py marketplace --apply` to assemble complete plugin packages and regenerate marketplace metadata.
 - Run `py -3 tools/run.py marketplace --check` to verify package and manifest freshness without writing.
-- Do not hand-edit generated plugin contents, bundle manifests, indexes, or installed skill projections.
+- Do not hand-edit generated plugin contents, bundle manifests, or indexes.
 - Verify `.codex-plugin/plugin.json`, all referenced assets, skill closure, copied resources, and required license notices in each built package.
 - Confirm `dist/plugins/` remains consumable from a Git checkout; Portfolio pins this path through the marketplace-source submodule.
 

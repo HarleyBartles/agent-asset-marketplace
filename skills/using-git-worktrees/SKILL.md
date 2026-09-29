@@ -18,7 +18,6 @@ metadata:
     - the task is read-only and needs no new worktree.
   related_skills:
     - using-superpowers-plus
-    - refreshing-installed-skills
     - executing-plans
     - subagent-driven-development
     - finishing-a-development-branch
@@ -127,17 +126,17 @@ All scripts support `--help` and classify each flag as `read-only` or `mutating`
 
 ## Quick Reference
 
-| Situation                          | Action                                                       |
-| ---------------------------------- | ------------------------------------------------------------ |
-| Already in linked worktree         | Skip creation (Step 0)                                       |
-| In a submodule                     | Treat as normal repo (Step 0 guard)                          |
-| New worktree needed                | Preview and apply bundled `new_worktree.py`                  |
-| Native worktree tool available     | Still use bundled `new_worktree.py`                          |
-| Creation fails                     | Report blocker; do not switch creator or checkout            |
-| Tests fail during baseline         | Report failures + ask                                        |
-| Bundled `new-worktree` script      | Use it for creation                                          |
-| Completed branch/worktree          | Use `finishing-a-development-branch` for verified retirement |
-| Skills need refresh after creation | `new-worktree` auto-runs `refreshing-installed-skills`       |
+| Situation                                | Action                                                                                                                              |
+| ---------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| Already in linked worktree               | Skip creation (Step 0)                                                                                                              |
+| In a submodule                           | Treat as normal repo (Step 0 guard)                                                                                                 |
+| New worktree needed                      | Preview and apply bundled `new_worktree.py`                                                                                         |
+| Native worktree tool available           | Still use bundled `new_worktree.py`                                                                                                 |
+| Creation fails                           | Report blocker; do not switch creator or checkout                                                                                   |
+| Tests fail during baseline               | Report failures + ask                                                                                                               |
+| Bundled `new-worktree` script            | Use it for creation                                                                                                                 |
+| Completed branch/worktree                | Use `finishing-a-development-branch` for verified retirement                                                                        |
+| Repo plugins need refresh after creation | Codex loads repo-scoped plugins from the worktree's native config; use the Marketplace Upgrade action to refresh the source payload |
 
 ## Common Rationalizations
 

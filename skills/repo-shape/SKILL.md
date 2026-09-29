@@ -26,6 +26,8 @@ Each repo supplies a thin overlay at `.agents/doctrine/repo-runbook-policy.md` t
 
 If a repo retires generated `INDEX.md` or `INDEX.json` files, remove the tracked outputs and their generation/check commands from local runners, hooks, and hosted CI. Do not add a replacement subscription or generated inventory. Keep binding routes in `AGENTS.md`, and let runbooks and playbooks remain directly addressable by their declared local paths.
 
+Repo-scoped plugin dependencies are an explicit optional standard. When the consumer adopts `repo-plugin-subscriptions`, use its native Codex and Devin config contract; do not install plugin payloads into `.agents/skills/`.
+
 ## Read when
 
 | Need                                                     | Read                                                                                                                                                                          |
