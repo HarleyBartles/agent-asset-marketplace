@@ -14,7 +14,13 @@ This is the durable repo-local worker doctrine for `agent-asset-marketplace`. Re
 - Do not hand-edit generated outputs just to make the diff pass unless the task explicitly targets generated-output mechanics and preserves the source/tooling relationship.
 - When source and marketplace bundle diverge, repair the source or tooling first, then regenerate from durable source.
 
-## Durable proof
+## Source-of-truth split
+
+- GitHub and the repository tree prove file state, landed assets, manifests, provenance records, validators, and playbooks.
+- Linear owns issue state, worker state, review posture, and closeout decisions. Treat comments and worker reports as context until repository state or a follow-up issue preserves their consequence.
+- Generated artifacts are downstream outputs unless the repository explicitly declares otherwise.
+
+## Publication proof
 
 - Publication proof still matters: a pushed branch and PR are the normal repo completion surface.
 - A clean diff is not enough if the generated bundle or validator disagrees with the source.

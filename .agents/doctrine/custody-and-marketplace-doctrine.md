@@ -11,7 +11,7 @@ This document defines source custody, product composition, and generated package
 - `dist/plugins/` contains generated, self-contained installable plugin packages. Never edit shipped output to change source behavior.
 - `src/marketplace/` owns reusable definition validation and build implementation. `tools/` owns command entry points and repository tooling.
 - Skill tests remain beside source under `skills/<skill-id>/tests/` and ship with the skill except evaluator-only material and run results. Build tests live in `tests/build/`; installed product contracts live in `tests/shipping/`. Repository tests live in `tests/repository/`.
-- `.agents/skills/` contains only this repository's subscribed plugin projections and local skills; `.agents/standards/` contains the pinned resources for declared standards.
+- `.agents/skills/` contains only explicitly subscribed plugin projections and declared local skills; it is absent when neither is declared. This repository declares neither. `.agents/standards/` contains pinned resources for this repository's declared standards.
 
 ## Composition and build
 
@@ -30,7 +30,7 @@ First-party describes current source custody and responsibility. It does not era
 1. Create or update canonical source under `skills/<skill-id>/` and shared materials under `shared/`.
 2. Declare product membership and resource destinations in the relevant `src/plugin-definitions/<plugin>/contents.json` files.
 3. Run the focused skill tests, build tests, or package tests owned by the changed behavior.
-4. Run `py -3 tools/run.py marketplace --apply`, then refresh installed skills and indexes through their owning targets.
+4. Run `py -3 tools/run.py marketplace --apply`, then reconcile skill projections through their owning target. This repository's empty subscription keeps `.agents/skills/` absent.
 5. Run focused checks. The tracked hook runs the three repository-owned suites once on the final commit.
 
 ## Product metadata

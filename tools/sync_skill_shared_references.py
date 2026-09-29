@@ -26,7 +26,9 @@ SHARES = {
 
 
 def _check_markdown_outputs(paths: list[Path]) -> None:
-    formatter = ROOT / ".agents/skills/markdown-formatting/scripts/format_markdown.py"
+    formatter = ROOT / ".agents/standards/markdown-formatting/markdown-formatting/scripts/format_markdown.py"
+    if not formatter.is_file():
+        formatter = ROOT / "skills/markdown-formatting/scripts/format_markdown.py"
     contract = ROOT / ".agents/contracts/markdown-formatting.json"
     if not formatter.is_file() or not contract.is_file() or not paths:
         return

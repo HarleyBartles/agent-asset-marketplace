@@ -188,16 +188,6 @@
       "reason": "Preserve vendored authority evidence byte-for-byte for provenance review."
     },
     {
-      "kind": "tree",
-      "path": ".agents/skills/writing-style/assets/authority",
-      "reason": "Preserve the installed projection of vendored authority evidence byte-for-byte for provenance review."
-    },
-    {
-      "kind": "tree",
-      "path": ".agents/skills/writing-with-clarity/assets/authority",
-      "reason": "Preserve the installed projection of vendored authority evidence byte-for-byte for provenance review."
-    },
-    {
       "kind": "file",
       "path": "dist/plugins/superpowers-plus/skills/writing-skills/templates/skill/SKILL.md",
       "reason": "Preserve the unrendered {metadata} insertion token; the frontmatter becomes valid only when the scaffold is materialized."

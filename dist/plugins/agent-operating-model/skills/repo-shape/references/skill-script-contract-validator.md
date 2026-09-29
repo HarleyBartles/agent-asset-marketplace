@@ -2,7 +2,11 @@
 
 ## What it checks
 
-`repo-standards/scripts/validate_skill_scripts.py` walks every installed skill Python script under `.agents/skills/*/scripts/*.py` and verifies this contract:
+`repo-standards/scripts/validate_skill_scripts.py` walks every skill Python script under `<root>/*/scripts/*.py` and verifies this contract. By default, `<root>` is `.agents/skills` for consumer repositories. Marketplace source CI passes `--root skills` so canonical scripts are checked without requiring installed copies:
+
+```bash
+py -3 skills/repo-shape/scripts/validate_skill_scripts.py --root skills --check
+```
 
 - `--help` exits `0` and contains a `usage:` line.
 - `--help` declares the script classification: `read-only`, `mutating`, or `mixed`.

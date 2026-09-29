@@ -169,6 +169,7 @@ run_declared apply
 # hosted full-PR snapshots. The NUL-delimited input keeps filenames safe.
 git update-index --add --remove -z --stdin < "$ORIGINAL_STAGED_PATHS"
 
+# Capture refresh output, including deletions when the empty subscription removes this tree.
 git add -A -- .agents/skills/ 2>/dev/null || true
 git add -- ':(glob)**/.provenance.json' 2>/dev/null || true
 git add -- .agents/plugins/marketplace.json 2>/dev/null || true

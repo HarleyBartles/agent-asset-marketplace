@@ -215,7 +215,7 @@
         "path": "./dist/plugins/writing-pack"
       },
       "policy": {
-        "installation": "INSTALLED_BY_DEFAULT",
+        "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
       },
       "category": "Productivity"

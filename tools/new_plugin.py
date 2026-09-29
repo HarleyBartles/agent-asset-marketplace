@@ -20,7 +20,9 @@ TEMPLATE: Final[Path] = DEFINITIONS / "repo-worker-pack/files/assets/icon.svg"
 
 
 def _check_markdown_outputs(paths: list[Path]) -> None:
-    formatter = ROOT / ".agents/skills/markdown-formatting/scripts/format_markdown.py"
+    formatter = ROOT / ".agents/standards/markdown-formatting/markdown-formatting/scripts/format_markdown.py"
+    if not formatter.is_file():
+        formatter = ROOT / "skills/markdown-formatting/scripts/format_markdown.py"
     if formatter.is_file() and paths:
         relative = [path.relative_to(ROOT).as_posix() for path in paths]
         subprocess.run([sys.executable, str(formatter), "--check-files", *relative], cwd=ROOT, check=True)

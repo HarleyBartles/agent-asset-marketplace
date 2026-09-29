@@ -4,7 +4,7 @@ A source-first marketplace of first-party maintained agent skills and Codex plug
 
 ## What this is
 
-This repository is my working collection of agent skills. I write them to suit my own needs, workflows, and tastes. They are organized as a marketplace so I can install and reuse them across projects and tools.
+This repository is the source of truth for agent skills and plugins. Skills are organized as a marketplace so agents can use them across projects and tools. This checkout itself uses ambient plugins and does not install marketplace skill copies.
 
 You are welcome to browse or use anything here, but these skills were built for my purposes, not as a general-purpose product or a guaranteed fit for anyone else.
 
@@ -17,7 +17,7 @@ You are welcome to browse or use anything here, but these skills were built for 
 - `src/packages/` — source for separately built Python packages.
 - `dist/plugins/` — generated, self-contained installable Codex plugins.
 - `dist/wheels/` — built Python wheels distributed by this repository.
-- `.agents/skills/` — portable skills and runbooks I use directly with agents.
+- `.agents/plugins/marketplace.json` — the available plugin catalog; this repo declares no skill subscriptions, so `.agents/skills/` is absent.
 - `docs/decisions/` — architecture decision records.
 - `tests/` — named repository, build, shipping, and evaluation-harness suites; skill tests stay with their source.
 

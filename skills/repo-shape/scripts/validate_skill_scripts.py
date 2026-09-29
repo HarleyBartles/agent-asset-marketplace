@@ -29,7 +29,6 @@ def _repo_root() -> Path:
 
 
 ROOT = _repo_root()
-SCRIPTS_GLOB = ".agents/skills/*/scripts/*.py"
 
 
 class Report:
@@ -151,10 +150,17 @@ def main(argv: list[str] | None = None) -> int:
         action="store_true",
         help="alias for --check; this validator is read-only (read-only)",
     )
-    parser.parse_args(argv)
+    parser.add_argument(
+        "--root",
+        type=Path,
+        default=Path(".agents/skills"),
+        help="skill collection root (defaults to repository-installed skills)",
+    )
+    args = parser.parse_args(argv)
 
     report = Report()
-    scripts = sorted(ROOT.glob(SCRIPTS_GLOB))
+    skill_root = args.root if args.root.is_absolute() else ROOT / args.root
+    scripts = sorted(skill_root.glob("*/scripts/*.py"))
     if not scripts:
         print("no skill scripts found", file=sys.stderr)
         return 1

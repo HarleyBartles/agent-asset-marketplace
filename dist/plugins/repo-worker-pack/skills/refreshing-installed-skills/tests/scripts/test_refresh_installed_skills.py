@@ -812,6 +812,43 @@ def test_apply_allow_shared_checkout_succeeds_in_shared_checkout(tmp_path: Path,
         assert refresh_installed_skills.main() == 0
 
 
+def test_empty_subscription_check_reports_and_apply_removes_skill_projection(tmp_path: Path) -> None:
+    skills_path = tmp_path / ".agents" / "skills"
+    stale_skill = skills_path / "writing"
+    stale_skill.mkdir(parents=True)
+    (stale_skill / "SKILL.md").write_text("stale projection\n", encoding="utf-8")
+    provenance_path = skills_path / ".provenance.json"
+    provenance_path.write_text('{"syncedPlugins":["writing-pack"]}\n', encoding="utf-8")
+    marketplace_path = tmp_path / ".agents" / "plugins" / "marketplace.json"
+    marketplace_path.parent.mkdir(parents=True)
+    marketplace_path.write_text('{"plugins":[],"repo":{"local_skills":[]}}\n', encoding="utf-8")
+
+    with (
+        patch.object(refresh_installed_skills, "ROOT", tmp_path),
+        patch.object(refresh_installed_skills, "MARKETPLACE_PATH", marketplace_path),
+        patch.object(refresh_installed_skills, "AGENTS_SKILLS_PATH", skills_path),
+        patch.object(refresh_installed_skills, "PROVENANCE_PATH", provenance_path),
+        patch.object(refresh_installed_skills, "_is_submodule", return_value=False),
+        patch.object(refresh_installed_skills, "_marketplace_source_drift", return_value=None),
+        patch.object(refresh_installed_skills, "_roll_marketplace_source", return_value=None),
+        patch.object(refresh_installed_skills, "_get_installed_plugins", return_value=[]),
+        patch.object(refresh_installed_skills, "_run_validate_local_skills_extra", return_value=True),
+        patch.object(refresh_installed_skills.shared_checkout, "approve_mutation", return_value=True),
+    ):
+        with patch.object(sys, "argv", ["refresh_installed_skills.py", "--check"]):
+            assert refresh_installed_skills.main() == 1
+        assert stale_skill.is_dir()
+        assert provenance_path.is_file()
+
+        with patch.object(sys, "argv", ["refresh_installed_skills.py", "--apply", "--allow-shared-checkout"]):
+            assert refresh_installed_skills.main() == 0
+        assert not skills_path.exists()
+
+        with patch.object(sys, "argv", ["refresh_installed_skills.py", "--check"]):
+            assert refresh_installed_skills.main() == 0
+        assert not skills_path.exists()
+
+
 def test_discover_local_skills_sorted_and_validated(tmp_path: Path) -> None:
     skills_path = tmp_path / "skills"
     valid = skills_path / "mark-valid"

@@ -18,7 +18,6 @@ STYLE = ROOT / "skills" / "writing-style"
 PROFILE = STYLE / "references" / "profiles" / "fatigue" / "ai-prose-fatigue" / "patterns.json"
 GOLDENS = PROFILE.with_name("goldens.json")
 SCRIPTS = ENGINE / "scripts"
-INSTALLED_ENGINE = ROOT / ".agents" / "skills" / "writing-profile-engine"
 PROFILE_SCHEMA = ENGINE / "assets" / "schemas" / "writing-profile.schema.json"
 SOURCE_AUTHORITY = ENGINE / "references" / "source-authority.json"
 
@@ -249,11 +248,7 @@ def test_validation_matches_strict_schema_and_case_local_golden_links(tmp_path: 
     assert "must be listed in applicable_pattern_ids" in errors
 
 
-def test_installed_and_standalone_validation_are_self_contained(tmp_path: Path) -> None:
-    installed = _run_from(INSTALLED_ENGINE / "scripts", "validate_profiles.py", "--json")
-    assert installed.returncode == 0, installed.stderr
-    assert json.loads(installed.stdout)["profiles_checked"] >= 1
-
+def test_copied_package_validation_is_self_contained(tmp_path: Path) -> None:
     standalone_engine = tmp_path / "writing-profile-engine"
     shutil.copytree(ENGINE, standalone_engine)
     standalone_profiles = tmp_path / "references" / "profiles" / "fatigue" / "sample"
