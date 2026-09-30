@@ -13,6 +13,8 @@ license: MIT
 
 # Command Bus
 
+For an explicit adoption or assessment of `command-bus`, first inspect the repository's pinned subscription and certification, then use the [standard definition](references/standard.md). Ambient skill availability does not adopt the standard.
+
 A repository command bus gives agents one discoverable entrypoint over named, deterministic targets. The repository owns its target inventory; this skill owns the portable interface.
 
 ## Contract

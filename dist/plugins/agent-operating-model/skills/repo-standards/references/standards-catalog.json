@@ -1,0 +1,16 @@
+{
+  "version": 2,
+  "standards": [
+    {"id": "repo-plugin-subscriptions", "title": "Repository plugin subscriptions", "skill": "repo-agent-assets", "definition": "skills/repo-agent-assets/references/standard.md"},
+    {"id": "root-agent-router", "title": "AGENTS routing", "skill": "agents-routing", "definition": "skills/agents-routing/references/standard.md"},
+    {"id": "runbook-composition", "title": "Runbook composition", "skill": "runbook-composition", "definition": "skills/runbook-composition/references/standard.md"},
+    {"id": "playbook-composition", "title": "Playbook composition", "skill": "playbook-composition", "definition": "skills/playbook-composition/references/standard.md"},
+    {"id": "agent-doctrine-contracts", "title": "Agent doctrine and contracts", "skill": "agent-doctrine-contracts", "definition": "skills/agent-doctrine-contracts/references/standard.md"},
+    {"id": "tracked-validation-hook", "title": "Tracked hook and CI", "skill": "tracked-repo-hooks", "definition": "skills/tracked-repo-hooks/references/standard.md"},
+    {"id": "command-bus", "title": "Command bus", "skill": "command-bus", "definition": "skills/command-bus/references/standard.md"},
+    {"id": "review-entrypoint", "title": "Review entrypoint", "skill": "review-entrypoint", "definition": "skills/review-entrypoint/references/standard.md"},
+    {"id": "contribution-entrypoint", "title": "Contribution entrypoint", "skill": "contribution-entrypoint", "definition": "skills/contribution-entrypoint/references/standard.md"},
+    {"id": "completed-artifact-custody", "title": "Completed artifact custody", "skill": "completed-artifact-custody", "definition": "skills/completed-artifact-custody/references/standard.md"},
+    {"id": "unslop", "title": "Unslop profile maintenance", "skill": "unslop", "definition": "skills/unslop/references/standard.md"}
+  ]
+}

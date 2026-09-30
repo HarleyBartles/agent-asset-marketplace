@@ -13,6 +13,8 @@ license: MIT
 
 # Repo Agent Assets
 
+For an explicit adoption or assessment of `repo-plugin-subscriptions`, first inspect the repository's pinned subscription and certification, then use the [standard definition](references/standard.md). Ambient skill availability does not adopt the standard.
+
 Canonical marketplace skills live in their plugin source trees. A repository may opt into repo-scoped plugin subscriptions through the `repo-plugin-subscriptions` operating standard, which uses native harness configuration and does not copy plugin payloads or project plugin skills into `.agents/skills/`.
 
 Repository-authored skills remain owned by the consumer. Keep exact local skill names in `repo.local_skills`, validate their `SKILL.md` frontmatter, and preserve them during Marketplace updates. Plugin availability does not select AOM standards or create repository-local skill ownership.

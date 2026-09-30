@@ -1,6 +1,6 @@
 # Agent Operating Model
 
-This ambient bundle makes first-party repository operating capabilities available to agents. It also carries a catalog of individually deployable standards.
+This plugin makes first-party repository operating capabilities available to agents and publishes selectable standard definitions.
 
 ## Bundle contents
 
@@ -11,11 +11,13 @@ This ambient bundle makes first-party repository operating capabilities availabl
 
 ## Boundary
 
-- Plugin availability provides capabilities and a menu of deployable standards. It does not require a consumer to implement the whole operating model.
-- Each consumer explicitly chooses standards from the catalog, keeps its own standards separately, and runs only the checks and scaffolds it declared.
-- `repo-standards` helps agents compose focused capabilities. It does not make every `repo-shape` surface mandatory by default.
+- Plugin availability provides capabilities and a menu of standards. It does not adopt any standard for a consumer.
+- Each consumer chooses the standards it wants, implements them in its own repository, and self-certifies against the requirements it pins.
+- A standard skill carries its current definition, adoption and assessment guidance, and any optional starter assets. It may supply no deployable asset.
+- Repositories may take, adapt, replace, or omit optional starters. Adopted files and tools become repository-owned; matching AOM starter bytes is not a compliance requirement.
+- `repo-standards` helps agents select and assess focused capabilities. It does not make every `repo-shape` surface mandatory by default.
 - Worker custody, worktrees, risk, and publication remain in the ambient `repo-worker-pack`.
 
 ## Install shape
 
-Skills are installed from the Codex plugin roots under `dist/plugins/<pack>/skills/<skill>/`. The operating model is an ordinary ambient plugin: subscribing makes its agent capabilities available. Consumer repositories do not need to install copies of these skills to adopt a standard. Deploy only the selected standard resources and pin the consumer-controlled checker inputs used by local and hosted validation.
+Skills are installed from the Codex plugin roots under `dist/plugins/agent-operating-model/skills/<skill>/`. The plugin makes authoring capabilities available. A repository adopting a standard records its immutable source commit and definition path separately from plugin refresh, maintains a readable certification, and routes agents to those records. Root `AGENTS.md` is created or updated for every AOM adoption. The repository owns implementation and compliance.

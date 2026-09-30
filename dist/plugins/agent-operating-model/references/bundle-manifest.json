@@ -15,6 +15,50 @@
   "plugin_license": "MIT",
   "entries": [
     {
+      "canonical_name": "agents-routing",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Canonical AGENTS routing standard skill. (AGENTS Routing first-party skill)",
+      "canonical_source_path": "skills/agents-routing",
+      "local_path": "skills/agents-routing",
+      "source_path": "skills/agents-routing/SKILL.md"
+    },
+    {
+      "canonical_name": "agent-doctrine-contracts",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Canonical agent doctrine and contracts standard skill. (Agent Doctrine and Contracts first-party skill)",
+      "canonical_source_path": "skills/agent-doctrine-contracts",
+      "local_path": "skills/agent-doctrine-contracts",
+      "source_path": "skills/agent-doctrine-contracts/SKILL.md"
+    },
+    {
+      "canonical_name": "completed-artifact-custody",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Canonical completed artifact custody standard skill. (Completed Artifact Custody first-party skill)",
+      "canonical_source_path": "skills/completed-artifact-custody",
+      "local_path": "skills/completed-artifact-custody",
+      "source_path": "skills/completed-artifact-custody/SKILL.md"
+    },
+    {
+      "canonical_name": "contribution-entrypoint",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Canonical contribution entrypoint standard skill. (Contribution Entrypoint first-party skill)",
+      "canonical_source_path": "skills/contribution-entrypoint",
+      "local_path": "skills/contribution-entrypoint",
+      "source_path": "skills/contribution-entrypoint/SKILL.md"
+    },
+    {
       "canonical_name": "command-bus",
       "source_category": "first_party",
       "content_mode": "verbatim",
@@ -24,6 +68,28 @@
       "canonical_source_path": "skills/command-bus",
       "local_path": "skills/command-bus",
       "source_path": "skills/command-bus/SKILL.md"
+    },
+    {
+      "canonical_name": "playbook-composition",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Canonical playbook composition standard skill. (Playbook Composition first-party skill)",
+      "canonical_source_path": "skills/playbook-composition",
+      "local_path": "skills/playbook-composition",
+      "source_path": "skills/playbook-composition/SKILL.md"
+    },
+    {
+      "canonical_name": "review-entrypoint",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Canonical review entrypoint standard skill. (Review Entrypoint first-party skill)",
+      "canonical_source_path": "skills/review-entrypoint",
+      "local_path": "skills/review-entrypoint",
+      "source_path": "skills/review-entrypoint/SKILL.md"
     },
     {
       "canonical_name": "markdown-formatting",
@@ -37,6 +103,17 @@
       "source_path": "skills/markdown-formatting/SKILL.md"
     },
     {
+      "canonical_name": "runbook-composition",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Canonical runbook composition standard skill. (Runbook Composition first-party skill)",
+      "canonical_source_path": "skills/runbook-composition",
+      "local_path": "skills/runbook-composition",
+      "source_path": "skills/runbook-composition/SKILL.md"
+    },
+    {
       "canonical_name": "python",
       "source_category": "first_party",
       "content_mode": "verbatim",
@@ -46,6 +123,17 @@
       "canonical_source_path": "skills/python",
       "local_path": "skills/python",
       "source_path": "skills/python/SKILL.md"
+    },
+    {
+      "canonical_name": "unslop",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Canonical unslop standard skill. (Unslop Standard first-party skill)",
+      "canonical_source_path": "skills/unslop",
+      "local_path": "skills/unslop",
+      "source_path": "skills/unslop/SKILL.md"
     },
     {
       "canonical_name": "repo-agent-assets",
