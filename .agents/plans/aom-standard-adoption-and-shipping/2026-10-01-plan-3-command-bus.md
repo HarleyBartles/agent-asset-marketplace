@@ -58,7 +58,7 @@ The Python starter accepts `run.py [--help]` or `run.py <target> (--help|--check
 - [x] Implement side-effect-free top-level and target help. Target help explains its supported modes and target arguments using registry metadata; it never invokes the child command.
 - [x] Invoke targets with inherited stdout and stderr. Return the child process's exact exit status. Reject unsupported or multiple mode arguments before process creation.
 - [x] Demonstrate check-only and apply-only targets. For the dry-run sample, report proposed state and return success when mutation would be proposed; fail only for an actual preview error.
-- [x] Run `py -3 -m pytest -q skills/command-bus/tests/assets/test_command_bus.py`, Ruff on changed Python files, and verify all scripts use only standard-library imports. The focused suite passes 12 tests and Ruff passes.
+- [x] Run `py -3 -m pytest -q skills/command-bus/tests/assets/test_command_bus.py`, Ruff on changed Python files, and verify all scripts use only standard-library imports. The focused suite passes 13 tests and Ruff passes; rejected and help requests leave a launch marker absent.
 
 **Exit:** The starter exemplifies the interface while leaving target discovery/implementation language and orchestration policy under repository ownership.
 

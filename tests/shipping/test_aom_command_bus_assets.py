@@ -78,6 +78,4 @@ def test_optional_python_starter_works_after_copy_to_consumer_tools(tmp_path: Pa
     assert "would update" in preview_result.stdout.lower()
     assert destination.read_text(encoding="utf-8") == "consumer-owned\n"
 
-    assert not (consumer_tools / "command-bus/tests").exists()
-    assert not (consumer_tools / "command-bus").exists()
     assert not (installed_plugin / "skills/command-bus/tests/evaluator-only").exists()

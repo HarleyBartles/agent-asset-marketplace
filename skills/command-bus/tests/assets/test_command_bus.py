@@ -136,3 +136,43 @@ def test_invalid_target_metadata_is_rejected_before_dispatch() -> None:
         assert "bad_target" in str(error)
     else:
         raise AssertionError("invalid target metadata was accepted")
+
+
+def test_help_and_rejected_requests_never_launch_a_target(tmp_path: Path, capsys: object) -> None:
+    spec = importlib.util.spec_from_file_location("command_bus_invocation_probe", BUS)
+    assert spec is not None and spec.loader is not None
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    target = tmp_path / "record_invocation.py"
+    marker = tmp_path / "launched.txt"
+    target.write_text(
+        f"from pathlib import Path\nPath({str(marker)!r}).write_text('started', encoding='utf-8')\n",
+        encoding="utf-8",
+    )
+    module.TARGETS["probe"] = {
+        "command": [sys.executable, str(target)],
+        "description": "Records whether dispatch launched this target.",
+        "supported_modes": ["check"],
+        "prerequisites": [],
+        "side_effects": "Writes the requested test marker.",
+        "argument_help": "--marker PATH",
+    }
+    assert module.main(["probe", "--check"]) == 0
+    assert marker.read_text(encoding="utf-8") == "started"
+    marker.unlink()
+
+    requests = (
+        ("target help", ["probe", "--help"], 0),
+        ("missing mode", ["probe"], 2),
+        ("conflicting modes", ["probe", "--check", "--apply"], 2),
+        ("unknown target", ["missing", "--check"], 2),
+        ("unsupported mode", ["probe", "--apply"], 2),
+    )
+
+    for label, arguments, expected_status in requests:
+        assert module.main(arguments) == expected_status, label
+        assert not marker.exists(), f"{label} launched the target"
+        capsys.readouterr()  # Keep each request's expected diagnostic local.
+
+    assert module.main(["--help"]) == 0
+    assert not marker.exists()
