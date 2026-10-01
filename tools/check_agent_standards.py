@@ -27,6 +27,12 @@ STANDARD_DEFINITIONS = {
     "completed-artifact-custody": "skills/completed-artifact-custody/references/standard.md",
     "unslop": "skills/unslop/references/standard.md",
 }
+UNSLOP_RUNBOOKS = (
+    ".agents/runbooks/planning.md",
+    ".agents/runbooks/implementing.md",
+    ".agents/runbooks/code-review.md",
+    ".agents/runbooks/pr.md",
+)
 
 
 def _unknown_fields(value: dict[str, Any], allowed: set[str], label: str) -> list[str]:
@@ -235,6 +241,11 @@ def check_repository(repo_root: Path) -> list[str]:
                 findings.append(f"required by {standard_id}: {relative} directory is missing")
             elif not expected_directory and not path.is_file():
                 findings.append(f"required by {standard_id}: {relative} is missing")
+
+    for relative in UNSLOP_RUNBOOKS:
+        path = _resolve_repo_file(repo_root, relative)
+        if path is None or not path.is_file() or "../unslop/repository.md" not in path.read_text(encoding="utf-8"):
+            findings.append(f"Unslop profile route is missing from {relative}")
 
     findings.extend(_check_hook_command_contract(repo_root))
 

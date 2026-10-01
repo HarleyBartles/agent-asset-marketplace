@@ -21,4 +21,4 @@ Use the [testing playbook](.agents/playbooks/testing.md) and [tracked hook contr
 
 ## Maintenance responsibility
 
-Keep this file as a pointer layer; update the owning doctrine, contract, runbook, or playbook when its policy changes.
+Keep this file as a pointer layer; update the owning doctrine, contract, runbook, or playbook when its policy changes. For adopted AOM standards, read the [subscription](.agents/contracts/operating-standards.json) and its [certification](.agents/contracts/standards-certification.md), and maintain the relevant certification when changing a covered surface.

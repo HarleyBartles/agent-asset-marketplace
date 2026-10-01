@@ -46,7 +46,7 @@
 | Tracked hook and CI                 | Hook/command contract, hosted workflow, and command runner route are present and aligned | Candidate-tree correctness, Linux/Windows equivalence, prerequisite coverage, and no-skip behavior |
 | Review and contribution entrypoints | Root `REVIEW.md` and `CONTRIBUTING.md` exist and their local links resolve               | Each entrypoint is sufficient and useful for its audience                                          |
 | Completed artifact custody          | No checker may infer completion from markers or checkbox counts                          | Next-slice semantic discovery, preservation of active plans, and promotion of durable knowledge    |
-| Unslop                              | `.agents/unslop/` exists and is discoverable from a relevant agent route                 | Distinct recurrence evidence, effective guards, and maintained feedback loop                       |
+| Unslop                              | `.agents/unslop/` exists and relevant runbooks link to the profile                       | Distinct recurrence evidence, effective guards, and maintained feedback loop                       |
 
 Mechanical results support the certification; they do not certify the semantic column.
 
@@ -81,48 +81,37 @@ ______________________________________________________________________
 - [x] Ensure diagnostics distinguish malformed authority records, missing implementation evidence, mechanical policy failures, and semantic claims the checker cannot decide.
 - [x] Run the focused behavior suite and the targeted static checks for the new code.
 
-### Task 2: Migrate the adoption record and write evidence-based certification
+### Task 2: Atomically migrate v2 adoption and the active compliance chain
 
 **Files:**
 
 - Modify: `.agents/contracts/operating-standards.json`
 - Create: `.agents/contracts/standards-certification.md`
 - Modify: `AGENTS.md`
-- Modify if required by evidence: existing `.agents/doctrine/`, `.agents/contracts/`, `.agents/runbooks/`, `.agents/playbooks/`, `REVIEW.md`, and `CONTRIBUTING.md`
-- Test: Task 1 and Task 2 cases
+- Modify: `tools/run.py`
+- Modify only if required by evidence: existing `.agents/doctrine/`, `.agents/contracts/`, `.agents/runbooks/`, `.agents/playbooks/`, `REVIEW.md`, and `CONTRIBUTING.md`
+- Test: `tests/repository/test_agent_standards.py`; complete candidate hook on the atomic commit
 
 **Consumes:** The checker interface from Task 1 and exact source definitions at the verified pin.
 
-**Produces:** A minimal v2 subscription record and discoverable, accurate certification of this repository's actual state.
+**Produces:** A minimal v2 subscription record, discoverable accurate certification, and an active hook/CI chain that uses the repository-owned checker. Commit these authority changes atomically because the current legacy gate reads v1-only fields from the subscription file.
 
-- [ ] Replace v1 command vectors and deployment roots with exactly the eight selected standards and their full immutable source, commit, definition, and certification identities.
-- [ ] Create certification entries that map each pledge to actual implementation, evidence, and drift controls; report any gap or unverified claim plainly, and do not mark the set fully certified while any adopted invariant is unmet.
-- [ ] Update root `AGENTS.md` with a concise conditional route to the subscription and certification while preserving its existing pointer-only shape.
-- [ ] Do not adopt doctrine/contracts standard merely because certification uses `.agents/contracts/`; do not add empty books or sections to resemble AOM starters.
-- [ ] Correct any concrete compliance gap discovered in the selected repository-owned surfaces only when the current plan's scoped implementation can safely close it; otherwise record the exact gap for Plan 9/11 and retain honest uncertified status.
-- [ ] Run the focused checker and semantic read-through against each pinned definition and certification entry.
+- [x] Replace v1 command vectors and deployment roots with exactly the eight selected standards and their full immutable source, commit, definition, and certification identities.
+- [x] Create certification entries that map each pledge to actual implementation, evidence, and drift controls; report any gap or unverified claim plainly, and do not mark the set fully certified while any adopted invariant is unmet.
+- [x] Update root `AGENTS.md` with a concise conditional route to the subscription and certification while preserving its existing pointer-only shape.
+- [x] Do not adopt doctrine/contracts standard merely because certification uses `.agents/contracts/`; do not add empty books or sections to resemble AOM starters.
+- [x] Correct any concrete compliance gap discovered in the selected repository-owned surfaces only when the current plan's scoped implementation can safely close it; otherwise record the exact gap for Plan 9/11 and retain honest uncertified status.
+- [x] Link planning, implementation, review, and PR runbooks directly to `.agents/unslop/repository.md`; keep ambient `$unslop-profiles` assistance optional for fresh clones.
+- [x] Record concrete near-miss evidence in the repo-owned Unslop profile with a clear candidate status; do not label one session as cross-agent recurrence.
+- [x] Run the focused checker and semantic read-through against each pinned definition and certification entry.
+- [x] Replace the `_check_standard_deployment()` byte-equality prerequisite with the repository-owned checker; retain checks for generated Marketplace/plugin artifacts through their actual generator owners.
+- [x] Remove the active gate's dependency on v1-only fields and generic scaffold dispatch. Do not yet delete now-unreferenced deployment files; Plan 9 owns retirement.
+- [x] Preserve staged-candidate validation, apply/check behavior, diagnostics, command ordering, and the Windows/Linux shared target set.
+- [x] Confirm the hook and hosted workflow invoke the same logical CI gate and that no user command is silently dropped.
+- [x] Run `py -3 tools/check_agent_standards.py --check`, `py -3 tools/run.py repo-standards --check`, and the focused checker suite.
+- [ ] Run the complete normal Windows pre-commit gate by committing this atomic change; do not duplicate the full gate immediately before or after that hooked commit.
 
-### Task 3: Wire the new repository-owned chain into the existing gate
-
-**Files:**
-
-- Modify: `tools/run.py`
-- Modify: `.agents/contracts/repo-standards-commands.json` only if its current shape cannot bind the new target without an unrelated contract redesign
-- Modify: `tests/repository/test_run_cli.py` and tracked hook behavior tests only where changed behavior needs a genuine behavior proof
-- Read: `.agents/standards/tracked-validation-hook/`
-- Read: `.github/workflows/marketplace-validation.yml`
-
-**Consumes:** The checker and v2 subscription/certification from Tasks 1-2.
-
-**Produces:** The existing `repo-standards`/`ci` gate runs repository-owned adoption checks while preserving the full Windows hook and Linux CI behavior.
-
-- [ ] Replace the `_check_standard_deployment()` byte-equality prerequisite with the repository-owned checker; retain checks for generated Marketplace/plugin artifacts through their actual generator owners.
-- [ ] Remove the active gate's dependency on v1-only fields and generic scaffold dispatch. Do not yet delete now-unreferenced deployment files; Plan 9 owns retirement.
-- [ ] Preserve staged-candidate validation, apply/check behavior, diagnostics, command ordering, and the Windows/Linux shared target set.
-- [ ] Confirm the hook and hosted workflow invoke the same logical CI gate and that no user command is silently dropped.
-- [ ] Run targeted tests, then the complete normal Windows pre-commit gate by committing the planned slice; do not duplicate the full gate immediately before or after that hooked commit.
-
-### Task 4: Review and close the migration slice
+### Task 3: Review and close the migration slice
 
 **Files:**
 
@@ -130,7 +119,7 @@ ______________________________________________________________________
 - Modify: `roadmap.md`, recording Plan 8's final commit and findings
 - Review: complete change from the Plan 7 baseline
 
-**Consumes:** Tasks 1-3, their focused evidence, and the completed Windows hook result.
+**Consumes:** Tasks 1-2, their focused evidence, and the completed Windows hook result.
 
 **Produces:** A reviewable, committed v2 subscription transition with no claim of Linux execution until Plan 11 has current-hosted evidence.
 

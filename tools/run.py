@@ -4,7 +4,6 @@
 from __future__ import annotations
 
 import argparse
-import hashlib
 import json
 import os
 import shlex
@@ -299,51 +298,10 @@ def _validate_skill_scripts(ctx: Ctx) -> None:
     )
 
 
-def _check_standard_deployment() -> None:
-    """Require every deployed checker to match its recorded pinned bytes."""
-    contract = json.loads((ROOT / ".agents/contracts/operating-standards.json").read_text(encoding="utf-8"))
-    provenance = json.loads((ROOT / ".agents/standards/provenance.json").read_text(encoding="utf-8"))
-    revisions = {entry["revision"] for entry in contract["standards"] if entry["origin"] == "marketplace"}
-    if revisions != {provenance["revision"]}:
-        raise ValueError("selected marketplace standards do not match the deployed source revision")
-    resources = provenance["resources"]
-    deployed_root = ROOT / ".agents/standards"
-    actual = {
-        path.relative_to(ROOT).as_posix()
-        for path in deployed_root.rglob("*")
-        if path.is_file() and path.name != "provenance.json" and "__pycache__" not in path.parts
-    }
-    if actual != set(resources):
-        raise ValueError("deployed standard resources differ from provenance")
-    for relative, record in resources.items():
-        path = ROOT / relative
-        if path.is_symlink() or hashlib.sha256(path.read_bytes()).hexdigest() != record["sha256"]:
-            raise ValueError(f"deployed standard resource differs from provenance: {relative}")
-    print(f"OK deployed standards: {len(resources)} pinned resources")
-
-
 def _run_repo_standards(ctx: Ctx) -> None:
-    _check_standard_deployment()
+    _run([sys.executable, "tools/check_agent_standards.py", "--check"], ctx)
     if ctx.mode == "check":
-        _run(
-            [
-                sys.executable,
-                ".agents/standards/_runtime/repo_standards.py",
-                "--check",
-            ],
-            ctx,
-        )
         _validate_skill_scripts(ctx)
-    else:
-        cmd = [
-            sys.executable,
-            ".agents/standards/_runtime/repo_standards.py",
-            "--apply",
-            "--yes",
-        ]
-        if ctx.allow_shared:
-            cmd.append("--allow-shared-checkout")
-        _run(cmd, ctx)
 
 
 def _check_review_preflight(ctx: Ctx) -> None:

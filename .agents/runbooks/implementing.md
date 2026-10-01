@@ -56,4 +56,4 @@ Do not copy plugin skills into `.agents/skills/`; use native repo plugin declara
 
 ## Unslop profile routing
 
-During repository implementation and result review, use `$unslop-profiles` when the change involves evidence claims, source-versus-generated ownership, or scope and lifecycle decisions. Keep corrections tied to concrete files or decisions; skip unrelated cues.
+Read the [repository Unslop profile](../unslop/repository.md) during implementation and result review. If `$unslop-profiles` is available, use it when evidence claims, source-versus-generated ownership, or scope and lifecycle decisions fit its cues; skip unrelated cues.

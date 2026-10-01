@@ -52,4 +52,4 @@ None.
 
 ## Unslop profile routing
 
-When preparing a pull request or reporting publication status, use `$unslop-profiles` to check material completion, validation, and GitHub-state claims against their owning evidence. Correct only unsupported or over-scoped claims; unrelated publication details skip profile use.
+Read the [repository Unslop profile](../unslop/repository.md) when preparing a pull request or reporting publication status. If `$unslop-profiles` is available, check material completion, validation, and GitHub-state claims against their owning evidence. Correct only unsupported or over-scoped claims.

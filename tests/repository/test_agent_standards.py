@@ -73,6 +73,10 @@ def adopting_repo(tmp_path: Path) -> Path:
         ".agents/runbooks/example.md": "Lifecycle-stage guide.\n",
         ".agents/playbooks/example.md": "Cross-stage concern guide.\n",
         ".agents/unslop/repo.md": "No profiles yet.\n",
+        ".agents/runbooks/planning.md": "See [repository profile](../unslop/repository.md).\n",
+        ".agents/runbooks/implementing.md": "See [repository profile](../unslop/repository.md).\n",
+        ".agents/runbooks/code-review.md": "See [repository profile](../unslop/repository.md).\n",
+        ".agents/runbooks/pr.md": "See [repository profile](../unslop/repository.md).\n",
     }
     for relative, content in required_files.items():
         target = tmp_path / relative
@@ -211,6 +215,7 @@ def test_checker_rejects_legacy_subscription_versions(adopting_repo: Path) -> No
         ("missing_root_router", "root AGENTS.md"),
         ("missing_route", "root AGENTS.md must route"),
         ("missing_review", "required by review-entrypoint: REVIEW.md is missing"),
+        ("missing_unslop_route", "Unslop profile route is missing from .agents/runbooks/planning.md"),
     ],
 )
 def test_checker_reports_subscription_and_route_drift(adopting_repo: Path, mutation: str, diagnostic: str) -> None:
@@ -254,6 +259,9 @@ def test_checker_reports_subscription_and_route_drift(adopting_repo: Path, mutat
         (adopting_repo / "AGENTS.md").write_text("No subscription route here.\n", encoding="utf-8")
     elif mutation == "missing_review":
         (adopting_repo / "REVIEW.md").unlink()
+    elif mutation == "missing_unslop_route":
+        path = adopting_repo / ".agents/runbooks/planning.md"
+        path.write_text("No profile link here.\n", encoding="utf-8")
 
     result = run_checker(adopting_repo)
 

@@ -41,3 +41,11 @@ Memory, worker reports, generated artifacts, and PR text can be useful pointers;
 ## Application example
 
 If a worker report says a PR was merged, first inspect the live GitHub PR and verify its merge state before retiring its plan. Keep the report as a useful pointer, and base the lifecycle decision on GitHub evidence.
+
+## Occurrence maintenance
+
+When a concrete failure or near miss matches this profile or suggests a related pattern, add a concise evidence-linked note here. Distinguish separate work from duplicate reports, and record whether the profile was available, routed, read, followed, and effective when those facts are known. Mark a single-agent or single-session observation as a candidate; do not describe it as cross-agent recurrence or treat it as proof that this guard works. Reassess the profile when later agents add distinct evidence.
+
+### Candidate observations
+
+- **2026-10-01, Plan 8 standards selection:** The first provisional adoption list treated `.agents/plugins/marketplace.json` as a consumer plugin subscription. Reading [README.md](../../README.md) showed that this file publishes the Marketplace catalog and that this checkout declares no skill subscriptions, so `repo-plugin-subscriptions` was removed before migration. The planning route to this profile existed but had not been read when the provisional list was formed. The corrected selection is recorded in [the migration roadmap](../plans/aom-standard-adoption-and-shipping/2026-10-01-plan-7-marketplace-migration-roadmap.md). This is one near miss from one session; it does not establish cross-agent recurrence or profile effectiveness.
