@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agent-plugins.org/schemas/aom-standard-subscriptions-v2.schema.json",
+  "title": "AOM standard subscriptions",
+  "description": "Immutable source authority and readable certification references. Structural validity is not compliance certification. Apply the repo-standards checker as well: portable JSON Schema cannot enforce arbitrary uniqueness by the subscription id property.",
+  "type": "object",
+  "required": ["version", "standards"],
+  "additionalProperties": false,
+  "properties": {
+    "version": {"const": 2},
+    "standards": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {"$ref": "#/$defs/subscription"}
+    }
+  },
+  "$defs": {
+    "subscription": {
+      "type": "object",
+      "required": ["id", "source", "certification"],
+      "additionalProperties": false,
+      "properties": {
+        "id": {"type": "string", "pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$"},
+        "source": {"$ref": "#/$defs/source"},
+        "certification": {
+          "type": "string",
+          "pattern": "^(?!/)(?!.*\\\\)(?!.*:)(?!.*//)(?!.*(?:^|/)\\.{1,2}(?:/|$))(?!.*\\/$)[^#]+(?:#[^#]+)?$"
+        }
+      }
+    },
+    "source": {
+      "type": "object",
+      "required": ["repository", "commit", "definition"],
+      "additionalProperties": false,
+      "properties": {
+        "repository": {"type": "string", "pattern": "\\S"},
+        "commit": {"type": "string", "pattern": "^(?:[0-9a-f]{40}|[0-9a-f]{64})$"},
+        "definition": {
+          "type": "string",
+          "pattern": "^(?!/)(?!.*\\\\)(?!.*:)(?!.*//)(?!.*(?:^|/)\\.{1,2}(?:/|$))(?!.*\\/$)[^#]+$"
+        }
+      }
+    }
+  }
+}
