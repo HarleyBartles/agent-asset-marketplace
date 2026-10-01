@@ -19,7 +19,7 @@ A repository adopts the `unslop` standard with this v2 subscription in `.agents/
 }
 ```
 
-That exact definition requires `.agents/unslop/` and durable occurrence evidence. Its certification routes release-writing work to `.agents/unslop/repo.md`. The current ambient Unslop+ package is newer than the subscription. The file has two candidate patterns:
+That exact definition requires `.agents/unslop/` and durable occurrence evidence. `.agents/runbooks/release.md` routes release-writing work to `$unslop-profiles` and `.agents/unslop/repo.md`. The current ambient Unslop+ package is newer than the subscription. The file has two candidate patterns:
 
 1. Release notes omit concrete retry conditions or limits.
 2. Agents make claims about reliability without evidence from the implementation or tests.

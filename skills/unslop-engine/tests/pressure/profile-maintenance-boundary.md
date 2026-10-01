@@ -19,7 +19,7 @@ A consumer repository has adopted the Unslop standard with this v2 subscription 
 }
 ```
 
-That pinned definition requires `.agents/unslop/`, durable occurrence evidence, and continuing certification. The certification routes release-writing work to `.agents/unslop/repo.md`; no `.agents/standards/unslop/` copy or `.agents/contracts/unslop.json` exists. The ambient Unslop+ engine is newer than the subscription. The profile is operational guidance for release documentation. It says to ground reliability claims in observable retry conditions and limits, and to preserve quoted source titles.
+That pinned definition requires `.agents/unslop/`, durable occurrence evidence, and continuing certification. `.agents/runbooks/release.md` routes release-writing work to `$unslop-profiles` and `.agents/unslop/repo.md`; no `.agents/standards/unslop/` copy or `.agents/contracts/unslop.json` exists. The ambient Unslop+ engine is newer than the subscription. The profile is operational guidance for release documentation. It says to ground reliability claims in observable retry conditions and limits, and to preserve quoted source titles.
 
 The consumer repository root is `/workspace/consumer` and has no `scripts/unslop.py`. The loaded engine skill comes from `<active-unslop-engine-skill-directory>` in the installed Unslop+ package.
 
