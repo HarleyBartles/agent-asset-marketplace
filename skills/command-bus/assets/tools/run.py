@@ -16,7 +16,7 @@ VALID_MODES = frozenset(MODE_OPTIONS.values())
 TARGETS: dict[str, dict[str, Any]] = {
     "check_status": {
         "command": [sys.executable, str(TARGET_DIR / "check_status.py")],
-        "description": "Demonstrate a read-only repository check.",
+        "description": "Demonstrate check-mode dispatch and argument forwarding.",
         "supported_modes": ["check"],
         "prerequisites": ["Python available through the current interpreter."],
         "side_effects": "Reads no maintained files and writes no maintained files.",

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Sample read-only target that reports forwarded arguments."""
+"""Sample check-only target for dispatcher and argument-forwarding demonstrations."""
 
 from __future__ import annotations
 

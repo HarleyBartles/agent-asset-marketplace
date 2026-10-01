@@ -149,6 +149,7 @@ def test_help_and_rejected_requests_never_launch_a_target(tmp_path: Path, capsys
         f"from pathlib import Path\nPath({str(marker)!r}).write_text('started', encoding='utf-8')\n",
         encoding="utf-8",
     )
+    module.TARGETS.clear()
     module.TARGETS["probe"] = {
         "command": [sys.executable, str(target)],
         "description": "Records whether dispatch launched this target.",
