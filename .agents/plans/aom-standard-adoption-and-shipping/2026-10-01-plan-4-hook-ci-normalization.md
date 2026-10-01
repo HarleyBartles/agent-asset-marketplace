@@ -69,14 +69,16 @@ Run: `py -3 -m pytest -q skills/tracked-repo-hooks/tests/assets/test_normalize_t
 
 **Produces:** A portable Bash hook seed that protects the staged candidate while allowing the adopter to wire its own canonical apply and check commands.
 
-- [ ] Create a temporary-repository integration harness using Git Bash. Locate Bash on `PATH` or beside the installed Git for Windows; fail with a clear prerequisite message if neither exists. Cover staged and unstaged edits to the same file, unrelated unstaged edits, untracked files, filenames with spaces, and an apply operation that changes a staged candidate path.
-- [ ] Implement the hook's candidate lifecycle: identify staged paths, preserve unstaged/untracked state, materialize the index candidate, invoke apply then check integration functions, stage only allowed candidate updates, verify the final check ran on the resulting candidate, and restore the developer's remaining work on success and failure.
-- [ ] Make both repository integration functions fail closed with a clear message until the adopter replaces them. Keep their command choices local to the copied hook; do not add a universal command declaration or assume a command bus.
-- [ ] Add a hosted mode that requires a clean detached checkout of the declared commit and proves the gate leaves its committed tree unchanged. Reject dirty hosted state and command failures clearly.
-- [ ] Assert candidate tree identity, hook exit status, and restoration of index/worktree/untracked files after success and apply/check callback failures. If restoration itself fails, report the exact recovery location and fail nonzero; do not make an OS-level restore failure a required test case.
-- [ ] Run the integration suite under Windows Git Bash and ensure it uses ordinary Bash features available to the hosted Linux example. Do not include OS-specific copies of the same algorithm.
+- [x] Create a temporary-repository integration harness using Git Bash. Locate Bash on `PATH` or beside the installed Git for Windows; fail with a clear prerequisite message if neither exists. Cover staged and unstaged edits to the same file, unrelated unstaged edits, untracked files, filenames with spaces, and an apply operation that changes a staged candidate path.
+- [x] Implement the hook's candidate lifecycle: preserve unstaged/untracked state, materialize the index candidate, invoke apply then check integration functions, stage candidate updates, verify the final check ran on the resulting candidate, and restore the developer's remaining work on success and failure.
+- [x] Make both repository integration functions fail closed with a clear message until the adopter replaces them. Keep their command choices local to the copied hook; do not add a universal command declaration or assume a command bus.
+- [x] Add a hosted mode that requires a clean detached checkout of the declared commit and proves the gate leaves its committed tree unchanged. Reject dirty hosted state and command failures clearly.
+- [x] Assert candidate tree identity, hook exit status, and restoration of index/worktree/untracked files after success and apply/check callback failures. If restoration itself fails, report the exact recovery location and fail nonzero; do not make an OS-level restore failure a required test case.
+- [x] Run the integration suite under Windows Git Bash and ensure it uses ordinary Bash features available to the hosted Linux example. Do not include OS-specific copies of the same algorithm.
 
 Run: `py -3 -m pytest -q skills/tracked-repo-hooks/tests/assets/test_pre_commit_starter.py` from PowerShell with the installed Git Bash available.
+
+Evidence: six temporary-repository behavior tests pass under Windows Git Bash, including same-file staged/unstaged restoration with a transformed candidate, unrelated tracked edits, untracked paths with spaces, apply/check failures, clean hosted mode, hosted-state rejection, and missing-adapter failure. Bash syntax validation passes.
 
 **Exit:** The starter demonstrates safe candidate assessment but remains unusable until a repo-owned apply/check integration is supplied.
 

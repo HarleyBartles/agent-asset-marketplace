@@ -1,0 +1,211 @@
+#!/usr/bin/env bash
+# Optional fail-closed seed. Adapt tools/hook_gate_adapter.sh to repository gates.
+set -euo pipefail
+
+usage() {
+  cat <<'EOF'
+Usage: pre-commit
+       pre-commit --hosted <commit>
+       pre-commit --help
+
+No arguments validates the staged candidate for a local commit.
+--hosted validates the clean detached checkout of the named committed revision.
+EOF
+}
+
+if [[ "$#" -eq 1 && "$1" == "--help" ]]; then
+  usage
+  exit 0
+fi
+
+if ! REPO_ROOT="$(git rev-parse --show-toplevel)"; then
+  echo "pre-commit: run from inside a Git repository" >&2
+  exit 2
+fi
+cd "$REPO_ROOT"
+while IFS= read -r git_variable; do
+  unset "$git_variable"
+done < <(git rev-parse --local-env-vars)
+export REPO_ROOT
+
+ADAPTER="${REPO_HOOK_ADAPTER:-$REPO_ROOT/tools/hook_gate_adapter.sh}"
+
+run_repository_apply_gate() {
+  echo "pre-commit: run_repository_apply_gate is not configured in $ADAPTER" >&2
+  return 2
+}
+
+run_repository_check_gate() {
+  echo "pre-commit: run_repository_check_gate is not configured in $ADAPTER" >&2
+  return 2
+}
+
+if [[ -f "$ADAPTER" ]]; then
+  # This is a starter-local seam, not a shared AOM command or module contract.
+  # shellcheck source=/dev/null
+  source "$ADAPTER"
+fi
+
+run_hosted_gate() {
+  if [[ "$#" -ne 1 ]]; then
+    echo "pre-commit: --hosted requires exactly one commit" >&2
+    usage >&2
+    return 2
+  fi
+  if git symbolic-ref -q HEAD >/dev/null; then
+    echo "pre-commit: hosted mode requires a detached checkout" >&2
+    return 2
+  fi
+  local requested_commit head_commit before_tree after_tree status
+  if ! requested_commit="$(git rev-parse --verify "$1^{commit}")"; then
+    echo "pre-commit: hosted commit does not resolve: $1" >&2
+    return 2
+  fi
+  head_commit="$(git rev-parse HEAD)"
+  if [[ "$head_commit" != "$requested_commit" ]]; then
+    echo "pre-commit: hosted checkout HEAD does not match requested commit $requested_commit" >&2
+    return 2
+  fi
+  status="$(git status --porcelain --untracked-files=all)"
+  if [[ -n "$status" ]]; then
+    echo "pre-commit: hosted mode requires a clean checkout" >&2
+    return 2
+  fi
+  before_tree="$(git write-tree)"
+  run_repository_check_gate
+  after_tree="$(git write-tree)"
+  status="$(git status --porcelain --untracked-files=all)"
+  if [[ "$before_tree" != "$after_tree" || -n "$status" ]]; then
+    echo "pre-commit: hosted check changed the committed candidate" >&2
+    return 1
+  fi
+}
+
+if [[ "$#" -gt 0 ]]; then
+  if [[ "$1" == "--hosted" ]]; then
+    shift
+    run_hosted_gate "$@"
+    exit $?
+  fi
+  echo "pre-commit: unsupported arguments" >&2
+  usage >&2
+  exit 2
+fi
+
+ORIGINAL_INDEX_TREE="$(git write-tree)"
+UNSTAGED_PATCH="$(mktemp)"
+UNTRACKED_DIR=""
+WORKTREE_RESET=0
+CANDIDATE_TOUCHED=0
+CANDIDATE_STAGED=0
+RESTORE_FAILED=0
+
+restore_local_state() {
+  local exit_code=$? restore_index_tree="$ORIGINAL_INDEX_TREE"
+  trap - EXIT
+
+  if [[ "$CANDIDATE_TOUCHED" -eq 1 ]]; then
+    if [[ "$CANDIDATE_STAGED" -eq 0 ]]; then
+      if ! git read-tree "$ORIGINAL_INDEX_TREE"; then
+        echo "pre-commit: could not restore the original index tree $ORIGINAL_INDEX_TREE" >&2
+        exit_code=1
+        RESTORE_FAILED=1
+      fi
+    else
+      restore_index_tree="$CANDIDATE_TREE"
+    fi
+    if ! git checkout -- .; then
+      echo "pre-commit: could not restore the working tree from the candidate index" >&2
+      exit_code=1
+      RESTORE_FAILED=1
+    fi
+    if ! git clean -fd --quiet; then
+      echo "pre-commit: could not remove temporary untracked gate output" >&2
+      exit_code=1
+      RESTORE_FAILED=1
+    fi
+  elif [[ "$WORKTREE_RESET" -eq 1 ]]; then
+    if ! git checkout -- .; then
+      echo "pre-commit: could not restore the pre-candidate working tree" >&2
+      exit_code=1
+      RESTORE_FAILED=1
+    fi
+  fi
+
+  if [[ "$WORKTREE_RESET" -eq 1 && -s "$UNSTAGED_PATCH" ]]; then
+    if ! git apply --3way --binary --whitespace=nowarn "$UNSTAGED_PATCH"; then
+      echo "pre-commit: original unstaged edits could not be restored; recover them from $UNSTAGED_PATCH" >&2
+      exit_code=1
+      RESTORE_FAILED=1
+    fi
+  fi
+
+  if [[ "$WORKTREE_RESET" -eq 1 ]] && ! git read-tree "$restore_index_tree"; then
+    echo "pre-commit: could not restore the intended staged candidate $restore_index_tree" >&2
+    exit_code=1
+    RESTORE_FAILED=1
+  fi
+
+  if [[ -n "$UNTRACKED_DIR" ]]; then
+    for path in "${untracked_paths[@]}"; do
+      mkdir -p -- "$REPO_ROOT/$(dirname -- "$path")"
+      if ! mv -f -- "$UNTRACKED_DIR/$path" "$REPO_ROOT/$path"; then
+        echo "pre-commit: original untracked file could not be restored: $path" >&2
+        exit_code=1
+        RESTORE_FAILED=1
+      fi
+    done
+    if [[ "$RESTORE_FAILED" -eq 0 ]]; then
+      rm -rf -- "$UNTRACKED_DIR"
+    else
+      echo "pre-commit: recover remaining untracked files from $UNTRACKED_DIR" >&2
+    fi
+  fi
+
+  if [[ "$RESTORE_FAILED" -eq 0 ]]; then
+    rm -f "$UNSTAGED_PATCH"
+  fi
+  exit "$exit_code"
+}
+
+trap restore_local_state EXIT
+
+git diff --binary --no-ext-diff --full-index -- > "$UNSTAGED_PATCH"
+if [[ -s "$UNSTAGED_PATCH" ]]; then
+  WORKTREE_RESET=1
+  git checkout -- .
+fi
+
+mapfile -d '' -t untracked_paths < <(git ls-files --others --exclude-standard -z)
+if [[ "${#untracked_paths[@]}" -gt 0 ]]; then
+  UNTRACKED_DIR="$(mktemp -d)"
+  for path in "${untracked_paths[@]}"; do
+    mkdir -p -- "$UNTRACKED_DIR/$(dirname -- "$path")"
+    mv -- "$REPO_ROOT/$path" "$UNTRACKED_DIR/$path"
+  done
+fi
+
+CANDIDATE_TOUCHED=1
+run_repository_apply_gate
+if [[ "$(git write-tree)" != "$ORIGINAL_INDEX_TREE" ]]; then
+  echo "pre-commit: apply integration must not stage files directly" >&2
+  exit 2
+fi
+
+git add -A -- .
+CANDIDATE_STAGED=1
+CANDIDATE_TREE="$(git write-tree)"
+run_repository_check_gate
+
+if [[ "$(git write-tree)" != "$CANDIDATE_TREE" ]]; then
+  echo "pre-commit: check integration changed the candidate index" >&2
+  exit 1
+fi
+if ! git diff --quiet; then
+  echo "pre-commit: check integration changed tracked candidate files" >&2
+  exit 1
+fi
+if [[ -n "$(git ls-files --others --exclude-standard)" ]]; then
+  echo "pre-commit: check integration left untracked candidate files; ignore or remove its disposable outputs" >&2
+  exit 1
+fi
