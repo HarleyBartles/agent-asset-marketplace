@@ -90,13 +90,15 @@ Evidence: six temporary-repository behavior tests pass under Windows Git Bash, i
 
 **Produces:** One concrete Linux hosted-CI example that invokes the same tracked hook, plus a separately deployable example for a repository that has also adopted command-bus.
 
-- [ ] Add a hosted workflow example that checks out a proposed commit, provides declared prerequisites, uses a detached clean checkout, and invokes the same hook in hosted mode. Keep provider-specific workflow material clearly marked as optional.
-- [ ] Write tests that assert the example invokes the tracked hook in hosted mode for the checked-out commit, does not substitute a narrower workflow-only check, and requires no ambient AOM checkout at runtime. The hook's repository-owned check callback remains the single complete gate.
-- [ ] Add a small Python command-bus target example with truthful `--help`, a meaningful `--check` path, explicit supported-mode metadata/instructions, and exact subprocess exit/output propagation. The adopter manually copies and registers or adapts it; it must not install itself or scan for a bus.
-- [ ] Prove the bus-target example can be run independently after copying and that command-bus is not required to use the hook starter or hosted example.
-- [ ] Document that the sample target is optional, conforms to the command-bus interface when registered, and creates no shared module ABI or command configuration contract.
+- [x] Add a hosted workflow example that checks out a proposed commit, provides a fail-closed prerequisite adaptation point, uses a detached clean checkout, and invokes the same hook in hosted mode. Keep provider-specific workflow material clearly marked as optional.
+- [x] Write tests that assert the example invokes the tracked hook in hosted mode for the checked-out commit, does not substitute a narrower workflow-only check, and requires no ambient AOM checkout at runtime. The hook's repository-owned check callback remains the single complete gate.
+- [x] Add a small Python command-bus target example with truthful `--help`, a meaningful `--check` path, explicit supported-mode metadata/instructions, and exact subprocess exit/output propagation. The adopter manually copies and registers or adapts it; it must not install itself or scan for a bus.
+- [x] Prove the bus-target example can be run independently after copying and that command-bus is not required to use the hook starter or hosted example.
+- [x] Document that the sample target is optional, conforms to the command-bus interface when registered, and creates no shared module ABI or command configuration contract.
 
 Run: `py -3 -m pytest -q skills/tracked-repo-hooks/tests/assets/test_bus_target.py skills/tracked-repo-hooks/tests/assets/test_hosted_workflow.py`.
+
+Evidence: three focused tests pass. YAML parses; the workflow resolves one proposed commit for checkout and hosted hook execution with no Marketplace runtime checkout. The copied target runs standalone, forwards spaced arguments, output streams, and exit status, and rejects absent or unsupported modes. Ruff passes.
 
 **Exit:** Repositories can use the hook standard with or without command-bus adoption; hosted CI and the Windows hook share the same gate semantics.
 
