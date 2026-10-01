@@ -144,7 +144,7 @@ New content remains inside these owner skills under `assets/`, `references/`, an
 
 ## Handoff boundaries
 
-- Plan 2 introduces optional assets. It does not migrate Marketplace's own subscription/runtime, implement the command bus, or change hook/CI behavior; those remain Plans 3 and 6.
-- Plan 3 owns portable CLI interfaces, optional bus starter, complete Windows/Linux hook parity, and cross-platform text normalization.
-- Legacy v1 resources remain untouched until Plan 6.
+- Plan 2 introduces optional assets. It does not migrate Marketplace's own subscription/runtime, implement the command bus, or change hook/CI behavior; those remain Plans 3, 4, and 7.
+- Plan 3 owns the optional command-bus starter. Plan 4 owns the separate hook/CI standard assets and cross-platform text normalization.
+- Legacy v1 resources remain untouched until Plan 7.
 - The repository does not receive a fixed runbook or playbook inventory because AOM offers these examples.
