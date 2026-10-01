@@ -6,6 +6,10 @@
 
 List only standards recorded in `.agents/contracts/operating-standards.json`. For each, record its pinned definition, implementation location, required invariants the repository meets, evidence and semantic review used, and measures that detect or prevent drift.
 
+### runbook-composition
+
+Replace this example section with an accurate certification for the pinned definition, or remove it if this repository does not adopt this standard.
+
 ## Ongoing responsibility
 
 Every agent changing an adopted surface preserves its requirements and updates this certification and its drift controls when implementation or evidence changes.

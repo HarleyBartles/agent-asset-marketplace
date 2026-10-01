@@ -9,5 +9,7 @@ Use these expectations only to evaluate fresh adoption decisions. They are not u
 - The AGENTS checker applies configurable per-file budgets, includes untracked files, and imposes no count ceiling. Its size result does not establish safe or effective routing.
 - The doctrine/contracts checker requires the standard's two stores, checks JSON syntax only, checks local Markdown links, and reports no-inbound-link Markdown files as candidates. Harness, skill, plugin, and tool routes may be invisible; candidates are advisory.
 - The plugin checker validates local Codex/Devin declarations and selector consistency only. It does not fetch remotes or prove access, authentication, trust, install, or runtime behavior. `main` and a full immutable SHA are alternatives on individual dependencies.
+- Codex catalogs may expose available plugins that this repository does not activate. The optional checker rejects invalid activation bindings but does not require every available catalog entry to be activated.
+- The doctrine/contracts checker reports broken links from its selected agent stores and explicitly selected route sources. Unrelated Markdown may establish inbound links, but its broken links do not fail that check.
 - `REVIEW.md` can contain its useful guidance inline without review books. `CONTRIBUTING.md` can contain the useful contributor process inline without other AOM standards or fixed headings.
 - Structural checks and asset presence never establish semantic compliance. Repository certification must cite its own implementation, evidence, and drift controls.

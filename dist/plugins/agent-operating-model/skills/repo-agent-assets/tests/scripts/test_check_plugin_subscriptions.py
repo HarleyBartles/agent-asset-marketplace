@@ -88,6 +88,30 @@ def test_accepts_codex_and_devin_native_git_subdirectory_declarations(tmp_path: 
     assert "authentication" in result.stdout.lower()
 
 
+def test_catalog_can_offer_inactive_plugin_without_making_it_a_dependency(tmp_path: Path) -> None:
+    _write_codex(tmp_path)
+    catalog_path = tmp_path / ".agents/plugins/marketplace.json"
+    catalog = json.loads(catalog_path.read_text(encoding="utf-8"))
+    catalog["plugins"].append(
+        {
+            "name": "optional-linter",
+            "source": {
+                "source": "git-subdir",
+                "url": "https://github.com/example-org/agent-plugins.git",
+                "path": "./plugins/optional-linter",
+                "ref": "main",
+            },
+            "policy": {"installation": "AVAILABLE", "authentication": "ON_INSTALL"},
+        }
+    )
+    catalog_path.write_text(json.dumps(catalog), encoding="utf-8")
+
+    result = _check(tmp_path)
+
+    assert result.returncode == 0, result.stdout + result.stderr
+    assert "local declarations are syntactically consistent" in result.stdout.lower()
+
+
 def test_shipped_codex_and_devin_examples_are_consistent(tmp_path: Path) -> None:
     assets = SCRIPT.parents[1] / "assets/examples"
     targets = {

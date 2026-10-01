@@ -98,3 +98,22 @@ def test_route_roots_and_excludes_affect_static_discovery_without_certifying_rou
     assert "static markdown links only" in result.stdout.lower()
     assert "candidate without an inbound markdown link: .agents/doctrine/runtime.md" in result.stdout.lower()
     assert before == after
+
+
+def test_unrelated_markdown_links_contribute_inbound_evidence_without_failing(tmp_path: Path) -> None:
+    doctrine = tmp_path / ".agents/doctrine"
+    contracts = tmp_path / ".agents/contracts"
+    doctrine.mkdir(parents=True)
+    contracts.mkdir(parents=True)
+    (doctrine / "rule.md").write_text("A durable rule.\n", encoding="utf-8")
+    (contracts / "contract.md").write_text("A repository contract.\n", encoding="utf-8")
+    (tmp_path / "README.md").write_text(
+        "See [rule](.agents/doctrine/rule.md) and [missing](not-here.md).\n", encoding="utf-8"
+    )
+
+    result = check(tmp_path)
+
+    assert result.returncode == 0, result.stdout + result.stderr
+    assert "README.md: broken local link" not in result.stdout
+    assert "candidate without an inbound markdown link: .agents/doctrine/rule.md" not in result.stdout.lower()
+    assert "candidate without an inbound markdown link: .agents/contracts/contract.md" in result.stdout.lower()
