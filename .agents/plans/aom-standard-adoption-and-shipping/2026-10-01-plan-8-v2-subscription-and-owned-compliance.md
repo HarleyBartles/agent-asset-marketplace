@@ -1,6 +1,6 @@
 # V2 Subscription and Repository-Owned Compliance Plan
 
-**Status:** ready
+**Status:** executing
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use `subagent-driven-development` (recommended) or `executing-plans` to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
@@ -36,13 +36,28 @@
 - The checker must run from a clean clone without network access and must not execute source-pinned definitions or modify files.
 - The normal hook's staged-tree behavior and existing Linux workflow remain intact when the repo-standards target changes.
 
+## Mechanical and semantic boundary
+
+| Selected pledge                     | Mechanical repository check                                                              | Semantic self-certification / review                                                               |
+| ----------------------------------- | ---------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| Root AGENTS router                  | Existing allow-list, root line budget, and CI invocation                                 | Useful progressive routes, scoped quality, and no duplicated doctrine                              |
+| Runbook composition                 | Existing Markdown-link validator checks references                                       | Each maintained runbook is a useful work-stage lifecycle guide and is routed at the right point    |
+| Playbook composition                | Existing Markdown-link validator checks references                                       | Concern/stage distinction, useful guidance, discoverability, and capability availability claims    |
+| Tracked hook and CI                 | Hook/command contract, hosted workflow, and command runner route are present and aligned | Candidate-tree correctness, Linux/Windows equivalence, prerequisite coverage, and no-skip behavior |
+| Review and contribution entrypoints | Root `REVIEW.md` and `CONTRIBUTING.md` exist and their local links resolve               | Each entrypoint is sufficient and useful for its audience                                          |
+| Completed artifact custody          | No checker may infer completion from markers or checkbox counts                          | Next-slice semantic discovery, preservation of active plans, and promotion of durable knowledge    |
+| Unslop                              | `.agents/unslop/` exists and is discoverable from a relevant agent route                 | Distinct recurrence evidence, effective guards, and maintained feedback loop                       |
+
+Mechanical results support the certification; they do not certify the semantic column.
+
 ______________________________________________________________________
 
-### Task 1: Specify repository compliance behavior before replacing the v1 authority
+### Task 1: Specify and implement the repository-owned read-only checker
 
 **Files:**
 
 - Create: `tests/repository/test_agent_standards.py`
+- Create: `tools/check_agent_standards.py`
 - Read: `.agents/contracts/operating-standards.json`
 - Read: `.agents/standards/_runtime/repo_standards.py`
 - Read: `tools/run.py`
@@ -52,34 +67,21 @@ ______________________________________________________________________
 
 **Consumes:** The v2 structure and self-certification boundaries in the approved specification, plus the currently active hook and hosted gate.
 
-**Produces:** Observable checker cases for valid subscriptions, malformed pins, missing certification routes, inaccurate certification status, and this repo's selected mechanical policies.
+**Produces:** Behavior tests and a deterministic, offline, repository-owned checker with clear mechanical diagnostics and no deployment or semantic-certification side effects.
 
-- [ ] Record the selected IDs and exact definition pins as fixture inputs; reject an unselected catalog entry and do not infer adoption from installed capabilities.
-- [ ] Cover malformed and duplicate subscription IDs, non-full Git IDs, unsafe paths, missing definition or certification references, and missing root router.
-- [ ] Cover certification that accurately identifies an implementation gap without declaring success; do not equate structural validity with compliance.
-- [ ] Identify which selected-standard obligations are mechanically checkable here and which require agent/human semantic review; preserve existing checks only when they enforce a retained invariant.
-- [ ] Run focused cases to demonstrate expected failures before implementation.
+- [x] Record the selected IDs and exact definition pins as fixture inputs; reject an unselected catalog entry and do not infer adoption from installed capabilities.
+- [x] Cover malformed and duplicate subscription IDs, non-full Git IDs, unsafe paths, missing certification references, and missing root router. The remote definition path is structurally validated but need not exist in a consumer checkout.
+- [x] Cover certification that accurately identifies an implementation gap without declaring success; do not equate structural validity with compliance.
+- [x] Identify which selected-standard obligations are mechanically checkable here and which require agent/human semantic review; preserve existing checks only when they enforce a retained invariant.
+- [x] Run focused cases to demonstrate expected failures before implementation.
+- [x] Validate the v2 subscription schema, exact selected set, pin formats, known source repository, safe relative definition/certification paths, local certification presence, root `AGENTS.md`, and route targets. Do not require source definition files to be copied into the adopting checkout.
+- [x] Validate only repository-chosen mechanical policy: retain meaningful AGENTS.md size alarms and structure checks, hook/CI command coverage, and required entrypoint locations. Book references use the existing Markdown-link checker; book category and usefulness stay semantic.
+- [x] Keep semantic book usefulness, router quality, unslop effectiveness, hook parity quality, and all other judgment-based claims in certification/review instead of pretending source text or checker success proves them.
+- [x] Ensure check mode performs no network access, writes, scaffold deployment, format changes, or execution of commands from the subscription record.
+- [x] Ensure diagnostics distinguish malformed authority records, missing implementation evidence, mechanical policy failures, and semantic claims the checker cannot decide.
+- [x] Run the focused behavior suite and the targeted static checks for the new code.
 
-### Task 2: Implement a repository-owned read-only adoption and policy checker
-
-**Files:**
-
-- Create: `tools/check_agent_standards.py`
-- Modify: `tests/repository/test_agent_standards.py`
-- Read: the pinned standard definitions at `3d59506dbd7a02266dedc9251b396dd60e5cc37d`
-
-**Consumes:** Task 1 behaviors and the selected standards' requirements.
-
-**Produces:** A deterministic, offline, repository-owned checker with clear mechanical diagnostics and no deployment or semantic-certification side effects.
-
-- [ ] Validate the v2 subscription schema, exact selected set, pin formats, known source repository, safe relative definition/certification paths, local presence, root `AGENTS.md`, and route targets.
-- [ ] Validate only repository-chosen mechanical policy: retain meaningful AGENTS.md size alarms and structure checks, runbook lifecycle-stage and playbook concern boundaries, hook/CI command coverage, and required entrypoint locations where a reliable mechanical check exists.
-- [ ] Keep semantic book usefulness, router quality, unslop effectiveness, hook parity quality, and all other judgment-based claims in certification/review instead of pretending source text or checker success proves them.
-- [ ] Ensure check mode performs no network access, writes, scaffold deployment, format changes, or execution of commands from the subscription record.
-- [ ] Ensure diagnostics distinguish malformed authority records, missing implementation evidence, mechanical policy failures, and semantic claims the checker cannot decide.
-- [ ] Run the focused behavior suite and the targeted static checks for the new code.
-
-### Task 3: Migrate the adoption record and write evidence-based certification
+### Task 2: Migrate the adoption record and write evidence-based certification
 
 **Files:**
 
@@ -89,7 +91,7 @@ ______________________________________________________________________
 - Modify if required by evidence: existing `.agents/doctrine/`, `.agents/contracts/`, `.agents/runbooks/`, `.agents/playbooks/`, `REVIEW.md`, and `CONTRIBUTING.md`
 - Test: Task 1 and Task 2 cases
 
-**Consumes:** The checker interface from Task 2 and exact source definitions at the verified pin.
+**Consumes:** The checker interface from Task 1 and exact source definitions at the verified pin.
 
 **Produces:** A minimal v2 subscription record and discoverable, accurate certification of this repository's actual state.
 
@@ -100,7 +102,7 @@ ______________________________________________________________________
 - [ ] Correct any concrete compliance gap discovered in the selected repository-owned surfaces only when the current plan's scoped implementation can safely close it; otherwise record the exact gap for Plan 9/11 and retain honest uncertified status.
 - [ ] Run the focused checker and semantic read-through against each pinned definition and certification entry.
 
-### Task 4: Wire the new repository-owned chain into the existing gate
+### Task 3: Wire the new repository-owned chain into the existing gate
 
 **Files:**
 
@@ -110,7 +112,7 @@ ______________________________________________________________________
 - Read: `.agents/standards/tracked-validation-hook/`
 - Read: `.github/workflows/marketplace-validation.yml`
 
-**Consumes:** The checker and v2 subscription/certification from Tasks 2-3.
+**Consumes:** The checker and v2 subscription/certification from Tasks 1-2.
 
 **Produces:** The existing `repo-standards`/`ci` gate runs repository-owned adoption checks while preserving the full Windows hook and Linux CI behavior.
 
@@ -120,7 +122,7 @@ ______________________________________________________________________
 - [ ] Confirm the hook and hosted workflow invoke the same logical CI gate and that no user command is silently dropped.
 - [ ] Run targeted tests, then the complete normal Windows pre-commit gate by committing the planned slice; do not duplicate the full gate immediately before or after that hooked commit.
 
-### Task 5: Review and close the migration slice
+### Task 4: Review and close the migration slice
 
 **Files:**
 
@@ -128,7 +130,7 @@ ______________________________________________________________________
 - Modify: `roadmap.md`, recording Plan 8's final commit and findings
 - Review: complete change from the Plan 7 baseline
 
-**Consumes:** Tasks 1-4, their focused evidence, and the completed Windows hook result.
+**Consumes:** Tasks 1-3, their focused evidence, and the completed Windows hook result.
 
 **Produces:** A reviewable, committed v2 subscription transition with no claim of Linux execution until Plan 11 has current-hosted evidence.
 
