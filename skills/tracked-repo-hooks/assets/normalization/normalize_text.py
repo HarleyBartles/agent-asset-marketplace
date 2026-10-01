@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import re
 import sys
+import unicodedata
 from pathlib import Path
 
 
@@ -32,6 +33,8 @@ def normalize(raw: bytes, *, line_ending: str, final_newline: str, path: Path) -
         text = payload.decode("utf-8")
     except UnicodeDecodeError as error:
         raise ValueError(f"{path}: content is not valid UTF-8: {error}") from error
+    if any(unicodedata.category(character) == "Cc" and character not in "\t\n\r" for character in text):
+        raise ValueError(f"{path}: binary/control content contains unsupported control characters")
 
     newline = "\n" if line_ending == "lf" else "\r\n"
     normalized = re.sub(r"\r\n|\r|\n", newline, text)

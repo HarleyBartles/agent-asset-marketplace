@@ -23,9 +23,11 @@ An adoption is repository-owned implementation and self-certification, not deplo
 
 Choose only the starter assets that help, or use none:
 
-- [Candidate-safe Bash hook](assets/hooks/pre-commit) is a fail-closed seed. Adapt its repository-owned apply/check functions and install it as the tracked hook. It expects Git Bash on Windows and Bash on Linux.
+- [Candidate-safe Bash hook](assets/hooks/pre-commit) is a fail-closed seed. Adapt its repository-owned apply/check functions and install it as the tracked hook. It expects Git Bash on Windows and Bash on Linux. When Git launches the tracked file directly as a hook, preserve its executable bit on platforms that require it.
 - [Python text normalizer](assets/normalization/normalize_text.py) operates only on explicitly selected UTF-8 text paths. Adapt its selected paths and line-ending/final-newline policy. The [`.gitattributes` example](assets/normalization/gitattributes.example) is optional policy material, not a required global file.
 - [GitHub Actions hosted-gate example](assets/workflows/github-actions-hosted-gate.yml) checks out the proposed commit and invokes the same hook in hosted mode. Its prerequisite step intentionally fails until adapted. Other CI providers may implement the same pledge directly.
 - [Optional bus target](assets/targets/repository_gate.py) can be copied and manually registered only when the repository separately adopts command-bus. It forwards one repository-owned read-only complete-check command; it is not an installer, bus ABI, or command registry.
 
 Assets become repository-owned when copied. Presence does not prove conformance. The hook, normalizer, workflow, and bus target can each be replaced independently if the repo's own approach meets its pinned requirements. V1 consumers continue to follow their pinned definition until an explicit upgrade.
+
+The hook preserves ignored workspace files so it does not remove local tool environments or caches. Those files remain visible to repository gates. The adapter and certification must ensure that ignored generated inputs are rebuilt from the candidate or excluded from gate decisions; stale ignored content must not change whether the committed candidate passes. Hosted CI also has ignored setup outputs, so its gate must derive checked artifacts from the checked-out commit.

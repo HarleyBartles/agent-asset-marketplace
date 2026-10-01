@@ -83,16 +83,19 @@ def test_apply_preserves_utf8_bom_and_paths_not_selected(tmp_path: Path) -> None
 
 def test_apply_rejects_binary_and_undecodable_files_without_changing_them(tmp_path: Path) -> None:
     binary = tmp_path / "binary.dat"
+    control_data = tmp_path / "control-data.dat"
     undecodable = tmp_path / "undecodable.txt"
     binary.write_bytes(b"data\x00\r\n")
+    control_data.write_bytes(b"data\x01\r\n")
     undecodable.write_bytes(b"\xff\xfe\x80")
 
-    result = run_normalizer("apply", binary, undecodable)
+    result = run_normalizer("apply", binary, control_data, undecodable)
 
     assert result.returncode == 2
     assert "binary" in result.stderr.lower()
     assert "utf-8" in result.stderr.lower()
     assert binary.read_bytes() == b"data\x00\r\n"
+    assert control_data.read_bytes() == b"data\x01\r\n"
     assert undecodable.read_bytes() == b"\xff\xfe\x80"
 
 

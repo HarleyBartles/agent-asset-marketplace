@@ -152,7 +152,11 @@ def test_check_failure_keeps_the_applied_candidate_and_restores_other_work(tmp_p
     repo = _repo(
         tmp_path / "check failure repo",
         apply_body='sed -i "1s/^Header staged/Header normalized/" "$REPO_ROOT/notes file.txt"',
-        check_body='printf "check\\n" >> "$REPO_ROOT/.git/gate-calls"; return 23',
+        check_body=(
+            'printf "check\\n" >> "$REPO_ROOT/.git/gate-calls"; '
+            'printf "callback corruption\\n" > "$REPO_ROOT/notes file.txt"; '
+            'git add -- "notes file.txt"; return 23'
+        ),
     )
     notes = repo / "notes file.txt"
     notes.write_bytes(b"Header staged\nContent\nFooter\n")

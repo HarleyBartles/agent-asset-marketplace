@@ -19,7 +19,7 @@ def test_workflow_checks_out_and_runs_the_same_declared_commit_through_the_hook(
 
     assert checkout["with"]["ref"] == "${{ github.event.pull_request.head.sha || github.sha }}"
     assert gate["env"]["COMMIT_SHA"] == "${{ github.event.pull_request.head.sha || github.sha }}"
-    assert 'githooks/pre-commit --hosted "$COMMIT_SHA"' in hosted_step
+    assert 'bash githooks/pre-commit --hosted "$COMMIT_SHA"' in hosted_step
     assert "repository_gate.py" not in hosted_step
     assert "tools/run.py" not in hosted_step
     assert len([step for step in steps if step.get("uses", "").startswith("actions/checkout@")]) == 1

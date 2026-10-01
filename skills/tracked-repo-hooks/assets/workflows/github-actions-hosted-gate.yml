@@ -28,4 +28,4 @@ jobs:
           test "$(git rev-parse HEAD)" = "$COMMIT_SHA"
       - name: Run the tracked complete gate
         shell: bash
-        run: githooks/pre-commit --hosted "$COMMIT_SHA"
+        run: bash githooks/pre-commit --hosted "$COMMIT_SHA"

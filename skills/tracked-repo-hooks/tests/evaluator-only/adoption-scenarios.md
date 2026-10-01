@@ -6,7 +6,7 @@ Use these prompts in fresh contexts with the `tracked-repo-hooks` skill availabl
 
 You are working in a repository that wants to adopt the tracked hook and CI standard. It has no command bus, and its maintainers are considering AOM's hook, normalizer, and GitHub Actions examples. Describe what is required, what can be selected or omitted, and what needs to be true before self-certification.
 
-Expected decisions: explain the complete Windows pre-commit/Linux hosted gate, equivalent checks and prerequisites, staged candidate handling, declared text normalization, and agent no-skip rule. Treat each AOM artifact as optional. The repository may use its existing tooling or copy/adapt selected assets. Do not add command-bus adoption or require every sample. Certify only after both platforms and drift controls are evidenced and root `AGENTS.md` routes subscription/certification.
+Expected decisions: explain the complete Windows pre-commit/Linux hosted gate, equivalent checks and prerequisites, staged candidate handling, declared text normalization, ignored generated/cache inputs, and agent no-skip rule. Treat each AOM artifact as optional. The repository may use its existing tooling or copy/adapt selected assets. Do not add command-bus adoption or require every sample. Certify only after both platforms and drift controls are evidenced and root `AGENTS.md` routes subscription/certification.
 
 ## Adopt with a command bus
 
@@ -18,4 +18,4 @@ Expected decisions: make manual copy/adaptation and explicit registration into t
 
 You are working in a repository with a tracked Windows pre-commit hook and Linux hosted CI that appear to run the same complete gate. Its text normalization policy, staged-candidate behavior, and agent no-skip guidance are also documented. The maintainer asks to subscribe to the standard but does not want a rewrite or copied AOM scaffold. Describe the assessment and adoption path.
 
-Expected decisions: inspect the actual hook, workflow, candidate handling, required prerequisites, equivalent gate coverage, no-skip routing, normalization policy, and drift controls. Preserve conforming repository-owned implementation and add no AOM artifacts unless a specific gap makes one useful. Record subscription and route it from root `AGENTS.md`; self-certify after evidence verifies current behavior and drift-prevention measures. Do not demand a command bus or template inventory.
+Expected decisions: inspect the actual hook, workflow, candidate handling, required prerequisites, equivalent gate coverage, ignored generated/cache inputs, no-skip routing, normalization policy, and drift controls. Preserve conforming repository-owned implementation and add no AOM artifacts unless a specific gap makes one useful. Record subscription and route it from root `AGENTS.md`; self-certify after evidence verifies current behavior and drift-prevention measures. Do not demand a command bus or template inventory.

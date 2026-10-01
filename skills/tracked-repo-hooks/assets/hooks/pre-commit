@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # Optional fail-closed seed. Adapt tools/hook_gate_adapter.sh to repository gates.
+# Ignored workspace files remain available; adapters must refresh or isolate ignored derived inputs.
 set -euo pipefail
 
 usage() {
@@ -105,14 +106,13 @@ restore_local_state() {
   trap - EXIT
 
   if [[ "$CANDIDATE_TOUCHED" -eq 1 ]]; then
-    if [[ "$CANDIDATE_STAGED" -eq 0 ]]; then
-      if ! git read-tree "$ORIGINAL_INDEX_TREE"; then
-        echo "pre-commit: could not restore the original index tree $ORIGINAL_INDEX_TREE" >&2
-        exit_code=1
-        RESTORE_FAILED=1
-      fi
-    else
+    if [[ "$CANDIDATE_STAGED" -eq 1 ]]; then
       restore_index_tree="$CANDIDATE_TREE"
+    fi
+    if ! git read-tree "$restore_index_tree"; then
+      echo "pre-commit: could not restore the intended staged candidate $restore_index_tree" >&2
+      exit_code=1
+      RESTORE_FAILED=1
     fi
     if ! git checkout -- .; then
       echo "pre-commit: could not restore the working tree from the candidate index" >&2

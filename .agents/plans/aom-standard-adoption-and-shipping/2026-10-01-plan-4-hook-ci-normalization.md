@@ -4,7 +4,7 @@
 
 **Goal:** Ship useful optional hook, normalization, hosted-gate, and command-bus integration starters for repositories that adopt the tracked hook and CI standard.
 
-**Architecture:** Keep the standard's pledge independent from its optional assets: adopters own one complete Windows pre-commit and Linux hosted gate, the canonical validation path, candidate-state handling, and normalization policy. AOM provides a Bash hook seed, a portable Python text normalizer, policy examples, and a copyable bus-target example; every artifact is adapted by an agent and then becomes repository-owned. The hook seed exposes explicit repository-owned apply/check integration functions that fail closed until filled in, so it does not impose a command manifest, a command bus, or another standard.
+**Architecture:** Keep the standard's pledge independent from its optional assets: adopters own one complete Windows pre-commit and Linux hosted gate, the canonical validation path, candidate-state handling, and normalization policy. AOM provides a Bash hook seed, a portable Python text normalizer, policy examples, and a copyable bus-target example; every artifact is adapted by an agent and then becomes repository-owned. The hook seed exposes explicit repository-owned apply/check integration functions that fail closed until filled in, so it does not impose a command manifest, a command bus, or another standard. It preserves ignored files for local environments, so adapters must rebuild or isolate ignored derived inputs that could affect gate results. The package builder preserves executable file modes so a copied hook can be registered directly where the platform requires it.
 
 **Tech Stack:** Bash for the Git hook entrypoint, Python standard library for portable file normalization and the optional bus-target example, GitHub Actions YAML as one hosted-CI example, pytest and Git Bash for behavior tests, existing Marketplace builder.
 
@@ -18,6 +18,7 @@
 
 - The adopted pledge requires a tracked pre-commit hook and hosted CI to run the same complete repository gate, with Windows local and Linux hosted execution, equivalent checks and failure criteria, and no hook skipping by agents.
 - The hook evaluates the exact commit candidate, includes any hook-side normalization or generation in that candidate, validates it, and preserves unrelated unstaged and untracked work. Hosted CI evaluates the committed counterpart.
+- Git-ignored local caches/configuration remain available to preserve developer environments. The adopting repository's gate must rebuild or isolate any ignored derived inputs that could affect the candidate result; it must not trust stale ignored content as commit evidence. Hosted setup outputs are subject to the same requirement.
 - Required infrastructure must exist on both platforms. Missing prerequisites fail clearly; no checks are deferred exclusively to hosted CI or omitted locally.
 - Normalize repository-declared line endings and final-newline conventions, including generated/formatted text. Repositories own file scope, conventions, hook, validation path, and drift controls.
 - Command bus remains optional. If adopted, its CLI contract remains authoritative; the hook/CI standard can provide a target example for explicit agent integration. No automatic install, target discovery, module ABI, shared command JSON, or source submodule.
@@ -40,6 +41,8 @@
 | Owner                       | Deliverable                                                                                                                                                |
 | --------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `skills/tracked-repo-hooks` | Optional Bash candidate hook, Python normalizer, normalization examples, hosted workflow example, copyable bus-target example, and behavior/adoption tests |
+| `src/marketplace/build.py`  | Preserve executable file modes when copying plugin assets                                                                                                  |
+| `tests/build`               | Verify executable asset modes survive package assembly                                                                                                     |
 | `tests/shipping`            | Isolated generated-package execution proof and standard-asset closure checks                                                                               |
 | Generated AOM plugin        | `dist/plugins/agent-operating-model/skills/tracked-repo-hooks/` projection only                                                                            |
 
@@ -52,7 +55,7 @@
 **Produces:** A standard-library-only normalizer that operates on explicitly supplied paths, supports `--check` and `--apply`, and applies a caller-selected line-ending and final-newline policy without repository-wide guessing.
 
 - [x] Write behavior tests for LF and CRLF conversion, bare-CR normalization, required final newline, check-mode drift reporting, apply-mode convergence, repeated apply idempotence, and paths with spaces.
-- [x] Add refusal tests for missing paths, binary/NUL content, and undecodable content; verify check mode does not change file bytes and apply mode does not alter rejected or unselected paths.
+- [x] Add refusal tests for missing paths, binary/NUL and control-byte content, and undecodable content; verify check mode does not change file bytes and apply mode does not alter rejected or unselected paths.
 - [x] Implement explicit `--check`/`--apply`, `--line-ending {lf,crlf}`, `--final-newline {ensure,forbid}`, and one-or-more path arguments. Preserve an existing UTF-8 BOM, normalize only selected UTF-8 text, and fail clearly rather than guessing on unsupported content.
 - [x] Add `gitattributes.example` with a declared text/EOL policy and binary override; label it as an editable example, not a mandatory global configuration.
 - [x] Run the focused normalizer suite and Ruff; confirm only standard-library runtime imports. Six behavior tests pass; source and generated normalization asset hashes match.
@@ -78,7 +81,7 @@ Run: `py -3 -m pytest -q skills/tracked-repo-hooks/tests/assets/test_normalize_t
 
 Run: `py -3 -m pytest -q skills/tracked-repo-hooks/tests/assets/test_pre_commit_starter.py` from PowerShell with the installed Git Bash available.
 
-Evidence: six temporary-repository behavior tests pass under Windows Git Bash, including same-file staged/unstaged restoration with a transformed candidate, unrelated tracked edits, untracked paths with spaces, apply/check failures, clean hosted mode, hosted-state rejection, and missing-adapter failure. Bash syntax validation passes.
+Evidence: six temporary-repository behavior tests pass under Windows Git Bash, including same-file staged/unstaged restoration with a transformed candidate, unrelated tracked edits, untracked paths with spaces, apply/check failures, a check callback that corrupts the index before failing, clean hosted mode, hosted-state rejection, and missing-adapter failure. Bash syntax validation passes. Ignored workspace data stays visible by design and is called out as repository-adapter responsibility.
 
 **Exit:** The starter demonstrates safe candidate assessment but remains unusable until a repo-owned apply/check integration is supplied.
 
@@ -98,7 +101,7 @@ Evidence: six temporary-repository behavior tests pass under Windows Git Bash, i
 
 Run: `py -3 -m pytest -q skills/tracked-repo-hooks/tests/assets/test_bus_target.py skills/tracked-repo-hooks/tests/assets/test_hosted_workflow.py`.
 
-Evidence: three focused tests pass. YAML parses; the workflow resolves one proposed commit for checkout and hosted hook execution with no Marketplace runtime checkout. The copied target runs standalone, forwards spaced arguments, output streams, and exit status, and rejects absent or unsupported modes. Ruff passes.
+Evidence: three focused tests pass. YAML parses; the workflow resolves one proposed commit for checkout and hosted hook execution through explicit `bash` invocation, with no Marketplace runtime checkout. The copied target runs standalone, forwards spaced arguments, output streams, and exit status, and rejects absent or unsupported modes. Ruff passes.
 
 **Exit:** Repositories can use the hook standard with or without command-bus adoption; hosted CI and the Windows hook share the same gate semantics.
 
@@ -120,7 +123,7 @@ Evidence: three focused tests pass. YAML parses; the workflow resolves one propo
 
 Run: `py -3 -m pytest -q skills/tracked-repo-hooks/tests/assets tests/shipping/test_aom_tracked_repo_hooks_assets.py tests/shipping/test_aom_standard_assets.py`.
 
-Evidence: 20 focused tests pass on Windows, including the isolated generated-package consumer run. Marketplace generation and `marketplace --check` pass. The generated skill matches canonical package files, its asset links resolve, evaluator-only scenarios are excluded, and copied runtime assets run with `PYTHONPATH` removed. Actual hosted Linux execution remains deferred to Plan 8.
+Evidence: 20 focused asset/shipping tests pass on Windows, including the isolated generated-package consumer run. Three package-assembly tests pass; its POSIX executable-mode case is skipped on Windows and remains for Linux validation. Marketplace generation and `marketplace --check` pass. The generated skill matches canonical package files, its asset links resolve, evaluator-only scenarios are excluded, and copied runtime assets run with `PYTHONPATH` removed. Git records mode `100755` for the canonical and generated hook; the hosted example invokes it through Bash. Actual hosted Linux execution remains deferred to Plan 8.
 
 **Exit:** A repo can choose which starter pieces help, implement its own conformance, and certify only after the full Windows/Linux pledge is demonstrably met.
 
