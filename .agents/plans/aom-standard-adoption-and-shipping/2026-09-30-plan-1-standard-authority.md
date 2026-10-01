@@ -1,6 +1,8 @@
 # Standard Authority Packages Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use `subagent-driven-development` (recommended) or `executing-plans` to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+**Status:** completed-awaiting-retirement
+
+> **For agentic workers:** REQUIRED SUB-SKILL: Use `subagent-driven-development` (recommended) or `executing-plans` to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** Ship the agreed selectable standard definitions and an immutable subscription-record interface without migrating existing consumer implementations.
 
@@ -100,7 +102,7 @@ The example commit is a syntax fixture, not claimed published authority. Actual 
 
 **Produces:** Eleven independently readable definitions and the exact catalog rows above. Definitions name their stable ID, pledge, standalone obligations, conditional obligations, self-certification criteria, and optional asset policy. They do not require a universal document heading scheme from consumer books.
 
-- [ ] Write the selection behavior fixture with these bounded prompts before authoring guidance:
+- [x] Write the selection behavior fixture with these bounded prompts before authoring guidance:
 
 ```text
 Case A: A tiny repo wants a release-stage runbook only. It has no playbooks,
@@ -113,10 +115,10 @@ it must create review books or another guidance store.
 
 Keep expected judgments evaluator-only: A requires useful stage guidance, certification and root routing but no starter inventory; B remains governed by its pin without alarms; C permits inline review guidance. Assess decisions, not exact phrasing. Run a fresh skill behavior probe only during authorized implementation using available capabilities; record results in task scratch, never alongside shipped prompts.
 
-- [ ] Author each definition from its corresponding approved spec subsection, including shared records/routing and relevant cross-standard obligations. The unslop definition includes the standalone management method now, even though optional observation starters land in Plan 5. Do not claim a checker, hook starter, or template exists before its later delivery.
-- [ ] Write each owning SKILL.md with installed-skill frontmatter, a concise trigger description, an on-demand definition link, and instructions to inspect the repo's declared authority before assessment. An explicit upgrade resolves the requested source; ordinary use must not substitute current guidance for older pinned requirements.
-- [ ] Write the discovery catalog using the eleven table rows. Retain the old `skills/repo-shape/references/operating-standards-catalog.json` unchanged for current runtime compatibility.
-- [ ] Add the new skill membership using the existing first-party provenance shape in contents.json. Update metadata without claiming future starters exist. Retain legacy capabilities needed for v1 consumers. Run `py -3 tools/run.py marketplace --apply`, review the prompts against the source skills, stage canonical additions and owned generated output, and commit through the normal hook. This makes Task 1 independently deliverable with no temporary membership failure.
+- [x] Author each definition from its corresponding approved spec subsection, including shared records/routing and relevant cross-standard obligations. The unslop definition includes the standalone management method now, even though optional observation starters land in Plan 5. Do not claim a checker, hook starter, or template exists before its later delivery.
+- [x] Write each owning SKILL.md with installed-skill frontmatter, a concise trigger description, an on-demand definition link, and instructions to inspect the repo's declared authority before assessment. An explicit upgrade resolves the requested source; ordinary use must not substitute current guidance for older pinned requirements.
+- [x] Write the discovery catalog using the eleven table rows. Retain the old `skills/repo-shape/references/operating-standards-catalog.json` unchanged for current runtime compatibility.
+- [x] Add the new skill membership using the existing first-party provenance shape in contents.json. Update metadata without claiming future starters exist. Retain legacy capabilities needed for v1 consumers. Run `py -3 tools/run.py marketplace --apply`, review the prompts against the source skills, stage canonical additions and owned generated output, and commit through the normal hook. This makes Task 1 independently deliverable with no temporary membership failure.
 
 **Exit:** A reader can determine one standard's actual pledge independently; optional assets and other standards do not turn into hidden obligations. No current consumer runtime changes.
 
@@ -141,7 +143,7 @@ def main(argv: list[str] | None = None) -> int:
 
 Expose `validate_commit(value: object) -> list[str]` and `validate_relative_path(value: object, *, allow_fragment: bool = False) -> list[str]` for Task 3 reuse. CLI `--repo-root` defaults to the current directory; bare `--check` must respond with a clear result and exit 0 or 1 rather than an argparse missing-option exit. This fits the existing skill-script CLI validator.
 
-- [ ] Add independent behavior tests with this minimal fixture and the assertions below:
+- [x] Add independent behavior tests with this minimal fixture and the assertions below:
 
 ```python
 def record(standard_id="repo-private", commit="a" * 40):
@@ -166,10 +168,10 @@ def test_legacy_commands_are_not_v2_authority():
 
 Also cover duplicate IDs, malformed entry/source types, 64-character IDs, empty selections, unknown fields, missing root AGENTS/certification, empty certificate fragments, POSIX traversal, Windows drive-relative paths, UNC paths, and malformed JSON. These protect actual cross-platform structural behavior, not document wording.
 
-- [ ] Run `py -3 -m pytest -q skills/repo-standards/tests/scripts/test_subscriptions.py` and observe the specific unsupported behavior before implementation.
-- [ ] Implement schema and standard-library validation using explicit field sets, `PurePosixPath`/`PureWindowsPath` checks, and read-only JSON loading. Use no shell evaluation. Never interpret `check`, `apply`, or paths from a v1 record as executable instructions. CLI output states that structural validity is not certification.
-- [ ] Add a subprocess fixture that snapshots consumer bytes, invokes the checker, and asserts no file additions or changes for valid, missing, and legacy records. Put an executable sentinel in the fixture and assert it is never invoked.
-- [ ] Run the focused suite and `py -3 tools/run.py marketplace --apply`; stage only owning source/tests and regenerated outputs; commit with the normal hook. No duplicate complete CI command before/after the commit.
+- [x] Run `py -3 -m pytest -q skills/repo-standards/tests/scripts/test_subscriptions.py` and observe the specific unsupported behavior before implementation.
+- [x] Implement schema and standard-library validation using explicit field sets, `PurePosixPath`/`PureWindowsPath` checks, and read-only JSON loading. Use no shell evaluation. Never interpret `check`, `apply`, or paths from a v1 record as executable instructions. CLI output states that structural validity is not certification.
+- [x] Add a subprocess fixture that snapshots consumer bytes, invokes the checker, and asserts no file additions or changes for valid, missing, and legacy records. Put an executable sentinel in the fixture and assert it is never invoked.
+- [x] Run the focused suite and `py -3 tools/run.py marketplace --apply`; stage only owning source/tests and regenerated outputs; commit with the normal hook. No duplicate complete CI command before/after the commit.
 
 **Exit:** Valid pinned records and malformed/legacy input have clear structural results, and the checker cannot silently adopt, fetch, execute declared commands, or assert semantic compliance.
 
@@ -191,7 +193,7 @@ CLI: `python pinned_definition.py --source-root PATH --commit FULL_ID --definiti
 
 Bare `--check` reports missing retrieval inputs with exit 1, without fetching or inspecting an inferred repository. `--help` exits 0. This is helper validation, not a command-bus mutation preview.
 
-- [ ] Write this real temporary-Git fixture. It uses explicit fixture-local identity and stripped repository-local environment, not the user's global settings:
+- [x] Write this real temporary-Git fixture. It uses explicit fixture-local identity and stripped repository-local environment, not the user's global settings:
 
 ```python
 @pytest.fixture
@@ -223,7 +225,7 @@ def git_authority(tmp_path):
 
 The temporary fixture has no project hooks; this local override isolates it from user-global hook configuration and must never be used for Marketplace commits.
 
-- [ ] Add these behavioral assertions:
+- [x] Add these behavioral assertions:
 
 ```python
 def test_older_commit_is_read_after_branch_advances(git_authority):
@@ -238,8 +240,8 @@ def test_missing_path_has_no_head_fallback(git_authority):
 
 Add absent-object, invalid commit, unsafe path, and working-tree-dirty cases. The latter must still read committed authority, without resetting or modifying the checkout.
 
-- [ ] Run `py -3 -m pytest -q skills/repo-standards/tests/scripts/test_pinned_definition.py` and establish the missing behavior.
-- [ ] Implement this retrieval shape, importing Task 2 validators from the neighboring helper. Raise `ValueError` for input errors and `RuntimeError` for unavailable authority; never fall back to HEAD:
+- [x] Run `py -3 -m pytest -q skills/repo-standards/tests/scripts/test_pinned_definition.py` and establish the missing behavior.
+- [x] Implement this retrieval shape, importing Task 2 validators from the neighboring helper. Raise `ValueError` for input errors and `RuntimeError` for unavailable authority; never fall back to HEAD:
 
 ```python
 def read_pinned_definition(source_root, commit, definition):
@@ -258,8 +260,8 @@ def read_pinned_definition(source_root, commit, definition):
     return result.stdout
 ```
 
-- [ ] Write source-resolution guidance: verify source identity, retrieve the declared commit explicitly when absent, read the exact definition, and report unavailable authority without assessing latest requirements instead. An offline retained snapshot must identify its pin; do not treat an unverified downloaded file as source proof.
-- [ ] Run both authority suites, regenerate with `py -3 tools/run.py marketplace --apply`, and commit the source helper, tests, and owned projections through the normal hook.
+- [x] Write source-resolution guidance: verify source identity, retrieve the declared commit explicitly when absent, read the exact definition, and report unavailable authority without assessing latest requirements instead. An offline retained snapshot must identify its pin; do not treat an unverified downloaded file as source proof.
+- [x] Run both authority suites, regenerate with `py -3 tools/run.py marketplace --apply`, and commit the source helper, tests, and owned projections through the normal hook.
 
 **Exit:** Advancing current source or refreshing ambient AOM does not change what bytes the pinned authority reader returns.
 
@@ -271,12 +273,12 @@ def read_pinned_definition(source_root, commit, definition):
 
 **Produces:** Explicit new-model adoption/assessment/upgrade routes and bounded legacy guidance; no second semantic authority in broad legacy skills.
 
-- [ ] Add scenarios before changing instructions: v1 consumer asks for assessment, v2 repo pins a removed/non-current standard, new adopter requests only runbooks, and existing authored certification disagrees with observed implementation. Expected actions respectively preserve existing pinned legacy authority without auto-migration; retrieve declared historical source; adopt only requested obligations; report real drift without altering the pin to pass.
-- [ ] Update repo-standards to inspect the record format and requested task. V1 means use the existing pinned deployment or retrieve its historical definition, not run current scaffolders to upgrade it. V2 means follow immutable source and certification. Missing record is non-adoption until explicitly requested adoption. The coordinator advertises the new catalog as choices, not mandatory surfaces.
-- [ ] Add the adoption guide with root entrypoint routing, honest semantic certification, optional starter selection, and explicit upgrade reconciliation. Use the default paths from the spec. Do not provide a command that records certified success based solely on the structural checker.
-- [ ] Convert repo-composition to route stage and concern work to the focused owners. Mark repo-shape as legacy structural/deployment compatibility rather than the definition of every new standard. Preserve old executable resources for existing v1 consumer runtime; removal belongs in Plan 6.
-- [ ] Reconcile the three reused owner skills with their new definitions. Keep current ancillary reference material where useful, but route semantic requirements to the owning definition. Remove instructions that make Marketplace submodules, Markdown standard adoption, shared-checkout flags, or fixed book inventories requirements of the new model. Do not edit current runtime scripts in this task.
-- [ ] Probe the bounded scenarios in fresh implementation-time contexts and review decisions against the spec. Regenerate with `py -3 tools/run.py marketplace --apply`, then commit instructions and owned projections, preserving attribution and source metadata.
+- [x] Add scenarios before changing instructions: v1 consumer asks for assessment, v2 repo pins a removed/non-current standard, new adopter requests only runbooks, and existing authored certification disagrees with observed implementation. Expected actions respectively preserve existing pinned legacy authority without auto-migration; retrieve declared historical source; adopt only requested obligations; report real drift without altering the pin to pass.
+- [x] Update repo-standards to inspect the record format and requested task. V1 means use the existing pinned deployment or retrieve its historical definition, not run current scaffolders to upgrade it. V2 means follow immutable source and certification. Missing record is non-adoption until explicitly requested adoption. The coordinator advertises the new catalog as choices, not mandatory surfaces.
+- [x] Add the adoption guide with root entrypoint routing, honest semantic certification, optional starter selection, and explicit upgrade reconciliation. Use the default paths from the spec. Do not provide a command that records certified success based solely on the structural checker.
+- [x] Convert repo-composition to route stage and concern work to the focused owners. Mark repo-shape as legacy structural/deployment compatibility rather than the definition of every new standard. Preserve old executable resources for existing v1 consumer runtime; removal belongs in Plan 6.
+- [x] Reconcile the three reused owner skills with their new definitions. Keep current ancillary reference material where useful, but route semantic requirements to the owning definition. Remove instructions that make Marketplace submodules, Markdown standard adoption, shared-checkout flags, or fixed book inventories requirements of the new model. Do not edit current runtime scripts in this task.
+- [x] Probe the bounded scenarios in fresh implementation-time contexts and review decisions against the spec. Regenerate with `py -3 tools/run.py marketplace --apply`, then commit instructions and owned projections, preserving attribution and source metadata.
 
 **Exit:** No ambient route implies adoption or changes historical requirements; generic capability guidance cannot silently revive retired obligations.
 
@@ -288,13 +290,13 @@ def read_pinned_definition(source_root, commit, definition):
 
 **Produces:** Self-contained AOM package exposing all target owners and the coordinator, with isolated runtime proof. Existing nonstandard capability skills such as Python remain unless they conflict with this plan; broad removal is not authorized here.
 
-- [ ] Add a shipping test that copies generated `dist/plugins/agent-operating-model` to an isolated temp directory, creates a separate consumer with a v2 record, root AGENTS, and certificate file, then invokes its packaged `skills/repo-standards/scripts/subscriptions.py`. Expected exit is 0 with a structural-only result. Remove certificate and expect nonzero. Snapshot consumer bytes to prove no writes. The source checkout is not on PYTHONPATH and the subprocess cwd is the consumer, not Marketplace.
-- [ ] Add a definition-link closure assertion: use actual package-relative links from owning skill entries and resolve them within the isolated plugin. Verify no required path escapes into canonical source or another plugin. Execute packaged pinned-definition retrieval against Task 3's temporary Git authority; no source-checkout imports are allowed.
-- [ ] Confirm AOM contents include the eight new focused skills and existing three owner skills plus coordinator; reconcile membership only if Task 1 missed a required owner. Keep first-party source custody and explicit provenance. Update package descriptions to the selectable-standard model without claiming future starter implementations are already present. Do not advertise retired Markdown as a new selectable standard; preserve any still-needed legacy capability until Plan 6 removes or relocates it.
-- [ ] Run `py -3 tools/run.py marketplace --apply` after canonical edits, then the two focused script suites and `py -3 -m pytest -q tests/shipping/test_aom_standard_authority.py`. The normal commit hook performs the complete gate; do not repeat it immediately before or after a passing hooked commit.
-- [ ] Stage intended source, tests, metadata, and generated projections; commit. Confirm `git show --stat HEAD` contains only Plan 1 scope and `git status --short` is clean. If the builder needs modification, constrain it to a proven isolated closure defect; do not redesign deployment in this plan.
-- [ ] Obtain fresh whole-change review against this plan and the approved spec. Fix actual findings, regenerate affected output, and repeat focused evidence for changed behavior. Describe v1 bridge behavior and current absence of later starters honestly in the handoff.
-- [ ] Use completing-planning-artifacts to close only this completed plan after a verified fully reviewable implementation handoff. Retain it through its completing PR if publication is authorized. Keep the roadmap and full spec active for future deliveries. Record actual commits/PRs only after they exist; do not infer publication authorization from this planning request.
+- [x] Add a shipping test that copies generated `dist/plugins/agent-operating-model` to an isolated temp directory, creates a separate consumer with a v2 record, root AGENTS, and certificate file, then invokes its packaged `skills/repo-standards/scripts/subscriptions.py`. Expected exit is 0 with a structural-only result. Remove certificate and expect nonzero. Snapshot consumer bytes to prove no writes. The source checkout is not on PYTHONPATH and the subprocess cwd is the consumer, not Marketplace.
+- [x] Add a definition-link closure assertion: use actual package-relative links from owning skill entries and resolve them within the isolated plugin. Verify no required path escapes into canonical source or another plugin. Execute packaged pinned-definition retrieval against Task 3's temporary Git authority; no source-checkout imports are allowed.
+- [x] Confirm AOM contents include the eight new focused skills and existing three owner skills plus coordinator; reconcile membership only if Task 1 missed a required owner. Keep first-party source custody and explicit provenance. Update package descriptions to the selectable-standard model without claiming future starter implementations are already present. Do not advertise retired Markdown as a new selectable standard; preserve any still-needed legacy capability until Plan 6 removes or relocates it.
+- [x] Run `py -3 tools/run.py marketplace --apply` after canonical edits, then the two focused script suites and `py -3 -m pytest -q tests/shipping/test_aom_standard_authority.py`. The normal commit hook performs the complete gate; do not repeat it immediately before or after a passing hooked commit.
+- [x] Stage intended source, tests, metadata, and generated projections; commit. Confirm `git show --stat HEAD` contains only Plan 1 scope and `git status --short` is clean. If the builder needs modification, constrain it to a proven isolated closure defect; do not redesign deployment in this plan.
+- [x] Obtain fresh whole-change review against this plan and the approved spec. Fix actual findings, regenerate affected output, and repeat focused evidence for changed behavior. Describe v1 bridge behavior and current absence of later starters honestly in the handoff.
+- [x] Use completing-planning-artifacts to close only this completed plan after a verified fully reviewable implementation handoff. Retain it through its completing PR if publication is authorized. Keep the roadmap and full spec active for future deliveries. Record actual commits/PRs only after they exist; do not infer publication authorization from this planning request.
 
 **Exit:** Packaged definitions and authority helpers work as an isolated install, existing gate/runtime remain usable, and a reviewer can trace all Plan 1 acceptance claims to current evidence.
 
