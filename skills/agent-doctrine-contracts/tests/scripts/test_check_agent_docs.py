@@ -48,11 +48,14 @@ def test_valid_json_needs_no_universal_contract_schema(tmp_path: Path) -> None:
     contracts = tmp_path / ".agents/contracts"
     contracts.mkdir(parents=True)
     (contracts / "local-contract.json").write_text('{"any": "repository-owned shape"}\n', encoding="utf-8")
+    (contracts / "unlinked-contract.yaml").write_text("pledge: repository-owned\n", encoding="utf-8")
 
     result = check(tmp_path)
 
     assert result.returncode == 0, result.stdout + result.stderr
     assert "schema validation is not performed" in result.stdout.lower()
+    candidate = "candidate without an inbound markdown link: .agents/contracts/unlinked-contract.yaml"
+    assert candidate in result.stdout.lower()
 
 
 def test_reports_broken_links_and_unlinked_documents_as_candidates(tmp_path: Path) -> None:

@@ -140,7 +140,7 @@ def main(argv: list[str] | None = None) -> int:
                 inbound.add(target)
 
     for path in documents:
-        if path.suffix.lower() in {".md", ".markdown"} and path not in inbound:
+        if path not in inbound:
             print(f"CANDIDATE without an inbound Markdown link: {path.relative_to(root).as_posix()}")
 
     for error in errors:
