@@ -60,11 +60,11 @@
 
 **Produces:** Concrete evaluator inputs and expected behaviors before changing skill guidance.
 
-- [ ] Add a scenario with multiple agents/sessions encountering distinct instances of the same failure, plus duplicate reports of one incident. Require the agent to connect distinct evidence, avoid double-counting duplicates, and defer profile creation until recurrence warrants it.
-- [ ] Include a profile that was absent from the workflow route, a profile that was reached/read but ineffective, and useful guidance that was ignored. Require different responses for each case.
-- [ ] Extend consumer discovery coverage for v2 subscriptions to use the exact pinned definition and certification, including a pin older than the currently installed definition; preserve the existing v1 deployed-contract scenario.
-- [ ] State that non-adopters may still apply matching generic ambient profiles but do not gain repository occurrence-recording obligations from that availability.
-- [ ] Ensure the provider-absent scenario demonstrates that the AOM fallback guide is sufficient to maintain the process without an authoring skill.
+- [x] Add a scenario with multiple agents/sessions encountering distinct instances of the same failure, plus duplicate reports of one incident. Require the agent to connect distinct evidence, avoid double-counting duplicates, and decide whether independent recurrence warrants a profile change.
+- [x] Include a profile that was absent from the workflow route, a profile that was reached/read but ineffective, and useful guidance that was ignored. Require different responses for each case.
+- [x] Extend consumer discovery coverage for v2 subscriptions to use the exact pinned definition and certification, including a pin older than the currently installed definition; preserve the existing v1 deployed-contract scenario.
+- [x] State that non-adopters may still apply matching generic ambient profiles but do not gain repository occurrence-recording obligations from that availability.
+- [x] Ensure the provider-absent scenario demonstrates that the AOM fallback guide is sufficient to maintain the process without an authoring skill.
 
 ## Task 2: Make the AOM management guide an executable fallback
 
@@ -78,12 +78,12 @@
 
 **Produces:** A standalone lifecycle guide that an adopter can follow without Unslop+.
 
-- [ ] Define the minimum useful occurrence record in flexible prose: enough task/surface/evidence context to distinguish an incident, connect it to a candidate or existing pattern, and record guard availability/reach/read/follow/effect when known. Do not prescribe fixed fields or a new observation schema.
-- [ ] Explain how agents across sessions compare occurrences, distinguish independent recurrence from duplicate reports, and retain candidate observations while evidence is insufficient.
-- [ ] Give distinct next actions for missing routing, ineffective correction, and ignored useful guidance; include revision, narrowing, consolidation, and retirement based on evidence.
-- [ ] Preserve `.agents/unslop/repo.md` as a sufficient small-repository shape and explain splitting by class only when it improves discovery or ownership.
-- [ ] Keep profile authoring and edits reviewable by the repository's human/agent-owned process; do not imply automatic file modification, counters, or telemetry.
-- [ ] Re-read standard and guide together; change the standard only to resolve a demonstrated ambiguity between pledge and fallback procedure.
+- [x] Define the minimum useful occurrence record in prose: enough task/surface/evidence context to distinguish an incident, connect it to a candidate or existing pattern, and record guard availability/reach/read/follow/effect when known. Do not prescribe fixed fields or a new observation schema.
+- [x] Explain how agents across sessions compare occurrences, distinguish independent recurrence from duplicate reports, and retain candidate observations while evidence is insufficient.
+- [x] Give distinct next actions for missing routing, ineffective correction, and ignored useful guidance; include revision, narrowing, consolidation, and retirement based on evidence.
+- [x] Preserve `.agents/unslop/repo.md` as a sufficient small-repository shape and explain splitting by class only when it improves discovery or ownership.
+- [x] Keep profile authoring and edits reviewable by the repository's human/agent-owned process; do not imply automatic file modification, counters, or telemetry.
+- [x] Re-read standard and guide together; the standard already states the pledge clearly and required no change.
 
 ## Task 3: Update profile discovery and adopter maintenance behavior
 
@@ -98,12 +98,12 @@
 
 **Produces:** An application capability that preserves version authority and participates in an adopter's feedback loop.
 
-- [ ] Replace v2 reliance on `.agents/contracts/unslop.json` with routing through `repo-standards` to the subscription's immutable pinned definition and certification. Read only profile locations and routes supported by that pinned definition and repository implementation.
-- [ ] Preserve the v1 path using its historical deployed definition/resources; never interpret an old pin through current AOM requirements or run today's scaffolder as an upgrade.
-- [ ] When Unslop is adopted, tell agents doing relevant repository work to record concrete, distinct recurring-failure evidence under `.agents/unslop/`, assess matching guards, and diagnose reach/read/follow/effect when known. Route to the standalone management guide for lifecycle decisions.
-- [ ] Keep observations concise and evidence-backed. Recognize duplicate reports, separate incidents, and near misses without asserting recurrence or violation beyond the available evidence.
-- [ ] Preserve independent application of matching bundled generic profiles when there is no consumer adoption; do not create repository-specific logging or certification obligations for non-adopters.
-- [ ] Preserve applicability boundaries, doctrine/user-intent authority, conflict reporting, and evidence-grounded review behavior.
+- [x] Replace v2 reliance on `.agents/contracts/unslop.json` with routing through `repo-standards` to the subscription's immutable pinned definition and certification. Read only profile locations and routes supported by that pinned definition and repository implementation.
+- [x] Preserve the v1 path using its historical deployed definition/resources; never interpret an old pin through current AOM requirements or run today's scaffolder as an upgrade.
+- [x] When Unslop is adopted, tell agents doing relevant repository work to record concrete, distinct recurring-failure evidence under `.agents/unslop/`, assess matching guards, and diagnose reach/read/follow/effect when known. Route to the standalone management guide for lifecycle decisions.
+- [x] Keep observations concise and evidence-backed. Recognize duplicate reports, separate incidents, and near misses without asserting recurrence or violation beyond the available evidence.
+- [x] Preserve independent application of matching bundled generic profiles when there is no consumer adoption; do not create repository-specific logging or certification obligations for non-adopters.
+- [x] Preserve applicability boundaries, doctrine/user-intent authority, conflict reporting, and evidence-grounded review behavior.
 
 ## Task 4: Align the profile engine with pinned standards and the evidence loop
 
@@ -117,11 +117,11 @@
 
 **Produces:** Engine guidance that proposes changes from repository evidence without overriding pinned authority or adopter review.
 
-- [ ] Replace the unconditional `.agents/standards/unslop/references/unslop-standard.md` instruction with v1/v2 pinned authority resolution through `repo-standards`, preserving old-v1 deployed resources.
-- [ ] Clarify that profile proposals draw on the adopter's durable occurrence evidence and observed reach/effect, not merely a text sample count or one agent's impression; duplicates do not count as recurrence.
-- [ ] Preserve the consumer-review boundary: the engine may propose create/revise/narrow/consolidate/retire actions but does not automatically edit or publish consumer profiles.
-- [ ] Keep package/sample analysis and profile validation explicitly separate from evidence that an agent followed or violated guidance.
-- [ ] Update the pressure case to test pinned authority, duplicate versus distinct evidence, and a reviewable proposal based on demonstrated repeated failures.
+- [x] Replace the unconditional `.agents/standards/unslop/references/unslop-standard.md` instruction with v1/v2 pinned authority resolution through `repo-standards`, preserving old-v1 deployed resources.
+- [x] Clarify that profile proposals draw on the adopter's durable occurrence evidence and observed reach/effect, not merely a text sample count or one agent's impression; duplicates do not count as recurrence.
+- [x] Preserve the consumer-review boundary: the engine may propose create/revise/narrow/consolidate/retire actions but does not automatically edit or publish consumer profiles.
+- [x] Keep package/sample analysis and profile validation explicitly separate from evidence that an agent followed or violated guidance.
+- [x] Update the pressure case to test pinned authority, duplicate versus distinct evidence, and a reviewable proposal based on demonstrated repeated failures.
 
 ## Task 5: Build the owning plugin projections and verify focused behavior
 
@@ -135,12 +135,12 @@
 
 **Produces:** Current plugin projections with no source/projection drift.
 
-- [ ] Run focused Marketplace validation for Unslop and Unslop+ source structures and linked Markdown resources.
-- [ ] Evaluate every pressure scenario against the final source guidance; resolve ambiguity where v1, v2, adoption, or provider absence could lead to a different result.
-- [ ] Regenerate with `py -3 tools/run.py marketplace --apply` and inspect the resulting owning-plugin diffs for source parity.
-- [ ] Run `py -3 tools/run.py marketplace --check`, `py -3 tools/build_marketplace.py --check`, and `py -3 tools/validate_markdown_links.py --check`. Evaluate the Markdown pressure scenarios with the relevant skill; this repository treats those as evaluator prompts, not pytest cases.
-- [ ] Do not run the full gate redundantly before a successful hooked commit; the normal commit hook owns it.
-- [ ] Confirm no consumer subscription, legacy contract, standard deployment, or other repository changed as a side effect.
+- [x] Run focused Marketplace validation for Unslop and Unslop+ source structures and linked Markdown resources.
+- [x] Evaluate every pressure scenario against the final source guidance; resolve ambiguity where v1, v2, adoption, or provider absence could lead to a different result.
+- [x] Regenerate with `py -3 tools/run.py marketplace --apply` and inspect the resulting owning-plugin diffs for source parity.
+- [x] Run `py -3 tools/run.py marketplace --check`, `py -3 tools/build_marketplace.py --check`, and `py -3 tools/validate_markdown_links.py --check`. Evaluate the Markdown pressure scenarios with the relevant skill; this repository treats those as evaluator prompts, not pytest cases.
+- [x] Do not run the full gate redundantly before a successful hooked commit; the normal commit hook owns it.
+- [x] Confirm no consumer subscription, legacy contract, standard deployment, or other repository changed as a side effect.
 
 ## Task 6: Whole-range review and closeout
 
@@ -154,7 +154,7 @@
 
 **Produces:** A reviewed Plan 6 slice with accurate plan and roadmap status.
 
-- [ ] Run the normal hooked commit path for source changes; preserve the future roadmap and all still-live later work.
+- [x] Run the normal hooked commit path for source changes; preserve the future roadmap and all still-live later work.
 - [ ] Obtain a fresh whole-range review against the branch merge base, including standard authority, v1/v2 compatibility, adopter versus non-adopter boundaries, projection parity, and scenario coverage. Fix all Critical and Important findings, then request a fresh review of corrections.
 - [ ] Record implementation head and review outcome in the Plan 6 row and mark this plan `completed-awaiting-retirement`; keep Plan 7 and Plan 8 pending.
 - [ ] Use the repository planning-artifact completion workflow and task ledger to record each completed plan task with its evidence.

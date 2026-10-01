@@ -1,6 +1,6 @@
 ---
 name: unslop-profiles
-description: Use when a task route or recurring failure cue indicates that operational anti-slop guidance may apply, to find, read, and apply matching consumer or generic profiles during work and review.
+description: Use when a task route or recurring failure cue indicates that operational anti-slop guidance may apply, to find and apply matching profiles and record distinct evidence for an explicitly adopted consumer feedback loop.
 metadata:
   source-id: unslop-profiles
   source-path: skills/unslop-profiles/SKILL.md
@@ -13,8 +13,8 @@ metadata:
     - a software task fits a bundled generic profile and profile guidance would improve the result.
     - a recurring profile failure cue appears in actual work or review.
   do_not_use_when:
-    - no available profile's trigger and scope fit the task.
-    - proposing or maintaining profile content from recurring evidence; use unslop-engine.
+    - no available profile fits, there is no explicit consumer adoption, and no recurring failure cue needs recording.
+    - drafting, revising, consolidating, or retiring profile guards from evidence; follow the adopter's pinned management guide, with unslop-engine as optional proposal support.
   related_skills:
     - unslop-engine
     - writing
@@ -27,11 +27,12 @@ Find and apply operational profiles when a workflow route or task trigger indica
 
 ## Discover the applicable profiles
 
-1. Read the current task and any applicable workflow route. Identify the profile's declared trigger and scope before deciding it applies.
-2. If the consumer explicitly adopts the `unslop` Operating Model standard in `.agents/contracts/operating-standards.json`, read `.agents/contracts/unslop.json` and search only its declared `profile_roots` for Markdown profiles. The default root is `.agents/unslop`. Read each matching consumer profile before using it. Do not infer adoption from a directory or ambient plugin alone.
-3. Find matching bundled profiles under `references/profiles/` using the task map below, then read each profile that fits. The consumer standard and Unslop+ are independently optional: use available generic profiles if the consumer standard is absent, and use consumer profiles when exposed by the adopted standard even when Writing Pack is unavailable.
-4. Apply only profiles whose triggers and scopes fit. Multiple compatible profiles may guide the same task. Preserve each profile's source and scope; do not silently reconcile conflicting guidance. Doctrine, evidence, user intent, and task requirements bound every profile.
-5. If no profile fits, skip profile application. Do not force a nearby profile onto the work.
+1. Read the current task and its applicable workflow route. Identify a profile's trigger and scope before deciding it applies.
+2. Determine adoption only from the repository's explicit subscription. Use `repo-standards` to read `.agents/contracts/operating-standards.json`, the named certification, and the exact immutable definition. Do not use the current catalog or installed skill version to replace that authority.
+3. Follow the pinned version's consumer resources. For v1, use the deployed configuration and paths specified by that historical definition; read `.agents/contracts/unslop.json` and its declared `profile_roots` only when those pinned resources define them. For v2, follow the certification and repository workflow routes to applicable profiles under the canonical `.agents/unslop/` location. Do not require `.agents/contracts/unslop.json`, a fixed profile shape, or a current-version upgrade for v2.
+4. Find matching bundled profiles under `references/profiles/` using the task map below, then read each profile that fits. Consumer adoption and Unslop+ are independently optional: use available generic profiles when the consumer standard is absent, and use consumer profiles when the adopted standard routes them even when Writing Pack is unavailable.
+5. Apply only profiles whose triggers and scopes fit. Multiple compatible profiles may guide the same task. Preserve each profile's source and scope; do not silently reconcile conflicting guidance. Doctrine, evidence, user intent, and task requirements bound every profile.
+6. If no profile fits, skip profile application. Do not force a nearby profile onto the work.
 
 | Task scope                                           | Bundled profile                               |
 | ---------------------------------------------------- | --------------------------------------------- |
@@ -58,6 +59,18 @@ Find and apply operational profiles when a workflow route or task trigger indica
 - Do not mechanically delete a word, reshape prose, or add ceremony solely to satisfy a profile. A profile correction must improve the actual result.
 - When profiles appear to conflict, identify the conflicting guidance and its scope. Follow authoritative doctrine and the user's requirements; surface a material unresolved conflict instead of silently merging the profiles.
 - For sustained prose, use the `writing` workflow when that capability is available. The generic writing profile remains available for a narrow review or when no suitable writing provider is available.
+
+## Maintain an adopted repository's feedback loop
+
+When the repository explicitly adopts `unslop`, and this capability is available for relevant work:
+
+- When a concrete failure or near miss matches an existing or candidate repository pattern, inspect its durable observations under `.agents/unslop/` before adding evidence.
+- Record a distinct occurrence in the repository's existing organization, linking the task, work surface, or stable evidence that lets a later agent find it. Note whether a relevant guard was available at the work point, routed, read, followed, and effective when those facts are knowable. Keep unknown facts unknown.
+- Do not add a second occurrence for duplicate comments or reports about the same underlying work. Connect distinct incidents across agents and sessions so the repository can assess recurrence later.
+- Use the pinned standard's standalone management guide to decide whether evidence warrants creating, revising, narrowing, consolidating, or retiring a guard. An available `unslop-engine` can help prepare a proposal; it does not replace the guide or the repository's review process.
+- Do not turn an observation into a profile automatically. A profile is reusable corrective guidance, not an incident log or an assertion that an agent violated policy.
+
+If the repository has not adopted `unslop`, do not create repository-specific occurrence records or certification duties. Matching bundled generic profiles may still guide the current work.
 
 ## Boundaries
 

@@ -4,15 +4,17 @@ An unslop profile protects a repository from repeated agent mistakes with durabl
 
 ## Record and connect occurrences
 
-When an agent recognizes a recurring mistake or a near miss, add a concise observation under `.agents/unslop/`. Include enough context to distinguish a new incident from a duplicate report and link it to a candidate pattern or existing guard. Record whether the relevant guard was available, read, followed, and effective when that can be established.
+When a concrete failure or near miss may reveal a recurring agent mistake, inspect the existing observations and add a concise record under `.agents/unslop/` when it adds distinct evidence. Include enough task or work-surface context and a durable evidence reference to distinguish the incident, then connect it to a candidate pattern or existing guard. For example: “Release PR 52 omitted the three-attempt limit from the retry description; this is a separate draft from PR 41. The release workflow did not link the retry-claims guard, and there is no evidence the author read it.”
+
+Record whether the guard could be found, was available at the work point, was read or followed, and changed the result when those facts can be established. Say when the evidence is unknown. Keep the record concise and use the repository's chosen organization; there is no required field list, per-pattern file, or separate database. Do not add every review comment as another occurrence: check whether reports refer to the same underlying work before treating them as independent incidents.
 
 ## Improve only from evidence
 
-Compare distinct incidents before treating a behavior as a pattern. Write or revise a guard when evidence shows a repeated mistake or a useful near miss. State the recognition cue, corrective action, applicable scope, and boundaries that prevent false positives. Keep candidate observations when the evidence does not yet support a durable rule.
+Agents working in later sessions compare the durable observations before treating a behavior as a pattern. Separate incidents across tasks or work sessions can show recurrence; duplicate comments or reports about one draft cannot. Write or revise a guard when the distinct evidence supports a reusable correction or a near miss reveals a concrete opportunity to prevent the mistake. State the recognition cue, corrective action, applicable scope, and boundaries that prevent false positives. Keep candidate observations when the evidence does not yet support a durable guard.
 
 ## Review the result
 
-After later work, assess whether the guard reached the agent and changed the behavior. Missing routing calls for a better route. A guard that was read but did not help calls for a clearer or narrower correction. A useful guard that was ignored calls for addressing the decision point where it was bypassed. A duplicate observation does not count as independent recurrence.
+After later work, assess whether the guard reached the agent and changed the behavior. If it was not routed or available at the work point, improve the route. If it was read but did not help, clarify or narrow the corrective move using the observed failure. If useful guidance was read and ignored, inspect the decision point and address why it was bypassed; do not assume adding more wording will help. A duplicate observation does not count as independent recurrence, and an unknown reach or effect must remain unknown rather than being guessed.
 
 ## Scale with the repository
 
