@@ -51,11 +51,11 @@
 
 **Produces:** A standard-library-only normalizer that operates on explicitly supplied paths, supports `--check` and `--apply`, and applies a caller-selected line-ending and final-newline policy without repository-wide guessing.
 
-- [ ] Write behavior tests for LF and CRLF conversion, bare-CR normalization, required final newline, check-mode drift reporting, apply-mode convergence, repeated apply idempotence, and paths with spaces.
-- [ ] Add refusal tests for missing paths, binary/NUL content, and undecodable content; verify check mode does not change file bytes and apply mode does not alter rejected or unselected paths.
-- [ ] Implement explicit `--check`/`--apply`, `--line-ending {lf,crlf}`, `--final-newline {ensure,forbid}`, and one-or-more path arguments. Preserve an existing UTF-8 BOM, normalize only selected UTF-8 text, and fail clearly rather than guessing on unsupported content.
-- [ ] Add `gitattributes.example` with a declared text/EOL policy and binary override; label it as an editable example, not a mandatory global configuration.
-- [ ] Run the focused normalizer suite and Ruff; confirm only standard-library runtime imports.
+- [x] Write behavior tests for LF and CRLF conversion, bare-CR normalization, required final newline, check-mode drift reporting, apply-mode convergence, repeated apply idempotence, and paths with spaces.
+- [x] Add refusal tests for missing paths, binary/NUL content, and undecodable content; verify check mode does not change file bytes and apply mode does not alter rejected or unselected paths.
+- [x] Implement explicit `--check`/`--apply`, `--line-ending {lf,crlf}`, `--final-newline {ensure,forbid}`, and one-or-more path arguments. Preserve an existing UTF-8 BOM, normalize only selected UTF-8 text, and fail clearly rather than guessing on unsupported content.
+- [x] Add `gitattributes.example` with a declared text/EOL policy and binary override; label it as an editable example, not a mandatory global configuration.
+- [x] Run the focused normalizer suite and Ruff; confirm only standard-library runtime imports. Six behavior tests pass; source and generated normalization asset hashes match.
 
 Run: `py -3 -m pytest -q skills/tracked-repo-hooks/tests/assets/test_normalize_text.py` and `py -3 -m ruff check skills/tracked-repo-hooks/assets/normalization skills/tracked-repo-hooks/tests/assets/test_normalize_text.py`.
 
