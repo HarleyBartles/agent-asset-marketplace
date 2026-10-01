@@ -138,7 +138,7 @@ New content remains inside these owner skills under `assets/`, `references/`, an
 - [x] Run `py -3 tools/run.py marketplace --apply`, focused checker suites, and `py -3 -m pytest -q tests/shipping/test_aom_standard_assets.py`. The normal commit hook supplies the complete repository gate.
 - [x] Stage intended source, tests, package metadata, and generated projections; commit. Confirm the commit is Plan 2 scope and the worktree is clean.
 - [x] Obtain fresh whole-change review against this plan and approved spec. Fix Critical and Important findings, regenerate affected outputs, and repeat focused checks. Final fresh review of base `1847f5d9c` through head `d6f8947f1` found no Critical or Important issues; the one Minor CLI finding was fixed, tested, regenerated, and re-reviewed.
-- [ ] Mark this plan `completed-awaiting-retirement` after the fully reviewable handoff. Keep the roadmap active and preserve its future plans.
+- [x] Mark this plan `completed-awaiting-retirement` after the fully reviewable handoff. The final reviewed implementation head is `d6f8947f1`; Plan 11 supplies the hosted Linux evidence. Keep the roadmap active and preserve its future plans.
 
 **Exit:** Repositories can select, edit, replace, or omit AOM assets; isolated package behavior supports that workflow, and self-certification remains a repository-owned claim.
 

@@ -11,18 +11,28 @@ import pytest
 ROOT = Path(__file__).resolve().parents[2]
 
 
+def _fixture_env() -> dict[str, str]:
+    import os
+
+    env = os.environ.copy()
+    for name in ("GIT_DIR", "GIT_WORK_TREE", "GIT_INDEX_FILE"):
+        env.pop(name, None)
+    return env
+
+
 def test_changed_python_files_use_staged_snapshot_when_hook_marks_it(tmp_path: Path, monkeypatch) -> None:
     repo = tmp_path / "staged-python"
     repo.mkdir()
-    subprocess.run(["git", "init"], cwd=repo, check=True, capture_output=True)
-    subprocess.run(["git", "config", "user.email", "test@test"], cwd=repo, check=True)
-    subprocess.run(["git", "config", "user.name", "Test"], cwd=repo, check=True)
+    env = _fixture_env()
+    subprocess.run(["git", "init"], cwd=repo, env=env, check=True, capture_output=True)
+    subprocess.run(["git", "config", "user.email", "test@test"], cwd=repo, env=env, check=True)
+    subprocess.run(["git", "config", "user.name", "Test"], cwd=repo, env=env, check=True)
     source = repo / "sample.py"
     source.write_text("value = 1\n", encoding="utf-8")
-    subprocess.run(["git", "add", "sample.py"], cwd=repo, check=True)
-    subprocess.run(["git", "commit", "-m", "base"], cwd=repo, check=True, capture_output=True)
+    subprocess.run(["git", "add", "sample.py"], cwd=repo, env=env, check=True)
+    subprocess.run(["git", "commit", "-m", "base"], cwd=repo, env=env, check=True, capture_output=True)
     source.write_text("value = 2\n", encoding="utf-8")
-    subprocess.run(["git", "add", "sample.py"], cwd=repo, check=True)
+    subprocess.run(["git", "add", "sample.py"], cwd=repo, env=env, check=True)
 
     spec = importlib.util.spec_from_file_location("run_under_test", ROOT / "tools" / "run.py")
     module = importlib.util.module_from_spec(spec)
@@ -31,6 +41,9 @@ def test_changed_python_files_use_staged_snapshot_when_hook_marks_it(tmp_path: P
     spec.loader.exec_module(module)
     monkeypatch.setattr(module, "ROOT", repo)
     monkeypatch.setenv("REPO_STANDARDS_STAGED_SNAPSHOT", "1")
+    monkeypatch.delenv("GIT_DIR", raising=False)
+    monkeypatch.delenv("GIT_WORK_TREE", raising=False)
+    monkeypatch.delenv("GIT_INDEX_FILE", raising=False)
 
     assert module._changed_python_files("HEAD") == [Path("sample.py")]
 

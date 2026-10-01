@@ -31,7 +31,7 @@ Resolve the stated capabilities against skills available at runtime, under the b
 
 ## Local commands and paths
 
-Canonical marketplace skills live under `skills/<skill-id>/`; reusable resources live under `shared/`; product membership lives under `src/plugin-definitions/<plugin>/contents.json`. Repository-local skills use `.agents/skills/<skill>/` and exact `repo.local_skills` registration. Read `writing-skills/references/local-and-marketplace-custody.md` and `source-grounded-authoring.md` when custody or source decomposition matters.
+Canonical marketplace skills live under `skills/<skill-id>/`; reusable resources live under `shared/`; product membership lives under `src/plugin-definitions/<plugin>/contents.json`. Repository-authored skills live under `.agents/skills/<skill>/` and need no separate inventory. Read `writing-skills/references/local-and-marketplace-custody.md` and `source-grounded-authoring.md` when custody or source decomposition matters.
 
 Scaffold through `writing-skills/scripts/new_skill.py`, regenerate marketplace-wide changes with `py -3 tools/run.py marketplace --apply`, and refresh installed skills through the canonical marketplace target. MCP wrapper skills use the `using-<x>-mcp` name, a reference router, `agents/openai.yaml`, an icon, and a tool-surface reference.
 

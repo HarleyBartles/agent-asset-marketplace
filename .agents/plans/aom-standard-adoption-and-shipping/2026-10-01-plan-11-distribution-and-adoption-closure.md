@@ -2,7 +2,7 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use `subagent-driven-development` (recommended) or `executing-plans` to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Status:** completed-awaiting-retirement
+**Status:** in progress
 
 **Goal:** Close the Marketplace's AOM migration with direct evidence that the generated plugin installs in isolation, standards remain independently selectable and pinned, and the complete tracked gate passes on Windows and hosted Linux.
 
@@ -82,7 +82,30 @@
 - [x] Remove the workflow job condition that skips pull requests with `draft == true`; preserve the `ubuntu-latest` runner, clean detached commit check, dependency setup, and `githooks/pre-commit` hosted mode.
 - [x] Run `py -3 tools/run.py marketplace --check` and `py -3 tools/run.py validate --check` for any uncommitted adoption or documentation changes; stage intended paths and commit through the normal tracked hook.
 - [x] Push the completed branch and open a Draft PR against the repository's actual default branch; attach the PR to this Codex task.
-- [x] Wait for `.github/workflows/marketplace-validation.yml` to report the tracked `githooks/pre-commit` gate green on the exact PR head. If it fails, repair the owning source, commit, push, and repeat against the new head.
-- [x] Update the `tracked-validation-hook` certification with the exact commit whose hosted Linux gate passed and the Windows hook evidence for its staged tree; retain semantic and runtime limits.
-- [x] Commit and push the certification/roadmap closeout. Confirm Windows hook and hosted Linux gate status for the resulting head, and report any hosted result that is still pending without claiming certification prematurely.
-- [x] Complete a final whole-range review, ensure the working tree is clean, and report the Draft PR URL, exact reviewed head, local and hosted evidence, and any remaining human-owned post-handoff action.
+- [ ] Wait for `.github/workflows/marketplace-validation.yml` to report the tracked `githooks/pre-commit` gate green on the exact PR head. The earlier successful run checked GitHub's synthetic merge ref, not the PR head, so it is not exact-commit evidence. If the gate fails, repair the owning source, commit, push, and repeat against the new head.
+- [ ] Update the `tracked-validation-hook` certification with the exact commit whose hosted Linux gate passed and the Windows hook evidence for its staged tree; retain semantic and runtime limits.
+- [ ] Commit and push the certification/roadmap closeout. Confirm Windows hook and hosted Linux gate status for the resulting head, and report any hosted result that is still pending without claiming certification prematurely.
+- [ ] Complete a final whole-range review, ensure the working tree is clean, and report the Draft PR URL, exact reviewed head, local and hosted evidence, and any remaining human-owned post-handoff action.
+
+### Task 4: Repair whole-branch review findings before final handoff
+
+**Files:**
+
+- Modify: `githooks/pre-commit` and tests that exercise the actual repository hook and hosted workflow.
+- Modify: `.github/workflows/marketplace-validation.yml` to check out and assert the proposed commit SHA.
+- Modify: `requirements.txt`, `.agents/plugins/marketplace.json`, `src/plugin-definitions/marketplace-policy.json`, the marketplace registry builder/validator, and the obsolete tracked wheel.
+- Modify: skill-authoring guidance, repository routing/doctrine, the approved spec, and workflow pressure fixtures where review found retired behavior still stated as current.
+- Modify: Plan 2 and Plan 8 completion records and this plan's evidence.
+
+**Consumes:** The final range review of `3b39cc051..d6fc0a71d`, exact live GitHub run evidence, the approved AOM spec, and the recorded Plan 8 execution ledger.
+
+**Produces:** A hosted gate that proves the exact proposed commit, a repository hook that validates Git's actual commit candidate, no retired formatter payload or local-skill registration contract, and internally consistent adoption guidance and plan records.
+
+- [x] Add behavior tests for a real `git commit --only` using Git's temporary index, exact proposed-SHA checkout/validation, and repository-authored skills under `.agents/skills/` without a separate registration. Observe the expected failures before changing the implementation.
+- [x] Preserve `GIT_INDEX_FILE` in the hook's superproject candidate operations while preventing it from leaking into nested submodule commands. Confirm both path-limited commit behavior and preservation of separately staged work.
+- [x] Make the hosted workflow check out `${{ github.event.pull_request.head.sha || github.sha }}`, assert `HEAD` equals that exact SHA in a clean detached checkout, and pass the same SHA to hosted hook mode.
+- [x] Remove the retired Markdown formatter dependencies and tracked wheel; remove the `repo.local_skills` declaration and consumer requirement from the marketplace policy, generator, validator, and authoring routes while retaining repository-owned `.agents/skills/` content as valid.
+- [x] Reconcile the approved Markdown authoring decision and existing-pin upgrade sequence across the spec, repo-standards adoption guide, skill-authoring guidance, and pressure fixtures. Keep historical plan records but resolve their incomplete completion checkboxes using recorded commit evidence.
+- [ ] Regenerate only canonical downstream Marketplace projections, remove stale active references, and run the complete normal Windows hook through a commit.
+- [ ] Push the correction commit to Draft PR #345, verify hosted Linux checks the exact head SHA and passes, then update certification and roadmap evidence. Commit/push the documentation closeout and verify the final PR head again.
+- [ ] Build a fresh final review package for the exact final range, obtain fresh read-only whole-branch and plan review, resolve all Critical/Important findings, run completion-readiness, and leave the checkout clean.

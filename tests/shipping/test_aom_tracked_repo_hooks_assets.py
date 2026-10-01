@@ -70,6 +70,8 @@ def test_generated_package_assets_run_from_an_isolated_consumer(tmp_path: Path) 
     sample.write_bytes(b"line one\r\nline two\r")
     env = os.environ.copy()
     env.pop("PYTHONPATH", None)
+    for name in ("GIT_DIR", "GIT_WORK_TREE", "GIT_INDEX_FILE"):
+        env.pop(name, None)
     normalized = subprocess.run(
         [
             sys.executable,

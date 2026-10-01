@@ -109,7 +109,7 @@ ______________________________________________________________________
 - [x] Preserve staged-candidate validation, apply/check behavior, diagnostics, command ordering, and the Windows/Linux shared target set.
 - [x] Confirm the hook and hosted workflow invoke the same logical CI gate and that no user command is silently dropped.
 - [x] Run `py -3 tools/check_agent_standards.py --check`, `py -3 tools/run.py repo-standards --check`, and the focused checker suite.
-- [ ] Run the complete normal Windows pre-commit gate by committing this atomic change; do not duplicate the full gate immediately before or after that hooked commit.
+- [x] Run the complete normal Windows pre-commit gate by committing this atomic change; do not duplicate the full gate immediately before or after that hooked commit. Task 2 execution evidence records the full hook passing on atomic commit `534ee8400`.
 
 ### Task 3: Review and close the migration slice
 

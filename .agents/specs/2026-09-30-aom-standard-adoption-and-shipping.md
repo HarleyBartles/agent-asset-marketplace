@@ -278,7 +278,7 @@ The old `agent-operating-model.json` exception record is a legacy migration surf
 
 Current deployed scaffolders and byte-provenance enforcement must be reconciled with consumer ownership. Consumer migration is an explicit adoption task, not an automatic consequence of shipping the new plugin. Retiring a catalog entry does not rewrite old Git-pinned subscriptions. Record migrations honestly and preserve active future plans during artifact cleanup.
 
-The Markdown problem identified is inconsistent prose hard wrapping. Carry the authoring convention of one paragraph per source line in writing-pack, preserving code/list/table structure. It does not warrant a repo adoption standard or mandatory formatter system.
+The Markdown problem identified is inconsistent prose hard wrapping. Keep concise, optional authoring guidance in writing-pack: favor consistent paragraph widths when starting or substantially revising a document, follow a clear existing convention, and avoid reflowing unrelated text. Do not prescribe one paragraph per source line, a fixed width, a repo adoption standard, or a mandatory formatter system.
 
 ## 8. Acceptance criteria for later implementation
 

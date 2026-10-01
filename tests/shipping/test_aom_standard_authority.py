@@ -28,14 +28,21 @@ FOCUSED_SKILLS = (
 
 
 def _run(args: list[str], *, cwd: Path, env: dict[str, str]) -> subprocess.CompletedProcess[bytes]:
-    return subprocess.run(args, cwd=cwd, env=env, capture_output=True, check=False)
+    clean_env = env.copy()
+    for name in ("GIT_DIR", "GIT_WORK_TREE", "GIT_INDEX_FILE"):
+        clean_env.pop(name, None)
+    return subprocess.run(args, cwd=cwd, env=clean_env, capture_output=True, check=False)
 
 
 def _git(authority: Path, *args: str) -> bytes:
+    env = os.environ.copy()
+    for name in ("GIT_DIR", "GIT_WORK_TREE", "GIT_INDEX_FILE"):
+        env.pop(name, None)
     result = subprocess.run(
         ["git", "-C", str(authority), *args],
         capture_output=True,
         check=False,
+        env=env,
     )
     assert result.returncode == 0, result.stderr.decode("utf-8", errors="replace")
     return result.stdout.strip()

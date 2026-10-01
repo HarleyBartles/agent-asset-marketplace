@@ -245,9 +245,6 @@
       "category": "Productivity"
     }
   ],
-  "repo": {
-    "local_skills": []
-  },
   "notes": [
     "Canonical Codex marketplace source layout.",
     "Active marketplace plugins are limited to the protected plugin roots only."
