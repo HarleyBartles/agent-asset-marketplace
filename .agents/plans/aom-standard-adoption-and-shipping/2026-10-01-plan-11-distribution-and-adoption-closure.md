@@ -39,23 +39,23 @@
 **Files:**
 
 - Read: `.agents/docs/distribution.md`, `.agents/plugins/marketplace.json`, `dist/plugins/agent-operating-model/.codex-plugin/plugin.json`, and the generated AOM bundle manifest.
-- Modify only under: `../_agent-scratch/agent-asset-marketplace/codex/open-runbook-playbook-composition/plan-11-distribution-and-adoption-closure/`.
+- Modify only under: the plan's off-repo workspace returned by `workspace.py --apply PLAN_FILE`.
 
 **Consumes:** Plan 10 commit `45a718ae4` and its generated Marketplace projection.
 
 **Produces:** A recorded local proof that Codex can resolve and install the self-contained AOM package from this checkout without user-global state changes.
 
-- [ ] Create the scratch directory above following `.agents/doctrine/non-repo-locations-policy.md`; set `CODEX_HOME` only for the Codex CLI process to a new `codex-home` directory beneath it.
-- [ ] From PowerShell, set `$repoRoot = (git rev-parse --show-toplevel).Trim()` and `$env:CODEX_HOME` to the isolated `codex-home`, then run `codex plugin marketplace add $repoRoot --json` and `codex plugin add agent-operating-model@agent-asset-marketplace --json`.
+- [ ] Resolve the shared off-repo plan workspace with `workspace.py --apply PLAN_FILE` and keep its returned path in `$workspacePath`; create `$workspacePath\codex-home` for this proof.
+- [ ] From PowerShell, set `$repoRoot = (git rev-parse --show-toplevel).Trim()` and `$env:CODEX_HOME = Join-Path $workspacePath 'codex-home'`, then run `codex plugin marketplace add $repoRoot --json` and `codex plugin add agent-operating-model@agent-asset-marketplace --json`.
 - [ ] Run `codex plugin list --json` and inspect the isolated installed package; confirm the package manifest and standard skills are present and retired `repo-shape` and `markdown-formatting` payloads are absent.
-- [ ] Record the command results and installed package path in `../_agent-scratch/agent-asset-marketplace/codex/open-runbook-playbook-composition/plan-11-distribution-and-adoption-closure/evidence.md`; keep temporary Codex state outside the repository and preserve it until the evidence is recorded.
+- [ ] Record the command results and installed package path in `$workspacePath\evidence.md`; keep temporary Codex state outside the repository and preserve it until the evidence is recorded.
 
 ### Task 2: Verify selectable standards and exact source authority
 
 **Files:**
 
 - Read: `.agents/contracts/operating-standards.json`, `.agents/contracts/standards-certification.md`, `skills/repo-standards/references/source-resolution.md`, each selected `standard.md`, and the behavior cases under `skills/repo-standards/tests/behavior/`.
-- Modify only under: the Task 1 scratch directory if a disposable consumer fixture is needed.
+- Modify only under: the off-repo plan workspace resolved by `workspace.py --apply PLAN_FILE` if a disposable consumer fixture is needed.
 
 **Consumes:** The isolated installed package from Task 1 and the immutable source pins in the repository subscription record.
 
