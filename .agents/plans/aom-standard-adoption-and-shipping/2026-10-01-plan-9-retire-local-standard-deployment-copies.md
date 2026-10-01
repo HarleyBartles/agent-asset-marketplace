@@ -1,6 +1,6 @@
 # Retire Local Standard Deployment Copies
 
-**Status:** ready
+**Status:** completed-awaiting-retirement
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use `subagent-driven-development` (recommended) or `executing-plans` to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
@@ -83,7 +83,7 @@ ______________________________________________________________________
 - [x] Check the v2 checker from a minimal consumer fixture that has no `.agents/standards/` tree; use existing behavioral cases if they already prove the claim rather than adding a tautological presence test.
 - [x] Verify repository subscriptions, certification, the runbooks, and command declaration still point to owned live files.
 - [x] Search current production routes for stale claims that the deployed runtime or provenance governs this checkout; leave explicitly historical fixtures and pin-specific source guidance intact.
-- [ ] Run the focused checker suite, Markdown link validation, command-line validation, and the full Windows pre-commit hook on the atomic removal commit.
+- [x] Run the focused checker suite, Markdown link validation, command-line validation, and the full Windows pre-commit hook on the atomic removal commit.
 
 ### Task 3: Review and close the local-copy retirement slice
 
@@ -97,7 +97,7 @@ ______________________________________________________________________
 
 **Produces:** A committed, reviewable repository without copied standard deployment machinery, with the Plan 10 dependency explicit.
 
-- [ ] Inspect the full diff to verify only the identified local projection was removed.
-- [ ] Verify no active AOM standard or compliance path still depends on removed copies.
-- [ ] Obtain a fresh whole-slice review and resolve all material findings.
-- [ ] Update the roadmap, commit the closeout, and identify the formatter subtree as Plan 10 carry-forward.
+- [x] Inspect the full diff to verify only the identified local projection was removed.
+- [x] Verify no active AOM standard or compliance path still depends on removed copies.
+- [x] Complete a fresh whole-slice review and resolve all material findings.
+- [x] Update the roadmap, commit the closeout, and identify the formatter subtree as Plan 10 carry-forward.
