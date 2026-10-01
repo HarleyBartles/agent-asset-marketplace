@@ -40,6 +40,9 @@ def test_target_help_describes_modes_and_side_effects_without_running_target() -
 
     assert result.returncode == 0, result.stderr
     assert "--apply" in result.stdout
+    usage = next(line for line in result.stdout.splitlines() if line.startswith("Usage:"))
+    assert "--apply" in usage
+    assert "--check" not in usage
     assert "writes" in result.stdout.lower()
     assert "usage: apply_change.py" not in result.stdout.lower()
 
@@ -86,6 +89,8 @@ def test_selected_target_without_mode_fails_without_running_it(tmp_path: Path) -
     assert result.returncode != 0
     assert "mode" in result.stderr.lower()
     assert "usage:" in result.stderr.lower()
+    assert "--apply" in result.stderr
+    assert "--check" not in result.stderr
     assert not destination.exists()
 
 

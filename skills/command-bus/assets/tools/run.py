@@ -84,7 +84,8 @@ def _print_top_help() -> int:
 def _print_target_help(name: str, target: dict[str, Any]) -> None:
     modes = ", ".join(f"--{mode}" for mode in target["supported_modes"])
     prerequisites = "; ".join(target["prerequisites"]) or "None declared."
-    print(f"Usage: run.py {name} (--help|--check|--apply|--dry-run) [-- <target-arguments>...]")
+    usage_modes = "|".join(("--help", *(f"--{mode}" for mode in target["supported_modes"])))
+    print(f"Usage: run.py {name} ({usage_modes}) [-- <target-arguments>...]")
     print(f"\n{target['description']}")
     print(f"Supported modes: {modes}.")
     print(f"Prerequisites: {prerequisites}")
@@ -119,9 +120,10 @@ def main(argv: list[str] | None = None) -> int:
         _print_target_help(name, target)
         return 0
     if not target_arguments or target_arguments[0] not in MODE_OPTIONS:
+        usage_modes = "|".join(("--help", *(f"--{supported}" for supported in target["supported_modes"])))
         return _fail(
             f"target {name!r} requires an explicit mode or --help",
-            usage=f"Usage: run.py {name} (--help|--check|--apply|--dry-run) [-- <target-arguments>...]",
+            usage=f"Usage: run.py {name} ({usage_modes}) [-- <target-arguments>...]",
         )
 
     mode_option = target_arguments[0]
