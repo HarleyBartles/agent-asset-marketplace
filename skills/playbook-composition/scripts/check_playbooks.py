@@ -10,7 +10,11 @@ from pathlib import Path
 from urllib.parse import unquote, urlsplit
 
 
-LINK = re.compile(r"!?\[[^\]]*\]\(([^)]+)\)")
+INLINE_LINK = re.compile(
+    r"!?\[[^\]]*\]\(\s*(<[^>\n]*>|(?:\\.|[^()\s]|\([^()\n]*\))+)(?:\s+(?:\"[^\"]*\"|'[^']*'|\([^)]*\)))?\s*\)"
+)
+REFERENCE_DEFINITION = re.compile(r"^[ \t]{0,3}\[([^\]\n]+)\]:[ \t]*(<[^>\n]*>|(?:\\.|[^\s])+)", re.MULTILINE)
+REFERENCE_USE = re.compile(r"(?<!!)\[([^\]\n]+)\](?:\[([^\]\n]*)\])?")
 DISCLAIMER = (
     "Review is still required for semantic usefulness and concern classification, effective routing, "
     "non-Markdown routes, and cross-stage fit. This check does not certify compliance."
@@ -30,6 +34,23 @@ def _local_target(markdown: Path, raw: str, root: Path) -> Path | None:
     if not resolved.is_relative_to(root):
         raise ValueError(f"link escapes repository: {target}")
     return resolved
+
+
+def _markdown_link_targets(content: str) -> list[tuple[str | None, str | None]]:
+    targets = [(match.group(1), None) for match in INLINE_LINK.finditer(content)]
+    definitions: dict[str, str] = {}
+    for match in REFERENCE_DEFINITION.finditer(content):
+        label = " ".join(match.group(1).split()).casefold()
+        definitions[label] = match.group(2)
+    for line in content.splitlines():
+        if REFERENCE_DEFINITION.match(line):
+            continue
+        without_inline_links = INLINE_LINK.sub("", line)
+        for match in REFERENCE_USE.finditer(without_inline_links):
+            label = match.group(2) if match.group(2) else match.group(1)
+            normalized = " ".join(label.split()).casefold()
+            targets.append((definitions.get(normalized), label))
+    return targets
 
 
 def _repo_file(root: Path, value: str) -> Path:
@@ -85,7 +106,10 @@ def main(argv: list[str] | None = None) -> int:
             if not path.is_file():
                 continue
             content = path.read_text(encoding="utf-8")
-            for raw in LINK.findall(content):
+            for raw, label in _markdown_link_targets(content):
+                if raw is None:
+                    errors.append(f"{path.relative_to(root).as_posix()}: undefined Markdown reference: [{label}]")
+                    continue
                 try:
                     target = _local_target(path, raw, root)
                 except ValueError as exc:

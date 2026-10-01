@@ -65,6 +65,7 @@ def test_reports_broken_links_and_unlinked_documents_as_candidates(tmp_path: Pat
     contracts.mkdir(parents=True)
     (doctrine / "routed.md").write_text("See [contract](../contracts/rules.md).\n", encoding="utf-8")
     (doctrine / "broken.md").write_text("See [missing](not-here.md).\n", encoding="utf-8")
+    (doctrine / "broken-reference.md").write_text("See [missing][not-defined].\n", encoding="utf-8")
     (contracts / "rules.md").write_text("Keep a durable invariant.\n", encoding="utf-8")
     (contracts / "orphan.md").write_text("A governance document without a static inbound link.\n", encoding="utf-8")
     (tmp_path / "AGENTS.md").write_text("Read [doctrine](.agents/doctrine/routed.md).\n", encoding="utf-8")
@@ -73,6 +74,7 @@ def test_reports_broken_links_and_unlinked_documents_as_candidates(tmp_path: Pat
 
     assert result.returncode == 1
     assert "broken local link" in result.stdout.lower()
+    assert "undefined markdown reference: [not-defined]" in result.stdout.lower()
     assert "candidate without an inbound markdown link" in result.stdout.lower()
     assert "orphan.md" in result.stdout
     assert "routed.md" not in result.stdout.split("candidate without an inbound markdown link:")[-1]
@@ -85,10 +87,10 @@ def test_route_roots_and_excludes_affect_static_discovery_without_certifying_rou
     doctrine.mkdir(parents=True)
     contracts.mkdir(parents=True)
     custom.mkdir()
-    (doctrine / "rule with spaces.md").write_text("A durable rule.\n", encoding="utf-8")
+    (doctrine / "rule.md").write_text("A durable rule.\n", encoding="utf-8")
     (doctrine / "runtime.md").write_text("A document loaded through plugin metadata.\n", encoding="utf-8")
-    (custom / "entry.md").write_text("Read [the rule](<../.agents/doctrine/rule with spaces.md>).\n", encoding="utf-8")
-    (tmp_path / "ignored.md").write_text("Read [the rule](<.agents/doctrine/rule with spaces.md>).\n", encoding="utf-8")
+    (custom / "entry.md").write_text("Read [the rule](<../.agents/doctrine/rule.md>).\n", encoding="utf-8")
+    (tmp_path / "ignored.md").write_text("Read [the rule](.agents/doctrine/rule.md).\n", encoding="utf-8")
     (tmp_path / "plugin.json").write_text('{"skill_reference": ".agents/doctrine/runtime.md"}\n', encoding="utf-8")
     before = {
         path.relative_to(tmp_path).as_posix(): path.read_bytes() for path in tmp_path.rglob("*") if path.is_file()
@@ -111,14 +113,15 @@ def test_unrelated_markdown_links_contribute_inbound_evidence_without_failing(tm
     (doctrine / "rule with spaces.md").write_text("A durable rule.\n", encoding="utf-8")
     (contracts / "contract.md").write_text("A repository contract.\n", encoding="utf-8")
     (tmp_path / "README.md").write_text(
-        "See [rule](<.agents/doctrine/rule with spaces.md>) and [missing](not-here.md).\n", encoding="utf-8"
+        "See [rule][policy] and [missing](not-here.md).\n\n[policy]: <.agents/doctrine/rule with spaces (policy).md>\n",
+        encoding="utf-8",
     )
 
     result = check(tmp_path)
 
     assert result.returncode == 0, result.stdout + result.stderr
     assert "README.md: broken local link" not in result.stdout
-    linked_candidate = "candidate without an inbound markdown link: .agents/doctrine/rule with spaces.md"
+    linked_candidate = "candidate without an inbound markdown link: .agents/doctrine/rule with spaces (policy).md"
     unlinked_candidate = "candidate without an inbound markdown link: .agents/contracts/contract.md"
     assert linked_candidate not in result.stdout.lower()
     assert unlinked_candidate in result.stdout.lower()

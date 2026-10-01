@@ -13,7 +13,11 @@ from urllib.parse import unquote, urlsplit
 
 
 DOCUMENT_SUFFIXES = {".md", ".markdown", ".json", ".yaml", ".yml", ".toml"}
-LINK = re.compile(r"!?\[[^\]]*\]\(([^)]+)\)")
+INLINE_LINK = re.compile(
+    r"!?\[[^\]]*\]\(\s*(<[^>\n]*>|(?:\\.|[^()\s]|\([^()\n]*\))+)(?:\s+(?:\"[^\"]*\"|'[^']*'|\([^)]*\)))?\s*\)"
+)
+REFERENCE_DEFINITION = re.compile(r"^[ \t]{0,3}\[([^\]\n]+)\]:[ \t]*(<[^>\n]*>|(?:\\.|[^\s])+)", re.MULTILINE)
+REFERENCE_USE = re.compile(r"(?<!!)\[([^\]\n]+)\](?:\[([^\]\n]*)\])?")
 DEFAULT_EXCLUDES = (".git/**",)
 
 
@@ -48,6 +52,23 @@ def _resolve_link(source: Path, raw: str, root: Path) -> Path | None:
     if not resolved.is_relative_to(root):
         raise ValueError(f"link escapes repository: {target}")
     return resolved
+
+
+def _markdown_link_targets(content: str) -> list[tuple[str | None, str | None]]:
+    targets = [(match.group(1), None) for match in INLINE_LINK.finditer(content)]
+    definitions: dict[str, str] = {}
+    for match in REFERENCE_DEFINITION.finditer(content):
+        label = " ".join(match.group(1).split()).casefold()
+        definitions[label] = match.group(2)
+    for line in content.splitlines():
+        if REFERENCE_DEFINITION.match(line):
+            continue
+        without_inline_links = INLINE_LINK.sub("", line)
+        for match in REFERENCE_USE.finditer(without_inline_links):
+            label = match.group(2) if match.group(2) else match.group(1)
+            normalized = " ".join(label.split()).casefold()
+            targets.append((definitions.get(normalized), label))
+    return targets
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -128,7 +149,11 @@ def main(argv: list[str] | None = None) -> int:
             if source in checked_route_sources:
                 errors.append(f"{source.relative_to(root).as_posix()}: cannot read route source: {exc}")
             continue
-        for raw in LINK.findall(content):
+        for raw, label in _markdown_link_targets(content):
+            if raw is None:
+                if source in checked_route_sources:
+                    errors.append(f"{source.relative_to(root).as_posix()}: undefined Markdown reference: [{label}]")
+                continue
             try:
                 target = _resolve_link(source, raw, root)
             except ValueError as exc:

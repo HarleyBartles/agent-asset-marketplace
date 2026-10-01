@@ -32,13 +32,13 @@ def test_accepts_standalone_concern_guide_without_fixed_headings(tmp_path: Path)
     assert "semantic usefulness" in result.stdout.lower()
 
 
-def test_resolves_angle_bracket_route_with_spaces_in_target(tmp_path: Path) -> None:
-    (tmp_path / "security guide.md").write_text("A cross-stage concern guide.\n", encoding="utf-8")
+def test_resolves_angle_bracket_route_with_parenthesized_target(tmp_path: Path) -> None:
+    (tmp_path / "security (concern).md").write_text("A cross-stage concern guide.\n", encoding="utf-8")
     (tmp_path / "AGENTS.md").write_text(
-        "For security concerns, read [security](<security guide.md>).\n", encoding="utf-8"
+        "For security concerns, read [security](<security (concern).md>).\n", encoding="utf-8"
     )
 
-    result = run_checker(tmp_path, "--document", "security guide.md", "--route-source", "AGENTS.md")
+    result = run_checker(tmp_path, "--document", "security (concern).md", "--route-source", "AGENTS.md")
 
     assert result.returncode == 0, result.stdout + result.stderr
 
@@ -50,6 +50,15 @@ def test_rejects_broken_local_link(tmp_path: Path) -> None:
 
     assert result.returncode == 1
     assert "missing.md" in result.stdout
+
+
+def test_rejects_undefined_reference_style_link(tmp_path: Path) -> None:
+    (tmp_path / "testing.md").write_text("See [policy][missing].\n", encoding="utf-8")
+
+    result = run_checker(tmp_path, "--document", "testing.md")
+
+    assert result.returncode == 1
+    assert "undefined markdown reference: [missing]" in result.stdout.lower()
 
 
 def test_rejects_document_missing_from_route_and_bad_route_source(tmp_path: Path) -> None:

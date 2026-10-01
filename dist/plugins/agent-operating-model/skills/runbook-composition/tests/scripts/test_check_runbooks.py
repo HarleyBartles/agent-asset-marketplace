@@ -31,12 +31,14 @@ def test_accepts_minimal_stage_guide_without_prescribed_headings(tmp_path: Path)
     assert "semantic usefulness" in result.stdout.lower()
 
 
-def test_resolves_angle_bracket_route_with_spaces_in_target(tmp_path: Path) -> None:
+def test_resolves_reference_route_with_angle_bracket_target_spaces_and_parentheses(tmp_path: Path) -> None:
     (tmp_path / "docs").mkdir()
-    (tmp_path / "docs/design guide.md").write_text("A lifecycle stage guide.\n", encoding="utf-8")
-    (tmp_path / "AGENTS.md").write_text("For design, read [the guide](<docs/design guide.md>).\n", encoding="utf-8")
+    (tmp_path / "docs/design guide (decision).md").write_text("A lifecycle stage guide.\n", encoding="utf-8")
+    (tmp_path / "AGENTS.md").write_text(
+        "For design, read [the guide][design].\n\n[design]: <docs/design guide (decision).md>\n", encoding="utf-8"
+    )
 
-    result = run_checker(tmp_path, "--document", "docs/design guide.md", "--route-source", "AGENTS.md")
+    result = run_checker(tmp_path, "--document", "docs/design guide (decision).md", "--route-source", "AGENTS.md")
 
     assert result.returncode == 0, result.stdout + result.stderr
 
@@ -48,6 +50,15 @@ def test_rejects_broken_local_link(tmp_path: Path) -> None:
 
     assert result.returncode == 1
     assert "absent.md" in result.stdout
+
+
+def test_rejects_undefined_reference_style_link(tmp_path: Path) -> None:
+    (tmp_path / "design.md").write_text("Consult [the guide][missing].\n", encoding="utf-8")
+
+    result = run_checker(tmp_path, "--document", "design.md")
+
+    assert result.returncode == 1
+    assert "undefined markdown reference: [missing]" in result.stdout.lower()
 
 
 def test_rejects_selected_document_without_supplied_route(tmp_path: Path) -> None:
