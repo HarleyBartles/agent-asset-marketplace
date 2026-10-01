@@ -26,7 +26,7 @@ Run the superproject command first from the actual start path. Any non-empty res
 
 The absolute common Git directory is anchored by Git to the active repository. Its parent is the main checkout for both a normal checkout and a linked worktree, including when the start path is nested below either checkout. Do not join a relative `--git-common-dir` result to an already-resolved checkout, and do not derive these locations from `Path(__file__)` or the process working directory.
 
-When `checkout-git` and `common-git` resolve to the same path, the worker is in the shared main checkout. Mutation must refuse that checkout by default. An explicit `--allow-shared-checkout` may continue only after current human approval and a prominent warning; it changes no path calculation and never permits a submodule.
+When `checkout-git` and `common-git` resolve to the same path, the worker is in the main checkout. Follow the user's requested workspace and repository worktree policy; do not invent an additional mutation-intent flag. A submodule checkout remains an invalid repository root for this workflow.
 
 ## Fresh-main gate
 
@@ -40,7 +40,7 @@ Before editing files:
 
 ## Worktree isolation and verification gate
 
-Use a dedicated linked worktree for repo mutation unless the user explicitly authorizes the shared checkout override. Before mutation, record:
+Use the repository's canonical worktree workflow for repo mutation. Before mutation, record:
 
 - current checkout and Git-derived main checkout;
 - task branch and base commit;

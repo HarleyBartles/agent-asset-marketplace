@@ -1,12 +1,12 @@
 # Retire Obsolete Standards and Markdown Formatter
 
-**Status:** ready
+**Status:** in progress
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use `subagent-driven-development` (recommended) or `executing-plans` to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Remove obsolete Markdown-formatting and root-gitignore standards and their old deployment surface, carry the useful Markdown authoring guidance into writing-pack, and retire the formatter wheel and gate integration without weakening repository line-ending normalization or the atomic Windows/Linux CI target.
 
-**Architecture:** Markdown prose authoring guidance belongs in the writing skill, not a separately subscribed formatting standard, consumer contract, custom formatter, or Marketplace wheel. The guidance gives a consistent readable source style without imposing a hard line-length rule or repository checker. Repository line endings remain governed by the active tracked validation hook and `.gitattributes`. Root-gitignore cleanup is no longer a standard or deployment target. Current repository-owned v2 subscriptions remain unchanged.
+**Architecture:** Markdown prose authoring guidance belongs in the writing skill, not a separately subscribed formatting standard, consumer contract, custom formatter, or Marketplace wheel. The guidance gives a consistent readable source style without imposing a hard line-length rule or repository checker. Repository line endings remain governed by the active tracked validation hook and `.gitattributes`. Root-gitignore cleanup is no longer a standard or deployment target. The entire `repo-shape` skill is an obsolete v1 structural/deployment compatibility layer; its history remains available from the exact source commit recorded by old consumers, while current repository-owned common tools move to `tools/`. Remove the retired shared-checkout mutation-intent flag from current repository tools and agent guidance; explicit `--apply` remains the mutation boundary and the worktree workflow governs checkout selection. Current repository-owned v2 subscriptions remain unchanged.
 
 **Tech Stack:** Python 3, existing writing-pack source, plugin build/generation tools, existing tracked validation hook and command declaration.
 
@@ -42,8 +42,10 @@
 
 - Formatter consumers: `.agents/contracts/repo-standards-commands.json`, `tools/new_plugin.py`, `tools/sync_skill_shared_references.py`, `.agents/playbooks/code-style.md`, old repository-shape scaffolding/docs, and the formatter skill itself.
 - Formatter source/package: `skills/markdown-formatting/`, `.agents/standards/markdown-formatting/`, `.mdformat.toml`, `src/packages/mdformat-safe-link-labels/`, and generated Marketplace plugin/wheel files.
+- Legacy coordinator: `skills/repo-shape/` and the compatibility entrypoint `skills/repo-standards/scripts/repo_standards.py`. Live repository utility functions used by `tools/run.py` are `deploy_vendor_profiles.py` and `validate_skill_scripts.py`; move these two to `tools/` before retiring the old skill.
 - Obsolete local contracts: `.agents/contracts/markdown-formatting.json`, `.agents/contracts/agent-operating-model.json` (v1 surface exceptions), and `.agents/contracts/unslop.json` (v1 profile roots). Confirm remaining production references before deleting each.
 - Obsolete root-gitignore deployment source: the old repo-shape catalog/manifest entry, `scaffold_gitignore.py`, its shell/PowerShell wrappers and scaffold-all calls, templates, tests, and guidance. Keep ordinary root `.gitignore` policy and version-control configuration intact.
+- Retired shared-checkout flag: `tools/shared_checkout.py`, `tools/run.py`, `tools/new_plugin.py`, `tools/sync_runtime_agents.py`, the writing-skills scaffolder, the now-worktree creator's deprecated no-op flag, CLI validation policy, and Repo Worker Pack docs/tests.
 
 ______________________________________________________________________
 
@@ -59,10 +61,10 @@ ______________________________________________________________________
 
 **Produces:** Concise agent-facing advice for readable, consistent Markdown authoring without a line-length gate.
 
-- [ ] Write the useful source-formatting advice in the existing writing-pack entry point; preserve the human-readable preference for consistent paragraph widths without prescribing an exact number.
-- [ ] Route code-style guidance to the writing capability for Markdown authoring; remove the deleted formatter command and claims of machine-enforced wrapping.
-- [ ] Preserve authored document semantics, code blocks, tables, and existing paragraph content; do not bulk-reformat unrelated files.
-- [ ] Confirm that newline normalization remains separately enforced by the tracked gate and `.gitattributes`.
+- [x] Write the useful source-formatting advice in the existing writing-pack entry point; preserve the human-readable preference for consistent paragraph widths without prescribing an exact number.
+- [x] Route code-style guidance to the writing capability for Markdown authoring; remove the deleted formatter command and claims of machine-enforced wrapping.
+- [x] Preserve authored document semantics, code blocks, tables, and existing paragraph content; do not bulk-reformat unrelated files.
+- [x] Confirm that newline normalization remains separately enforced by the tracked gate and `.gitattributes`.
 
 ### Task 2: Remove the formatter standard and its wheel from owned source
 
@@ -79,31 +81,38 @@ ______________________________________________________________________
 
 **Produces:** A Marketplace with no separately installable Markdown-formatting standard, wheel, formatter commands, or local standard deployment copy.
 
-- [ ] Remove the formatter apply/check command vectors from the active repo command binding while preserving both `tools/run.py ci --apply` and `--check` invocations.
-- [ ] Remove formatter fallback selection from `tools/new_plugin.py` and `tools/sync_skill_shared_references.py`; preserve their actual plugin-generation and reference-sync responsibilities.
-- [ ] Remove the formatter skill from canonical plugin definitions and delete its dedicated source tests and implementation.
-- [ ] Remove the safe-link-labels wheel source and generation route; ensure no current build or packaging command attempts to create or validate it.
-- [ ] Remove the obsolete Markdown-formatting contract, schema, requirements, scaffolders, and formatter config from current source and consumer-facing docs.
-- [ ] Rebuild Marketplace projections from canonical sources and verify the generated AOM plugin no longer includes the formatter skill or wheel.
-- [ ] Confirm ordinary Markdown link validation, repository line-ending checks, and all non-formatting CI targets still run.
+- [x] Remove the formatter apply/check command vectors from the active repo command binding while preserving both `tools/run.py ci --apply` and `--check` invocations.
+- [x] Remove formatter fallback selection from `tools/new_plugin.py` and `tools/sync_skill_shared_references.py`; preserve their actual plugin-generation and reference-sync responsibilities.
+- [x] Remove the formatter skill from canonical plugin definitions and delete its dedicated source tests and implementation.
+- [x] Remove the safe-link-labels wheel source and generation route; ensure no current build or packaging command attempts to create or validate it.
+- [x] Remove the obsolete Markdown-formatting contract, schema, requirements, scaffolders, and formatter config from current source and consumer-facing docs.
+- [x] Rebuild Marketplace projections from canonical sources and verify the generated AOM plugin no longer includes the formatter skill or wheel.
+- [x] Confirm ordinary Markdown link validation, repository line-ending checks, and all non-formatting CI targets still run.
 
-### Task 3: Retire root-gitignore standard and unused legacy contract records
+### Task 3: Retire the obsolete v1 compatibility skill and local legacy contracts
 
 **Files:**
 
-- Modify: relevant current source under `skills/repo-shape/` and tests, removing the obsolete root-gitignore standard registration and scaffolder.
+- Move: `skills/repo-shape/scripts/deploy_vendor_profiles.py` and `validate_skill_scripts.py` to their current repository tool owners under `tools/`
+- Delete: `skills/repo-shape/` and its obsolete tests/fixtures, plus `skills/repo-standards/scripts/repo_standards.py`
 - Delete only after reference audit: `.agents/contracts/agent-operating-model.json` and `.agents/contracts/unslop.json`
+- Modify: `skills/repo-standards/SKILL.md`, `skills/repo-composition/SKILL.md`, `.agents/docs/distribution.md`, and current plugin README to route old pins to Git history rather than bundling v1 implementation history
 - Preserve: root `.gitignore`, `tools/validate_agents_md.py`, the v2 subscription, and `.agents/unslop/repository.md`
 
 **Consumes:** Plan 8 certification and live-source search for old contract references.
 
-**Produces:** No active root-gitignore standard or stale v1 exception/profile-root contract in this repository's selected implementation.
+**Produces:** No current `repo-shape` compatibility skill, root-gitignore deployment surface, or stale v1 exception/profile-root contract in the v2 implementation. Git history remains the authority for old immutable pins.
 
-- [ ] Remove `root-gitignore-hygiene` from the current selectable/deployment source catalog, manifest, scaffolder routes, and tests after verifying the new standard catalog already excludes it.
-- [ ] Retain the legitimate root `.gitignore` and ordinary ignore rules; remove only obsolete `.agents/superpowers/sdd` compatibility machinery if it has no current owner or consumer.
-- [ ] Search production source for readers of `.agents/contracts/agent-operating-model.json` and `.agents/contracts/unslop.json`; remove these files only when no current implementation relies on them.
-- [ ] Keep `.agents/unslop/` as the canonical profile location and preserve the v2 certification entry.
-- [ ] Update current repo-shape onboarding text so it no longer tells a current adopter to deploy retired standards; preserve historical plans as historical records.
+- [x] Move the two generic tools used by `tools/run.py` before deleting `skills/repo-shape/`; retain their behavior and wire the runner to the new paths.
+- [x] Remove the v1 `repo-shape` skill from the current AOM plugin definition and delete its current source and tests; exact old pins remain retrievable from Git history rather than a current plugin projection.
+- [x] Remove the compatibility entrypoint from `skills/repo-standards` and update current docs so v1 authority resolution uses the exact immutable source commit.
+- [x] Remove all root-gitignore and markdown-formatting deployment registrations with the v1 skill; verify the new v2 standard catalog already excludes both.
+- [x] Retain the legitimate root `.gitignore` and ordinary ignore rules; remove only obsolete `.agents/superpowers/sdd` compatibility machinery if it has no current owner or consumer.
+- [x] Search production source for readers of `.agents/contracts/agent-operating-model.json` and `.agents/contracts/unslop.json`; remove these files only when no current implementation relies on them.
+- [x] Keep `.agents/unslop/` as the canonical profile location and preserve the v2 certification entry.
+- [x] Delete `.agents/contracts/agent-operating-model.json`, `.agents/contracts/markdown-formatting.json`, and `.agents/contracts/unslop.json` only after confirming no active source, certification, or gate reads them.
+- [x] Remove the redundant `--allow-shared-checkout` gates from current mutation tools and their wrappers, docs, and behavior tests; keep `--apply` as the explicit write request and preserve submodule rejection and the approved worktree workflow.
+- [x] Preserve historical plans as historical records; do not edit past decisions merely to erase references to the retired model.
 
 ### Task 4: Whole-slice review and closeout
 
@@ -117,7 +126,7 @@ ______________________________________________________________________
 
 **Produces:** A committed retirement slice with source, generated distribution, and gate records consistent.
 
-- [ ] Regenerate canonical plugin outputs and run repository-owned structural and shipping checks.
+- [x] Regenerate canonical plugin outputs and run repository-owned structural and shipping checks.
 - [ ] Inspect the whole diff for hand-edited generated files, remaining formatter/root-gitignore routes, removed safeguards, and unrelated content churn.
 - [ ] Verify Windows pre-commit and Linux hosted workflow still call the same complete logical CI target; certify only evidence actually observed.
 - [ ] Complete a fresh whole-slice review and resolve all material findings.

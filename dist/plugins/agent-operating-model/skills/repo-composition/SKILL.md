@@ -23,4 +23,4 @@ Capabilities can refer to repository-authored skills by name and path, plugin sk
 
 Keep routing useful and proportional: connect each lifecycle stage to the concerns that apply, rather than making every runbook reference every playbook. The `Applicability` text in a book corroborates scope and can rule out a mismatch; it does not trigger discovery. Route the book from a place an agent reads at the relevant work point.
 
-For historical v1 consumers, follow the exact pinned definition and deployed resources. Current composition definitions do not silently replace existing requirements. The old structural and scaffolding assets remain covered by `repo-shape` compatibility guidance.
+For historical v1 consumers, retrieve and follow the exact pinned definition and deployed resources from its immutable Git commit. Current composition definitions do not silently replace existing requirements; the current plugin does not bundle old compatibility machinery.

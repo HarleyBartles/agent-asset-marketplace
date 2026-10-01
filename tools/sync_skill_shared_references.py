@@ -5,8 +5,6 @@ from __future__ import annotations
 
 import argparse
 from pathlib import Path
-import subprocess
-import sys
 
 ROOT = Path(__file__).resolve().parents[1]
 CANONICAL_DIR = ROOT / "dist" / "plugins" / "superpowers-plus" / "references"
@@ -23,17 +21,6 @@ SHARES = {
         "dispatching-parallel-agents",
     ],
 }
-
-
-def _check_markdown_outputs(paths: list[Path]) -> None:
-    formatter = ROOT / ".agents/standards/markdown-formatting/markdown-formatting/scripts/format_markdown.py"
-    if not formatter.is_file():
-        formatter = ROOT / "skills/markdown-formatting/scripts/format_markdown.py"
-    contract = ROOT / ".agents/contracts/markdown-formatting.json"
-    if not formatter.is_file() or not contract.is_file() or not paths:
-        return
-    relative = [path.relative_to(ROOT).as_posix() for path in paths]
-    subprocess.run([sys.executable, str(formatter), "--check-files", *relative], cwd=ROOT, check=True)
 
 
 def _canonical_text(filename: str) -> str:
@@ -74,7 +61,6 @@ def _apply() -> None:
             target.write_text(canonical_text, encoding="utf-8", newline="\n")
             written.append(target)
             print(f"Wrote {target.relative_to(ROOT)}")
-    _check_markdown_outputs(written)
 
 
 def main(argv: list[str] | None = None) -> int:

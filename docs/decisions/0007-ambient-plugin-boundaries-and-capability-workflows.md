@@ -28,4 +28,4 @@ Ambient packs can evolve without consumer copy-refresh cycles. Portable workflow
 
 ## Current authority
 
-The ambient pack sources and product definitions own plugin roles. The Agent Operating Model catalog owns selectable standards. `repo-composition` defines runbook/playbook capability semantics; `repo-shape` owns their applicable scaffolds and structural validation. These are the current authorities; dated audit records are task evidence and do not supersede them.
+The ambient pack sources and product definitions own plugin roles. The Agent Operating Model catalog owns selectable standards. `repo-composition` defines runbook/playbook capability semantics, and each subscribing repository owns its implementation and self-certification. Focused standards own their optional starter assets; no central scaffolder owns the adopted repository surfaces. These are the current authorities; dated audit records are task evidence and do not supersede them.

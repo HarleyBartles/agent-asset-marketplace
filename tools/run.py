@@ -14,10 +14,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Callable
 
-import shared_checkout
-
 ROOT = Path(__file__).resolve().parent.parent
-SCRIPT_NAME = "tools/run"
 
 
 PLUGIN_ROOTS_PATH = ROOT / "dist" / "plugins"
@@ -29,7 +26,6 @@ _MAX_CMD_CHARS = 28000
 class Ctx:
     mode: str
     base_ref: str | None
-    allow_shared: bool
     verbose: bool
     diagnostics: bool = False
 
@@ -254,7 +250,7 @@ def _apply_marketplace(ctx: Ctx) -> None:
     _run([sys.executable, "tools/build_marketplace.py", "--apply"], ctx)
     _run([sys.executable, "tools/generate_marketplace.py", "--apply"], ctx)
     _run([sys.executable, "tools/validate_marketplace.py", "--phase", "all"], ctx)
-    _run([sys.executable, "skills/repo-shape/scripts/deploy_vendor_profiles.py", "--apply"], ctx)
+    _run([sys.executable, "tools/deploy_vendor_profiles.py", "--apply"], ctx)
 
 
 def _check_marketplace(ctx: Ctx) -> None:
@@ -289,7 +285,7 @@ def _validate_skill_scripts(ctx: Ctx) -> None:
     _run(
         [
             sys.executable,
-            "skills/repo-shape/scripts/validate_skill_scripts.py",
+            "tools/validate_skill_scripts.py",
             "--root",
             "skills",
             "--check",
@@ -312,14 +308,7 @@ def _check_review_preflight(ctx: Ctx) -> None:
 
 
 def _apply_runtime_agents(ctx: Ctx) -> None:
-    cmd = [
-        sys.executable,
-        "tools/sync_runtime_agents.py",
-        "--apply",
-    ]
-    if ctx.allow_shared:
-        cmd.extend(["--allow-shared-checkout", "--yes"])
-    _run(cmd, ctx)
+    _run([sys.executable, "tools/sync_runtime_agents.py", "--apply"], ctx)
 
 
 def _check_runtime_agents(ctx: Ctx) -> None:
@@ -360,7 +349,7 @@ def _run_ci(ctx: Ctx) -> None:
     if ctx.mode == "apply":
         for target in deps:
             task = _TASKS[target]
-            _run_steps(target, task, task.apply, Ctx("apply", ctx.base_ref, ctx.allow_shared, ctx.verbose, False))
+            _run_steps(target, task, task.apply, Ctx("apply", ctx.base_ref, ctx.verbose, False))
         return
     failures: list[RunnerError] = []
     for target in deps:
@@ -370,7 +359,7 @@ def _run_ci(ctx: Ctx) -> None:
                 target,
                 task,
                 task.check,
-                Ctx("check", ctx.base_ref, ctx.allow_shared, ctx.verbose, ctx.diagnostics),
+                Ctx("check", ctx.base_ref, ctx.verbose, ctx.diagnostics),
             )
         except RunnerError as exc:
             if ctx.diagnostics:
@@ -434,13 +423,12 @@ _TASKS: dict[str, Task] = {
         check=(_check_review_preflight,),
         fix="review-preflight findings are manual; run `tools/review_preflight.py --check` to see them",
     ),
-    # runtime-agents is intentionally excluded from the `ci` deps because it
-    # stages files into the main checkout, which is a local, mutating
-    # operation. It remains available for repo-local profile staging only.
+    # runtime-agents is intentionally excluded from `ci`; it stages profiles
+    # into the main checkout for the local runtime.
     "runtime-agents": Task(
         apply=(_apply_runtime_agents,),
         check=(_check_runtime_agents,),
-        fix="tools/run runtime-agents --apply --allow-shared-checkout",
+        fix="tools/run runtime-agents --apply",
     ),
     "ci": Task(
         deps=("lint", "repo-standards", "tests-build", "tests-repository", "tests-shipping", "validate"),
@@ -529,11 +517,6 @@ def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         help="base ref for changed-line linting (default: origin/main)",
     )
     parser.add_argument(
-        "--allow-shared-checkout",
-        action="store_true",
-        help="acknowledge intentional writes in the main shared checkout on any branch (requires --apply)",
-    )
-    parser.add_argument(
         "--diagnostics",
         action="store_true",
         help="collect all independent check failures before rejecting (ci --check only)",
@@ -557,17 +540,10 @@ def main(argv: list[str] | None = None) -> int:
     if args.diagnostics and args.apply:
         print("error: --diagnostics requires --check", file=sys.stderr)
         return 1
-    if args.allow_shared_checkout and not args.apply:
-        print("error: --allow-shared-checkout requires --apply", file=sys.stderr)
-        return 1
-    if args.apply:
-        if not shared_checkout.approve_mutation(ROOT, SCRIPT_NAME, args.allow_shared_checkout):
-            return 1
     base_ref = _resolve_base_ref(args)
     ctx = Ctx(
         mode="apply" if args.apply else "check",
         base_ref=base_ref,
-        allow_shared=args.allow_shared_checkout,
         verbose=args.verbose,
         diagnostics=args.diagnostics,
     )

@@ -21,7 +21,6 @@ FOCUSED_SKILLS = (
     "unslop",
     "repo-agent-assets",
     "repo-composition",
-    "repo-shape",
     "repo-standards",
     "repository-validation",
     "tracked-repo-hooks",

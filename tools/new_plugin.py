@@ -7,25 +7,13 @@ import argparse
 import json
 from pathlib import Path
 import shutil
-import subprocess
 import sys
 from typing import Final
-
-import shared_checkout
 
 ROOT: Final[Path] = Path(__file__).resolve().parents[1]
 DEFINITIONS: Final[Path] = ROOT / "src/plugin-definitions"
 PLUGIN_ROOTS: Final[Path] = ROOT / "src/plugin-definitions/catalog.json"
 TEMPLATE: Final[Path] = DEFINITIONS / "repo-worker-pack/files/assets/icon.svg"
-
-
-def _check_markdown_outputs(paths: list[Path]) -> None:
-    formatter = ROOT / ".agents/standards/markdown-formatting/markdown-formatting/scripts/format_markdown.py"
-    if not formatter.is_file():
-        formatter = ROOT / "skills/markdown-formatting/scripts/format_markdown.py"
-    if formatter.is_file() and paths:
-        relative = [path.relative_to(ROOT).as_posix() for path in paths]
-        subprocess.run([sys.executable, str(formatter), "--check-files", *relative], cwd=ROOT, check=True)
 
 
 def _display_name(name: str) -> str:
@@ -123,7 +111,6 @@ def _scaffold(definition: Path, name: str) -> None:
     if TEMPLATE.is_file():
         shutil.copyfile(TEMPLATE, package_files / "assets/icon.svg")
     _register_root(name)
-    _check_markdown_outputs([package_files / "README.md", package_files / "SOURCE.md"])
 
 
 def _register_root(name: str) -> None:
@@ -150,12 +137,9 @@ def main(argv: list[str] | None = None) -> int:
     mode = parser.add_mutually_exclusive_group(required=True)
     mode.add_argument("--check", action="store_true", help="Report without writing")
     mode.add_argument("--apply", action="store_true", help="Create product definition and inactive inventory entry")
-    parser.add_argument("--allow-shared-checkout", action="store_true")
     args = parser.parse_args(argv)
     if args.name is None:
         print("error: product name is required", file=sys.stderr)
-        return 1
-    if args.apply and not shared_checkout.approve_mutation(ROOT, "new_plugin.py", args.allow_shared_checkout):
         return 1
     definition = _validate(args.name, args.check)
     if definition is None:

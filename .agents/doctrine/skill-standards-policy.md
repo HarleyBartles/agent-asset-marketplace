@@ -34,9 +34,9 @@ The skill directory name must match the `name` field in `SKILL.md` frontmatter.
 
 The Agent Skills specification permits additional directories but does not define `tests/`; this repository defines that directory in `.agents/contracts/skill-tests.md`.
 
-## Local skills
+## Repository-authored skills
 
-Local `.agents/skills/<name>/` skills are tracked local custody when their exact names appear in `repo.local_skills` in `.agents/plugins/marketplace.json`. Prefixes are optional naming choices, not custody requirements. Local skills require normal local skill frontmatter and are excluded from marketplace provenance; their authoring method is owned by `writing-skills`.
+`.agents/skills/` is reserved for skills authored and owned by the repository. It requires no separate `repo.local_skills` declaration. Repository-authored skills require normal skill frontmatter and are excluded from Marketplace provenance; their authoring method is owned by `writing-skills`.
 
 ## Authority and source custody
 

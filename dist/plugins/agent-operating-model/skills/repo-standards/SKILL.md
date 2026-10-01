@@ -19,7 +19,7 @@ For assessment or adoption, read [adoption and certification](references/adoptio
 
 For an explicit adoption task, follow the [agent-led adoption sequence](references/adoption-and-certification.md#adoption-workflow). Editable [subscription](assets/templates/operating-standards-v2.example.json), [root router](assets/templates/AGENTS.md.example), and [certification](assets/templates/standards-certification.md.example) examples are available. Treat example values as placeholders and replace them with repository facts before deployment.
 
-Honor the source and immutable commit recorded by the repository. A v1 record identifies the historical deployed authority; inspect that pinned definition and deployed resources. Do not run current scaffolders as an upgrade. A v2 record identifies the source repository, full commit, definition path, and certification reference; retrieve that exact object, including when its standard is absent from today's catalog. The catalog presents current choices, not an update alarm. Upgrades are explicit reconciliation work.
+Honor the source and immutable commit recorded by the repository. A v1 record identifies historical deployed authority; retrieve the exact definition and resources from its immutable source commit. Do not use a current plugin snapshot as an upgrade. A v2 record identifies the source repository, full commit, definition path, and certification reference; retrieve that exact object, including when its standard is absent from today's catalog. The catalog presents current choices, not an update alarm. Upgrades are explicit reconciliation work.
 
 After selecting the pinned authority, route to the smallest owner:
 
@@ -34,4 +34,4 @@ After selecting the pinned authority, route to the smallest owner:
 | Named command targets                                    | `command-bus`              |
 | Focused checks and evidence                              | `repository-validation`    |
 
-Use other focused standard skills named in the pinned definition or current catalog. Compose owners only when the requested change crosses their boundaries. `repo-shape` is a legacy v1 structural/deployment compatibility route; it does not define the obligations of every current standard.
+Use other focused standard skills named in the pinned definition or current catalog. Compose owners only when the requested change crosses their boundaries. Historical pins remain readable from their exact source commit; they do not add obligations to current v2 adopters.

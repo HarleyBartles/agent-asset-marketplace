@@ -6,13 +6,12 @@ Agent-facing policy for this directory lives in [.devin/rules/tools.md](../.devi
 
 Canonical task runner:
 
-- `tools/run <target>... [--check | --apply] [--base-ref <ref>] [--allow-shared-checkout] [--verbose]` — dependency-aware runner that composes the marketplace generators and validators. On Linux/macOS/WSL/Git Bash use `./tools/run`; on Windows PowerShell use `.\tools\run.ps1`. `py -3 tools/run.py` works as a cross-platform fallback. The individual `.py` files below are implementation details.
+- `tools/run <target>... [--check | --apply] [--base-ref <ref>] [--verbose]` — dependency-aware runner that composes the marketplace generators and validators. On Linux/macOS/WSL/Git Bash use `./tools/run`; on Windows PowerShell use `.\tools\run.ps1`. `py -3 tools/run.py` works as a cross-platform fallback. The individual `.py` files below are implementation details.
 
 Useful targets:
 
 - `tools/run ci --check` / `tools/run.ps1 ci --check` — full non-mutating CI gate (lint, repo-standards, marketplace).
 - `tools/run marketplace --apply` / `tools/run.ps1 marketplace --apply` — regenerate all marketplace surfaces.
-- `tools/run marketplace --apply --allow-shared-checkout` / `tools/run.ps1 marketplace --apply --allow-shared-checkout` — approve writes in the main shared checkout.
 
 Keep tooling minimal and focused on validation or lightweight asset handling.
 
@@ -24,6 +23,5 @@ Every `tools/*.py` file that is meant to be run directly (it has an `if __name__
 - respond to `--check` as the default, read-only, idempotent mode;
 - respond to `--apply` if it is classified `mixed` or `mutating`;
 - support `--force` if it may overwrite an existing, drifted surface;
-- support `--allow-shared-checkout` (which requires `--apply`) if it may write to the main shared checkout. Linked worktrees do not need the flag.
 
 `tools/validate_tool_cli.py --check` is the contract gate and is run by `tools/run.py ci --check`.

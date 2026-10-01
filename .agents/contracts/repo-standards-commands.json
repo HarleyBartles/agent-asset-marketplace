@@ -1,10 +1,8 @@
 {
   "apply": [
-    ["@python", ".agents/standards/markdown-formatting/markdown-formatting/scripts/format_markdown.py", "--apply"],
-    ["@python", "tools/run.py", "ci", "--apply", "--allow-shared-checkout"]
+    ["@python", "tools/run.py", "ci", "--apply"]
   ],
   "check": [
-    ["@python", ".agents/standards/markdown-formatting/markdown-formatting/scripts/format_markdown.py", "--check"],
     ["@python", "tools/run.py", "ci", "--check", "--diagnostics"]
   ],
   "generated_paths": [

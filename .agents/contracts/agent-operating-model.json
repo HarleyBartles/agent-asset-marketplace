@@ -1,9 +1,0 @@
-{
-  "version": 1,
-  "surface_exceptions": [
-    {
-      "id": "marketplace-source-submodule",
-      "reason": "This repository is the canonical marketplace source rather than a marketplace consumer."
-    }
-  ]
-}

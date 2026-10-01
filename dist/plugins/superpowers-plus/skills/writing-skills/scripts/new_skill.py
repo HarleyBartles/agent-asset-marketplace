@@ -81,21 +81,11 @@ def _git(repo_root: Path, *args: str) -> str:
     return result.stdout.strip()
 
 
-def _guard_write_checkout(repo_root: Path, allow_shared_checkout: bool) -> Path:
+def _guard_write_checkout(repo_root: Path) -> Path:
     superproject = _git(repo_root, "rev-parse", "--show-superproject-working-tree")
     if superproject:
         raise ValueError("refusing to scaffold from a submodule checkout")
     checkout_root = Path(_git(repo_root, "rev-parse", "--show-toplevel")).resolve()
-    git_dir = Path(_git(checkout_root, "rev-parse", "--path-format=absolute", "--git-dir")).resolve()
-    common_dir = Path(_git(checkout_root, "rev-parse", "--path-format=absolute", "--git-common-dir")).resolve()
-    if git_dir == common_dir:
-        if not allow_shared_checkout:
-            raise ValueError(
-                "refusing to scaffold from a shared main checkout; "
-                "use --allow-shared-checkout "
-                "with current human approval"
-            )
-        print("WARNING: --allow-shared-checkout is active; current human approval is required.")
     return checkout_root
 
 
@@ -107,12 +97,10 @@ def _resolve_cli_repo_root(start_directory: Path) -> Path:
         return start_directory
 
 
-def scaffold(
-    repo_root: Path, name: str, custody: str, lane: str, check: bool, *, allow_shared_checkout: bool = False
-) -> int:
+def scaffold(repo_root: Path, name: str, custody: str, lane: str, check: bool) -> int:
     validate_request(name, custody, lane)
     if not check:
-        repo_root = _guard_write_checkout(repo_root, allow_shared_checkout)
+        repo_root = _guard_write_checkout(repo_root)
     destination = destination_for(repo_root, name, custody, lane)
     if destination.exists():
         raise FileExistsError(f"destination already exists: {destination}")
@@ -157,7 +145,6 @@ def main() -> int:
     parser.add_argument("--custody", choices=sorted(CUSTODIES))
     parser.add_argument("--lane", choices=sorted(LANES), help="source-authoring and authority-evidence lane")
     parser.add_argument("--check", action="store_true", help="report what would be scaffolded (read-only)")
-    parser.add_argument("--allow-shared-checkout", action="store_true")
     args = parser.parse_args()
     if not (args.name or args.custody or args.lane or args.check):
         parser.print_help()
@@ -178,9 +165,7 @@ def main() -> int:
         parser.error(f"required: {', '.join(missing)}")
     try:
         repo_root = _resolve_cli_repo_root(Path.cwd().resolve())
-        return scaffold(
-            repo_root, args.name, args.custody, args.lane, args.check, allow_shared_checkout=args.allow_shared_checkout
-        )
+        return scaffold(repo_root, args.name, args.custody, args.lane, args.check)
     except (OSError, subprocess.CalledProcessError, ValueError, FileExistsError) as error:
         parser.error(str(error))
     return 2

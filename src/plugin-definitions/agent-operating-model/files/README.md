@@ -15,7 +15,7 @@ This plugin makes first-party repository operating capabilities available to age
 - Each consumer chooses the standards it wants, implements them in its own repository, and self-certifies against the requirements it pins.
 - A standard skill carries its current definition, adoption and assessment guidance, and any optional starter assets. It may supply no deployable asset.
 - Repositories may take, adapt, replace, or omit optional starters. Adopted files and tools become repository-owned; matching AOM starter bytes is not a compliance requirement.
-- `repo-standards` helps agents select and assess focused capabilities. It does not make every `repo-shape` surface mandatory by default.
+- `repo-standards` helps agents select and assess focused capabilities. It does not make every repository capability mandatory by default.
 - Worker custody, worktrees, risk, and publication remain in the ambient `repo-worker-pack`.
 
 ## Install shape

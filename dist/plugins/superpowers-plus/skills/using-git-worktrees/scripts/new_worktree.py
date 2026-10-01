@@ -481,12 +481,6 @@ def _build_parser() -> argparse.ArgumentParser:
         action="store_true",
         help="deprecated compatibility flag; repo plugins load from native worktree config",
     )
-    parser.add_argument(
-        "--allow-shared-checkout",
-        action="store_true",
-        help="deprecated; no effect (kept for compatibility)",
-    )
-
     mode = parser.add_mutually_exclusive_group()
     mode.add_argument(
         "--check",
