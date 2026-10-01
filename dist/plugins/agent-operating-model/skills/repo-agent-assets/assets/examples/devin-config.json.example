@@ -1,0 +1,18 @@
+{
+  "requiredPlugins": [
+    {
+      "source": "git-subdir",
+      "url": "https://github.com/example-org/agent-plugins.git",
+      "path": "plugins/review-tools",
+      "ref": "main"
+    },
+    {
+      "source": "git-subdir",
+      "url": "https://github.com/example-org/agent-plugins.git",
+      "path": "plugins/test-tools",
+      "sha": "0123456789abcdef0123456789abcdef01234567"
+    }
+  ],
+  "optionalPlugins": [],
+  "forbiddenPlugins": []
+}

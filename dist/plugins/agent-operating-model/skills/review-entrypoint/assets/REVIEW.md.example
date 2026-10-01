@@ -1,0 +1,7 @@
+# Code review guidance
+
+Review the proposed change against its request, approved design, and the behavior the repository promises. Prioritize defects that can harm users, data, security, or future change. Trace affected paths and failure cases. Check that tests prove observable behavior and that reported validation matches the evidence.
+
+Report actionable findings with a location and consequence. Separate confirmed defects from questions and preferences. If the repository has a maintained review concern guide or review-stage procedure, route to it here and say when it applies. Do not add routes to documents that do not exist.
+
+Adapt this entrypoint to the repository's actual review workflow. Inline guidance is sufficient; another review document is optional.

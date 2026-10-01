@@ -14,3 +14,5 @@ license: MIT
 # Contribution Entrypoint
 
 Use the [contribution entrypoint standard](references/standard.md) when a repository explicitly adopts or asks to assess `contribution-entrypoint`. Inspect existing contributor guidance before choosing inline or routed content.
+
+AOM offers an optional inline-capable [root CONTRIBUTING.md example](assets/CONTRIBUTING.md.example). Adapt or replace it with the repository's actual process. The standard requires a useful root entrypoint; it does not require other books, an adopted standard, or a fixed heading layout.
