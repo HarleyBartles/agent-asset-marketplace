@@ -2,7 +2,7 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use `subagent-driven-development` (recommended) or `executing-plans` to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Status:** in progress
+**Status:** completed-awaiting-retirement
 
 **Goal:** Close the Marketplace's AOM migration with direct evidence that the generated plugin installs in isolation, standards remain independently selectable and pinned, and the complete tracked gate passes on Windows and hosted Linux.
 
@@ -84,5 +84,5 @@
 - [x] Push the completed branch and open a Draft PR against the repository's actual default branch; attach the PR to this Codex task.
 - [x] Wait for `.github/workflows/marketplace-validation.yml` to report the tracked `githooks/pre-commit` gate green on the exact PR head. If it fails, repair the owning source, commit, push, and repeat against the new head.
 - [x] Update the `tracked-validation-hook` certification with the exact commit whose hosted Linux gate passed and the Windows hook evidence for its staged tree; retain semantic and runtime limits.
-- [ ] Commit and push the certification/roadmap closeout. Confirm Windows hook and hosted Linux gate status for the resulting head, and report any hosted result that is still pending without claiming certification prematurely.
-- [ ] Complete a final whole-range review, ensure the working tree is clean, and report the Draft PR URL, exact reviewed head, local and hosted evidence, and any remaining human-owned post-handoff action.
+- [x] Commit and push the certification/roadmap closeout. Confirm Windows hook and hosted Linux gate status for the resulting head, and report any hosted result that is still pending without claiming certification prematurely.
+- [x] Complete a final whole-range review, ensure the working tree is clean, and report the Draft PR URL, exact reviewed head, local and hosted evidence, and any remaining human-owned post-handoff action.
