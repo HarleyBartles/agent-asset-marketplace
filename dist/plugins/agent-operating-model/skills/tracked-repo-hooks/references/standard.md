@@ -31,4 +31,11 @@ Record this standard's ID, source repository, immutable commit, definition path,
 
 ## Optional AOM assets
 
-AOM may offer a hook starter, normalization support, and a bus target implementation. Each is optional and becomes repository-owned when adopted. No fixed command JSON or source submodule is required. Do not add the retired shared-checkout mutation-intent flag as an obligation.
+AOM ships optional, independently selectable examples in the `tracked-repo-hooks` skill package:
+
+- `assets/hooks/pre-commit`: candidate-safe Bash hook with fail-closed repository-owned apply/check seams. Copy and adapt it, or implement another tracked hook.
+- `assets/normalization/normalize_text.py`: standard-library Python normalizer for explicitly selected UTF-8 paths, with `--check` and `--apply`. Repositories choose scope and policy. `gitattributes.example` is optional.
+- `assets/workflows/github-actions-hosted-gate.yml`: one GitHub Actions example that checks out the proposed commit and calls the tracked hook in hosted mode. Its prerequisite step fails until adapted. It does not require an AOM runtime checkout.
+- `assets/targets/repository_gate.py`: optional check-only command-bus target sample. Manually copy and register/adapt it only if command-bus is also adopted. It forwards a repository-owned complete read-only check command and defines no shared module ABI, configuration contract, or installation behavior.
+
+None is required by the pledge. A repository can implement the invariants in its existing tools or adopt any subset of these examples. Copied material is adapted, maintained, and certified by the repository. Presence of any starter is not evidence of compliance. Do not add a fixed command JSON, source submodule, or the retired shared-checkout mutation-intent flag as an obligation.

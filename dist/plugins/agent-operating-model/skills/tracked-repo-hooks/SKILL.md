@@ -19,4 +19,13 @@ The pledge is one complete gate on Windows before commit and Linux in hosted CI.
 
 Preserve repository content across platforms. Normalize line endings and file endings so Windows authoring and Linux hosted execution do not create avoidable churn. Validate the candidate commit state and report failures clearly. A repository chooses the hook implementation and its commands; use the command bus only when that standard is also adopted, and make hook integration an explicit bus target/module deployment into the repository-owned bus.
 
-The optional starter hook is a deployable seed. A repository may adapt it or implement another approach that meets the pinned invariants. V1 consumers continue to follow their pinned definition, including any historical command contract, until an explicit upgrade.
+An adoption is repository-owned implementation and self-certification, not deployment of a mandatory AOM scaffold. Route the subscription and readable certification from root `AGENTS.md`. Certification names the hook, hosted workflow, complete gate, Windows/Linux prerequisites and evidence, candidate/unstaged-work handling, normalization policy, agent no-skip rule, and the measures that prevent parity drift. Every agent changing an affected surface maintains that certification. Certify only after the complete gate and its drift controls are in place.
+
+Choose only the starter assets that help, or use none:
+
+- [Candidate-safe Bash hook](assets/hooks/pre-commit) is a fail-closed seed. Adapt its repository-owned apply/check functions and install it as the tracked hook. It expects Git Bash on Windows and Bash on Linux.
+- [Python text normalizer](assets/normalization/normalize_text.py) operates only on explicitly selected UTF-8 text paths. Adapt its selected paths and line-ending/final-newline policy. The [`.gitattributes` example](assets/normalization/gitattributes.example) is optional policy material, not a required global file.
+- [GitHub Actions hosted-gate example](assets/workflows/github-actions-hosted-gate.yml) checks out the proposed commit and invokes the same hook in hosted mode. Its prerequisite step intentionally fails until adapted. Other CI providers may implement the same pledge directly.
+- [Optional bus target](assets/targets/repository_gate.py) can be copied and manually registered only when the repository separately adopts command-bus. It forwards one repository-owned read-only complete-check command; it is not an installer, bus ABI, or command registry.
+
+Assets become repository-owned when copied. Presence does not prove conformance. The hook, normalizer, workflow, and bus target can each be replaced independently if the repo's own approach meets its pinned requirements. V1 consumers continue to follow their pinned definition until an explicit upgrade.

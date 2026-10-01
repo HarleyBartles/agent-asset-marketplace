@@ -28,6 +28,7 @@ SKILLS = (
     "repo-agent-assets",
     "repo-standards",
     "command-bus",
+    "tracked-repo-hooks",
     "review-entrypoint",
     "contribution-entrypoint",
 )
