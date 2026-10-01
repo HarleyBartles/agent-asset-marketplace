@@ -27,7 +27,7 @@ license: MIT
 
 This is the thin portable control plane for repo-backed work. It supplies repeatable hygiene and publication boundaries; the consuming repository owns its paths, commands, exclusions, CI, and exceptions through its local hygiene/layout policy and stage runbooks. Superpowers lane composition is owned by `using-superpowers-plus`; each stage skill owns its own baseline.
 
-At the start of a new substantive slice, after refreshing the required base and creating its isolated branch/worktree, inspect current `main` for planning artifacts marked `completed-awaiting-retirement`. **REQUIRED SUB-SKILL:** Use `completing-planning-artifacts` in its successor-slice ingress lane before substantive edits. Carry retirement as the first commit in the same eventual PR; do not create a cleanup-only PR.
+At the start of a new substantive slice, follow the repository's planning-artifact policy. If the repository explicitly adopts `completed-artifact-custody` or a human requests that lifecycle, inspect its declared planning locations and linked artifacts semantically before substantive edits, then route to `completing-planning-artifacts`. Retire eligible artifacts in that slice's first substantive commit. If the lifecycle is not adopted or requested, installed capability does not impose it; follow local policy.
 
 ## Read when
 

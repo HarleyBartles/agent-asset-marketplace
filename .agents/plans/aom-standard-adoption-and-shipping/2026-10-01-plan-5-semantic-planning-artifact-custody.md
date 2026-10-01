@@ -80,12 +80,12 @@
 
 **Produces:** A selectable standard that is self-contained and does not imply adoption through ambient capability.
 
-- [ ] State the pledge in terms of what the repo requires agents to do: semantically classify completed artifacts at the next substantive slice, preserve active future work, promote durable knowledge, retire eligible artifacts from current-base history, and maintain safeguards through self-certification.
-- [ ] Define completion as the whole artifact's governed scope being done, supported by repository evidence. Name checkboxes, state labels, PR metadata, and similar markers as useful clues only; none is a sole discovery route or deletion authority.
-- [ ] Clarify that a roadmap with later work remains live while a completed child plan may be retired, and that artifacts absent from the current base are retained for their completing PR's canonical history.
-- [ ] Make runbook/playbook routing conditional on those surfaces existing; make checker and workflow-skill deployment optional; state that ambient availability and other standard subscriptions do not impose this standard.
-- [ ] Keep repository self-certification about its actual route, lifecycle measure, and drift controls. Do not prescribe a universal checker, status schema, artifact inventory, or automatic deletion command.
-- [ ] State the global discovery requirement: a repo adopting this standard routes root `AGENTS.md` to its subscription and readable certification record, without forcing adoption of the broader doctrine/contracts standard beyond the required record location.
+- [x] State the pledge in terms of what the repo requires agents to do: semantically classify completed artifacts at the next substantive slice, preserve active future work, promote durable knowledge, retire eligible artifacts from current-base history, and maintain safeguards through self-certification.
+- [x] Define completion as the whole artifact's governed scope being done, supported by repository evidence. Name checkboxes, state labels, PR metadata, and similar markers as useful clues only; none is a sole discovery route or deletion authority.
+- [x] Clarify that a roadmap with later work remains live while a completed child plan may be retired, and that artifacts absent from the current base are retained for their completing PR's canonical history.
+- [x] Make runbook/playbook routing conditional on those surfaces existing; make checker and workflow-skill deployment optional; state that ambient availability and other standard subscriptions do not impose this standard.
+- [x] Keep repository self-certification about its actual route, lifecycle measure, and drift controls. Do not prescribe a universal checker, status schema, artifact inventory, or automatic deletion command.
+- [x] State the global discovery requirement: a repo adopting this standard routes root `AGENTS.md` to its subscription and readable certification record, without forcing adoption of the broader doctrine/contracts standard beyond the required record location.
 
 ## Task 3: Implement semantic discovery in the optional capability
 
@@ -99,17 +99,17 @@
 
 **Produces:** A portable, repo-owned-on-adoption guide for semantic completion review and two-slice handling.
 
-- [ ] Before editing the capability, write the scenario inputs and scoring rubric. The input describes two fixture repos: one whose subscription record selects this standard and one without it whose local doctrine specifies its own closeout. In the adopter, include an unchecked plan whose full deliverable appears in merged source/PR evidence, a completed child inside a roadmap with future work, a fully checked plan whose code is absent, a stale completion marker contradicted by the repo, and a branch-only plan. Combine an end-of-day deadline, sunk implementation effort, and a conflicting PR cleanup instruction. Ask evaluators to return a table with artifact, whole-scope classification, repository evidence, adoption status, and next action. Keep expected dispositions out of the input file.
-- [ ] Resolve the evaluator workspace with `py -3 skills/subagent-workspace/scripts/workspace.py --apply .agents/plans/aom-standard-adoption-and-shipping/2026-10-01-plan-5-semantic-planning-artifact-custody.md`. Use `selecting-a-subagent` to select one adequate fresh-context route and hold model, reasoning, prompt, and scenario bytes fixed across reps.
-- [ ] Run five no-guidance control reps and five reps with the current capability. Give each a fresh context and only the scenario input. Capture decisions and exact rationalizations off-repo. Confirm the current capability misses the unchecked-but-merged case or wrongly applies the lifecycle without adoption. If the no-guidance control handles a case better, record that as evidence and fix only the existing capability's demonstrated harm; do not claim a behavior gain without it.
-- [ ] Narrow the skill's applicability: use it when the repo adopted `completed-artifact-custody` or a human explicitly requests this process; otherwise follow the repository's own policy.
-- [ ] Replace marker-only candidate discovery with a scope-first review of repository-declared planning locations plus artifacts explicitly linked by the active plan, issue, PR, or roadmap. Use a marker as a clue, never as the gate.
-- [ ] Classify each candidate as complete, still active/mixed, explicitly abandoned, or uncertain. Verify the whole artifact scope against current code, tests, accepted delivery records, and linked future obligations; use `cleanup-custody` for genuinely ambiguous custody.
-- [ ] Treat a fully checked plan as a completion signal to verify, not proof. Treat unchecked tasks as historical bookkeeping when repository evidence proves the governed scope shipped. A stale marker cannot override contrary evidence.
-- [ ] Retire an artifact only if its whole scope is complete or its abandonment has been explicitly decided, durable content is promoted, and the artifact is present in the successor slice's current base. Keep completed PR plans in the completing PR and keep the parent of live future work.
-- [ ] Specify that the successor-slice removal is the first substantive commit in that slice's eventual PR. Update surviving parent roadmaps and remove stale links in that same retirement change. Do not create cleanup-only PRs or automatic deletion machinery.
-- [ ] Put expected outcomes and required evidence in the separate rubric: unchecked-but-merged is complete; its parent roadmap remains active; checked-but-unimplemented remains active; a contradicted marker does not authorize removal; a branch-only plan stays through its completing PR; the non-adopter follows only its local policy.
-- [ ] Run five fresh-context treatment reps with the updated skill against the same case input and route. Require all classifications and local-policy boundaries in the rubric; use observed failures to refine the wording and repeat the affected reps. Keep only the scenario and rubric as evaluator-only authoring tests; delete evaluator transcripts and outputs from scratch.
+- [x] Before editing the capability, write the scenario inputs and scoring rubric. The input describes two fixture repos: one whose subscription record selects this standard and one without it whose local doctrine specifies its own closeout. In the adopter, include an unchecked plan whose full deliverable appears in merged source/PR evidence, a completed child inside a roadmap with future work, a fully checked plan whose code is absent, a stale completion marker contradicted by the repo, and a branch-only plan. Combine an end-of-day deadline, sunk implementation effort, and a conflicting PR cleanup instruction. Ask evaluators to return a table with artifact, whole-scope classification, repository evidence, adoption status, and next action. Keep expected dispositions out of the input file.
+- [x] Resolve the evaluator workspace with `py -3 skills/subagent-workspace/scripts/workspace.py --apply .agents/plans/aom-standard-adoption-and-shipping/2026-10-01-plan-5-semantic-planning-artifact-custody.md`. Use `selecting-a-subagent` to select one adequate fresh-context route and hold model, reasoning, prompt, and scenario bytes fixed across reps.
+- [x] Run five no-guidance control reps and five reps with the current capability. Give each a fresh context and only the scenario input. Capture decisions and exact rationalizations off-repo. Confirm the current capability misses the unchecked-but-merged case or wrongly applies the lifecycle without adoption. If the no-guidance control handles a case better, record that as evidence and fix only the existing capability's demonstrated harm; do not claim a behavior gain without it.
+- [x] Narrow the skill's applicability: use it when the repo adopted `completed-artifact-custody` or a human explicitly requests this process; otherwise follow the repository's own policy.
+- [x] Replace marker-only candidate discovery with a scope-first review of repository-declared planning locations plus artifacts explicitly linked by the active plan, issue, PR, or roadmap. Use a marker as a clue, never as the gate.
+- [x] Classify each candidate as complete, still active/mixed, explicitly abandoned, or uncertain. Verify the whole artifact scope against current code, tests, accepted delivery records, and linked future obligations; use `cleanup-custody` for genuinely ambiguous custody.
+- [x] Treat a fully checked plan as a completion signal to verify, not proof. Treat unchecked tasks as historical bookkeeping when repository evidence proves the governed scope shipped. A stale marker cannot override contrary evidence.
+- [x] Retire an artifact only if its whole scope is complete or its abandonment has been explicitly decided, durable content is promoted, and the artifact is present in the successor slice's current base. Keep completed PR plans in the completing PR and keep the parent of live future work.
+- [x] Specify that the successor-slice removal is the first substantive commit in that slice's eventual PR. Update surviving parent roadmaps and remove stale links in that same retirement change. Do not create cleanup-only PRs or automatic deletion machinery.
+- [x] Put expected outcomes and required evidence in the separate rubric: unchecked-but-merged is complete; its parent roadmap remains active; checked-but-unimplemented remains active; a contradicted marker does not authorize removal; a branch-only plan stays through its completing PR; the non-adopter follows only its local policy.
+- [x] Run five fresh-context treatment reps with the updated skill against the same case input and route. Require all classifications and local-policy boundaries in the rubric; use observed failures to refine the wording and repeat the affected reps. Keep only the scenario and rubric as evaluator-only authoring tests; delete evaluator transcripts and outputs from scratch.
 
 ## Task 4: Align portable worker routing with explicit adoption
 
@@ -126,11 +126,11 @@
 
 **Produces:** No ambient workflow imposes next-slice retirement on non-adopters; subscribed repos receive routing at completion and new-slice entry.
 
-- [ ] In repo-worker-base, route to the capability only when the repo declares this standard or local policy requests it. Tell non-adopters to follow their repo policy and explicitly state that installed capability is not adoption.
-- [ ] In writing-plans and executing-plans, make completion-artifact handling conditional on adoption/local policy. Keep the exact marker available as a recording option, not as a universal completion condition.
-- [ ] In linear-issue-shaping, defer retirement timing to repository policy. Describe the adopted two-slice case accurately: retain through the completing PR; retire in the next eligible substantive slice.
-- [ ] In iterative-review, replace the unconditional rule against tracked planning artifacts before Ready. Its closeout node must apply the consumer's policy and preserve artifacts through a completing PR when that repo adopted the two-slice standard.
-- [ ] Preserve review readiness, evidence, and durable-promotion obligations; change only artifact custody assumptions.
+- [x] In repo-worker-base, route to the capability only when the repo declares this standard or local policy requests it. Tell non-adopters to follow their repo policy and explicitly state that installed capability is not adoption.
+- [x] In writing-plans and executing-plans, make completion-artifact handling conditional on adoption/local policy. Keep the exact marker available as a recording option, not as a universal completion condition.
+- [x] In linear-issue-shaping, defer retirement timing to repository policy. Describe the adopted two-slice case accurately: retain through the completing PR; retire in the next eligible substantive slice.
+- [x] In iterative-review, replace the unconditional rule against tracked planning artifacts before Ready. Its closeout node must apply the consumer's policy and preserve artifacts through a completing PR when that repo adopted the two-slice standard.
+- [x] Preserve review readiness, evidence, and durable-promotion obligations; change only artifact custody assumptions.
 
 ## Task 5: Regenerate and validate the standard package
 
@@ -145,11 +145,11 @@
 
 **Produces:** Consistent canonical skills, standard definitions, generated packages, and no broken planning links.
 
-- [ ] Run evaluator-scenario self-review against every expected classification in the new file; verify no expected outcome depends only on exact marker text, checkbox totals, or a lexical detector.
-- [ ] Run focused shipping validation: `py -3 -m pytest tests/shipping/test_aom_standard_assets.py -q`.
-- [ ] Run `py -3 tools/run.py marketplace --apply`, then `py -3 tools/run.py marketplace --check`; verify source/generated parity for each changed skill and the standard reference.
-- [ ] Run `py -3 tools/validate_markdown_links.py --check`. The changed capabilities do not add bundled executable scripts, so no skill-script validator is needed for this slice.
-- [ ] Inspect `git diff --check`, staged paths, planning-artifact status, and generated source parity. Do not run the full CI gate immediately before a normal hooked commit.
+- [x] Run evaluator-scenario self-review against every expected classification in the new file; verify no expected outcome depends only on exact marker text, checkbox totals, or a lexical detector.
+- [x] Run focused shipping validation: `py -3 -m pytest tests/shipping/test_aom_standard_assets.py -q`.
+- [x] Run `py -3 tools/run.py marketplace --apply`, then `py -3 tools/run.py marketplace --check`; verify source/generated parity for each changed skill and the standard reference.
+- [x] Run `py -3 tools/validate_markdown_links.py --check`. The changed capabilities do not add bundled executable scripts, so no skill-script validator is needed for this slice.
+- [x] Inspect `git diff --check`, staged paths, planning-artifact status, and generated source parity. Do not run the full CI gate immediately before a normal hooked commit.
 
 ## Task 6: Review and close the implementation slice
 

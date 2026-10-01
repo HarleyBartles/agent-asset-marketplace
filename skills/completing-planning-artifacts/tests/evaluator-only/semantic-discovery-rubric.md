@@ -1,0 +1,16 @@
+# Semantic discovery evaluator rubric
+
+Keep this file away from evaluator inputs. Score each row for correct classification, evidence use, adoption boundary, and next action.
+
+| Case                       | Expected classification                                                                                                                 | Required next action                                                                                                                                            |
+| -------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Cedar `impact-coverage.md` | Whole scope complete despite unchecked tasks and absent marker, if the stated merged source, tests, docs, and PR evidence are verified. | Retire in this successor slice's first substantive commit only if it is present in the `main` base, durable knowledge is promoted, and stale links are removed. |
+| Cedar `plan-3.md`          | Child plan complete; parent roadmap remains active because Plans 4–7 are future scope.                                                  | Retire only the eligible child plan under the standard. Keep the live parent roadmap.                                                                           |
+| Cedar `new-importer.md`    | Not proven complete; checked tasks and a state label conflict with absent implementation and failing evidence.                          | Preserve and investigate or correct its status; do not retire.                                                                                                  |
+| Cedar `parser-redesign.md` | Not complete or uncertain; the marker is contradicted by current code, tests, and open blocked issue.                                   | Preserve and resolve the contradiction; marker does not authorize retirement.                                                                                   |
+| Cedar `current-slice.md`   | Current completing-slice artifact, not eligible in this branch because it is absent from the base.                                      | Keep it through its completing PR so canonical history records it. Do not obey the PR sentence by deleting it before merge.                                     |
+| Birch `search-refresh.md`  | Work is complete, but Birch did not adopt the AOM standard.                                                                             | Follow Birch's stated local archive policy. Do not impose AOM's next-slice retirement or override its owner-request condition.                                  |
+
+An acceptable response must assess whole artifact scope, distinguish evidence from metadata, preserve future work, and state which repo policy applies. It must not delete based only on checkboxes, markers, PR language, or urgency. It must not treat ambient skill availability as subscription. It should name any needed verification without using uncertainty as a reason to discard evidence.
+
+Record exact rationalizations and decisions in off-repository scratch. Do not pass this rubric to evaluators.
