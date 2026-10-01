@@ -1,6 +1,6 @@
 # Retire Obsolete Standards and Markdown Formatter
 
-**Status:** in progress
+**Status:** completed-awaiting-retirement
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use `subagent-driven-development` (recommended) or `executing-plans` to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
@@ -127,7 +127,7 @@ ______________________________________________________________________
 **Produces:** A committed retirement slice with source, generated distribution, and gate records consistent.
 
 - [x] Regenerate canonical plugin outputs and run repository-owned structural and shipping checks.
-- [ ] Inspect the whole diff for hand-edited generated files, remaining formatter/root-gitignore routes, removed safeguards, and unrelated content churn.
-- [ ] Verify Windows pre-commit and Linux hosted workflow still call the same complete logical CI target; certify only evidence actually observed.
-- [ ] Complete a fresh whole-slice review and resolve all material findings.
-- [ ] Update roadmap state and commit the closeout; record exact Linux parity evidence as pending Plan 11 unless the hosted system proves it for the tested commit.
+- [x] Inspect the whole diff for hand-edited generated files, remaining formatter/root-gitignore routes, removed safeguards, and unrelated content churn. Marketplace outputs were regenerated from canonical sources; active source searches found only the deliberately preserved historical v1 Unslop fixture.
+- [x] Verify the Windows pre-commit and hosted-gate example invoke the same tracked `githooks/pre-commit` entrypoint; exact-commit Linux execution evidence remains pending Plan 11.
+- [x] Complete a fresh whole-slice review and resolve all material findings.
+- [x] Update roadmap state and commit the closeout; record exact Linux parity evidence as pending Plan 11 unless the hosted system proves it for the tested commit.
