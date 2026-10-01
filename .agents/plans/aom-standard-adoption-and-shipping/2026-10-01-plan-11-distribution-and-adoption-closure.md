@@ -81,8 +81,8 @@
 
 - [x] Remove the workflow job condition that skips pull requests with `draft == true`; preserve the `ubuntu-latest` runner, clean detached commit check, dependency setup, and `githooks/pre-commit` hosted mode.
 - [x] Run `py -3 tools/run.py marketplace --check` and `py -3 tools/run.py validate --check` for any uncommitted adoption or documentation changes; stage intended paths and commit through the normal tracked hook.
-- [ ] Push the completed branch and open a Draft PR against the repository's actual default branch; attach the PR to this Codex task.
-- [ ] Wait for `.github/workflows/marketplace-validation.yml` to report the tracked `githooks/pre-commit` gate green on the exact PR head. If it fails, repair the owning source, commit, push, and repeat against the new head.
-- [ ] Update the `tracked-validation-hook` certification with the exact commit whose hosted Linux gate passed and the Windows hook evidence for its staged tree; retain semantic and runtime limits.
+- [x] Push the completed branch and open a Draft PR against the repository's actual default branch; attach the PR to this Codex task.
+- [x] Wait for `.github/workflows/marketplace-validation.yml` to report the tracked `githooks/pre-commit` gate green on the exact PR head. If it fails, repair the owning source, commit, push, and repeat against the new head.
+- [x] Update the `tracked-validation-hook` certification with the exact commit whose hosted Linux gate passed and the Windows hook evidence for its staged tree; retain semantic and runtime limits.
 - [ ] Commit and push the certification/roadmap closeout. Confirm Windows hook and hosted Linux gate status for the resulting head, and report any hosted result that is still pending without claiming certification prematurely.
 - [ ] Complete a final whole-range review, ensure the working tree is clean, and report the Draft PR URL, exact reviewed head, local and hosted evidence, and any remaining human-owned post-handoff action.
