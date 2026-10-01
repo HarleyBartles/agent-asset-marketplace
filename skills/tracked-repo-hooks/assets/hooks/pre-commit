@@ -25,7 +25,9 @@ if ! REPO_ROOT="$(git rev-parse --show-toplevel)"; then
 fi
 cd "$REPO_ROOT"
 while IFS= read -r git_variable; do
-  unset "$git_variable"
+  if [[ "$git_variable" != "GIT_INDEX_FILE" ]]; then
+    unset "$git_variable"
+  fi
 done < <(git rev-parse --local-env-vars)
 export REPO_ROOT
 

@@ -142,6 +142,37 @@ def test_local_hook_loads_the_adapter_from_the_staged_candidate(tmp_path: Path) 
     assert _git(repo, "status", "--short") == "MM tools/hook_gate_adapter.sh"
 
 
+def test_commit_only_validates_git_temporary_index_candidate(tmp_path: Path) -> None:
+    repo = _repo(tmp_path / "path limited commit repo")
+    _write_adapter(
+        repo,
+        apply_body='git write-tree > "$REPO_ROOT/.git/apply-tree"',
+        check_body='git write-tree > "$REPO_ROOT/.git/check-tree"',
+    )
+    _git(repo, "add", "tools/hook_gate_adapter.sh")
+    _git(repo, "commit", "--quiet", "-m", "record candidate observer")
+    _git(repo, "config", "core.hooksPath", "githooks")
+
+    (repo / "notes file.txt").write_text("Only-path commit\n", encoding="utf-8")
+    (repo / "other.txt").write_text("Keep separately staged\n", encoding="utf-8")
+    _git(repo, "add", "other.txt")
+    result = subprocess.run(
+        ["git", "commit", "--only", "-m", "path limited", "--", "notes file.txt"],
+        cwd=repo,
+        text=True,
+        capture_output=True,
+        check=False,
+        env=os.environ.copy(),
+    )
+
+    assert result.returncode == 0, result.stdout + result.stderr
+    committed_tree = _git(repo, "rev-parse", "HEAD^{tree}")
+    assert (repo / ".git/check-tree").read_text(encoding="utf-8").strip() == committed_tree
+    assert _git(repo, "show", "HEAD:notes file.txt") == "Only-path commit"
+    assert _git(repo, "show", "HEAD:other.txt") == "Other base"
+    assert _git(repo, "show", ":other.txt") == "Keep separately staged"
+
+
 def test_apply_failure_restores_staged_and_unstaged_work(tmp_path: Path) -> None:
     repo = _repo(
         tmp_path / "apply failure repo",
