@@ -36,7 +36,7 @@ This is the repository-owned assessment of its selected standards. The structura
 - **Implementation:** `githooks/pre-commit` materializes and checks the candidate tree. `.agents/contracts/repo-standards-commands.json` declares apply and check commands. `.github/workflows/marketplace-validation.yml` invokes the same hook in hosted mode.
 - **Must preserve:** Keep the complete `tools/run.py ci` gate on Windows and Linux, fail on missing prerequisites, preserve unrelated working changes, and prohibit agents from bypassing the hook.
 - **Drift controls:** The tracked hook and hosted workflow are both reviewed with command-contract changes. `.agents/runbooks/pr.md` and `.agents/doctrine/tools.md` prohibit bypassing the hook.
-- **Evidence and limits:** The complete Windows tracked hook passed on commit `78479aa1ded0ba4ec2a851eb7e4a08d15a5e8eb7`. The hosted Linux workflow passed the same exact commit on Draft PR #345, run `36928068729` (`https://github.com/HarleyBartles/agent-asset-marketplace/actions/runs/36928068729`). This certifies the gate at that commit; later source changes require fresh evidence. Hosted success demonstrates committed Linux parity, not that future local commits will pass.
+- **Evidence and limits:** The complete Windows tracked hook passed on commit `f7e322063d31d16da04f66929b5974679b97121a`. The hosted Linux workflow checked out and passed that exact detached PR head on Draft PR #345, run `36934495302` (`https://github.com/HarleyBartles/agent-asset-marketplace/actions/runs/36934495302`). This certifies the gate at that commit; later source changes require fresh evidence. Hosted success demonstrates committed Linux parity, not that future local commits will pass.
 
 ## review-entrypoint
 
