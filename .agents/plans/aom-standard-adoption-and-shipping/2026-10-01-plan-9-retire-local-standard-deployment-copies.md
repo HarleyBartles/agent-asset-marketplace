@@ -61,10 +61,10 @@ ______________________________________________________________________
 
 **Produces:** A verified keep/delete manifest for the local projection, preserving the formatter path and all authored v2 surfaces.
 
-- [ ] Confirm checker and active `repo-standards` target contain no reads of the deployment manifest, byte provenance, or deployed runtime.
-- [ ] Confirm the only direct runtime dependency in the local `.agents/standards/` tree is the Markdown formatter path used by `tools/new_plugin.py` and `tools/sync_skill_shared_references.py`.
-- [ ] Inspect the complete tracked tree under `.agents/standards/` and map each selected-standard copy to its current authoritative source or to the formatter exception.
-- [ ] Preserve historical compatibility tests/fixtures that model an old consumer; distinguish them from current repository runtime dependencies.
+- [x] Confirm checker and active `repo-standards` target contain no reads of the deployment manifest, byte provenance, or deployed runtime.
+- [x] Confirm the only direct runtime dependency in the local `.agents/standards/` tree is the Markdown formatter path used by `tools/new_plugin.py` and `tools/sync_skill_shared_references.py`.
+- [x] Inspect the complete tracked tree under `.agents/standards/` and map each selected-standard copy to its current authoritative source or to the formatter exception.
+- [x] Preserve historical compatibility tests/fixtures that model an old consumer; distinguish them from current repository runtime dependencies.
 
 ### Task 2: Remove obsolete local deployed resources
 
@@ -79,10 +79,10 @@ ______________________________________________________________________
 
 **Produces:** No local byte-vendored AOM standard implementations remain; only the explicitly temporary formatter copy remains.
 
-- [ ] Delete only the paths in the verified retirement boundary; keep `.agents/standards/markdown-formatting/` intact for Plan 10.
-- [ ] Check the v2 checker from a minimal consumer fixture that has no `.agents/standards/` tree; use existing behavioral cases if they already prove the claim rather than adding a tautological presence test.
-- [ ] Verify repository subscriptions, certification, the runbooks, and command declaration still point to owned live files.
-- [ ] Search current production routes for stale claims that the deployed runtime or provenance governs this checkout; leave explicitly historical fixtures and pin-specific source guidance intact.
+- [x] Delete only the paths in the verified retirement boundary; keep `.agents/standards/markdown-formatting/` intact for Plan 10.
+- [x] Check the v2 checker from a minimal consumer fixture that has no `.agents/standards/` tree; use existing behavioral cases if they already prove the claim rather than adding a tautological presence test.
+- [x] Verify repository subscriptions, certification, the runbooks, and command declaration still point to owned live files.
+- [x] Search current production routes for stale claims that the deployed runtime or provenance governs this checkout; leave explicitly historical fixtures and pin-specific source guidance intact.
 - [ ] Run the focused checker suite, Markdown link validation, command-line validation, and the full Windows pre-commit hook on the atomic removal commit.
 
 ### Task 3: Review and close the local-copy retirement slice
