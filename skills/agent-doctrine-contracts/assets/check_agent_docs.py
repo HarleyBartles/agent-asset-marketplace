@@ -1,0 +1,158 @@
+#!/usr/bin/env python3
+"""Editable starter for placement, JSON syntax, and static agent-document link checks."""
+
+from __future__ import annotations
+
+import argparse
+import fnmatch
+import json
+import re
+import sys
+from pathlib import Path
+from urllib.parse import unquote, urlsplit
+
+
+DOCUMENT_SUFFIXES = {".md", ".markdown", ".json", ".yaml", ".yml", ".toml"}
+LINK = re.compile(r"!?\[[^\]]*\]\(([^)]+)\)")
+DEFAULT_EXCLUDES = (".git/**",)
+
+
+def _excluded(path: Path, root: Path, patterns: list[str]) -> bool:
+    relative = path.relative_to(root).as_posix()
+    return ".git" in path.relative_to(root).parts or any(
+        fnmatch.fnmatchcase(relative, pattern) for pattern in (*DEFAULT_EXCLUDES, *patterns)
+    )
+
+
+def _markdown_files(root: Path, patterns: list[str], route_roots: list[Path]) -> set[Path]:
+    files = {path.resolve() for path in root.rglob("*.md") if not _excluded(path, root, patterns)}
+    files.update(path.resolve() for path in root.rglob("*.markdown") if not _excluded(path, root, patterns))
+    for route_root in route_roots:
+        candidates = [route_root] if route_root.is_file() else route_root.rglob("*")
+        files.update(
+            path.resolve() for path in candidates if path.is_file() and path.suffix.lower() in {".md", ".markdown"}
+        )
+    return files
+
+
+def _resolve_link(source: Path, raw: str, root: Path) -> Path | None:
+    target = raw.strip().split(maxsplit=1)[0].strip("<>")
+    parts = urlsplit(target)
+    if parts.scheme or target.startswith("//") or not parts.path:
+        return None
+    resolved = (source.parent / unquote(parts.path)).resolve()
+    if not resolved.is_relative_to(root):
+        raise ValueError(f"link escapes repository: {target}")
+    return resolved
+
+
+def main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(
+        description=(
+            "Check agent document stores, JSON syntax, and visible Markdown links. "
+            "Semantic routing still needs review. (read-only)"
+        )
+    )
+    parser.add_argument(
+        "--repo-root", type=Path, default=Path("."), help="repository root (default: current directory)"
+    )
+    parser.add_argument("--check", action="store_true", help="run read-only checks (default)")
+    parser.add_argument(
+        "--route-root",
+        action="append",
+        default=[],
+        metavar="PATH",
+        help="add a repository-relative Markdown route source file or tree, even if excluded; repeatable",
+    )
+    parser.add_argument(
+        "--exclude",
+        action="append",
+        default=[],
+        metavar="GLOB",
+        help="exclude a repository-relative document or route-source pattern; repeatable",
+    )
+    args = parser.parse_args(argv)
+
+    root = args.repo_root.resolve()
+    if not root.is_dir():
+        parser.error(f"repository root is not a directory: {root}")
+
+    errors: list[str] = []
+    stores = [root / ".agents/doctrine", root / ".agents/contracts"]
+    for store in stores:
+        if not store.is_dir():
+            errors.append(f"required agent-document store is missing: {store.relative_to(root).as_posix()}")
+
+    route_roots: list[Path] = []
+    for value in args.route_root:
+        route_root = (root / value).resolve()
+        if not route_root.is_relative_to(root):
+            errors.append(f"route root escapes repository: {value}")
+        elif not route_root.exists():
+            errors.append(f"route root does not exist: {value}")
+        elif not route_root.is_file() and not route_root.is_dir():
+            errors.append(f"route root is not a file or directory: {value}")
+        else:
+            route_roots.append(route_root)
+
+    documents = sorted(
+        path.resolve()
+        for store in stores
+        if store.is_dir()
+        for path in store.rglob("*")
+        if path.is_file() and path.suffix.lower() in DOCUMENT_SUFFIXES and not _excluded(path, root, args.exclude)
+    )
+    for path in documents:
+        if path.suffix.lower() == ".json":
+            try:
+                json.loads(path.read_text(encoding="utf-8"))
+            except (OSError, UnicodeError, json.JSONDecodeError) as exc:
+                errors.append(f"{path.relative_to(root).as_posix()}: invalid JSON syntax: {exc}")
+
+    route_sources = _markdown_files(root, args.exclude, route_roots)
+    inbound: set[Path] = set()
+    for source in route_sources:
+        try:
+            content = source.read_text(encoding="utf-8")
+        except (OSError, UnicodeError) as exc:
+            errors.append(f"{source.relative_to(root).as_posix()}: cannot read route source: {exc}")
+            continue
+        for raw in LINK.findall(content):
+            try:
+                target = _resolve_link(source, raw, root)
+            except ValueError as exc:
+                errors.append(f"{source.relative_to(root).as_posix()}: {exc}")
+                continue
+            if target is None:
+                continue
+            if not target.is_file():
+                errors.append(f"{source.relative_to(root).as_posix()}: broken local link: {raw.strip()}")
+            elif source != target and target in documents:
+                inbound.add(target)
+
+    for path in documents:
+        if path.suffix.lower() in {".md", ".markdown"} and path not in inbound:
+            print(f"CANDIDATE without an inbound Markdown link: {path.relative_to(root).as_posix()}")
+
+    for error in errors:
+        print(f"ERROR: {error}")
+    print(
+        f"Checked {len(documents)} agent document(s). JSON syntax is checked; "
+        "schema validation is not performed. Product schema semantics are out of scope."
+    )
+    print(
+        "Static Markdown links only: harness scope, skills, plugin metadata, tool registries, "
+        "and other runtime routes may be invisible."
+    )
+    print(
+        "Candidate reachability is advisory and needs repository review; this check does not "
+        "certify semantic reachability or compliance."
+    )
+    if errors:
+        return 1
+    print("OK: no mechanical errors found")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
