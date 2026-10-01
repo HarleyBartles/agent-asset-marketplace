@@ -1,5 +1,7 @@
 # Semantic Planning-Artifact Custody Implementation Plan
 
+**Status:** completed-awaiting-retirement
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use `subagent-driven-development` (recommended) or `executing-plans` to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Make completed-artifact custody a semantically discoverable, opt-in standard with portable guidance that preserves active future work and does not require a marker or an automatic deletion checker.
@@ -162,9 +164,9 @@
 
 **Produces:** A reviewed Plan 5 slice recorded as `completed-awaiting-retirement`; no draft PR until Plan 8 closure.
 
-- [ ] Commit Tasks 2-5 through the normal repository hook. Record the resulting implementation head and do not rerun the full gate after a successful hooked commit.
-- [ ] Obtain a fresh whole-range review against the approved spec. Fix Critical and Important findings, rerun affected focused validation, and obtain a fresh review after each correction.
-- [ ] Mark this plan `completed-awaiting-retirement`, keep it and the approved AOM spec/roadmap tracked for the eventual whole-roadmap PR, and update the Plan 5 roadmap row with commit and review evidence.
+- [x] Commit Tasks 2-5 through the normal repository hook. Implementation and review corrections are committed through `535c042538c2f76894f4a99514e1514573dd4bf9`; each normal commit hook passed the complete Windows gate.
+- [x] Obtain a fresh whole-range review against the approved spec. The final review of `3b39cc051f1fb4241c9ee36a1fca411190f9b1a8..535c042538c2f76894f4a99514e1514573dd4bf9` found no Critical, Important, or Minor findings. Earlier Important findings were corrected and re-reviewed; focused tests and full Windows commit gates passed after corrections.
+- [x] Mark this plan `completed-awaiting-retirement`, keep it and the approved AOM spec/roadmap tracked for the eventual whole-roadmap PR, and update the Plan 5 roadmap row with commit and review evidence.
 
 **Exit:** The selectable standard states its semantic pledge; an optional portable capability teaches agents to implement it; other standards and ambient skills do not silently impose it.
 
