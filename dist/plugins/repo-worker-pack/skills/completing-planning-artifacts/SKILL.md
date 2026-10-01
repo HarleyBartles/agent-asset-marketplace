@@ -19,7 +19,7 @@ license: MIT
 
 # Completing Planning Artifacts
 
-Use this lifecycle only when the repository explicitly adopts `completed-artifact-custody` or a human requests it. An installed skill, visible marker, or another standard does not create that subscription. Otherwise, follow the repository's own planning-artifact policy.
+Use this lifecycle only when the repository explicitly adopts `completed-artifact-custody` or a human requests it. Before applying it, resolve the repository's immutable subscription revision and read that definition together with its readable certification. The standard ID alone does not establish which obligations are in force. Preserve requirements from an older pin, including any required completion marker; this current capability does not upgrade a subscription. If the pin cannot be resolved, follow the repository's certification and local planning-artifact policy rather than inferring current requirements. An installed skill, visible marker, or another standard does not create or upgrade a subscription.
 
 The standard keeps plans, specifications, roadmaps, checkpoints, and similar files as in-flight execution artifacts through the PR that completes their work. Their completion and later retirement are separate decisions: the completing PR records canonical history; the first substantive successor slice retires eligible artifacts from its current base.
 
@@ -29,8 +29,8 @@ At slice completion and successor-slice entry, inspect planning locations declar
 
 For each artifact, classify its full governed scope as **complete**, **active or mixed**, **explicitly abandoned**, or **uncertain**. Compare the artifact's obligations with repository evidence such as current implementation, tests, accepted delivery records, linked issues, and future obligations. A merged PR is useful evidence, but verify that it delivered the artifact's full scope.
 
-- A plan can be complete even when its checkboxes remain unchecked or its completion marker is absent, if evidence shows the entire governed scope shipped.
-- Checked boxes, a `complete` state, or `completed-awaiting-retirement` do not prove completion when implementation, test, issue, or delivery evidence contradicts them.
+- Under the current semantic standard, a plan can be complete even when its checkboxes remain unchecked or its completion marker is absent, if evidence shows the entire governed scope shipped. If the repository's pinned definition or certification requires a marker, preserve that requirement until the repository explicitly adopts an updated definition.
+- Checked boxes, a `complete` state, or `completed-awaiting-retirement` do not prove completion when implementation, test, issue, or delivery evidence contradicts them. Follow any additional status-recording requirements in the pinned definition.
 - Classify a child plan against its own scope. A completed child may be retired while its parent roadmap remains active; keep the parent and future plans that still govern work.
 - Treat abandonment as an explicit decision. Inactivity, rejected scratch work, or a deletion request alone does not establish abandonment.
 - If the evidence leaves the artifact's actual state uncertain, or durable-content custody is unclear, do not retire it yet. Use `cleanup-custody` to resolve that specific uncertainty. When the evidence clearly shows missing delivery or active blocked work, classify it as active or mixed and preserve it.
@@ -48,7 +48,7 @@ Before handing off a substantially complete PR:
 
 After refreshing the required base and before substantive edits:
 
-1. Confirm the repository adopted this standard or that the human requested it. Read the local certification and follow its declared route and safeguards.
+1. Confirm the repository adopted this standard or that the human requested it. Resolve and read the immutable pinned definition and local certification; follow their declared route and safeguards. Do not infer an upgrade from the standard ID alone.
 2. Inspect the declared planning locations and linked artifacts. Classify each artifact semantically; do not require a marker or keyword to find a candidate.
 3. Retire only artifacts whose full scope is complete or explicitly abandoned, whose durable knowledge has been promoted, and which are present in the successor slice's current base. Verify that the base is current `main`; branch-only files remain in their completing PR. If the completing PR is already merged and its artifact is in this successor's current base, retire eligible artifacts in this slice's first substantive commit. If this PR is completing the artifact, keep it through merge and defer retirement to a later successor slice.
 4. Preserve active or mixed-scope artifacts, including a parent roadmap with future stages. A completed child plan can be retired independently when it no longer governs active work.

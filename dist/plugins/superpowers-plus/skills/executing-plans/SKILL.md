@@ -101,7 +101,7 @@ After all tasks:
 
 ## Complete Development
 
-1. Follow the repository's planning-artifact policy. If it adopts `completed-artifact-custody` or a human requests that lifecycle, use `completing-planning-artifacts` to assess the whole scope, promote durable decisions, and retain governing artifacts through the completing PR. A marker is optional and does not control semantic completion. Otherwise, follow local policy.
+1. Follow the repository's planning-artifact policy. If it adopts `completed-artifact-custody` or a human requests that lifecycle, resolve the immutable subscription revision and read its definition and local certification before using `completing-planning-artifacts`. Follow that version's status-recording requirements; the standard ID alone does not upgrade an older subscription. Under the current semantic definition, assess the whole scope, promote durable decisions, retain governing artifacts through the completing PR, and treat a marker as optional. Otherwise, follow local policy.
 2. Use `finishing-a-development-branch` for final validation, publication proof, and the user's integration choice.
 3. Keep a Draft PR draft until self-review and the latest committed tree pass the repository's required gate.
 4. Before deleting scratch, report every ledgered ruling and deferred minor. Delete only this plan's workspace after the final review is clean.

@@ -10,7 +10,7 @@ The repository maintains a tracked pre-commit hook and hosted CI that run one co
 
 - Run the complete required gate in both the Windows hook and Linux hosted CI, including tests, integration tests, lint, generation checks, and other merge-blocking validation.
 - Provide required infrastructure and prerequisites on both platforms. Missing requirements fail clearly rather than silently omitting checks.
-- Have the hook assess the candidate tree that will be committed. Include hook-side normalization or generation in that candidate and validate it. Preserve unrelated unstaged work. Gates must not rely on stale ignored build/configuration artifacts; refresh ignored derived inputs from the candidate or isolate the gate.
+- Have the hook assess the candidate tree that will be committed. Include hook-side normalization or generation in that candidate and validate it. Load gate configuration and adapters from the materialized candidate, never from unstaged edits. Preserve unrelated unstaged work. Gates must not rely on stale ignored build/configuration artifacts; refresh ignored derived inputs from the candidate or isolate the gate.
 - Have hosted CI assess the committed counterpart. Keep check coverage and failure criteria equivalent while allowing platform-specific adapters where needed. Derive ignored generated/setup inputs from the checked-out commit before using them as evidence.
 - Normalize declared line endings and final newlines, including generated and formatted text, so platform changes do not create churn.
 - Prohibit hook skipping by agents. The repository owns its hook, candidate materialization, canonical gate, and drift controls.

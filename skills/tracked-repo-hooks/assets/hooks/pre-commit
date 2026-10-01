@@ -29,7 +29,7 @@ while IFS= read -r git_variable; do
 done < <(git rev-parse --local-env-vars)
 export REPO_ROOT
 
-ADAPTER="${REPO_HOOK_ADAPTER:-$REPO_ROOT/tools/hook_gate_adapter.sh}"
+ADAPTER="$REPO_ROOT/tools/hook_gate_adapter.sh"
 
 run_repository_apply_gate() {
   echo "pre-commit: run_repository_apply_gate is not configured in $ADAPTER" >&2
@@ -41,11 +41,14 @@ run_repository_check_gate() {
   return 2
 }
 
-if [[ -f "$ADAPTER" ]]; then
-  # This is a starter-local seam, not a shared AOM command or module contract.
-  # shellcheck source=/dev/null
-  source "$ADAPTER"
-fi
+load_repository_adapter() {
+  if [[ -f "$ADAPTER" ]]; then
+    # Load only after the candidate tree is materialized, so the adapter matches
+    # the staged commit locally and the clean commit in hosted mode.
+    # shellcheck source=/dev/null
+    source "$ADAPTER"
+  fi
+}
 
 run_hosted_gate() {
   if [[ "$#" -ne 1 ]]; then
@@ -72,6 +75,7 @@ run_hosted_gate() {
     echo "pre-commit: hosted mode requires a clean checkout" >&2
     return 2
   fi
+  load_repository_adapter
   before_tree="$(git write-tree)"
   run_repository_check_gate
   after_tree="$(git write-tree)"
@@ -185,6 +189,7 @@ if [[ "${#untracked_paths[@]}" -gt 0 ]]; then
   done
 fi
 
+load_repository_adapter
 CANDIDATE_TOUCHED=1
 run_repository_apply_gate
 if [[ "$(git write-tree)" != "$ORIGINAL_INDEX_TREE" ]]; then

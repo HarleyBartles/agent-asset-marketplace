@@ -124,6 +124,24 @@ def test_local_hook_checks_the_staged_candidate_and_restores_other_work(tmp_path
     assert (repo / ".git/gate-calls").read_text(encoding="utf-8").splitlines() == ["apply", "check"]
 
 
+def test_local_hook_loads_the_adapter_from_the_staged_candidate(tmp_path: Path) -> None:
+    repo = _repo(tmp_path / "adapter candidate repo")
+
+    _write_adapter(repo, apply_body="return 17", check_body="return 17")
+    _git(repo, "add", "tools/hook_gate_adapter.sh")
+    _write_adapter(
+        repo,
+        apply_body='printf "unstaged adapter ran\\n" >> "$REPO_ROOT/.git/adapter-calls"',
+        check_body='printf "unstaged adapter ran\\n" >> "$REPO_ROOT/.git/adapter-calls"',
+    )
+
+    result = _run_hook(repo)
+
+    assert result.returncode != 0
+    assert not (repo / ".git/adapter-calls").exists()
+    assert _git(repo, "status", "--short") == "MM tools/hook_gate_adapter.sh"
+
+
 def test_apply_failure_restores_staged_and_unstaged_work(tmp_path: Path) -> None:
     repo = _repo(
         tmp_path / "apply failure repo",
@@ -212,6 +230,7 @@ def test_hosted_mode_rejects_dirty_or_attached_checkouts_before_running_gate(tmp
 def test_hook_fails_closed_when_the_repo_gate_adapter_is_missing(tmp_path: Path) -> None:
     repo = _repo(tmp_path / "no adapter repo")
     (repo / "tools/hook_gate_adapter.sh").unlink()
+    _git(repo, "add", "-u", "tools/hook_gate_adapter.sh")
 
     result = _run_hook(repo)
 

@@ -33,6 +33,8 @@ Describe the next-slice practice, the route by which agents inspect artifacts, h
 
 Record this standard's ID, source repository, immutable commit, definition path, and certification reference in `.agents/contracts/operating-standards.json`. The readable certification defaults to `.agents/contracts/standards-certification.md` and states where the implementation lives, what agents must preserve, how drift is prevented, and what evidence is mechanical or judgment-based. Every agent changing an affected surface maintains the certification. Using these paths does not adopt the separate agent doctrine/contracts standard. AOM adoption also requires root `AGENTS.md` routing to these records. Ambient availability of this or another standard's capabilities does not create a subscription or impose this lifecycle.
 
+The immutable commit recorded by the repository selects the requirements in force. Refreshing the ambient plugin does not upgrade that pin; an adopter changes its implementation and certification only through an explicit upgrade.
+
 ## Optional AOM assets
 
 AOM can provide guidance and implementation support for semantic discovery. Any starter becomes repository-owned and may be adapted. Ambient capability availability alone does not adopt this standard.
