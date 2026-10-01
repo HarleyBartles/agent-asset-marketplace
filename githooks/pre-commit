@@ -79,7 +79,7 @@ restore_worktree() {
 trap restore_worktree EXIT
 
 # Remember the user's intended paths before apply-mode tools rewrite the staged
-# snapshot. Mechanical edits to these paths (for example formatter output) are
+# snapshot. Mechanical edits to these paths (for example generated output) are
 # part of the candidate tree; unrelated authored paths remain protected.
 git diff --cached --name-only -z > "$ORIGINAL_STAGED_PATHS"
 
