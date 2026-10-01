@@ -54,7 +54,8 @@ def test_rejects_broken_local_link(tmp_path: Path) -> None:
 
 def test_rejects_undefined_reference_style_link(tmp_path: Path) -> None:
     (tmp_path / "design.md").write_text(
-        "- [x] Record the decision.\n\nThe [design term] needs definition.\n\nConsult [the guide][missing].\n",
+        "- [x] Record the decision.\n\nThe [design term] needs definition.\n\n"
+        "Consult [the guide][missing] and ![diagram][image-missing].\n",
         encoding="utf-8",
     )
 
@@ -62,6 +63,19 @@ def test_rejects_undefined_reference_style_link(tmp_path: Path) -> None:
 
     assert result.returncode == 1
     assert "undefined markdown reference: [missing]" in result.stdout.lower()
+    assert "undefined markdown reference: [image-missing]" in result.stdout.lower()
+
+
+def test_ignores_link_shaped_text_inside_fenced_markdown_examples(tmp_path: Path) -> None:
+    (tmp_path / "design.md").write_text(
+        "A lifecycle stage guide.\n\n`[inline example](missing.md)`\n\n"
+        "```markdown\n[example](missing.md)\n![example][missing]\n```\n",
+        encoding="utf-8",
+    )
+
+    result = run_checker(tmp_path, "--document", "design.md")
+
+    assert result.returncode == 0, result.stdout + result.stderr
 
 
 def test_rejects_selected_document_without_supplied_route(tmp_path: Path) -> None:

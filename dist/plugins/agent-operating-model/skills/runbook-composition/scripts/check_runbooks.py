@@ -14,7 +14,10 @@ INLINE_LINK = re.compile(
     r"!?\[[^\]]*\]\(\s*(<[^>\n]*>|(?:\\.|[^()\s]|\([^()\n]*\))+)(?:\s+(?:\"[^\"]*\"|'[^']*'|\([^)]*\)))?\s*\)"
 )
 REFERENCE_DEFINITION = re.compile(r"^[ \t]{0,3}\[([^\]\n]+)\]:[ \t]*(<[^>\n]*>|(?:\\.|[^\s])+)", re.MULTILINE)
-REFERENCE_USE = re.compile(r"(?<!!)\[([^\]\n]+)\](?:\[([^\]\n]*)\])?")
+REFERENCE_USE = re.compile(r"!?\[([^\]\n]+)\](?:\[([^\]\n]*)\])?")
+FENCE_OPEN = re.compile(r"^[ \t]{0,3}(`{3,}|~{3,})")
+FENCE_CLOSE = re.compile(r"^[ \t]{0,3}(`+|~+)[ \t]*$")
+INLINE_CODE_SPAN = re.compile(r"(?<!`)(`+)(?!`)[\s\S]*?(?<!`)\1(?!`)")
 DISCLAIMER = (
     "Review is still required for semantic usefulness and stage classification, effective routing, "
     "non-Markdown routes, and workflow fit. This check does not certify compliance."
@@ -37,6 +40,23 @@ def _local_target(markdown: Path, raw: str, root: Path) -> Path | None:
 
 
 def _markdown_link_targets(content: str) -> list[tuple[str | None, str | None]]:
+    lines: list[str] = []
+    active_fence: tuple[str, int] | None = None
+    for line in content.splitlines():
+        if active_fence is not None:
+            closing = FENCE_CLOSE.match(line)
+            if closing and closing.group(1)[0] == active_fence[0] and len(closing.group(1)) >= active_fence[1]:
+                active_fence = None
+            continue
+        opening = FENCE_OPEN.match(line)
+        if opening:
+            active_fence = (opening.group(1)[0], len(opening.group(1)))
+            continue
+        if line.startswith("\t") or line.startswith("    "):
+            continue
+        lines.append(line)
+    content = "\n".join(lines)
+    content = INLINE_CODE_SPAN.sub(_mask_code_span, content)
     targets = [(match.group(1), None) for match in INLINE_LINK.finditer(content)]
     definitions: dict[str, str] = {}
     for match in REFERENCE_DEFINITION.finditer(content):
@@ -53,6 +73,10 @@ def _markdown_link_targets(content: str) -> list[tuple[str | None, str | None]]:
                 continue
             targets.append((definitions.get(normalized), label))
     return targets
+
+
+def _mask_code_span(match: re.Match[str]) -> str:
+    return "".join("\n" if char == "\n" else " " for char in match.group())
 
 
 def _repo_file(root: Path, value: str) -> Path:

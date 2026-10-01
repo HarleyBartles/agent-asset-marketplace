@@ -69,7 +69,9 @@ def test_reports_broken_links_and_unlinked_documents_as_candidates(tmp_path: Pat
     contracts.mkdir(parents=True)
     (doctrine / "routed.md").write_text("See [contract](../contracts/rules.md).\n", encoding="utf-8")
     (doctrine / "broken.md").write_text("See [missing](not-here.md).\n", encoding="utf-8")
-    (doctrine / "broken-reference.md").write_text("See [missing][not-defined].\n", encoding="utf-8")
+    (doctrine / "broken-reference.md").write_text(
+        "See [missing][not-defined] and ![diagram][not-defined-image].\n", encoding="utf-8"
+    )
     (contracts / "rules.md").write_text("Keep a durable invariant.\n", encoding="utf-8")
     (contracts / "orphan.md").write_text("A governance document without a static inbound link.\n", encoding="utf-8")
     (tmp_path / "AGENTS.md").write_text("Read [doctrine](.agents/doctrine/routed.md).\n", encoding="utf-8")
@@ -79,6 +81,7 @@ def test_reports_broken_links_and_unlinked_documents_as_candidates(tmp_path: Pat
     assert result.returncode == 1
     assert "broken local link" in result.stdout.lower()
     assert "undefined markdown reference: [not-defined]" in result.stdout.lower()
+    assert "undefined markdown reference: [not-defined-image]" in result.stdout.lower()
     assert "candidate without an inbound markdown link" in result.stdout.lower()
     assert "orphan.md" in result.stdout
     assert "routed.md" not in result.stdout.split("candidate without an inbound markdown link:")[-1]
@@ -107,6 +110,22 @@ def test_route_roots_and_excludes_affect_static_discovery_without_certifying_rou
     assert "static markdown links only" in result.stdout.lower()
     assert "candidate without an inbound markdown link: .agents/doctrine/runtime.md" in result.stdout.lower()
     assert before == after
+
+
+def test_ignores_link_shaped_text_inside_fenced_agent_document_examples(tmp_path: Path) -> None:
+    doctrine = tmp_path / ".agents/doctrine"
+    contracts = tmp_path / ".agents/contracts"
+    doctrine.mkdir(parents=True)
+    contracts.mkdir(parents=True)
+    (doctrine / "examples.md").write_text(
+        "Agent guidance.\n\n`[inline example](missing.md)`\n\n"
+        "```markdown\n[example](missing.md)\n![example][missing]\n```\n",
+        encoding="utf-8",
+    )
+
+    result = check(tmp_path)
+
+    assert result.returncode == 0, result.stdout + result.stderr
 
 
 def test_unrelated_markdown_links_contribute_inbound_evidence_without_failing(tmp_path: Path) -> None:
