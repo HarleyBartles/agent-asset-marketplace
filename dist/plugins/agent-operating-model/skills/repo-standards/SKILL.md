@@ -1,6 +1,6 @@
 ---
 name: repo-standards
-description: Use when aligning several repository operating-model concerns or deciding which focused repository standard owns a requested change.
+description: Use when aligning repository operating-model standards, assessing adoption, or deciding which focused standard owns a requested change.
 metadata:
   source-id: repo-standards
   source-path: skills/repo-standards/SKILL.md
@@ -13,21 +13,23 @@ license: MIT
 
 # Repo Standards
 
-Agent Operating Model is an ambient catalog. Its presence does not mean the consumer adopts any of its standards. Help the repository choose only the standards it wants, including none; keep repository-owned standards in the repository's own composition. Run checks and scaffolds only for the explicitly declared composition.
+Agent Operating Model (AOM) publishes selectable standards. Availability is not adoption. A repository owns its implementation and self-certification after adopting a standard.
 
-The catalog is packaged with `repo-shape` at `references/operating-standards-catalog.json`. Treat its entries as available choices; a repository adopts a standard only through its own explicit composition declaration.
+For assessment or adoption, read [adoption and certification](references/adoption-and-certification.md), then inspect `.agents/contracts/operating-standards.json` and the certification it names. The current choices are listed in [the standards catalog](references/standards-catalog.json). A missing subscription means non-adoption unless the user asks to adopt. Do not infer adoption from installed skills, existing files, or an ambient catalog.
 
-Route the request to the smallest owning capability:
+Honor the source and immutable commit recorded by the repository. A v1 record identifies the historical deployed authority; inspect that pinned definition and deployed resources. Do not run current scaffolders as an upgrade. A v2 record identifies the source repository, full commit, definition path, and certification reference; retrieve that exact object, including when its standard is absent from today's catalog. The catalog presents current choices, not an update alarm. Upgrades are explicit reconciliation work.
 
-| Concern                                                       | Skill                   |
-| ------------------------------------------------------------- | ----------------------- |
-| Required repository surfaces and structural checks            | `repo-shape`            |
-| Runbooks, playbooks, and their composition graph              | `repo-composition`      |
-| Named command targets and dispatch semantics                  | `command-bus`           |
-| Focused checks, complete gates, and evidence                  | `repository-validation` |
-| Tracked pre-commit and hosted-CI parity                       | `tracked-repo-hooks`    |
-| Markdown formatting adoption and enforcement                  | `markdown-formatting`   |
-| Plugin subscriptions, local skills, and installed projections | `repo-agent-assets`     |
-| Python implementation patterns                                | `python`                |
+After selecting the pinned authority, route to the smallest owner:
 
-Read the consumer repository's local policy after selecting the owner. Compose multiple skills only for a migration that genuinely crosses their boundaries. Generic worker hygiene, worktrees, risk, publication, and closeout remain owned by `repo-worker-base` and are not part of this router.
+| Concern                                                  | Skill                      |
+| -------------------------------------------------------- | -------------------------- |
+| Subscription, certification, and broad routing           | `repo-standards`           |
+| Runbook lifecycle stages and playbook concerns           | `repo-composition`         |
+| Repository plugin dependencies and local authored skills | `repo-agent-assets`        |
+| AGENTS.md routing                                        | `agents-routing`           |
+| Agent doctrine and contracts                             | `agent-doctrine-contracts` |
+| Tracked hook and hosted CI parity                        | `tracked-repo-hooks`       |
+| Named command targets                                    | `command-bus`              |
+| Focused checks and evidence                              | `repository-validation`    |
+
+Use other focused standard skills named in the pinned definition or current catalog. Compose owners only when the requested change crosses their boundaries. `repo-shape` is a legacy v1 structural/deployment compatibility route; it does not define the obligations of every current standard.

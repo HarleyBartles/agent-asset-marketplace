@@ -1,6 +1,6 @@
 ---
 name: tracked-repo-hooks
-description: Use when installing, changing, or validating tracked pre-commit hooks, staged-snapshot execution, linked-worktree activation, or hosted-CI parity.
+description: Use when changing or assessing a repository's tracked pre-commit hook and hosted-CI parity under its adopted standard.
 metadata:
   source-id: tracked-repo-hooks
   source-path: skills/tracked-repo-hooks/SKILL.md
@@ -13,12 +13,10 @@ license: MIT
 
 # Tracked Repo Hooks
 
-For an explicit adoption or assessment of `tracked-validation-hook`, first inspect the repository's pinned subscription and certification, then use the [standard definition](references/standard.md). Ambient skill availability does not adopt the standard.
+For explicit adoption or assessment, inspect the repository's pinned subscription and certification through `repo-standards`, then follow the [tracked hook and CI definition](references/standard.md). Ambient availability does not adopt the standard.
 
-The canonical hook is tracked at `githooks/pre-commit` and activated through `core.hooksPath=githooks`. It materializes the staged tree, invokes the consumer-declared apply and check vectors, stages only owned generated surfaces declared in `.agents/contracts/repo-standards-commands.json`, restores unrelated working state, and rejects unresolved contract failures. The tracked hook is a behavioral seed: consumer-owned edits are valid when they preserve the staged-snapshot, apply-before-check, restoration, and hosted-parity contract.
+The pledge is one complete gate on Windows before commit and Linux in hosted CI. The checks are the same in both places: tests, lint, build, and other configured CI gates do not move exclusively to paid hosted CI or exclusively to a developer hook. The tracked hook must be maintained, hook skipping is prohibited for agents, and hosted CI runs the equivalent gate against the proposed commit.
 
-Hosted CI invokes the same hook against the checked-out commit with `REPO_STANDARDS_HOSTED_COMMIT=HEAD`. The portable hook never hard-codes Python, Ruff, or a repository-specific command bus.
+Preserve repository content across platforms. Normalize line endings and file endings so Windows authoring and Linux hosted execution do not create avoidable churn. Validate the candidate commit state and report failures clearly. A repository chooses the hook implementation and its commands; use the command bus only when that standard is also adopted, and make hook integration an explicit bus target/module deployment into the repository-owned bus.
 
-`REPO_STANDARDS_STAGED_SNAPSHOT=1` identifies the candidate tree under validation. It does not alter consumer command semantics or any other workflow policy unless the consumer's owning contract explicitly declares otherwise. Tree-selection mechanics do not acquire policy meaning merely because they are visible to a command.
-
-The compatibility hook template remains under `repo-shape/templates/` while the coordinator installs it; this skill owns its contract.
+The optional starter hook is a deployable seed. A repository may adapt it or implement another approach that meets the pinned invariants. V1 consumers continue to follow their pinned definition, including any historical command contract, until an explicit upgrade.

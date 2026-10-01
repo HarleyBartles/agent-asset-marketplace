@@ -1,6 +1,6 @@
 ---
 name: repo-agent-assets
-description: Use when changing repository plugin subscriptions, local skill declarations, provenance, or orphan cleanup.
+description: Use when changing repository plugin subscriptions or the custody boundary for repository-authored skills.
 metadata:
   source-id: repo-agent-assets
   source-path: skills/repo-agent-assets/SKILL.md
@@ -13,10 +13,10 @@ license: MIT
 
 # Repo Agent Assets
 
-For an explicit adoption or assessment of `repo-plugin-subscriptions`, first inspect the repository's pinned subscription and certification, then use the [standard definition](references/standard.md). Ambient skill availability does not adopt the standard.
+For explicit adoption or assessment, inspect the repository's pinned subscription and certification through `repo-standards`, then follow the [repo plugin subscriptions definition](references/standard.md). Ambient availability does not adopt the standard.
 
-Canonical marketplace skills live in their plugin source trees. A repository may opt into repo-scoped plugin subscriptions through the `repo-plugin-subscriptions` operating standard, which uses native harness configuration and does not copy plugin payloads or project plugin skills into `.agents/skills/`.
+The standard governs installing plugins into a repository through `.agents/plugins`, declared as Git dependencies using the supported harness configuration. `.agents/skills` is reserved for skills authored and owned by that repository. There is no required `repo.local_skills` inventory. A plugin-qualified skill is available to a fresh clone only when its plugin dependency is installed in the repository.
 
-Repository-authored skills remain owned by the consumer. Keep exact local skill names in `repo.local_skills`, validate their `SKILL.md` frontmatter, and preserve them during Marketplace updates. Plugin availability does not select AOM standards or create repository-local skill ownership.
+Canonical marketplace skills remain owned by their plugin source trees. AOM standard definitions and optional deployment assets are separately pinned by subscribing repositories; this skill does not copy marketplace payloads into a local skills folder. Follow a repository's historical v1 authority when its pin identifies the older contract.
 
-Marketplace publication remains outside this skill. This skill owns the consumer repository's local-skill declaration and the boundary between local skills and repo-scoped native plugin dependencies.
+Marketplace publication and source release remain outside this skill. The repository owns its selected plugin dependencies and its own authored skills.

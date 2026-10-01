@@ -1,6 +1,6 @@
 ---
 name: repo-shape
-description: Use when checking, creating, or repairing the required agent-facing files, directories, manifests, pointers, and structural contracts of a repository.
+description: Use when maintaining a repository against its explicitly pinned v1 AOM structural or deployment coordinator.
 metadata:
   source-id: repo-shape
   source-path: skills/repo-shape/SKILL.md
@@ -8,61 +8,24 @@ metadata:
   source-category: first_party
   status: active
   owner: Harley Bartles
-  scope: Portable repository surface shape, scaffolding, and structural validation.
-  use_when:
-    - checking or creating required repository files and directories.
-    - aligning structural manifests, routing pointers, or scaffolded surfaces.
-    - the repository shape coordinator reports missing or drifted surfaces.
-  do_not_use_when:
-    - generic repo hygiene such as worktree, branch, source custody, or publication boundaries — defer to repo-worker-base for those.
+  scope: Compatibility guidance for the legacy repository-shape coordinator and its deployed resources.
 license: MIT
 ---
 
 # Repo Shape
 
-This skill owns the portable repository surface model and the check/apply coordinator. Use `repo-standards` to route broad operating-model work and `repo-composition` for runbook or playbook semantics.
+This skill documents the legacy v1 structural and deployment coordinator. It is not the authority for current AOM standard requirements. For adoption, assessment, and the pinned definition, start with `repo-standards`.
 
-Each repo supplies a thin overlay at `.agents/doctrine/repo-runbook-policy.md` that records local mappings and shape exceptions. `repo-composition` owns the meaning of runbooks, playbooks, and their graph.
+When a repository's v1 pin routes work here, read the exact historical definition and deployed resources named by that pin, then follow their compatibility contract. Do not infer new adoption from these resources, scaffolders, or files already present. Do not use a current scaffold to migrate a v1 consumer implicitly.
 
-If a repo retires generated `INDEX.md` or `INDEX.json` files, remove the tracked outputs and their generation/check commands from local runners, hooks, and hosted CI. Do not add a replacement subscription or generated inventory. Keep binding routes in `AGENTS.md`, and let runbooks and playbooks remain directly addressable by their declared local paths.
+The following reference assets and scripts remain for existing v1 consumers. Their behavior is governed by the pinned v1 authority:
 
-Repo-scoped plugin dependencies are an explicit optional standard. When the consumer adopts `repo-plugin-subscriptions`, use its native Codex and Devin config contract; do not install plugin payloads into `.agents/skills/`.
+- [Repository shape standard](references/repository-shape-standard.md)
+- [Repository shape manifest](references/repository-shape-manifest.json)
+- [Runbook standard](references/repository-runbook-standard.md)
+- [CI validation pipeline](references/ci-validation-pipeline.md)
+- [Scratch workspace policy](references/scratch-workspace-policy.md)
+- [Script contract validator](references/skill-script-contract-validator.md)
+- [Vendor profile deployment](references/vendor-profile-deployment.md)
 
-## Read when
-
-| Need                                                     | Read                                                                                                                                                                          |
-| -------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| How a repo's runbooks should be laid out                 | [references/repository-runbook-standard.md](references/repository-runbook-standard.md)                                                                                        |
-| How a repo's shape should be checked/applied             | [references/repository-shape-standard.md](references/repository-shape-standard.md) and [references/repository-shape-manifest.json](references/repository-shape-manifest.json) |
-| How preflight, pre-commit, and CI relate                 | [references/ci-validation-pipeline.md](references/ci-validation-pipeline.md)                                                                                                  |
-| The repo's local runbook mappings                        | `.agents/doctrine/repo-runbook-policy.md` in the consuming repo                                                                                                               |
-| Repo hygiene (worktree, branch, validation, publication) | `repo-worker-base`                                                                                                                                                            |
-| Scratch workspace layout and cleanup                     | [references/scratch-workspace-policy.md](references/scratch-workspace-policy.md)                                                                                              |
-| Skill-bundled script CLI contract failures               | [references/skill-script-contract-validator.md](references/skill-script-contract-validator.md)                                                                                |
-| Vendor subagent profile deployment                       | [references/vendor-profile-deployment.md](references/vendor-profile-deployment.md)                                                                                            |
-
-## Workflow order
-
-`repo-shape` is a check-and-align tool, not a first-turn workflow router. Do not invoke it before `using-superpowers-plus`.
-
-After the owning workflow has routed you, invoke `repo-shape` when:
-
-- the stage skill explicitly tells you to verify or apply repo shape,
-- the repo's `AGENTS.md` or local runbook points you to `repo-standards`,
-- the task involves scaffolds, runbook layout, or the `repository-shape-manifest.json`.
-
-After routing, the `repo-shape` workflow is:
-
-1. Read `references/repository-runbook-standard.md` and `references/repository-shape-standard.md`.
-2. Read the repo's `.agents/doctrine/repo-runbook-policy.md`.
-3. Apply or check the surfaces the routed owner needs.
-
-## Script usage notes
-
-- Every Python script and wrapper accepts `--help`. Run it before reading the implementation.
-- `--check` is always a safe, read-only drift report.
-- Normal apply creates missing starter surfaces and preserves repository-owned customizations.
-- `--force <surface-id>` is a targeted template deployment, never a generic repair switch. It requires `--confirm-local-customisations-will-be-overwritten`; bare `--force` and `--apply --force` are invalid.
-- `repo-standards --check` is the read-only migration audit. It reports contract/schema issues, dead links, unsafe customizations, and available force-reset surfaces without mutating.
-
-For the full list of required surfaces, runbook and playbook sets, scaffold helpers, and exceptions, see [references/repository-shape-standard.md](references/repository-shape-standard.md) and [references/repository-runbook-standard.md](references/repository-runbook-standard.md).
+Current runbook and playbook semantics belong to `repo-composition` and the adopted pinned definitions. Current plugin subscription semantics belong to `repo-agent-assets`. A v1 repository continues to use its own recorded authority until it explicitly requests an upgrade.

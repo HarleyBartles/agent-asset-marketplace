@@ -1,6 +1,6 @@
 ---
 name: repo-composition
-description: Use when creating, changing, or validating repository runbooks, playbooks, their policy mapping, or declared composition edges.
+description: Use when creating, changing, or assessing repository runbooks and playbooks under their explicitly adopted standards.
 metadata:
   source-id: repo-composition
   source-path: skills/repo-composition/SKILL.md
@@ -13,12 +13,14 @@ license: MIT
 
 # Repo Composition
 
-Lifecycle stages are runbooks. Topical workflows are playbooks available whenever their concern applies. Runbook routing is optional; declared runbook/playbook edges resolve and agree on both sides. Playbooks may compose other playbooks through their `Composition` section, but composition targets must resolve and the resulting graph must remain acyclic.
+First inspect the repository's pinned subscription and certification through `repo-standards`. Follow only standards the repository adopted, using their pinned definitions.
 
-Use `Required capabilities` and `Optional capabilities` to describe what the workflow needs, without naming ambient provider skills. At runtime, inspect the skills actually exposed, choose a suitable provider for each capability, and follow its instructions. If a required capability has no suitable provider, stop before dependent work and report the unmet capability. Report and skip an unavailable optional capability when the rest of the workflow can proceed.
+Runbooks are lifecycle-stage guides for work that happens in the repository. Playbooks are concern guides that compose capabilities, doctrine, and contracts. Keep those purposes distinct. Either standard can be adopted and implemented on its own. If both are adopted, runbooks generally route to the applicable playbooks so the stage guide composes the relevant concerns.
 
-Use `Required repository-owned skills` and `Optional repository-owned skills` only for exact skill names with repository custody declared in `repo.local_skills`. Marketplace subscriptions and installed skill projections do not prove local ownership or runtime capability availability. Hosted validation checks document structure, path mappings, graph integrity, and declared local-skill custody only; it cannot prove that an ambient provider is available to an agent.
+Neither standard mandates a starter inventory, fixed headings, empty placeholder sections, or a doctrine/contract store. A repository may select optional starter books, adapt them, author its own, or use none. Do not create a book just to satisfy a template.
 
-Use the paths declared in the repository's runbook/playbook policy. Conventional `.agents/runbooks/` and `.agents/playbooks/` homes are defaults of explicitly adopted standards, not portable ambient assumptions.
+Capabilities can refer to repository-authored skills by name and path, plugin skills by installed plugin-qualified name from `.agents/plugins`, or ambient skills by capability description. Do not claim an ambient skill will exist for someone cloning the repository. If the repository has adopted `agent-doctrine-contracts`, use its locations for doctrine and contracts; otherwise playbooks can carry the operating knowledge needed for the selected concern.
 
-The portable contract and scaffolds currently live with `repo-shape` while the coordinator consumes them. This skill owns their semantics and is the trigger for future changes to those assets.
+Keep routing useful and proportional: connect each lifecycle stage to the concerns that apply, rather than making every runbook reference every playbook. The `Applicability` text in a book corroborates scope and can rule out a mismatch; it does not trigger discovery. Route the book from a place an agent reads at the relevant work point.
+
+For historical v1 consumers, follow the exact pinned definition and deployed resources. Current composition definitions do not silently replace existing requirements. The old structural and scaffolding assets remain covered by `repo-shape` compatibility guidance.

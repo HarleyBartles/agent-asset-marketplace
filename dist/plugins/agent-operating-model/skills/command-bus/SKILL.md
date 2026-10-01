@@ -1,6 +1,6 @@
 ---
 name: command-bus
-description: Use when creating, reviewing, or changing a repository command bus, named command targets, standard modes, orchestration, or exit behaviour.
+description: Use when creating, reviewing, or changing a repository command bus and its named targets.
 metadata:
   source-id: command-bus
   source-path: skills/command-bus/SKILL.md
@@ -13,19 +13,10 @@ license: MIT
 
 # Command Bus
 
-For an explicit adoption or assessment of `command-bus`, first inspect the repository's pinned subscription and certification, then use the [standard definition](references/standard.md). Ambient skill availability does not adopt the standard.
+For explicit adoption or assessment, inspect the repository's pinned subscription and certification through `repo-standards`, then follow the [command bus definition](references/standard.md). Ambient availability does not adopt the standard.
 
-A repository command bus gives agents one discoverable entrypoint over named, deterministic targets. The repository owns its target inventory; this skill owns the portable interface.
+A command bus is a repository-owned CLI under `tools/` that presents named targets. The repository chooses its implementation language and owns the bus and its targets. Python is a practical portable choice, not a requirement. The optional AOM bus implementation can bootstrap the repository bus; adoption does not automatically install it or register targets. Other standards may offer optional modules for deployment into a repository that has adopted a bus.
 
-## Contract
+Each target supports `--help` and the `--check` and `--apply` modes that make sense for that target. The CLI itself supports `--help`. `--check` reports state without mutation. A mutating target may support `--dry-run` when it can report the planned state. Define one consistent no-mode behavior for the bus and every target; do not let targets silently choose different defaults. Preserve target output and exit status, and reject unsupported or conflicting modes clearly.
 
-- Keep the entrypoint thin: parse, resolve, dispatch, propagate.
-- Every target appears in help and has one owning implementation.
-- Support `--check` for read-only drift detection and `--apply` for mutation when the target has both modes.
-- Reject contradictory or unsupported modes before running child commands.
-- Preserve child output and propagate non-zero exit status.
-- Run multi-target requests in declared order and stop on the first failure.
-- Keep diagnostics explicit; success output must not hide warnings or skipped material checks.
-- Test help discovery, target selection, mode forwarding, order, and failure propagation.
-
-Use `python` when the command bus is implemented in Python. Use `repository-validation` for what the targets must prove.
+Multi-target orchestration and ordering are optional repository choices, not universal requirements. Use the repository's own policy for target discovery, dependency ordering, and failure behavior. If the repository has an older v1 pin, follow that definition until an explicit upgrade.
