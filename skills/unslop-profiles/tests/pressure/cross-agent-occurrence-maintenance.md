@@ -2,7 +2,24 @@
 
 ## Scenario
 
-A repository adopts the `unslop` standard in a v2 subscription pinned to an older immutable definition. Its certification routes release-writing work to `.agents/unslop/repo.md`; the current ambient Unslop+ package is newer than the subscription. The file has two candidate patterns:
+A repository adopts the `unslop` standard with this v2 subscription in `.agents/contracts/operating-standards.json`:
+
+```json
+{
+  "version": 2,
+  "standards": [{
+    "id": "unslop",
+    "source": {
+      "repository": "https://github.com/HarleyBartles/agent-asset-marketplace.git",
+      "commit": "a537f406b0cb991cbd40cc35d964f1dbf26a1e0f",
+      "definition": "skills/unslop/references/standard.md"
+    },
+    "certification": ".agents/contracts/standards-certification.md#unslop"
+  }]
+}
+```
+
+That exact definition requires `.agents/unslop/` and durable occurrence evidence. Its certification routes release-writing work to `.agents/unslop/repo.md`. The current ambient Unslop+ package is newer than the subscription. The file has two candidate patterns:
 
 1. Release notes omit concrete retry conditions or limits.
 2. Agents make claims about reliability without evidence from the implementation or tests.
@@ -27,7 +44,7 @@ Assess the durable observations and candidate profiles. Explain which reports re
 - Count PRs 41, 52, 63, and 74 as separate incidents; do not count the two comments on PR 41 as separate recurrence.
 - Preserve enough task/PR and output evidence in the repository's `.agents/unslop/` records to connect incidents to candidate patterns and let later agents assess what happened.
 - Diagnose PRs 41 and 52 as a routing/reachability gap, not as proof that a read guard was ineffective or ignored.
-- Diagnose PR 63 as an ineffective or ambiguous corrective move: the author misunderstood what “observable” required. Propose wording that explicitly requests the retried responses and attempt limit.
+- Diagnose PR 63 as a corrective move that was too abstract for this author: their stated interpretation treated another adjective as observable evidence. Propose an example such as “Retries timeouts and HTTP 502 responses up to three times; authorization failures are not retried,” bounded by the implementation and false-positive boundary.
 - Diagnose PR 74 as useful guidance consciously bypassed for brevity; address the decision point and recommend an effective intervention without claiming the profile mechanically enforces behavior.
 - Use the repeated evidence to prepare reviewable profile changes, while retaining only reusable operational guidance in the profile and preserving evidence in concise occurrence records.
 - Do not change the pinned subscription or assess against the ambient package's newer definition. Do not claim that a profile or record proves compliance by itself.

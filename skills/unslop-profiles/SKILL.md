@@ -64,8 +64,8 @@ Find and apply operational profiles when a workflow route or task trigger indica
 
 When the repository's pinned Unslop definition requires an occurrence feedback loop, and this capability is available for relevant work:
 
-- When a concrete failure or near miss matches an existing or candidate repository pattern, inspect its durable observations under `.agents/unslop/` before adding evidence.
-- Record a distinct occurrence in the repository's existing organization, linking the task, work surface, or stable evidence that lets a later agent find it. Note whether a relevant guard was available at the work point, routed, read, followed, and effective when those facts are knowable. Keep unknown facts unknown.
+- When a concrete failure or near miss matches an existing or candidate repository pattern, inspect durable observations at the location defined by the pinned standard before adding evidence.
+- Record a distinct occurrence in the repository's existing organization at the location defined by the pin, linking the task, work surface, or stable evidence that lets a later agent find it. Note whether a relevant guard was available at the work point, routed, read, followed, and effective when those facts are knowable. Keep unknown facts unknown.
 - Do not add a second occurrence for duplicate comments or reports about the same underlying work. Connect distinct incidents across agents and sessions so the repository can assess recurrence later.
 - Use the pinned standard's standalone management guide when it provides one to decide whether evidence warrants creating, revising, narrowing, consolidating, or retiring a guard. An available `unslop-engine` can help prepare a proposal; it does not replace the guide or the repository's review process.
 - Do not turn an observation into a profile automatically. A profile is reusable corrective guidance, not an incident log or an assertion that an agent violated policy.
