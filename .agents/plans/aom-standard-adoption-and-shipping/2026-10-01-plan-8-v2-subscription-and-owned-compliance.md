@@ -1,6 +1,6 @@
 # V2 Subscription and Repository-Owned Compliance Plan
 
-**Status:** executing
+**Status:** completed-awaiting-retirement
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use `subagent-driven-development` (recommended) or `executing-plans` to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
@@ -123,7 +123,7 @@ ______________________________________________________________________
 
 **Produces:** A reviewable, committed v2 subscription transition with no claim of Linux execution until Plan 11 has current-hosted evidence.
 
-- [ ] Inspect the complete diff for retained selected standards, unselected standards, local plugin catalog ownership, and accidental deployment/scaffolder activity.
-- [ ] Verify generated files are changed only through their canonical generators; do not modify `dist/` by hand.
-- [ ] Obtain a fresh whole-slice review and resolve all material findings.
-- [ ] Update roadmap state, commit, and return a handoff summary that distinguishes Windows evidence from still-pending Linux evidence.
+- [x] Inspect the complete diff for retained selected standards, unselected standards, local plugin catalog ownership, and accidental deployment/scaffolder activity.
+- [x] Verify generated files are changed only through their canonical generators; do not modify `dist/` by hand.
+- [x] Obtain a fresh whole-slice review and resolve all material findings.
+- [x] Update roadmap state, commit, and return a handoff summary that distinguishes Windows evidence from still-pending Linux evidence.
