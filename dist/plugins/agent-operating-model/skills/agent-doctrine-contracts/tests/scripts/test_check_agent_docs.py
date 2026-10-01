@@ -44,9 +44,13 @@ def test_reports_missing_canonical_store(tmp_path: Path) -> None:
 
 
 def test_valid_json_needs_no_universal_contract_schema(tmp_path: Path) -> None:
-    (tmp_path / ".agents/doctrine").mkdir(parents=True)
+    doctrine = tmp_path / ".agents/doctrine"
+    doctrine.mkdir(parents=True)
     contracts = tmp_path / ".agents/contracts"
     contracts.mkdir(parents=True)
+    (doctrine / "checklist.md").write_text(
+        "- [x] Preserve this invariant.\n\nThe [doctrine term] applies.\n", encoding="utf-8"
+    )
     (contracts / "local-contract.json").write_text('{"any": "repository-owned shape"}\n', encoding="utf-8")
     (contracts / "unlinked-contract.yaml").write_text("pledge: repository-owned\n", encoding="utf-8")
 
@@ -110,7 +114,7 @@ def test_unrelated_markdown_links_contribute_inbound_evidence_without_failing(tm
     contracts = tmp_path / ".agents/contracts"
     doctrine.mkdir(parents=True)
     contracts.mkdir(parents=True)
-    (doctrine / "rule with spaces.md").write_text("A durable rule.\n", encoding="utf-8")
+    (doctrine / "rule with spaces (policy).md").write_text("A durable rule.\n", encoding="utf-8")
     (contracts / "contract.md").write_text("A repository contract.\n", encoding="utf-8")
     (tmp_path / "README.md").write_text(
         "See [rule][policy] and [missing](not-here.md).\n\n[policy]: <.agents/doctrine/rule with spaces (policy).md>\n",

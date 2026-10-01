@@ -49,6 +49,8 @@ def _markdown_link_targets(content: str) -> list[tuple[str | None, str | None]]:
         for match in REFERENCE_USE.finditer(without_inline_links):
             label = match.group(2) if match.group(2) else match.group(1)
             normalized = " ".join(label.split()).casefold()
+            if match.group(2) is None and normalized not in definitions:
+                continue
             targets.append((definitions.get(normalized), label))
     return targets
 

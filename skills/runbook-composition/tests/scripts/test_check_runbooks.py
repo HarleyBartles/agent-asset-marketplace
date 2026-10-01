@@ -53,7 +53,10 @@ def test_rejects_broken_local_link(tmp_path: Path) -> None:
 
 
 def test_rejects_undefined_reference_style_link(tmp_path: Path) -> None:
-    (tmp_path / "design.md").write_text("Consult [the guide][missing].\n", encoding="utf-8")
+    (tmp_path / "design.md").write_text(
+        "- [x] Record the decision.\n\nThe [design term] needs definition.\n\nConsult [the guide][missing].\n",
+        encoding="utf-8",
+    )
 
     result = run_checker(tmp_path, "--document", "design.md")
 

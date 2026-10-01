@@ -53,7 +53,9 @@ def test_rejects_broken_local_link(tmp_path: Path) -> None:
 
 
 def test_rejects_undefined_reference_style_link(tmp_path: Path) -> None:
-    (tmp_path / "testing.md").write_text("See [policy][missing].\n", encoding="utf-8")
+    (tmp_path / "testing.md").write_text(
+        "- [x] Run checks.\n\nThe [testing term] is local.\n\nSee [policy][missing].\n", encoding="utf-8"
+    )
 
     result = run_checker(tmp_path, "--document", "testing.md")
 
