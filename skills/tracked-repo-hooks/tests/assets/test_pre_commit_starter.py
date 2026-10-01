@@ -67,6 +67,8 @@ def _repo(
     hooks = root / "githooks"
     hooks.mkdir()
     shutil.copyfile(HOOK, hooks / "pre-commit")
+    if os.name != "nt":
+        (hooks / "pre-commit").chmod(0o755)
     _write_adapter(root, apply_body=apply_body, check_body=check_body)
     (root / "notes file.txt").write_bytes(b"Header\nContent\nFooter\n")
     (root / "other.txt").write_bytes(b"Other base\n")
