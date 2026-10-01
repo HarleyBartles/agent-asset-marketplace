@@ -28,9 +28,9 @@ Find and apply operational profiles when a workflow route or task trigger indica
 ## Discover the applicable profiles
 
 1. Read the current task and its applicable workflow route. Identify a profile's trigger and scope before deciding it applies.
-2. Determine adoption only from the repository's explicit subscription. Use `repo-standards` to read `.agents/contracts/operating-standards.json`, the named certification, and the exact immutable definition. Do not use the current catalog or installed skill version to replace that authority.
-3. Follow the pinned version's consumer resources. For v1, use the deployed configuration and paths specified by that historical definition; read `.agents/contracts/unslop.json` and its declared `profile_roots` only when those pinned resources define them. For v2, follow the certification and repository workflow routes to applicable profiles under the canonical `.agents/unslop/` location. Do not require `.agents/contracts/unslop.json`, a fixed profile shape, or a current-version upgrade for v2.
-4. Find matching bundled profiles under `references/profiles/` using the task map below, then read each profile that fits. Consumer adoption and Unslop+ are independently optional: use available generic profiles when the consumer standard is absent, and use consumer profiles when the adopted standard routes them even when Writing Pack is unavailable.
+2. Matching generic profiles can be used without AOM or a consumer subscription. When a repository route points to consumer profiles, or a relevant recurring failure may need repository-specific recording, resolve adoption through the repository's declared route. If AOM's `repo-standards` capability is available, use it to read the explicit subscription, certification, and exact immutable definition. Otherwise follow the repository's own declared route. Do not use the current catalog or installed skill version to replace pinned authority.
+3. Follow only the pinned definition's consumer resources. The historical v1 definition uses `.agents/contracts/unslop.json` and its declared `profile_roots`; it does not acquire the newer occurrence-recording or certification obligations. The selectable definition introduced at `a537f406b0cb991cbd40cc35d964f1dbf26a1e0f` uses `.agents/unslop/`, durable cross-agent observations, continuing certification, and its standalone management guide. For another pin, inspect its exact definition and follow only the locations, routes, and obligations it defines. Do not infer an upgrade from the installed skill version.
+4. Find matching bundled profiles under `references/profiles/` using the task map below, then read each profile that fits. Consumer adoption and Unslop+ are independently optional: use available generic profiles without AOM, and use consumer profiles when the adopted standard routes them even when Writing Pack is unavailable.
 5. Apply only profiles whose triggers and scopes fit. Multiple compatible profiles may guide the same task. Preserve each profile's source and scope; do not silently reconcile conflicting guidance. Doctrine, evidence, user intent, and task requirements bound every profile.
 6. If no profile fits, skip profile application. Do not force a nearby profile onto the work.
 
@@ -62,15 +62,15 @@ Find and apply operational profiles when a workflow route or task trigger indica
 
 ## Maintain an adopted repository's feedback loop
 
-When the repository explicitly adopts `unslop`, and this capability is available for relevant work:
+When the repository's pinned Unslop definition requires an occurrence feedback loop, and this capability is available for relevant work:
 
 - When a concrete failure or near miss matches an existing or candidate repository pattern, inspect its durable observations under `.agents/unslop/` before adding evidence.
 - Record a distinct occurrence in the repository's existing organization, linking the task, work surface, or stable evidence that lets a later agent find it. Note whether a relevant guard was available at the work point, routed, read, followed, and effective when those facts are knowable. Keep unknown facts unknown.
 - Do not add a second occurrence for duplicate comments or reports about the same underlying work. Connect distinct incidents across agents and sessions so the repository can assess recurrence later.
-- Use the pinned standard's standalone management guide to decide whether evidence warrants creating, revising, narrowing, consolidating, or retiring a guard. An available `unslop-engine` can help prepare a proposal; it does not replace the guide or the repository's review process.
+- Use the pinned standard's standalone management guide when it provides one to decide whether evidence warrants creating, revising, narrowing, consolidating, or retiring a guard. An available `unslop-engine` can help prepare a proposal; it does not replace the guide or the repository's review process.
 - Do not turn an observation into a profile automatically. A profile is reusable corrective guidance, not an incident log or an assertion that an agent violated policy.
 
-If the repository has not adopted `unslop`, do not create repository-specific occurrence records or certification duties. Matching bundled generic profiles may still guide the current work.
+If the pinned definition does not require repository-specific occurrence records, do not infer them from a newer ambient skill. If no subscription exists, do not create repository-specific occurrence records or certification duties. Matching bundled generic profiles may still guide the current work without requiring AOM discovery.
 
 ## Boundaries
 

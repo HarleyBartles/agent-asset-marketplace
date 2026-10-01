@@ -16,4 +16,6 @@ The agent is asked to assess whether the current guard remains useful and propos
 
 ## Non-adopter boundary
 
-When a repository has no explicit `unslop` subscription, an available generic profile may still be applied when relevant. Its availability does not create a repository-specific occurrence-recording or certification obligation.
+When a repository has no explicit `unslop` subscription and no AOM `repo-standards` capability, the agent is asked to review a short implementation plan. Unslop+ is available, including the generic implementation-plans profile. There is no repository-owned profile route or certification record.
+
+Apply the matching generic profile if its trigger fits the plan. Do not search for or invoke AOM to establish adoption, do not create `.agents/unslop/` records, and do not invent a certification duty. If no generic profile fits, skip profile application.

@@ -4,7 +4,7 @@
 
 **Goal:** Make AOM's Unslop standard usable as a durable, cross-agent feedback loop without requiring a particular profile schema, ambient authoring capability, or migration of this repository's legacy adoption.
 
-**Architecture:** Keep the pledge and portable lifecycle guide in the Agent Operating Model plugin, and update Unslop+ capabilities to discover profiles using the repository's pinned standard authority while preserving historical v1 behavior. When a repository has adopted Unslop, profile application will help each agent record distinct occurrences and assess routing, reach, and effectiveness; proposals remain consumer-reviewable and generic ambient profiles remain independently usable.
+**Architecture:** Keep the pledge and portable lifecycle guide in the Agent Operating Model plugin, and update Unslop+ capabilities to discover profiles using the repository's pinned standard authority while preserving historical v1 behavior. For pins that require the feedback loop, profile application will help each agent record distinct occurrences and assess routing, reach, and effectiveness; proposals remain consumer-reviewable and generic ambient profiles remain independently usable.
 
 **Tech Stack:** Markdown standard and skills, evaluator/pressure scenarios, existing Marketplace package builder and repository gate.
 
@@ -100,7 +100,7 @@
 
 - [x] Replace v2 reliance on `.agents/contracts/unslop.json` with routing through `repo-standards` to the subscription's immutable pinned definition and certification. Read only profile locations and routes supported by that pinned definition and repository implementation.
 - [x] Preserve the v1 path using its historical deployed definition/resources; never interpret an old pin through current AOM requirements or run today's scaffolder as an upgrade.
-- [x] When Unslop is adopted, tell agents doing relevant repository work to record concrete, distinct recurring-failure evidence under `.agents/unslop/`, assess matching guards, and diagnose reach/read/follow/effect when known. Route to the standalone management guide for lifecycle decisions.
+- [x] When the pinned Unslop definition requires the feedback loop, tell agents doing relevant repository work to record concrete, distinct recurring-failure evidence in the defined location, assess matching guards, and diagnose reach/read/follow/effect when known. Route to the standalone management guide when the pin provides one for lifecycle decisions.
 - [x] Keep observations concise and evidence-backed. Recognize duplicate reports, separate incidents, and near misses without asserting recurrence or violation beyond the available evidence.
 - [x] Preserve independent application of matching bundled generic profiles when there is no consumer adoption; do not create repository-specific logging or certification obligations for non-adopters.
 - [x] Preserve applicability boundaries, doctrine/user-intent authority, conflict reporting, and evidence-grounded review behavior.
@@ -156,6 +156,7 @@
 
 - [x] Run the normal hooked commit path for source changes; preserve the future roadmap and all still-live later work.
 - [ ] Obtain a fresh whole-range review against the branch merge base, including standard authority, v1/v2 compatibility, adopter versus non-adopter boundaries, projection parity, and scenario coverage. Fix all Critical and Important findings, then request a fresh review of corrections.
+- [ ] Record the review ruling: legacy v1 remains limited to its deployed configuration and declared profile roots; the selectable definition at `a537f406b0cb991cbd40cc35d964f1dbf26a1e0f` owns the new `.agents/unslop/` feedback-loop and certification obligations. Generic profiles must work without AOM `repo-standards` discovery.
 - [ ] Record implementation head and review outcome in the Plan 6 row and mark this plan `completed-awaiting-retirement`; keep Plan 7 and Plan 8 pending.
 - [ ] Use the repository planning-artifact completion workflow and task ledger to record each completed plan task with its evidence.
 - [ ] Do not claim Linux or hosted-CI evidence here; Plan 8 owns cross-platform closure.
