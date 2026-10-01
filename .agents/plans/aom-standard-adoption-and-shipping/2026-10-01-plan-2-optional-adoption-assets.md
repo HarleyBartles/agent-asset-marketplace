@@ -1,5 +1,7 @@
 # Optional Standard Adoption Assets Implementation Plan
 
+**Status:** completed-awaiting-retirement. Final reviewed implementation head: `d6f8947f1d0ada29ab604aa2918d19564ea2625d`.
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use `subagent-driven-development` (recommended) or `executing-plans` to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Give agents self-contained, optional AOM assets that help a repository adopt selected standards while leaving deployed files and compliance policy repository-owned.
@@ -134,8 +136,8 @@ New content remains inside these owner skills under `assets/`, `references/`, an
 - [x] Run fresh-context guided adoption probes for selective book choice, root-file preservation, checker limits, native plugin declaration boundaries, and REVIEW/CONTRIBUTING standalone adoption. Compare agent decisions with the spec, not exact wording. Fix any rationalization that turns optional content into required adoption.
 - [x] Confirm AOM plugin inventory and generated manifest include all owning skills and deployed starter assets without adding evaluator-only expectations, local skills inventories, or duplicate platform wrappers. Keep first-party provenance intact.
 - [x] Run `py -3 tools/run.py marketplace --apply`, focused checker suites, and `py -3 -m pytest -q tests/shipping/test_aom_standard_assets.py`. The normal commit hook supplies the complete repository gate.
-- [ ] Stage intended source, tests, package metadata, and generated projections; commit. Confirm the commit is Plan 2 scope and the worktree is clean.
-- [ ] Obtain fresh whole-change review against this plan and approved spec. Fix Critical and Important findings, regenerate affected outputs, and repeat focused checks.
+- [x] Stage intended source, tests, package metadata, and generated projections; commit. Confirm the commit is Plan 2 scope and the worktree is clean.
+- [x] Obtain fresh whole-change review against this plan and approved spec. Fix Critical and Important findings, regenerate affected outputs, and repeat focused checks. Final fresh review of base `1847f5d9c` through head `d6f8947f1` found no Critical or Important issues; the one Minor CLI finding was fixed, tested, regenerated, and re-reviewed.
 - [ ] Mark this plan `completed-awaiting-retirement` after the fully reviewable handoff. Keep the roadmap active and preserve its future plans.
 
 **Exit:** Repositories can select, edit, replace, or omit AOM assets; isolated package behavior supports that workflow, and self-certification remains a repository-owned claim.
