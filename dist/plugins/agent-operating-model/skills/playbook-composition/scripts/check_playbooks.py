@@ -18,7 +18,11 @@ DISCLAIMER = (
 
 
 def _local_target(markdown: Path, raw: str, root: Path) -> Path | None:
-    target = raw.strip().split(maxsplit=1)[0].strip("<>")
+    link = raw.strip()
+    if link.startswith("<") and ">" in link:
+        target = link[1 : link.index(">")]
+    else:
+        target = link.split(maxsplit=1)[0]
     parts = urlsplit(target)
     if parts.scheme or target.startswith(("#", "//")) or not parts.path:
         return None

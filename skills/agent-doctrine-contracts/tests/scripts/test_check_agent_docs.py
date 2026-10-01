@@ -85,10 +85,10 @@ def test_route_roots_and_excludes_affect_static_discovery_without_certifying_rou
     doctrine.mkdir(parents=True)
     contracts.mkdir(parents=True)
     custom.mkdir()
-    (doctrine / "rule.md").write_text("A durable rule.\n", encoding="utf-8")
+    (doctrine / "rule with spaces.md").write_text("A durable rule.\n", encoding="utf-8")
     (doctrine / "runtime.md").write_text("A document loaded through plugin metadata.\n", encoding="utf-8")
-    (custom / "entry.md").write_text("Read [the rule](../.agents/doctrine/rule.md).\n", encoding="utf-8")
-    (tmp_path / "ignored.md").write_text("Read [the rule](.agents/doctrine/rule.md).\n", encoding="utf-8")
+    (custom / "entry.md").write_text("Read [the rule](<../.agents/doctrine/rule with spaces.md>).\n", encoding="utf-8")
+    (tmp_path / "ignored.md").write_text("Read [the rule](<.agents/doctrine/rule with spaces.md>).\n", encoding="utf-8")
     (tmp_path / "plugin.json").write_text('{"skill_reference": ".agents/doctrine/runtime.md"}\n', encoding="utf-8")
     before = {
         path.relative_to(tmp_path).as_posix(): path.read_bytes() for path in tmp_path.rglob("*") if path.is_file()
@@ -108,15 +108,17 @@ def test_unrelated_markdown_links_contribute_inbound_evidence_without_failing(tm
     contracts = tmp_path / ".agents/contracts"
     doctrine.mkdir(parents=True)
     contracts.mkdir(parents=True)
-    (doctrine / "rule.md").write_text("A durable rule.\n", encoding="utf-8")
+    (doctrine / "rule with spaces.md").write_text("A durable rule.\n", encoding="utf-8")
     (contracts / "contract.md").write_text("A repository contract.\n", encoding="utf-8")
     (tmp_path / "README.md").write_text(
-        "See [rule](.agents/doctrine/rule.md) and [missing](not-here.md).\n", encoding="utf-8"
+        "See [rule](<.agents/doctrine/rule with spaces.md>) and [missing](not-here.md).\n", encoding="utf-8"
     )
 
     result = check(tmp_path)
 
     assert result.returncode == 0, result.stdout + result.stderr
     assert "README.md: broken local link" not in result.stdout
-    assert "candidate without an inbound markdown link: .agents/doctrine/rule.md" not in result.stdout.lower()
-    assert "candidate without an inbound markdown link: .agents/contracts/contract.md" in result.stdout.lower()
+    linked_candidate = "candidate without an inbound markdown link: .agents/doctrine/rule with spaces.md"
+    unlinked_candidate = "candidate without an inbound markdown link: .agents/contracts/contract.md"
+    assert linked_candidate not in result.stdout.lower()
+    assert unlinked_candidate in result.stdout.lower()
