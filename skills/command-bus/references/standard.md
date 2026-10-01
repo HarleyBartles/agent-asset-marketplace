@@ -34,3 +34,5 @@ Record this standard's ID, source repository, immutable commit, definition path,
 ## Optional AOM assets
 
 AOM provides an optional Python bus bootstrap. Repositories may deploy and modify it or implement a bus in another language if it meets this interface. Optional standard targets, including hook/CI modules, must be integrated by an agent and conform to this contract. `tools/` is the convention; `scripts/` remains a common home for standalone script work.
+
+The Python starter's local target table is an example implementation detail, not a standard registry or module ABI. A repository can copy, edit, replace, or omit it. A bus does not imply adoption of hook/CI or any other standard.

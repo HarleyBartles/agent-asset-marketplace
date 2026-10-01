@@ -27,6 +27,7 @@ SKILLS = (
     "agent-doctrine-contracts",
     "repo-agent-assets",
     "repo-standards",
+    "command-bus",
     "review-entrypoint",
     "contribution-entrypoint",
 )

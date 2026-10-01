@@ -19,4 +19,6 @@ A command bus is a repository-owned CLI under `tools/` that presents named targe
 
 Each target supports `--help` and the `--check` and `--apply` modes that make sense for that target. The CLI itself supports `--help`. `--check` reports state without mutation. A mutating target may support `--dry-run` when it can report the planned state. Define one consistent no-mode behavior for the bus and every target; do not let targets silently choose different defaults. Preserve target output and exit status, and reject unsupported or conflicting modes clearly.
 
+The optional [Python starter](assets/tools/run.py) and its [sample target](assets/tools/targets/check_status.py) can bootstrap a repository bus. The other sample targets demonstrate apply and dry-run behavior. Copy and adapt selected files under the repository's `tools/` directory as an explicit agent task. The starter's `TARGETS` mapping is only that implementation's local registry; a conforming repository can use any language, filename, target model, or CLI integration that meets the standard.
+
 Multi-target orchestration and ordering are optional repository choices, not universal requirements. Use the repository's own policy for target discovery, dependency ordering, and failure behavior. If the repository has an older v1 pin, follow that definition until an explicit upgrade.

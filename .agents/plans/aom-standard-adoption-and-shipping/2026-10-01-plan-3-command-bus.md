@@ -51,14 +51,14 @@ The Python starter accepts `run.py [--help]` or `run.py <target> (--help|--check
 
 **Produces:** A standard-library-only dispatcher with a concrete but editable subprocess target table and sample targets exercising distinct mode subsets.
 
-- [ ] Add subprocess behavior cases for bare bus help, target listing, target help, check-only target, apply-capable target, optional dry-run target, selected target with no mode, duplicate/conflicting modes, unknown target, unsupported mode, and malformed command metadata.
-- [ ] Add target fixtures that record their received argv and a side-effect file. Assert help, missing mode, conflicting mode, unknown target, and unsupported mode never create or modify the side-effect file.
-- [ ] Implement target selection syntax `run.py <target> <mode-or-help> [-- <target-arguments>...]`. Consume only the selected target and its single bus mode; forward argv tokens after `--` exactly and reject unexpected bus-level tokens before starting the target. Resolve relative command paths from the copied bus script's directory so the starter works when copied with its targets.
-- [ ] Implement the `TARGETS` mapping fields `command`, `description`, `supported_modes`, `prerequisites`, `side_effects`, and `argument_help`. Require a non-empty supported-mode list containing only `check`, `apply`, or `dry-run`; validate that command is a non-empty argv list of strings and that all help fields are present before any command starts. Keep invocation subprocess-based and do not import Python target modules.
-- [ ] Implement side-effect-free top-level and target help. Target help explains its supported modes and target arguments using registry metadata; it never invokes the child command.
-- [ ] Invoke targets with inherited stdout and stderr. Return the child process's exact exit status. Reject unsupported or multiple mode arguments before process creation.
-- [ ] Demonstrate check-only and apply-only targets. For the dry-run sample, report proposed state and return success when mutation would be proposed; fail only for an actual preview error.
-- [ ] Run `py -3 -m pytest -q skills/command-bus/tests/assets/test_command_bus.py`, Ruff on changed Python files, and verify all scripts use only standard-library imports.
+- [x] Add subprocess behavior cases for bare bus help, target listing, target help, check-only target, apply-capable target, optional dry-run target, selected target with no mode, duplicate/conflicting modes, unknown target, unsupported mode, and malformed command metadata.
+- [x] Add target fixtures that record their received argv and a side-effect file. Assert help, missing mode, conflicting mode, unknown target, and unsupported mode never create or modify the side-effect file.
+- [x] Implement target selection syntax `run.py <target> <mode-or-help> [-- <target-arguments>...]`. Consume only the selected target and its single bus mode; forward argv tokens after `--` exactly and reject unexpected bus-level tokens before starting the target. Derive sample target script paths from the copied bus script's directory so the bundle does not rely on the invocation cwd.
+- [x] Implement the `TARGETS` mapping fields `command`, `description`, `supported_modes`, `prerequisites`, `side_effects`, and `argument_help`. Require a non-empty supported-mode list containing only `check`, `apply`, or `dry-run`; validate that command is a non-empty argv list of strings and that all help fields are present before any command starts. Keep invocation subprocess-based and do not import Python target modules.
+- [x] Implement side-effect-free top-level and target help. Target help explains its supported modes and target arguments using registry metadata; it never invokes the child command.
+- [x] Invoke targets with inherited stdout and stderr. Return the child process's exact exit status. Reject unsupported or multiple mode arguments before process creation.
+- [x] Demonstrate check-only and apply-only targets. For the dry-run sample, report proposed state and return success when mutation would be proposed; fail only for an actual preview error.
+- [x] Run `py -3 -m pytest -q skills/command-bus/tests/assets/test_command_bus.py`, Ruff on changed Python files, and verify all scripts use only standard-library imports. The focused suite passes 12 tests and Ruff passes.
 
 **Exit:** The starter exemplifies the interface while leaving target discovery/implementation language and orchestration policy under repository ownership.
 
@@ -70,13 +70,13 @@ The Python starter accepts `run.py [--help]` or `run.py <target> (--help|--check
 
 **Produces:** Evidence that the bus starter is useful outside the Marketplace source checkout and remains optional.
 
-- [ ] Record fresh-context adoption scenarios in `skills/command-bus/tests/evaluator-only/adoption-scenarios.md`: select and adapt the Python starter; implement another-language bus without AOM assets; and adopt command bus without hook/CI. Define expected decisions in terms of the standard and approved spec, not exact response wording.
-- [ ] Run each adoption scenario in a fresh context. Confirm selection adds only the chosen standard to the subscription record and root AGENTS router, records certification only after the selected implementation exists, and does not require or imply neighboring standards.
-- [ ] Verify the bus-only scenario does not create a pre-commit hook, CI workflow, or text-normalization policy.
-- [ ] Copy the generated `dist/plugins/agent-operating-model` package to a temporary install location. Execute the copied bus and sample targets from a temporary consumer with Marketplace `PYTHONPATH` removed and no source checkout available.
-- [ ] Verify package-internal skill links resolve, runtime files are generated from canonical source, sample subprocesses preserve arguments/status, and evaluator-only material is not shipped.
-- [ ] Update the skill entrypoint to explain the optional Python starter, repository-owned target integration, agent-led deployment, no ABI promise, and explicit self-certification obligations.
-- [ ] Run the focused CLI suite and shipping test, then `py -3 tools/run.py marketplace --apply`; inspect the generated package and source parity.
+- [x] Record fresh-context adoption scenarios in `skills/command-bus/tests/evaluator-only/adoption-scenarios.md`: select and adapt the Python starter; implement another-language bus without AOM assets; and adopt command bus without hook/CI. Define expected decisions in terms of the standard and approved spec, not exact response wording.
+- [x] Run each adoption scenario in a fresh context. Confirm selection adds only the chosen standard to the subscription record and root AGENTS router, records certification only after the selected implementation exists, and does not require or imply neighboring standards.
+- [x] Verify the bus-only scenario does not create a pre-commit hook, CI workflow, or text-normalization policy.
+- [x] Copy the generated `dist/plugins/agent-operating-model` package to a temporary install location. Execute the copied bus and sample targets from a temporary consumer with Marketplace `PYTHONPATH` removed and no source checkout available.
+- [x] Verify package-internal skill links resolve, runtime files are generated from canonical source, sample subprocesses preserve arguments/status, and evaluator-only material is not shipped.
+- [x] Update the skill entrypoint to explain the optional Python starter, repository-owned target integration, agent-led deployment, no ABI promise, and explicit self-certification obligations.
+- [x] Run the focused CLI suite and shipping test, then `py -3 tools/run.py marketplace --apply`; inspect the generated package and source parity.
 
 **Exit:** Repositories can opt into the bus contract without adopting the Python starter, and those selecting the starter can copy and modify it without access to the Marketplace source tree.
 
