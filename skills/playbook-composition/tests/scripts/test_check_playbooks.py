@@ -8,9 +8,9 @@ from pathlib import Path
 SCRIPT = Path(__file__).resolve().parents[2] / "scripts" / "check_playbooks.py"
 
 
-def run_checker(root: Path, *args: str) -> subprocess.CompletedProcess[str]:
+def run_checker(root: Path, *args: str, include_check: bool = True) -> subprocess.CompletedProcess[str]:
     return subprocess.run(
-        [sys.executable, str(SCRIPT), "--repo-root", str(root), *args, "--check"],
+        [sys.executable, str(SCRIPT), "--repo-root", str(root), *args] + (["--check"] if include_check else []),
         cwd=root,
         text=True,
         capture_output=True,
@@ -30,6 +30,14 @@ def test_accepts_standalone_concern_guide_without_fixed_headings(tmp_path: Path)
 
     assert result.returncode == 0, result.stdout + result.stderr
     assert "semantic usefulness" in result.stdout.lower()
+
+
+def test_check_mode_is_default_when_flag_is_omitted(tmp_path: Path) -> None:
+    (tmp_path / "security.md").write_text("A cross-stage concern guide.\n", encoding="utf-8")
+
+    result = run_checker(tmp_path, "--document", "security.md", include_check=False)
+
+    assert result.returncode == 0, result.stdout + result.stderr
 
 
 def test_resolves_angle_bracket_route_with_parenthesized_target(tmp_path: Path) -> None:

@@ -105,7 +105,7 @@ def main(argv: list[str] | None = None) -> int:
         metavar="PATH",
         help="Markdown route source, relative to the repository; repeatable",
     )
-    parser.add_argument("--check", action="store_true", required=True, help="perform read-only integrity checks")
+    parser.add_argument("--check", action="store_true", help="perform read-only integrity checks (default)")
     args = parser.parse_args(argv)
 
     root = args.repo_root.resolve()

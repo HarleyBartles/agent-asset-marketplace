@@ -8,9 +8,9 @@ from pathlib import Path
 SCRIPT = Path(__file__).resolve().parents[2] / "scripts" / "check_runbooks.py"
 
 
-def run_checker(root: Path, *args: str) -> subprocess.CompletedProcess[str]:
+def run_checker(root: Path, *args: str, include_check: bool = True) -> subprocess.CompletedProcess[str]:
     return subprocess.run(
-        [sys.executable, str(SCRIPT), "--repo-root", str(root), *args, "--check"],
+        [sys.executable, str(SCRIPT), "--repo-root", str(root), *args] + (["--check"] if include_check else []),
         cwd=root,
         text=True,
         capture_output=True,
@@ -29,6 +29,14 @@ def test_accepts_minimal_stage_guide_without_prescribed_headings(tmp_path: Path)
 
     assert result.returncode == 0, result.stdout + result.stderr
     assert "semantic usefulness" in result.stdout.lower()
+
+
+def test_check_mode_is_default_when_flag_is_omitted(tmp_path: Path) -> None:
+    (tmp_path / "design.md").write_text("A lifecycle stage guide.\n", encoding="utf-8")
+
+    result = run_checker(tmp_path, "--document", "design.md", include_check=False)
+
+    assert result.returncode == 0, result.stdout + result.stderr
 
 
 def test_resolves_reference_route_with_angle_bracket_target_spaces_and_parentheses(tmp_path: Path) -> None:
