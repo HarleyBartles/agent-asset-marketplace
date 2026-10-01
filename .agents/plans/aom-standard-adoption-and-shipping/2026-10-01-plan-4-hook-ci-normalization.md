@@ -135,9 +135,11 @@ Evidence: 20 focused asset/shipping tests pass on Windows, including the isolate
 
 **Produces:** Reviewed optional hook/CI starter assets with package-local authority and no implicit command-bus dependency.
 
-- [ ] Inspect staged paths and generated/source parity; commit through the normal hook. Do not rerun the full gate redundantly after a successful hooked commit.
-- [ ] Obtain a fresh whole-range review against this plan and the approved spec. Fix Critical and Important findings, regenerate outputs, rerun focused evidence, and get a fresh review after each correction.
-- [ ] Mark this plan `completed-awaiting-retirement`; update the roadmap row with implementation head and review outcome.
+- [x] Inspect staged paths and generated/source parity; commit through the normal hook. Do not rerun the full gate redundantly after a successful hooked commit.
+- [x] Obtain a fresh whole-range review against this plan and the approved spec. Fix Critical and Important findings, regenerate outputs, rerun focused evidence, and get a fresh review after each correction.
+- [x] Mark this plan `completed-awaiting-retirement`; update the roadmap row with implementation head and review outcome.
+
+**Closeout evidence:** Implementation head `6ca3e73a8e2df9938b84359500884628b22f2924`. The normal commit hook passed the complete Windows gate. Focused hook asset/shipping tests passed (20); package assembly tests passed (3, with the POSIX executable-mode test skipped on Windows); Ruff, Bash syntax validation, and `marketplace --check` passed. The initial whole-range review found three Important issues and one Minor issue; each was corrected. A fresh review of correction commit `6ca3e73a8` found no actionable issues. Hosted Linux execution and actual cross-platform equivalence remain deferred to Plan 8.
 
 **Exit:** The tracked hook/CI standard has useful optional deployment support, while repository-owned gate policy and certification remain with each adopting repo.
 
