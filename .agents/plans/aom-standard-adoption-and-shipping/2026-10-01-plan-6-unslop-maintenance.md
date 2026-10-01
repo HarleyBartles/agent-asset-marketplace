@@ -1,5 +1,7 @@
 # Unslop Maintenance Across Agents Implementation Plan
 
+**Status:** completed-awaiting-retirement
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use `subagent-driven-development` (recommended) or `executing-plans` to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Make AOM's Unslop standard usable as a durable, cross-agent feedback loop without requiring a particular profile schema, ambient authoring capability, or migration of this repository's legacy adoption.
@@ -155,8 +157,8 @@
 **Produces:** A reviewed Plan 6 slice with accurate plan and roadmap status.
 
 - [x] Run the normal hooked commit path for source changes; preserve the future roadmap and all still-live later work.
-- [ ] Obtain a fresh whole-range review against the branch merge base, including standard authority, v1/v2 compatibility, adopter versus non-adopter boundaries, projection parity, and scenario coverage. Fix all Critical and Important findings, then request a fresh review of corrections.
-- [ ] Record the review ruling: legacy v1 remains limited to its deployed configuration and declared profile roots; the selectable definition at `a537f406b0cb991cbd40cc35d964f1dbf26a1e0f` owns the new `.agents/unslop/` feedback-loop and certification obligations. Generic profiles must work without AOM `repo-standards` discovery.
-- [ ] Record implementation head and review outcome in the Plan 6 row and mark this plan `completed-awaiting-retirement`; keep Plan 7 and Plan 8 pending.
-- [ ] Use the repository planning-artifact completion workflow and task ledger to record each completed plan task with its evidence.
-- [ ] Do not claim Linux or hosted-CI evidence here; Plan 8 owns cross-platform closure.
+- [x] Obtain a fresh whole-range review against the branch merge base, including standard authority, v1/v2 compatibility, adopter versus non-adopter boundaries, projection parity, and scenario coverage. Final review of `3b39cc051f1fb4241c9ee36a1fca411190f9b1a8..2b7f5fe48c4230e81b6e938bce8c6f0170ac9b0a` found no Critical, Important, or Minor findings after corrections.
+- [x] Record the review ruling: legacy v1 remains limited to its deployed configuration and declared profile roots; the selectable definition at `a537f406b0cb991cbd40cc35d964f1dbf26a1e0f` owns the new `.agents/unslop/` feedback-loop and certification obligations. Generic profiles work without AOM `repo-standards` discovery, and certification lookup occurs only when the pinned subscription names one.
+- [x] Record implementation head and review outcome in the Plan 6 row and mark this plan `completed-awaiting-retirement`; keep Plan 7 and Plan 8 pending.
+- [x] Use the repository planning-artifact completion workflow and task ledger to record each completed plan task with its evidence.
+- [x] Do not claim Linux or hosted-CI evidence here; Plan 8 owns cross-platform closure.
