@@ -139,6 +139,54 @@ def test_accepts_sha_or_ref_but_rejects_both_selectors(tmp_path: Path) -> None:
     assert "exactly one" in rejected.stdout.lower()
 
 
+def test_codex_marketplace_registration_ref_is_optional_but_validated_when_present(tmp_path: Path) -> None:
+    _write_codex(tmp_path)
+    config = tmp_path / ".codex/config.toml"
+    config.write_text(
+        '[marketplaces.sample-repo-plugins]\nsource_type = "git"\n'
+        'source = "https://github.com/example-org/sample-repo.git"\n\n'
+        '[plugins."review-tools@sample-repo-plugins"]\nenabled = true\n',
+        encoding="utf-8",
+    )
+    omitted = _check(tmp_path)
+    config.write_text(
+        config.read_text(encoding="utf-8").replace(
+            'source = "https://github.com/example-org/sample-repo.git"',
+            'source = "https://github.com/example-org/sample-repo.git"\nref = ""',
+        ),
+        encoding="utf-8",
+    )
+    empty = _check(tmp_path)
+
+    assert omitted.returncode == 0, omitted.stdout + omitted.stderr
+    assert empty.returncode == 1
+    assert "ref must be a non-empty string" in empty.stdout.lower()
+
+
+def test_ignores_other_marketplace_activations_and_unrelated_codex_config(tmp_path: Path) -> None:
+    _write_codex(tmp_path)
+    config = tmp_path / ".codex/config.toml"
+    config.write_text(
+        '[marketplaces.sample-repo-plugins]\nsource_type = "git"\n'
+        'source = "https://github.com/example-org/sample-repo.git"\n\n'
+        '[marketplaces.other-marketplace]\nsource_type = "git"\n'
+        'source = "https://github.com/example-org/other-marketplace.git"\n\n'
+        '[plugins."other-plugin@other-marketplace"]\nenabled = true\n',
+        encoding="utf-8",
+    )
+    no_repo_catalog = tmp_path / "without-local-catalog"
+    no_repo_catalog.mkdir()
+    (no_repo_catalog / ".codex").mkdir()
+    (no_repo_catalog / ".codex/config.toml").write_text(config.read_text(encoding="utf-8"), encoding="utf-8")
+
+    local_catalog = _check(tmp_path)
+    unrelated_only = _check(no_repo_catalog)
+
+    assert local_catalog.returncode == 0, local_catalog.stdout + local_catalog.stderr
+    assert unrelated_only.returncode == 0, unrelated_only.stdout + unrelated_only.stderr
+    assert "no repository git plugin catalog present" in unrelated_only.stdout.lower()
+
+
 def test_rejects_malformed_catalog_toml_and_conflicting_activation(tmp_path: Path) -> None:
     _write_codex(tmp_path)
     config = tmp_path / ".codex/config.toml"
@@ -210,6 +258,6 @@ def test_checks_only_present_harness_surfaces_and_does_not_modify_repository(tmp
 
     after = sorted(path.relative_to(tmp_path).as_posix() for path in tmp_path.rglob("*") if path.is_file())
     assert result.returncode == 0, result.stdout + result.stderr
-    assert "codex: not present" in result.stdout.lower()
+    assert "codex: no repository git plugin catalog present" in result.stdout.lower()
     assert "devin: not present" in result.stdout.lower()
     assert before == after

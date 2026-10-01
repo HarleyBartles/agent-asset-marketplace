@@ -107,14 +107,10 @@ def _codex_catalog(path: Path, errors: list[str]) -> tuple[str | None, set[str]]
 def _check_codex(root: Path, errors: list[str], surfaces: list[str]) -> None:
     catalog_path = root / CATALOG_PATH
     config_path = root / CODEX_CONFIG_PATH
-    if not catalog_path.exists() and not config_path.exists():
-        surfaces.append("Codex: not present")
-        return
     if not catalog_path.is_file():
-        errors.append(f"missing Codex Git plugin catalog: {CATALOG_PATH.as_posix()}")
-        catalog_name, plugin_names = None, set()
-    else:
-        catalog_name, plugin_names = _codex_catalog(catalog_path, errors)
+        surfaces.append("Codex: no repository Git plugin catalog present")
+        return
+    catalog_name, plugin_names = _codex_catalog(catalog_path, errors)
     if not config_path.is_file():
         errors.append(f"missing Codex project binding: {CODEX_CONFIG_PATH.as_posix()}")
         surfaces.append("Codex: catalog present, project binding missing")
@@ -137,19 +133,20 @@ def _check_codex(root: Path, errors: list[str], surfaces: list[str]) -> None:
         errors.append("Codex marketplace registration must match the catalog name and use source_type = 'git'")
     elif not _git_url(registration.get("source")):
         errors.append("Codex marketplace registration source must be a Git URL")
-    elif not isinstance(registration.get("ref"), str) or not registration["ref"].strip():
-        errors.append("Codex marketplace registration must declare a non-empty ref")
+    elif "ref" in registration and (not isinstance(registration["ref"], str) or not registration["ref"].strip()):
+        errors.append("Codex marketplace registration ref must be a non-empty string when provided")
 
     for key, config_value in activations.items():
         if not isinstance(key, str) or "@" not in key:
-            errors.append(f"{CODEX_CONFIG_PATH.as_posix()}: invalid plugin activation key {key!r}")
             continue
         plugin_name, marketplace_name = key.rsplit("@", 1)
-        if marketplace_name != catalog_name or plugin_name not in plugin_names:
+        if marketplace_name != catalog_name:
+            continue
+        if plugin_name not in plugin_names:
             errors.append(f"{CODEX_CONFIG_PATH.as_posix()}: activation {key!r} has no matching catalog entry")
-        if not isinstance(config_value, dict) or not isinstance(config_value.get("enabled"), bool):
+        elif not isinstance(config_value, dict) or not isinstance(config_value.get("enabled"), bool):
             errors.append(f"{CODEX_CONFIG_PATH.as_posix()}: activation {key!r} must set enabled to a boolean")
-    surfaces.append("Codex: checked Git catalog, project registration, and plugin activation")
+    surfaces.append("Codex: checked repository Git catalog, project registration, and local plugin activations")
 
 
 def _devin_dependency(value: object, label: str, errors: list[str]) -> None:
