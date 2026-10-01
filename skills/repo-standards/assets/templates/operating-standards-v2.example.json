@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "standards": [
+    {
+      "id": "runbook-composition",
+      "source": {
+        "repository": "https://example.invalid/replace-with-standard-source.git",
+        "commit": "0000000000000000000000000000000000000000",
+        "definition": "skills/runbook-composition/references/standard.md"
+      },
+      "certification": ".agents/contracts/standards-certification.md#runbook-composition"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+# Repository standards certification
+
+> Status: not yet certified. Replace this notice with an accurate status only after assessing the implementation against each pinned definition. The presence of this file or a passing structural check is not evidence of compliance.
+
+## Adopted standards
+
+List only standards recorded in `.agents/contracts/operating-standards.json`. For each, record its pinned definition, implementation location, required invariants the repository meets, evidence and semantic review used, and measures that detect or prevent drift.
+
+## Ongoing responsibility
+
+Every agent changing an adopted surface preserves its requirements and updates this certification and its drift controls when implementation or evidence changes.

@@ -1,0 +1,11 @@
+# Repository agent entrypoint
+
+Use the repository README for human orientation. Treat this file as a short routing layer for agents.
+
+## Operating standard records
+
+When assessing or changing an existing standard adoption, read `.agents/contracts/operating-standards.json` and the certification path recorded for that standard. When initializing the first adoption, create those records as part of the repository's adoption task, then route agents here. If a standard applies to the current work, follow its repository-owned implementation and read its guidance at the relevant work point.
+
+## Maintenance
+
+Keep this file concise. Add only routes agents need at the point of work; keep detailed obligations in their owning documents.
