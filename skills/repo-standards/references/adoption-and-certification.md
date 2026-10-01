@@ -23,7 +23,7 @@ If the repository has a v1 record, do not replace it as a side effect of a new a
 
 ## Self-certification
 
-The certification is a human-readable, agent-facing statement of the adopted standards, how the repository satisfies each required invariant, and the measures that detect or prevent drift. Put it in a location agents can discover, normally the default certification path above. Where the repository adopts agent-doctrine-and-contracts, the certification itself is agent doctrine that records invariants to preserve.
+The certification is a human-readable, agent-facing statement of the adopted standards, how the repository satisfies each required invariant, and the measures that detect or prevent drift. Put it in a location agents can discover, normally the default certification path above. Where the repository adopts `agent-doctrine-contracts`, the certification itself is agent doctrine that records invariants to preserve.
 
 Certification is semantic and repository-owned. A structural checker can report facts it can observe, but it cannot record or establish certified success by itself. When observed repository state conflicts with a certification claim, report the mismatch. Preserve the pinned standard. Repair the implementation or revise the certification to describe the actual state; change a checker only when evidence shows the checker misrepresents the pinned requirement.
 
