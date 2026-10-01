@@ -1,5 +1,7 @@
 # Command Bus Standard Assets Implementation Plan
 
+**Status:** completed-awaiting-retirement. Final reviewed implementation head: `6f8862e2d`.
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use `subagent-driven-development` (recommended) or `executing-plans` to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Ship an optional, repository-editable command bus starter that demonstrates the adopted CLI contract without requiring Python, a fixed filename, shared target ABI, or any other AOM standard.
@@ -88,9 +90,9 @@ The Python starter accepts `run.py [--help]` or `run.py <target> (--help|--check
 
 **Produces:** A reviewable, independently usable command-bus asset delivery.
 
-- [ ] Inspect staged paths for scope and generated/source parity, then commit through the normal repository hook. Do not run the full gate redundantly before or after a successful hooked commit.
-- [ ] Obtain a fresh whole-change review against this plan and the approved spec. Fix Critical and Important findings, regenerate outputs, rerun focused evidence, and request a fresh review after corrections.
-- [ ] Mark this plan `completed-awaiting-retirement`; update its roadmap row with the final implementation head and review outcome.
+- [x] Inspect staged paths for scope and generated/source parity, then commit through the normal repository hook. Do not run the full gate redundantly before or after a successful hooked commit.
+- [x] Obtain fresh whole-change reviews against this plan and the approved spec. Resolve the dispatch-proof finding and contradictory target usage, regenerate outputs, rerun focused evidence, and re-review corrections. Final whole-range review found no Critical or Important issues; a final focused review found no issues.
+- [x] Mark this plan `completed-awaiting-retirement`; update its roadmap row with the final implementation head and review outcome.
 
 **Exit:** The command-bus definition has a useful optional implementation starter and adoption evidence without implying repository installation or choosing consumer architecture.
 
