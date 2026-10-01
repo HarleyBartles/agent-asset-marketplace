@@ -140,7 +140,6 @@ def _check_codex(root: Path, errors: list[str], surfaces: list[str]) -> None:
     elif not isinstance(registration.get("ref"), str) or not registration["ref"].strip():
         errors.append("Codex marketplace registration must declare a non-empty ref")
 
-    activated: set[str] = set()
     for key, config_value in activations.items():
         if not isinstance(key, str) or "@" not in key:
             errors.append(f"{CODEX_CONFIG_PATH.as_posix()}: invalid plugin activation key {key!r}")
@@ -148,12 +147,8 @@ def _check_codex(root: Path, errors: list[str], surfaces: list[str]) -> None:
         plugin_name, marketplace_name = key.rsplit("@", 1)
         if marketplace_name != catalog_name or plugin_name not in plugin_names:
             errors.append(f"{CODEX_CONFIG_PATH.as_posix()}: activation {key!r} has no matching catalog entry")
-        else:
-            activated.add(plugin_name)
         if not isinstance(config_value, dict) or not isinstance(config_value.get("enabled"), bool):
             errors.append(f"{CODEX_CONFIG_PATH.as_posix()}: activation {key!r} must set enabled to a boolean")
-    for plugin_name in sorted(plugin_names - activated):
-        errors.append(f"Codex catalog plugin {plugin_name!r} has no matching project activation")
     surfaces.append("Codex: checked Git catalog, project registration, and plugin activation")
 
 

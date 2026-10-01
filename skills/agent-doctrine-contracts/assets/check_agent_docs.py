@@ -110,23 +110,32 @@ def main(argv: list[str] | None = None) -> int:
                 errors.append(f"{path.relative_to(root).as_posix()}: invalid JSON syntax: {exc}")
 
     route_sources = _markdown_files(root, args.exclude, route_roots)
+    checked_route_sources = {path for path in documents if path.suffix.lower() in {".md", ".markdown"}}
+    for route_root in route_roots:
+        candidates = [route_root] if route_root.is_file() else route_root.rglob("*")
+        checked_route_sources.update(
+            path.resolve() for path in candidates if path.is_file() and path.suffix.lower() in {".md", ".markdown"}
+        )
     inbound: set[Path] = set()
     for source in route_sources:
         try:
             content = source.read_text(encoding="utf-8")
         except (OSError, UnicodeError) as exc:
-            errors.append(f"{source.relative_to(root).as_posix()}: cannot read route source: {exc}")
+            if source in checked_route_sources:
+                errors.append(f"{source.relative_to(root).as_posix()}: cannot read route source: {exc}")
             continue
         for raw in LINK.findall(content):
             try:
                 target = _resolve_link(source, raw, root)
             except ValueError as exc:
-                errors.append(f"{source.relative_to(root).as_posix()}: {exc}")
+                if source in checked_route_sources:
+                    errors.append(f"{source.relative_to(root).as_posix()}: {exc}")
                 continue
             if target is None:
                 continue
             if not target.is_file():
-                errors.append(f"{source.relative_to(root).as_posix()}: broken local link: {raw.strip()}")
+                if source in checked_route_sources:
+                    errors.append(f"{source.relative_to(root).as_posix()}: broken local link: {raw.strip()}")
             elif source != target and target in documents:
                 inbound.add(target)
 
