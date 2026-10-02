@@ -1,7 +1,7 @@
 # Markdown Source Guidance
 
-Treat source wrapping as an authoring choice for people reading diffs and raw files. Follow the document's existing convention when it is clear. When starting or substantially revising a document, keep prose paragraphs visually consistent with one another; do not mix tight wrapping, very long lines, and unwrapped sections without a reason.
+Keep each prose paragraph and each list item on one physical source line, regardless of length. Never soft-wrap Markdown text to meet a column width. Start another source line at a paragraph break, a new list item, or an intentional Markdown line break. Preserve structural line breaks in headings, tables, code blocks, frontmatter, and other Markdown syntax.
 
-Do not add hard line breaks that change paragraph meaning or reflow unrelated sections for cosmetic consistency. Prefer the smallest change that makes the edited passage easy to read. Keep line endings consistent with the repository's tracked-file policy.
+Do not add intentional line breaks that change paragraph meaning or reflow unrelated sections for cosmetic consistency. When editing a paragraph, flatten existing soft wraps in that paragraph. Keep line endings consistent with the repository's tracked-file policy.
 
-This guidance has no fixed column limit, formatter dependency, or repository-wide check. Rendered Markdown wraps to the available view; source readability is judged in context.
+This guidance has no fixed column limit, formatter dependency, or repository-wide check. Rendered Markdown wraps to the available view; Markdown source does not wrap prose within paragraphs.
