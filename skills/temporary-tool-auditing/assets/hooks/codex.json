@@ -1,0 +1,22 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {"matcher": "", "hooks": [{"type": "command", "command": "{{AUDIT_RECORDER_COMMAND}}"}]}
+    ],
+    "PostToolUse": [
+      {"matcher": "", "hooks": [{"type": "command", "command": "{{AUDIT_RECORDER_COMMAND}}"}]}
+    ],
+    "SubagentStart": [
+      {"matcher": "", "hooks": [{"type": "command", "command": "{{AUDIT_RECORDER_COMMAND}}"}]}
+    ],
+    "SubagentStop": [
+      {"matcher": "", "hooks": [{"type": "command", "command": "{{AUDIT_RECORDER_COMMAND}}"}]}
+    ],
+    "SessionStart": [
+      {"matcher": "", "hooks": [{"type": "command", "command": "{{AUDIT_RECORDER_COMMAND}}"}]}
+    ],
+    "SessionEnd": [
+      {"matcher": "", "hooks": [{"type": "command", "command": "{{AUDIT_RECORDER_COMMAND}}"}]}
+    ]
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "hooks": {
+    "PreToolUse": {"command": "{{AUDIT_RECORDER_COMMAND}}"},
+    "PostToolUse": {"command": "{{AUDIT_RECORDER_COMMAND}}"},
+    "SessionStart": {"command": "{{AUDIT_RECORDER_COMMAND}}"},
+    "SessionEnd": {"command": "{{AUDIT_RECORDER_COMMAND}}"}
+  }
+}
