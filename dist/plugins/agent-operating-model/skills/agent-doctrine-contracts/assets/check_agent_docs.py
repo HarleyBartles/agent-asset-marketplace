@@ -13,6 +13,7 @@ from urllib.parse import unquote, urlsplit
 
 
 DOCUMENT_SUFFIXES = {".md", ".markdown", ".json", ".yaml", ".yml", ".toml"}
+MARKDOWN_SUFFIXES = {".md", ".markdown"}
 INLINE_LINK = re.compile(
     r"!?\[[^\]]*\]\(\s*(<[^>\n]*>|(?:\\.|[^()\s]|\([^()\n]*\))+)(?:\s+(?:\"[^\"]*\"|'[^']*'|\([^)]*\)))?\s*\)"
 )
@@ -32,12 +33,16 @@ def _excluded(path: Path, root: Path, patterns: list[str]) -> bool:
 
 
 def _markdown_files(root: Path, patterns: list[str], route_roots: list[Path]) -> set[Path]:
-    files = {path.resolve() for path in root.rglob("*.md") if not _excluded(path, root, patterns)}
-    files.update(path.resolve() for path in root.rglob("*.markdown") if not _excluded(path, root, patterns))
+    files = {
+        path.resolve()
+        for suffix in MARKDOWN_SUFFIXES
+        for path in root.rglob(f"*{suffix}")
+        if not _excluded(path, root, patterns)
+    }
     for route_root in route_roots:
         candidates = [route_root] if route_root.is_file() else route_root.rglob("*")
         files.update(
-            path.resolve() for path in candidates if path.is_file() and path.suffix.lower() in {".md", ".markdown"}
+            path.resolve() for path in candidates if path.is_file() and path.suffix.lower() in MARKDOWN_SUFFIXES
         )
     return files
 
@@ -161,11 +166,11 @@ def main(argv: list[str] | None = None) -> int:
                 errors.append(f"{path.relative_to(root).as_posix()}: invalid JSON syntax: {exc}")
 
     route_sources = _markdown_files(root, args.exclude, route_roots)
-    checked_route_sources = {path for path in documents if path.suffix.lower() in {".md", ".markdown"}}
+    checked_route_sources = {path for path in documents if path.suffix.lower() in MARKDOWN_SUFFIXES}
     for route_root in route_roots:
         candidates = [route_root] if route_root.is_file() else route_root.rglob("*")
         checked_route_sources.update(
-            path.resolve() for path in candidates if path.is_file() and path.suffix.lower() in {".md", ".markdown"}
+            path.resolve() for path in candidates if path.is_file() and path.suffix.lower() in MARKDOWN_SUFFIXES
         )
     inbound: set[Path] = set()
     for source in route_sources:
