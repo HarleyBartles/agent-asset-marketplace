@@ -38,6 +38,7 @@ jobs:
         run: git fetch origin main
 
       - name: Verify checked out commit for hosted parity
+        id: verify-hosted-commit
         shell: bash
         run: |
           set -euo pipefail
@@ -54,6 +55,7 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Validate tracked commit gate
+        id: tracked-commit-gate
         shell: bash
         run: |
           set -euo pipefail

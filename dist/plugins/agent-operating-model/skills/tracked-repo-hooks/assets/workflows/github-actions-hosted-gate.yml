@@ -27,5 +27,6 @@ jobs:
           test -z "$(git status --porcelain --untracked-files=all)"
           test "$(git rev-parse HEAD)" = "$COMMIT_SHA"
       - name: Run the tracked complete gate
+        id: tracked-complete-gate
         shell: bash
         run: bash githooks/pre-commit --hosted "$COMMIT_SHA"

@@ -19,11 +19,7 @@ def _registry() -> dict:
     return {"plugins": [{"name": "writing-pack", "policy": {"installation": "AVAILABLE"}}]}
 
 
-def test_repo_authored_skills_need_no_marketplace_subscription(tmp_path: Path) -> None:
-    local_skill = tmp_path / ".agents" / "skills" / "local-skill"
-    local_skill.mkdir(parents=True)
-    (local_skill / "SKILL.md").write_text("---\nname: local-skill\n---\n", encoding="utf-8")
-
+def test_marketplace_policy_with_no_install_defaults_is_valid() -> None:
     validate_marketplace.validate_installation_policy(_policy(), _registry())
 
 
