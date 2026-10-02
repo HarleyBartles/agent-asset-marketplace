@@ -119,14 +119,11 @@ def _validate_run_py(path: Path, report: Report) -> None:
 
     has_check = "--check" in text
     has_apply = "--apply" in text
-    has_allow_shared = "--allow-shared-checkout" in text
 
     if not has_check:
         report.record("FAIL", path, "missing --check flag")
     if not has_apply:
         report.record("FAIL", path, "missing --apply flag")
-    if not has_allow_shared:
-        report.record("FAIL", path, "missing --allow-shared-checkout flag")
 
     has_tasks = False
     for node in ast.walk(tree):
@@ -138,7 +135,7 @@ def _validate_run_py(path: Path, report: Report) -> None:
     if not has_tasks:
         report.record("FAIL", path, "_TASKS definition not found")
 
-    if has_check and has_apply and has_allow_shared and has_tasks:
+    if has_check and has_apply and has_tasks:
         report.record("OK", path, "tools/run.py declares standard flags and _TASKS")
 
 

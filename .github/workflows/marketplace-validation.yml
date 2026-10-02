@@ -22,21 +22,29 @@ concurrency:
 jobs:
   marketplace-validation:
     name: marketplace-validation
-    if: ${{ github.event_name != 'pull_request' || github.event.pull_request.draft == false }}
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    env:
+      REPO_STANDARDS_HOSTED_COMMIT: ${{ github.event.pull_request.head.sha || github.sha }}
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
           fetch-depth: 0
 
       - name: Fetch origin/main
         run: git fetch origin main
 
-      - name: Detach checked out commit for hosted parity
-        run: git -c advice.detachedHead=false checkout --detach HEAD
+      - name: Verify checked out commit for hosted parity
+        id: verify-hosted-commit
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git branch --show-current)" = ""
+          test "$(git rev-parse HEAD)" = "$REPO_STANDARDS_HOSTED_COMMIT"
+          test -z "$(git status --porcelain --untracked-files=all)"
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -47,9 +55,8 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Validate tracked commit gate
+        id: tracked-commit-gate
         shell: bash
-        env:
-          REPO_STANDARDS_HOSTED_COMMIT: HEAD
         run: |
           set -euo pipefail
           githooks/pre-commit

@@ -1,0 +1,10 @@
+version: 1
+metadata:
+  skill_name: unslop
+  source_category: first_party
+interface:
+  display_name: Unslop Standard
+  short_description: Assess or adopt durable profiles for recurring agent mistakes.
+  default_prompt: Use unslop to assess or adopt durable profiles for recurring agent mistakes in this repository.
+policy:
+  allow_implicit_invocation: true

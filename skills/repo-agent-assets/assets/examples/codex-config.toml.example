@@ -1,0 +1,10 @@
+[marketplaces.sample-repo-plugins]
+source_type = "git"
+source = "https://github.com/example-org/sample-repo.git"
+ref = "main"
+
+[plugins."review-tools@sample-repo-plugins"]
+enabled = true
+
+[plugins."test-tools@sample-repo-plugins"]
+enabled = true

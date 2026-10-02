@@ -9,11 +9,19 @@ ROOT = Path(__file__).resolve().parents[2]
 SCRIPT = ROOT / "tools" / "validate_markdown_links.py"
 
 
+def _fixture_env() -> dict[str, str]:
+    env = os.environ.copy()
+    for name in ("GIT_DIR", "GIT_WORK_TREE", "GIT_INDEX_FILE"):
+        env.pop(name, None)
+    return env
+
+
 def _init_repo(path: Path) -> Path:
     path.mkdir()
-    subprocess.run(["git", "init"], cwd=path, check=True, capture_output=True)
-    subprocess.run(["git", "config", "user.email", "test@test"], cwd=path, check=True, capture_output=True)
-    subprocess.run(["git", "config", "user.name", "Test"], cwd=path, check=True, capture_output=True)
+    env = _fixture_env()
+    subprocess.run(["git", "init"], cwd=path, env=env, check=True, capture_output=True)
+    subprocess.run(["git", "config", "user.email", "test@test"], cwd=path, env=env, check=True, capture_output=True)
+    subprocess.run(["git", "config", "user.name", "Test"], cwd=path, env=env, check=True, capture_output=True)
     return path
 
 
@@ -22,15 +30,13 @@ def _commit_files(repo: Path, files: dict[str, str]) -> None:
         path = repo / relative
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(content, encoding="utf-8", newline="\n")
-    subprocess.run(["git", "add", "-A"], cwd=repo, check=True, capture_output=True)
-    subprocess.run(["git", "commit", "-m", "fixture"], cwd=repo, check=True, capture_output=True)
+    env = _fixture_env()
+    subprocess.run(["git", "add", "-A"], cwd=repo, env=env, check=True, capture_output=True)
+    subprocess.run(["git", "commit", "-m", "fixture"], cwd=repo, env=env, check=True, capture_output=True)
 
 
 def _run(repo: Path) -> subprocess.CompletedProcess[str]:
-    env = os.environ.copy()
-    env.pop("GIT_DIR", None)
-    env.pop("GIT_WORK_TREE", None)
-    env.pop("GIT_INDEX_FILE", None)
+    env = _fixture_env()
     return subprocess.run(
         [sys.executable, str(SCRIPT), "--check"],
         cwd=repo,

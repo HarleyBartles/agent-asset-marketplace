@@ -1,0 +1,32 @@
+# Optional GitHub Actions example. Adapt the prerequisite step for the consumer repository.
+name: Hook and hosted gate parity example
+
+on:
+  pull_request:
+  push:
+  workflow_dispatch:
+
+jobs:
+  complete-gate:
+    runs-on: ubuntu-latest
+    env:
+      COMMIT_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+    steps:
+      - name: Check out the proposed commit
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          fetch-depth: 1
+      - name: Install repository gate prerequisites
+        run: |
+          echo "Adapt this step to install the repository's declared gate prerequisites." >&2
+          exit 2
+      - name: Require a clean detached candidate
+        shell: bash
+        run: |
+          test -z "$(git status --porcelain --untracked-files=all)"
+          test "$(git rev-parse HEAD)" = "$COMMIT_SHA"
+      - name: Run the tracked complete gate
+        id: tracked-complete-gate
+        shell: bash
+        run: bash githooks/pre-commit --hosted "$COMMIT_SHA"

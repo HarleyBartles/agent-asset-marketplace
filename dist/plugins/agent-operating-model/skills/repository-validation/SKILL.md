@@ -17,4 +17,4 @@ Distinguish focused developer checks from the complete repository gate. `--apply
 
 Normal commits rely on the tracked hook's staged-snapshot gate. Run the broad check separately only for uncommitted verification, diagnosis, or explicit CI parity. Consumer repositories own their command vectors and language stack.
 
-The detailed validation pipeline remains in `repo-shape/references/ci-validation-pipeline.md` during the compatibility migration; this skill owns changes to that contract.
+The repository's active command surface is recorded in `.agents/contracts/repo-standards-commands.json`. Follow that contract and its linked implementation; a Marketplace skill or ambient plugin does not own the consumer's command paths.

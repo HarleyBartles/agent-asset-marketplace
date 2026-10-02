@@ -19,7 +19,7 @@ Targets are: `inventory`, `marketplace`, `validate`, `review-preflight`, `runtim
 
 Codex plugin first.
 
-Use `--check` to validate the current generated surface without rewriting it. `--allow-shared-checkout` is approved once by `tools/run` and forwarded to child scripts that require explicit approval to write in the main shared checkout. It is not needed in a linked worktree. `--allow-shared-checkout` alone is rejected by those scripts.
+Use `--check` to validate the current generated surface without rewriting it. Mutating commands use their documented `--apply` boundary; repository worktree selection follows the worktree workflow.
 
 `py -3 tools/validate_marketplace.py` verifies the plugin manifest, bundle manifest, and referenced surfaces for each plugin.
 

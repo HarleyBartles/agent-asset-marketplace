@@ -1,6 +1,6 @@
 ---
 name: tracked-repo-hooks
-description: Use when installing, changing, or validating tracked pre-commit hooks, staged-snapshot execution, linked-worktree activation, or hosted-CI parity.
+description: Use when changing or assessing a repository's tracked pre-commit hook and hosted-CI parity under its adopted standard.
 metadata:
   source-id: tracked-repo-hooks
   source-path: skills/tracked-repo-hooks/SKILL.md
@@ -13,10 +13,21 @@ license: MIT
 
 # Tracked Repo Hooks
 
-The canonical hook is tracked at `githooks/pre-commit` and activated through `core.hooksPath=githooks`. It materializes the staged tree, invokes the consumer-declared apply and check vectors, stages only owned generated surfaces declared in `.agents/contracts/repo-standards-commands.json`, restores unrelated working state, and rejects unresolved contract failures. The tracked hook is a behavioral seed: consumer-owned edits are valid when they preserve the staged-snapshot, apply-before-check, restoration, and hosted-parity contract.
+For explicit adoption or assessment, inspect the repository's pinned subscription and certification through `repo-standards`, then follow the [tracked hook and CI definition](references/standard.md). Ambient availability does not adopt the standard.
 
-Hosted CI invokes the same hook against the checked-out commit with `REPO_STANDARDS_HOSTED_COMMIT=HEAD`. The portable hook never hard-codes Python, Ruff, or a repository-specific command bus.
+The pledge is one complete gate on Windows before commit and Linux in hosted CI. The checks are the same in both places: tests, lint, build, and other configured CI gates do not move exclusively to paid hosted CI or exclusively to a developer hook. The tracked hook must be maintained, hook skipping is prohibited for agents, and hosted CI runs the equivalent gate against the proposed commit.
 
-`REPO_STANDARDS_STAGED_SNAPSHOT=1` identifies the candidate tree under validation. It does not alter consumer command semantics or any other workflow policy unless the consumer's owning contract explicitly declares otherwise. Tree-selection mechanics do not acquire policy meaning merely because they are visible to a command.
+Preserve repository content across platforms. Normalize line endings and file endings so Windows authoring and Linux hosted execution do not create avoidable churn. Validate the candidate commit state and report failures clearly. A repository chooses the hook implementation and its commands; use the command bus only when that standard is also adopted, and make hook integration an explicit bus target/module deployment into the repository-owned bus.
 
-The compatibility hook template remains under `repo-shape/templates/` while the coordinator installs it; this skill owns its contract.
+An adoption is repository-owned implementation and self-certification, not deployment of a mandatory AOM scaffold. Route the subscription and readable certification from root `AGENTS.md`. Certification names the hook, hosted workflow, complete gate, Windows/Linux prerequisites and evidence, candidate/unstaged-work handling, normalization policy, agent no-skip rule, and the measures that prevent parity drift. Every agent changing an affected surface maintains that certification. Certify only after the complete gate and its drift controls are in place.
+
+Choose only the starter assets that help, or use none:
+
+- [Candidate-safe Bash hook](assets/hooks/pre-commit) is a fail-closed seed. Adapt its repository-owned apply/check functions and install it as the tracked hook. It expects Git Bash on Windows and Bash on Linux. When Git launches the tracked file directly as a hook, preserve its executable bit on platforms that require it.
+- [Python text normalizer](assets/normalization/normalize_text.py) operates only on explicitly selected UTF-8 text paths. Adapt its selected paths and line-ending/final-newline policy. The [`.gitattributes` example](assets/normalization/gitattributes.example) is optional policy material, not a required global file.
+- [GitHub Actions hosted-gate example](assets/workflows/github-actions-hosted-gate.yml) checks out the proposed commit and invokes the same hook in hosted mode. Its prerequisite step intentionally fails until adapted. Other CI providers may implement the same pledge directly.
+- [Optional bus target](assets/targets/repository_gate.py) can be copied and manually registered only when the repository separately adopts command-bus. It forwards one repository-owned read-only complete-check command; it is not an installer, bus ABI, or command registry.
+
+Assets become repository-owned when copied. Presence does not prove conformance. The hook, normalizer, workflow, and bus target can each be replaced independently if the repo's own approach meets its pinned requirements. V1 consumers continue to follow their pinned definition until an explicit upgrade.
+
+The hook preserves ignored workspace files so it does not remove local tool environments or caches. Those files remain visible to repository gates. The adapter and certification must ensure that ignored generated inputs are rebuilt from the candidate or excluded from gate decisions; stale ignored content must not change whether the committed candidate passes. Hosted CI also has ignored setup outputs, so its gate must derive checked artifacts from the checked-out commit.

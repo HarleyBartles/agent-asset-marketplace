@@ -1,0 +1,7 @@
+# Contributing
+
+Before changing the repository, read its root `AGENTS.md` for agent-facing routes and the README for project orientation. Follow the repository's existing branch, worktree, and review workflow. If a contributor guide, planning guide, or testing guide already covers the current task, use it at the relevant work point.
+
+Run the checks required for the files and behavior you changed. In a pull request, describe the change, why it is needed, and the evidence you ran. If a required check cannot run, state that clearly.
+
+Replace or adapt these directions to match the repository. Add links only to real, maintained guidance; this process can remain inline without adopting runbooks, playbooks, or other AOM standards.

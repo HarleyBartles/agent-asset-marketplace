@@ -446,7 +446,7 @@ def test_new_worktree_initializes_generic_submodule_without_skill_projection(tmp
 
 
 def test_new_worktree_from_linked_worktree_succeeds_without_flag(tmp_path: Path) -> None:
-    """new_worktree can be invoked from a linked worktree without --allow-shared-checkout."""
+    """new_worktree can be invoked from a linked worktree."""
     repo = _make_repo_with_bundled_refresh(tmp_path, "linked-src-repo")
     linked_root = tmp_path / "_agent-worktrees" / "linked-src-repo" / "linked"
     subprocess.run(
@@ -470,7 +470,7 @@ def test_new_worktree_from_linked_worktree_succeeds_without_flag(tmp_path: Path)
 
 
 def test_new_worktree_from_main_succeeds_without_flag(tmp_path: Path) -> None:
-    """new_worktree does not require --allow-shared-checkout even from the main checkout."""
+    """new_worktree does not require an extra mutation-intent flag."""
     repo = _make_repo_with_bundled_refresh(tmp_path, "main-non-tty-repo")
     target_root = tmp_path / "_agent-worktrees" / "main-non-tty-repo" / "feature"
     # stdin is not a TTY because capture_output=True and no stdin is piped.

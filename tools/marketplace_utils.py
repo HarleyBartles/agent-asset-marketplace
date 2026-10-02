@@ -45,10 +45,6 @@ def load_repo_local_marketplace_policy() -> dict[str, Any]:
     exclusions = policy.get("exclusions", [])
     if not isinstance(exclusions, list):
         raise ValueError(f"{REPO_LOCAL_MARKETPLACE_POLICY_PATH}: exclusions must be a list")
-    local_skills = policy.get("local_skills", [])
-    if not isinstance(local_skills, list):
-        raise ValueError(f"{REPO_LOCAL_MARKETPLACE_POLICY_PATH}: local_skills must be a list")
-
     return {
         "marketplace_name": policy.get("marketplace_name", "agent-asset-marketplace"),
         "display_name": policy.get("display_name", "Agent Asset Marketplace"),
@@ -61,7 +57,6 @@ def load_repo_local_marketplace_policy() -> dict[str, Any]:
             str(key): str(value) for key, value in category_overrides.items() if str(key).strip() and str(value).strip()
         },
         "exclusions": tuple(str(item) for item in exclusions if str(item).strip()),
-        "local_skills": tuple(str(item) for item in local_skills if str(item).strip()),
     }
 
 
@@ -178,9 +173,6 @@ EXPECTED_MARKETPLACE = {
         for spec in MARKETPLACE_PLUGIN_SPECS
         if spec["name"] not in REPO_LOCAL_MARKETPLACE_POLICY["exclusions"]
     ],
-    "repo": {
-        "local_skills": list(REPO_LOCAL_MARKETPLACE_POLICY["local_skills"]),
-    },
     "notes": MARKETPLACE_NOTES,
 }
 
@@ -329,9 +321,6 @@ def build_marketplace_manifest(plugin_manifests: list[dict[str, Any]]) -> dict[s
             "displayName": "Agent Asset Marketplace",
         },
         "plugins": plugins,
-        "repo": {
-            "local_skills": list(REPO_LOCAL_MARKETPLACE_POLICY["local_skills"]),
-        },
         "notes": MARKETPLACE_NOTES,
     }
 

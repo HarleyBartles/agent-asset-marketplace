@@ -2,28 +2,31 @@
 
 ## Purpose
 
-Remove completed planning artifacts before flipping the PR to ready.
+Apply the repository's planning-artifact custody policy during PR closeout.
 
 ## Inputs
 
-- PR body, linked issues
-- Plan and spec paths named in the PR body or repository-declared planning guidance
-- Any related roadmaps or research files
-- Branch working tree
+- PR body and linked issues
+- Plan and specification paths named in the PR body or repository-declared planning guidance
+- Related roadmaps and other artifacts that establish scope
+- Repository standards subscription and readable certification
+- Branch working tree and base
 
 ## Recipe
 
-1. Identify the plan and spec named in the PR body, linked issues, or the repository's declared planning locations.
-2. Confirm the plan's work is complete and promote enduring decisions into ADRs or current doctrine.
-3. Remove the completed plan, spec, roadmap, checkpoint, and related planning artifacts from Git. An optional copy may go to the consumer's central completed-artifact scratch store; it is disposable and not evidence.
-4. Run the consumer's declared validation and marketplace regeneration helpers when applicable.
-5. Run the consumer's canonical CI check; do not proceed if it fails.
-6. Commit the completed-artifact removal normally.
+1. Identify the planning artifacts in scope from the PR, linked issues, and repository-declared planning locations. Follow links that clarify each artifact's scope.
+2. If the repository adopted `completed-artifact-custody`, resolve its immutable subscription revision and read that definition with the readable certification. The standard ID alone does not establish which obligations are in force. If a human explicitly requests the lifecycle without a subscription, use the current definition only for that requested scope. If the repository has neither adopted the standard nor received a human request, follow local policy. Route to `completing-planning-artifacts` and preserve any older pinned requirements; do not silently upgrade an older pin.
+3. For each artifact, classify its whole scope as complete, active or mixed, explicitly abandoned, or uncertain. Use checkboxes, markers, state labels, and PR metadata as clues, then compare them with implementation, tests, delivery records, linked issues, and future obligations.
+4. Promote enduring decisions before removing any artifact. Preserve active scope, including parent roadmaps with future work. A completed child plan may be retired independently if its own work is complete.
+5. When the pinned definition requires two-slice custody, keep governing artifacts in the completing PR through merge. In a successor slice, retire only artifacts eligible under the pinned definition and certification, present in its current `main` base, in the first substantive commit of that slice. Keep branch-only artifacts through their completing PR. Follow local policy when the standard is not adopted.
+6. Remove stale links or generated indexes in the same retirement change. Run the consumer's declared validation and regeneration commands when a retirement is required.
+7. Verify the final tracked state and the PR's canonical CI gate before reporting closeout.
 
 ## Outputs
 
-- Completed planning artifacts absent from the tracked tree
-- Durable decisions retained only in their current authority surfaces
+- Artifact-by-artifact custody decisions with evidence and the applicable repository policy
+- Eligible successor-slice artifacts retired in the correct commit, or completing-slice artifacts retained through merge
+- Durable decisions promoted and stale links updated where removal occurred
 
 ## Next check
 

@@ -53,4 +53,4 @@ Do not treat installed projections, worker reports, or stale summaries as source
 
 ## Unslop profile routing
 
-During review, use `$unslop-profiles` when a finding concerns evidence ownership, unsupported claims, or scope expansion. Cite the specific diff or decision and recommend a proportionate correction; skip when no profile cue applies.
+Read the [repository Unslop profile](../unslop/repository.md) during review. If `$unslop-profiles` is available, apply it when findings concern evidence ownership, unsupported claims, or scope expansion. Cite the specific diff or decision and recommend a proportionate correction.

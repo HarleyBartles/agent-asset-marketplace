@@ -11,18 +11,28 @@ import pytest
 ROOT = Path(__file__).resolve().parents[2]
 
 
+def _fixture_env() -> dict[str, str]:
+    import os
+
+    env = os.environ.copy()
+    for name in ("GIT_DIR", "GIT_WORK_TREE", "GIT_INDEX_FILE"):
+        env.pop(name, None)
+    return env
+
+
 def test_changed_python_files_use_staged_snapshot_when_hook_marks_it(tmp_path: Path, monkeypatch) -> None:
     repo = tmp_path / "staged-python"
     repo.mkdir()
-    subprocess.run(["git", "init"], cwd=repo, check=True, capture_output=True)
-    subprocess.run(["git", "config", "user.email", "test@test"], cwd=repo, check=True)
-    subprocess.run(["git", "config", "user.name", "Test"], cwd=repo, check=True)
+    env = _fixture_env()
+    subprocess.run(["git", "init"], cwd=repo, env=env, check=True, capture_output=True)
+    subprocess.run(["git", "config", "user.email", "test@test"], cwd=repo, env=env, check=True)
+    subprocess.run(["git", "config", "user.name", "Test"], cwd=repo, env=env, check=True)
     source = repo / "sample.py"
     source.write_text("value = 1\n", encoding="utf-8")
-    subprocess.run(["git", "add", "sample.py"], cwd=repo, check=True)
-    subprocess.run(["git", "commit", "-m", "base"], cwd=repo, check=True, capture_output=True)
+    subprocess.run(["git", "add", "sample.py"], cwd=repo, env=env, check=True)
+    subprocess.run(["git", "commit", "-m", "base"], cwd=repo, env=env, check=True, capture_output=True)
     source.write_text("value = 2\n", encoding="utf-8")
-    subprocess.run(["git", "add", "sample.py"], cwd=repo, check=True)
+    subprocess.run(["git", "add", "sample.py"], cwd=repo, env=env, check=True)
 
     spec = importlib.util.spec_from_file_location("run_under_test", ROOT / "tools" / "run.py")
     module = importlib.util.module_from_spec(spec)
@@ -31,6 +41,9 @@ def test_changed_python_files_use_staged_snapshot_when_hook_marks_it(tmp_path: P
     spec.loader.exec_module(module)
     monkeypatch.setattr(module, "ROOT", repo)
     monkeypatch.setenv("REPO_STANDARDS_STAGED_SNAPSHOT", "1")
+    monkeypatch.delenv("GIT_DIR", raising=False)
+    monkeypatch.delenv("GIT_WORK_TREE", raising=False)
+    monkeypatch.delenv("GIT_INDEX_FILE", raising=False)
 
     assert module._changed_python_files("HEAD") == [Path("sample.py")]
 
@@ -49,7 +62,6 @@ def test_run_help_exposes_targets_and_flags():
     assert "--check" in result.stdout
     assert "--apply" in result.stdout
     assert "--base-ref" in result.stdout
-    assert "--allow-shared-checkout" in result.stdout
     assert "marketplace" in result.stdout
     assert "ci" in result.stdout
 
@@ -62,16 +74,6 @@ def test_apply_and_check_mutually_exclusive():
     )
     assert result.returncode == 1
     assert "mutually exclusive" in result.stderr
-
-
-def test_allow_shared_checkout_requires_apply():
-    result = subprocess.run(
-        [sys.executable, str(ROOT / "tools" / "run.py"), "inventory", "--allow-shared-checkout"],
-        capture_output=True,
-        text=True,
-    )
-    assert result.returncode == 1
-    assert "--allow-shared-checkout requires --apply" in result.stderr
 
 
 def test_resolve_ci_order():
@@ -92,7 +94,7 @@ def test_ci_runs_only_the_three_repository_owned_test_suites(monkeypatch):
 
     monkeypatch.setattr(run, "_run", fake_run)
     monkeypatch.setattr(run, "_check_tracked_line_endings", lambda: None)
-    ctx = run.Ctx(mode="check", base_ref=None, allow_shared=False, verbose=False)
+    ctx = run.Ctx(mode="check", base_ref=None, verbose=False)
 
     run.run_targets(["ci"], ctx)
 
@@ -119,7 +121,7 @@ def test_resolve_multiple_targets_deduped():
     assert "validate" in targets
 
 
-def test_runner_check_mode_no_allow_shared(monkeypatch):
+def test_runner_check_mode_does_not_apply_mutations(monkeypatch):
     calls = []
 
     def fake_run(cmd, ctx):
@@ -130,11 +132,10 @@ def test_runner_check_mode_no_allow_shared(monkeypatch):
     monkeypatch.setattr(run, "_git_diff_exit_code", lambda ctx: None)
     monkeypatch.setattr(run, "_check_tracked_line_endings", lambda: None)
 
-    ctx = run.Ctx(mode="check", base_ref=None, allow_shared=True, verbose=False)
+    ctx = run.Ctx(mode="check", base_ref=None, verbose=False)
     run.run_targets(["repo-standards", "validate"], ctx)
 
     for cmd in calls:
-        assert "--allow-shared-checkout" not in " ".join(cmd)
         assert "--apply" not in " ".join(cmd)
 
 
@@ -144,7 +145,7 @@ def test_failure_prints_fix(monkeypatch):
 
     monkeypatch.setattr(run, "_run", boom)
 
-    ctx = run.Ctx(mode="check", base_ref=None, allow_shared=False, verbose=False)
+    ctx = run.Ctx(mode="check", base_ref=None, verbose=False)
     with pytest.raises(run.RunnerError) as exc_info:
         run.run_targets(["inventory"], ctx)
     assert "target 'inventory' failed" in str(exc_info.value)
@@ -162,7 +163,7 @@ def test_lint_fix_command_used_in_apply(monkeypatch):
 
     monkeypatch.setattr(run, "_run", fake_run)
 
-    ctx = run.Ctx(mode="apply", base_ref="origin/main", allow_shared=False, verbose=False)
+    ctx = run.Ctx(mode="apply", base_ref="origin/main", verbose=False)
     run.run_targets(["lint"], ctx)
 
     check_cmd = [c for c in calls if c[1:4] == ["-m", "ruff", "check"]]
@@ -184,7 +185,7 @@ def test_lint_check_mode_does_not_format_files(monkeypatch):
 
     monkeypatch.setattr(run, "_run", fake_run)
 
-    ctx = run.Ctx(mode="check", base_ref=None, allow_shared=False, verbose=False)
+    ctx = run.Ctx(mode="check", base_ref=None, verbose=False)
     run.run_targets(["lint"], ctx)
 
     fmt_cmd = [c for c in calls if c[1:4] == ["-m", "ruff", "format"]]
@@ -204,7 +205,7 @@ def test_base_ref_forwards_to_ruff_diff(monkeypatch):
 
     monkeypatch.setattr(run, "_run", fake_run)
 
-    ctx = run.Ctx(mode="check", base_ref="custom/base", allow_shared=False, verbose=False)
+    ctx = run.Ctx(mode="check", base_ref="custom/base", verbose=False)
     run.run_targets(["lint"], ctx)
 
     diff_cmd = [c for c in calls if "tools/ruff_diff.py" in " ".join(c)]
@@ -266,7 +267,7 @@ def test_validate_fix_message(monkeypatch):
 
     monkeypatch.setattr(run, "_run", boom)
 
-    ctx = run.Ctx(mode="check", base_ref=None, allow_shared=False, verbose=False)
+    ctx = run.Ctx(mode="check", base_ref=None, verbose=False)
     with pytest.raises(run.RunnerError) as exc_info:
         run.run_targets(["validate"], ctx)
     assert "target 'validate' failed" in str(exc_info.value)
@@ -284,7 +285,7 @@ def test_ci_apply_does_not_run_manual_review_preflight(monkeypatch):
     monkeypatch.setattr(run, "_git_diff_exit_code", lambda ctx: None)
     monkeypatch.setattr(run, "_check_tracked_line_endings", lambda: None)
 
-    ctx = run.Ctx(mode="apply", base_ref=None, allow_shared=True, verbose=False)
+    ctx = run.Ctx(mode="apply", base_ref=None, verbose=False)
     run.run_targets(run.resolve_targets(["ci"]), ctx)
 
     assert not any(command[:2] == [sys.executable, "tools/review_preflight.py"] for command in calls)
@@ -301,7 +302,7 @@ def test_validate_does_not_call_git_diff_exit_code(monkeypatch):
     monkeypatch.setattr(run, "_check_tracked_line_endings", lambda: None)
     monkeypatch.setattr(run, "_run", lambda cmd, ctx: None)
 
-    ctx = run.Ctx(mode="check", base_ref=None, allow_shared=False, verbose=False)
+    ctx = run.Ctx(mode="check", base_ref=None, verbose=False)
     run._run_validate(ctx)
 
     assert "git_diff_exit_code" not in calls
@@ -319,7 +320,7 @@ def test_validation_targets_run_the_focused_markdown_link_validator(monkeypatch,
     monkeypatch.setattr(run, "_git_diff_exit_code", lambda ctx: None)
     monkeypatch.setattr(run, "_check_tracked_line_endings", lambda: None)
 
-    ctx = run.Ctx(mode="check", base_ref=None, allow_shared=False, verbose=False)
+    ctx = run.Ctx(mode="check", base_ref=None, verbose=False)
     run.run_targets(list(target), ctx)
 
     assert [sys.executable, "tools/validate_markdown_links.py", "--check"] in calls

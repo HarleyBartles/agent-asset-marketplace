@@ -1,0 +1,10 @@
+version: 1
+metadata:
+  skill_name: review-entrypoint
+  source_category: first_party
+interface:
+  display_name: Review Entrypoint Standard
+  short_description: Assess or adopt root REVIEW.md code review guidance.
+  default_prompt: Use review-entrypoint to assess or adopt this repository's root REVIEW.md guidance.
+policy:
+  allow_implicit_invocation: true

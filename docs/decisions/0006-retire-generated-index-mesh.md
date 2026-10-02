@@ -16,4 +16,4 @@ Repository guidance routes directly through `AGENTS.md`, authored runbooks, play
 
 ## Current authority
 
-The repo-shape and repo-worker-base skills define direct routing and consumer migration behavior. The consumer runner migration guide documents removal of mesh calls with no replacement.
+Root and scoped repository routers, authored runbooks and playbooks, and skill metadata define current direct routing. AOM standards are pinned in Git and implemented by the adopting repository; old consumer migration artifacts remain available at their historical commits.

@@ -44,12 +44,7 @@ The outcome of brainstorming is an understanding your human partner can recogniz
 When the request already supplies purpose, audience, constraints, and success, reflect them and do not ask the same questions again. For already-authorized bounded work, this reflection is part of the short design, not a new approval pause.
 
 <HARD-GATE>
-Do NOT invoke any implementation skill, write any code, scaffold any
-project, or take implementation action while a consequential product,
-canon, privacy, licensing, or authority decision is unresolved. An
-architectural design still requires explicit human approval before
-implementation. A clear bounded change may proceed from its short design
-when the task is already authorized and no human-owned decision remains.
+Do NOT invoke any implementation skill, write any code, scaffold any project, or take implementation action while a consequential product, canon, privacy, licensing, or authority decision is unresolved. An architectural design still requires explicit human approval before implementation. A clear bounded change may proceed from its short design when the task is already authorized and no human-owned decision remains.
 </HARD-GATE>
 
 ## Three Paths

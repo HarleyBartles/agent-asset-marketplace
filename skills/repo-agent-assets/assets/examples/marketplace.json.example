@@ -1,0 +1,36 @@
+{
+  "name": "sample-repo-plugins",
+  "interface": {
+    "displayName": "Sample repository plugins"
+  },
+  "plugins": [
+    {
+      "name": "review-tools",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/example-org/agent-plugins.git",
+        "path": "./plugins/review-tools",
+        "ref": "main"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Coding"
+    },
+    {
+      "name": "test-tools",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/example-org/agent-plugins.git",
+        "path": "./plugins/test-tools",
+        "sha": "0123456789abcdef0123456789abcdef01234567"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Coding"
+    }
+  ]
+}

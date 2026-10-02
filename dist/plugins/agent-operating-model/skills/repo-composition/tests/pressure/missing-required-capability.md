@@ -2,7 +2,7 @@
 
 ## Setup
 
-A workflow declares `Required capabilities: validate the consumer's operating contract` and has no suitable provider in the agent's currently exposed skills. An optional capability is also unavailable. A repository-owned skill named `consumer-policy-review` is present and declared under `repo.local_skills`.
+A workflow declares `Required capabilities: validate the consumer's operating contract` and has no suitable provider in the agent's currently exposed skills. An optional capability is also unavailable. A repository-authored skill named `consumer-policy-review` is present under `.agents/skills/`.
 
 ## Expected behavior
 

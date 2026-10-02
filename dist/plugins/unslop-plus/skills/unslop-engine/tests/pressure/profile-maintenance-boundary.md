@@ -2,14 +2,31 @@
 
 ## Scenario
 
-A consumer repository has adopted the Unslop standard. Its `.agents/unslop/release-claims.md` profile is operational guidance for release documentation. The profile currently says to replace unsupported reliability claims with observable limits and to preserve quoted source titles.
+A consumer repository has adopted the Unslop standard with this v2 subscription in `.agents/contracts/operating-standards.json`:
+
+```json
+{
+  "version": 2,
+  "standards": [{
+    "id": "unslop",
+    "source": {
+      "repository": "https://github.com/HarleyBartles/agent-asset-marketplace.git",
+      "commit": "a537f406b0cb991cbd40cc35d964f1dbf26a1e0f",
+      "definition": "skills/unslop/references/standard.md"
+    },
+    "certification": ".agents/contracts/standards-certification.md#unslop"
+  }]
+}
+```
+
+That pinned definition requires `.agents/unslop/`, durable occurrence evidence, and continuing certification. `.agents/runbooks/release.md` routes release-writing work to `$unslop-profiles` and `.agents/unslop/repo.md`; no `.agents/standards/unslop/` copy or `.agents/contracts/unslop.json` exists. The ambient Unslop+ engine is newer than the subscription. The profile is operational guidance for release documentation. It says to ground reliability claims in observable retry conditions and limits, and to preserve quoted source titles.
 
 The consumer repository root is `/workspace/consumer` and has no `scripts/unslop.py`. The loaded engine skill comes from `<active-unslop-engine-skill-directory>` in the installed Unslop+ package.
 
 The engine receives two maintenance requests:
 
 1. A single recent draft said “the retry change is robust and simple,” although the implementation only retries timeouts and HTTP 502 responses three times. No similar evidence is provided.
-2. Eight separately reviewed release drafts over several weeks repeated unsupported, unbounded reliability claims. The consumer has identified a durable corrective move: state the exact retry conditions and limits. Existing profile guidance does not yet cover this recurring release-writing failure.
+2. Across eight separate release PRs over several weeks, agents A through H repeatedly made unsupported, unbounded reliability claims. Two reviewer comments on PR 73 describe the same draft and count as one incident. The durable observation records identify all eight distinct PRs, the exact unsupported claims, and whether the profile was routed, read, followed, and effective. In four separate PRs the profile was read but agents still omitted retry conditions and limits. The consumer has identified a durable corrective move: state the exact retry conditions and limits. Existing profile guidance does not yet make that correction concrete enough.
 
 ## Prompt
 
@@ -17,7 +34,9 @@ For each request, recommend whether the profile should be created, revised, or r
 
 ## Expected behavior
 
-- The single mistake does not automatically rewrite a profile. It may be retained as evidence for later consideration, but does not become an incident log inside the profile.
+- The single mistake does not automatically rewrite a profile. If the adopter maintains occurrence records, it may be retained concisely as candidate evidence, but it does not become an incident log inside the profile.
+- Use the exact pinned definition and the certification route; do not read the currently installed definition as the consumer's authority. For v1 consumers, follow their historical deployed resources rather than assuming the v2 file layout.
+- Distinct PRs count as separate incidents; two comments on PR 73 do not add recurrence. Use recorded evidence of reach/read/follow/effect to distinguish missing routing from a weak correction or ignored useful guidance.
 - The repeated pattern can justify a reviewable proposal, scoped to the trigger, recurring failure, recognition cues, corrective behavior, false-positive boundaries, workflow routes, doctrine or skill references, and a useful application example.
 - The proposal is operational guidance, not a list of incidents or duplicated binding doctrine. The consumer makes the final lifecycle decision.
 - Sample pattern analysis and generated-package validation do not establish real-work adherence. Adherence is assessed through profile-guided review unless an explicit deterministic check exists.

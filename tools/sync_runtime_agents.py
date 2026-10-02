@@ -93,38 +93,6 @@ def _profile_paths(agents_dir: Path) -> list[Path]:
     return sorted(p for p in agents_dir.iterdir() if p.is_file() and p.suffix == ".md")
 
 
-def _main_worktree_preview(main: Path) -> str:
-    """Return a short, human-readable preview of the main worktree for prompts."""
-    try:
-        status = _git("status", "--short", cwd=main)
-        dirty = " (dirty)" if status.strip() else ""
-    except subprocess.CalledProcessError:
-        dirty = ""
-    return f"{main}{dirty}"
-
-
-def _approve(apply: bool, yes: bool, main: Path, allow_shared: bool) -> bool:
-    if not apply:
-        return True
-    if not allow_shared:
-        print(
-            "error: applying without --allow-shared-checkout is not allowed; "
-            "pass --allow-shared-checkout to write to the main checkout.",
-            file=sys.stderr,
-        )
-        return False
-    if yes:
-        return True
-    try:
-        response = input(
-            f"This will overwrite subagent profiles in the main checkout "
-            f"{_main_worktree_preview(main)}. Continue? (y/N) "
-        )
-    except (EOFError, KeyboardInterrupt):
-        return False
-    return response.strip().lower() == "y"
-
-
 def _needs_sync(source: Path, target: Path) -> bool:
     if not target.exists():
         return True
@@ -147,17 +115,13 @@ def _format_diff(source: Path, target: Path) -> str:
     )
 
 
-def _sync_profiles(apply: bool, allow_shared: bool, yes: bool) -> int:
+def _sync_profiles(apply: bool) -> int:
     main = _find_main_worktree()
     source_dir = AGENTS_DIR
     target_dir = main / ".agents" / "agents"
 
     if not source_dir.is_dir():
         print(f"error: source directory does not exist: {source_dir}", file=sys.stderr)
-        return 1
-
-    if not _approve(apply, yes, main, allow_shared):
-        print("Aborted.", file=sys.stderr)
         return 1
 
     if apply:
@@ -211,8 +175,8 @@ def _sync_profiles(apply: bool, allow_shared: bool, yes: bool) -> int:
             print(f"  out of sync: {p.name}", file=sys.stderr)
             print(_format_diff(p, target_dir / p.name), file=sys.stderr)
         print(
-            f"Run `py -3 {Path(__file__).relative_to(ROOT).as_posix()} --apply --allow-shared-checkout` to sync, "
-            "or `py -3 tools/run.py runtime-agents --apply --allow-shared-checkout`. "
+            f"Run `py -3 {Path(__file__).relative_to(ROOT).as_posix()} --apply` or "
+            "`py -3 tools/run.py runtime-agents --apply` to sync. "
             "Then restart the IDE so the runtime picks up the new profiles.",
             file=sys.stderr,
         )
@@ -250,16 +214,6 @@ def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         action="store_true",
         help="report drift without modifying the main checkout (default)",
     )
-    parser.add_argument(
-        "--allow-shared-checkout",
-        action="store_true",
-        help="allow applying changes to the main (shared) checkout",
-    )
-    parser.add_argument(
-        "--yes",
-        action="store_true",
-        help="skip the interactive confirmation when applying changes",
-    )
     return parser.parse_args(argv)
 
 
@@ -272,8 +226,7 @@ def main(argv: list[str] | None = None) -> int:
         apply = args.apply
         if not apply and not args.check:
             args.check = True
-        allow_shared = getattr(args, "allow_shared_checkout", False)
-        return _sync_profiles(apply, allow_shared, args.yes)
+        return _sync_profiles(apply)
     except FileNotFoundError as exc:
         print(f"error: required command or path not found: {exc}", file=sys.stderr)
         return 1

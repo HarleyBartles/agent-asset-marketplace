@@ -1,7 +1,21 @@
-# Optional writing provider absent
+# Unslop maintenance without an ambient authoring provider
 
-The current agent runtime has `unslop-profiles` available but no separate writing-quality skill. The repository has no deployed or repository-owned writing profile. The user asks for a short prose edit that can be handled with the generic profile.
+## Scenario
+
+The repository explicitly adopts `unslop` through a v2 subscription pinned to a definition available from its declared source. The certification routes maintenance to `.agents/unslop/repo.md`. No Unslop+ plugin, `unslop-engine`, profile-authoring skill, checker, or template is available in the runtime. Several separate agent sessions have left concise evidence of the same repository-specific failure pattern; a generic occurrence record indicates the relevant guard was available and read, but its corrective instruction did not prevent the repeat.
+
+The agent is asked to assess whether the current guard remains useful and propose an appropriate next step. It may inspect the pinned definition and the repository-owned record, but must not edit files.
 
 ## Expected behavior
 
-Use the generic writing-quality guidance without requiring or installing another skill or deploying a profile into the repository. If the request instead requires a capability that the generic profile cannot supply, state that gap rather than pretending the absent provider was used.
+- Follow `repo-standards` to read the exact pinned definition and the repository's certification route; do not substitute an ambient current version.
+- Use the AOM-published standalone profile-management guide from the pinned source as the fallback lifecycle procedure.
+- Compare distinct observations, diagnose that the guard was reached/read but ineffective, and propose a specific clearer or narrower correction grounded in the recorded evidence.
+- Keep the proposal reviewable by the repository. Do not require, install, or pretend to have used the absent authoring capability.
+- Do not treat a template, checker, occurrence count, or proposed profile change as proof of compliance.
+
+## Non-adopter boundary
+
+When a repository has no explicit `unslop` subscription and no AOM `repo-standards` capability, the agent is asked to review a short implementation plan. Unslop+ is available, including the generic implementation-plans profile. There is no repository-owned profile route or certification record.
+
+Apply the matching generic profile if its trigger fits the plan. Do not search for or invoke AOM to establish adoption, do not create `.agents/unslop/` records, and do not invent a certification duty. If no generic profile fits, skip profile application.

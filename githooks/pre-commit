@@ -7,7 +7,13 @@ cd "$REPO_ROOT"
 
 # Git exports repository-local variables to hooks. Clear them after resolving
 # this worktree so nested Git commands can honour their own working directory.
-unset $(git rev-parse --local-env-vars)
+# Keep the index Git supplied for path-limited commits: it is the actual commit
+# candidate and may differ from the user's ordinary index.
+while IFS= read -r git_variable; do
+  if [ "$git_variable" != "GIT_INDEX_FILE" ]; then
+    unset "$git_variable"
+  fi
+done < <(git rev-parse --local-env-vars)
 
 # Local Git invokes this hook with the candidate tree in the index and HEAD
 # still at its parent. Hosted CI opts into the same state by naming the checked
@@ -20,12 +26,17 @@ if [ -n "$HOSTED_COMMIT" ]; then
     echo "pre-commit: hosted parity mode requires a detached checkout" >&2
     exit 1
   fi
+  HOSTED_SHA=$(git rev-parse "$HOSTED_COMMIT^{commit}")
+  if [ "$(git rev-parse HEAD)" != "$HOSTED_SHA" ]; then
+    echo "pre-commit: hosted checkout HEAD does not match requested commit $HOSTED_SHA" >&2
+    exit 1
+  fi
   if ! git diff --quiet || ! git diff --cached --quiet || [ -n "$(git ls-files --others --exclude-standard)" ]; then
     echo "pre-commit: hosted parity mode requires a clean checkout" >&2
     exit 1
   fi
-  HOSTED_TREE=$(git rev-parse "$HOSTED_COMMIT^{tree}")
-  HOSTED_PARENT=$(git rev-parse "$HOSTED_COMMIT^")
+  HOSTED_TREE=$(git rev-parse "$HOSTED_SHA^{tree}")
+  HOSTED_PARENT=$(git rev-parse "$HOSTED_SHA^")
   git reset --soft "$HOSTED_PARENT"
   if [ "$(git write-tree)" != "$HOSTED_TREE" ]; then
     echo "pre-commit: could not reconstruct the hosted commit as a staged snapshot" >&2
@@ -68,7 +79,7 @@ restore_worktree() {
 trap restore_worktree EXIT
 
 # Remember the user's intended paths before apply-mode tools rewrite the staged
-# snapshot. Mechanical edits to these paths (for example formatter output) are
+# snapshot. Mechanical edits to these paths (for example generated output) are
 # part of the candidate tree; unrelated authored paths remain protected.
 git diff --cached --name-only -z > "$ORIGINAL_STAGED_PATHS"
 
@@ -81,6 +92,7 @@ if ! SUBMODULE_STATUS=$(git submodule status --recursive); then
 fi
 SUBMODULE_HEAD_DRIFT=$(printf '%s\n' "$SUBMODULE_STATUS" | grep -E '^[+-U]' || true)
 SUBMODULE_WORKTREE_DRIFT=$(git submodule foreach --quiet --recursive '
+  unset GIT_INDEX_FILE
   actual=$(git rev-parse HEAD) || exit 1
   dirty=$(git status --porcelain --untracked-files=all) || exit 1
   if [ "$actual" != "$sha1" ] || [ -n "$dirty" ]; then

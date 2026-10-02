@@ -1,6 +1,0 @@
-[plugins]
-
-[marketplaces."__MARKETPLACE_NAME__"]
-source_type = "git"
-source = "__GIT_SOURCE__"
-ref = "main"

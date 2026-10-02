@@ -1,265 +1,77 @@
 {
-  "version": 1,
+  "version": 2,
   "standards": [
     {
       "id": "root-agent-router",
-      "origin": "marketplace",
-      "revision": "0af5d4da6a594458bc2bad1b8e9e013a66ea8e20",
-      "implementation_root": ".agents/standards/root-agent-router",
-      "check": [
-        "@python",
-        ".agents/standards/_runtime/repo_standards.py",
-        "--run-standard",
-        "root-agent-router",
-        "--check"
-      ],
-      "apply": [
-        "@python",
-        ".agents/standards/_runtime/repo_standards.py",
-        "--run-standard",
-        "root-agent-router",
-        "--apply",
-        "--yes",
-        "@allow-shared-checkout"
-      ],
-      "generated_paths": [],
-      "requires": []
+      "source": {
+        "repository": "https://github.com/HarleyBartles/agent-asset-marketplace.git",
+        "commit": "3d59506dbd7a02266dedc9251b396dd60e5cc37d",
+        "definition": "skills/agents-routing/references/standard.md"
+      },
+      "certification": ".agents/contracts/standards-certification.md#root-agent-router"
     },
     {
       "id": "runbook-composition",
-      "origin": "marketplace",
-      "revision": "0af5d4da6a594458bc2bad1b8e9e013a66ea8e20",
-      "implementation_root": ".agents/standards/runbook-composition",
-      "check": [
-        "@python",
-        ".agents/standards/_runtime/repo_standards.py",
-        "--run-standard",
-        "runbook-composition",
-        "--check"
-      ],
-      "apply": [
-        "@python",
-        ".agents/standards/_runtime/repo_standards.py",
-        "--run-standard",
-        "runbook-composition",
-        "--apply",
-        "--yes",
-        "@allow-shared-checkout"
-      ],
-      "generated_paths": [],
-      "requires": []
+      "source": {
+        "repository": "https://github.com/HarleyBartles/agent-asset-marketplace.git",
+        "commit": "3d59506dbd7a02266dedc9251b396dd60e5cc37d",
+        "definition": "skills/runbook-composition/references/standard.md"
+      },
+      "certification": ".agents/contracts/standards-certification.md#runbook-composition"
     },
     {
       "id": "playbook-composition",
-      "origin": "marketplace",
-      "revision": "0af5d4da6a594458bc2bad1b8e9e013a66ea8e20",
-      "implementation_root": ".agents/standards/playbook-composition",
-      "check": [
-        "@python",
-        ".agents/standards/_runtime/repo_standards.py",
-        "--run-standard",
-        "playbook-composition",
-        "--check"
-      ],
-      "apply": [
-        "@python",
-        ".agents/standards/_runtime/repo_standards.py",
-        "--run-standard",
-        "playbook-composition",
-        "--apply",
-        "--yes",
-        "@allow-shared-checkout"
-      ],
-      "generated_paths": [],
-      "requires": []
+      "source": {
+        "repository": "https://github.com/HarleyBartles/agent-asset-marketplace.git",
+        "commit": "3d59506dbd7a02266dedc9251b396dd60e5cc37d",
+        "definition": "skills/playbook-composition/references/standard.md"
+      },
+      "certification": ".agents/contracts/standards-certification.md#playbook-composition"
     },
     {
       "id": "tracked-validation-hook",
-      "origin": "marketplace",
-      "revision": "0af5d4da6a594458bc2bad1b8e9e013a66ea8e20",
-      "implementation_root": ".agents/standards/tracked-validation-hook",
-      "check": [
-        "@python",
-        ".agents/standards/_runtime/repo_standards.py",
-        "--run-standard",
-        "tracked-validation-hook",
-        "--check"
-      ],
-      "apply": [
-        "@python",
-        ".agents/standards/_runtime/repo_standards.py",
-        "--run-standard",
-        "tracked-validation-hook",
-        "--apply",
-        "--yes",
-        "@allow-shared-checkout"
-      ],
-      "generated_paths": [],
-      "requires": []
-    },
-    {
-      "id": "markdown-formatting",
-      "origin": "marketplace",
-      "revision": "0af5d4da6a594458bc2bad1b8e9e013a66ea8e20",
-      "implementation_root": ".agents/standards/markdown-formatting",
-      "check": [
-        "@python",
-        ".agents/standards/_runtime/repo_standards.py",
-        "--run-standard",
-        "markdown-formatting",
-        "--check"
-      ],
-      "apply": [
-        "@python",
-        ".agents/standards/_runtime/repo_standards.py",
-        "--run-standard",
-        "markdown-formatting",
-        "--apply",
-        "--yes",
-        "@allow-shared-checkout"
-      ],
-      "generated_paths": [],
-      "requires": []
+      "source": {
+        "repository": "https://github.com/HarleyBartles/agent-asset-marketplace.git",
+        "commit": "3d59506dbd7a02266dedc9251b396dd60e5cc37d",
+        "definition": "skills/tracked-repo-hooks/references/standard.md"
+      },
+      "certification": ".agents/contracts/standards-certification.md#tracked-validation-hook"
     },
     {
       "id": "review-entrypoint",
-      "origin": "marketplace",
-      "revision": "0af5d4da6a594458bc2bad1b8e9e013a66ea8e20",
-      "implementation_root": ".agents/standards/review-entrypoint",
-      "check": [
-        "@python",
-        ".agents/standards/_runtime/repo_standards.py",
-        "--run-standard",
-        "review-entrypoint",
-        "--check"
-      ],
-      "apply": [
-        "@python",
-        ".agents/standards/_runtime/repo_standards.py",
-        "--run-standard",
-        "review-entrypoint",
-        "--apply",
-        "--yes",
-        "@allow-shared-checkout"
-      ],
-      "generated_paths": [],
-      "requires": []
+      "source": {
+        "repository": "https://github.com/HarleyBartles/agent-asset-marketplace.git",
+        "commit": "3d59506dbd7a02266dedc9251b396dd60e5cc37d",
+        "definition": "skills/review-entrypoint/references/standard.md"
+      },
+      "certification": ".agents/contracts/standards-certification.md#review-entrypoint"
     },
     {
       "id": "contribution-entrypoint",
-      "origin": "marketplace",
-      "revision": "0af5d4da6a594458bc2bad1b8e9e013a66ea8e20",
-      "implementation_root": ".agents/standards/contribution-entrypoint",
-      "check": [
-        "@python",
-        ".agents/standards/_runtime/repo_standards.py",
-        "--run-standard",
-        "contribution-entrypoint",
-        "--check"
-      ],
-      "apply": [
-        "@python",
-        ".agents/standards/_runtime/repo_standards.py",
-        "--run-standard",
-        "contribution-entrypoint",
-        "--apply",
-        "--yes",
-        "@allow-shared-checkout"
-      ],
-      "generated_paths": [],
-      "requires": []
-    },
-    {
-      "id": "root-gitignore-hygiene",
-      "origin": "marketplace",
-      "revision": "0af5d4da6a594458bc2bad1b8e9e013a66ea8e20",
-      "implementation_root": ".agents/standards/root-gitignore-hygiene",
-      "check": [
-        "@python",
-        ".agents/standards/_runtime/repo_standards.py",
-        "--run-standard",
-        "root-gitignore-hygiene",
-        "--check"
-      ],
-      "apply": [
-        "@python",
-        ".agents/standards/_runtime/repo_standards.py",
-        "--run-standard",
-        "root-gitignore-hygiene",
-        "--apply",
-        "--yes",
-        "@allow-shared-checkout"
-      ],
-      "generated_paths": [],
-      "requires": []
+      "source": {
+        "repository": "https://github.com/HarleyBartles/agent-asset-marketplace.git",
+        "commit": "3d59506dbd7a02266dedc9251b396dd60e5cc37d",
+        "definition": "skills/contribution-entrypoint/references/standard.md"
+      },
+      "certification": ".agents/contracts/standards-certification.md#contribution-entrypoint"
     },
     {
       "id": "completed-artifact-custody",
-      "origin": "marketplace",
-      "revision": "0af5d4da6a594458bc2bad1b8e9e013a66ea8e20",
-      "implementation_root": ".agents/standards/completed-artifact-custody",
-      "check": [
-        "@python",
-        ".agents/standards/_runtime/repo_standards.py",
-        "--run-standard",
-        "completed-artifact-custody",
-        "--check"
-      ],
-      "apply": [
-        "@python",
-        ".agents/standards/_runtime/repo_standards.py",
-        "--run-standard",
-        "completed-artifact-custody",
-        "--apply",
-        "--yes",
-        "@allow-shared-checkout"
-      ],
-      "generated_paths": [],
-      "requires": []
+      "source": {
+        "repository": "https://github.com/HarleyBartles/agent-asset-marketplace.git",
+        "commit": "3d59506dbd7a02266dedc9251b396dd60e5cc37d",
+        "definition": "skills/completed-artifact-custody/references/standard.md"
+      },
+      "certification": ".agents/contracts/standards-certification.md#completed-artifact-custody"
     },
     {
       "id": "unslop",
-      "origin": "marketplace",
-      "revision": "0af5d4da6a594458bc2bad1b8e9e013a66ea8e20",
-      "implementation_root": ".agents/standards/unslop",
-      "check": [
-        "@python",
-        ".agents/standards/_runtime/repo_standards.py",
-        "--run-standard",
-        "unslop",
-        "--check"
-      ],
-      "apply": [
-        "@python",
-        ".agents/standards/_runtime/repo_standards.py",
-        "--run-standard",
-        "unslop",
-        "--apply",
-        "--yes",
-        "@allow-shared-checkout"
-      ],
-      "generated_paths": [],
-      "requires": []
-    },
-    {
-      "id": "marketplace-registry",
-      "origin": "repository",
-      "implementation_root": "tools",
-      "check": [
-        "@python",
-        "tools/generate_marketplace.py",
-        "--check"
-      ],
-      "apply": [
-        "@python",
-        "tools/generate_marketplace.py",
-        "--apply"
-      ],
-      "generated_paths": [
-        ".agents/plugins/marketplace.json",
-        "dist/manifest.json"
-      ],
-      "requires": []
+      "source": {
+        "repository": "https://github.com/HarleyBartles/agent-asset-marketplace.git",
+        "commit": "3d59506dbd7a02266dedc9251b396dd60e5cc37d",
+        "definition": "skills/unslop/references/standard.md"
+      },
+      "certification": ".agents/contracts/standards-certification.md#unslop"
     }
   ]
 }

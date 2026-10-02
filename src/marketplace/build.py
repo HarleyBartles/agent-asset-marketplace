@@ -38,7 +38,7 @@ def _copy_source(
             target.mkdir(parents=True, exist_ok=True)
         elif path.is_file():
             target.parent.mkdir(parents=True, exist_ok=True)
-            shutil.copyfile(path, target)
+            shutil.copy2(path, target)
 
 
 def _codex_compatibility_manifest(manifest: dict) -> dict:

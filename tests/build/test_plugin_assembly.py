@@ -1,4 +1,6 @@
 import json
+import os
+import stat
 import sys
 from pathlib import Path
 
@@ -136,3 +138,19 @@ def test_empty_plugin_is_built_without_skills(tmp_path: Path) -> None:
     assert json.loads((package / "plugin.json").read_text(encoding="utf-8"))["name"] == "empty"
     assert (package / ".codex-plugin/plugin.json").is_file()
     assert not (package / ".claude-plugin").exists()
+
+
+def test_build_preserves_executable_bits_for_shipped_hook_assets(tmp_path: Path) -> None:
+    if os.name == "nt":
+        pytest.skip("Windows does not expose POSIX executable bits through filesystem metadata")
+
+    _source(tmp_path)
+    source = tmp_path / "skills/shared-skill/assets/pre-commit"
+    source.parent.mkdir(parents=True)
+    source.write_text("#!/usr/bin/env bash\nexit 0\n", encoding="utf-8")
+    source.chmod(source.stat().st_mode | stat.S_IXUSR | stat.S_IXGRP | stat.S_IXOTH)
+
+    build_marketplace(tmp_path, apply=True)
+
+    packaged = tmp_path / "dist/plugins/alpha/skills/shared-skill/assets/pre-commit"
+    assert stat.S_IMODE(packaged.stat().st_mode) & stat.S_IXUSR

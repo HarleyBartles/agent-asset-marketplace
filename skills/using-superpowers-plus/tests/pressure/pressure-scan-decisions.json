@@ -126,10 +126,10 @@
     "reason": "Repository-local composition guidance required by the approved runbook and playbook contract."
   },
   {
-    "path": "dist/plugins/agent-operating-model/skills/repo-shape/references/ci-validation-pipeline.md",
-    "line": 61,
+    "path": ".agents/runbooks/pr.md",
+    "line": 34,
     "pattern": "must-read",
-    "context": "The consuming repository documents the exact apply/check commands, target names, hook sequence, and any platform-specific wrappers. Portable workers must read that local command map rather than assuming a path, interpreter, command bus, or target name.",
+    "context": "Use the repository-owned command map for exact apply/check commands, target names, hook sequence, and platform requirements; do not assume a path, interpreter, command bus, or target name.",
     "classification": "repo-local",
     "owner": "runbook-playbook contract",
     "reason": "Repository-local composition guidance required by the approved runbook and playbook contract."
@@ -156,7 +156,7 @@
     "path": ".agents/runbooks/implementing.md",
     "line": 26,
     "pattern": "portable-repo-command",
-    "context": "When repo-local runtime subagent profiles under `.agents/agents/` change, run `py -3 tools/run.py runtime-agents --apply --allow-shared-checkout` from the worktree and restart the IDE before dispatching a changed profile.",
+    "context": "When repo-local runtime subagent profiles under `.agents/agents/` change, run `py -3 tools/run.py runtime-agents --apply` from the worktree and restart the IDE before dispatching a changed profile.",
     "classification": "repo-local",
     "owner": "runbook-playbook contract",
     "reason": "Repository-local composition guidance required by the approved runbook and playbook contract."

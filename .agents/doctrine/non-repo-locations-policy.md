@@ -19,7 +19,7 @@ The runtime searches the user-global directory first, so portable profiles do no
 Use `runtime-agents` only for repo-local `.agents/agents/*.md` profiles (e.g. `reviewer-marketplace.md`). The Devin runtime resolves profiles against the `.agents/agents/` directory of the main checkout (the IDE's `cwd`), not a linked worktree. When working in a feature branch that adds or changes repo-local profiles, stage them into the main checkout uncommitted so the runtime can see them:
 
 ```
-py -3 tools/run.py runtime-agents --apply --allow-shared-checkout
+py -3 tools/run.py runtime-agents --apply
 ```
 
 These are local runtime staging copies only. Do not commit them to `main`. Restart the IDE after applying so the runtime picks up the new profiles.

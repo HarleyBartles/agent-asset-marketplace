@@ -49,4 +49,4 @@ Do not hand off an uncommitted plan, call it durable repository truth, or open a
 
 ## Unslop profile routing
 
-When planning repository changes, use `$unslop-profiles` to check the applicable Marketplace profile for evidence-backed scope, ownership, and lifecycle decisions. Apply only matching cues; unrelated planning skips profile guidance.
+Read the [repository Unslop profile](../unslop/repository.md) when planning Marketplace work. If `$unslop-profiles` is available, use it to connect concrete planning evidence to any matching guard; apply only relevant cues.
