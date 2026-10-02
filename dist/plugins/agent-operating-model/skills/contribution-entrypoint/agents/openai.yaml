@@ -1,0 +1,10 @@
+version: 1
+metadata:
+  skill_name: contribution-entrypoint
+  source_category: first_party
+interface:
+  display_name: Contribution Entrypoint Standard
+  short_description: Assess or adopt the repository root CONTRIBUTING.md entrypoint.
+  default_prompt: Use contribution-entrypoint to assess or adopt this repository's root CONTRIBUTING.md entrypoint.
+policy:
+  allow_implicit_invocation: true

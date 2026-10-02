@@ -8,6 +8,12 @@ metadata:
   source-category: first_party
   status: active
   owner: Harley Bartles
+  use_when:
+    - the human asks to adopt or assess the agent-doctrine-contracts standard.
+    - the repository subscribes to the standard and agent-facing doctrine or contract stores are changing.
+  do_not_use_when:
+    - the files describe product schemas or API contracts rather than agent operating guidance.
+    - the repository has no subscription and no explicit adoption or assessment request for this standard.
 license: MIT
 ---
 

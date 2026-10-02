@@ -1,0 +1,10 @@
+version: 1
+metadata:
+  skill_name: runbook-composition
+  source_category: first_party
+interface:
+  display_name: Runbook Composition Standard
+  short_description: Assess or adopt repository lifecycle-stage runbooks and their routes.
+  default_prompt: Use runbook-composition to assess or adopt lifecycle-stage runbooks in this repository.
+policy:
+  allow_implicit_invocation: true

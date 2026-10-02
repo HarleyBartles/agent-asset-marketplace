@@ -1,0 +1,10 @@
+version: 1
+metadata:
+  skill_name: completed-artifact-custody
+  source_category: first_party
+interface:
+  display_name: Completed Artifact Custody Standard
+  short_description: Assess or adopt semantic completion and retirement guidance for repository plans.
+  default_prompt: Use completed-artifact-custody to assess or adopt semantic completion and retirement guidance for repository plans and specifications.
+policy:
+  allow_implicit_invocation: true

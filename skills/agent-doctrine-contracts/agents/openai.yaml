@@ -1,0 +1,10 @@
+version: 1
+metadata:
+  skill_name: agent-doctrine-contracts
+  source_category: first_party
+interface:
+  display_name: Agent Doctrine and Contracts Standard
+  short_description: Assess or adopt agent-facing doctrine and contract stores.
+  default_prompt: Use agent-doctrine-contracts to assess or adopt agent-facing doctrine and contract stores in this repository.
+policy:
+  allow_implicit_invocation: true

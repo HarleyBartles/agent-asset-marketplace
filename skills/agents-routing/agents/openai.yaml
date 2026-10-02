@@ -1,0 +1,10 @@
+version: 1
+metadata:
+  skill_name: agents-routing
+  source_category: first_party
+interface:
+  display_name: AGENTS Routing Standard
+  short_description: Assess or adopt the repository AGENTS.md routing standard.
+  default_prompt: Use agents-routing to assess or adopt the AGENTS.md routing standard in this repository.
+policy:
+  allow_implicit_invocation: true

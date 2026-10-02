@@ -8,6 +8,12 @@ metadata:
   source-category: first_party
   status: active
   owner: Harley Bartles
+  use_when:
+    - the human asks to adopt or assess the playbook-composition standard.
+    - the repository subscribes to the standard and reusable concern playbooks or their routes are changing.
+  do_not_use_when:
+    - the document is a lifecycle-stage procedure owned by a runbook.
+    - the repository has no subscription and no explicit adoption or assessment request for this standard.
 license: MIT
 ---
 

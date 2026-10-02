@@ -1,0 +1,10 @@
+version: 1
+metadata:
+  skill_name: playbook-composition
+  source_category: first_party
+interface:
+  display_name: Playbook Composition Standard
+  short_description: Assess or adopt repository concern playbooks and their routes.
+  default_prompt: Use playbook-composition to assess or adopt reusable concern playbooks in this repository.
+policy:
+  allow_implicit_invocation: true

@@ -8,6 +8,12 @@ metadata:
   source-category: first_party
   status: active
   owner: Harley Bartles
+  use_when:
+    - the human asks to adopt or assess the root-agent-router standard in a repository.
+    - the repository subscribes to root-agent-router and an AGENTS.md route, scope, or budget is changing.
+  do_not_use_when:
+    - the task edits unrelated guidance and no AGENTS.md routing obligation applies.
+    - the repository has no subscription and no explicit adoption or assessment request for root-agent-router.
 license: MIT
 ---
 

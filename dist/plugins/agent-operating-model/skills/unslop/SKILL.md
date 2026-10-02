@@ -8,6 +8,12 @@ metadata:
   source-category: first_party
   status: active
   owner: Harley Bartles
+  use_when:
+    - the human asks to adopt or assess the unslop standard for a repository.
+    - recurring agent mistakes, durable slop guards, or their routes are being recorded or maintained.
+  do_not_use_when:
+    - the task concerns a one-off mistake with no evidence of recurrence across agents.
+    - the repository has no subscription and no explicit adoption or assessment request for this standard.
 license: MIT
 ---
 
