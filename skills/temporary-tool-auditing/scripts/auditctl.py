@@ -1,0 +1,256 @@
+"""Lifecycle CLI for bounded temporary tool-audit runs. (mixed)"""
+
+import argparse
+import json
+import math
+import time
+import uuid
+from pathlib import Path
+
+from assessment import assess
+from registration import install, remove
+from sanitize import sanitize
+from store import AuditStoreError, append_record, load_manifest, save_manifest
+
+
+def _duration(value, default=30.0) -> float:
+    try:
+        duration = default if value is None else float(value)
+    except (TypeError, ValueError):
+        raise AuditStoreError("invalid-duration") from None
+    if not math.isfinite(duration) or duration <= 0:
+        raise AuditStoreError("invalid-duration")
+    return duration
+
+
+def _close_interval(manifest: dict, now: float) -> None:
+    intervals = manifest.setdefault("intervals", [])
+    if intervals and intervals[-1].get("end") is None:
+        intervals[-1]["end"] = min(now, manifest.get("expires_at", now))
+        if intervals[-1]["end"] < now:
+            manifest.setdefault("coverage_gaps", []).append({"start": intervals[-1]["end"], "end": now})
+
+
+def _subject(value: str) -> dict:
+    if value.startswith("session:") and len(value) > 8:
+        return {"session_id": value[8:]}
+    if value.startswith("agent:") and len(value) > 6:
+        return {"agent_id": value[6:]}
+    if value.startswith("child:") and len(value) > 6:
+        return {"kind": "child", "agent_id": value[6:]}
+    raise AuditStoreError("invalid-subject-selector")
+
+
+def execute(args: dict, now: float | None = None) -> dict:
+    now = time.time() if now is None else now
+    operation = args.get("operation")
+    run = Path(args["run_dir"]).resolve() if args.get("run_dir") else None
+    apply = bool(args.get("apply"))
+    if operation == "prepare":
+        duration = _duration(args.get("duration_minutes"))
+        detail = args.get("detail")
+        runtime = args.get("runtime")
+        if runtime not in {"codex", "devin"} or detail not in {"status", "full-results"}:
+            raise AuditStoreError("invalid-prepare-options")
+        subject = _subject(args.get("subject", ""))
+        question, redactions = sanitize(args.get("question", ""))
+        if not apply:
+            return {"applied": False, "runtime": runtime, "detail": detail, "duration_minutes": duration}
+        manifest = {
+            "version": 1,
+            "run_id": str(uuid.uuid4()),
+            "runtime": runtime,
+            "runtime_version": args.get("runtime_version"),
+            "project_root": str(Path(args["project"]).resolve()),
+            "registration_root": None,
+            "subject": subject,
+            "question": question,
+            "detail": detail,
+            "expires_at": now + duration * 60,
+            "armed": False,
+            "cleanup_required": False,
+            "registration_state": "not-installed",
+            "activation_verified": False,
+            "intervals": [],
+            "controls": [],
+            "health": [],
+            "owned_entries": [],
+            "redactions": redactions,
+        }
+        save_manifest(run, manifest)
+        return {"applied": True, "run_id": manifest["run_id"], "expires_at": manifest["expires_at"]}
+    if run is None:
+        raise AuditStoreError("run-directory-required")
+    if not apply and operation not in {"status", "assess", "verify"}:
+        return {"applied": False, "operation": operation}
+    if operation == "install":
+        manifest = load_manifest(run)
+        return install(run, Path(manifest["project_root"]), manifest["runtime"])
+    if operation == "remove":
+        manifest = load_manifest(run)
+        manifest["armed"] = False
+        _close_interval(manifest, now)
+        save_manifest(run, manifest)
+        return remove(run)
+    if operation == "status":
+        manifest = load_manifest(run)
+        if now >= manifest.get("expires_at", 0):
+            state = "expired"
+        else:
+            state = "recording" if manifest.get("armed") else "stopped"
+        return {"recording_state": state, "cleanup_required": bool(manifest.get("cleanup_required")), **manifest}
+    if operation == "verify":
+        manifest = load_manifest(run)
+        if manifest.get("registration_state") != "installed":
+            raise AuditStoreError("registration-unverified")
+        control_id = args.get("control_call_id")
+        if not control_id:
+            raise AuditStoreError("control-call-id-required")
+        events_path = run / "events.jsonl"
+        events = (
+            [json.loads(row) for row in events_path.read_text(encoding="utf-8").splitlines()]
+            if events_path.exists()
+            else []
+        )
+        found = any(
+            item.get("call_id") == control_id and item.get("run_id") == manifest.get("run_id") for item in events
+        )
+        if not found:
+            raise AuditStoreError("activation-control-not-captured")
+        if apply:
+            manifest["activation_verified"] = True
+            manifest.setdefault("controls", []).append({"call_id": control_id, "verified_at": now})
+            save_manifest(run, manifest)
+        return {"activation_verified": found, "applied": apply}
+    if operation in {"start", "stop", "disarm", "renew"}:
+        manifest = load_manifest(run)
+        if operation == "start":
+            if not manifest.get("activation_verified"):
+                raise AuditStoreError("activation-unverified")
+            if now >= manifest.get("expires_at", 0):
+                raise AuditStoreError("lease-expired-renew-first")
+            if manifest.get("armed"):
+                raise AuditStoreError("already-armed")
+            manifest.setdefault("intervals", []).append(
+                {"start": now, "end": None, "detail": manifest.get("detail"), "expires_at": manifest["expires_at"]}
+            )
+            manifest["armed"] = True
+        elif operation in {"stop", "disarm"}:
+            _close_interval(manifest, now)
+            manifest["armed"] = False
+        else:
+            duration = _duration(args.get("duration_minutes"))
+            was_expired = now >= manifest.get("expires_at", 0)
+            if was_expired:
+                prior_gaps = list(manifest.get("coverage_gaps", []))
+                _close_interval(manifest, now)
+                gap = {"start": manifest.get("expires_at"), "end": now}
+                if gap not in manifest.get("coverage_gaps", prior_gaps):
+                    manifest.setdefault("coverage_gaps", []).append(gap)
+                manifest["armed"] = False
+            elif manifest.get("armed") and manifest.get("intervals"):
+                manifest["intervals"][-1]["expires_at"] = now + duration * 60
+            manifest["expires_at"] = now + duration * 60
+            manifest.setdefault("renewals", []).append({"at": now, "duration_minutes": duration})
+        save_manifest(run, manifest)
+        return {
+            "operation": operation,
+            "applied": True,
+            "armed": manifest["armed"],
+            "expires_at": manifest["expires_at"],
+        }
+    if operation == "assess":
+        manifest = load_manifest(run)
+        return assess(run, _subject(args["subject"]) if args.get("subject") else manifest.get("subject", {}))
+    if operation == "verify-teardown":
+        manifest = load_manifest(run)
+        if manifest.get("registration_state") != "removed" or not args.get("restart_confirmed"):
+            raise AuditStoreError("teardown-restart-unverified")
+        if not args.get("canary_performed"):
+            raise AuditStoreError("teardown-canary-required")
+        # A direct sanitized recorder control proves the store remains healthy.
+        append_record(run, "controls", {"code": "teardown-direct-control", "received_at": now})
+        events = (run / "events.jsonl").read_text(encoding="utf-8") if (run / "events.jsonl").exists() else ""
+        since = manifest.get("teardown_probe_started_at", manifest.get("expires_at", now))
+        late = False
+        for line in events.splitlines():
+            try:
+                event = json.loads(line)
+                if event.get("received_at", 0) >= since:
+                    late = True
+            except Exception:
+                late = True
+        if late:
+            raise AuditStoreError("cached-hook-still-active")
+        manifest["cleanup_required"] = False
+        manifest["registration_state"] = "teardown-verified"
+        manifest["teardown_verified_at"] = now
+        save_manifest(run, manifest)
+        return {"cleanup_required": False, "teardown_verified": True}
+    raise AuditStoreError("unknown-operation")
+
+
+def _parser() -> argparse.ArgumentParser:
+    parser = argparse.ArgumentParser(description="Manage a bounded temporary tool audit. (mixed)")
+    parser.add_argument("--check", action="store_true", help="validate the command surface without mutation")
+    subs = parser.add_subparsers(dest="operation")
+    operations = (
+        "prepare",
+        "install",
+        "status",
+        "verify",
+        "start",
+        "stop",
+        "renew",
+        "assess",
+        "disarm",
+        "remove",
+        "verify-teardown",
+    )
+    for operation in operations:
+        child = subs.add_parser(operation)
+        child.add_argument("--apply", action="store_true", help="apply this operation")
+        child.add_argument("--check", action="store_true", help="preview without mutation")
+        child.add_argument("--run-dir", required=operation != "prepare")
+        if operation == "prepare":
+            child.add_argument("--runtime", choices=("codex", "devin"), required=True)
+            child.add_argument("--project", required=True)
+            child.add_argument("--question", required=True)
+            child.add_argument("--subject", required=True)
+            child.add_argument("--detail", choices=("status", "full-results"), required=True)
+            child.add_argument("--duration-minutes", type=float)
+            child.add_argument("--runtime-version")
+        if operation == "renew":
+            child.add_argument("--duration-minutes", type=float)
+        if operation == "verify":
+            child.add_argument("--control-call-id")
+        if operation == "assess":
+            child.add_argument("--subject")
+        if operation == "verify-teardown":
+            child.add_argument("--restart-confirmed", action="store_true")
+            child.add_argument("--canary-performed", action="store_true")
+    return parser
+
+
+def main(argv=None) -> int:
+    parser = _parser()
+    args = parser.parse_args(argv)
+    if args.check and not args.operation:
+        return 0
+    if not args.operation:
+        parser.print_help()
+        return 0
+    try:
+        result = execute(vars(args))
+        print(json.dumps(result, ensure_ascii=False, sort_keys=True))
+        return 0
+    except AuditStoreError as error:
+        print(json.dumps({"error": error.code}, sort_keys=True))
+        return 1
+    except Exception:
+        print(json.dumps({"error": "operation-failed"}, sort_keys=True))
+        return 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

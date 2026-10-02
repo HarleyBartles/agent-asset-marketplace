@@ -81,10 +81,18 @@ def _safe_json(value: object, code: str) -> tuple[bytes, list[str]]:
 
 
 def load_manifest(run: Path) -> dict:
-    path = Path(run) / "manifest.json"
+    run = Path(run)
+    path = run / "manifest.json"
     try:
-        with _locked(Path(run)):
+        if not path.is_file():
+            raise AuditStoreError("manifest-read-failed")
+        if not (run / ".audit.lock").exists():
+            # Atomic replacement makes an unlocked read safe when no writer has
+            # created the lock yet, and keeps read-only status checks read-only.
             data = json.loads(path.read_text(encoding="utf-8"))
+        else:
+            with _locked(run):
+                data = json.loads(path.read_text(encoding="utf-8"))
         if not isinstance(data, dict):
             raise ValueError
         return data

@@ -4,6 +4,7 @@ import json
 import os
 import shutil
 import tempfile
+import time
 from pathlib import Path
 
 from runtime import render_handlers
@@ -124,6 +125,7 @@ def remove(run: Path) -> dict:
     else:
         raise AuditStoreError("registration-location-unknown")
     conflicts = []
+    manifest["teardown_probe_started_at"] = time.time()
     with _locked(root):
         data = _read(config) if config.exists() else {"hooks": {}}
         hooks = data["hooks"]
@@ -150,7 +152,7 @@ def remove(run: Path) -> dict:
                 _write(config, data)
             else:
                 config.unlink()
-        if owner.exists():
+        if owner.exists() and not conflicts:
             try:
                 current_owner = json.loads(owner.read_text(encoding="utf-8"))
             except Exception:
