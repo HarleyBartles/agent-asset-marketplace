@@ -1,0 +1,15 @@
+version: 1
+metadata:
+  skill_name: temporary-tool-auditing
+  source_category: first_party
+interface:
+  display_name: Temporary Tool Auditing
+  short_description: Capture bounded, sanitized tool-use evidence with temporary hooks.
+  default_prompt: Use this skill when tool-use evidence is needed for a scenario test, and remove the temporary hooks after the run.
+policy:
+  products:
+  - chatgpt
+  - codex
+  - api
+  - atlas
+  allow_implicit_invocation: false

@@ -1,0 +1,85 @@
+"""Best-effort removal of common credentials from tool audit evidence."""
+
+import re
+from typing import Any
+
+_REDACTED = "[REDACTED]"
+_SECRET_KEYS = re.compile(
+    r"(?:^|[_-])(password|passwd|secret|token|api[_-]?key|access[_-]?key|"
+    r"authorization|proxy[_-]?authorization|cookie|set[_-]?cookie|private[_-]?key)(?:$|[_-])",
+    re.IGNORECASE,
+)
+_PATTERNS = [
+    (re.compile(r"-----BEGIN [^-]*PRIVATE KEY-----.*?-----END [^-]*PRIVATE KEY-----", re.I | re.S), _REDACTED),
+    (re.compile(r"(?i)\b(Bearer|Basic)\s+[A-Za-z0-9._~+/=-]+"), lambda m: f"{m.group(1)} {_REDACTED}"),
+    (re.compile(r"(?i)([a-z][a-z0-9+.-]*://)[^/@\s:]+(?::[^/@\s]*)?@"), lambda m: f"{m.group(1)}{_REDACTED}@"),
+    (
+        re.compile(r"(?i)(\b(?:password|passwd|token|api[_-]?key|secret)\s*=\s*)([^\s;&]+)"),
+        lambda m: f"{m.group(1)}{_REDACTED}",
+    ),
+    (
+        re.compile(r"(?i)(--(?:password|passwd|token|api[_-]?key|secret)(?:=|\s+))([^\s]+)"),
+        lambda m: f"{m.group(1)}{_REDACTED}",
+    ),
+    (re.compile(r"\bsk-(?:proj-)?[A-Za-z0-9_-]{20,}\b"), _REDACTED),
+    (re.compile(r"\bgh[pousr]_[A-Za-z0-9_]{20,}\b"), _REDACTED),
+    (re.compile(r"\bAKIA[0-9A-Z]{16}\b"), _REDACTED),
+    (re.compile(r"\bxox[baprs]-[A-Za-z0-9-]{10,}\b"), _REDACTED),
+]
+
+
+def _clean_text(value: str) -> tuple[str, bool]:
+    cleaned = value
+    changed = False
+    for pattern, replacement in _PATTERNS:
+        updated = pattern.sub(replacement, cleaned)
+        changed = changed or updated != cleaned
+        cleaned = updated
+    return cleaned, changed
+
+
+def sanitize(value: object) -> tuple[object, list[str]]:
+    """Return a JSON-compatible copy and safe JSONPath-like redaction paths."""
+    redactions: list[str] = []
+    active: set[int] = set()
+
+    def visit(item: Any, path: str, depth: int) -> Any:
+        if depth > 40:
+            redactions.append(path)
+            return _REDACTED
+        if isinstance(item, dict):
+            identity = id(item)
+            if identity in active:
+                redactions.append(path)
+                return _REDACTED
+            active.add(identity)
+            result = {}
+            for key, child in item.items():
+                safe_key = str(key)[:256]
+                child_path = f"{path}.{safe_key}"
+                if _SECRET_KEYS.search(safe_key.replace(" ", "_")):
+                    result[safe_key] = _REDACTED
+                    redactions.append(child_path)
+                else:
+                    result[safe_key] = visit(child, child_path, depth + 1)
+            active.remove(identity)
+            return result
+        if isinstance(item, (list, tuple)):
+            identity = id(item)
+            if identity in active:
+                redactions.append(path)
+                return _REDACTED
+            active.add(identity)
+            result = [visit(child, f"{path}[{index}]", depth + 1) for index, child in enumerate(item)]
+            active.remove(identity)
+            return result
+        if isinstance(item, str):
+            cleaned, changed = _clean_text(item)
+            if changed:
+                redactions.append(path)
+            return cleaned
+        if item is None or isinstance(item, (bool, int, float)):
+            return item
+        return f"[UNSUPPORTED:{type(item).__name__}]"
+
+    return visit(value, "$", 0), redactions
