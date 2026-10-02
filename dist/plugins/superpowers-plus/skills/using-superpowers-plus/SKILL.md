@@ -64,7 +64,9 @@ If you were dispatched as a subagent to execute a specific task, ignore this ski
 </SUBAGENT-STOP>
 
 <EXTREMELY-IMPORTANT>
-At the start of every conversation, use `using-superpowers-plus` as the sole first-turn router, including the explicit exceptions and fast paths below. Do not invoke other skills before `using-superpowers-plus` has routed you to the owning skill. Once the owning skill is active, invoke the skills it explicitly tells you to at the relevant points in its workflow. </EXTREMELY-IMPORTANT>
+At the start of every conversation, use `using-superpowers-plus` as the sole first-turn router, including the explicit exceptions and fast paths below.
+
+Do not invoke other skills before `using-superpowers-plus` has routed you to the owning skill. Once the owning skill is active, invoke the skills it explicitly tells you to at the relevant points in its workflow. </EXTREMELY-IMPORTANT>
 
 ## First-turn exceptions and fast paths
 
