@@ -1,6 +1,6 @@
 # AOM Standard Adoption and Shipping
 
-> Status: Full design specification for human review. Implementation is not authorized by this document. Design date: 2026-09-30. Investigated source baseline: `3b39cc051f1fb4241c9ee36a1fca411190f9b1a8`.
+> Status: Approved by the human on 2026-09-30; implementation is authorized. Design date: 2026-09-30. Investigated source baseline: `3b39cc051f1fb4241c9ee36a1fca411190f9b1a8`.
 
 ## 1. Purpose and scope
 

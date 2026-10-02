@@ -1,6 +1,6 @@
 # Marketplace Adoption Migration Roadmap
 
-**Status:** complete
+**Status:** completed-awaiting-retirement
 
 **Goal:** Decompose the Marketplace's own adoption migration into safe, reviewable plans that replace the old deployment model without losing the repository's actual compliance gates.
 
