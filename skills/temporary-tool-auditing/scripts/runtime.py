@@ -70,7 +70,8 @@ def render_handlers(runtime: str, recorder: Path) -> dict:
     """Render project-local handlers using this active Python interpreter."""
     runtime = runtime.lower()
     recorder = Path(recorder).resolve()
-    argv = [sys.executable, str(recorder), "--run-dir", str(recorder.parent)]
+    run_dir = recorder.parent.parent if recorder.parent.name == "scripts" else recorder.parent
+    argv = [sys.executable, str(recorder), "--run-dir", str(run_dir)]
     command = subprocess.list2cmdline(argv) if sys.platform == "win32" else shlex.join(argv)
     if runtime == "codex":
         return {
