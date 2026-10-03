@@ -14,7 +14,7 @@
 
 ## Execution rulings and current evidence
 
-Implementation is authorized and published in PR #347. The human has directed #347 to land before #346, with the #346 owner adapting its work afterwards. The current #347 head is `fc7a9e5eb6833d5ab3e1109a6a9fdf3a7b781e0d`, based on main `b481f98ae90aa45e5271d10fe1f7aaeb6c7047aa`. Its 43-commit main range contains temporary-tool-auditing snapshot `224ac579fa62e5622facc89f2fb4eb8226ac8273` from the earlier #346 work. The live #346 head has since advanced to `f6b4fba3dd512e10d313628a18c3a4958232322d`; those later runtime, retention, and activation changes are not in #347.
+Implementation is authorized and published in PR #347. The human has directed #347 to land before #346, with the #346 owner adapting its work afterwards. The current #347 head is `325a5c268d89673af81b941041ad4a495f505c05`, based on main `b481f98ae90aa45e5271d10fe1f7aaeb6c7047aa`. Its 45-commit main range contains temporary-tool-auditing snapshot `224ac579fa62e5622facc89f2fb4eb8226ac8273` from the earlier #346 work. The live #346 head has since advanced to `f6b4fba3dd512e10d313628a18c3a4958232322d`; those later runtime, retention, and activation changes are not in #347.
 
 MARK-379 did not install or activate audit instrumentation. The planned child-query capture was unavailable; the cited behavioral reports and parent reproductions do not independently witness each child's retrieval or every public query. These are explicit evidence limits and are not negative findings. No instrumentation, audit logs, or helper copies were created by MARK-379, so this slice has no teardown or purge obligation.
 
@@ -72,7 +72,7 @@ Checklist disposition: Tasks 2-4 and the conducting-code-review authoring, fixtu
 
 ## Sequencing evidence
 
-GitHub was checked on 2026-10-03. PR #347 targets main at `fc7a9e5eb6833d5ab3e1109a6a9fdf3a7b781e0d`; main `b481f98ae90aa45e5271d10fe1f7aaeb6c7047aa` is an ancestor. GitHub reports MERGEABLE/CLEAN, and hosted marketplace-validation succeeds for that exact head. The current #347 diff contains temporary-tool-auditing at snapshot `224ac579fa62e5622facc89f2fb4eb8226ac8273`. PR #346 remains open at `f6b4fba3dd512e10d313628a18c3a4958232322d`; its newer source is outside #347 and will be reconciled by its owner after this PR lands. No #346 completion gate remains for #347.
+GitHub was checked on 2026-10-03. PR #347 targets main at `325a5c268d89673af81b941041ad4a495f505c05`; main `b481f98ae90aa45e5271d10fe1f7aaeb6c7047aa` is an ancestor. GitHub reports MERGEABLE/CLEAN, and hosted marketplace-validation run 37140122262 succeeded for that exact head. The current #347 diff contains temporary-tool-auditing at snapshot `224ac579fa62e5622facc89f2fb4eb8226ac8273`. PR #346 remains open at `f6b4fba3dd512e10d313628a18c3a4958232322d`; its newer source is outside #347 and will be reconciled by its owner after this PR lands. No #346 completion gate remains for #347.
 
 ## File responsibilities
 
