@@ -75,30 +75,29 @@ def normalize_event(
     }
     if detail == "full-results" and event == "post" and result is not None:
         normalized["result"] = result
-    control_operation = _auditctl_operation(arguments, run_dir, lifecycle_cli_path)
+    control_operation = _auditctl_operation(tool_name, arguments, run_dir, lifecycle_cli_path)
     if control_operation:
         normalized["control_operation"] = control_operation
     return normalized
 
 
 def _auditctl_operation(
-    arguments: object, run_dir: str | Path | None = None, helper_path: str | Path | None = None
+    tool_name: object,
+    arguments: object,
+    run_dir: str | Path | None = None,
+    helper_path: str | Path | None = None,
 ) -> str | None:
     if run_dir is None or helper_path is None:
         return None
-    values = []
-
-    def collect(value):
-        if isinstance(value, dict):
-            for child in value.values():
-                collect(child)
-        elif isinstance(value, (list, tuple)):
-            for child in value:
-                collect(child)
-        elif isinstance(value, str):
-            values.append(value)
-
-    collect(arguments)
+    name = str(tool_name or "").strip().lower()
+    if name not in {"bash", "powershell", "exec"} or not isinstance(arguments, dict):
+        return None
+    command = next(
+        (arguments[key] for key in ("command", "cmd", "script") if isinstance(arguments.get(key), str)),
+        None,
+    )
+    if command is None:
+        return None
     allowed = {
         "prepare",
         "install",
@@ -118,32 +117,42 @@ def _auditctl_operation(
     def unquote(value: str) -> str:
         return value[1:-1] if len(value) >= 2 and value[0] == value[-1] and value[0] in {"'", '"'} else value
 
-    for value in values:
-        try:
-            tokens = [unquote(token) for token in shlex.split(value, posix=False)]
-        except ValueError:
-            continue
-        for index, token in enumerate(tokens[:-2]):
-            if os.path.normcase(os.path.realpath(os.path.normpath(token))) != expected_helper:
-                continue
-            if index == 0:
-                continue
-            interpreter = tokens[index - 1].replace("\\", "/").rsplit("/", 1)[-1].lower()
-            python_names = {"py", "py.exe", "python", "python.exe", "python3", "python3.exe"}
-            if interpreter not in python_names:
-                launcher = tokens[index - 2].replace("\\", "/").rsplit("/", 1)[-1].lower() if index >= 2 else ""
-                if not (interpreter.startswith("-") and launcher in {"py", "py.exe"}):
-                    continue
-            operation = tokens[index + 1].lower()
-            if operation not in allowed:
-                continue
-            try:
-                run_index = tokens.index("--run-dir", index + 2)
-                candidate_run = os.path.normcase(os.path.normpath(tokens[run_index + 1]))
-            except (ValueError, IndexError):
-                continue
-            if os.path.normcase(os.path.realpath(os.path.normpath(candidate_run))) == expected_run:
-                return operation
+    try:
+        tokens = [unquote(token) for token in shlex.split(command, posix=False)]
+    except ValueError:
+        return None
+    if any(token in {";", "&&", "||", "|", "&"} for token in tokens):
+        return None
+    # Only recognize a standalone helper invocation at the beginning of the
+    # command. Searching nested arguments or later shell clauses could hide a
+    # real tool call from the assessment.
+    helper_index = 1
+    interpreter = tokens[0].replace("\\", "/").rsplit("/", 1)[-1].lower() if tokens else ""
+    python_names = {"py", "py.exe", "python", "python.exe", "python3", "python3.exe"}
+    if interpreter not in python_names:
+        return None
+    if len(tokens) > 1 and tokens[1].startswith("-"):
+        if interpreter not in {"py", "py.exe"}:
+            return None
+        helper_index += 1
+    if (
+        len(tokens) <= helper_index
+        or os.path.normcase(os.path.realpath(os.path.normpath(tokens[helper_index]))) != expected_helper
+    ):
+        return None
+    operation_index = helper_index + 1
+    if len(tokens) <= operation_index:
+        return None
+    operation = tokens[operation_index].lower()
+    if operation not in allowed:
+        return None
+    try:
+        run_index = tokens.index("--run-dir", operation_index + 1)
+        candidate_run = os.path.normcase(os.path.normpath(tokens[run_index + 1]))
+    except (ValueError, IndexError):
+        return None
+    if os.path.normcase(os.path.realpath(os.path.normpath(candidate_run))) == expected_run:
+        return operation
     return None
 
 

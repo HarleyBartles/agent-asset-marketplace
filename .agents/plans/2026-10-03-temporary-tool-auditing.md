@@ -197,6 +197,11 @@ The fresh whole-branch review at `5938683cf4d3b9e3c9ca183de7dc67413d67f2b9` foun
 - [x] Persist and use the hook interpreter for direct teardown health checks; keep cleanup pending if that interpreter is unavailable.
 - [x] Disable late outcome writes after explicit disarm, removal, and verified teardown while retaining matched late outcomes after ordinary stop/expiry.
 - [x] Return subject, detail, intervals, unresolved count, coverage, health, and redaction data in assessment output.
+- [x] Restrict lifecycle-control recognition to standalone invocations in known command tools and command fields; preserve mixed commands and nested payloads as subject attempts.
+- [x] Detect all intersecting Devin dispatch intervals, including dispatches already active before the selected child starts; reject ambiguous child attribution.
+- [x] Redact `Pwd=` connection-string values, including quoted and braced forms, and verify persisted event records.
+- [x] Verify teardown health through the normalized event-recording path and exact event log; a writable controls log alone cannot satisfy cleanup.
+- [x] Replace the Devin capability-floor relative link with an immutable repository source link so the reference remains available in the shipped package.
 - [ ] Run the owning suite and full repository gates, regenerate the package, commit, and obtain fresh whole-branch plus matching topical reviews.
 
 ## Execution entry and current baseline

@@ -32,6 +32,9 @@ from record import record_event
         ({"url": "postgres://user:db-SENTINEL@db.example.test/main"}, "db-SENTINEL"),
         ({"command": "tool --password=flag-SENTINEL"}, "flag-SENTINEL"),
         ({"command": "tool --api-key api-SENTINEL"}, "api-SENTINEL"),
+        ({"connection": "Server=db;User Id=example;Pwd=SENTINEL-password"}, "SENTINEL-password"),
+        ({"connection": 'Server=db;Password="quoted;password"'}, "quoted;password"),
+        ({"connection": "Server=db;Pwd={braced password}"}, "braced password"),
     ],
 )
 def test_sanitise_removes_credential_values(value, secret):
@@ -88,6 +91,7 @@ def test_recorder_never_persists_sentinels_from_json_or_header_strings(tmp_path,
                     "Proxy-Authorization: Digest proxy-SENTINEL"
                 ),
                 "url": "https://example.test/?access_token=query-SENTINEL",
+                "connection_string": "Server=db;User Id=example;Pwd=connection-SENTINEL",
                 "command": (
                     "tool --access-token cli-SENTINEL --refresh_token=refresh-SENTINEL "
                     '--password "example-secret has spaces" password="assignment secret with spaces"'
@@ -107,6 +111,7 @@ def test_recorder_never_persists_sentinels_from_json_or_header_strings(tmp_path,
         "cli-SENTINEL",
         "refresh-SENTINEL",
         "result-SENTINEL",
+        "connection-SENTINEL",
     ):
         assert sentinel not in persisted
     assert json.loads(persisted)["redactions"]

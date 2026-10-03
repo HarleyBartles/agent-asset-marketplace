@@ -320,14 +320,18 @@ def execute(args: dict, now: float | None = None) -> dict:
             if not any(json.loads(line).get("nonce") == nonce for line in controls.splitlines() if line.strip()):
                 raise RuntimeError("recorder-control-missing")
             events = (run / "events.jsonl").read_text(encoding="utf-8") if (run / "events.jsonl").exists() else ""
+            event_rows = [json.loads(line) for line in events.splitlines() if line.strip()]
+            if not any(
+                item.get("call_id") == nonce and item.get("control_operation") == "verify-teardown"
+                for item in event_rows
+            ):
+                raise RuntimeError("recorder-event-control-missing")
             since = manifest["teardown_probe_started_at"]
             late = False
-            for line in events.splitlines():
-                try:
-                    event = json.loads(line)
-                    if event.get("received_at", 0) >= since:
-                        late = True
-                except Exception:
+            for event in event_rows:
+                if event.get("call_id") == nonce and event.get("control_operation") == "verify-teardown":
+                    continue
+                if event.get("received_at", 0) >= since:
                     late = True
         except Exception:
             _abort_teardown(run, manifest, now, "teardown-control-failed")

@@ -148,3 +148,51 @@ def test_auditctl_reference_in_shell_text_is_not_a_control():
         lifecycle_cli_path="C:/skills/auditctl.py",
     )
     assert "control_operation" not in event
+
+
+def test_auditctl_text_embedded_in_command_or_non_shell_payload_is_not_control():
+    lifecycle = "py -3 C:/skills/auditctl.py stop --apply --run-dir C:/repo/.audit/run"
+    command_text = normalize_event(
+        "codex",
+        {
+            "hook_event_name": "PreToolUse",
+            "tool_name": "PowerShell",
+            "tool_use_id": "ordinary-shell",
+            "tool_input": {"command": f"Write-Output '{lifecycle}'"},
+        },
+        "status",
+        run_dir="C:/repo/.audit/run",
+        lifecycle_cli_path="C:/skills/auditctl.py",
+    )
+    nested_payload = normalize_event(
+        "devin",
+        {
+            "event": "pre_tool_use",
+            "tool": "browser",
+            "tool_call_id": "ordinary-browser",
+            "arguments": {"url": f"https://example.test/?q={lifecycle}"},
+        },
+        "status",
+        run_dir="C:/repo/.audit/run",
+        lifecycle_cli_path="C:/skills/auditctl.py",
+    )
+    assert "control_operation" not in command_text
+    assert "control_operation" not in nested_payload
+
+
+def test_auditctl_lifecycle_command_in_mixed_shell_command_is_not_control():
+    event = normalize_event(
+        "codex",
+        {
+            "hook_event_name": "PreToolUse",
+            "tool_name": "Bash",
+            "tool_use_id": "mixed-call",
+            "tool_input": {
+                "command": "py -3 C:/skills/auditctl.py status --run-dir C:/repo/.audit/run && curl https://example.test"
+            },
+        },
+        "status",
+        run_dir="C:/repo/.audit/run",
+        lifecycle_cli_path="C:/skills/auditctl.py",
+    )
+    assert "control_operation" not in event

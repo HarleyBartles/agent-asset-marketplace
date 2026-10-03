@@ -91,8 +91,34 @@ def main(argv=None) -> int:
     try:
         if args.control_nonce:
             nonce = str(uuid.UUID(args.control_nonce))
+            now = time.time()
+            run = Path(args.run_dir)
+            manifest = load_manifest(run)
+            helper = manifest.get("lifecycle_cli_path")
+            if not isinstance(helper, str):
+                raise AuditStoreError("lifecycle-helper-unavailable")
+            command = " ".join(
+                (
+                    json.dumps(sys.executable),
+                    json.dumps(helper),
+                    "verify-teardown --phase finish --apply --run-dir",
+                    json.dumps(str(run)),
+                )
+            )
+            if not record_event(
+                run,
+                {
+                    "hook_event_name": "PreToolUse",
+                    "session_id": "audit-control",
+                    "tool_use_id": nonce,
+                    "tool_name": "Bash",
+                    "tool_input": {"command": command},
+                },
+                now,
+            ):
+                raise AuditStoreError("recorder-event-control-failed")
             append_record(
-                Path(args.run_dir),
+                run,
                 "controls",
                 {
                     "code": "recorder-direct-control",

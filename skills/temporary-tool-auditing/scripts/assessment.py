@@ -180,14 +180,25 @@ def assess(run: Path, subject: dict, parent_idle_confirmed: bool = False) -> dic
         )
         start_at = start.get("received_at") if start else None
         end_at = end.get("received_at") if end else None
-        overlapping = any(
-            item.get("call_id") != dispatch_id
-            and item.get("event") == "pre"
-            and isinstance(item.get("received_at"), (int, float))
-            and isinstance(end_at, (int, float))
-            and start_at <= item["received_at"] <= end_at
-            for item in dispatches
-        )
+        dispatch_bounds = {}
+        for item in dispatches:
+            call_id = item.get("call_id")
+            timestamp = item.get("received_at")
+            if not isinstance(timestamp, (int, float)):
+                continue
+            dispatch_bounds.setdefault(call_id, {})[item.get("event")] = timestamp
+        overlapping = False
+        if isinstance(start_at, (int, float)) and isinstance(end_at, (int, float)):
+            for other_id, bounds in dispatch_bounds.items():
+                if other_id == dispatch_id or not isinstance(bounds.get("pre"), (int, float)):
+                    continue
+                other_start = bounds["pre"]
+                other_end = bounds.get("post")
+                # Missing completion means the other dispatch may still be
+                # active; otherwise compare the complete intervals.
+                if other_start <= end_at and (not isinstance(other_end, (int, float)) or other_end >= start_at):
+                    overlapping = True
+                    break
         if (
             not start
             or not end

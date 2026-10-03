@@ -6,7 +6,7 @@ from typing import Any
 
 _REDACTED = "[REDACTED]"
 _SECRET_KEYS = re.compile(
-    r"(?:^|[_-])(password|passwd|secret|token|api[_-]?key|access[_-]?key|"
+    r"(?:^|[_-])(password|passwd|pwd|secret|token|api[_-]?key|access[_-]?key|"
     r"authorization|proxy[_-]?authorization|cookie|set[_-]?cookie|private[_-]?key)(?:$|[_-])",
     re.IGNORECASE,
 )
@@ -16,7 +16,7 @@ _PATTERNS = [
     (re.compile(r"(?i)([a-z][a-z0-9+.-]*://)[^/@\s:]+(?::[^/@\s]*)?@"), lambda m: f"{m.group(1)}{_REDACTED}@"),
     (
         re.compile(
-            r"""(?i)(\b(?:password|passwd|(?:access|refresh)[_-]?token|token|api[_-]?key|secret)\s*=\s*)("(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'|[^\s;&]+)""",
+            r"""(?i)(\b(?:password|passwd|pwd|(?:access|refresh)[_-]?token|token|api[_-]?key|secret)\s*=\s*)("(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'|\{[^}]*\}|[^\s;&]+)""",
         ),
         lambda m: f"{m.group(1)}{_REDACTED}",
     ),

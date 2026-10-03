@@ -1,6 +1,6 @@
 # Devin hooks
 
-The supported Devin shape here is grounded in the recorded Marketplace capability probe at [the harness capability floor](../../iterative-review/references/harness-capability-floor.md). That probe observed project-installed `.devin/hooks.v1.json` handlers and `PreToolUse` / `PostToolUse` payloads with `session_id`, `prompt_id`, `tool_name`, `tool_input`, `tool_use_id`, and `hook_event_name`. The evidence is historical; verify the active Devin runtime before relying on it.
+The supported Devin shape here is grounded in the recorded Marketplace capability probe at [the harness capability floor](https://github.com/HarleyBartles/agent-asset-marketplace/blob/b481f98ae90aa45e5271d10fe1f7aaeb6c7047aa/skills/iterative-review/references/harness-capability-floor.md). That probe observed project-installed `.devin/hooks.v1.json` handlers and `PreToolUse` / `PostToolUse` payloads with `session_id`, `prompt_id`, `tool_name`, `tool_input`, `tool_use_id`, and `hook_event_name`. The evidence is historical; verify the active Devin runtime before relying on it.
 
 The recorded probe found hooks are loaded when the session starts. Install the rendered project-local file, review it, and start or restart the Devin session before measuring capture. Remove the project-local entries and repeat the runtime canary check after restart. Do not adapt Codex's configuration shape by assumption; the adapters keep runtime handlers separate.
 

@@ -1,6 +1,7 @@
 import json
 import sys
 import time
+from pathlib import Path
 import pytest
 
 from auditctl import execute
@@ -13,6 +14,7 @@ def base_run(path, **updates):
         "run_id": "run-1",
         "hook_interpreter": sys.executable,
         "runtime": "codex",
+        "lifecycle_cli_path": str(Path(__file__).parents[2] / "scripts" / "auditctl.py"),
         "project_root": str(path.parent),
         "registration_root": str(path.parent / ".codex"),
         "detail": "status",
@@ -306,9 +308,10 @@ def test_teardown_probe_succeeds_when_direct_control_works_and_no_hook_fires(tmp
     run = tmp_path / "run"
     base_run(run, registration_state="removed", cleanup_required=True)
     install_test_recorder(run)
+    begin_at = time.time()
     begin = execute(
         {"operation": "verify-teardown", "run_dir": str(run), "phase": "begin", "apply": True},
-        now=100,
+        now=begin_at,
     )
     assert begin["teardown_probe"] == "started"
     result = execute(
@@ -320,23 +323,58 @@ def test_teardown_probe_succeeds_when_direct_control_works_and_no_hook_fires(tmp
             "canary_performed": True,
             "apply": True,
         },
-        now=101,
+        now=begin_at + 1,
     )
     assert result["teardown_verified"] is True
     manifest = load_manifest(run)
     assert manifest["cleanup_required"] is False
     assert manifest["armed"] is False
     assert (run / "controls.jsonl").exists()
+    events = [json.loads(line) for line in (run / "events.jsonl").read_text().splitlines()]
+    assert any(item.get("control_operation") == "verify-teardown" for item in events)
     assert not (run / "health.jsonl").exists()
+
+
+def test_teardown_fails_when_direct_control_log_works_but_event_log_does_not(tmp_path, monkeypatch):
+    from types import SimpleNamespace
+
+    import auditctl
+
+    run = tmp_path / "run"
+    base_run(run, registration_state="removed", cleanup_required=True)
+    install_test_recorder(run)
+    execute({"operation": "verify-teardown", "run_dir": str(run), "phase": "begin", "apply": True}, now=100)
+
+    def controls_only(command, **_kwargs):
+        nonce = command[-1]
+        append_record(run, "controls", {"code": "recorder-direct-control", "nonce": nonce})
+        return SimpleNamespace(returncode=0)
+
+    monkeypatch.setattr(auditctl.subprocess, "run", controls_only)
+    with pytest.raises(Exception) as error:
+        execute(
+            {
+                "operation": "verify-teardown",
+                "run_dir": str(run),
+                "phase": "finish",
+                "restart_confirmed": True,
+                "canary_performed": True,
+                "apply": True,
+            },
+            now=101,
+        )
+    assert getattr(error.value, "code", None) == "teardown-control-failed"
+    assert load_manifest(run)["cleanup_required"] is True
 
 
 def test_teardown_probe_detects_cached_hook_and_leaves_cleanup_pending(tmp_path):
     run = tmp_path / "run"
     base_run(run, registration_state="removed", cleanup_required=True)
     install_test_recorder(run)
+    begin_at = time.time()
     execute(
         {"operation": "verify-teardown", "run_dir": str(run), "phase": "begin", "apply": True},
-        now=100,
+        now=begin_at,
     )
     record_event(
         run,
@@ -346,7 +384,7 @@ def test_teardown_probe_detects_cached_hook_and_leaves_cleanup_pending(tmp_path)
             "tool_use_id": "stale-hook-call",
             "tool_name": "Bash",
         },
-        101,
+        begin_at + 1,
     )
     with pytest.raises(Exception) as error:
         execute(
@@ -358,7 +396,7 @@ def test_teardown_probe_detects_cached_hook_and_leaves_cleanup_pending(tmp_path)
                 "canary_performed": True,
                 "apply": True,
             },
-            now=102,
+            now=begin_at + 2,
         )
     assert getattr(error.value, "code", None) == "cached-hook-still-active"
     manifest = load_manifest(run)
@@ -392,8 +430,9 @@ def test_teardown_does_not_clear_cleanup_when_recorder_health_failed(tmp_path):
     run = tmp_path / "run"
     base_run(run, registration_state="removed", cleanup_required=True)
     install_test_recorder(run)
-    execute({"operation": "verify-teardown", "run_dir": str(run), "phase": "begin", "apply": True}, now=100)
-    (run / "health.jsonl").write_text('{"code":"record-failed","received_at":101}\n')
+    begin_at = time.time()
+    execute({"operation": "verify-teardown", "run_dir": str(run), "phase": "begin", "apply": True}, now=begin_at)
+    (run / "health.jsonl").write_text(json.dumps({"code": "record-failed", "received_at": begin_at + 1}) + "\n")
     with pytest.raises(Exception) as error:
         execute(
             {
@@ -404,7 +443,7 @@ def test_teardown_does_not_clear_cleanup_when_recorder_health_failed(tmp_path):
                 "canary_performed": True,
                 "apply": True,
             },
-            now=102,
+            now=begin_at + 2,
         )
     assert getattr(error.value, "code", None) == "teardown-recorder-health-failed"
     assert load_manifest(run)["cleanup_required"] is True
