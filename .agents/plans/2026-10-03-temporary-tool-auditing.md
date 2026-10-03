@@ -206,6 +206,7 @@ The fresh whole-branch review at `5938683cf4d3b9e3c9ca183de7dc67413d67f2b9` foun
 - [x] Exclude only explicitly registered control call identities; exact lifecycle command text alone cannot hide a selected subject's tool attempt.
 - [x] Redact plain `key=` URL query credentials while preserving unrelated query parameters.
 - [x] Redact cloud signed-URL signature and credential query parameters before persistence.
+- [x] Redact common JWT, ID token, and OAuth authorization-code URL parameters before persistence.
 - [ ] Run the owning suite and full repository gates, regenerate the package, commit, and obtain fresh whole-branch plus matching topical reviews.
 
 ## Execution entry and current baseline
