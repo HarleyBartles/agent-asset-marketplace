@@ -95,16 +95,15 @@ The dispatcher supplies the prepared `<diff_path>` and scope/context, actual con
 
 Every lens profile in `reviewer-*.md` profiles in the Devin Desktop agents search path (portable or repo-local) should include a `## Applies to` section with:
 
-- `inputs:` — required and optional `run_subagent` placeholders.
-- `globs:` — path globs that, if matched in the diff, make the lens relevant.
-- `keywords:` — keyword triggers that make the lens relevant.
+- `inputs:` - required and optional dispatch placeholders. Common package, description, resource and report inputs are parameter requirements, not lens applicability triggers.
+- `globs:` - changed-path cues for discovering candidate lenses.
+- `keywords:` - subject cues for discovering candidate lenses.
 
 When selecting one or more lenses for a PR or a branch diff, read the relevant profile files and match them in this order:
 
-1. Input match: if the orchestrator provides an input listed under `## Applies to` for that lens (e.g. `<plan_path>` for `reviewer-plans`), the lens applies.
-2. Glob match: if any changed file matches a glob, the lens applies.
-3. Keyword match: if the PR title/body or diff summary contains a keyword, the lens applies.
-4. Assess relevant trust boundaries even without keyword matches; use reviewer-security for applicable authentication/authorization, untrusted input/output, process/filesystem, serialization, dependency or privacy changes. If no specialist applies, select the adequate whole-branch route.
+1. Establish the requested review role and scope. A supplied domain artifact can warrant its lens when that artifact is being reviewed or governs the change, such as `<plan_path>` for plan compliance. Merely supplying `<diff_path>`, `<pr_description>`, resource entrypoints or report paths does not select any specialist.
+2. Use changed-file globs and subject keywords to discover candidate lenses, then verify relevance against the changed behavior and each lens's remit. A broad glob or incidental word alone does not justify an unrelated specialist seat. Honor an explicit human or repository requirement for a lens.
+3. Assess relevant trust boundaries even without keyword matches; use reviewer-security for applicable authentication/authorization, untrusted input/output, process/filesystem, serialization, dependency or privacy changes. If no specialist applies, select the adequate whole-branch route.
 
 Prefer the least escalated lens that covers the diff. For broad, multi-surface branches, include all matching lenses rather than a single generalist.
 

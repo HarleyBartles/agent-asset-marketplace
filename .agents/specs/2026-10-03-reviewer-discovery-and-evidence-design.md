@@ -1,6 +1,6 @@
 # Reviewer discovery and evidence design
 
-Status: settled design authorized for implementation through the active goal. Implementation proceeds on the incorporated MARK-377 / PR #346 head; reconcile completed dependency delivery and latest main before Draft PR publication.
+Status: implementation and review in progress. Draft PR #347 is explicitly incomplete while final fix review and completed MARK-377 delivery/main-range reconciliation remain open. The settled design governs the implementation; source/profile/packaging changes and the isolated copied-package evaluation are delivered, with runtime trace and live Devin coverage limits recorded in the plan.
 
 Issue: [MARK-379](https://linear.app/harleys-workspace/issue/MARK-379/enable-reviewer-subagents-to-discover-skills-and-research)
 

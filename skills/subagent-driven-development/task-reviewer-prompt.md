@@ -103,9 +103,7 @@ Subagent (general-purpose):
     touches is a Missing finding, no matter how clean the rest of the
     batch looks.
 
-    If a requirement cannot be verified from this diff alone (it lives in
-    unchanged code or spans tasks), report it as a ⚠️ item instead of
-    broadening your search.
+    When a requirement depends on unchanged code or spans tasks, read the targeted caller, contract or relevant surrounding context needed to assess it. Report a cannot-verify item only if proportionate context checks still leave the requirement unverified, and name the missing evidence. Do not crawl unrelated code or silently expand the assigned task.
 
     ## Part 2: Code Quality
 

@@ -36,8 +36,6 @@ You are reviewer-security. Review applicable security and privacy behavior in th
   - password
   - private_key
   - api_key
-- inputs:
-  - `<diff_path>`
 
 Keywords are discovery cues, not an exhaustive trigger list. Select this lens when the changed code crosses an applicable security/privacy boundary even without a keyword match.
 
