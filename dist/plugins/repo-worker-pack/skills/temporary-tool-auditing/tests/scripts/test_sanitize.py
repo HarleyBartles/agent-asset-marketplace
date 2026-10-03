@@ -52,6 +52,12 @@ from record import record_event
         ({"url": "https://auth.example/callback?mfa_code=mfa-SENTINEL"}, "mfa-SENTINEL"),
         ({"url": "https://auth.example/callback?private_key=private-key-SENTINEL"}, "private-key-SENTINEL"),
         ({"url": "https://legacy.example/app?asp_net_session_id=asp-session-SENTINEL"}, "asp-session-SENTINEL"),
+        (
+            {"url": "https://example.test/callback?user%5Bpassword%5D=bracket-password-SENTINEL"},
+            "bracket-password-SENTINEL",
+        ),
+        ({"url": "https://example.test/callback?oauth[access_token]=bracket-token-SENTINEL"}, "bracket-token-SENTINEL"),
+        ({"url": "https://example.test/profile?profile.email=dotted-email-SENTINEL"}, "dotted-email-SENTINEL"),
         ({"url": "https://example.test/maps?key=AIzaSyD-SENTINEL&zoom=3"}, "AIzaSyD-SENTINEL"),
         (
             {"url": "https://bucket.test/file?X-Amz-Signature=signature-SENTINEL&X-Amz-Security-Token=token-SENTINEL"},
@@ -198,6 +204,11 @@ def test_recorder_never_persists_sentinels_from_json_or_header_strings(tmp_path,
                 "mfa_url": "https://auth.example/callback?mfa_code=mfa-persisted-SENTINEL",
                 "private_key_url": "https://auth.example/callback?private_key=private-key-persisted-SENTINEL",
                 "asp_session_url": "https://legacy.example/app?asp_net_session_id=asp-session-persisted-SENTINEL",
+                "nested_sensitive_url": (
+                    "https://example.test/callback?user%5Bpassword%5D=nested-password-persisted-SENTINEL"
+                    "&oauth[access_token]=nested-token-persisted-SENTINEL&profile.email=nested-email-persisted-SENTINEL"
+                    "&view=summary"
+                ),
                 "command": (
                     "tool --access-token cli-SENTINEL --refresh_token=refresh-SENTINEL "
                     '--password "example-secret has spaces" password="assignment secret with spaces"'
@@ -245,8 +256,12 @@ def test_recorder_never_persists_sentinels_from_json_or_header_strings(tmp_path,
         "mfa-persisted-SENTINEL",
         "private-key-persisted-SENTINEL",
         "asp-session-persisted-SENTINEL",
+        "nested-password-persisted-SENTINEL",
+        "nested-token-persisted-SENTINEL",
+        "nested-email-persisted-SENTINEL",
     ):
         assert sentinel not in persisted
     persisted_event = json.loads(persisted)
     assert persisted_event["session_id"] == "s1"
+    assert "view=summary" in persisted_event["arguments"]["nested_sensitive_url"]
     assert persisted_event["redactions"]

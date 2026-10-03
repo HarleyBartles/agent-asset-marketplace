@@ -110,7 +110,8 @@ def _clean_text(value: str) -> tuple[str, bool]:
 
     def redact_sensitive_parameter(match: re.Match) -> str:
         key = unquote_plus(match.group(2))
-        normalized_key = re.sub(r"([a-z0-9])([A-Z])", r"\1_\2", key).replace(" ", "_")
+        normalized_key = re.sub(r"([a-z0-9])([A-Z])", r"\1_\2", key)
+        normalized_key = re.sub(r"[\[\]./\\]+", "_", normalized_key).replace(" ", "_")
         if _SECRET_KEYS.search(normalized_key):
             return f"{match.group(1)}{match.group(2)}{match.group(3)}{_REDACTED}"
         return match.group(0)
