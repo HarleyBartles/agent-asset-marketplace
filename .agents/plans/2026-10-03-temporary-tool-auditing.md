@@ -213,7 +213,10 @@ The fresh whole-branch review at `5938683cf4d3b9e3c9ca183de7dc67413d67f2b9` foun
 - [x] Preserve only explicitly supplied schema-defined audit attribution session-ID paths; redact same-named values in nested tool arguments and results.
 - [x] Cover structured personal, health, payment, and common secret identifiers, plus selected high-confidence free-text email, US SSN, JWT, and Luhn-valid payment-card patterns. Document that arbitrary private or commercial content cannot be detected comprehensively.
 - [x] Add post-assessment purge of event, health, and control logs plus known run-local recorder copies as a mandatory cleanup stage, gated on verified hook unload; preserve unknown files and keep cleanup pending until deletion is confirmed.
-- [ ] Run the owning suite and full repository gates, regenerate the package, commit, and obtain fresh whole-branch plus matching topical reviews.
+- [x] Preflight the whole run directory before purging; leave root-level unknown files intact and cleanup pending without deleting logs.
+- [x] Reject symlink/junction helper directories and any resolved helper path outside the run before deleting logs or helper copies; verify with a Windows junction sentinel test.
+- [x] Classify URL query keys through the structured sensitive-field rules after decoding and normalizing camelCase, bracket, and dotted nesting; verify persisted sentinels are removed while unrelated query parameters remain.
+- [x] Run the owning suite and full repository gates, regenerate the package, commit, and obtain fresh whole-branch plus matching topical reviews. Fresh web-backed whole-branch and security reviews at `c7283d3f` found no actionable gaps; reviewers checked OWASP, OpenTelemetry, RFC 9110, Python junction handling, Microsoft reparse points, and CWE-59.
 
 ## Execution entry and current baseline
 
