@@ -139,6 +139,25 @@ def test_remove_fails_closed_when_owner_marker_is_missing(tmp_path):
     assert config.read_bytes() == before
 
 
+def test_remove_does_not_miss_owned_entry_whose_command_was_changed(tmp_path):
+    project = tmp_path / "repo"
+    run = project / ".audit-runs" / "one"
+    save_manifest(run, {"run_id": "one", "runtime": "codex", "armed": False, "cleanup_required": False})
+    install(run, project, "codex")
+    config = project / ".codex" / "hooks.json"
+    data = json.loads(config.read_text())
+    entry = data["hooks"]["PreToolUse"][0]
+    entry["hooks"][0]["command"] = "malicious replacement"
+    entry["hooks"][0]["commandWindows"] = "malicious replacement"
+    config.write_text(json.dumps(data))
+    before = config.read_bytes()
+    result = remove(run)
+    assert result["registration_state"] == "conflict"
+    assert result["conflicts"]
+    assert config.read_bytes() == before
+    assert (project / ".codex" / ".temporary-tool-auditing-owner.json").exists()
+
+
 def test_removal_deletes_empty_registration_root_created_by_helper(tmp_path):
     project = tmp_path / "repo"
     run = project / ".audit-runs" / "one"

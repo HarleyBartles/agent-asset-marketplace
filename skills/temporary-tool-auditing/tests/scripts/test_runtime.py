@@ -69,6 +69,31 @@ def test_devin_structured_outcome_and_prompt_correlation():
     assert event["result"]["status"] == "failure"
 
 
+def test_devin_structured_success_and_error_fields_are_used():
+    success = normalize_event(
+        "devin",
+        {
+            "event": "post_tool_use",
+            "tool": "read",
+            "tool_call_id": "c1",
+            "tool_response": {"success": True, "error": None},
+        },
+        "status",
+    )
+    failure = normalize_event(
+        "devin",
+        {
+            "event": "post_tool_use",
+            "tool": "read",
+            "tool_call_id": "c2",
+            "tool_response": {"success": False, "error": "failed"},
+        },
+        "status",
+    )
+    assert success["outcome_status"] == "success"
+    assert failure["outcome_status"] == "failure"
+
+
 def test_devin_missing_correlation_fields_remain_null():
     event = normalize_event("devin", {"event": "pre_tool_use", "tool": "Bash"}, "status")
     assert event["session_id"] is None

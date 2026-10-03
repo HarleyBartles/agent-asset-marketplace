@@ -151,7 +151,7 @@ def test_devin_child_needs_serialized_dispatch_boundaries(tmp_path):
         ],
         runtime="devin",
     )
-    result = assess(tmp_path, {"dispatch_call_id": "dispatch-1", "kind": "child"})
+    result = assess(tmp_path, {"dispatch_call_id": "dispatch-1", "kind": "child"}, parent_idle_confirmed=True)
     assert result["claim_supported"] is False
     assert "devin-child-attribution-ambiguous" in result["limitations"]
 
@@ -170,7 +170,7 @@ def test_devin_child_counts_tools_inside_one_serialized_dispatch(tmp_path):
         ],
         runtime="devin",
     )
-    result = assess(tmp_path, {"dispatch_call_id": "dispatch-1", "kind": "child"})
+    result = assess(tmp_path, {"dispatch_call_id": "dispatch-1", "kind": "child"}, parent_idle_confirmed=True)
     assert result["attempt_count"] == 1
     assert "devin-child-attribution-ambiguous" not in result["limitations"]
 
@@ -187,9 +187,26 @@ def test_devin_child_completion_comes_from_matching_dispatch_post(tmp_path):
         ],
         runtime="devin",
     )
-    result = assess(tmp_path, {"dispatch_call_id": "dispatch-1", "kind": "child"})
+    result = assess(tmp_path, {"dispatch_call_id": "dispatch-1", "kind": "child"}, parent_idle_confirmed=True)
     assert result["claim_supported"] is True
     assert result["completion_source"] == "matched-dispatch-post"
+
+
+def test_devin_child_requires_orchestrator_idle_attestation(tmp_path):
+    now = time.time()
+    make_run(
+        tmp_path,
+        [
+            event("pre", "control-1", "control-session"),
+            event("post", "control-1", "control-session"),
+            event("pre", "dispatch-1", tool_name="run_subagent", received_at=now - 8),
+            event("post", "dispatch-1", tool_name="run_subagent", received_at=now - 4),
+        ],
+        runtime="devin",
+    )
+    result = assess(tmp_path, {"dispatch_call_id": "dispatch-1", "kind": "child"})
+    assert result["claim_supported"] is False
+    assert "devin-parent-idle-unconfirmed" in result["limitations"]
 
 
 def test_codex_agent_completion_requires_matching_subagent_stop(tmp_path):

@@ -10,9 +10,9 @@ import uuid
 from pathlib import Path
 
 from assessment import assess
-from registration import install, remove
+from registration import install, registration_absent, remove
 from sanitize import sanitize
-from store import AuditStoreError, create_manifest, load_manifest, save_manifest, update_manifest
+from store import AuditStoreError, append_record, create_manifest, load_manifest, save_manifest, update_manifest
 
 
 def _duration(value, default=30.0) -> float:
@@ -31,6 +31,14 @@ def _close_interval(manifest: dict, now: float) -> None:
         intervals[-1]["end"] = min(now, manifest.get("expires_at", now))
         if intervals[-1]["end"] < now:
             manifest.setdefault("coverage_gaps", []).append({"start": intervals[-1]["end"], "end": now})
+
+
+def _abort_teardown(run: Path, manifest: dict, now: float, code: str) -> None:
+    _close_interval(manifest, now)
+    manifest["armed"] = False
+    manifest.pop("teardown_probe_until", None)
+    save_manifest(run, manifest)
+    raise AuditStoreError(code)
 
 
 def _subject(value: str) -> dict:
@@ -97,6 +105,8 @@ def execute(args: dict, now: float | None = None) -> dict:
 
         def disarm(manifest):
             manifest["armed"] = False
+            manifest["activation_verified"] = False
+            manifest["registration_state"] = "removing"
             _close_interval(manifest, now)
 
         update_manifest(run, disarm)
@@ -186,6 +196,8 @@ def execute(args: dict, now: float | None = None) -> dict:
         if operation == "start":
 
             def transition(manifest):
+                if manifest.get("registration_state") != "installed":
+                    raise AuditStoreError("registration-not-installed")
                 if not manifest.get("activation_verified"):
                     raise AuditStoreError("activation-unverified")
                 if now >= manifest.get("expires_at", 0):
@@ -208,6 +220,8 @@ def execute(args: dict, now: float | None = None) -> dict:
             duration = _duration(args.get("duration_minutes"))
 
             def transition(manifest):
+                if manifest.get("registration_state") != "installed":
+                    raise AuditStoreError("registration-not-installed")
                 was_expired = now >= manifest.get("expires_at", 0)
                 if was_expired:
                     _close_interval(manifest, now)
@@ -215,6 +229,7 @@ def execute(args: dict, now: float | None = None) -> dict:
                     if gap not in manifest.get("coverage_gaps", []):
                         manifest.setdefault("coverage_gaps", []).append(gap)
                     manifest["armed"] = False
+                    manifest["activation_verified"] = False
                 elif manifest.get("armed") and manifest.get("intervals"):
                     manifest["intervals"][-1]["expires_at"] = now + duration * 60
                 manifest["expires_at"] = now + duration * 60
@@ -229,7 +244,27 @@ def execute(args: dict, now: float | None = None) -> dict:
         }
     if operation == "assess":
         manifest = load_manifest(run)
-        return assess(run, _subject(args["subject"]) if args.get("subject") else manifest.get("subject", {}))
+        if args.get("parent_idle_confirmed"):
+            if not apply:
+                raise AuditStoreError("parent-idle-attestation-requires-apply")
+            subject = _subject(args["subject"]) if args.get("subject") else manifest.get("subject", {})
+            if manifest.get("runtime") != "devin" or subject.get("kind") != "child":
+                raise AuditStoreError("parent-idle-attestation-only-for-devin-child")
+            append_record(
+                run,
+                "controls",
+                {
+                    "code": "devin-parent-idle-attestation",
+                    "dispatch_call_id": subject.get("dispatch_call_id"),
+                    "run_id": manifest.get("run_id"),
+                    "confirmed_at": now,
+                },
+            )
+        return assess(
+            run,
+            _subject(args["subject"]) if args.get("subject") else manifest.get("subject", {}),
+            parent_idle_confirmed=bool(args.get("parent_idle_confirmed")),
+        )
     if operation == "verify-teardown":
         manifest = load_manifest(run)
         if manifest.get("registration_state") != "removed":
@@ -253,13 +288,15 @@ def execute(args: dict, now: float | None = None) -> dict:
             save_manifest(run, manifest)
             return {"teardown_probe": "started", "expires_at": now + 120}
         if phase != "finish" or not args.get("restart_confirmed"):
-            raise AuditStoreError("teardown-restart-unverified")
+            _abort_teardown(run, manifest, now, "teardown-restart-unverified")
         if not args.get("canary_performed"):
-            raise AuditStoreError("teardown-canary-required")
+            _abort_teardown(run, manifest, now, "teardown-canary-required")
         if not manifest.get("teardown_probe_started_at"):
             raise AuditStoreError("teardown-probe-not-started")
         if now > manifest.get("teardown_probe_until", 0):
-            raise AuditStoreError("teardown-probe-expired")
+            _abort_teardown(run, manifest, now, "teardown-probe-expired")
+        if not registration_absent(run, manifest):
+            _abort_teardown(run, manifest, now, "teardown-registration-still-present")
         try:
             nonce = str(uuid.uuid4())
             recorder = run / "scripts" / "record.py"
@@ -286,17 +323,24 @@ def execute(args: dict, now: float | None = None) -> dict:
                 except Exception:
                     late = True
         except Exception:
-            _close_interval(manifest, now)
-            manifest["armed"] = False
-            manifest.pop("teardown_probe_until", None)
-            save_manifest(run, manifest)
-            raise AuditStoreError("teardown-control-failed") from None
+            _abort_teardown(run, manifest, now, "teardown-control-failed")
         if late:
-            _close_interval(manifest, now)
-            manifest["armed"] = False
-            manifest.pop("teardown_probe_until", None)
-            save_manifest(run, manifest)
-            raise AuditStoreError("cached-hook-still-active")
+            _abort_teardown(run, manifest, now, "cached-hook-still-active")
+        health_path = run / "health.jsonl"
+        if health_path.exists():
+            try:
+                health_rows = [
+                    json.loads(line) for line in health_path.read_text(encoding="utf-8").splitlines() if line.strip()
+                ]
+            except Exception:
+                health_rows = [{}]
+            if any(
+                not isinstance(item, dict)
+                or not isinstance(item.get("received_at"), (int, float))
+                or item["received_at"] >= manifest["teardown_probe_started_at"]
+                for item in health_rows
+            ):
+                _abort_teardown(run, manifest, now, "teardown-recorder-health-failed")
         _close_interval(manifest, now)
         manifest["armed"] = False
         manifest.pop("teardown_probe_until", None)
@@ -344,6 +388,12 @@ def _parser() -> argparse.ArgumentParser:
             child.add_argument("--control-call-id")
         if operation == "assess":
             child.add_argument("--subject")
+            child.add_argument(
+                "--confirm-parent-idle",
+                dest="parent_idle_confirmed",
+                action="store_true",
+                help="attest that the orchestrator made no tool calls during this Devin child dispatch",
+            )
         if operation == "verify-teardown":
             child.add_argument("--restart-confirmed", action="store_true")
             child.add_argument("--canary-performed", action="store_true")

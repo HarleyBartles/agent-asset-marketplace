@@ -136,7 +136,7 @@ def test_missing_control_cannot_prove_no_tools(empty_completed_run):
 ```
 
 - [x] Run `py -3 -m pytest skills/temporary-tool-auditing/tests/scripts/test_assessment.py -q` to RED.
-- [x] Implement Codex agent-ID attribution and bounded main/session scopes. Devin child scope requires serialized captured dispatch boundaries and explicit absence of overlapping unidentified producers; reject ambiguous attribution. Retain late outcomes linked to in-window attempts even if delivered after stop, but do not repair an unobserved gap. Treat controls, runtime coverage and subject completion as prerequisites with evidence references, not free-form claims that silently override captured contradictions.
+- [x] Implement Codex agent-ID attribution and bounded main/session scopes. Devin child scope requires serialized captured dispatch boundaries, no overlapping unidentified producers, and a persisted orchestrator-idle self-attestation; reject ambiguous attribution. Retain late outcomes linked to in-window attempts even if delivered after stop, but do not repair an unobserved gap. Treat controls, runtime coverage and subject completion as prerequisites with evidence references, not free-form claims that silently override captured contradictions.
 - [x] Re-run to GREEN. Document statuses and the distinction between no observed attempts within verified coverage and universal no-tool proof.
 - [x] Commit `feat: assess bounded tool-use evidence`.
 

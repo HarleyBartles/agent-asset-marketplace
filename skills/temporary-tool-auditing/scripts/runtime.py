@@ -46,6 +46,11 @@ def normalize_event(runtime: str, payload: dict, detail: str) -> dict:
     status = "observed-unknown"
     if event == "post" and isinstance(result, dict):
         candidate = str(_first(result, "status", "outcome", "state") or "").lower()
+        if runtime == "devin" and "success" in result and isinstance(result["success"], bool):
+            if result.get("error"):
+                status = "failure"
+            else:
+                status = "success" if result["success"] else "failure"
         if candidate in {"success", "succeeded", "completed"}:
             status = "success"
         elif candidate in {"failure", "failed", "error"}:

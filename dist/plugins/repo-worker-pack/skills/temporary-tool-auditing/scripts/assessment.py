@@ -47,7 +47,7 @@ def _selected(record: dict, subject: dict, runtime: str, limitations: set[str]) 
     return record.get("session_id") == session_id
 
 
-def assess(run: Path, subject: dict) -> dict:
+def assess(run: Path, subject: dict, parent_idle_confirmed: bool = False) -> dict:
     limitations: set[str] = set()
     try:
         manifest = load_manifest(Path(run))
@@ -82,6 +82,8 @@ def assess(run: Path, subject: dict) -> dict:
     completion_at = manifest.get("subject_completed_at")
     completion_source = manifest.get("subject_completion_source")
     if runtime == "devin" and subject.get("kind") == "child":
+        if not parent_idle_confirmed:
+            limitations.add("devin-parent-idle-unconfirmed")
         dispatch_id = subject.get("dispatch_call_id")
         matching_dispatch_post = next(
             (
@@ -243,7 +245,13 @@ def assess(run: Path, subject: dict) -> dict:
     return {
         "claim_supported": supported,
         "claim_scope": "no observed tool attempts for the selected subject during verified coverage",
+        "attribution_assumptions": ["orchestrator-self-attested-idleness"]
+        if runtime == "devin" and subject.get("kind") == "child" and parent_idle_confirmed
+        else [],
         "completion_source": completion_source,
+        "parent_idle_attestation": "orchestrator-self-attested"
+        if runtime == "devin" and subject.get("kind") == "child" and parent_idle_confirmed
+        else None,
         "attempt_count": attempts,
         "paired_count": paired,
         "outcome_statuses": {

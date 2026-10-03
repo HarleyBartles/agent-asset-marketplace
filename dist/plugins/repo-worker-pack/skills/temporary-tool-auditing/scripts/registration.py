@@ -153,19 +153,11 @@ def remove(run: Path) -> dict:
                 current.remove(entry)
                 if not current:
                     hooks.pop(event, None)
-            elif (
-                current is not None
-                and isinstance(current, list)
-                and any(
-                    isinstance(candidate, dict)
-                    and candidate.get("hooks", [{}])[0].get("command") == entry.get("hooks", [{}])[0].get("command")
-                    for candidate in current
-                )
-            ):
+            elif current is not None and isinstance(current, list) and current:
                 conflicts.append(event)
             elif current is not None and not isinstance(current, list):
                 conflicts.append(event)
-        if config.exists():
+        if config.exists() and not conflicts:
             if hooks or len(data) > 1:
                 _write(config, data)
             else:
@@ -199,3 +191,18 @@ def _has_owned_config(config: Path, manifest: dict) -> bool:
     except AuditStoreError:
         return True
     return False
+
+
+def registration_absent(run: Path, manifest: dict | None = None) -> bool:
+    run = Path(run).resolve()
+    manifest = manifest or load_manifest(run)
+    root_value = manifest.get("registration_root")
+    if not root_value:
+        return manifest.get("registration_state") in {"not-installed", "removed", "teardown-verified"}
+    root = Path(root_value)
+    runtime = manifest.get("runtime")
+    config = root / ("hooks.json" if runtime == "codex" else "hooks.v1.json")
+    owner = root / ".temporary-tool-auditing-owner.json"
+    if owner.exists():
+        return False
+    return not _has_owned_config(config, manifest)

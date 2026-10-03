@@ -20,7 +20,7 @@ _PATTERNS = [
     ),
     (
         re.compile(
-            r"(?i)(\b(?:x-)?(?:password|passwd|token|access[_-]?token|refresh[_-]?token|api[_-]?key|secret)\s*:\s*)([^\s,;&]+)"
+            r"(?i)(\b(?:x-)?(?:password|passwd|token|access[_-]?token|refresh[_-]?token|api[_-]?key|secret|set-cookie|cookie)\s*:\s*)([^\r\n]+)"
         ),
         lambda m: f"{m.group(1)}{_REDACTED}",
     ),

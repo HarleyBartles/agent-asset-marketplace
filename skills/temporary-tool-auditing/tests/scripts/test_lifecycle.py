@@ -1,3 +1,4 @@
+import json
 import time
 import pytest
 
@@ -70,7 +71,17 @@ def test_expiry_does_not_complete_cleanup_and_renewal_closes_gap(tmp_path):
     manifest = load_manifest(run)
     assert manifest["expires_at"] == 401
     assert manifest["armed"] is False
+    assert manifest["activation_verified"] is False
     assert manifest["coverage_gaps"]
+
+
+def test_start_after_expired_lease_renewal_requires_new_activation_probe(tmp_path):
+    run = tmp_path / "run"
+    base_run(run, expires_at=100, activation_verified=True, intervals=[{"start": 50, "end": 100}])
+    execute({"operation": "renew", "run_dir": str(run), "duration_minutes": 5, "apply": True}, now=101)
+    with pytest.raises(Exception) as error:
+        execute({"operation": "start", "run_dir": str(run), "apply": True}, now=102)
+    assert getattr(error.value, "code", None) == "activation-unverified"
 
 
 def test_start_requires_activation_and_stop_preserves_cleanup(tmp_path):
@@ -186,6 +197,34 @@ def test_apply_and_check_together_are_rejected(tmp_path):
     assert getattr(error.value, "code", None) == "conflicting-modes"
 
 
+def test_devin_parent_idle_attestation_requires_apply_and_is_persisted(tmp_path):
+    run = tmp_path / "run"
+    base_run(run, runtime="devin", subject={"kind": "child", "dispatch_call_id": "dispatch-1"})
+    with pytest.raises(Exception) as error:
+        execute(
+            {"operation": "assess", "run_dir": str(run), "subject": "child:dispatch-1", "parent_idle_confirmed": True},
+            now=100,
+        )
+    assert getattr(error.value, "code", None) == "parent-idle-attestation-requires-apply"
+    execute(
+        {
+            "operation": "assess",
+            "run_dir": str(run),
+            "subject": "child:dispatch-1",
+            "parent_idle_confirmed": True,
+            "apply": True,
+        },
+        now=101,
+    )
+    assert json.loads((run / "controls.jsonl").read_text()) == {
+        "code": "devin-parent-idle-attestation",
+        "dispatch_call_id": "dispatch-1",
+        "run_id": "run-1",
+        "confirmed_at": 101,
+        "redactions": [],
+    }
+
+
 def test_prepare_rejects_run_directory_inside_project_and_existing_run(tmp_path):
     base = {
         "operation": "prepare",
@@ -250,6 +289,15 @@ def test_lifecycle_start_transition_is_atomic_under_concurrency(tmp_path):
         outcomes = list(pool.map(lambda _: start(), range(2)))
     assert sorted(outcomes) == ["already-armed", "started"]
     assert len(load_manifest(run)["intervals"]) == 1
+
+
+@pytest.mark.parametrize("operation", ["start", "renew"])
+def test_capture_cannot_restart_after_registration_removal(tmp_path, operation):
+    run = tmp_path / "run"
+    base_run(run, registration_state="removed", activation_verified=True)
+    with pytest.raises(Exception) as error:
+        execute({"operation": operation, "run_dir": str(run), "apply": True, "duration_minutes": 5}, now=100)
+    assert getattr(error.value, "code", None) == "registration-not-installed"
 
 
 def test_teardown_probe_succeeds_when_direct_control_works_and_no_hook_fires(tmp_path):
@@ -336,3 +384,66 @@ def test_teardown_requires_current_restart_probe_and_fails_closed_on_expiry(tmp_
     assert getattr(error.value, "code", None) == "teardown-probe-expired"
     manifest = load_manifest(run)
     assert manifest["cleanup_required"] is True
+
+
+def test_teardown_does_not_clear_cleanup_when_recorder_health_failed(tmp_path):
+    run = tmp_path / "run"
+    base_run(run, registration_state="removed", cleanup_required=True)
+    install_test_recorder(run)
+    execute({"operation": "verify-teardown", "run_dir": str(run), "phase": "begin", "apply": True}, now=100)
+    (run / "health.jsonl").write_text('{"code":"record-failed","received_at":101}\n')
+    with pytest.raises(Exception) as error:
+        execute(
+            {
+                "operation": "verify-teardown",
+                "run_dir": str(run),
+                "phase": "finish",
+                "restart_confirmed": True,
+                "canary_performed": True,
+                "apply": True,
+            },
+            now=102,
+        )
+    assert getattr(error.value, "code", None) == "teardown-recorder-health-failed"
+    assert load_manifest(run)["cleanup_required"] is True
+
+
+def test_teardown_does_not_clear_cleanup_while_owned_hook_config_remains(tmp_path):
+    from runtime import render_handlers
+
+    run = tmp_path / "run"
+    project = tmp_path / "project"
+    root = project / ".codex"
+    root.mkdir(parents=True)
+    handlers = render_handlers("codex", run / "scripts" / "record.py")
+    entry = handlers["PreToolUse"][0]
+    config = root / "hooks.json"
+    config.write_text(json.dumps({"hooks": {"PreToolUse": [entry]}}))
+    owner = root / ".temporary-tool-auditing-owner.json"
+    owner.write_text(json.dumps({"run_id": "run-1", "run_dir": str(run)}))
+    base_run(
+        run,
+        project_root=str(project),
+        registration_root=str(root),
+        registration_state="removed",
+        cleanup_required=True,
+        owned_entries=[{"event": "PreToolUse", "entry": entry}],
+    )
+    install_test_recorder(run)
+    execute({"operation": "verify-teardown", "run_dir": str(run), "phase": "begin", "apply": True}, now=100)
+    with pytest.raises(Exception) as error:
+        execute(
+            {
+                "operation": "verify-teardown",
+                "run_dir": str(run),
+                "phase": "finish",
+                "restart_confirmed": True,
+                "canary_performed": True,
+                "apply": True,
+            },
+            now=101,
+        )
+    assert getattr(error.value, "code", None) == "teardown-registration-still-present"
+    manifest = load_manifest(run)
+    assert manifest["cleanup_required"] is True
+    assert manifest["armed"] is False

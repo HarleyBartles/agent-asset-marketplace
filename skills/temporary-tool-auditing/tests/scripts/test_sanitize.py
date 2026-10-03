@@ -13,6 +13,8 @@ from record import record_event
         ({"clientSecret": "camel-secret-SENTINEL"}, "camel-secret-SENTINEL"),
         ({"text": '{"access_token":"json-token-SENTINEL"}'}, "json-token-SENTINEL"),
         ({"text": "X-API-Key: header-key-SENTINEL"}, "header-key-SENTINEL"),
+        ({"text": "Cookie: sessionid=cookie-header-SENTINEL"}, "cookie-header-SENTINEL"),
+        ({"text": "Set-Cookie: sid=setter-cookie-SENTINEL; Secure"}, "setter-cookie-SENTINEL"),
         ({"Cookie": "sid=cookie-SENTINEL"}, "cookie-SENTINEL"),
         ({"Authorization": "Bearer bearer-SENTINEL"}, "bearer-SENTINEL"),
         ({"key": "sk-proj-abcdefghijklmnopqrstuvwxyz123456"}, "sk-proj-abcdefghijklmnopqrstuvwxyz123456"),
