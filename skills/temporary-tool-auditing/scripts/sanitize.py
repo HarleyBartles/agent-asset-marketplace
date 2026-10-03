@@ -3,11 +3,12 @@
 import json
 import re
 from typing import Any
+from urllib.parse import unquote_plus
 
 _REDACTED = "[REDACTED]"
 _SECRET_KEYS = re.compile(
     r"(?:^|[_-])(password|passwd|pwd|passphrase|secret|token|credential|credentials|api[_-]?key|access[_-]?key|"
-    r"session(?:[_-]?id)?|sid|phpsessid|jsessionid|asp\.net[_-]?session[_-]?id|cfid|cftoken|"
+    r"session(?:[_-]?id)?|sid|phpsessid|jsessionid|asp(?:\.|[_-])net[_-]?session[_-]?id|cfid|cftoken|"
     r"email|e[_-]?mail|phone|mobile|telephone|ssn|social[_-]?security(?:[_-]?number)?|"
     r"national[_-]?(?:id|identifier)|passport(?:[_-]?(?:number|no))?|date[_-]?of[_-]?birth|dob|"
     r"address|postal[_-]?code|zip[_-]?code|first[_-]?name|last[_-]?name|full[_-]?name|username|"
@@ -20,6 +21,7 @@ _SECRET_KEYS = re.compile(
     re.IGNORECASE,
 )
 _EMAIL = re.compile(r"(?i)\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,63}\b")
+_URL_PARAMETER = re.compile(r"(?i)([?&#;])([^=&#;\s\"'<>]+)(=)([^&#;\s\"'<>]+)")
 _US_SSN = re.compile(r"(?<!\d)(?!000|666|9\d\d)\d{3}[- ](?!00)\d{2}[- ](?!0000)\d{4}(?!\d)")
 _JWT = re.compile(r"\beyJ[A-Za-z0-9_-]{8,}\.[A-Za-z0-9_-]{8,}\.[A-Za-z0-9_-]{8,}\b")
 _PAN = re.compile(r"(?<!\d)(?:\d[ -]?){12,18}\d(?!\d)")
@@ -30,7 +32,7 @@ _PATTERNS = [
     (
         re.compile(
             r"(?i)([?&#](?:key|api[_-]?key|access[_-]?key|auth[_-]?token|refresh[_-]?token|token|jwt|id[_-]?token|"
-            r"session(?:[_-]?id)?|sid|phpsessid|jsessionid|asp\.net[_-]?sessionid|cfid|cftoken|"
+            r"session(?:[_-]?id)?|sid|phpsessid|jsessionid|asp(?:\.|[_-])net[_-]?session[_-]?id|cfid|cftoken|"
             r"oauth[_-]?token|code|password|passwd|pwd|credential|credentials|client[_-]?secret|"
             r"email|e[_-]?mail|phone|mobile|telephone|ssn|social[_-]?security(?:[_-]?number)?|"
             r"national[_-]?(?:id|identifier)|passport(?:[_-]?(?:number|no))?|date[_-]?of[_-]?birth|dob|"
@@ -105,6 +107,17 @@ def _clean_text(value: str) -> tuple[str, bool]:
         updated = pattern.sub(replacement, cleaned)
         changed = changed or updated != cleaned
         cleaned = updated
+
+    def redact_sensitive_parameter(match: re.Match) -> str:
+        key = unquote_plus(match.group(2))
+        normalized_key = re.sub(r"([a-z0-9])([A-Z])", r"\1_\2", key).replace(" ", "_")
+        if _SECRET_KEYS.search(normalized_key):
+            return f"{match.group(1)}{match.group(2)}{match.group(3)}{_REDACTED}"
+        return match.group(0)
+
+    updated = _URL_PARAMETER.sub(redact_sensitive_parameter, cleaned)
+    changed = changed or updated != cleaned
+    cleaned = updated
     return cleaned, changed
 
 

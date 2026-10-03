@@ -47,6 +47,11 @@ from record import record_event
         ({"url": "https://bank.example/transfer?iban=iban-SENTINEL"}, "iban-SENTINEL"),
         ({"url": "https://health.example/patient?diagnosis=diagnosis-SENTINEL"}, "diagnosis-SENTINEL"),
         ({"url": "https://bank.example/transfer?account_number=account-SENTINEL"}, "account-SENTINEL"),
+        ({"url": "https://health.example/patient?dateOfBirth=camel-dob-SENTINEL"}, "camel-dob-SENTINEL"),
+        ({"url": "https://api.example/callback?%64ob=encoded-dob-SENTINEL"}, "encoded-dob-SENTINEL"),
+        ({"url": "https://auth.example/callback?mfa_code=mfa-SENTINEL"}, "mfa-SENTINEL"),
+        ({"url": "https://auth.example/callback?private_key=private-key-SENTINEL"}, "private-key-SENTINEL"),
+        ({"url": "https://legacy.example/app?asp_net_session_id=asp-session-SENTINEL"}, "asp-session-SENTINEL"),
         ({"url": "https://example.test/maps?key=AIzaSyD-SENTINEL&zoom=3"}, "AIzaSyD-SENTINEL"),
         (
             {"url": "https://bucket.test/file?X-Amz-Signature=signature-SENTINEL&X-Amz-Security-Token=token-SENTINEL"},
@@ -190,6 +195,9 @@ def test_recorder_never_persists_sentinels_from_json_or_header_strings(tmp_path,
                 "iban_url": "https://bank.example/transfer?iban=iban-persisted-SENTINEL",
                 "diagnosis_url": "https://health.example/patient?diagnosis=diagnosis-persisted-SENTINEL",
                 "account_url": "https://bank.example/transfer?account_number=account-persisted-SENTINEL",
+                "mfa_url": "https://auth.example/callback?mfa_code=mfa-persisted-SENTINEL",
+                "private_key_url": "https://auth.example/callback?private_key=private-key-persisted-SENTINEL",
+                "asp_session_url": "https://legacy.example/app?asp_net_session_id=asp-session-persisted-SENTINEL",
                 "command": (
                     "tool --access-token cli-SENTINEL --refresh_token=refresh-SENTINEL "
                     '--password "example-secret has spaces" password="assignment secret with spaces"'
@@ -234,6 +242,9 @@ def test_recorder_never_persists_sentinels_from_json_or_header_strings(tmp_path,
         "iban-persisted-SENTINEL",
         "diagnosis-persisted-SENTINEL",
         "account-persisted-SENTINEL",
+        "mfa-persisted-SENTINEL",
+        "private-key-persisted-SENTINEL",
+        "asp-session-persisted-SENTINEL",
     ):
         assert sentinel not in persisted
     persisted_event = json.loads(persisted)
