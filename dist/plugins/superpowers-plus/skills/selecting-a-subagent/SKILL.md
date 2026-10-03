@@ -114,7 +114,7 @@ A consumer repo can extend the portable lens set by authoring a hand-edited `.ag
 
 Use this when the repo has domain-specific surfaces that a generic lens cannot cover. For example, one consumer might add a `.agents/agents/reviewer-marketplace.md` lens for pack generation, another might add `reviewer-domains.md` for domain canon, or `reviewer-tests.md` for a test harness. These are not part of the portable pack.
 
-When `iterative-review` runs, it should discover each `reviewer-*.md` profile from the Devin Desktop agents search path, evaluate the `## Applies to` section against the diff, PR description, and any provided inputs, and dispatch only the matching lenses plus `reviewer-strong`.
+When the owning review workflow authorizes lens dispatch, discover applicable reviewer profiles from the active runtime and repository routes, assess their Applies-to cues against the diff and its trust boundaries, and select only the warranted lenses. Use requesting-code-review for whole-branch review and conducting-code-review for the reviewer method; profile availability does not authorize additional dispatches.
 
 ## Vendor and third-party profiles
 

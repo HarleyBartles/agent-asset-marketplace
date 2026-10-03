@@ -105,6 +105,26 @@ def test_build_packages_complete_copies_and_check_mode_is_read_only(tmp_path: Pa
     assert build_marketplace(tmp_path, apply=False)
 
 
+def test_retiring_one_membership_preserves_source_and_other_plugin(tmp_path: Path) -> None:
+    _source(tmp_path)
+    build_marketplace(tmp_path, apply=True)
+    canonical_before = _tree(tmp_path / "skills/shared-skill")
+    beta_before = _tree(tmp_path / "dist/plugins/beta")
+    definition = tmp_path / "src/plugin-definitions/alpha/contents.json"
+    definition.write_text(json.dumps({"skills": []}), encoding="utf-8")
+
+    with pytest.raises(BuildError):
+        build_marketplace(tmp_path, apply=False)
+    assert (tmp_path / "dist/plugins/alpha/skills/shared-skill/SKILL.md").exists()
+
+    build_marketplace(tmp_path, apply=True)
+
+    assert not (tmp_path / "dist/plugins/alpha/skills/shared-skill").exists()
+    assert _tree(tmp_path / "skills/shared-skill") == canonical_before
+    assert _tree(tmp_path / "dist/plugins/beta") == beta_before
+    assert build_marketplace(tmp_path, apply=False)
+
+
 def test_check_mode_reports_stale_output_without_mutating_it(tmp_path: Path) -> None:
     _source(tmp_path)
     output = tmp_path / "dist/plugins/alpha/stale.txt"

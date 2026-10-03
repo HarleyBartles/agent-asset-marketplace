@@ -20,7 +20,6 @@ metadata:
     - selecting-a-subagent
     - conducting-code-review
     - receiving-code-review
-    - iterative-review
     - finishing-a-development-branch
     - subagent-driven-development
     - executing-plans

@@ -34,6 +34,12 @@ Task 3 evidence: all eight reviewer profile model fields were compared against T
 
 The strong profile's mandatory legacy engine metrics/ledger precondition was removed while aligning its resource contract: ordinary review cannot depend on the workflow being unshipped in Task 4. Prior reports/resolution evidence remain optional claims to verify, and missing prepared packages retain the blocked outcome. This changes active routing, not retained iterative-review source.
 
+Task 3 delivery: `1badd247b0cc15a4bba6a2e411d0a3d064018d48`; the complete tracked Windows hook passed with the same build/repository/shipping counts as Task 1.
+
+Task 4 source-retention baseline is Git tree `05e475f50278ff381c54619e646825fb9e1d62fa` for `47a2f03bec9ebe6bf7928cfdabc2a87b89030358:skills/iterative-review`. The active-route scan after canonical removal leaves only the authored retention note, historical immutable audit-probe attribution and an explicitly legacy scratch name. Retained skill internals and historical tests are unchanged. The assembly suite had no membership-retirement behavior test, so the added generic alpha/beta case verifies preview non-mutation, apply removing only the retired output, and unchanged canonical source/other package. The existing generator already supports it; no fabricated generator RED or production bug-fix claim is made. Assembly/isolated-plugin command: 5 passed, 1 Windows POSIX-bits skip.
+
+Task 4 isolated-package evaluation remains incomplete: the fresh child failed with a workspace-out-of-credits error before producing a review. The actual generated package was copied to an isolated scratch directory and checked for closure, but that inspection does not substitute for the child evaluation. The source/package changes are committed for custody while Task 4 remains open.
+
 ## Global Constraints
 
 - Implement MARK-379 only, in `Z:/_agent-worktrees/agent-asset-marketplace/codex/mark-379-reviewer-discovery` on `codex/mark-379-reviewer-discovery`.

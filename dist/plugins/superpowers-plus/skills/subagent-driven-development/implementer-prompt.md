@@ -126,7 +126,7 @@ Subagent (general-purpose):
     - Read the relevant `reviewer-*.md` profiles in the Devin Desktop agents search path `## Checklist` profiles for the surfaces you touched (e.g. `reviewer-skills` for `SKILL.md` and reference files, `reviewer-marketplace` for scaffolders and generated surfaces, `reviewer-security` for secrets/PII, `reviewer-strong` for whole-branch design).
     - Run each checklist mechanically against your diff.
     - Fix any predictable findings before reporting back. Do not produce code you expect a reviewer to catch and fix.
-    - This pre-review is not a substitute for the `iterative-review` lens/strong dispatch on the final PR.
+    - This pre-review does not replace the fresh whole-branch review dispatched through requesting-code-review, using conducting-code-review, on the final PR.
 
     If you find issues during self-review, fix them now before reporting.
 

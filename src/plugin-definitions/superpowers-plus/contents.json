@@ -89,17 +89,6 @@
       }
     },
     {
-      "name": "iterative-review",
-      "source": "iterative-review",
-      "provenance": {
-        "source_category": "first_party",
-        "content_mode": "verbatim",
-        "source_family": "first_party",
-        "copy_expectation": "byte_identical",
-        "provenance_note": "First-party helper skill bundled verbatim."
-      }
-    },
-    {
       "name": "publishing-source",
       "source": "publishing-source",
       "provenance": {

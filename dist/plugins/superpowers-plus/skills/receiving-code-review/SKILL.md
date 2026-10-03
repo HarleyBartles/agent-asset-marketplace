@@ -19,7 +19,6 @@ metadata:
   related_skills:
     - requesting-code-review
     - conducting-code-review
-    - iterative-review
     - executing-plans
     - subagent-driven-development
     - finishing-a-development-branch
