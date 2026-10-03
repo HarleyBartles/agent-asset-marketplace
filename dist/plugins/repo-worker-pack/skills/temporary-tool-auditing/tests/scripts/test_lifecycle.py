@@ -203,7 +203,7 @@ def test_apply_and_check_together_are_rejected(tmp_path):
 
 def test_devin_parent_idle_attestation_requires_apply_and_is_persisted(tmp_path):
     run = tmp_path / "run"
-    base_run(run, runtime="devin", subject={"kind": "child", "dispatch_call_id": "dispatch-1"})
+    base_run(run, runtime="devin-desktop", subject={"kind": "child", "dispatch_call_id": "dispatch-1"})
     with pytest.raises(Exception) as error:
         execute(
             {"operation": "assess", "run_dir": str(run), "subject": "child:dispatch-1", "parent_idle_confirmed": True},

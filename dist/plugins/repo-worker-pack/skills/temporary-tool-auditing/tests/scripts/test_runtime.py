@@ -51,7 +51,7 @@ def test_codex_post_text_response_does_not_imply_success():
 
 def test_devin_structured_outcome_and_prompt_correlation():
     event = normalize_event(
-        "devin",
+        "devin-desktop",
         {
             "event": "post_tool_use",
             "session_id": "s1",
@@ -71,7 +71,7 @@ def test_devin_structured_outcome_and_prompt_correlation():
 
 def test_devin_structured_success_and_error_fields_are_used():
     success = normalize_event(
-        "devin",
+        "devin-desktop",
         {
             "event": "post_tool_use",
             "tool": "read",
@@ -81,7 +81,7 @@ def test_devin_structured_success_and_error_fields_are_used():
         "status",
     )
     failure = normalize_event(
-        "devin",
+        "devin-desktop",
         {
             "event": "post_tool_use",
             "tool": "read",
@@ -95,7 +95,7 @@ def test_devin_structured_success_and_error_fields_are_used():
 
 
 def test_devin_missing_correlation_fields_remain_null():
-    event = normalize_event("devin", {"event": "pre_tool_use", "tool": "Bash"}, "status")
+    event = normalize_event("devin-desktop", {"event": "pre_tool_use", "tool": "Bash"}, "status")
     assert event["session_id"] is None
     assert event["call_id"] is None
     assert event["outcome_status"] == "observed-unknown"
@@ -110,7 +110,7 @@ def test_handlers_use_absolute_interpreter_script_command(tmp_path):
 
 
 def test_devin_handlers_use_observed_v1_event_shape(tmp_path):
-    handlers = render_handlers("devin", tmp_path / "record.py")
+    handlers = render_handlers("devin-desktop", tmp_path / "record.py")
     assert handlers["version"] == 1
     entry = handlers["hooks"]["PreToolUse"][0]
     assert entry["matcher"] == ""
@@ -165,7 +165,7 @@ def test_auditctl_text_embedded_in_command_or_non_shell_payload_is_not_control()
         lifecycle_cli_path="C:/skills/auditctl.py",
     )
     nested_payload = normalize_event(
-        "devin",
+        "devin-desktop",
         {
             "event": "pre_tool_use",
             "tool": "browser",

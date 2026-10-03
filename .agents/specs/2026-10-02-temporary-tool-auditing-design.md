@@ -6,7 +6,7 @@ Status: Approved by the human on 2026-10-03; implementation is in progress on `c
 
 Provide an Agent Capability Pack skill for an agent that needs to prove tool use during a bounded task. The capability installs temporary project-local instrumentation, verifies capture, records attempted calls and observed outcomes across covered agents, assesses an identified subject, and removes the instrumentation with verified runtime teardown.
 
-The first release supports Codex and Devin. It offers tool auditing, not a general hook framework, an authorisation gate, or an immutable evidence system. MARK-378 owns the separate authorisation experiment. Evidence supports cooperative auditing within demonstrated runtime coverage; it does not establish protection against an agent deliberately modifying its recorder or evidence.
+The first release supports Codex and the demonstrated Devin Desktop hook contract. Devin CLI remains unsupported until its separate configuration and per-call correlation requirements are verified. It offers tool auditing, not a general hook framework, an authorisation gate, or an immutable evidence system. MARK-378 owns the separate authorisation experiment. Evidence supports cooperative auditing within demonstrated runtime coverage; it does not establish protection against an agent deliberately modifying its recorder or evidence.
 
 Canonical source belongs under `skills/temporary-tool-auditing/`. Agent Capability Pack composition currently lives under `src/plugin-definitions/repo-worker-pack/`. Generated plugin outputs are rebuilt from those sources. Installation of the pack makes the skill available; it does not activate hooks in consumer repositories.
 
@@ -56,7 +56,7 @@ Codex uses `.codex/hooks.json` with a `hooks` wrapper, or compatible inline proj
 
 The Codex desktop spike established live discovery, human trust review, activation after restart, cached execution after file removal, and unload after a second restart. Worktree-local capture succeeded in a trusted fresh CLI session. The skill describes the required trust/restart handoff and always verifies actual activation and teardown rather than universalising the spike's restart behaviour. Hosted and specialised paths outside demonstrated hook coverage remain explicit limitations.
 
-Devin uses `.devin/hooks.v1.json`, whose root is the event map. Its documented events include PreToolUse, PostToolUse, SessionStart, and SessionEnd. Use its own supported event set rather than copying Codex subagent event registrations. Its turn identifier is `prompt_id`, shell tool name is `exec`, and documented post-tool response includes `success`, `output`, and `error`.
+The `devin-desktop` adapter is grounded in the recorded Devin Desktop capability probe and uses its observed `.devin/hooks.v1.json` wrapper and event payload. Devin CLI is a distinct contract: its current [hook documentation](https://docs.devin.ai/cli/extensibility/hooks/overview) requires a root event map and documents session/turn IDs without establishing the per-call correlation ID needed by this assessor. Keep Devin CLI unsupported until its schema and correlation behavior are separately verified. Do not present the Desktop spike as evidence for CLI behavior.
 
 The recorded Devin Desktop spike proves pre/post capture for parent and child calls and `tool_use_id` pairing, but child calls share the parent session and lack `agent_id`. Session-wide auditing is supported. Individual child attribution requires serialized dispatch, verified launch/completion boundaries, and no overlapping unidentified tool producers. The orchestrator and other agents must remain idle for the dispatch window; the orchestrator records this positional-attribution assumption explicitly. Otherwise report unattributed events and decline the individual-child no-tool claim. Installation guidance carries the recorded session-start loading/restart constraint and verifies it live. Official CLI documentation does not silently replace recorded Desktop evidence.
 
@@ -80,15 +80,15 @@ Resume inspects the durable manifest, actual registration, lease, and runtime co
 
 Meaningful helper tests belong under `skills/temporary-tool-auditing/tests/`. They verify sanitised on-disk bytes for representative credentials, intact concurrent records, attempt/outcome pairing and incompleteness, lease expiry and renewal gaps, crash/recovery states, preservation of unrelated hooks, ownership conflicts, and idempotent removal. Instruction behaviour checks verify honest attribution/coverage claims and persistent cleanup obligations. No exact-prose or inventory-only tests substitute for these behaviours.
 
-Live runtime controls verify activation, parent and child capture, a completed no-tools child, tool failure and unmatched outcomes, agent-selected result detail, expiry/renewal, and post-removal unload. Use existing Devin spike evidence for demonstrated capabilities, fresh runtime controls where available, and explicit unverified limits where it cannot be repeated from Codex. Never declare a new live Devin check passed from documentation alone.
+Live runtime controls verify activation, parent and child capture, a completed no-tools child, tool failure and unmatched outcomes, agent-selected result detail, expiry/renewal, and post-removal unload. Use existing Devin Desktop spike evidence for demonstrated capabilities, fresh runtime controls where that runtime is available, and explicit unverified limits where it cannot be repeated. Never declare a new live Devin check passed from documentation alone.
 
 Rebuild marketplace projections from canonical sources and run the owning skill tests plus required repository and shipping gates. Return code and validation proof, runtime evidence, residual limits, and verified teardown for every installed development probe. Probe transcripts and run-specific findings remain scratch; durable runtime rules belong in the skill references.
 
 ## Evidence sources
 
 - [Official Codex hooks](https://learn.chatgpt.com/docs/hooks).
-- [Official Devin hook configuration](https://docs.devin.ai/cli/extensibility/hooks/overview).
-- [Official Devin lifecycle payloads](https://docs.devin.ai/cli/extensibility/hooks/lifecycle-hooks).
+- [Official Devin CLI hook configuration](https://docs.devin.ai/cli/extensibility/hooks/overview), used to define the unsupported CLI boundary.
+- [Official Devin CLI lifecycle payloads](https://docs.devin.ai/cli/extensibility/hooks/lifecycle-hooks), used to distinguish documented correlation fields from the Desktop spike.
 - [Recorded Devin Desktop capability findings](../../skills/iterative-review/references/harness-capability-floor.md).
 
 The completed Codex scratch spike is supporting experiment evidence, not a repository authority. Its durable consequences are stated above. Existing evidence does not remove the positive-control requirements for a future consumer run.

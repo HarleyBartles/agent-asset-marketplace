@@ -23,7 +23,7 @@ def normalize_event(
     lifecycle_cli_path: str | Path | None = None,
 ) -> dict:
     runtime = runtime.lower()
-    if runtime not in {"codex", "devin"}:
+    if runtime not in {"codex", "devin-desktop"}:
         raise ValueError("unsupported-runtime")
     raw_event = str(_first(payload, "hook_event_name", "event", "event_name") or "unknown").lower()
     if "pre" in raw_event or raw_event in {"before_tool_use", "tool_start"}:
@@ -52,7 +52,7 @@ def normalize_event(
     status = "observed-unknown"
     if event == "post" and isinstance(result, dict):
         candidate = str(_first(result, "status", "outcome", "state") or "").lower()
-        if runtime == "devin" and "success" in result and isinstance(result["success"], bool):
+        if runtime == "devin-desktop" and "success" in result and isinstance(result["success"], bool):
             if result.get("error"):
                 status = "failure"
             else:
@@ -179,7 +179,7 @@ def render_handlers(runtime: str, recorder: Path) -> dict:
                 handler["timeout"] = 3
             hooks[event] = [{"matcher": "", "hooks": [handler]}]
         return hooks
-    if runtime == "devin":
+    if runtime == "devin-desktop":
         command = windows_command if sys.platform == "win32" else posix_command
         return {
             "version": 1,

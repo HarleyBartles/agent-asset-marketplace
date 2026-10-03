@@ -29,7 +29,7 @@ def _read_records(path: Path, limitations: set[str]) -> list[dict]:
 
 def _selected(record: dict, subject: dict, runtime: str, limitations: set[str]) -> bool:
     if subject.get("agent_id") is not None:
-        if runtime == "devin":
+        if runtime == "devin-desktop":
             return False
         if record.get("event") not in {"pre", "post"}:
             return False
@@ -91,7 +91,7 @@ def assess(run: Path, subject: dict, parent_idle_confirmed: bool = False) -> dic
         limitations.add("no-verified-coverage")
     completion_at = manifest.get("subject_completed_at")
     completion_source = manifest.get("subject_completion_source")
-    if runtime == "devin" and subject.get("kind") == "child":
+    if runtime == "devin-desktop" and subject.get("kind") == "child":
         if not parent_idle_confirmed:
             limitations.add("devin-parent-idle-unconfirmed")
         dispatch_id = subject.get("dispatch_call_id")
@@ -153,7 +153,7 @@ def assess(run: Path, subject: dict, parent_idle_confirmed: bool = False) -> dic
     def is_control(item):
         return identity(item) in control_identities
 
-    if runtime == "devin" and subject.get("kind") == "child":
+    if runtime == "devin-desktop" and subject.get("kind") == "child":
         dispatch_id = subject.get("dispatch_call_id")
         dispatches = [
             item
@@ -220,7 +220,7 @@ def assess(run: Path, subject: dict, parent_idle_confirmed: bool = False) -> dic
     for item in subject_records:
         if item.get("event") in {"pre", "post"} and not item.get("session_id"):
             limitations.add("missing-session-id")
-        if runtime == "devin" and item.get("event") in {"pre", "post"} and not item.get("turn_id"):
+        if runtime == "devin-desktop" and item.get("event") in {"pre", "post"} and not item.get("turn_id"):
             limitations.add("missing-turn-id")
     selected = [item for item in subject_records if not is_control(item)]
     pres: dict[str, dict] = {}
@@ -268,7 +268,7 @@ def assess(run: Path, subject: dict, parent_idle_confirmed: bool = False) -> dic
         "claim_supported": supported,
         "claim_scope": "no observed tool attempts for the selected subject during verified coverage",
         "attribution_assumptions": ["orchestrator-self-attested-idleness"]
-        if runtime == "devin" and subject.get("kind") == "child" and parent_idle_confirmed
+        if runtime == "devin-desktop" and subject.get("kind") == "child" and parent_idle_confirmed
         else [],
         "completion_source": completion_source,
         "subject": subject,
@@ -279,7 +279,7 @@ def assess(run: Path, subject: dict, parent_idle_confirmed: bool = False) -> dic
         "health": health,
         "redactions": redactions,
         "parent_idle_attestation": "orchestrator-self-attested"
-        if runtime == "devin" and subject.get("kind") == "child" and parent_idle_confirmed
+        if runtime == "devin-desktop" and subject.get("kind") == "child" and parent_idle_confirmed
         else None,
         "attempt_count": attempts,
         "paired_count": paired,

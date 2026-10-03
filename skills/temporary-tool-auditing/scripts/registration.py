@@ -54,7 +54,7 @@ def _paths(project: Path, run: Path, runtime: str) -> tuple[Path, Path, Path]:
 
 def install(run: Path, project: Path, runtime: str) -> dict:
     run, project = Path(run).resolve(), Path(project).resolve()
-    if runtime not in {"codex", "devin"}:
+    if runtime not in {"codex", "devin-desktop"}:
         raise AuditStoreError("unsupported-runtime")
     root, config_path, owner_path = _paths(project, run, runtime)
     manifest = load_manifest(run)

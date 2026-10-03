@@ -61,7 +61,7 @@ def execute(args: dict, now: float | None = None) -> dict:
         duration = _duration(args.get("duration_minutes"))
         detail = args.get("detail")
         runtime = args.get("runtime")
-        if runtime not in {"codex", "devin"} or detail not in {"status", "full-results"}:
+        if runtime not in {"codex", "devin-desktop"} or detail not in {"status", "full-results"}:
             raise AuditStoreError("invalid-prepare-options")
         subject = _subject(args.get("subject", ""))
         project = Path(args["project"]).resolve()
@@ -252,7 +252,7 @@ def execute(args: dict, now: float | None = None) -> dict:
             if not apply:
                 raise AuditStoreError("parent-idle-attestation-requires-apply")
             subject = _subject(args["subject"]) if args.get("subject") else manifest.get("subject", {})
-            if manifest.get("runtime") != "devin" or subject.get("kind") != "child":
+            if manifest.get("runtime") != "devin-desktop" or subject.get("kind") != "child":
                 raise AuditStoreError("parent-idle-attestation-only-for-devin-child")
             append_record(
                 run,
@@ -389,7 +389,7 @@ def _parser() -> argparse.ArgumentParser:
         child.add_argument("--check", action="store_true", help="preview without mutation")
         child.add_argument("--run-dir", required=operation != "prepare")
         if operation == "prepare":
-            child.add_argument("--runtime", choices=("codex", "devin"), required=True)
+            child.add_argument("--runtime", choices=("codex", "devin-desktop"), required=True)
             child.add_argument("--project", required=True)
             child.add_argument("--question", required=True)
             child.add_argument("--subject", required=True)

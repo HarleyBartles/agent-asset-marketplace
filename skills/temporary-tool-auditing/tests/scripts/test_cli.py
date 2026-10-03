@@ -15,6 +15,30 @@ def test_help_and_check_are_safe(capsys, tmp_path):
     assert not run.exists()
 
 
+def test_ambiguous_devin_runtime_name_is_rejected(capsys, tmp_path):
+    with pytest.raises(SystemExit) as exit_code:
+        main(
+            [
+                "prepare",
+                "--run-dir",
+                str(tmp_path / "run"),
+                "--runtime",
+                "devin",
+                "--project",
+                str(tmp_path),
+                "--question",
+                "x",
+                "--subject",
+                "session:s1",
+                "--detail",
+                "status",
+            ]
+        )
+    assert exit_code.value.code == 2
+    assert "devin-desktop" in capsys.readouterr().err
+    assert not (tmp_path / "run").exists()
+
+
 def test_invalid_duration_returns_safe_error_and_does_not_write(tmp_path, capsys):
     code = main(
         [

@@ -25,7 +25,7 @@
 
 ## Source map and shared contracts
 
-Create `skills/temporary-tool-auditing/SKILL.md`, `agents/openai.yaml`, `references/codex.md`, `references/devin.md`, `references/evidence.md`, and `assets/hooks/{codex,devin}.json`. Use canonical metadata conventions from neighbouring first-party skills; do not copy generated provenance.
+Create `skills/temporary-tool-auditing/SKILL.md`, `agents/openai.yaml`, `references/codex.md`, `references/devin.md`, `references/evidence.md`, and `assets/hooks/{codex,devin-desktop}.json`. Use canonical metadata conventions from neighbouring first-party skills; do not copy generated provenance.
 
 Create these focused modules under `skills/temporary-tool-auditing/scripts/`:
 
@@ -45,7 +45,7 @@ Manifest version 1 contains `run_id`, `runtime`, `runtime_version`, `project_roo
 
 Normalized records contain `run_id`, `received_at`, `event`, `session_id`, optional `agent_id`, `turn_id`, `call_id`, `tool_name`, sanitized `arguments`, `outcome_status`, optional sanitized `result`, and `redactions`. Missing IDs are null and invalidate dependent attribution/pairing rather than being manufactured. Outcome status is `observed-unknown`, `success`, `failure`, or `rejected`; use the latter three only when the runtime payload independently establishes them.
 
-CLI: `auditctl.py <operation> --run-dir <absolute-path>`, with `--check` default and `--apply` for mutations. `prepare` additionally requires `--runtime codex|devin --project <root> --question <text> --subject <session-or-agent-selector> --detail status|full-results`, and accepts `--duration-minutes` default 30 and `--runtime-version`. Provide `--help` at root and operation level. Missing required capabilities return nonzero and safe structured errors. Never put the raw question or exception text into output before sanitisation.
+CLI: `auditctl.py <operation> --run-dir <absolute-path>`, with `--check` default and `--apply` for mutations. `prepare` additionally requires `--runtime codex|devin-desktop --project <root> --question <text> --subject <session-or-agent-selector> --detail status|full-results`, and accepts `--duration-minutes` default 30 and `--runtime-version`. Devin CLI remains unsupported until its config and correlation contract are verified separately. Provide `--help` at root and operation level. Missing required capabilities return nonzero and safe structured errors. Never put the raw question or exception text into output before sanitisation.
 
 ## Review Focus
 
@@ -78,7 +78,7 @@ def test_secret_does_not_reach_persisted_record(tmp_path):
 
 ### Task 2: Runtime adapters and paired event recording
 
-**Files:** Create `scripts/runtime.py`, `scripts/record.py`, `assets/hooks/codex.json`, `assets/hooks/devin.json`, `tests/scripts/test_record.py`, `test_runtime.py`.
+**Files:** Create `scripts/runtime.py`, `scripts/record.py`, `assets/hooks/codex.json`, `assets/hooks/devin-desktop.json`, `tests/scripts/test_record.py`, `test_runtime.py`.
 
 **Interfaces:** Consumes Task 1 storage. Produces `normalize_event`, `render_handlers`, and `record_event`; stdin command accepts `--run-dir`, emits neutral runtime-valid JSON, and never changes tool decisions.
 
@@ -170,7 +170,7 @@ def test_expiry_does_not_complete_cleanup(expired_run):
 - [x] Exercise the complete helper against disposable project configurations using `py -3 -m pytest skills/temporary-tool-auditing/tests/scripts -q`; fix failures through owning tasks rather than adding test-only overrides.
 - [ ] Run fresh Codex live controls in the canonical worktree with run data under `Z:/_agent-scratch/agent-asset-marketplace/codex-mark-377-temporary-tool-auditing/implementation-validation/`. Capture parent shell success/nonzero failure, paired child call, completed no-tools child, nested tool execution and an available MCP call, selected detail levels, short expiry and explicit renewal. Human reviews actual hook definitions; use restart handoffs where observed necessary. Do not expose credentials or print raw responses to verification artifacts.
 - [ ] Remove development registrations, disarm, restart if required and execute healthy armed unload canary before declaring teardown. Stop dependent completion if cleanup remains unresolved. Retain sanitized runtime evidence and result/coverage summaries in scratch, not source.
-- [x] Compare Devin fixtures/references against the recorded `skills/iterative-review/references/harness-capability-floor.md` and official documentation. Run fresh Devin controls only if a Devin runtime is actually available; otherwise state new code is tested by fixture/helper behaviour and historical runtime evidence, not live revalidated. Reject any discovered contract conflict rather than guessing a pass.
+- [x] Compare Devin Desktop fixtures/references against the recorded `skills/iterative-review/references/harness-capability-floor.md` and current official Devin CLI documentation. Keep Devin CLI unsupported because its standalone hook config format differs and its documented event shape does not establish the per-call correlation ID. Run fresh Devin Desktop controls only if that runtime is available; otherwise state new code is tested by fixture/helper behaviour and historical runtime evidence, not live revalidated.
 - [ ] Commit `docs: guide tool auditing and runtime recovery` after focused checks and behavioural evaluation. Run-specific model results are never committed into the skill.
 
 ### Task 7: Package, review and publish the capability
@@ -205,6 +205,7 @@ The fresh whole-branch review at `5938683cf4d3b9e3c9ca183de7dc67413d67f2b9` foun
 - [x] Attribute Codex session selectors to parent calls without a child agent ID; require an agent selector for Codex child calls.
 - [x] Exclude only explicitly registered control call identities; exact lifecycle command text alone cannot hide a selected subject's tool attempt.
 - [x] Redact plain `key=` URL query credentials while preserving unrelated query parameters.
+- [x] Redact cloud signed-URL signature and credential query parameters before persistence.
 - [ ] Run the owning suite and full repository gates, regenerate the package, commit, and obtain fresh whole-branch plus matching topical reviews.
 
 ## Execution entry and current baseline
