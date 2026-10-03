@@ -1,4 +1,5 @@
 import json
+import os
 import sys
 import time
 from pathlib import Path
@@ -431,6 +432,31 @@ def test_purge_preserves_unowned_root_files_before_deleting_logs(tmp_path):
     assert load_manifest(run)["cleanup_required"] is True
     assert note.read_text(encoding="utf-8") == "keep this unowned file"
     assert (run / "events.jsonl").exists()
+
+
+@pytest.mark.skipif(os.name != "nt" or not hasattr(Path, "is_junction"), reason="Windows junction behavior")
+def test_purge_rejects_scripts_junction_without_touching_target_or_logs(tmp_path):
+    import subprocess
+
+    run = tmp_path / "run"
+    base_run(run, registration_state="teardown-verified", cleanup_required=True, teardown_verified_at=100)
+    append_record(run, "events", {"call_id": "call-1"})
+    outside = tmp_path / "outside"
+    outside.mkdir()
+    sentinel = outside / "record.py"
+    sentinel.write_text("leave outside data intact", encoding="utf-8")
+    scripts = run / "scripts"
+    subprocess.run(["cmd.exe", "/c", "mklink", "/J", str(scripts), str(outside)], check=True, capture_output=True)
+    assert scripts.is_junction()
+
+    with pytest.raises(Exception) as error:
+        execute({"operation": "purge", "run_dir": str(run), "apply": True}, now=101)
+
+    assert getattr(error.value, "code", None) == "run-helper-purge-failed"
+    assert load_manifest(run)["cleanup_required"] is True
+    assert sentinel.read_text(encoding="utf-8") == "leave outside data intact"
+    assert (run / "events.jsonl").exists()
+    scripts.unlink()
 
 
 def test_teardown_fails_when_direct_control_log_works_but_event_log_does_not(tmp_path, monkeypatch):

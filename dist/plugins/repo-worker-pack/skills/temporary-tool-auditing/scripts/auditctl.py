@@ -132,6 +132,19 @@ def execute(args: dict, now: float | None = None) -> dict:
                 raise AuditStoreError("run-purge-unowned-entry")
         except OSError:
             raise AuditStoreError("run-purge-inspection-failed") from None
+        scripts = run / "scripts"
+        try:
+            is_junction = getattr(scripts, "is_junction", lambda: False)()
+            if scripts.is_symlink() or is_junction:
+                raise AuditStoreError("run-helper-purge-failed")
+            if scripts.exists():
+                if not scripts.is_dir() or scripts.resolve(strict=True) != run.resolve(strict=True) / "scripts":
+                    raise AuditStoreError("run-helper-purge-failed")
+                owned_helpers = {"record.py", "runtime.py", "store.py", "sanitize.py"}
+                if any(entry.name not in owned_helpers for entry in scripts.iterdir()):
+                    raise AuditStoreError("run-helper-purge-failed")
+        except OSError:
+            raise AuditStoreError("run-helper-purge-failed") from None
         for name in ("events", "health", "controls"):
             path = run / f"{name}.jsonl"
             try:
@@ -140,11 +153,8 @@ def execute(args: dict, now: float | None = None) -> dict:
                 raise AuditStoreError("log-purge-failed") from None
             if path.exists():
                 raise AuditStoreError("log-purge-failed")
-        scripts = run / "scripts"
-        if scripts.is_symlink() or (scripts.exists() and not scripts.is_dir()):
-            raise AuditStoreError("run-helper-purge-failed")
         if scripts.exists():
-            for name in ("record.py", "runtime.py", "store.py", "sanitize.py"):
+            for name in owned_helpers:
                 try:
                     (scripts / name).unlink(missing_ok=True)
                 except OSError:
