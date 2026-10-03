@@ -16,6 +16,10 @@ from record import record_event
         ({"text": "Cookie: sessionid=cookie-header-SENTINEL"}, "cookie-header-SENTINEL"),
         ({"text": "Set-Cookie: sid=setter-cookie-SENTINEL; Secure"}, "setter-cookie-SENTINEL"),
         ({"Cookie": "sid=cookie-SENTINEL"}, "cookie-SENTINEL"),
+        ({"args": {"JSESSIONID": "java-session-SENTINEL"}}, "java-session-SENTINEL"),
+        ({"args": {"sessionid": "plain-session-SENTINEL"}}, "plain-session-SENTINEL"),
+        ({"args": {"sessionId": "camel-session-SENTINEL"}}, "camel-session-SENTINEL"),
+        ({"args": {"sid": "short-session-SENTINEL"}}, "short-session-SENTINEL"),
         ({"Authorization": "Bearer bearer-SENTINEL"}, "bearer-SENTINEL"),
         ({"key": "sk-proj-abcdefghijklmnopqrstuvwxyz123456"}, "sk-proj-abcdefghijklmnopqrstuvwxyz123456"),
         ({"text": "Authorization: Basic dXNlcjpwYXNz"}, "dXNlcjpwYXNz"),
@@ -35,6 +39,7 @@ from record import record_event
         ({"url": "https://example.test/#access_token=fragment-token-SENTINEL"}, "fragment-token-SENTINEL"),
         ({"url": "https://legacy.example/action?sessionid=session-SENTINEL&view=summary"}, "session-SENTINEL"),
         ({"url": "https://legacy.example/action?JSESSIONID=java-session-SENTINEL"}, "java-session-SENTINEL"),
+        ({"url": "https://legacy.example/app?CFID=cfid-SENTINEL&CFTOKEN=cftoken-SENTINEL"}, "cftoken-SENTINEL"),
         ({"command": "tool --access-token cli-SENTINEL"}, "cli-SENTINEL"),
         ({"command": "tool --refresh_token=refresh-SENTINEL"}, "refresh-SENTINEL"),
         ({"command": 'tool --password "example-secret has spaces"'}, "example-secret has spaces"),
@@ -110,7 +115,12 @@ def test_recorder_never_persists_sentinels_from_json_or_header_strings(tmp_path,
                 "auth_url": "https://api.example/items?auth_token=auth-persisted-SENTINEL",
                 "fragment_url": "https://example.test/#access_token=fragment-persisted-SENTINEL",
                 "session_url": "https://legacy.example/action?sessionid=session-persisted-SENTINEL",
+                "coldfusion_url": "https://legacy.example/app?CFID=cfid-persisted&CFTOKEN=cftoken-persisted-SENTINEL",
                 "connection_string": "Server=db;User Id=example;Pwd=connection-SENTINEL",
+                "JSESSIONID": "java-session-persisted-SENTINEL",
+                "sessionid": "plain-session-persisted-SENTINEL",
+                "sessionId": "camel-session-persisted-SENTINEL",
+                "sid": "short-session-persisted-SENTINEL",
                 "command": (
                     "tool --access-token cli-SENTINEL --refresh_token=refresh-SENTINEL "
                     '--password "example-secret has spaces" password="assignment secret with spaces"'
@@ -133,10 +143,17 @@ def test_recorder_never_persists_sentinels_from_json_or_header_strings(tmp_path,
         "auth-persisted-SENTINEL",
         "fragment-persisted-SENTINEL",
         "session-persisted-SENTINEL",
+        "cftoken-persisted-SENTINEL",
         "cli-SENTINEL",
         "refresh-SENTINEL",
         "result-SENTINEL",
         "connection-SENTINEL",
+        "java-session-persisted-SENTINEL",
+        "plain-session-persisted-SENTINEL",
+        "camel-session-persisted-SENTINEL",
+        "short-session-persisted-SENTINEL",
     ):
         assert sentinel not in persisted
-    assert json.loads(persisted)["redactions"]
+    persisted_event = json.loads(persisted)
+    assert persisted_event["session_id"] == "s1"
+    assert persisted_event["redactions"]

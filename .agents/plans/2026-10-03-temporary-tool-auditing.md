@@ -209,6 +209,8 @@ The fresh whole-branch review at `5938683cf4d3b9e3c9ca183de7dc67413d67f2b9` foun
 - [x] Redact common JWT, ID token, and OAuth authorization-code URL parameters before persistence.
 - [x] Redact common `auth_token` query and sensitive URL fragment values before persistence.
 - [x] Redact common session-cookie identifier query parameters before persistence.
+- [x] Redact legacy CFID/CFTOKEN URL session tracking credentials before persistence.
+- [x] Redact structured session-cookie identifiers without removing the event's session ID used for correlation.
 - [ ] Run the owning suite and full repository gates, regenerate the package, commit, and obtain fresh whole-branch plus matching topical reviews.
 
 ## Execution entry and current baseline

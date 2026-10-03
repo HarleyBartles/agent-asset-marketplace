@@ -7,6 +7,7 @@ from typing import Any
 _REDACTED = "[REDACTED]"
 _SECRET_KEYS = re.compile(
     r"(?:^|[_-])(password|passwd|pwd|secret|token|api[_-]?key|access[_-]?key|"
+    r"session(?:[_-]?id)?|sid|phpsessid|jsessionid|asp\.net[_-]?session[_-]?id|cfid|cftoken|"
     r"authorization|proxy[_-]?authorization|cookie|set[_-]?cookie|private[_-]?key)(?:$|[_-])",
     re.IGNORECASE,
 )
@@ -17,7 +18,7 @@ _PATTERNS = [
     (
         re.compile(
             r"(?i)([?&#](?:key|api[_-]?key|access[_-]?key|auth[_-]?token|refresh[_-]?token|token|jwt|id[_-]?token|"
-            r"session(?:[_-]?id)?|sid|phpsessid|jsessionid|asp\.net[_-]?sessionid|"
+            r"session(?:[_-]?id)?|sid|phpsessid|jsessionid|asp\.net[_-]?sessionid|cfid|cftoken|"
             r"oauth[_-]?token|code|client[_-]?secret|(?:x-amz-|x-goog-)?(?:signature|sig)|"
             r"x-amz-security-token|x-amz-credential)=)[^&#\s\"'<>]+"
         ),
@@ -84,6 +85,8 @@ def sanitize(value: object) -> tuple[object, list[str]]:
                 if key_changed:
                     result[safe_key] = _REDACTED
                     redactions.append(child_path)
+                elif safe_key == "session_id":
+                    result[safe_key] = visit(child, child_path, depth + 1)
                 elif _SECRET_KEYS.search(normalized_key):
                     result[safe_key] = _REDACTED
                     redactions.append(child_path)
