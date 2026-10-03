@@ -1,0 +1,13 @@
+# Evidence and limits
+
+This recorder supports a bounded statement about one selected subject and one verified capture window. It does not establish universal proof that an agent never used a tool. The strongest supported absence statement is: no tool attempts were observed for the selected subject during the verified coverage interval.
+
+Assessment requires a recorded positive control, verified hook activation, a completed subject inside the coverage interval, readable event and health logs, and no known coverage gaps. A positive control proves the recorder emitted an event in this run. It does not prove every runtime tool path is observable.
+
+Pre-tool events represent observed attempts, including calls later rejected or failed. A post-tool event without independently structured outcome evidence has status `observed-unknown`; visible text alone is not treated as proof of success. Missing call IDs, duplicate events, unmatched pre/post events, malformed log lines, redactions, recorder health failures, and activity outside the selected attribution scope are surfaced as limitations.
+
+Codex child attribution uses the runtime's agent identifier when present. Main-session activity can have no agent identifier, so select the appropriate session scope and do not infer a child identity from absence. Devin hook events have session and prompt identifiers but do not expose a child agent identifier in the recorded harness evidence. Devin child attribution is therefore limited to captured, serialized dispatch boundaries; overlapping or unidentified activity makes the attribution ambiguous.
+
+Evidence records are sanitized before persistence. Sanitization recognizes common credential field names, authorization and cookie values, private-key blocks, URL user information, common API-key formats, and common credential assignments. This is a defensive filter, not a secret detector or confidentiality guarantee. Keep raw results disabled unless the scenario needs them, never deliberately place credentials in a test call, and inspect the resulting redaction report before sharing evidence.
+
+The recorder is observational and must not alter tool decisions. Remove only the exact owned project-local hook entries, restart the runtime when its configuration is cached, then run the teardown verification. A removed config entry alone does not prove that a running runtime unloaded its cached hook.

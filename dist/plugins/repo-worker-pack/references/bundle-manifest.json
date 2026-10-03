@@ -120,6 +120,17 @@
       "canonical_source_path": "skills/repo-worker-pack--risk-gates",
       "local_path": "skills/risk-gates",
       "source_path": "skills/repo-worker-pack--risk-gates/SKILL.md"
+    },
+    {
+      "canonical_name": "temporary-tool-auditing",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Canonical first-party temporary-tool-auditing skill.",
+      "canonical_source_path": "skills/temporary-tool-auditing",
+      "local_path": "skills/temporary-tool-auditing",
+      "source_path": "skills/temporary-tool-auditing/SKILL.md"
     }
   ]
 }

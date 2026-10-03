@@ -1,6 +1,6 @@
 # Temporary Tool Auditing
 
-Status: Approved by the human on 2026-10-03; implementation planning is authorised. Design date: 2026-10-02. Issue: MARK-377. Source baseline: `b481f98ae90aa45e5271d10fe1f7aaeb6c7047aa`.
+Status: Approved by the human on 2026-10-03; implementation is in progress on `codex/mark-377-temporary-tool-auditing`. Design date: 2026-10-02. Issue: MARK-377. Source baseline: `b481f98ae90aa45e5271d10fe1f7aaeb6c7047aa`.
 
 ## Purpose and boundary
 

@@ -61,7 +61,7 @@ CLI: `auditctl.py <operation> --run-dir <absolute-path>`, with `--check` default
 
 **Interfaces:** Consumes Python standard library only. Produces the `sanitize` and store functions above; safe errors expose codes, never raw payloads.
 
-- [ ] Write parametrized tests for API keys, nested password/token/cookie fields, Authorization headers, Basic/Bearer text, private-key blocks, URL userinfo, connection strings, CLI assignments and flags. Inspect persisted bytes and captured diagnostics, not only return dictionaries. Include harmless data preservation and redaction-path reporting.
+- [x] Write parametrized tests for API keys, nested password/token/cookie fields, Authorization headers, Basic/Bearer text, private-key blocks, URL userinfo, connection strings, CLI assignments and flags. Inspect persisted bytes and captured diagnostics, not only return dictionaries. Include harmless data preservation and redaction-path reporting.
 
 ```python
 def test_secret_does_not_reach_persisted_record(tmp_path):
@@ -71,10 +71,10 @@ def test_secret_does_not_reach_persisted_record(tmp_path):
     assert '[REDACTED]' in (tmp_path / 'events.jsonl').read_text()
 ```
 
-- [ ] Run `py -3 -m pytest skills/temporary-tool-auditing/tests/scripts/test_sanitize.py skills/temporary-tool-auditing/tests/scripts/test_store.py -q`; witness failure before implementation.
-- [ ] Implement recursive redaction plus bounded text patterns. Centralise sanitisation at persistent-write boundaries. Use OS-specific standard-library file locks (`msvcrt` on Windows, `fcntl` on POSIX), atomic manifest replacement, restrictive creation where supported, bounded lock acquisition, and generic error codes. Lock read/modify/write transactions, not just individual writes. Add subprocess-writer tests proving complete unique records; test lock failure and interrupted atomic replacement preserve readable state.
-- [ ] Re-run the two suites. Include redaction failures that produce no unsafe partial file. Inspect all written files for fixture secrets.
-- [ ] Commit `feat: add sanitised audit storage` through the tracked hook. Do not create empty skill scaffolding solely to satisfy an inventory test; add the minimal valid skill metadata required by repository validators with this deliverable.
+- [x] Run `py -3 -m pytest skills/temporary-tool-auditing/tests/scripts/test_sanitize.py skills/temporary-tool-auditing/tests/scripts/test_store.py -q`; witness failure before implementation.
+- [x] Implement recursive redaction plus bounded text patterns. Centralise sanitisation at persistent-write boundaries. Use OS-specific standard-library file locks (`msvcrt` on Windows, `fcntl` on POSIX), atomic manifest replacement, restrictive creation where supported, bounded lock acquisition, and generic error codes. Lock read/modify/write transactions, not just individual writes. Add subprocess-writer tests proving complete unique records; test lock failure and interrupted atomic replacement preserve readable state.
+- [x] Re-run the two suites. Include redaction failures that produce no unsafe partial file. Inspect all written files for fixture secrets.
+- [x] Commit `feat: add sanitised audit storage` through the tracked hook. Do not create empty skill scaffolding solely to satisfy an inventory test; add the minimal valid skill metadata required by repository validators with this deliverable.
 
 ### Task 2: Runtime adapters and paired event recording
 
@@ -82,7 +82,7 @@ def test_secret_does_not_reach_persisted_record(tmp_path):
 
 **Interfaces:** Consumes Task 1 storage. Produces `normalize_event`, `render_handlers`, and `record_event`; stdin command accepts `--run-dir`, emits neutral runtime-valid JSON, and never changes tool decisions.
 
-- [ ] Add Codex and Devin payload fixtures from observed field shapes using invented non-secret data. Cover Codex child identity, main identity absence, Devin prompt IDs, structured Devin success/failure/error, text-only Codex outcome, and missing correlation fields.
+- [x] Add Codex and Devin payload fixtures from observed field shapes using invented non-secret data. Cover Codex child identity, main identity absence, Devin prompt IDs, structured Devin success/failure/error, text-only Codex outcome, and missing correlation fields.
 
 ```python
 def test_post_event_does_not_imply_success():
@@ -94,10 +94,10 @@ def test_post_event_does_not_imply_success():
     assert 'result' not in result
 ```
 
-- [ ] Run `py -3 -m pytest skills/temporary-tool-auditing/tests/scripts/test_record.py skills/temporary-tool-auditing/tests/scripts/test_runtime.py -q` and witness RED.
-- [ ] Implement arming and expiry checks before persistence; collect raw fields only in memory, sanitize then normalize/store. Parse failures and write failures emit generic health codes without payload echoes. Supply Codex pre/post/session/subagent events and Devin pre/post/session events. Use absolute recorder/interpreter paths with platform-correct quoting; resolve active interpreter without assuming a shell's `python` alias. Probe unsupported interpreter capabilities before registration.
-- [ ] Test expiry boundary, disarm, full-results sanitisation, secret-containing malformed stdin, absent outcome status and concurrent invocation. Re-run the suites to GREEN.
-- [ ] Commit `feat: record runtime audit attempts and outcomes`.
+- [x] Run `py -3 -m pytest skills/temporary-tool-auditing/tests/scripts/test_record.py skills/temporary-tool-auditing/tests/scripts/test_runtime.py -q` and witness RED.
+- [x] Implement arming and expiry checks before persistence; collect raw fields only in memory, sanitize then normalize/store. Parse failures and write failures emit generic health codes without payload echoes. Supply Codex pre/post/session/subagent events and Devin pre/post/session events. Use absolute recorder/interpreter paths with platform-correct quoting; resolve active interpreter without assuming a shell's `python` alias. Probe unsupported interpreter capabilities before registration.
+- [x] Test expiry boundary, disarm, full-results sanitisation, secret-containing malformed stdin, absent outcome status and concurrent invocation. Re-run the suites to GREEN.
+- [x] Commit `feat: record runtime audit attempts and outcomes`.
 
 ### Task 3: Owned project-local registration and recovery
 
@@ -105,7 +105,7 @@ def test_post_event_does_not_imply_success():
 
 **Interfaces:** Consumes `render_handlers` and locked store; produces `install`/`remove` results containing ownership state and safe conflicts. Existing inline Codex hooks may coexist; use local hooks.json and preserve both source types rather than rewriting unrelated TOML.
 
-- [ ] Test preservation of existing handlers and top-level fields, non-ASCII paths/spaces, worktree root selection, concurrent installer rejection, same-run idempotence, and ownership conflict on removal. Build an interrupted-install fixture with an intent journal but incomplete registration.
+- [x] Test preservation of existing handlers and top-level fields, non-ASCII paths/spaces, worktree root selection, concurrent installer rejection, same-run idempotence, and ownership conflict on removal. Build an interrupted-install fixture with an intent journal but incomplete registration.
 
 ```python
 def test_remove_preserves_new_unrelated_handler(installed_run, config_path):
@@ -115,10 +115,10 @@ def test_remove_preserves_new_unrelated_handler(installed_run, config_path):
     assert load_manifest(installed_run)['cleanup_required'] is True
 ```
 
-- [ ] Run `py -3 -m pytest skills/temporary-tool-auditing/tests/scripts/test_registration.py -q` to RED.
-- [ ] Persist cleanup obligation and intended owned entries before config mutation. Use a registration-root lock and ownership marker containing only run location/ID, reject a second active run, and copy recorder dependencies into the run. Fingerprint owned handler entries without copying raw config. Recover by comparing intent against current entries after a crash. Remove unchanged owned entries only, never restore a whole-file backup. Detect malformed configs and changed owned entries as conflicts. Remove helper-created empty files/directories only; retain inert run assets.
-- [ ] Re-run tests to GREEN; include crash points before config replace and before manifest finalisation, plus successful repeated cleanup.
-- [ ] Commit `feat: manage temporary audit registration custody`.
+- [x] Run `py -3 -m pytest skills/temporary-tool-auditing/tests/scripts/test_registration.py -q` to RED.
+- [x] Persist cleanup obligation and intended owned entries before config mutation. Use a registration-root lock and ownership marker containing only run location/ID, reject a second active run, and copy recorder dependencies into the run. Fingerprint owned handler entries without copying raw config. Recover by comparing intent against current entries after a crash. Remove unchanged owned entries only, never restore a whole-file backup. Detect malformed configs and changed owned entries as conflicts. Remove helper-created empty files/directories only; retain inert run assets.
+- [x] Re-run tests to GREEN; include crash points before config replace and before manifest finalisation, plus successful repeated cleanup.
+- [x] Commit `feat: manage temporary audit registration custody`.
 
 ### Task 4: Evidence assessment and subject attribution
 
@@ -126,7 +126,7 @@ def test_remove_preserves_new_unrelated_handler(installed_run, config_path):
 
 **Interfaces:** Consumes sanitized records and manifest. Produces structured counts, `claim_supported`, and `limitations`; never hides unresolved events. Match by run, subject and call ID; detect duplicates and malformed/truncated records as health limits.
 
-- [ ] Test paired attempts/outcomes, unmatched pre/post, controls excluded by captured IDs, no positive control, missing completion, redactions, missing IDs, expiry gaps, child session sharing, and late outcomes. Include Devin serialized boundary attribution versus overlapping dispatches or unidentified parent activity.
+- [x] Test paired attempts/outcomes, unmatched pre/post, controls excluded by captured IDs, no positive control, missing completion, redactions, missing IDs, expiry gaps, child session sharing, and late outcomes. Include Devin serialized boundary attribution versus overlapping dispatches or unidentified parent activity.
 
 ```python
 def test_missing_control_cannot_prove_no_tools(empty_completed_run):
@@ -135,10 +135,10 @@ def test_missing_control_cannot_prove_no_tools(empty_completed_run):
     assert 'missing-positive-control' in result['limitations']
 ```
 
-- [ ] Run `py -3 -m pytest skills/temporary-tool-auditing/tests/scripts/test_assessment.py -q` to RED.
-- [ ] Implement Codex agent-ID attribution and bounded main/session scopes. Devin child scope requires serialized captured dispatch boundaries and explicit absence of overlapping unidentified producers; reject ambiguous attribution. Retain late outcomes linked to in-window attempts even if delivered after stop, but do not repair an unobserved gap. Treat controls, runtime coverage and subject completion as prerequisites with evidence references, not free-form claims that silently override captured contradictions.
-- [ ] Re-run to GREEN. Document statuses and the distinction between no observed attempts within verified coverage and universal no-tool proof.
-- [ ] Commit `feat: assess bounded tool-use evidence`.
+- [x] Run `py -3 -m pytest skills/temporary-tool-auditing/tests/scripts/test_assessment.py -q` to RED.
+- [x] Implement Codex agent-ID attribution and bounded main/session scopes. Devin child scope requires serialized captured dispatch boundaries and explicit absence of overlapping unidentified producers; reject ambiguous attribution. Retain late outcomes linked to in-window attempts even if delivered after stop, but do not repair an unobserved gap. Treat controls, runtime coverage and subject completion as prerequisites with evidence references, not free-form claims that silently override captured contradictions.
+- [x] Re-run to GREEN. Document statuses and the distinction between no observed attempts within verified coverage and universal no-tool proof.
+- [x] Commit `feat: assess bounded tool-use evidence`.
 
 ### Task 5: CLI lifecycle, renewable leases and restart recovery
 
@@ -146,7 +146,7 @@ def test_missing_control_cannot_prove_no_tools(empty_completed_run):
 
 **Interfaces:** Consumes Tasks 1-4 functions. Produces the CLI contract above and operations `prepare`, `install`, `status`, `verify`, `start`, `stop`, `renew`, `assess`, `disarm`, `remove`, `verify-teardown`.
 
-- [ ] Test no mutation under `--check`, default 30 minutes, positive finite durations, explicit renewal, expiry gaps, illegal transitions, interrupted install resume, capture-detail changes only between intervals, and cleanup remaining true after stop/expiry/removal.
+- [x] Test no mutation under `--check`, default 30 minutes, positive finite durations, explicit renewal, expiry gaps, illegal transitions, interrupted install resume, capture-detail changes only between intervals, and cleanup remaining true after stop/expiry/removal.
 
 ```python
 def test_expiry_does_not_complete_cleanup(expired_run):
@@ -155,10 +155,10 @@ def test_expiry_does_not_complete_cleanup(expired_run):
     assert state['cleanup_required'] is True
 ```
 
-- [ ] Run `py -3 -m pytest skills/temporary-tool-auditing/tests/scripts/test_lifecycle.py skills/temporary-tool-auditing/tests/scripts/test_cli.py -q` to RED.
-- [ ] Implement durable transitions, safe structured CLI output, root/operation help and explicit preview/apply. `verify` binds a marked actual captured call to the requested coverage. `start` refuses absent verified activation; `stop` closes interval without discarding evidence. `renew` after expiry closes the old interval at expiry and requires a new start. `verify-teardown` is two-phase: direct recorder health control, short armed baseline and runtime canary after removal/restart, then compare log and disarm. Cleanup clears only when both configuration absence and the healthy canary support unload. Always disarm on verification failure; unavailable runtime keeps cleanup pending.
-- [ ] Test a cached hook still firing after removal, a failed direct recorder control, silent health failure, and success after simulated unload. Re-run to GREEN. Tests inject a clock and runtime control fixtures; they do not declare simulated behaviour live.
-- [ ] Commit `feat: complete renewable audit lifecycle and teardown verification`.
+- [x] Run `py -3 -m pytest skills/temporary-tool-auditing/tests/scripts/test_lifecycle.py skills/temporary-tool-auditing/tests/scripts/test_cli.py -q` to RED.
+- [x] Implement durable transitions, safe structured CLI output, root/operation help and explicit preview/apply. `verify` binds a marked actual captured call to the requested coverage. `start` refuses absent verified activation; `stop` closes interval without discarding evidence. `renew` after expiry closes the old interval at expiry and requires a new start. `verify-teardown` is two-phase: direct recorder health control, short armed baseline and runtime canary after removal/restart, then compare log and disarm. Cleanup clears only when both configuration absence and the healthy canary support unload. Always disarm on verification failure; unavailable runtime keeps cleanup pending.
+- [x] Test a cached hook still firing after removal, a failed direct recorder control, silent health failure, and success after simulated unload. Re-run to GREEN. Tests inject a clock and runtime control fixtures; they do not declare simulated behaviour live.
+- [x] Commit `feat: complete renewable audit lifecycle and teardown verification`.
 
 ### Task 6: Skill instructions, runtime controls and evidence limits
 
@@ -167,10 +167,10 @@ def test_expiry_does_not_complete_cleanup(expired_run):
 **Interfaces:** Consumes the working CLI. Produces an agent-readable workflow with executable commands resolved from the installed skill path, all mutation/restart obligations, evidence detail choice, mandatory sanitisation, runtime trust review and preserved capability limits.
 
 - [ ] Write reusable behavioural prompts for interrupted/expired audits, untrusted hooks, missing coverage, ambiguous Devin child activity, tempting empty-log claims, result-detail selection and secret-bearing inputs. Evaluate decisions against the contract, not prose matches. Keep expected answers in evaluator-only material.
-- [ ] Exercise the complete helper against disposable project configurations using `py -3 -m pytest skills/temporary-tool-auditing/tests/scripts -q`; fix failures through owning tasks rather than adding test-only overrides.
+- [x] Exercise the complete helper against disposable project configurations using `py -3 -m pytest skills/temporary-tool-auditing/tests/scripts -q`; fix failures through owning tasks rather than adding test-only overrides.
 - [ ] Run fresh Codex live controls in the canonical worktree with run data under `Z:/_agent-scratch/agent-asset-marketplace/codex-mark-377-temporary-tool-auditing/implementation-validation/`. Capture parent shell success/nonzero failure, paired child call, completed no-tools child, nested tool execution and an available MCP call, selected detail levels, short expiry and explicit renewal. Human reviews actual hook definitions; use restart handoffs where observed necessary. Do not expose credentials or print raw responses to verification artifacts.
 - [ ] Remove development registrations, disarm, restart if required and execute healthy armed unload canary before declaring teardown. Stop dependent completion if cleanup remains unresolved. Retain sanitized runtime evidence and result/coverage summaries in scratch, not source.
-- [ ] Compare Devin fixtures/references against the recorded `skills/iterative-review/references/harness-capability-floor.md` and official documentation. Run fresh Devin controls only if a Devin runtime is actually available; otherwise state new code is tested by fixture/helper behaviour and historical runtime evidence, not live revalidated. Reject any discovered contract conflict rather than guessing a pass.
+- [x] Compare Devin fixtures/references against the recorded `skills/iterative-review/references/harness-capability-floor.md` and official documentation. Run fresh Devin controls only if a Devin runtime is actually available; otherwise state new code is tested by fixture/helper behaviour and historical runtime evidence, not live revalidated. Reject any discovered contract conflict rather than guessing a pass.
 - [ ] Commit `docs: guide tool auditing and runtime recovery` after focused checks and behavioural evaluation. Run-specific model results are never committed into the skill.
 
 ### Task 7: Package, review and publish the capability
@@ -179,8 +179,8 @@ def test_expiry_does_not_complete_cleanup(expired_run):
 
 **Interfaces:** Consumes the complete skill and verified teardown evidence. Produces a self-contained generated plugin, clean hooked commit, fresh whole-branch review and verified Draft PR.
 
-- [ ] Add the skill with first-party verbatim provenance matching neighbouring entries. Read existing repository build/shipping assertions and extend only a genuine packaging gap; do not add filename or exact-copy change-detector tests.
-- [ ] Run `py -3 tools/run.py marketplace --apply`, `py -3 tools/build_marketplace.py --check`, and `py -3 -m pytest skills/temporary-tool-auditing/tests/scripts -q`. Inspect generated diff and confirm installed relative helper/template paths work from the built package independently of the source tree.
+- [x] Add the skill with first-party verbatim provenance matching neighbouring entries. Read existing repository build/shipping assertions and extend only a genuine packaging gap; do not add filename or exact-copy change-detector tests.
+- [x] Run `py -3 tools/run.py marketplace --apply`, `py -3 tools/build_marketplace.py --check`, and `py -3 -m pytest skills/temporary-tool-auditing/tests/scripts -q`. Inspect generated diff and confirm installed relative helper/template paths work from the built package independently of the source tree.
 - [ ] Promote enduring runtime and evidence rules into skill references; mark this plan/spec `completed-awaiting-retirement` when all agent-owned items are complete. Preserve them through the completing PR. Do not retire unrelated active artifacts. No predecessor cleanup was identified as eligible in the initial spec-only slice; reassess any subsequently landed completed artifacts against repository custody before adding removals.
 - [ ] Commit through the tracked hook, which owns complete apply/check gates. Do not redundantly run complete CI immediately before/after that successful commit or bypass the hook.
 - [ ] Obtain fresh whole-branch review through the installed requesting-code-review workflow. Correct actionable findings, re-run affected checks and obtain fresh review after correction; CI alone is insufficient review evidence.
