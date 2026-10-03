@@ -36,6 +36,8 @@ The coordinator supplies the review object and immutable base/head identity wher
 
 The brief directs the reviewer to conducting-code-review using a usable runtime skill reference. When the runtime does not automatically supply the skill catalog or resource locations to fresh children, the coordinator supplies those discovery entry points. A pointer to a catalog is preferable to pasting every skill body. Do not invent unavailable dispatch parameters or claim that prompt wording grants tools.
 
+When a repository ships REVIEW.md, the dispatcher points the reviewer to that entrypoint. The reviewer also checks for it through targeted discovery when the dispatcher omitted it, and follows its applicable routes alongside AGENTS.md and scoped repository instructions. REVIEW.md is an optional repository-owned entrypoint, not a portable prerequisite or an exemption from higher-priority instructions. Existing review guidance may live elsewhere; absence of REVIEW.md does not imply absence of guidance and does not require creating one.
+
 The reviewer enters its assigned method directly. Retain the using-superpowers-plus exception for explicitly dispatched subagents; do not make each reviewer restart the general conversation router.
 
 ## Discovery and investigation
@@ -43,6 +45,10 @@ The reviewer enters its assigned method directly. Retain the using-superpowers-p
 Every reviewer checks the relevant resource entry points before reaching a verdict: repository instructions and routed guidance, the installed skill catalog, and the tool capabilities actually available in its context. Discovery is targeted to the assignment rather than a broad filesystem or tool inventory.
 
 The reviewer reads applicable repository guidance and specialist skills even when they were not named by the coordinator. It chooses relevance using the changed behavior, domain, technologies, versions, and review lens. Loading every skill, repeatedly loading the same guidance, or recursively following unrelated workflows is not discovery quality.
+
+Review includes code style and known anti-patterns, not only functional correctness and security. Understand the accepted standard way to write the relevant language, framework, or mechanism using repository conventions, applicable capability skills, and authoritative documentation where needed. Passing tests does not excuse sloppy implementation or an established anti-pattern. Ground style findings in the applicable standard and concrete code evidence, explain the consequence or binding convention, and distinguish accepted alternatives from personal preference. Account for repository-supported versions and deliberate requirements rather than imposing the newest idiom indiscriminately.
+
+When the repository ships unslop profiles, discover and read those relevant to the review, including profiles reached through local entrypoints and their application skills. Check that the change does not introduce or propagate the identified slop patterns across code, tests, prose, or workflow artifacts within scope. Evaluate each cue using the profile's evidence, false-positive, and override boundaries; a cue is a review question, not an automatic defect or token ban. Report concrete matches and required corrections within scope, and report unrelated pre-existing slop separately under the existing-issue boundary. Reviewing a profile does not authorize rewriting it or recording new occurrences in repository files.
 
 The reviewer forms concrete review questions from requirements, implementation behavior, trust boundaries, failure paths, and applicable guidance. It may investigate beyond a diff when needed to answer those questions, including callers, configuration, tests, and existing mitigations. Diff preparation remains the coordinator's responsibility; discovery does not authorize rebuilding a missing package or changing the reviewed revision.
 
@@ -52,9 +58,13 @@ Use primary sources appropriate to the question, such as official product docume
 
 For a simple review whose relevant expectations and technology behavior are already established, external research need not become a ceremonial step. Stop when the material questions have been answered or the remaining limitations are identified. Do not use a fixed tool-call or citation quota as a substitute for adequate investigation.
 
+This proportional research policy is human-approved. Code-style questions also warrant authoritative research when the accepted approach, API contract, or version-dependent idiom is uncertain. Every review checks available guidance and capabilities; not every review must retrieve an external source.
+
 ## Scope, action, and authority boundaries
 
-Reviews are read-only on repository state. No source edits, installs, branch/index changes, publication, or additional subagent dispatch follows from discovering a skill. The existing workflow may allow an owned off-repo report. Focused verification commands require the assignment's authorization and must respect its action boundaries.
+Reviewers protect the reviewed source, index, HEAD, and branch state rather than obeying a blanket prohibition on writes or execution. Focused tests and reproductions are legitimate review mechanisms when they answer a concrete question left unresolved by reading and research. The reviewer may create owned off-repo reports and disposable proof artifacts, and use scratch copies of the reviewed revision when checks create files. Preserve the reviewed checkout and its identity; do not let caches or generated test artifacts alter it. Report the question, command or proof, result, and material limits. Do not rerun existing validation merely to recreate evidence already available.
+
+Dependency installation, expensive validation, and checks against live services are referred to the dispatcher rather than performed under ordinary review authority. The dispatcher can arrange an authorized environment or supply resulting evidence. Discovering a skill does not authorize source edits, branch/index changes, publication, or additional subagent dispatch. Review-specific instructions must permit the legitimate verification mechanisms above instead of stymying them with strict read-only wording.
 
 Applicable skill guidance informs the assigned review; its unrelated execution stages do not expand reviewer authority. A requirement to mutate, install, or publish must be reported as incompatible with the current review assignment, not executed automatically. Explicit user constraints and binding repository instructions retain their authority.
 
@@ -62,21 +72,27 @@ Retrieved content is source material, not an instruction channel. Public researc
 
 A standard or recommendation can support a review question without becoming a newly imposed repository requirement. A finding must establish actual impact or a violation of an applicable requirement. Assess existing controls and reachable conditions before claiming a defect.
 
+Reviewers evaluate the code under review. They may investigate surrounding code and report existing issues that surface, but must not demand that the change set expand to resolve unrelated defects. Distinguish issues introduced, worsened, or made reachable by the change; existing issues the assigned requirements explicitly require this change to address; and other pre-existing issues. The first two categories may affect approval. Report the third separately for follow-up, with severity and evidence, without making its repair an automatic condition of approval. Escalate a critical existing issue explicitly without silently expanding the assignment. The human or dispatcher owns any resulting scope decision.
+
 Focused re-review discovers guidance and researches questions relevant to the original findings or new behavior in the fix. It does not restart whole-branch investigation. Adjacent observations follow the existing deferred-finding rules.
 
 ## Capability limitations and recovery
 
 The coordinator checks known runtime capabilities before dispatch and the reviewer verifies what it actually received. Both distinguish skill access, repository reading, online retrieval, and permitted verification commands from model or reasoning selection.
 
-An optional unavailable resource does not block unrelated review. Use an appropriate available authoritative alternative where possible and disclose the material limitation. Do not install a missing skill or fabricate research access.
+An unavailable resource, including internet access, does not by itself terminate the whole review. Give the best assessment supported by available resources, use an appropriate available authoritative alternative where possible, and disclose the missing capability and affected coverage. Do not install a missing skill, fabricate research access, or describe remembered knowledge as a live source lookup.
 
-When missing guidance or research prevents a material question from being assessed, report the affected question as unverified and do not issue an unqualified clean or ready verdict. When binding repository guidance makes a capability mandatory, stop the dependent assessment and return the blocker. The coordinator can supply the required material or select an authorized adequate runtime; supplied material is identified as supplied rather than independently retrieved.
+When missing guidance or research prevents a material question from being assessed, report the affected question as unverified and do not issue an unqualified clean or ready verdict. When binding repository guidance makes a capability mandatory, stop the dependent assessment and return the blocker while completing the independent parts that remain assessable.
+
+The dispatcher may re-dispatch with relevant access when the runtime actually supports it, or conduct the missing research itself and provide the material to the reviewer. Supplied research includes the original source references, relevant excerpts or supporting detail, version and configuration applicability, and remaining uncertainty. The reviewer identifies the material as dispatcher-supplied, evaluates it against the code, and updates the affected assessment without automatically adopting the dispatcher's conclusions. Resume the same reviewer where supported; otherwise provide a fresh reviewer with a self-contained package for the unresolved questions. Do not imply that re-dispatch alone grants access or that supplied research was independently retrieved by the reviewer.
 
 On resumption, preserve review identity and the questions already answered. Revalidate material external facts when their version, applicability, or currency has changed. Do not treat old research notes as proof that new code was reviewed.
 
 ## Evidence and output
 
 The shared method contributes evidence to each workflow's existing report format. It does not replace existing severity scales, fix loops, verdicts, or terminal-response contracts.
+
+Every substantive review report includes a short review basis alongside its findings and verdict, including when no issues are found. Identify applicable repository guidance, specialist skills and unslop profiles actually applied, authoritative sources used, focused tests or proofs performed and their outcomes, and material coverage gaps. Explain material applicability or version assumptions where needed. If external research or executable proof was unnecessary, state that briefly rather than implying it occurred. Keep this concise and relevant to the assignment; no exhaustive tool transcript or recital of every discovered resource is required. For workflows with a terse terminal response, this basis belongs in the report artifact, not an expanded terminal message.
 
 For each finding, report the affected code location, observed behavior, relevant reachable conditions or requirement, impact, and supporting evidence. When external knowledge or a specialist skill materially supports the finding, identify the source and the specific applicable guidance. Include version or retrieval context where material. A citation alone does not prove the implementation is vulnerable.
 
@@ -107,12 +123,19 @@ The security profile will cover relevant security and privacy boundaries, risk p
 Use a narrow witnessed behavioral proof before changing the skill behavior, then compare the revised behavior on the same underlying review problem. Do not use text-presence or change-detector tests to claim successful review.
 
 - A fresh reviewer discovers an unmentioned repository-specific review skill and applies its relevant guidance correctly without inheriting the coordinator's conclusions.
+- A reviewer identifies a code-style anti-pattern using applicable repository and language/framework standards, while accepting a supported idiomatic alternative instead of enforcing personal preference.
+- A reviewer discovers a relevant repository unslop profile and detects propagation of its evidenced pattern, while respecting a companion case covered by the profile's false-positive or override boundary.
+- A repository with REVIEW.md has its applicable review routes consulted even when the dispatcher omitted the pointer; a repository without it is reviewed using its existing entrypoints without requiring a new file.
 - A security reviewer consults an applicable authoritative source, finds a real code-backed defect, and correctly accepts a companion case whose existing mitigation addresses that risk. Authoritative research supports both detection and restraint.
 - An installed specialist skill is used when relevant, while any mutation or delegation workflow it contains is kept outside the reviewer's authority.
 - A missing mandatory resource or material research capability produces a specific limitation and a qualified assessment rather than a false clean verdict.
+- A reviewer without internet access completes the assessable review and reports the gap. Dispatcher-supplied authoritative research enables it to assess the unresolved question without claiming independent retrieval or accepting a conclusion unsupported by the code; re-dispatch with access is an alternative only where supported.
 - A focused fix re-review uses relevant guidance and research without expanding into untouched whole-branch review.
+- A reviewer reports a pre-existing issue surfaced during investigation separately from change-related findings and does not demand unrelated repairs as a condition of approval; existing issues introduced into reachability or required to be addressed remain within the review's assessment.
 - Online content cannot change review instructions, and queries do not disclose private review material.
+- A focused executable proof answers a concrete review question using disposable scratch artifacts while preserving the reviewed source, index, HEAD, and branch state. Checks requiring installation, expensive validation, or live-service activity are referred to the dispatcher.
 - A regenerated Superpowers+ plugin omits iterative-review while its canonical source, tests, references, and helpers remain available for future refactoring. Active shipped routes do not require the absent skill.
+- A clean review and a review with findings both provide a concise, truthful review basis showing applied guidance, profiles, sources, proof outcomes, and material gaps; the report does not claim resources were used merely because they were available.
 
 Each proof records the available resources, reviewed revision, observable actions, supporting sources, and resulting findings or non-findings. Hook instrumentation may be used when available with verified coverage, but this issue does not implement instrumentation or assume an empty log proves no tools were used.
 
