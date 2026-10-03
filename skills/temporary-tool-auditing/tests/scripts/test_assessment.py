@@ -80,6 +80,20 @@ def test_missing_session_identity_is_not_silently_excluded(tmp_path):
     assert result["claim_supported"] is False
 
 
+def test_codex_session_selector_attributes_only_parent_events(tmp_path):
+    make_run(
+        tmp_path,
+        [
+            event("pre", "control-1", "control-session"),
+            event("pre", "child-tool", "subject-1", agent_id="child-7"),
+            event("post", "child-tool", "subject-1", agent_id="child-7"),
+        ],
+    )
+    result = assess(tmp_path, {"session_id": "subject-1"})
+    assert result["claim_supported"] is True
+    assert result["attempt_count"] == 0
+
+
 def test_unmatched_post_and_duplicate_pre_are_visible(tmp_path):
     make_run(
         tmp_path,
@@ -111,7 +125,7 @@ def test_late_post_pairs_with_attempt_inside_coverage(tmp_path):
     assert "unmatched-pre" not in result["limitations"]
 
 
-def test_lifecycle_control_calls_are_excluded_but_need_a_separate_positive_control(tmp_path):
+def test_unregistered_lifecycle_commands_from_subject_count_as_attempts(tmp_path):
     make_run(
         tmp_path,
         [
@@ -121,8 +135,9 @@ def test_lifecycle_control_calls_are_excluded_but_need_a_separate_positive_contr
         ],
     )
     result = assess(tmp_path, {"session_id": "subject-1"})
-    assert result["attempt_count"] == 0
-    assert result["claim_supported"] is True
+    assert result["attempt_count"] == 1
+    assert result["paired_count"] == 1
+    assert result["claim_supported"] is False
 
 
 def test_gap_or_late_post_does_not_repair_coverage(tmp_path):

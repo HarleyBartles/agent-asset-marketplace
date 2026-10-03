@@ -22,6 +22,7 @@ from record import record_event
         ({"text": "Authorization: ApiKey auth-SENTINEL"}, "auth-SENTINEL"),
         ({"text": "Proxy-Authorization: Digest proxy-SENTINEL"}, "proxy-SENTINEL"),
         ({"url": "https://example.test/?access_token=query-SENTINEL"}, "query-SENTINEL"),
+        ({"url": "https://example.test/maps?key=AIzaSyD-SENTINEL&zoom=3"}, "AIzaSyD-SENTINEL"),
         ({"command": "tool --access-token cli-SENTINEL"}, "cli-SENTINEL"),
         ({"command": "tool --refresh_token=refresh-SENTINEL"}, "refresh-SENTINEL"),
         ({"command": 'tool --password "example-secret has spaces"'}, "example-secret has spaces"),
@@ -91,6 +92,7 @@ def test_recorder_never_persists_sentinels_from_json_or_header_strings(tmp_path,
                     "Proxy-Authorization: Digest proxy-SENTINEL"
                 ),
                 "url": "https://example.test/?access_token=query-SENTINEL",
+                "maps_url": "https://example.test/maps?key=AIzaSyD-persisted-SENTINEL&zoom=3",
                 "connection_string": "Server=db;User Id=example;Pwd=connection-SENTINEL",
                 "command": (
                     "tool --access-token cli-SENTINEL --refresh_token=refresh-SENTINEL "
@@ -108,6 +110,7 @@ def test_recorder_never_persists_sentinels_from_json_or_header_strings(tmp_path,
         "auth-SENTINEL",
         "proxy-SENTINEL",
         "query-SENTINEL",
+        "AIzaSyD-persisted-SENTINEL",
         "cli-SENTINEL",
         "refresh-SENTINEL",
         "result-SENTINEL",

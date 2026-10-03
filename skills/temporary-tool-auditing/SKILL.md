@@ -20,7 +20,7 @@ license: MIT
 
 # Temporary Tool Auditing
 
-Use this skill when a scenario needs tool-use evidence. Hooks observe every agent in the runtime session, so select the subject by a captured session, agent, or Devin dispatch identifier. Evidence supports a bounded claim for verified coverage, not universal proof.
+Use this skill when a scenario needs tool-use evidence. Hooks observe every agent in the runtime session, so select the subject by a captured session, agent, or Devin dispatch identifier. A Codex session selector attributes parent calls by session ID and absence of child agent ID; use an agent selector for a Codex child. Devin session selectors include session activity, while an individual Devin child requires serialized dispatch attribution. Evidence supports a bounded claim for verified coverage, not universal proof.
 
 ## Workflow
 

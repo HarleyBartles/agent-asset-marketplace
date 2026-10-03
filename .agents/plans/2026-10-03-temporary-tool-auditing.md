@@ -202,6 +202,9 @@ The fresh whole-branch review at `5938683cf4d3b9e3c9ca183de7dc67413d67f2b9` foun
 - [x] Redact `Pwd=` connection-string values, including quoted and braced forms, and verify persisted event records.
 - [x] Verify teardown health through the normalized event-recording path and exact event log; a writable controls log alone cannot satisfy cleanup.
 - [x] Replace the Devin capability-floor relative link with an immutable repository source link so the reference remains available in the shipped package.
+- [x] Attribute Codex session selectors to parent calls without a child agent ID; require an agent selector for Codex child calls.
+- [x] Exclude only explicitly registered control call identities; exact lifecycle command text alone cannot hide a selected subject's tool attempt.
+- [x] Redact plain `key=` URL query credentials while preserving unrelated query parameters.
 - [ ] Run the owning suite and full repository gates, regenerate the package, commit, and obtain fresh whole-branch plus matching topical reviews.
 
 ## Execution entry and current baseline

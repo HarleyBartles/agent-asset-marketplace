@@ -37,6 +37,8 @@ def _selected(record: dict, subject: dict, runtime: str, limitations: set[str]) 
             limitations.add("missing-agent-id")
             return False
         return record.get("agent_id") == subject["agent_id"]
+    if runtime == "codex" and record.get("event") in {"pre", "post"} and record.get("agent_id") is not None:
+        return False
     session_id = subject.get("session_id")
     if session_id is None:
         limitations.add("missing-subject-selector")
@@ -129,17 +131,7 @@ def assess(run: Path, subject: dict, parent_idle_confirmed: bool = False) -> dic
         limitations.add("subject-completion-unverified")
 
     manifest_controls = [item for item in manifest.get("controls", []) if isinstance(item, dict)]
-    lifecycle_controls = [
-        {
-            "call_id": item.get("call_id"),
-            "session_id": item.get("session_id"),
-            "agent_id": item.get("agent_id"),
-            "role": "lifecycle",
-        }
-        for item in records
-        if item.get("control_operation") and item.get("call_id")
-    ]
-    all_controls = manifest_controls + extra_controls + lifecycle_controls
+    all_controls = manifest_controls + extra_controls
 
     def identity(item):
         return item.get("call_id"), item.get("session_id"), item.get("agent_id")
@@ -230,7 +222,7 @@ def assess(run: Path, subject: dict, parent_idle_confirmed: bool = False) -> dic
             limitations.add("missing-session-id")
         if runtime == "devin" and item.get("event") in {"pre", "post"} and not item.get("turn_id"):
             limitations.add("missing-turn-id")
-    selected = [item for item in subject_records if not is_control(item) and not item.get("control_operation")]
+    selected = [item for item in subject_records if not is_control(item)]
     pres: dict[str, dict] = {}
     posts: dict[str, dict] = {}
     interval_bounds = [(item["start"], item["end"]) for item in valid_intervals]
