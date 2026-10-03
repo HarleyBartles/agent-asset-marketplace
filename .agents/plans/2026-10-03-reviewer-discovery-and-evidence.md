@@ -186,8 +186,8 @@ def label_or_empty(load):
 - [x] Fetch main and inspect the current #346 and #347 GitHub states. Verify main is an ancestor of #347 and hosted validation covers its exact published head. The human selected #347-first sequencing, so review the included #346 snapshot rather than waiting for or pretending to integrate #346's newer head.
 - [ ] Obtain a fresh independent review of the complete current main-targeted diff, including the earlier temporary-tool-auditing snapshot. Review dispatch currently fails because Codex reports no available credits; prior partial-range reviews do not cover this diff. Resolve any Critical or Important findings and review their corrections.
 - [ ] Update this plan and spec to `completed-awaiting-retirement` only after full-diff review and any agent-owned corrections are complete. Keep both artifacts in the completing PR and commit final updates through the tracked hook.
-- [ ] Update the existing PR body to reflect #347-first sequencing, included snapshot `224ac579`, current #346 head `f6b4fba3`, reviewed scope, and honest limits. Push the task branch, verify mergeability and hosted checks at the exact final head, then apply the Ready preflight. Do not merge without the human's separate instruction.
-- [ ] Update MARK-379 with final PR URL/head, full-diff review outcome, validation, material limits, and subsequent #346 adaptation sequence. Retain the worktree while this PR is under review.
+- [x] Update the existing PR body for #347-first sequencing, the included snapshot, the current #346 head, review status, limits, and exact-head proof. Push the documentation update and verify GitHub MERGEABLE/CLEAN plus hosted marketplace-validation at the exact head.
+- [ ] Update MARK-379 with the final post-review outcome and Ready preflight. Retain the worktree while the PR is under review.
 
 **Exit:** A fully reviewable PR to main with a fresh independent review of the actual final main-targeted diff, generated parity, exact-head validation evidence, and an accurate follow-on integration record for #346. This plan does not require #346 to merge first and does not authorize merging #347.
 
