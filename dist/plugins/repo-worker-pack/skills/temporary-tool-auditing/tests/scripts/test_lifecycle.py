@@ -417,6 +417,22 @@ def test_purge_preserves_unowned_run_files_and_keeps_cleanup_pending(tmp_path):
     assert (scripts / "operator-note.txt").read_text(encoding="utf-8") == "keep this unowned file"
 
 
+def test_purge_preserves_unowned_root_files_before_deleting_logs(tmp_path):
+    run = tmp_path / "run"
+    base_run(run, registration_state="teardown-verified", cleanup_required=True, teardown_verified_at=100)
+    append_record(run, "events", {"call_id": "call-1"})
+    note = run / "operator-note.txt"
+    note.write_text("keep this unowned file", encoding="utf-8")
+
+    with pytest.raises(Exception) as error:
+        execute({"operation": "purge", "run_dir": str(run), "apply": True}, now=101)
+
+    assert getattr(error.value, "code", None) == "run-purge-unowned-entry"
+    assert load_manifest(run)["cleanup_required"] is True
+    assert note.read_text(encoding="utf-8") == "keep this unowned file"
+    assert (run / "events.jsonl").exists()
+
+
 def test_teardown_fails_when_direct_control_log_works_but_event_log_does_not(tmp_path, monkeypatch):
     from types import SimpleNamespace
 
