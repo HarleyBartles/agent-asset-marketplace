@@ -167,3 +167,16 @@ def test_removal_deletes_empty_registration_root_created_by_helper(tmp_path):
     assert root.exists()
     remove(run)
     assert not root.exists()
+
+
+def test_install_rejects_removed_run_under_registration_lock(tmp_path):
+    project = tmp_path / "repo"
+    run = project / ".audit-runs" / "one"
+    save_manifest(run, {"run_id": "one", "runtime": "codex", "registration_state": "removed"})
+    try:
+        install(run, project, "codex")
+    except Exception as error:
+        assert getattr(error, "code", None) == "registration-not-installable"
+    else:
+        raise AssertionError("a removed audit cannot recreate its hook")
+    assert not (project / ".codex" / "hooks.json").exists()

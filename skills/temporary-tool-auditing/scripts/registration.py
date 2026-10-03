@@ -77,6 +77,17 @@ def install(run: Path, project: Path, runtime: str) -> dict:
         if isinstance(item, dict)
     }
     with registration_lock(root):
+        manifest = load_manifest(run)
+        if manifest.get("runtime") != runtime:
+            raise AuditStoreError("runtime-mismatch")
+        if manifest.get("registration_state") in {"removing", "removed", "teardown-verified"}:
+            raise AuditStoreError("registration-not-installable")
+        prior_intent = manifest.get("owned_entries", [])
+        prior_pairs = {
+            (item.get("event"), json.dumps(item.get("entry"), sort_keys=True))
+            for item in prior_intent
+            if isinstance(item, dict)
+        }
         data = _read(config_path)
         if owner_path.exists():
             try:
@@ -133,8 +144,14 @@ def remove(run: Path) -> dict:
     else:
         raise AuditStoreError("registration-location-unknown")
     conflicts = []
-    manifest["teardown_probe_started_at"] = time.time()
     with registration_lock(root):
+        manifest = load_manifest(run)
+        current_root = Path(manifest.get("registration_root") or _paths(project, run, runtime)[0])
+        if current_root.resolve() != root.resolve():
+            raise AuditStoreError("registration-location-changed")
+        config = current_root / ("hooks.json" if runtime == "codex" else "hooks.v1.json")
+        owner = current_root / ".temporary-tool-auditing-owner.json"
+        manifest["teardown_probe_started_at"] = time.time()
         if owner.exists():
             try:
                 current_owner = json.loads(owner.read_text(encoding="utf-8"))

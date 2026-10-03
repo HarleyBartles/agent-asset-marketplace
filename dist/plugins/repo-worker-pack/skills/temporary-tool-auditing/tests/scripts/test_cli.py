@@ -41,3 +41,66 @@ def test_invalid_duration_returns_safe_error_and_does_not_write(tmp_path, capsys
     assert "invalid-duration" in output
     assert "NaN" not in output
     assert not (tmp_path / "run").exists()
+
+
+def test_check_before_subcommand_cannot_be_overridden_into_apply(tmp_path, capsys):
+    run = tmp_path / "run"
+    code = main(
+        [
+            "--check",
+            "prepare",
+            "--run-dir",
+            str(run),
+            "--runtime",
+            "codex",
+            "--project",
+            str(tmp_path / "project"),
+            "--question",
+            "prove calls",
+            "--subject",
+            "session:s1",
+            "--detail",
+            "status",
+            "--apply",
+        ]
+    )
+    assert code != 0
+    assert "conflicting-modes" in capsys.readouterr().out
+    assert not run.exists()
+
+
+def test_verify_teardown_check_is_read_only(tmp_path, capsys, monkeypatch):
+    from auditctl import execute
+    from store import save_manifest
+
+    run = tmp_path / "run"
+    save_manifest(
+        run,
+        {
+            "run_id": "run-1",
+            "runtime": "codex",
+            "project_root": str(tmp_path / "project"),
+            "registration_state": "removed",
+            "cleanup_required": True,
+            "teardown_probe_started_at": 1,
+            "teardown_probe_until": 100,
+        },
+    )
+
+    def should_not_run(*args, **kwargs):
+        raise AssertionError("check mode invoked recorder")
+
+    monkeypatch.setattr("auditctl.subprocess.run", should_not_run)
+    result = execute(
+        {
+            "operation": "verify-teardown",
+            "run_dir": str(run),
+            "check": True,
+            "phase": "finish",
+            "restart_confirmed": True,
+            "canary_performed": True,
+        },
+        now=20,
+    )
+    assert result == {"applied": False, "operation": "verify-teardown"}
+    assert '"cleanup_required":true' in (run / "manifest.json").read_text(encoding="utf-8")

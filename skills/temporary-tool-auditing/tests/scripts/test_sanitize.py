@@ -19,6 +19,11 @@ from record import record_event
         ({"Authorization": "Bearer bearer-SENTINEL"}, "bearer-SENTINEL"),
         ({"key": "sk-proj-abcdefghijklmnopqrstuvwxyz123456"}, "sk-proj-abcdefghijklmnopqrstuvwxyz123456"),
         ({"text": "Authorization: Basic dXNlcjpwYXNz"}, "dXNlcjpwYXNz"),
+        ({"text": "Authorization: ApiKey auth-SENTINEL"}, "auth-SENTINEL"),
+        ({"text": "Proxy-Authorization: Digest proxy-SENTINEL"}, "proxy-SENTINEL"),
+        ({"url": "https://example.test/?access_token=query-SENTINEL"}, "query-SENTINEL"),
+        ({"command": "tool --access-token cli-SENTINEL"}, "cli-SENTINEL"),
+        ({"command": "tool --refresh_token=refresh-SENTINEL"}, "refresh-SENTINEL"),
         ({"key": "-----BEGIN PRIVATE KEY-----\nprivate-SENTINEL\n-----END PRIVATE KEY-----"}, "private-SENTINEL"),
         ({"url": "https://user:url-SENTINEL@example.test/api"}, "url-SENTINEL"),
         ({"url": "postgres://user:db-SENTINEL@db.example.test/main"}, "db-SENTINEL"),
@@ -75,13 +80,27 @@ def test_recorder_never_persists_sentinels_from_json_or_header_strings(tmp_path,
             "tool_name": "MCP",
             "tool_input": {
                 "body": '{"api_key":"json-SENTINEL"}',
-                "headers": "X-API-Key: header-SENTINEL",
+                "headers": (
+                    "X-API-Key: header-SENTINEL\nAuthorization: ApiKey auth-SENTINEL\n"
+                    "Proxy-Authorization: Digest proxy-SENTINEL"
+                ),
+                "url": "https://example.test/?access_token=query-SENTINEL",
+                "command": "tool --access-token cli-SENTINEL --refresh_token=refresh-SENTINEL",
             },
             "tool_response": {"body": '{"access_token":"result-SENTINEL"}'},
         },
         100,
     )
     persisted = (tmp_path / "events.jsonl").read_text(encoding="utf-8")
-    for sentinel in ("json-SENTINEL", "header-SENTINEL", "result-SENTINEL"):
+    for sentinel in (
+        "json-SENTINEL",
+        "header-SENTINEL",
+        "auth-SENTINEL",
+        "proxy-SENTINEL",
+        "query-SENTINEL",
+        "cli-SENTINEL",
+        "refresh-SENTINEL",
+        "result-SENTINEL",
+    ):
         assert sentinel not in persisted
     assert json.loads(persisted)["redactions"]

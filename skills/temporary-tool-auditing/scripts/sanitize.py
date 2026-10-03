@@ -15,17 +15,21 @@ _PATTERNS = [
     (re.compile(r"(?i)\b(Bearer|Basic)\s+[A-Za-z0-9._~+/=-]+"), lambda m: f"{m.group(1)} {_REDACTED}"),
     (re.compile(r"(?i)([a-z][a-z0-9+.-]*://)[^/@\s:]+(?::[^/@\s]*)?@"), lambda m: f"{m.group(1)}{_REDACTED}@"),
     (
-        re.compile(r"(?i)(\b(?:password|passwd|token|api[_-]?key|secret)\s*=\s*)([^\s;&]+)"),
-        lambda m: f"{m.group(1)}{_REDACTED}",
-    ),
-    (
         re.compile(
-            r"(?i)(\b(?:x-)?(?:password|passwd|token|access[_-]?token|refresh[_-]?token|api[_-]?key|secret|set-cookie|cookie)\s*:\s*)([^\r\n]+)"
+            r"(?i)(\b(?:password|passwd|(?:access|refresh)[_-]?token|token|api[_-]?key|secret)\s*=\s*)([^\s;&]+)"
         ),
         lambda m: f"{m.group(1)}{_REDACTED}",
     ),
     (
-        re.compile(r"(?i)(--(?:password|passwd|token|api[_-]?key|secret)(?:=|\s+))([^\s]+)"),
+        re.compile(
+            r"(?i)(\b(?:x-)?(?:password|passwd|token|access[_-]?token|refresh[_-]?token|api[_-]?key|secret|set-cookie|cookie|proxy-authorization|authorization)\s*:\s*)([^\r\n]+)"
+        ),
+        lambda m: f"{m.group(1)}{_REDACTED}",
+    ),
+    (
+        re.compile(
+            r"(?i)(--(?:password|passwd|(?:access|refresh)[_-]?token|token|api[_-]?key|secret)(?:=|\s+))([^\s]+)"
+        ),
         lambda m: f"{m.group(1)}{_REDACTED}",
     ),
     (re.compile(r"\bsk-(?:proj-)?[A-Za-z0-9_-]{20,}\b"), _REDACTED),

@@ -354,7 +354,9 @@ def execute(args: dict, now: float | None = None) -> dict:
 
 def _parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Manage a bounded temporary tool audit. (mixed)")
-    parser.add_argument("--check", action="store_true", help="validate the command surface without mutation")
+    parser.add_argument(
+        "--check", dest="global_check", action="store_true", help="validate the command surface without mutation"
+    )
     subs = parser.add_subparsers(dest="operation")
     operations = (
         "prepare",
@@ -404,6 +406,7 @@ def _parser() -> argparse.ArgumentParser:
 def main(argv=None) -> int:
     parser = _parser()
     args = parser.parse_args(argv)
+    args.check = bool(args.check or args.global_check)
     if args.check and not args.operation:
         return 0
     if not args.operation:
