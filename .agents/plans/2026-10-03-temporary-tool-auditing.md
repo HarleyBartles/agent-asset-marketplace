@@ -2,9 +2,9 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use `subagent-driven-development` (recommended) or `executing-plans` to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Ship an Agent Capability Pack skill that establishes bounded tool-use evidence in Codex and Devin and verifies removal of its temporary instrumentation.
+**Goal:** Ship an Agent Capability Pack skill that establishes bounded tool-use evidence in Codex and Devin, with a stable user-wide Codex hook and temporary, renewable recording engagements.
 
-**Architecture:** One Python recorder and evidence model, with focused Codex and Devin configuration/payload adapters. A durable run manifest separates registration, activation, recording, expiry, and verified cleanup. Every persisted surface passes through mandatory sanitisation.
+**Architecture:** One Python recorder and evidence model, with focused Codex and Devin adapters. Codex installs one stable user-wide hook definition and dispatcher, approved once, which reads current activation state on every invocation and stays inert outside an active worktree engagement. A durable run manifest separates installation from engagement activation, recording rounds, expiry, and verified disablement/purge; every persisted surface passes through mandatory sanitisation.
 
 **Tech Stack:** Python standard library, pytest, JSON/JSONL, runtime command hooks, existing marketplace builder and tracked Git hook. Support Windows and Linux; no new third-party runtime dependency.
 
@@ -16,11 +16,11 @@
 
 - Implement MARK-377 only. No general hook framework, authorisation gate, secret-backed evidence fingerprints, or malicious-agent immutability claim.
 - Codex and Devin are supported with explicit runtime differences. Capture all covered agents; select the subject when assessing evidence.
-- Prefer worktree-local registration; record and explain checkout fallback. Never install global hooks or bypass human hook-definition review. For Codex only, preview and temporarily trust the exact project/worktree path in user config, preserve pre-existing trust, refuse an explicit untrusted entry, and remove only the entry this run added.
+- Codex uses stable user-wide registration in `$CODEX_HOME/hooks.json` (normally `C:/Users/hbart/.codex/hooks.json`) and a dispatcher at a stable user-owned path. Preserve unrelated hooks and require human hook-definition approval. Global hooks do not require project trust: do not add or remove worktree trust solely for auditing. Keep Devin Desktop registration runtime-specific until its global semantics are independently established.
 - Record sanitized arguments, identifiers, and observed outcome status by default; full sanitized results are optional and chosen by the agent before observation.
 - Default lease is 30 minutes, adjustable with explicit renewal. Expiry never clears cleanup and renewal never fills a capture gap.
 - No raw payload spool, secret-bearing config backup, exception dump, or unsanitized diagnostic. Failure or ambiguity prevents a no-tools claim.
-- Preserve existing hooks and unrelated configuration changes; remove only unchanged owned entries. Keep evidence and inert recorder after teardown.
+- Preserve existing hooks and unrelated configuration changes. Keep the stable Codex dispatcher installed and inert between engagements. At engagement completion disable activation, verify subsequent runtime calls create no records, and purge run logs and run-local recorder copies; retain only a minimal sanitized receipt. Explicit uninstall removes only unchanged owned global entries.
 - Scope of the completing slice ends at a fully reviewable Draft PR with verified development-probe teardown. Ready and merge are human-owned subsequent actions.
 
 ## Source map and shared contracts
@@ -36,7 +36,8 @@ Create these focused modules under `skills/temporary-tool-auditing/scripts/`:
 | `runtime.py` | `normalize_event(runtime: str, payload: dict, detail: str) -> dict`, `render_handlers(runtime: str, recorder: Path) -> dict`; runtime field/status conversion and absolute interpreter command. |
 | `record.py` | `record_event(run: Path, payload: dict, now: float) -> bool`; lease/arming check, sanitisation, normalization, append and health handling; command entry reads stdin. |
 | `registration.py` | `install(run: Path, project: Path, runtime: str) -> dict`, `remove(run: Path) -> dict`; owned JSON handler mutation and guarded recovery. |
-| `codex_trust.py` | Preview and temporarily add/remove only the exact active Codex project/worktree trust entry, preserving unrelated user configuration and pre-existing trust. |
+| `codex_trust.py` | Retire the audit-only Codex project trust path after migrating the global dispatcher; preserve pre-existing user trust and unrelated configuration. |
+| `activation.py` | Freshly read activation state per invocation, resolve the exact worktree/run and lease, and atomically enable/disable an engagement without changing hook definitions. |
 | `assessment.py` | `assess(run: Path, subject: dict) -> dict`; counts and prerequisite/coverage/attribution limits. |
 | `auditctl.py` | User CLI, durable transitions, controls, expiry renewal and restart handoffs. |
 
@@ -51,11 +52,11 @@ CLI: `auditctl.py <operation> --run-dir <absolute-path>`, with `--check` default
 ## Review Focus
 
 - Credential patterns in free text, URLs, CLI flags, serialized JSON and common header forms are sanitized before persistence; pattern detection remains best-effort: Task 1 and Task 2.
-- Codex trust writes affect only the exact worktree entry, preserve unrelated user config and existing file security attributes, refuse explicit untrusted state, and leave no temporary trust after teardown: Task 3.
+- Global hook installation preserves unrelated handlers, stays idempotent, and needs no worktree trust; fresh activation reads affect only the selected worktree, expire inert, and cannot redirect writes to an unrelated run: Task 3.
 - Interrupted config writes leave discoverable ownership; concurrent installers cannot stack runs. Registration locks live in private user temp storage, not in the project hook directory: Task 3.
 - Late outcomes, lease gaps and missing call IDs cannot produce complete no-tools evidence: Task 4.
 - Devin interleaving cannot be guessed into child attribution: Task 4.
-- Cached hooks and a broken recorder cannot make silent teardown appear verified: Task 5 and Task 6.
+- Missing activation, lease expiry, disablement, and failed dispatcher health checks cannot make silent recording or cleanup appear verified: Task 5 and Task 6.
 
 ### Task 1: Sanitised storage with portable concurrency
 
@@ -101,27 +102,19 @@ def test_post_event_does_not_imply_success():
 - [x] Test expiry boundary, disarm, full-results sanitisation, secret-containing malformed stdin, absent outcome status and concurrent invocation. Re-run the suites to GREEN.
 - [x] Commit `feat: record runtime audit attempts and outcomes`.
 
-### Task 3: Owned project-local registration and recovery
+### Task 3: Stable Codex global dispatcher and activation spike
 
-**Files:** Create `scripts/registration.py`, `scripts/codex_trust.py`, `tests/scripts/test_registration.py`, `tests/scripts/test_codex_trust.py`; extend `store.py` transaction support only if required.
+**Files:** Modify `scripts/registration.py`, `scripts/record.py`, `scripts/runtime.py`, `scripts/auditctl.py`, `tests/scripts/test_registration.py`, `test_record.py`, `test_lifecycle.py`, and `references/codex.md`; create `scripts/activation.py` and `tests/scripts/test_activation.py`. Retire Codex audit-only trust mutations in `scripts/codex_trust.py` and their tests when no longer used. All paths are within `skills/temporary-tool-auditing/`.
 
-**Interfaces:** Consumes `render_handlers` and locked store; produces `install`/`remove` results containing ownership state and safe conflicts. Use local hooks.json and preserve unrelated user config. For Codex, separately preview and manage the exact project trust entry in user config; do not trust a parent path or modify hook definitions in TOML.
+**Interfaces:** Global installation is idempotent and independent of a run. The dispatcher receives runtime stdin, reads current activation state, matches the runtime `session_id` and exact configured worktree, and invokes the existing sanitized recorder only for an active, unexpired run belonging to that session family. Each activation entry contains the parent session ID, worktree path, run ID/directory, detail level, and expiry. Codex documents that subagent hooks carry the parent session ID; preserve available child identifiers for attribution within that family. Reject missing or mismatched selectors before persisting event, health, or control records. The stable global hook may execute across projects, but inactive and unrelated sessions create no audit records. Enable/disable changes activation state without modifying approved hook definitions. Concurrent session families, including two sessions in the same worktree, retain separate activation entries and run identity. Session-family selection happens at capture time; choosing a particular child or parent within that family remains an assessment concern.
 
-- [x] Test preservation of existing handlers and top-level fields, non-ASCII paths/spaces, worktree root selection, concurrent installer rejection, same-run idempotence, and ownership conflict on removal. Build an interrupted-install fixture with an intent journal but incomplete registration.
-
-```python
-def test_remove_preserves_new_unrelated_handler(installed_run, config_path):
-    add_unrelated_handler(config_path, 'unrelated-command')
-    remove(installed_run)
-    assert handler_commands(config_path) == ['unrelated-command']
-    assert load_manifest(installed_run)['cleanup_required'] is True
-```
-
-- [x] Run `py -3 -m pytest skills/temporary-tool-auditing/tests/scripts/test_registration.py -q` to RED.
-- [x] Persist cleanup obligation and intended owned entries before config mutation. Use a registration-root lock and ownership marker containing only run location/ID, reject a second active run, and copy recorder dependencies into the run. Fingerprint owned handler entries without copying raw config. Recover by comparing intent against current entries after a crash. Remove unchanged owned entries only, never restore a whole-file backup. Detect malformed configs and changed owned entries as conflicts. Remove helper-created empty files/directories only; retain inert run assets.
-- [x] Re-run tests to GREEN; include crash points before config replace and before manifest finalisation, plus successful repeated cleanup.
-- [x] Add exact worktree trust setup/teardown with a read-only preview, cross-worktree config lock, pre-existing trust preservation, explicit-untrusted refusal, and conflict-safe cleanup; verify repeated installation does not lose trust ownership.
-- [x] Commit `feat: manage temporary audit registration custody`.
+- [ ] Inspect the current Codex user hook/config state read-only. Reconcile previous development registrations and any still-pending cleanup from their manifests before installing anything new; do not repeat already-proven installation/removal cycles.
+- [ ] Write behavior tests proving missing activation creates no audit files, unrelated projects and sessions remain unrecorded, two sessions in one worktree stay isolated, matching parent and child events are captured, missing session IDs create no records, expiry disables writes, independent session families can activate without clobbering each other, and repeated install preserves unrelated handlers and creates no duplicates. Reuse interrupted-write/ownership coverage from the existing registration implementation.
+- [ ] Implement one stable global definition and dispatcher, using an absolute interpreter/script command and generic safe failures. Persist ownership intent before changes; no raw configuration backup. Keep logs and run-local assets project-scoped or in the selected run directory, not in a global payload spool.
+- [ ] Spike a Windows user environment setting as the activation switch: explicitly retrieve its current persisted value on each hook invocation, rather than reading inherited `os.environ`. Use the setting to reference an activation registry keyed by parent session ID and exact worktree path, with run ID/directory, detail level, and lease. First demonstrate inactive behavior, then enable, capture a harmless positive control, disable, and demonstrate no further writes in the same Codex process. Never put secrets into the switch or registry.
+- [ ] If the fresh environment lookup does not provide reliable live switching, use a stable activation-registry file read on every invocation. Record the observed reason and ship one selected mechanism, with portable file lookup on platforms without the Windows setting API. Do not add parallel switch frameworks.
+- [ ] Install and obtain human approval once; request one initial restart only if the runtime needs it to load the definition. After activation succeeds, reuse this installation for the entire live test matrix and follow-up rounds. No restart is expected for activation, pause, resume, renewal, or engagement cleanup; prove this rather than assume it.
+- [ ] Run `py -3 -m pytest skills/temporary-tool-auditing/tests/scripts -q`, inspect persisted test files and safe diagnostics, and commit through the tracked hook after the selected mechanism is proven. Explicit uninstall remains a separate user-requested operation and is not ordinary engagement cleanup.
 
 ### Task 4: Evidence assessment and subject attribution
 
@@ -159,7 +152,7 @@ def test_expiry_does_not_complete_cleanup(expired_run):
 ```
 
 - [x] Run `py -3 -m pytest skills/temporary-tool-auditing/tests/scripts/test_lifecycle.py skills/temporary-tool-auditing/tests/scripts/test_cli.py -q` to RED.
-- [ ] Implement durable transitions, safe structured CLI output, root/operation help and explicit preview/apply. `verify` binds a marked actual captured call to the requested coverage. `start` refuses absent verified activation; `stop` closes interval without discarding evidence. `renew` after expiry closes the old interval at expiry and requires a new start. `verify-teardown` is two-phase: direct recorder health control, short armed baseline and runtime canary after removal/restart, then compare log and disarm. Cleanup clears only after configuration absence, healthy unload verification, and verified event/health/control log purge. Always disarm on verification failure; unavailable runtime or failed purge keeps cleanup pending.
+- [ ] Revise durable transitions for stable global installation. `verify` binds a captured runtime control to the exact active run; `start` requires verified coverage; `stop` closes a recording round while retaining the engagement for assessment and follow-up. `renew` preserves the default 30-minute adjustable lease and never repairs gaps. Final engagement cleanup disables its activation entry, performs a healthy dispatcher control plus a runtime canary proving no records were appended, then purges event/health/control logs and run-local assets. Keep cleanup pending on failed disablement, unavailable runtime, or failed purge. Do not require global hook absence or unload for engagement cleanup; retain separate uninstall verification for explicit removal.
 - [x] Test a cached hook still firing after removal, a failed direct recorder control, silent health failure, and success after simulated unload. Re-run to GREEN. Tests inject a clock and runtime control fixtures; they do not declare simulated behaviour live.
 - [x] Commit `feat: complete renewable audit lifecycle and teardown verification`.
 
@@ -171,10 +164,10 @@ def test_expiry_does_not_complete_cleanup(expired_run):
 
 - [x] Write reusable behavioural prompts for interrupted/expired audits, untrusted hooks, missing coverage, ambiguous Devin child activity, tempting empty-log claims, result-detail selection, secret-bearing inputs, and post-assessment purge. Evaluate decisions against the contract, not prose matches. Keep expected answers in evaluator-only material. Fresh contexts selected status when sufficient, rejected real credentials, declined to fill expired coverage retroactively, rejected the ambiguous Devin child claim, and required purge after verified teardown; concise decision summaries are retained in scratch without transcripts or model metadata.
 - [x] Exercise the complete helper against disposable project configurations using `py -3 -m pytest skills/temporary-tool-auditing/tests/scripts -q`; fix failures through owning tasks rather than adding test-only overrides.
-- [ ] Run fresh Codex live controls in the canonical worktree with run data under `Z:/_agent-scratch/agent-asset-marketplace/codex-mark-377-temporary-tool-auditing/implementation-validation/`. Capture parent shell success/nonzero failure, paired child call, completed no-tools child, nested tool execution and an available MCP call, selected detail levels, short expiry and explicit renewal. Human reviews actual hook definitions; use restart handoffs where observed necessary. Do not expose credentials or print raw responses to verification artifacts.
-- [ ] Remove development registrations, disarm, restart if required, and execute the healthy armed unload canary. After assessment is reported without persisting a separate report, run `purge --apply` and verify event, health, and control logs plus known recorder copies are absent and only a minimal cleanup receipt remains. Stop dependent completion if hook teardown or purge remains unresolved. Retain only sanitized runtime result/coverage summaries in scratch, not event logs or source.
+- [ ] Using the same installed global dispatcher and selected live activation mechanism, run fresh Codex live controls in the canonical worktree with run data under `Z:/_agent-scratch/agent-asset-marketplace/codex-mark-377-temporary-tool-auditing/implementation-validation/`. Capture parent shell success/nonzero failure, paired child call, completed no-tools child, nested tool execution and an available MCP call, selected detail levels, short expiry and explicit renewal. Human reviews the stable global definition once. Complete the initial activation spike first; all remaining controls reuse it without reinstalling or requesting further restarts. Record any unsupported event coverage as a limit rather than repeating setup. Do not expose credentials or print raw responses to verification artifacts.
+- [ ] At the end of the full development engagement, disable recording, verify a healthy dispatcher and no writes from a subsequent runtime canary without restarting, then purge event, health, and control logs plus known run-local recorder copies. Verify only a minimal sanitized cleanup receipt remains. Keep the global dispatcher installed and inert. Assessment/reporting between rounds does not trigger cleanup while follow-up work is pending. Stop dependent completion if disablement or purge remains unresolved.
 - [x] Compare Devin Desktop fixtures/references against the recorded `skills/iterative-review/references/harness-capability-floor.md` and current official Devin CLI documentation. Keep Devin CLI unsupported because its standalone hook config format differs and its documented event shape does not establish the per-call correlation ID. Run fresh Devin Desktop controls only if that runtime is available; otherwise state new code is tested by fixture/helper behaviour and historical runtime evidence, not live revalidated.
-- [ ] Commit `docs: guide tool auditing and runtime recovery` after focused checks and behavioural evaluation. Run-specific model results are never committed into the skill.
+- [ ] Update skill and pressure scenarios to distinguish installation, engagement, and recording round. Cover pause/assess/report/resume and a human requesting further scenarios: reuse the installation, renew as needed, and purge only when the engagement is finished or abandoned. Commit `docs: guide tool auditing and runtime recovery` after focused checks and behavioural evaluation. Run-specific model results are never committed into the skill.
 
 ### Task 7: Package, review and publish the capability
 
@@ -189,6 +182,10 @@ def test_expiry_does_not_complete_cleanup(expired_run):
 - [ ] Obtain fresh whole-branch review through the installed requesting-code-review workflow. Correct actionable findings, re-run affected checks and obtain fresh review after correction; CI alone is insufficient review evidence.
 - [ ] When execution is authorised through publication, push the task branch and create a Draft PR with exact-file body text. Attach it to this chat; verify the remote head and hosted checks. Report remaining human Ready/merge actions as subsequent actions, not unchecked implementation steps. If publication is not authorised at execution time, retain completed local work and request that final concrete publication decision.
 - [ ] Return validation output, final head, changed source/generated boundaries, runtime coverage and residuals, all development-probe cleanup proof, and the PR URL when created. Update MARK-377 with evidence without declaring merged or Done unless those states are actually proved and authorised.
+
+## Historical implementation evidence before the global-hook revision
+
+Checked items below record witnessed work on the earlier project-local design. They do not establish acceptance of the revised global lifecycle. Task 3 and the reopened Task 5/6 items govern the remaining work. Update the approved spec to the settled global lifecycle before implementation; retain sanitisation and evidence constraints.
 
 ## Review hardening follow-up
 
@@ -226,3 +223,13 @@ The fresh whole-branch review at `5938683cf4d3b9e3c9ca183de7dc67413d67f2b9` foun
 Use the existing canonical worktree `Z:/_agent-worktrees/agent-asset-marketplace/codex/mark-377-temporary-tool-auditing`, branch `codex/mark-377-temporary-tool-auditing`. The implementation and generated package are in place and under review; follow-up hardening changes address independent review findings. The previous disposable spike is fully torn down; its scratch evidence is context, not production code.
 
 Read `.agents/runbooks/implementing.md`, the approved spec, this plan, source custody doctrine, skill tests contract and tracked command contract before execution. Refresh upstream and inspect drift without overwriting the current approved artifacts. Do not recreate a worktree or discard pre-existing dirty state. Every task's commit uses the repository hook and all helper tests named above; execution updates checkboxes from witnessed evidence.
+
+## Updated acceptance and implementation handoff
+
+- [ ] Update the approved design spec to match this revision before changing implementation. Source: the human-approved permanent global hook discussion in this chat. MARK-377 was refreshed through the separate Linear MCP; it remains In Progress, has no linked Linear documents, and its original temporary-registration wording is superseded for Codex by this approved revision.
+- [ ] Prove capture-time session-family isolation: activate one parent session, capture its parent and subagent controls, and exercise a separate session in the same worktree plus a session in another project. Inspect the selected run to prove neither unrelated session was persisted; no post-recording filtering may satisfy this criterion. Establish the actual runtime session-ID source before activation and report unsupported or missing child identifiers as attribution limits.
+- [ ] Prove one-time global load/approval followed by enable, positive control, pause/assessment, resume, renewal, disable, inert canary, and purge in one continuing Codex process. Keep recording rounds in one engagement and retain controls as evidence until final purge.
+- [ ] Fresh review must inspect the selected activation mechanism, per-worktree isolation, sanitisation before persistence, default-inert/expired behavior, and cleanup. Security reviewers are expected to web-spike relevant risks and primary standards and connect findings to this local-machine scope.
+- [ ] Regenerate the shipped package and complete the existing review/publication gates after these revised tasks pass. Do not treat earlier fixture or teardown evidence as proof of the new live mechanism.
+
+This revision is ready for human reading. Implementation remains paused pending review of this updated plan. The selected execution lane remains `executing-plans` because dispatcher activation, lifecycle migration, and live evidence share state; a separate implementation agent per task would add handoff overhead without separating those concerns.
