@@ -24,6 +24,10 @@ The first fresh reviewer found both seeded defects and accepted the safe boundar
 
 The AOM adoption roadmap, eleven plans and spec were classified complete against their full recorded obligations, durable owners and live merged PR #345, then retired in the first substantive implementation commit. Retain this slice, MARK-377 and uncertain/active predecessor artifacts.
 
+Task 1 delivery: `b2b12dc9cd119e4622bc21dbc6a41935d1756536`, new shared skill/source/generated membership and reusable behavior cases. Fixture custody/revision tests: 3 passed. Complete tracked Windows hook: build 13 passed/1 skipped, repository 114 passed, shipping 10 passed, other checks passed. Narrow report-basis RED/GREEN is recorded off-repo. Baseline and GREEN used the same UTF-8 fixture-produced diff rather than the package helper; the fix case uses the owning helper. Git tracked content/index/revision checks establish custody; individual child tool/query execution remains outside independent coverage.
+
+Task 2 evidence: current-template baseline found defects despite restrictive wording, so the change resolves a contract conflict without claiming a discovery failure. The updated fix template produced ADDRESSED with no new breakage, applied the remaining AGENTS route with REVIEW.md absent, and separated the unchanged loader issue without blocking the fix. The nominated unavailable documentation route failed both in the child report and a dispatcher web-tool verification; other official URLs were usable. The child continued with the best supported review and then attributed dispatcher-supplied research, which corroborated its findings without inventing a gap. This demonstrates failed-resource recovery, not a runtime with all internet access unavailable.
+
 ## Global Constraints
 
 - Implement MARK-379 only, in `Z:/_agent-worktrees/agent-asset-marketplace/codex/mark-379-reviewer-discovery` on `codex/mark-379-reviewer-discovery`.

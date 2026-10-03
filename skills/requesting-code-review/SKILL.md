@@ -18,6 +18,7 @@ metadata:
     - a substitute for self-review.
   related_skills:
     - selecting-a-subagent
+    - conducting-code-review
     - receiving-code-review
     - iterative-review
     - finishing-a-development-branch
@@ -76,6 +77,8 @@ Describe the review needed, then consult `selecting-a-subagent` before every rev
 - `{BASE_SHA}` - Starting commit
 - `{HEAD_SHA}` - Ending commit
 
+Supply the actual conducting-code-review skill location, usable runtime/catalog discovery entrypoints, repository/revision, review scope/lens, known capability limits, owned proof scratch and report destination. Fresh context removes conversation history, not access to skills or research. Resource suggestions are starting points. Select a route with actual resource/execution access adequate for the lens; if access is missing, preserve the best available review and recover through attributed dispatcher research or re-dispatch with real access. Require the concise review basis even when clean.
+
 **3. Act on feedback:**
 
 - Fix Critical issues immediately
@@ -85,7 +88,7 @@ Describe the review needed, then consult `selecting-a-subagent` before every rev
 
 ## Branch or PR diff review
 
-When the code-review request is about a branch or PR diff, the orchestrator (this session) prepares the review inputs; the reviewer subagent only reads the prepared diff and description.
+When the code-review request is about a branch or PR diff, the orchestrator (this session) prepares the review inputs; the reviewer subagent evaluates the prepared package with conducting-code-review and relevant resources.
 
 1. Determine the base ref (`<base>`) and branch (`<branch>`).
 2. Generate the review package as UTF-8 without a BOM with `py -3 <runtime-skill-path-for-subagent-workspace>/scripts/review_package.py --apply - <base> <branch> <diff_path>`. Use `-` for no plan file; `diff_path` is optional and the script prints the path it wrote.
@@ -98,7 +101,7 @@ Inputs to pass to the subagent:
 - `<pr_description>` — the PR title/body and any linked issue/spec context (optional).
 - `<base>` and `<branch>` — the base and head refs (optional, for extra verification).
 
-The subagent reads the prepared diff, uses `<pr_description>` to understand intent and scope, cites specific files and line numbers, and does not modify files.
+The subagent uses the package and relevant context, cites files and lines, and protects reviewed source/index/revision. Focused tests and disposable proofs remain permitted under conducting-code-review. Include the shared skill/resource entrypoints, limits, scratch and report destination with the inputs above.
 
 Use the prepared-diff prompt template at [reviewer-prompt.md](reviewer-prompt.md).
 

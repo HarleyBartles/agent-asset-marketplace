@@ -20,6 +20,7 @@ metadata:
     - writing-plans
     - executing-plans
     - selecting-a-subagent
+    - conducting-code-review
     - finishing-a-development-branch
     - dispatching-parallel-agents
 license: MIT
@@ -228,7 +229,7 @@ Per-task reviews are task-scoped gates. The broad review happens once, at the fi
 Before dispatching the task reviewer, invoke `selecting-a-subagent` to pick the right reviewer profile (`reviewer`, `reviewer-strong`, or `reviewer-fixes`) for the task diff.
 
 - Hand the reviewer its diff as a file: run this skill's `py -3 <runtime-skill-path-for-subagent-workspace>/scripts/review_package.py --apply PLAN_FILE BASE HEAD` and pass the reviewer the file path it prints. The script writes the package as UTF-8 with no BOM. The output never enters your own context, and the reviewer sees the commit list, stat summary, and full diff with context in one `read` call. Use the BASE you recorded before dispatching the implementer — never `HEAD~1`, which silently truncates multi-commit tasks. Never dispatch a task reviewer without a diff file.
-- **Reviewer inputs:** the task reviewer gets three paths — the same brief file, the report file, and the review package — plus the global constraints that bind the task.
+- **Reviewer inputs:** provide the brief, implementer report, prepared package, binding global constraints and scope, actual conducting-code-review entrypoint, usable resource catalog/routes, reviewed checkout/revision, known capability limits, owned proof scratch and review report destination. Use the same method for focused fix review. Fresh context preserves skill discovery, authoritative research and legitimate focused execution; require a concise review basis even for clean verdicts.
 - The global-constraints block you hand the reviewer is its attention lens. Copy the binding requirements verbatim from the plan's Global Constraints section or the spec: exact values, exact formats, and the stated relationships between components ("same layout as X", "matches Y"). The reviewer's template already carries the process rules (YAGNI, test hygiene, review method) — the constraints block is for what THIS project's spec demands.
 - Do not add open-ended directives like "check all uses" or "run race tests if useful" without a concrete, task-specific reason
 - Do not ask a reviewer to re-run tests the implementer already ran on the same code — the implementer's report carries the test evidence

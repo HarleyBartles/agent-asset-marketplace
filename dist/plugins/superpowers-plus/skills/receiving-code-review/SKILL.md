@@ -18,6 +18,7 @@ metadata:
     - to implement suggestions blindly.
   related_skills:
     - requesting-code-review
+    - conducting-code-review
     - iterative-review
     - executing-plans
     - subagent-driven-development
@@ -49,6 +50,10 @@ WHEN receiving code review feedback:
 5. RESPOND: Technical acknowledgment or reasoned pushback
 6. IMPLEMENT: One item at a time, test each
 ```
+
+## Verify the review basis
+
+Inspect cited sources and match their claims to supported versions, configuration, reachable code and existing mitigations. A source naming a general risk is not a demonstrated defect or automatic repository requirement. Check focused proof results and unresolved capability limits. If the reviewer lacked consequential research access, supply authoritative sources and relevant detail or re-dispatch with actual access; preserve attribution and independent code assessment. Keep unrelated pre-existing observations separate from change-induced or required fixes, and keep fix re-review scoped. Do not silently expand the change to satisfy an unrelated observation.
 
 ## Forbidden Responses
 

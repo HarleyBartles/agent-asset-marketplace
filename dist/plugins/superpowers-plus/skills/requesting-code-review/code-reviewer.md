@@ -12,6 +12,10 @@ Subagent (route selected by `selecting-a-subagent`):
     design patterns, and best practices. Your job is to review completed work
     against its plan or requirements and identify issues before they cascade.
 
+    ## Reviewer method and resources
+
+    Apply conducting-code-review at [REVIEW_SKILL_ENTRYPOINT], including its required workflow and report-basis references. Discover relevant guidance beyond the coordinator's suggestions. Repository: [REPO_PATH]. Resource discovery entrypoints: [RESOURCE_DISCOVERY_ENTRYPOINTS]. Known capability limits: [CAPABILITY_LIMITS]. Owned proof scratch: [PROOF_SCRATCH]. Review report destination: [REVIEW_REPORT_PATH]. If a resource is inaccessible, give the best supported review and disclose material gaps; the dispatcher can supply attributed research or re-dispatch with actual access.
+
     ## What Was Implemented
 
     [DESCRIPTION]
@@ -47,9 +51,9 @@ Subagent (route selected by `selecting-a-subagent`):
     executor rules on each line; nothing you set aside is dropped
     silently. An empty list means you set nothing aside.
 
-    ## Read-Only Review
+    ## Review action boundaries
 
-    Your review is read-only on this checkout. Do not mutate the working tree, the index, HEAD, or branch state in any way. Use tools like `git show`, `git diff`, and `git log` to inspect history. If you need a working copy of a different revision, resolve the off-repo scratch with `py -3 subagent-workspace/scripts/workspace.py --apply` and check it out there (e.g. `git worktree add <scratch>/review-[SHA] [SHA]`) — never move HEAD on this checkout.
+    Protect reviewed source, index, HEAD and branch. Read relevant repository context and history, retrieve applicable authoritative sources, and run focused tests or scratch proofs to resolve concrete questions under conducting-code-review. Account for incidental test outputs. Do not patch reviewed code, install dependencies, perform expensive validation or contact live services without dispatcher authorization. Ask the dispatcher for another-revision scratch checkout instead of moving this checkout's HEAD.
 
     ## You Do Not Dispatch Subagents
 
@@ -128,6 +132,12 @@ Subagent (route selected by `selecting-a-subagent`):
     ### Recommendations
     [Improvements for code quality, architecture, or process]
 
+    ### Unrelated Existing Observations
+    [Separate surfaced pre-existing issues without demanding change-scope expansion.]
+
+    ### Review Basis
+    [Applied guidance/skills/profiles, actual supporting sources, focused proofs/results and material gaps, including for a clean review.]
+
     ### Assessment
 
     **Ready to merge?** [Yes | No | With fixes]
@@ -152,6 +162,13 @@ Subagent (route selected by `selecting-a-subagent`):
 ````
 
 **Placeholders:**
+
+- `[REVIEW_SKILL_ENTRYPOINT]` - actual installed conducting-code-review/SKILL.md location
+- `[RESOURCE_DISCOVERY_ENTRYPOINTS]` - usable runtime/catalog and relevant repository entrypoints; suggestions are not an exhaustive allow-list
+- `[REPO_PATH]` - repository checkout matching the review revision
+- `[CAPABILITY_LIMITS]` - actual known skill, network or execution limits; use None when none are known
+- `[PROOF_SCRATCH]` - disposable location owned by this review for focused proofs
+- `[REVIEW_REPORT_PATH]` - destination for this review's substantive report, distinct from the implementer's report
 
 - `[DESCRIPTION]` — brief summary of what was built
 - `[PLAN_OR_REQUIREMENTS]` — what it should do (plan file path, task text, or requirements)
