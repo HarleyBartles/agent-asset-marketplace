@@ -257,6 +257,25 @@ def assess(run: Path, subject: dict, parent_idle_confirmed: bool = False) -> dic
     paired = len(pres.keys() & posts.keys())
     if attempts:
         limitations.add("tool-attempts-observed")
+    if attempts == 0 and isinstance(completion_at, (int, float)):
+        completion_controls = [
+            record
+            for record in records
+            if record.get("event") == "pre"
+            and identity(record) in positive_control_identities
+            and isinstance(record.get("received_at"), (int, float))
+            and record["received_at"] >= completion_at
+        ]
+        session_end_controls = [
+            record
+            for record in records
+            if record.get("event") == "sessionend"
+            and record.get("session_id") == manifest.get("capture_session_id")
+            and isinstance(record.get("received_at"), (int, float))
+            and record["received_at"] >= completion_at
+        ]
+        if not completion_controls and not session_end_controls:
+            limitations.add("missing-completion-control")
     supported = not limitations
     unresolved_count = len(pres.keys() - posts.keys()) + len(posts.keys() - pres.keys())
     redactions = sorted(

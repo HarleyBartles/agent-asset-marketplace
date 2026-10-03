@@ -2,7 +2,6 @@
 
 import json
 import os
-import re
 import hashlib
 import tempfile
 import time
@@ -11,6 +10,13 @@ from pathlib import Path
 from typing import Any, Callable, Iterator
 
 from sanitize import sanitize
+
+MAX_EVENT_LOG_BYTES = 25 * 1024 * 1024
+MAX_HEALTH_LOG_BYTES = 256 * 1024
+MAX_CONTROL_LOG_BYTES = 1024 * 1024
+CONTROL_LOG_CLEANUP_RESERVE_BYTES = 64 * 1024
+MAX_MANIFEST_BYTES = 2 * 1024 * 1024
+MANIFEST_CLEANUP_RESERVE_BYTES = 64 * 1024
 
 
 class AuditStoreError(Exception):
@@ -108,6 +114,8 @@ def load_manifest(run: Path) -> dict:
 
 def _write_manifest_locked(run: Path, path: Path, value: dict) -> None:
     safe_session_paths = set()
+    if isinstance(value, dict) and isinstance(value.get("capture_session_id"), str):
+        safe_session_paths.add("$.capture_session_id")
     subject = value.get("subject") if isinstance(value, dict) else None
     if isinstance(subject, dict) and "session_id" in subject:
         safe_session_paths.add("$.subject.session_id")
@@ -119,6 +127,15 @@ def _write_manifest_locked(run: Path, path: Path, value: dict) -> None:
             if isinstance(control, dict) and "session_id" in control
         )
     encoded, _ = _safe_json(value, "manifest-encode-failed", safe_session_paths)
+    state = value.get("registration_state") if isinstance(value, dict) else None
+    if state in {"teardown-verified", "cleaned"}:
+        maximum = MAX_MANIFEST_BYTES
+    elif state in {"removed", "removing"}:
+        maximum = MAX_MANIFEST_BYTES - MANIFEST_CLEANUP_RESERVE_BYTES
+    else:
+        maximum = MAX_MANIFEST_BYTES - 2 * MANIFEST_CLEANUP_RESERVE_BYTES
+    if len(encoded) > maximum:
+        raise AuditStoreError("manifest-size-limit-reached")
     descriptor, temporary = tempfile.mkstemp(prefix=".manifest-", suffix=".tmp", dir=run)
     try:
         if os.name != "nt":
@@ -204,7 +221,7 @@ def append_record_if(
     value: dict,
     eligible: Callable[[dict, dict], bool] | None,
 ) -> dict | None:
-    if not isinstance(name, str) or not re.fullmatch(r"[A-Za-z0-9_-]{1,64}", name):
+    if not isinstance(name, str) or name not in {"events", "health", "controls"}:
         raise AuditStoreError("invalid-record-name")
     safe_session_paths = {"$.session_id"} if name in {"events", "controls"} and "session_id" in value else set()
     cleaned, redactions = sanitize(value, safe_session_paths=safe_session_paths)
@@ -223,6 +240,24 @@ def append_record_if(
                     return None
             encoded, _ = _safe_json(cleaned, "record-encode-failed", safe_session_paths)
             path = run / f"{name}.jsonl"
+            current_size = path.stat().st_size if path.exists() else 0
+            if name == "events":
+                maximum = MAX_EVENT_LOG_BYTES
+                code = "event-log-limit-reached"
+            elif name == "controls":
+                cleanup_codes = {"recorder-health-control", "recorder-direct-control"}
+                reserve_record = cleaned.get("code") in cleanup_codes
+                maximum = (
+                    MAX_CONTROL_LOG_BYTES
+                    if reserve_record
+                    else MAX_CONTROL_LOG_BYTES - CONTROL_LOG_CLEANUP_RESERVE_BYTES
+                )
+                code = "control-log-limit-reached"
+            else:
+                maximum = MAX_HEALTH_LOG_BYTES
+                code = "health-log-limit-reached" if name == "health" else "auxiliary-log-limit-reached"
+            if current_size + len(encoded) + 1 > maximum:
+                raise AuditStoreError(code)
             fd = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_APPEND, 0o600)
             try:
                 if os.name != "nt":

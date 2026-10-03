@@ -34,7 +34,13 @@ def event(kind, call, session="subject-1", **extra):
 
 
 def test_no_attempt_claim_requires_positive_control_and_completed_coverage(tmp_path):
-    make_run(tmp_path, [event("pre", "control-1", "control-session")])
+    make_run(
+        tmp_path,
+        [
+            event("pre", "control-1", "control-session"),
+            event("pre", "control-1", "control-session", received_at=time.time() + 1),
+        ],
+    )
     result = assess(tmp_path, {"session_id": "subject-1"})
     assert result["claim_supported"] is True
     assert result["attempt_count"] == 0
@@ -87,6 +93,7 @@ def test_codex_session_selector_attributes_only_parent_events(tmp_path):
             event("pre", "control-1", "control-session"),
             event("pre", "child-tool", "subject-1", agent_id="child-7"),
             event("post", "child-tool", "subject-1", agent_id="child-7"),
+            event("pre", "control-1", "control-session", received_at=time.time() + 1),
         ],
     )
     result = assess(tmp_path, {"session_id": "subject-1"})
@@ -201,6 +208,7 @@ def test_devin_child_counts_tools_inside_one_serialized_dispatch(tmp_path):
             event("pre", "child-tool", received_at=now - 6),
             event("post", "child-tool", received_at=now - 5),
             event("post", "dispatch-1", tool_name="run_subagent", received_at=now - 4),
+            event("pre", "control-1", "control-session", received_at=now + 1),
         ],
         runtime="devin-desktop",
     )
@@ -246,7 +254,11 @@ def test_devin_child_requires_orchestrator_idle_attestation(tmp_path):
 def test_codex_agent_completion_requires_matching_subagent_stop(tmp_path):
     make_run(
         tmp_path,
-        [event("pre", "control-1", "control-session"), event("subagentstop", "stop-1", agent_id="agent-7")],
+        [
+            event("pre", "control-1", "control-session"),
+            event("subagentstop", "stop-1", agent_id="agent-7"),
+            event("pre", "control-1", "control-session", received_at=time.time() + 1),
+        ],
     )
     result = assess(tmp_path, {"agent_id": "agent-7"})
     assert result["claim_supported"] is True

@@ -3,17 +3,28 @@
 import argparse
 import json
 import math
+import os
 import re
 import subprocess
+import sys
 import time
 import uuid
 from pathlib import Path
 
 from assessment import assess
-from codex_trust import preview_project_trust
+from activation import disable as disable_activation, enable as enable_activation
+from global_registration import global_install_present, install_global
 from registration import install, registration_absent, remove
 from sanitize import sanitize
-from store import AuditStoreError, append_record_if, create_manifest, load_manifest, save_manifest, update_manifest
+from store import (
+    AuditStoreError,
+    append_record_if,
+    create_manifest,
+    load_manifest,
+    registration_lock,
+    save_manifest,
+    update_manifest,
+)
 
 
 def _duration(value, default=30.0) -> float:
@@ -24,6 +35,22 @@ def _duration(value, default=30.0) -> float:
     if not math.isfinite(duration) or duration <= 0:
         raise AuditStoreError("invalid-duration")
     return duration
+
+
+def _codex_home() -> Path:
+    return Path(os.environ.get("CODEX_HOME") or (Path.home() / ".codex")).resolve()
+
+
+def _activation_registry(home: Path) -> Path:
+    return Path(home) / "tool-auditing" / "activations.json"
+
+
+def _activation_entry_present(registry: Path, run_id: str) -> bool:
+    try:
+        data = json.loads(Path(registry).read_text(encoding="utf-8"))
+        return any(item.get("run_id") == run_id for item in data.get("entries", []) if isinstance(item, dict))
+    except (OSError, ValueError, TypeError):
+        return False
 
 
 def _close_interval(manifest: dict, now: float) -> None:
@@ -52,7 +79,7 @@ def _subject(value: str) -> dict:
     raise AuditStoreError("invalid-subject-selector")
 
 
-def execute(args: dict, now: float | None = None) -> dict:
+def execute(args: dict, now: float | None = None, *, _lifecycle_locked: bool = False) -> dict:
     now = time.time() if now is None else now
     operation = args.get("operation")
     run = Path(args["run_dir"]).resolve() if args.get("run_dir") else None
@@ -65,6 +92,11 @@ def execute(args: dict, now: float | None = None) -> dict:
         runtime = args.get("runtime")
         if runtime not in {"codex", "devin-desktop"} or detail not in {"status", "full-results"}:
             raise AuditStoreError("invalid-prepare-options")
+        capture_session_id = args.get("capture_session_id") or (
+            os.environ.get("CODEX_SESSION_ID") if runtime == "codex" else None
+        )
+        if runtime == "codex" and not capture_session_id:
+            raise AuditStoreError("session-id-unavailable")
         subject = _subject(args.get("subject", ""))
         project = Path(args["project"]).resolve()
         if run is None or run == project or project in run.parents:
@@ -80,6 +112,7 @@ def execute(args: dict, now: float | None = None) -> dict:
             "project_root": str(project),
             "registration_root": None,
             "subject": subject,
+            "capture_session_id": capture_session_id,
             "question": question,
             "detail": detail,
             "expires_at": now + duration * 60,
@@ -97,17 +130,101 @@ def execute(args: dict, now: float | None = None) -> dict:
         return {"applied": True, "run_id": manifest["run_id"], "expires_at": manifest["expires_at"]}
     if run is None:
         raise AuditStoreError("run-directory-required")
+    serialized_operations = {
+        "install",
+        "enable",
+        "disable",
+        "start",
+        "stop",
+        "disarm",
+        "renew",
+        "remove",
+        "verify-teardown",
+        "purge",
+    }
+    if apply and operation in serialized_operations:
+        if not _lifecycle_locked:
+            with registration_lock(run):
+                return execute(args, now, _lifecycle_locked=True)
+        current = load_manifest(run)
+        state = current.get("registration_state")
+        if current.get("logs_purged") or state in {"cleaned", "teardown-verified"}:
+            if operation == "purge" and current.get("logs_purged"):
+                return {"logs_purged": True, "cleanup_required": False, "already_purged": True}
+            if operation == "purge" and state == "teardown-verified":
+                pass
+            else:
+                raise AuditStoreError("lifecycle-terminal")
     if not apply and operation == "install":
         manifest = load_manifest(run)
         runtime = manifest.get("runtime")
-        preview = preview_project_trust(Path(manifest["project_root"])) if runtime == "codex" else None
+        preview = (
+            {"global": True, "codex_home": str(_codex_home()), "project_path": manifest.get("project_root")}
+            if runtime == "codex"
+            else None
+        )
         return {"applied": False, "operation": "install", "codex_trust": preview}
     if not apply and operation not in {"status", "assess", "verify"}:
         return {"applied": False, "operation": operation}
     if operation == "install":
         manifest = load_manifest(run)
+        if manifest.get("runtime") == "codex":
+            home = _codex_home()
+            source = Path(__file__).resolve().parent
+            result = install_global(home, source, refresh_helpers=bool(args.get("refresh_global_helpers")))
+
+            def mark_installed(current):
+                current["registration_root"] = str(home)
+                current["registration_state"] = "installed"
+                current["global_dispatcher"] = True
+                current["lifecycle_cli_path"] = str(Path(__file__).resolve())
+                current["hook_interpreter"] = sys.executable
+
+            update_manifest(run, mark_installed)
+            return result
         return install(run, Path(manifest["project_root"]), manifest["runtime"])
+    if operation == "enable":
+        manifest = load_manifest(run)
+        if manifest.get("registration_state") in {"teardown-verified", "cleaned"} or manifest.get("logs_purged"):
+            raise AuditStoreError("lifecycle-terminal")
+        home = _codex_home()
+        if manifest.get("runtime") != "codex" or not global_install_present(home):
+            raise AuditStoreError("global-dispatcher-not-installed")
+        session_id = args.get("session_id") or manifest.get("capture_session_id") or os.environ.get("CODEX_SESSION_ID")
+        if not session_id:
+            raise AuditStoreError("session-id-unavailable")
+        result = enable_activation(_activation_registry(home), run, session_id)
+
+        def mark_enabled(current):
+            current["capture_session_id"] = session_id
+            current["registration_state"] = "installed"
+            current["cleanup_required"] = True
+            current["activation_verified"] = False
+            current["armed"] = False
+            current["activation_registry"] = str(_activation_registry(home))
+            current["global_dispatcher"] = True
+
+        update_manifest(run, mark_enabled)
+        return result
+    if operation == "disable":
+        manifest = load_manifest(run)
+        if manifest.get("runtime") != "codex":
+            raise AuditStoreError("disable-only-supported-for-codex-global")
+        registry = Path(manifest.get("activation_registry") or _activation_registry(_codex_home()))
+        result = disable_activation(registry, run)
+
+        def mark_disabled(current):
+            _close_interval(current, now)
+            current["armed"] = False
+            current["activation_verified"] = False
+            current["late_outcomes_allowed"] = False
+            current["registration_state"] = "removed"
+
+        update_manifest(run, mark_disabled)
+        return result
     if operation == "remove":
+        if load_manifest(run).get("global_dispatcher"):
+            raise AuditStoreError("disable-engagement-global-hook-remains-installed")
 
         def disarm(manifest):
             manifest["armed"] = False
@@ -285,6 +402,10 @@ def execute(args: dict, now: float | None = None) -> dict:
                     if item.get("call_id") == control_id
                     and item.get("run_id") == manifest.get("run_id")
                     and item.get("event") == "pre"
+                    and (
+                        not manifest.get("global_dispatcher")
+                        or item.get("session_id") == manifest.get("capture_session_id")
+                    )
                     and isinstance(item.get("received_at"), (int, float))
                     and item["received_at"] >= manifest.get("activation_probe_started_at", float("inf"))
                     and item["received_at"] <= manifest.get("activation_probe_until", float("-inf"))
@@ -359,7 +480,23 @@ def execute(args: dict, now: float | None = None) -> dict:
                 manifest["expires_at"] = now + duration * 60
                 manifest.setdefault("renewals", []).append({"at": now, "duration_minutes": duration})
 
+        previous_manifest = load_manifest(run) if operation == "renew" else None
         manifest, _ = update_manifest(run, transition)
+        if (
+            manifest.get("runtime") == "codex"
+            and manifest.get("activation_registry")
+            and manifest.get("capture_session_id")
+        ):
+            try:
+                enable_activation(Path(manifest["activation_registry"]), run, manifest["capture_session_id"])
+            except Exception:
+                if operation != "renew":
+                    raise
+                try:
+                    save_manifest(run, previous_manifest)
+                except AuditStoreError:
+                    raise AuditStoreError("activation-renewal-rollback-failed") from None
+                raise AuditStoreError("activation-renewal-failed") from None
         return {
             "operation": operation,
             "applied": True,
@@ -398,6 +535,65 @@ def execute(args: dict, now: float | None = None) -> dict:
         if manifest.get("registration_state") != "removed":
             raise AuditStoreError("teardown-restart-unverified")
         phase = args.get("phase", "finish")
+        if manifest.get("runtime") == "codex" and manifest.get("global_dispatcher"):
+            if phase == "begin":
+                if not apply:
+                    return {"teardown_probe": "not-started", "requires_apply": True}
+                if _activation_entry_present(Path(manifest.get("activation_registry", "")), manifest.get("run_id")):
+                    raise AuditStoreError("activation-still-present")
+                if not global_install_present(_codex_home()):
+                    raise AuditStoreError("global-dispatcher-missing")
+                recorder = _codex_home() / "tool-auditing" / "record.py"
+                interpreter = manifest.get("hook_interpreter")
+                nonce = str(uuid.uuid4())
+                result = subprocess.run(
+                    [interpreter, "-B", str(recorder), "--run-dir", str(run), "--health-control-nonce", nonce],
+                    capture_output=True,
+                    text=True,
+                    timeout=10,
+                    check=False,
+                )
+                if result.returncode != 0:
+                    raise AuditStoreError("recorder-health-control-failed")
+                controls_path = run / "controls.jsonl"
+                controls = [
+                    json.loads(line) for line in controls_path.read_text(encoding="utf-8").splitlines() if line.strip()
+                ]
+                if not any(
+                    item.get("nonce") == nonce and item.get("code") == "recorder-health-control" for item in controls
+                ):
+                    raise AuditStoreError("recorder-health-control-missing")
+                events_path = run / "events.jsonl"
+                rows = events_path.read_bytes() if events_path.exists() else b""
+                manifest["teardown_event_baseline_count"] = len(rows.splitlines())
+                manifest["teardown_event_baseline_bytes"] = len(rows)
+                manifest["teardown_probe_started_at"] = now
+                manifest["teardown_probe_until"] = now + 120
+                save_manifest(run, manifest)
+                return {"teardown_probe": "started", "activation_disabled": True, "expires_at": now + 120}
+            if phase != "finish" or not args.get("canary_performed"):
+                raise AuditStoreError("teardown-canary-required")
+            if now > manifest.get("teardown_probe_until", 0):
+                raise AuditStoreError("teardown-probe-expired")
+            if _activation_entry_present(Path(manifest.get("activation_registry", "")), manifest.get("run_id")):
+                raise AuditStoreError("activation-still-present")
+            events_path = run / "events.jsonl"
+            rows = events_path.read_bytes() if events_path.exists() else b""
+            if len(rows.splitlines()) != manifest.get("teardown_event_baseline_count") or len(rows) != manifest.get(
+                "teardown_event_baseline_bytes"
+            ):
+                raise AuditStoreError("disabled-hook-recorded-canary")
+            manifest["cleanup_required"] = True
+            manifest["registration_state"] = "teardown-verified"
+            manifest["teardown_verified_at"] = now
+            manifest.pop("teardown_probe_until", None)
+            save_manifest(run, manifest)
+            return {
+                "cleanup_required": True,
+                "teardown_verified": True,
+                "logs_purge_required": True,
+                "restart_required": False,
+            }
         if phase == "begin":
             if not apply:
                 return {"teardown_probe": "not-started", "requires_apply": True}
@@ -505,6 +701,8 @@ def _parser() -> argparse.ArgumentParser:
         "assess",
         "disarm",
         "remove",
+        "enable",
+        "disable",
         "verify-teardown",
         "purge",
     )
@@ -513,6 +711,12 @@ def _parser() -> argparse.ArgumentParser:
         child.add_argument("--apply", action="store_true", help="apply this operation")
         child.add_argument("--check", action="store_true", help="preview without mutation")
         child.add_argument("--run-dir", required=operation != "prepare")
+        if operation == "install":
+            child.add_argument(
+                "--refresh-global-helpers",
+                action="store_true",
+                help="replace verified owned helper files after human review; hook definitions stay unchanged",
+            )
         if operation == "prepare":
             child.add_argument("--runtime", choices=("codex", "devin-desktop"), required=True)
             child.add_argument("--project", required=True)
@@ -521,6 +725,9 @@ def _parser() -> argparse.ArgumentParser:
             child.add_argument("--detail", choices=("status", "full-results"), required=True)
             child.add_argument("--duration-minutes", type=float)
             child.add_argument("--runtime-version")
+            child.add_argument("--capture-session-id")
+        if operation == "enable":
+            child.add_argument("--session-id")
         if operation == "renew":
             child.add_argument("--duration-minutes", type=float)
         if operation == "verify":

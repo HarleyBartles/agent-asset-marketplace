@@ -151,7 +151,7 @@ def sanitize(value: object, *, safe_session_paths: set[str] | None = None) -> tu
                 if key_changed:
                     result[safe_key] = _REDACTED
                     redactions.append(child_path)
-                elif safe_key == "session_id" and child_path in safe_session_paths:
+                elif child_path in safe_session_paths:
                     result[safe_key] = visit(child, child_path, depth + 1)
                 elif _SECRET_KEYS.search(normalized_key):
                     result[safe_key] = _REDACTED

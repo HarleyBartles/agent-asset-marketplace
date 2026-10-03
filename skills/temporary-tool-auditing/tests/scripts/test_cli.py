@@ -147,7 +147,7 @@ def test_verify_teardown_check_is_read_only(tmp_path, capsys, monkeypatch):
     assert '"cleanup_required":true' in (run / "manifest.json").read_text(encoding="utf-8")
 
 
-def test_install_check_previews_exact_codex_trust_path_without_mutation(tmp_path, monkeypatch):
+def test_install_check_previews_global_codex_hook_without_project_trust_mutation(tmp_path, monkeypatch):
     from auditctl import execute
     from store import save_manifest
 
@@ -161,5 +161,6 @@ def test_install_check_previews_exact_codex_trust_path_without_mutation(tmp_path
 
     assert result["applied"] is False
     assert result["codex_trust"]["project_path"] == str(project.resolve())
-    assert result["codex_trust"]["action"] == "add-exact-project-path"
+    assert result["codex_trust"]["global"] is True
+    assert result["codex_trust"]["codex_home"] == str(codex_home.resolve())
     assert not (codex_home / "config.toml").exists()

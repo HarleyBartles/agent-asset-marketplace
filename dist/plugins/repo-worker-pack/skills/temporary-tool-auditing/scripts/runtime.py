@@ -70,9 +70,10 @@ def normalize_event(
         "turn_id": turn_id,
         "call_id": call_id,
         "tool_name": tool_name,
-        "arguments": arguments,
         "outcome_status": status,
     }
+    if detail == "full-results" and arguments is not None:
+        normalized["arguments"] = arguments
     if detail == "full-results" and event == "post" and result is not None:
         normalized["result"] = result
     control_operation = _auditctl_operation(tool_name, arguments, run_dir, lifecycle_cli_path)
