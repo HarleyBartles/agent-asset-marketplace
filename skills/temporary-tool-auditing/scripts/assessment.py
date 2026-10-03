@@ -54,6 +54,14 @@ def assess(run: Path, subject: dict, parent_idle_confirmed: bool = False) -> dic
     except AuditStoreError:
         return {
             "claim_supported": False,
+            "claim_scope": "no observed tool attempts for the selected subject during verified coverage",
+            "subject": subject,
+            "detail": None,
+            "intervals": [],
+            "unresolved_count": 0,
+            "coverage": {"verified": False, "gaps": [], "interval_count": 0},
+            "health": [],
+            "redactions": [],
             "attempt_count": 0,
             "paired_count": 0,
             "limitations": ["manifest-unreadable"],
@@ -122,29 +130,36 @@ def assess(run: Path, subject: dict, parent_idle_confirmed: bool = False) -> dic
 
     manifest_controls = [item for item in manifest.get("controls", []) if isinstance(item, dict)]
     lifecycle_controls = [
-        {"call_id": item.get("call_id"), "role": "lifecycle"}
+        {
+            "call_id": item.get("call_id"),
+            "session_id": item.get("session_id"),
+            "agent_id": item.get("agent_id"),
+            "role": "lifecycle",
+        }
         for item in records
         if item.get("control_operation") and item.get("call_id")
     ]
     all_controls = manifest_controls + extra_controls + lifecycle_controls
-    control_ids = {item.get("call_id") for item in all_controls if item.get("call_id")}
-    captured_control_ids = {
-        call_id
-        for call_id in control_ids
-        if any(
-            record.get("run_id") == manifest.get("run_id")
-            and record.get("event") == "pre"
-            and record.get("call_id") == call_id
-            for record in records
-        )
+
+    def identity(item):
+        return item.get("call_id"), item.get("session_id"), item.get("agent_id")
+
+    control_identities = {identity(item) for item in all_controls if item.get("call_id") and item.get("session_id")}
+    captured_control_identities = {
+        key
+        for key in control_identities
+        if any(record.get("event") == "pre" and identity(record) == key for record in records)
     }
-    positive_control_ids = {
-        item.get("call_id")
+    positive_control_identities = {
+        identity(item)
         for item in all_controls
-        if isinstance(item, dict) and item.get("call_id") and item.get("role", "positive") == "positive"
+        if item.get("call_id") and item.get("session_id") and item.get("role", "positive") == "positive"
     }
-    if not (captured_control_ids & positive_control_ids):
+    if not (captured_control_identities & positive_control_identities):
         limitations.add("missing-positive-control")
+
+    def is_control(item):
+        return identity(item) in control_identities
 
     if runtime == "devin" and subject.get("kind") == "child":
         dispatch_id = subject.get("dispatch_call_id")
@@ -196,7 +211,7 @@ def assess(run: Path, subject: dict, parent_idle_confirmed: bool = False) -> dic
             item
             for item in records
             if item.get("run_id") == manifest.get("run_id")
-            and item.get("call_id") not in control_ids
+            and not is_control(item)
             and _selected(item, subject, runtime, limitations)
         ]
     for item in subject_records:
@@ -204,9 +219,7 @@ def assess(run: Path, subject: dict, parent_idle_confirmed: bool = False) -> dic
             limitations.add("missing-session-id")
         if runtime == "devin" and item.get("event") in {"pre", "post"} and not item.get("turn_id"):
             limitations.add("missing-turn-id")
-    selected = [
-        item for item in subject_records if item.get("call_id") not in control_ids and not item.get("control_operation")
-    ]
+    selected = [item for item in subject_records if not is_control(item) and not item.get("control_operation")]
     pres: dict[str, dict] = {}
     posts: dict[str, dict] = {}
     interval_bounds = [(item["start"], item["end"]) for item in valid_intervals]
@@ -242,6 +255,12 @@ def assess(run: Path, subject: dict, parent_idle_confirmed: bool = False) -> dic
     if attempts:
         limitations.add("tool-attempts-observed")
     supported = not limitations
+    unresolved_count = len(pres.keys() - posts.keys()) + len(posts.keys() - pres.keys())
+    redactions = sorted(
+        {marker for item in subject_records for marker in item.get("redactions", []) if isinstance(marker, str)}
+    )
+    gaps = manifest.get("coverage_gaps", [])
+    coverage_verified = bool(valid_intervals) and not gaps and "completion-outside-coverage" not in limitations
     return {
         "claim_supported": supported,
         "claim_scope": "no observed tool attempts for the selected subject during verified coverage",
@@ -249,6 +268,13 @@ def assess(run: Path, subject: dict, parent_idle_confirmed: bool = False) -> dic
         if runtime == "devin" and subject.get("kind") == "child" and parent_idle_confirmed
         else [],
         "completion_source": completion_source,
+        "subject": subject,
+        "detail": manifest.get("detail"),
+        "intervals": valid_intervals,
+        "unresolved_count": unresolved_count,
+        "coverage": {"verified": coverage_verified, "gaps": gaps, "interval_count": len(valid_intervals)},
+        "health": health,
+        "redactions": redactions,
         "parent_idle_attestation": "orchestrator-self-attested"
         if runtime == "devin" and subject.get("kind") == "child" and parent_idle_confirmed
         else None,

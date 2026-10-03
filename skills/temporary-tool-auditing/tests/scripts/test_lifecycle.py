@@ -1,4 +1,5 @@
 import json
+import sys
 import time
 import pytest
 
@@ -10,6 +11,7 @@ from store import append_record, load_manifest, save_manifest
 def base_run(path, **updates):
     manifest = {
         "run_id": "run-1",
+        "hook_interpreter": sys.executable,
         "runtime": "codex",
         "project_root": str(path.parent),
         "registration_root": str(path.parent / ".codex"),
@@ -174,7 +176,7 @@ def test_stop_records_operator_completion_within_closed_coverage(tmp_path):
         run,
         activation_verified=True,
         armed=True,
-        controls=[{"call_id": "positive", "role": "positive"}],
+        controls=[{"call_id": "positive", "session_id": "s1", "role": "positive"}],
         intervals=[{"start": 50, "end": None, "expires_at": 500}],
     )
     record_event(
@@ -446,4 +448,36 @@ def test_teardown_does_not_clear_cleanup_while_owned_hook_config_remains(tmp_pat
     assert getattr(error.value, "code", None) == "teardown-registration-still-present"
     manifest = load_manifest(run)
     assert manifest["cleanup_required"] is True
+    assert manifest["armed"] is False
+
+
+def test_teardown_uses_persisted_hook_interpreter_and_fails_closed_if_missing(tmp_path):
+    run = tmp_path / "run"
+    base_run(
+        run, registration_state="removed", cleanup_required=True, hook_interpreter=str(tmp_path / "missing-python.exe")
+    )
+    install_test_recorder(run)
+    execute({"operation": "verify-teardown", "run_dir": str(run), "phase": "begin", "apply": True}, now=100)
+    with pytest.raises(Exception) as error:
+        execute(
+            {
+                "operation": "verify-teardown",
+                "run_dir": str(run),
+                "phase": "finish",
+                "restart_confirmed": True,
+                "canary_performed": True,
+                "apply": True,
+            },
+            now=101,
+        )
+    assert getattr(error.value, "code", None) == "teardown-control-failed"
+    assert load_manifest(run)["cleanup_required"] is True
+
+
+def test_explicit_disarm_disables_late_outcome_capture(tmp_path):
+    run = tmp_path / "run"
+    base_run(run, armed=True, expires_at=500, intervals=[{"start": 50, "end": None, "expires_at": 500}])
+    execute({"operation": "disarm", "run_dir": str(run), "apply": True}, now=100)
+    manifest = load_manifest(run)
+    assert manifest["late_outcomes_allowed"] is False
     assert manifest["armed"] is False

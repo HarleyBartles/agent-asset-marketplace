@@ -16,7 +16,13 @@ def record_event(run: Path, payload: dict, now: float) -> bool:
         manifest = load_manifest(run)
         if not isinstance(manifest.get("expires_at"), (int, float)):
             return False
-        normalized = normalize_event(manifest.get("runtime", ""), payload, manifest.get("detail", "status"))
+        normalized = normalize_event(
+            manifest.get("runtime", ""),
+            payload,
+            manifest.get("detail", "status"),
+            run_dir=run,
+            lifecycle_cli_path=manifest.get("lifecycle_cli_path"),
+        )
         active_until = manifest.get("expires_at")
         if manifest.get("activation_probe_until") is not None:
             active_until = min(active_until, manifest["activation_probe_until"])
@@ -25,7 +31,12 @@ def record_event(run: Path, payload: dict, now: float) -> bool:
         in_window = manifest.get("armed") and now < active_until
         late_outcome = False
         if not in_window:
-            if normalized.get("event") != "post" or not normalized.get("call_id"):
+            if (
+                not manifest.get("late_outcomes_allowed", True)
+                or manifest.get("registration_state") in {"removing", "removed", "teardown-verified"}
+                or normalized.get("event") != "post"
+                or not normalized.get("call_id")
+            ):
                 return False
             events_path = Path(run) / "events.jsonl"
             try:

@@ -24,6 +24,9 @@ from record import record_event
         ({"url": "https://example.test/?access_token=query-SENTINEL"}, "query-SENTINEL"),
         ({"command": "tool --access-token cli-SENTINEL"}, "cli-SENTINEL"),
         ({"command": "tool --refresh_token=refresh-SENTINEL"}, "refresh-SENTINEL"),
+        ({"command": 'tool --password "example-secret has spaces"'}, "example-secret has spaces"),
+        ({"command": "tool --access-token='quoted token value'"}, "quoted token value"),
+        ({"text": 'password="assignment secret with spaces"'}, "assignment secret with spaces"),
         ({"key": "-----BEGIN PRIVATE KEY-----\nprivate-SENTINEL\n-----END PRIVATE KEY-----"}, "private-SENTINEL"),
         ({"url": "https://user:url-SENTINEL@example.test/api"}, "url-SENTINEL"),
         ({"url": "postgres://user:db-SENTINEL@db.example.test/main"}, "db-SENTINEL"),
@@ -85,7 +88,10 @@ def test_recorder_never_persists_sentinels_from_json_or_header_strings(tmp_path,
                     "Proxy-Authorization: Digest proxy-SENTINEL"
                 ),
                 "url": "https://example.test/?access_token=query-SENTINEL",
-                "command": "tool --access-token cli-SENTINEL --refresh_token=refresh-SENTINEL",
+                "command": (
+                    "tool --access-token cli-SENTINEL --refresh_token=refresh-SENTINEL "
+                    '--password "example-secret has spaces" password="assignment secret with spaces"'
+                ),
             },
             "tool_response": {"body": '{"access_token":"result-SENTINEL"}'},
         },

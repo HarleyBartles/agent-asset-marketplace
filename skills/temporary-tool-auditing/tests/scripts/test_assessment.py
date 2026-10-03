@@ -14,7 +14,7 @@ def make_run(path, events, **updates):
         "activation_verified": True,
         "intervals": [{"start": now - 20, "end": now + 1}],
         "subject_completed_at": now,
-        "controls": [{"call_id": "control-1"}],
+        "controls": [{"call_id": "control-1", "session_id": "control-session"}],
         "health": [],
     }
     manifest.update(updates)
@@ -217,3 +217,36 @@ def test_codex_agent_completion_requires_matching_subagent_stop(tmp_path):
     result = assess(tmp_path, {"agent_id": "agent-7"})
     assert result["claim_supported"] is True
     assert result["completion_source"] == "matched-subagent-stop"
+
+
+def test_control_id_in_another_session_does_not_hide_subject_attempt(tmp_path):
+    make_run(
+        tmp_path,
+        [
+            event("pre", "control-1", "control-session"),
+            event("pre", "control-1", "subject-1"),
+        ],
+    )
+    result = assess(tmp_path, {"session_id": "subject-1"})
+    assert result["attempt_count"] == 1
+    assert "tool-attempts-observed" in result["limitations"]
+    assert result["claim_supported"] is False
+
+
+def test_assessment_returns_reviewable_evidence_summary(tmp_path):
+    now = time.time()
+    make_run(
+        tmp_path,
+        [event("pre", "control-1", "control-session"), event("pre", "tool-1", redactions=["$.arguments.token"])],
+        detail="status",
+        intervals=[{"start": now - 20, "end": now + 1}],
+        coverage_gaps=[],
+    )
+    result = assess(tmp_path, {"session_id": "subject-1"})
+    assert result["subject"] == {"session_id": "subject-1"}
+    assert result["detail"] == "status"
+    assert result["intervals"]
+    assert result["unresolved_count"] == 1
+    assert result["coverage"]["verified"] is True
+    assert result["health"] == []
+    assert result["redactions"] == ["$.arguments.token"]

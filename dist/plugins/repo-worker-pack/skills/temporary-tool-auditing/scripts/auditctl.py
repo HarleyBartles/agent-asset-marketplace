@@ -4,7 +4,6 @@ import argparse
 import json
 import math
 import subprocess
-import sys
 import time
 import uuid
 from pathlib import Path
@@ -106,6 +105,7 @@ def execute(args: dict, now: float | None = None) -> dict:
         def disarm(manifest):
             manifest["armed"] = False
             manifest["activation_verified"] = False
+            manifest["late_outcomes_allowed"] = False
             manifest["registration_state"] = "removing"
             _close_interval(manifest, now)
 
@@ -179,6 +179,7 @@ def execute(args: dict, now: float | None = None) -> dict:
                     {
                         "call_id": control_id,
                         "session_id": control.get("session_id"),
+                        "agent_id": control.get("agent_id"),
                         "role": "positive",
                         "verified_at": now,
                     }
@@ -208,11 +209,14 @@ def execute(args: dict, now: float | None = None) -> dict:
                     {"start": now, "end": None, "detail": manifest.get("detail"), "expires_at": manifest["expires_at"]}
                 )
                 manifest["armed"] = True
+                manifest["late_outcomes_allowed"] = True
         elif operation in {"stop", "disarm"}:
 
             def transition(manifest):
                 _close_interval(manifest, now)
                 manifest["armed"] = False
+                if operation == "disarm":
+                    manifest["late_outcomes_allowed"] = False
                 if operation == "stop":
                     manifest["subject_completed_at"] = now
                     manifest["subject_completion_source"] = "operator-stop"
@@ -300,8 +304,11 @@ def execute(args: dict, now: float | None = None) -> dict:
         try:
             nonce = str(uuid.uuid4())
             recorder = run / "scripts" / "record.py"
+            interpreter = manifest.get("hook_interpreter")
+            if not isinstance(interpreter, str) or not Path(interpreter).is_file():
+                raise RuntimeError("hook-interpreter-unavailable")
             result = subprocess.run(
-                [sys.executable, str(recorder), "--run-dir", str(run), "--control-nonce", nonce],
+                [interpreter, str(recorder), "--run-dir", str(run), "--control-nonce", nonce],
                 capture_output=True,
                 text=True,
                 timeout=10,
@@ -345,6 +352,7 @@ def execute(args: dict, now: float | None = None) -> dict:
         manifest["armed"] = False
         manifest.pop("teardown_probe_until", None)
         manifest["cleanup_required"] = False
+        manifest["late_outcomes_allowed"] = False
         manifest["registration_state"] = "teardown-verified"
         manifest["teardown_verified_at"] = now
         save_manifest(run, manifest)

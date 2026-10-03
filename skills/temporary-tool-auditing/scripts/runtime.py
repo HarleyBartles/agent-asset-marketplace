@@ -1,7 +1,7 @@
 """Runtime-specific hook payload normalization and registration templates."""
 
 import shlex
-import re
+import os
 import subprocess
 import sys
 from pathlib import Path
@@ -15,7 +15,13 @@ def _first(payload: dict, *names: str):
     return None
 
 
-def normalize_event(runtime: str, payload: dict, detail: str) -> dict:
+def normalize_event(
+    runtime: str,
+    payload: dict,
+    detail: str,
+    run_dir: str | Path | None = None,
+    lifecycle_cli_path: str | Path | None = None,
+) -> dict:
     runtime = runtime.lower()
     if runtime not in {"codex", "devin"}:
         raise ValueError("unsupported-runtime")
@@ -69,13 +75,17 @@ def normalize_event(runtime: str, payload: dict, detail: str) -> dict:
     }
     if detail == "full-results" and event == "post" and result is not None:
         normalized["result"] = result
-    control_operation = _auditctl_operation(arguments)
+    control_operation = _auditctl_operation(arguments, run_dir, lifecycle_cli_path)
     if control_operation:
         normalized["control_operation"] = control_operation
     return normalized
 
 
-def _auditctl_operation(arguments: object) -> str | None:
+def _auditctl_operation(
+    arguments: object, run_dir: str | Path | None = None, helper_path: str | Path | None = None
+) -> str | None:
+    if run_dir is None or helper_path is None:
+        return None
     values = []
 
     def collect(value):
@@ -89,12 +99,51 @@ def _auditctl_operation(arguments: object) -> str | None:
             values.append(value)
 
     collect(arguments)
-    allowed = "prepare|install|status|verify|start|stop|renew|assess|disarm|remove|verify-teardown"
-    pattern = re.compile(rf"auditctl\.py[^\r\n]*?\b({allowed})\b", re.IGNORECASE)
+    allowed = {
+        "prepare",
+        "install",
+        "status",
+        "verify",
+        "start",
+        "stop",
+        "renew",
+        "assess",
+        "disarm",
+        "remove",
+        "verify-teardown",
+    }
+    expected_run = os.path.normcase(os.path.realpath(os.path.normpath(str(run_dir))))
+    expected_helper = os.path.normcase(os.path.realpath(os.path.normpath(str(helper_path))))
+
+    def unquote(value: str) -> str:
+        return value[1:-1] if len(value) >= 2 and value[0] == value[-1] and value[0] in {"'", '"'} else value
+
     for value in values:
-        match = pattern.search(value)
-        if match:
-            return match.group(1).lower()
+        try:
+            tokens = [unquote(token) for token in shlex.split(value, posix=False)]
+        except ValueError:
+            continue
+        for index, token in enumerate(tokens[:-2]):
+            if os.path.normcase(os.path.realpath(os.path.normpath(token))) != expected_helper:
+                continue
+            if index == 0:
+                continue
+            interpreter = tokens[index - 1].replace("\\", "/").rsplit("/", 1)[-1].lower()
+            python_names = {"py", "py.exe", "python", "python.exe", "python3", "python3.exe"}
+            if interpreter not in python_names:
+                launcher = tokens[index - 2].replace("\\", "/").rsplit("/", 1)[-1].lower() if index >= 2 else ""
+                if not (interpreter.startswith("-") and launcher in {"py", "py.exe"}):
+                    continue
+            operation = tokens[index + 1].lower()
+            if operation not in allowed:
+                continue
+            try:
+                run_index = tokens.index("--run-dir", index + 2)
+                candidate_run = os.path.normcase(os.path.normpath(tokens[run_index + 1]))
+            except (ValueError, IndexError):
+                continue
+            if os.path.normcase(os.path.realpath(os.path.normpath(candidate_run))) == expected_run:
+                return operation
     return None
 
 

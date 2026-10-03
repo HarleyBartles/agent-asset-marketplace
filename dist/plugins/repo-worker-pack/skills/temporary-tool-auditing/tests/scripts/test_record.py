@@ -75,3 +75,18 @@ def test_late_outcome_is_kept_only_for_an_observed_in_window_attempt(tmp_path):
     assert rows[-1]["late_outcome"] is True
     make_run(tmp_path, expires_at=200, armed=False)
     assert not record_event(tmp_path, {"hook_event_name": "PreToolUse"}, 100)
+
+
+def test_explicit_disarm_makes_retained_recorder_inert(tmp_path):
+    make_run(tmp_path, expires_at=200, armed=True)
+    assert record_event(
+        tmp_path,
+        {"hook_event_name": "PreToolUse", "session_id": "s", "tool_use_id": "disarm-1", "tool_name": "Bash"},
+        100,
+    )
+    make_run(tmp_path, expires_at=200, armed=False, late_outcomes_allowed=False, registration_state="removed")
+    assert not record_event(
+        tmp_path,
+        {"hook_event_name": "PostToolUse", "session_id": "s", "tool_use_id": "disarm-1", "tool_name": "Bash"},
+        101,
+    )

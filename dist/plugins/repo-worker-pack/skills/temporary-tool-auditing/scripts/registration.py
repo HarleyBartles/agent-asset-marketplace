@@ -4,6 +4,7 @@ import json
 import os
 import shutil
 import tempfile
+import sys
 import time
 from pathlib import Path
 
@@ -88,6 +89,7 @@ def install(run: Path, project: Path, runtime: str) -> dict:
             for item in prior_intent
             if isinstance(item, dict)
         }
+        config_created = not config_path.exists()
         data = _read(config_path)
         if owner_path.exists():
             try:
@@ -119,6 +121,9 @@ def install(run: Path, project: Path, runtime: str) -> dict:
                 "cleanup_required": True,
                 "owned_entries": owned,
                 "registration_root_created": bool(manifest.get("registration_root_created") or root_created),
+                "registration_config_created": bool(manifest.get("registration_config_created") or config_created),
+                "hook_interpreter": str(Path(sys.executable).resolve()),
+                "lifecycle_cli_path": str((Path(__file__).with_name("auditctl.py")).resolve()),
             }
         )
         save_manifest(run, manifest)  # durable intent precedes config mutation
@@ -152,6 +157,8 @@ def remove(run: Path) -> dict:
         config = current_root / ("hooks.json" if runtime == "codex" else "hooks.v1.json")
         owner = current_root / ".temporary-tool-auditing-owner.json"
         manifest["teardown_probe_started_at"] = time.time()
+        manifest["late_outcomes_allowed"] = False
+        save_manifest(run, manifest)
         if owner.exists():
             try:
                 current_owner = json.loads(owner.read_text(encoding="utf-8"))
@@ -159,7 +166,11 @@ def remove(run: Path) -> dict:
                 raise AuditStoreError("registration-owner-invalid") from None
             if current_owner.get("run_id") != manifest.get("run_id"):
                 raise AuditStoreError("registration-conflict")
-        elif manifest.get("owned_entries") and manifest.get("registration_state") != "removed":
+        elif (
+            manifest.get("owned_entries")
+            and manifest.get("registration_state") != "removed"
+            and _has_owned_config(config, manifest)
+        ):
             raise AuditStoreError("registration-owner-missing")
         data = _read(config) if config.exists() else {"hooks": {}}
         hooks = data["hooks"]
@@ -175,7 +186,7 @@ def remove(run: Path) -> dict:
             elif current is not None and not isinstance(current, list):
                 conflicts.append(event)
         if config.exists() and not conflicts:
-            if hooks or len(data) > 1:
+            if hooks or len(data) > 1 or not manifest.get("registration_config_created"):
                 _write(config, data)
             else:
                 config.unlink()

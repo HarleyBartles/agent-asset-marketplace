@@ -16,7 +16,7 @@ _PATTERNS = [
     (re.compile(r"(?i)([a-z][a-z0-9+.-]*://)[^/@\s:]+(?::[^/@\s]*)?@"), lambda m: f"{m.group(1)}{_REDACTED}@"),
     (
         re.compile(
-            r"(?i)(\b(?:password|passwd|(?:access|refresh)[_-]?token|token|api[_-]?key|secret)\s*=\s*)([^\s;&]+)"
+            r"""(?i)(\b(?:password|passwd|(?:access|refresh)[_-]?token|token|api[_-]?key|secret)\s*=\s*)("(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'|[^\s;&]+)""",
         ),
         lambda m: f"{m.group(1)}{_REDACTED}",
     ),
@@ -28,7 +28,7 @@ _PATTERNS = [
     ),
     (
         re.compile(
-            r"(?i)(--(?:password|passwd|(?:access|refresh)[_-]?token|token|api[_-]?key|secret)(?:=|\s+))([^\s]+)"
+            r"""(?i)(--(?:password|passwd|(?:access|refresh)[_-]?token|token|api[_-]?key|secret)(?:=|\s+))("(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'|[^\s]+)""",
         ),
         lambda m: f"{m.group(1)}{_REDACTED}",
     ),

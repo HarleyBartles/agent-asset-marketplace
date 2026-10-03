@@ -187,6 +187,18 @@ def test_expiry_does_not_complete_cleanup(expired_run):
 - [ ] When execution is authorised through publication, push the task branch and create a Draft PR with exact-file body text. Attach it to this chat; verify the remote head and hosted checks. Report remaining human Ready/merge actions as subsequent actions, not unchecked implementation steps. If publication is not authorised at execution time, retain completed local work and request that final concrete publication decision.
 - [ ] Return validation output, final head, changed source/generated boundaries, runtime coverage and residuals, all development-probe cleanup proof, and the PR URL when created. Update MARK-377 with evidence without declaring merged or Done unless those states are actually proved and authorised.
 
+## Review hardening follow-up
+
+The fresh whole-branch review at `5938683cf4d3b9e3c9ca183de7dc67413d67f2b9` found several evidence-integrity and cleanup gaps. The corrections below are implemented test-first; they need a fresh review at the new head before live runtime verification resumes.
+
+- [x] Redact full quoted credential values, including escaped quote forms, in CLI flags and assignments; verify sanitized on-disk records.
+- [x] Bind lifecycle controls to the exact installed helper path and run directory; namespace control identities by call, session, and agent so unrelated subject attempts remain visible.
+- [x] Recover intent-only interrupted registration when no owned hook config exists, while preserving ambiguous-owner conflicts and pre-existing empty config files.
+- [x] Persist and use the hook interpreter for direct teardown health checks; keep cleanup pending if that interpreter is unavailable.
+- [x] Disable late outcome writes after explicit disarm, removal, and verified teardown while retaining matched late outcomes after ordinary stop/expiry.
+- [x] Return subject, detail, intervals, unresolved count, coverage, health, and redaction data in assessment output.
+- [ ] Run the owning suite and full repository gates, regenerate the package, commit, and obtain fresh whole-branch plus matching topical reviews.
+
 ## Execution entry and current baseline
 
 Use the existing canonical worktree `Z:/_agent-worktrees/agent-asset-marketplace/codex/mark-377-temporary-tool-auditing`, branch `codex/mark-377-temporary-tool-auditing`. The implementation and generated package are in place and under review; follow-up hardening changes address independent review findings. The previous disposable spike is fully torn down; its scratch evidence is context, not production code.

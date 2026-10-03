@@ -1,4 +1,6 @@
 import json
+import sys
+from pathlib import Path
 from unittest.mock import patch
 
 from registration import install, remove
@@ -180,3 +182,50 @@ def test_install_rejects_removed_run_under_registration_lock(tmp_path):
     else:
         raise AssertionError("a removed audit cannot recreate its hook")
     assert not (project / ".codex" / "hooks.json").exists()
+
+
+def test_existing_empty_hook_config_is_preserved_on_remove(tmp_path):
+    project = tmp_path / "repo"
+    run = project / ".audit-runs" / "one"
+    config = project / ".codex" / "hooks.json"
+    config.parent.mkdir(parents=True)
+    config.write_text('{"hooks":{}}', encoding="utf-8")
+    save_manifest(run, {"run_id": "one", "runtime": "codex", "armed": False})
+    install(run, project, "codex")
+    assert load_manifest(run)["registration_config_created"] is False
+    remove(run)
+    assert config.exists()
+    assert json.loads(config.read_text(encoding="utf-8")) == {"hooks": {}}
+
+
+def test_install_records_the_interpreter_used_by_hook_templates(tmp_path):
+    project = tmp_path / "repo"
+    run = project / ".audit-runs" / "one"
+    save_manifest(run, {"run_id": "one", "runtime": "codex", "armed": False})
+    install(run, project, "codex")
+    manifest = load_manifest(run)
+    assert manifest["hook_interpreter"] == sys.executable
+    assert Path(manifest["lifecycle_cli_path"]).name == "auditctl.py"
+
+
+def test_remove_recovers_intent_journal_when_owner_and_config_were_not_written(tmp_path):
+    from runtime import render_handlers
+
+    project = tmp_path / "repo"
+    run = project / ".audit-runs" / "one"
+    entry = render_handlers("codex", run / "scripts" / "record.py")["PreToolUse"][0]
+    save_manifest(
+        run,
+        {
+            "run_id": "one",
+            "runtime": "codex",
+            "project_root": str(project),
+            "registration_root": str(project / ".codex"),
+            "registration_state": "removing",
+            "owned_entries": [{"event": "PreToolUse", "entry": entry}],
+            "cleanup_required": True,
+        },
+    )
+    result = remove(run)
+    assert result["registration_state"] == "removed"
+    assert result["config_absent"] is True
