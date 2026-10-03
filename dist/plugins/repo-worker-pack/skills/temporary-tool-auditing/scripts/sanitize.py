@@ -16,7 +16,7 @@ _PATTERNS = [
     (re.compile(r"(?i)([a-z][a-z0-9+.-]*://)[^/@\s:]+(?::[^/@\s]*)?@"), lambda m: f"{m.group(1)}{_REDACTED}@"),
     (
         re.compile(
-            r"(?i)([?&#](?:key|api[_-]?key|access[_-]?key|refresh[_-]?token|token|jwt|id[_-]?token|"
+            r"(?i)([?&#](?:key|api[_-]?key|access[_-]?key|auth[_-]?token|refresh[_-]?token|token|jwt|id[_-]?token|"
             r"oauth[_-]?token|code|client[_-]?secret|(?:x-amz-|x-goog-)?(?:signature|sig)|"
             r"x-amz-security-token|x-amz-credential)=)[^&#\s\"'<>]+"
         ),
