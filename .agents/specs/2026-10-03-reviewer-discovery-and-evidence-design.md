@@ -1,6 +1,6 @@
 # Reviewer discovery and evidence design
 
-Status: implementation and review in progress. Draft PR #347 is explicitly incomplete while final fix review and completed MARK-377 delivery/main-range reconciliation remain open. The settled design governs the implementation; source/profile/packaging changes and the isolated copied-package evaluation are delivered, with runtime trace and live Devin coverage limits recorded in the plan.
+Status: source implementation and independent review complete; delivery remains in progress. Draft PR #347 stays explicitly incomplete pending completed MARK-377 delivery/main-range reconciliation. The source/profile/packaging changes, isolated copied-package evaluation, whole-branch review and scoped fix verification are delivered. Runtime trace and live Devin coverage limits are recorded in the plan; no instrumentation was installed by this slice. Retain this governing artifact through its completing PR.
 
 Issue: [MARK-379](https://linear.app/harleys-workspace/issue/MARK-379/enable-reviewer-subagents-to-discover-skills-and-research)
 
