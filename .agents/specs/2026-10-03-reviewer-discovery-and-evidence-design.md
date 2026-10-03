@@ -1,6 +1,6 @@
 # Reviewer discovery and evidence design
 
-Status: proposed specification for human review. No implementation plan or skill implementation is authorized by this document.
+Status: settled design authorized for implementation planning on top of MARK-377 / PR #346. Skill implementation remains a subsequent authorized stage.
 
 Issue: [MARK-379](https://linear.app/harleys-workspace/issue/MARK-379/enable-reviewer-subagents-to-discover-skills-and-research)
 
@@ -28,7 +28,7 @@ The design was inspected against main at `b481f98ae90aa45e5271d10fe1f7aaeb6c7047
 - `skills/selecting-a-subagent/assets/reviewer-security.md` is currently a secrets and identifiers lens. General security review requires a broader remit and matching selection behavior.
 - The user reports `iterative-review` is broken and unused. Its source is retained for later refactoring, but it will be removed from the shipped Superpowers+ plugin in this slice. Its evolving review runtime is not an integration target for this design.
 
-Reinspect these seams after the required rebase. Current file arrangements do not bind the future plan to obsolete implementations.
+Reinspect these seams when incorporating the dependency. Current file arrangements do not bind the plan to obsolete implementations.
 
 ## Reviewer inputs and entry
 
@@ -139,12 +139,12 @@ Use a narrow witnessed behavioral proof before changing the skill behavior, then
 
 Each proof records the available resources, reviewed revision, observable actions, supporting sources, and resulting findings or non-findings. Hook instrumentation may be used when available with verified coverage, but this issue does not implement instrumentation or assume an empty log proves no tools were used.
 
-Later implementation must run focused owning behavior tests, regenerate marketplace artifacts, and satisfy the repository's staged hook and publication gates. The implementation plan chooses exact fixture mechanics, runtime checks, and commands after rebase.
+Later implementation must run focused owning behavior tests, regenerate marketplace artifacts, and satisfy the repository's staged hook and publication gates. The implementation plan chooses exact fixture mechanics, runtime checks, and commands against the proposed dependency delivery state, then reconciles them with actual delivered behavior before execution.
 
 ## Sequencing and open gate
 
-This worktree is reserved for specification, later planning, and eventual implementation. No plan is written in this phase. Keep MARK-379 In Progress and preserve the worktree.
+This worktree is reserved for specification, planning, and eventual implementation. The user authorized writing the plan before the dependency merges. Keep MARK-379 In Progress and preserve the worktree.
 
-The user confirmed MARK-377 (temporary tool auditing) as the merge dependency for planning. Its plan is at `Z:/_agent-worktrees/agent-asset-marketplace/codex/mark-377-temporary-tool-auditing/.agents/plans/2026-10-03-temporary-tool-auditing.md`. That plan proposes bounded auditing for Codex and Devin with sanitized records, verified activation, attribution limits, and teardown. Treat the plan as context and verify merged behavior before selecting any instrumentation for this issue's behavioral proof. Do not edit that worktree.
+MARK-377 is the delivery dependency, represented by [PR #346](https://github.com/HarleyBartles/agent-asset-marketplace/pull/346). Planning inspected its open head `ec393ac68e9ecfbffb7140ebcbff27685d978696`. Its plan is at `Z:/_agent-worktrees/agent-asset-marketplace/codex/mark-377-temporary-tool-auditing/.agents/plans/2026-10-03-temporary-tool-auditing.md`. Inspect GitHub and source for current behavior; its current skill requires verified teardown followed by purge, superseding the earlier evidence-retention proposal. Live activation and teardown remain pending according to the inspected PR body. Do not edit the dependency worktree or treat its pending runtime validation as complete.
 
-After MARK-377 merges, verify the merged repository state, rebase this branch onto current main, and reconcile this specification with the resulting contracts. Present any material design changes for human resolution. Only after the specification is approved and the sequencing gate is satisfied may the implementation plan be written. Skill changes and iterative-review packaging removal occur during that subsequent implementation stage.
+Planning may proceed now against delivery on top of PR #346 while this branch remains based on main. Before implementation, verify completed MARK-377 delivery and incorporate it by merge or rebase, reconcile this specification and the plan with the resulting contracts, and resolve conflicts. The requirement is a correct combined delivery and an eventual PR back to main without merge conflicts; no particular Git integration operation is mandated. Present material design changes for human resolution. Skill changes and iterative-review packaging removal occur during the subsequent authorized implementation stage.
