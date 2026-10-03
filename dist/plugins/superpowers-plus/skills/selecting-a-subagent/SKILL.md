@@ -23,6 +23,7 @@ metadata:
     - risk-gates
     - repo-worker-base
     - inspecting-the-environment
+    - conducting-code-review
 license: MIT
 ---
 
@@ -37,11 +38,11 @@ Use this skill before choosing a child subagent route. Detect the live dispatch 
 ## Runtime contract
 
 1. Detect the active child-dispatch contract.
-2. Inventory the models, reasoning values, context controls, and capacity actually exposed.
+2. Inventory exposed models, reasoning, context and capacity. For review, also check actual repository, skill/catalog, authoritative retrieval, focused execution/scratch and report-writing access; model adequacy alone does not establish capability adequacy.
 3. Load `references/shared-policy.md` and exactly one matching profile.
 4. Treat current runtime inventory as authoritative over stale profile metadata.
 5. Choose the least escalated adequate exposed route; do not infer price or entitlement.
-6. Record the profile, model or inheritance, reasoning or inheritance, context mode, rationale, and material limitation.
+6. Record profile, model or inheritance, reasoning or inheritance, context mode, rationale, actual review-resource access and material limitations separately.
 7. State explicitly when a desired route could not be enforced.
 
 Routing chooses a route; it does not authorize delegation. Follow the current task, environment, and repository rules before calling a child-dispatch tool.
@@ -88,22 +89,21 @@ Do not install repo-local `<lens>.md` profiles from the pack. The consumer repo 
 
 | Script safety, CLI compliance, shebangs, or `--check`/`--apply` classification | `reviewer-scripts` | | Small, tightly focused reviews or coherent single-responsibility re-review diffs | `reviewer-fixes` | | Repo-specific lens for surfaces not covered by the portable set | `.agents/agents/reviewer-<lens>.md` (see below) | | Bounded implementation / bugfix | `implementer` | | Implementation that needs more reasoning or broader context | `implementer-strong` |
 
-The orchestrator must provide a `<diff_path>` and optional `<pr_description>` to any reviewer profile. The reviewer subagent does not resolve the diff itself.
+The dispatcher supplies the prepared `<diff_path>` and scope/context, actual conducting-code-review skill entrypoint, usable resource/catalog entrypoints, reviewed checkout/revision, known capability limits, owned proof scratch and report destination. Supply a catalog if a fresh child does not receive one. A globally installed Devin profile cannot resolve a skill through an assumed relative path. The reviewer does not recreate missing packages; unavailable research or execution yields a truthful best-available review and explicit gaps. Use the [shared policy](references/shared-policy.md) for capability recovery.
 
 ## Lens dispatch from `## Applies to`
 
 Every lens profile in `reviewer-*.md` profiles in the Devin Desktop agents search path (portable or repo-local) should include a `## Applies to` section with:
 
-- `inputs:` — required and optional `run_subagent` placeholders.
-- `globs:` — path globs that, if matched in the diff, make the lens relevant.
-- `keywords:` — keyword triggers that make the lens relevant.
+- `inputs:` - required and optional dispatch placeholders. Common package, description, resource and report inputs are parameter requirements, not lens applicability triggers.
+- `globs:` - changed-path cues for discovering candidate lenses.
+- `keywords:` - subject cues for discovering candidate lenses.
 
 When selecting one or more lenses for a PR or a branch diff, read the relevant profile files and match them in this order:
 
-1. Input match: if the orchestrator provides an input listed under `## Applies to` for that lens (e.g. `<plan_path>` for `reviewer-plans`), the lens applies.
-2. Glob match: if any changed file matches a glob, the lens applies.
-3. Keyword match: if the PR title/body or diff summary contains a keyword, the lens applies.
-4. Default dispatch: if none of the above triggers a lens, dispatch `reviewer-strong` for the whole-branch pass.
+1. Establish the requested review role and scope. A supplied domain artifact can warrant its lens when that artifact is being reviewed or governs the change, such as `<plan_path>` for plan compliance. Merely supplying `<diff_path>`, `<pr_description>`, resource entrypoints or report paths does not select any specialist.
+2. Use changed-file globs and subject keywords to discover candidate lenses, then verify relevance against the changed behavior and each lens's remit. A broad glob or incidental word alone does not justify an unrelated specialist seat. Honor an explicit human or repository requirement for a lens.
+3. Assess relevant trust boundaries even without keyword matches; use reviewer-security for applicable authentication/authorization, untrusted input/output, process/filesystem, serialization, dependency or privacy changes. If no specialist applies, select the adequate whole-branch route.
 
 Prefer the least escalated lens that covers the diff. For broad, multi-surface branches, include all matching lenses rather than a single generalist.
 
@@ -113,7 +113,7 @@ A consumer repo can extend the portable lens set by authoring a hand-edited `.ag
 
 Use this when the repo has domain-specific surfaces that a generic lens cannot cover. For example, one consumer might add a `.agents/agents/reviewer-marketplace.md` lens for pack generation, another might add `reviewer-domains.md` for domain canon, or `reviewer-tests.md` for a test harness. These are not part of the portable pack.
 
-When `iterative-review` runs, it should discover each `reviewer-*.md` profile from the Devin Desktop agents search path, evaluate the `## Applies to` section against the diff, PR description, and any provided inputs, and dispatch only the matching lenses plus `reviewer-strong`.
+When the owning review workflow authorizes lens dispatch, discover applicable reviewer profiles from the active runtime and repository routes, assess their Applies-to cues against the diff and its trust boundaries, and select only the warranted lenses. Use requesting-code-review for whole-branch review and conducting-code-review for the reviewer method; profile availability does not authorize additional dispatches.
 
 ## Vendor and third-party profiles
 

@@ -29,7 +29,7 @@ metadata:
     - publishing-source
     - finishing-a-development-branch
     - requesting-code-review
-    - iterative-review
+    - conducting-code-review
     - writing-roadmaps
     - diagnosing-superpowers
   related_skills:
@@ -44,8 +44,8 @@ metadata:
     - publishing-source
     - finishing-a-development-branch
     - requesting-code-review
+    - conducting-code-review
     - receiving-code-review
-    - iterative-review
     - writing-skills
     - writing-roadmaps
     - diagnosing-superpowers
