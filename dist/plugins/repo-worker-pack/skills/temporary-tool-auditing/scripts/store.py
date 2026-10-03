@@ -74,9 +74,9 @@ def _locked(run: Path) -> Iterator[None]:
         handle.close()
 
 
-def _safe_json(value: object, code: str) -> tuple[bytes, list[str]]:
+def _safe_json(value: object, code: str, safe_session_paths: set[str] | None = None) -> tuple[bytes, list[str]]:
     try:
-        cleaned, redactions = sanitize(value)
+        cleaned, redactions = sanitize(value, safe_session_paths=safe_session_paths)
         encoded = json.dumps(cleaned, ensure_ascii=False, allow_nan=False, separators=(",", ":")).encode("utf-8")
         return encoded, redactions
     except Exception:
@@ -106,7 +106,18 @@ def load_manifest(run: Path) -> dict:
 
 
 def _write_manifest_locked(run: Path, path: Path, value: dict) -> None:
-    encoded, _ = _safe_json(value, "manifest-encode-failed")
+    safe_session_paths = set()
+    subject = value.get("subject") if isinstance(value, dict) else None
+    if isinstance(subject, dict) and "session_id" in subject:
+        safe_session_paths.add("$.subject.session_id")
+    controls = value.get("controls") if isinstance(value, dict) else None
+    if isinstance(controls, list):
+        safe_session_paths.update(
+            f"$.controls[{index}].session_id"
+            for index, control in enumerate(controls)
+            if isinstance(control, dict) and "session_id" in control
+        )
+    encoded, _ = _safe_json(value, "manifest-encode-failed", safe_session_paths)
     descriptor, temporary = tempfile.mkstemp(prefix=".manifest-", suffix=".tmp", dir=run)
     try:
         if os.name != "nt":
@@ -182,11 +193,12 @@ def registration_lock(root: Path):
 def append_record(run: Path, name: str, value: dict) -> dict:
     if not isinstance(name, str) or not re.fullmatch(r"[A-Za-z0-9_-]{1,64}", name):
         raise AuditStoreError("invalid-record-name")
-    cleaned, redactions = sanitize(value)
+    safe_session_paths = {"$.session_id"} if name in {"events", "controls"} and "session_id" in value else set()
+    cleaned, redactions = sanitize(value, safe_session_paths=safe_session_paths)
     if not isinstance(cleaned, dict):
         raise AuditStoreError("record-encode-failed")
     cleaned["redactions"] = sorted(set(cleaned.get("redactions", [])) | set(redactions))
-    encoded, _ = _safe_json(cleaned, "record-encode-failed")
+    encoded, _ = _safe_json(cleaned, "record-encode-failed", safe_session_paths)
     run = Path(run)
     try:
         with _locked(run):

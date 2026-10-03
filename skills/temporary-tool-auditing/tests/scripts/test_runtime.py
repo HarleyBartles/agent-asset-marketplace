@@ -134,6 +134,22 @@ def test_auditctl_lifecycle_commands_are_marked_as_controls():
     assert event["control_operation"] == "stop"
 
 
+def test_purge_command_is_a_lifecycle_control():
+    event = normalize_event(
+        "codex",
+        {
+            "hook_event_name": "PreToolUse",
+            "tool_name": "Bash",
+            "tool_use_id": "purge-call",
+            "tool_input": {"command": "py -3 C:/skills/auditctl.py purge --apply --run-dir C:/repo/.audit/run"},
+        },
+        "status",
+        run_dir="C:/repo/.audit/run",
+        lifecycle_cli_path="C:/skills/auditctl.py",
+    )
+    assert event["control_operation"] == "purge"
+
+
 def test_auditctl_reference_in_shell_text_is_not_a_control():
     event = normalize_event(
         "codex",

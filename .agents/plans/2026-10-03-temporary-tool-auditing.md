@@ -144,7 +144,7 @@ def test_missing_control_cannot_prove_no_tools(empty_completed_run):
 
 **Files:** Create `scripts/auditctl.py`, `tests/scripts/test_lifecycle.py`, `test_cli.py`; extend manifest fixture support.
 
-**Interfaces:** Consumes Tasks 1-4 functions. Produces the CLI contract above and operations `prepare`, `install`, `status`, `verify`, `start`, `stop`, `renew`, `assess`, `disarm`, `remove`, `verify-teardown`.
+**Interfaces:** Consumes Tasks 1-4 functions. Produces the CLI contract above and operations `prepare`, `install`, `status`, `verify`, `start`, `stop`, `renew`, `assess`, `disarm`, `remove`, `verify-teardown`, `purge`.
 
 - [x] Test no mutation under `--check`, default 30 minutes, positive finite durations, explicit renewal, expiry gaps, illegal transitions, interrupted install resume, capture-detail changes only between intervals, and cleanup remaining true after stop/expiry/removal.
 
@@ -156,7 +156,7 @@ def test_expiry_does_not_complete_cleanup(expired_run):
 ```
 
 - [x] Run `py -3 -m pytest skills/temporary-tool-auditing/tests/scripts/test_lifecycle.py skills/temporary-tool-auditing/tests/scripts/test_cli.py -q` to RED.
-- [x] Implement durable transitions, safe structured CLI output, root/operation help and explicit preview/apply. `verify` binds a marked actual captured call to the requested coverage. `start` refuses absent verified activation; `stop` closes interval without discarding evidence. `renew` after expiry closes the old interval at expiry and requires a new start. `verify-teardown` is two-phase: direct recorder health control, short armed baseline and runtime canary after removal/restart, then compare log and disarm. Cleanup clears only when both configuration absence and the healthy canary support unload. Always disarm on verification failure; unavailable runtime keeps cleanup pending.
+- [ ] Implement durable transitions, safe structured CLI output, root/operation help and explicit preview/apply. `verify` binds a marked actual captured call to the requested coverage. `start` refuses absent verified activation; `stop` closes interval without discarding evidence. `renew` after expiry closes the old interval at expiry and requires a new start. `verify-teardown` is two-phase: direct recorder health control, short armed baseline and runtime canary after removal/restart, then compare log and disarm. Cleanup clears only after configuration absence, healthy unload verification, and verified event/health/control log purge. Always disarm on verification failure; unavailable runtime or failed purge keeps cleanup pending.
 - [x] Test a cached hook still firing after removal, a failed direct recorder control, silent health failure, and success after simulated unload. Re-run to GREEN. Tests inject a clock and runtime control fixtures; they do not declare simulated behaviour live.
 - [x] Commit `feat: complete renewable audit lifecycle and teardown verification`.
 
@@ -166,10 +166,10 @@ def test_expiry_does_not_complete_cleanup(expired_run):
 
 **Interfaces:** Consumes the working CLI. Produces an agent-readable workflow with executable commands resolved from the installed skill path, all mutation/restart obligations, evidence detail choice, mandatory sanitisation, runtime trust review and preserved capability limits.
 
-- [x] Write reusable behavioural prompts for interrupted/expired audits, untrusted hooks, missing coverage, ambiguous Devin child activity, tempting empty-log claims, result-detail selection and secret-bearing inputs. Evaluate decisions against the contract, not prose matches. Keep expected answers in evaluator-only material. Fresh contexts selected status when sufficient, rejected real credentials, declined to fill expired coverage retroactively, and rejected the ambiguous Devin child claim; concise decision summaries are retained in scratch without transcripts or model metadata.
+- [x] Write reusable behavioural prompts for interrupted/expired audits, untrusted hooks, missing coverage, ambiguous Devin child activity, tempting empty-log claims, result-detail selection, secret-bearing inputs, and post-assessment purge. Evaluate decisions against the contract, not prose matches. Keep expected answers in evaluator-only material. Fresh contexts selected status when sufficient, rejected real credentials, declined to fill expired coverage retroactively, rejected the ambiguous Devin child claim, and required purge after verified teardown; concise decision summaries are retained in scratch without transcripts or model metadata.
 - [x] Exercise the complete helper against disposable project configurations using `py -3 -m pytest skills/temporary-tool-auditing/tests/scripts -q`; fix failures through owning tasks rather than adding test-only overrides.
 - [ ] Run fresh Codex live controls in the canonical worktree with run data under `Z:/_agent-scratch/agent-asset-marketplace/codex-mark-377-temporary-tool-auditing/implementation-validation/`. Capture parent shell success/nonzero failure, paired child call, completed no-tools child, nested tool execution and an available MCP call, selected detail levels, short expiry and explicit renewal. Human reviews actual hook definitions; use restart handoffs where observed necessary. Do not expose credentials or print raw responses to verification artifacts.
-- [ ] Remove development registrations, disarm, restart if required and execute healthy armed unload canary before declaring teardown. Stop dependent completion if cleanup remains unresolved. Retain sanitized runtime evidence and result/coverage summaries in scratch, not source.
+- [ ] Remove development registrations, disarm, restart if required, and execute the healthy armed unload canary. After assessment is reported without persisting a separate report, run `purge --apply` and verify event, health, and control logs plus known recorder copies are absent and only a minimal cleanup receipt remains. Stop dependent completion if hook teardown or purge remains unresolved. Retain only sanitized runtime result/coverage summaries in scratch, not event logs or source.
 - [x] Compare Devin Desktop fixtures/references against the recorded `skills/iterative-review/references/harness-capability-floor.md` and current official Devin CLI documentation. Keep Devin CLI unsupported because its standalone hook config format differs and its documented event shape does not establish the per-call correlation ID. Run fresh Devin Desktop controls only if that runtime is available; otherwise state new code is tested by fixture/helper behaviour and historical runtime evidence, not live revalidated.
 - [ ] Commit `docs: guide tool auditing and runtime recovery` after focused checks and behavioural evaluation. Run-specific model results are never committed into the skill.
 
@@ -210,7 +210,9 @@ The fresh whole-branch review at `5938683cf4d3b9e3c9ca183de7dc67413d67f2b9` foun
 - [x] Redact common `auth_token` query and sensitive URL fragment values before persistence.
 - [x] Redact common session-cookie identifier query parameters before persistence.
 - [x] Redact legacy CFID/CFTOKEN URL session tracking credentials before persistence.
-- [x] Redact structured session-cookie identifiers without removing the event's session ID used for correlation.
+- [x] Preserve only explicitly supplied schema-defined audit attribution session-ID paths; redact same-named values in nested tool arguments and results.
+- [x] Cover structured personal, health, payment, and common secret identifiers, plus selected high-confidence free-text email, US SSN, JWT, and Luhn-valid payment-card patterns. Document that arbitrary private or commercial content cannot be detected comprehensively.
+- [x] Add post-assessment purge of event, health, and control logs plus known run-local recorder copies as a mandatory cleanup stage, gated on verified hook unload; preserve unknown files and keep cleanup pending until deletion is confirmed.
 - [ ] Run the owning suite and full repository gates, regenerate the package, commit, and obtain fresh whole-branch plus matching topical reviews.
 
 ## Execution entry and current baseline

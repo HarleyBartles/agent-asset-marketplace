@@ -111,6 +111,50 @@ def execute(args: dict, now: float | None = None) -> dict:
 
         update_manifest(run, disarm)
         return remove(run)
+    if operation == "purge":
+        manifest = load_manifest(run)
+        if manifest.get("logs_purged") and not manifest.get("cleanup_required"):
+            return {"logs_purged": True, "cleanup_required": False, "already_purged": True}
+        if manifest.get("registration_state") != "teardown-verified" or not manifest.get("teardown_verified_at"):
+            raise AuditStoreError("teardown-not-verified")
+        if manifest.get("armed"):
+            raise AuditStoreError("recorder-still-armed")
+        for name in ("events", "health", "controls"):
+            path = run / f"{name}.jsonl"
+            try:
+                path.unlink(missing_ok=True)
+            except OSError:
+                raise AuditStoreError("log-purge-failed") from None
+            if path.exists():
+                raise AuditStoreError("log-purge-failed")
+        scripts = run / "scripts"
+        if scripts.is_symlink() or (scripts.exists() and not scripts.is_dir()):
+            raise AuditStoreError("run-helper-purge-failed")
+        if scripts.exists():
+            for name in ("record.py", "runtime.py", "store.py", "sanitize.py"):
+                try:
+                    (scripts / name).unlink(missing_ok=True)
+                except OSError:
+                    raise AuditStoreError("run-helper-purge-failed") from None
+            try:
+                scripts.rmdir()
+            except OSError:
+                raise AuditStoreError("run-helper-purge-failed") from None
+        final_manifest = {
+            "version": manifest.get("version", 1),
+            "run_id": manifest.get("run_id"),
+            "runtime": manifest.get("runtime"),
+            "registration_state": "cleaned",
+            "cleanup_required": False,
+            "teardown_verified_at": manifest["teardown_verified_at"],
+            "logs_purged": True,
+            "evidence_purged_at": now,
+        }
+        try:
+            save_manifest(run, final_manifest)
+        except AuditStoreError:
+            raise AuditStoreError("log-purge-finalize-failed") from None
+        return {"logs_purged": True, "cleanup_required": False, "evidence_purged_at": now}
     if operation == "status":
         manifest = load_manifest(run)
         if now >= manifest.get("expires_at", 0):
@@ -355,12 +399,12 @@ def execute(args: dict, now: float | None = None) -> dict:
         _close_interval(manifest, now)
         manifest["armed"] = False
         manifest.pop("teardown_probe_until", None)
-        manifest["cleanup_required"] = False
+        manifest["cleanup_required"] = True
         manifest["late_outcomes_allowed"] = False
         manifest["registration_state"] = "teardown-verified"
         manifest["teardown_verified_at"] = now
         save_manifest(run, manifest)
-        return {"cleanup_required": False, "teardown_verified": True}
+        return {"cleanup_required": True, "teardown_verified": True, "logs_purge_required": True}
     raise AuditStoreError("unknown-operation")
 
 
@@ -382,6 +426,7 @@ def _parser() -> argparse.ArgumentParser:
         "disarm",
         "remove",
         "verify-teardown",
+        "purge",
     )
     for operation in operations:
         child = subs.add_parser(operation)

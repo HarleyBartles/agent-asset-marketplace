@@ -110,6 +110,7 @@ def _auditctl_operation(
         "disarm",
         "remove",
         "verify-teardown",
+        "purge",
     }
     expected_run = os.path.normcase(os.path.realpath(os.path.normpath(str(run_dir))))
     expected_helper = os.path.normcase(os.path.realpath(os.path.normpath(str(helper_path))))

@@ -327,12 +327,94 @@ def test_teardown_probe_succeeds_when_direct_control_works_and_no_hook_fires(tmp
     )
     assert result["teardown_verified"] is True
     manifest = load_manifest(run)
-    assert manifest["cleanup_required"] is False
+    assert manifest["cleanup_required"] is True
     assert manifest["armed"] is False
     assert (run / "controls.jsonl").exists()
     events = [json.loads(line) for line in (run / "events.jsonl").read_text().splitlines()]
     assert any(item.get("control_operation") == "verify-teardown" for item in events)
     assert not (run / "health.jsonl").exists()
+
+
+def test_purge_requires_verified_teardown_and_removes_audit_logs(tmp_path):
+    run = tmp_path / "run"
+    base_run(
+        run,
+        registration_state="removed",
+        cleanup_required=True,
+        teardown_verified_at=100,
+        question="sensitive question",
+        controls=[{"call_id": "secret-call-id", "session_id": "runtime-session", "role": "positive"}],
+    )
+    for name in ("events", "health", "controls"):
+        append_record(run, name, {"payload": f"{name}-SECRET-SENTINEL"})
+    scripts = run / "scripts"
+    scripts.mkdir()
+    for name in ("record.py", "runtime.py", "store.py", "sanitize.py"):
+        (scripts / name).write_text("# owned recorder helper", encoding="utf-8")
+
+    with pytest.raises(Exception) as error:
+        execute({"operation": "purge", "run_dir": str(run), "apply": True}, now=101)
+    assert getattr(error.value, "code", None) == "teardown-not-verified"
+
+    manifest = load_manifest(run)
+    manifest["registration_state"] = "teardown-verified"
+    save_manifest(run, manifest)
+    result = execute({"operation": "purge", "run_dir": str(run), "apply": True}, now=102)
+
+    assert result["logs_purged"] is True
+    assert all(not (run / f"{name}.jsonl").exists() for name in ("events", "health", "controls"))
+    final = load_manifest(run)
+    assert final["cleanup_required"] is False
+    assert final["evidence_purged_at"] == 102
+    assert "question" not in final
+    assert not final.get("controls")
+    assert not scripts.exists()
+
+
+def test_purge_is_previewable_and_retries_missing_logs_idempotently(tmp_path):
+    run = tmp_path / "run"
+    base_run(run, registration_state="teardown-verified", cleanup_required=True, teardown_verified_at=100)
+    append_record(run, "events", {"call_id": "call-1"})
+    preview = execute({"operation": "purge", "run_dir": str(run), "apply": False}, now=101)
+    assert preview["applied"] is False
+    assert (run / "events.jsonl").exists()
+    execute({"operation": "purge", "run_dir": str(run), "apply": True}, now=102)
+    result = execute({"operation": "purge", "run_dir": str(run), "apply": True}, now=103)
+    assert result["logs_purged"] is True
+
+
+def test_purge_failure_keeps_cleanup_pending_and_reports_safe_error(tmp_path, monkeypatch):
+    run = tmp_path / "run"
+    base_run(run, registration_state="teardown-verified", cleanup_required=True, teardown_verified_at=100)
+    append_record(run, "events", {"call_id": "call-1"})
+    original_unlink = Path.unlink
+
+    def fail_events(path, *args, **kwargs):
+        if path.name == "events.jsonl":
+            raise PermissionError("do not echo filesystem details")
+        return original_unlink(path, *args, **kwargs)
+
+    monkeypatch.setattr(Path, "unlink", fail_events)
+    with pytest.raises(Exception) as error:
+        execute({"operation": "purge", "run_dir": str(run), "apply": True}, now=101)
+    assert getattr(error.value, "code", None) == "log-purge-failed"
+    assert load_manifest(run)["cleanup_required"] is True
+    assert (run / "events.jsonl").exists()
+
+
+def test_purge_preserves_unowned_run_files_and_keeps_cleanup_pending(tmp_path):
+    run = tmp_path / "run"
+    base_run(run, registration_state="teardown-verified", cleanup_required=True, teardown_verified_at=100)
+    scripts = run / "scripts"
+    scripts.mkdir()
+    (scripts / "operator-note.txt").write_text("keep this unowned file", encoding="utf-8")
+
+    with pytest.raises(Exception) as error:
+        execute({"operation": "purge", "run_dir": str(run), "apply": True}, now=101)
+
+    assert getattr(error.value, "code", None) == "run-helper-purge-failed"
+    assert load_manifest(run)["cleanup_required"] is True
+    assert (scripts / "operator-note.txt").read_text(encoding="utf-8") == "keep this unowned file"
 
 
 def test_teardown_fails_when_direct_control_log_works_but_event_log_does_not(tmp_path, monkeypatch):

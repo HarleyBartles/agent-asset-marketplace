@@ -6,11 +6,23 @@ from typing import Any
 
 _REDACTED = "[REDACTED]"
 _SECRET_KEYS = re.compile(
-    r"(?:^|[_-])(password|passwd|pwd|secret|token|api[_-]?key|access[_-]?key|"
+    r"(?:^|[_-])(password|passwd|pwd|passphrase|secret|token|credential|credentials|api[_-]?key|access[_-]?key|"
     r"session(?:[_-]?id)?|sid|phpsessid|jsessionid|asp\.net[_-]?session[_-]?id|cfid|cftoken|"
+    r"email|e[_-]?mail|phone|mobile|telephone|ssn|social[_-]?security(?:[_-]?number)?|"
+    r"national[_-]?(?:id|identifier)|passport(?:[_-]?(?:number|no))?|date[_-]?of[_-]?birth|dob|"
+    r"address|postal[_-]?code|zip[_-]?code|first[_-]?name|last[_-]?name|full[_-]?name|username|"
+    r"medical[_-]?record|health[_-]?record|health[_-]?data|patient[_-]?id|diagnosis|medical[_-]?history|"
+    r"genetic[_-]?data|bank[_-]?account|account[_-]?number|routing[_-]?number|iban|swift|"
+    r"pan|card[_-]?(?:number|no)|cardholder|credit[_-]?card|cvv|cvc|security[_-]?code|pin|track[_-]?data|"
+    r"totp[_-]?(?:secret|seed)|otp[_-]?secret|mfa[_-]?secret|two[_-]?factor[_-]?(?:secret|code|seed)|"
+    r"otp|one[_-]?time[_-]?(?:password|code)|mfa[_-]?code|recovery[_-]?code|backup[_-]?code|"
     r"authorization|proxy[_-]?authorization|cookie|set[_-]?cookie|private[_-]?key)(?:$|[_-])",
     re.IGNORECASE,
 )
+_EMAIL = re.compile(r"(?i)\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,63}\b")
+_US_SSN = re.compile(r"(?<!\d)(?!000|666|9\d\d)\d{3}[- ](?!00)\d{2}[- ](?!0000)\d{4}(?!\d)")
+_JWT = re.compile(r"\beyJ[A-Za-z0-9_-]{8,}\.[A-Za-z0-9_-]{8,}\.[A-Za-z0-9_-]{8,}\b")
+_PAN = re.compile(r"(?<!\d)(?:\d[ -]?){12,18}\d(?!\d)")
 _PATTERNS = [
     (re.compile(r"-----BEGIN [^-]*PRIVATE KEY-----.*?-----END [^-]*PRIVATE KEY-----", re.I | re.S), _REDACTED),
     (re.compile(r"(?i)\b(Bearer|Basic)\s+[A-Za-z0-9._~+/=-]+"), lambda m: f"{m.group(1)} {_REDACTED}"),
@@ -19,8 +31,16 @@ _PATTERNS = [
         re.compile(
             r"(?i)([?&#](?:key|api[_-]?key|access[_-]?key|auth[_-]?token|refresh[_-]?token|token|jwt|id[_-]?token|"
             r"session(?:[_-]?id)?|sid|phpsessid|jsessionid|asp\.net[_-]?sessionid|cfid|cftoken|"
-            r"oauth[_-]?token|code|client[_-]?secret|(?:x-amz-|x-goog-)?(?:signature|sig)|"
+            r"oauth[_-]?token|code|password|passwd|pwd|credential|credentials|client[_-]?secret|"
+            r"email|phone|ssn|pan|card[_-]?number|"
+            r"(?:x-amz-|x-goog-)?(?:signature|sig)|"
             r"x-amz-security-token|x-amz-credential)=)[^&#\s\"'<>]+"
+        ),
+        lambda m: f"{m.group(1)}{_REDACTED}",
+    ),
+    (
+        re.compile(
+            r"""(?i)(\b[A-Z0-9_.-]*(?:PASSWORD|PASSWD|PWD|PASSPHRASE|SECRET|TOKEN|CREDENTIALS?|API[_-]?KEY|ACCESS[_-]?KEY)[A-Z0-9_.-]*\s*=\s*)("(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'|\{[^}]*\}|[^\s;&]+)""",
         ),
         lambda m: f"{m.group(1)}{_REDACTED}",
     ),
@@ -38,7 +58,7 @@ _PATTERNS = [
     ),
     (
         re.compile(
-            r"""(?i)(--(?:password|passwd|(?:access|refresh)[_-]?token|token|api[_-]?key|secret)(?:=|\s+))("(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'|[^\s]+)""",
+            r"""(?i)(--(?:password|passwd|pwd|passphrase|(?:access|refresh)[_-]?token|token|api[_-]?key|secret|credential|client[_-]?secret|otp|mfa[_-]?code)(?:=|\s+))("(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'|[^\s]+)""",
         ),
         lambda m: f"{m.group(1)}{_REDACTED}",
     ),
@@ -46,7 +66,31 @@ _PATTERNS = [
     (re.compile(r"\bgh[pousr]_[A-Za-z0-9_]{20,}\b"), _REDACTED),
     (re.compile(r"\bAKIA[0-9A-Z]{16}\b"), _REDACTED),
     (re.compile(r"\bxox[baprs]-[A-Za-z0-9-]{10,}\b"), _REDACTED),
+    (re.compile(r"\bAIza[0-9A-Za-z_-]{35}\b"), _REDACTED),
+    (re.compile(r"\b(?:sk|rk)_live_[0-9A-Za-z]{16,}\b"), _REDACTED),
+    (_EMAIL, _REDACTED),
+    (_US_SSN, _REDACTED),
+    (_JWT, _REDACTED),
+    (
+        _PAN,
+        lambda match: _REDACTED if _passes_luhn(match.group(0)) else match.group(0),
+    ),
 ]
+
+
+def _passes_luhn(value: str) -> bool:
+    digits = [int(character) for character in value if character.isdigit()]
+    if not 13 <= len(digits) <= 19:
+        return False
+    checksum = 0
+    parity = len(digits) % 2
+    for index, digit in enumerate(digits):
+        if index % 2 == parity:
+            digit *= 2
+            if digit > 9:
+                digit -= 9
+        checksum += digit
+    return checksum % 10 == 0
 
 
 def _clean_text(value: str) -> tuple[str, bool]:
@@ -59,10 +103,11 @@ def _clean_text(value: str) -> tuple[str, bool]:
     return cleaned, changed
 
 
-def sanitize(value: object) -> tuple[object, list[str]]:
+def sanitize(value: object, *, safe_session_paths: set[str] | None = None) -> tuple[object, list[str]]:
     """Return a JSON-compatible copy and safe JSONPath-like redaction paths."""
     redactions: list[str] = []
     active: set[int] = set()
+    safe_session_paths = safe_session_paths or set()
 
     def visit(item: Any, path: str, depth: int) -> Any:
         if depth > 40:
@@ -85,7 +130,7 @@ def sanitize(value: object) -> tuple[object, list[str]]:
                 if key_changed:
                     result[safe_key] = _REDACTED
                     redactions.append(child_path)
-                elif safe_key == "session_id":
+                elif safe_key == "session_id" and child_path in safe_session_paths:
                     result[safe_key] = visit(child, child_path, depth + 1)
                 elif _SECRET_KEYS.search(normalized_key):
                     result[safe_key] = _REDACTED

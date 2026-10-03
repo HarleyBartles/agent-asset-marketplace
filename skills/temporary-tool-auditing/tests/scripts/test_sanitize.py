@@ -20,12 +20,28 @@ from record import record_event
         ({"args": {"sessionid": "plain-session-SENTINEL"}}, "plain-session-SENTINEL"),
         ({"args": {"sessionId": "camel-session-SENTINEL"}}, "camel-session-SENTINEL"),
         ({"args": {"sid": "short-session-SENTINEL"}}, "short-session-SENTINEL"),
+        ({"args": {"session_id": "nested-session-SENTINEL"}}, "nested-session-SENTINEL"),
+        ({"args": {"email": "person@example.test"}}, "person@example.test"),
+        ({"args": {"credentials": "several credentials"}}, "several credentials"),
+        ({"text": "contact person@example.test for access"}, "person@example.test"),
+        ({"text": "AWS_SECRET_ACCESS_KEY=cloud-secret-SENTINEL"}, "cloud-secret-SENTINEL"),
+        ({"args": {"ssn": "123-45-6789"}}, "123-45-6789"),
+        ({"args": {"card_number": "4111 1111 1111 1111"}}, "4111 1111 1111 1111"),
+        ({"args": {"cvv": "123"}}, "123"),
+        ({"args": {"medical_record": "patient note"}}, "patient note"),
+        ({"args": {"bank_account": "account-secret"}}, "account-secret"),
+        ({"args": {"totp_secret": "second-factor-seed"}}, "second-factor-seed"),
         ({"Authorization": "Bearer bearer-SENTINEL"}, "bearer-SENTINEL"),
         ({"key": "sk-proj-abcdefghijklmnopqrstuvwxyz123456"}, "sk-proj-abcdefghijklmnopqrstuvwxyz123456"),
+        (
+            {"text": "id token eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjMifQ.signaturevalue"},
+            "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjMifQ.signaturevalue",
+        ),
         ({"text": "Authorization: Basic dXNlcjpwYXNz"}, "dXNlcjpwYXNz"),
         ({"text": "Authorization: ApiKey auth-SENTINEL"}, "auth-SENTINEL"),
         ({"text": "Proxy-Authorization: Digest proxy-SENTINEL"}, "proxy-SENTINEL"),
         ({"url": "https://example.test/?access_token=query-SENTINEL"}, "query-SENTINEL"),
+        ({"url": "https://example.test/?password=query-password-SENTINEL"}, "query-password-SENTINEL"),
         ({"url": "https://example.test/maps?key=AIzaSyD-SENTINEL&zoom=3"}, "AIzaSyD-SENTINEL"),
         (
             {"url": "https://bucket.test/file?X-Amz-Signature=signature-SENTINEL&X-Amz-Security-Token=token-SENTINEL"},
@@ -50,6 +66,7 @@ from record import record_event
         ({"url": "postgres://user:db-SENTINEL@db.example.test/main"}, "db-SENTINEL"),
         ({"command": "tool --password=flag-SENTINEL"}, "flag-SENTINEL"),
         ({"command": "tool --api-key api-SENTINEL"}, "api-SENTINEL"),
+        ({"command": "tool --otp six-digit-SENTINEL"}, "six-digit-SENTINEL"),
         ({"connection": "Server=db;User Id=example;Pwd=SENTINEL-password"}, "SENTINEL-password"),
         ({"connection": 'Server=db;Password="quoted;password"'}, "quoted;password"),
         ({"connection": "Server=db;Pwd={braced password}"}, "braced password"),
@@ -68,6 +85,39 @@ def test_sanitise_preserves_harmless_values_and_reports_paths():
     assert cleaned["args"]["count"] == 3
     assert cleaned["args"]["password"] == "[REDACTED]"
     assert redactions == ["$.args.password"]
+
+
+def test_sanitise_preserves_only_root_and_audit_manifest_session_metadata():
+    value = {
+        "session_id": "runtime-session",
+        "arguments": {"session_id": "nested-session-secret"},
+        "subject": {"session_id": "selected-session"},
+        "controls": [{"session_id": "control-session"}],
+    }
+    cleaned, redactions = sanitize(
+        value,
+        safe_session_paths={"$.session_id", "$.subject.session_id", "$.controls[0].session_id"},
+    )
+    assert cleaned["session_id"] == "runtime-session"
+    assert cleaned["subject"]["session_id"] == "selected-session"
+    assert cleaned["controls"][0]["session_id"] == "control-session"
+    assert cleaned["arguments"]["session_id"] == "[REDACTED]"
+    assert "$.arguments.session_id" in redactions
+
+
+def test_sanitise_redacts_session_id_without_an_explicit_metadata_path():
+    cleaned, redactions = sanitize({"session_id": "untrusted-session-secret"})
+    assert cleaned["session_id"] == "[REDACTED]"
+    assert redactions == ["$.session_id"]
+
+
+def test_free_text_card_number_redaction_checks_luhn():
+    valid, valid_redactions = sanitize("payment 4111 1111 1111 1111 submitted")
+    invalid, invalid_redactions = sanitize("reference 4111 1111 1111 1112")
+    assert valid == "payment [REDACTED] submitted"
+    assert valid_redactions
+    assert invalid == "reference 4111 1111 1111 1112"
+    assert not invalid_redactions
 
 
 def test_sanitise_handles_cyclic_input_without_echoing_values():
@@ -121,6 +171,15 @@ def test_recorder_never_persists_sentinels_from_json_or_header_strings(tmp_path,
                 "sessionid": "plain-session-persisted-SENTINEL",
                 "sessionId": "camel-session-persisted-SENTINEL",
                 "sid": "short-session-persisted-SENTINEL",
+                "session_id": "nested-session-persisted-SENTINEL",
+                "email": "person@example.test",
+                "ssn": "123-45-6789",
+                "card_number": "4111 1111 1111 1111",
+                "cvv": "123",
+                "medical_record": "patient-record-SENTINEL",
+                "bank_account": "bank-account-SENTINEL",
+                "environment": "AWS_SECRET_ACCESS_KEY=env-secret-SENTINEL",
+                "credential_url": "https://example.test/?password=query-password-SENTINEL",
                 "command": (
                     "tool --access-token cli-SENTINEL --refresh_token=refresh-SENTINEL "
                     '--password "example-secret has spaces" password="assignment secret with spaces"'
@@ -152,6 +211,14 @@ def test_recorder_never_persists_sentinels_from_json_or_header_strings(tmp_path,
         "plain-session-persisted-SENTINEL",
         "camel-session-persisted-SENTINEL",
         "short-session-persisted-SENTINEL",
+        "nested-session-persisted-SENTINEL",
+        "person@example.test",
+        "123-45-6789",
+        "4111 1111 1111 1111",
+        "patient-record-SENTINEL",
+        "bank-account-SENTINEL",
+        "env-secret-SENTINEL",
+        "query-password-SENTINEL",
     ):
         assert sentinel not in persisted
     persisted_event = json.loads(persisted)

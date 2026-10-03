@@ -8,6 +8,10 @@ def test_help_and_check_are_safe(capsys, tmp_path):
         main(["--help"])
     assert exit_code.value.code == 0
     assert "prepare" in capsys.readouterr().out
+    with pytest.raises(SystemExit) as exit_code:
+        main(["--help"])
+    assert exit_code.value.code == 0
+    assert "purge" in capsys.readouterr().out
     run = tmp_path / "missing"
     assert main(["status", "--run-dir", str(run), "--check"]) != 0
     output = capsys.readouterr().out
