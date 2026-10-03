@@ -179,7 +179,7 @@ Subagent (general-purpose):
 
     ### Unrelated Existing Observations
 
-    [Separate surfaced pre-existing issues without requiring this task to expand scope.]
+    [Separate surfaced pre-existing issues with actual severity and scope rationale, without requiring this task to expand scope.]
 
     ### Assessment
 

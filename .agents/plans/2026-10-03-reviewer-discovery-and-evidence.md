@@ -40,6 +40,14 @@ Task 4 source-retention baseline is Git tree `05e475f50278ff381c54619e646825fb9e
 
 Task 4 isolated-package evaluation remains incomplete: the fresh child failed with a workspace-out-of-credits error before producing a review. The actual generated package was copied to an isolated scratch directory and checked for closure, but that inspection does not substitute for the child evaluation. The source/package changes are committed for custody while Task 4 remains open.
 
+Task 4 source/package delivery: f66789823034c87ebc0fc13819298c485e1acf78. Complete tracked Windows hook: build 14 passed/1 skipped, repository 114 passed, shipping 10 passed, other checks passed. The latest open dependency head 224ac579fa62e5622facc89f2fb4eb8226ac8273 was merged without conflicts at 26dd06cc904acce81ff8f906746f8c47b48f7ec0. Main remains b481f98ae90aa45e5271d10fe1f7aaeb6c7047aa; dependency completion and final main-range reconciliation remain pending.
+
+Self-inspection found two refinements: fix the review-basis link relative to its reference directory, and preserve actual severity for unrelated observations in the task/fix controller instead of automatically treating them as deferred Minor findings. These reconcile the approved scope contract; fresh review of the final change remains required.
+
+Merged dependency and canonical fixture checks: py -3 -m pytest skills/temporary-tool-auditing/tests skills/conducting-code-review/tests/scripts -q reported 211 passed, 2 skipped. The fixture payloads were reformatted at whitespace and logical newline boundaries, with parsed values unchanged; its three behavior tests passed again after that source-only readability refinement.
+
+Ruling: Publish an explicitly incomplete Draft for human inspection under the existing Draft-PR authorization and the repository PR runbook. This does not satisfy Task 5 or completion: the required fresh whole-branch review, isolated child evaluation, completed dependency/main reconciliation and final published-head evidence remain open. While PR #346 is open, its changes are present in the main-targeted draft range and must be clearly identified as dependency work; the final MARK-379 range must exclude them once delivery lands.
+
 ## Global Constraints
 
 - Implement MARK-379 only, in `Z:/_agent-worktrees/agent-asset-marketplace/codex/mark-379-reviewer-discovery` on `codex/mark-379-reviewer-discovery`.
