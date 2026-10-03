@@ -14,7 +14,7 @@
 
 ## Execution rulings and current evidence
 
-Implementation is authorized and published in PR #347. The human has directed #347 to land before #346, with the #346 owner adapting its work afterwards. The current #347 head is `325a5c268d89673af81b941041ad4a495f505c05`, based on main `b481f98ae90aa45e5271d10fe1f7aaeb6c7047aa`. Its 45-commit main range contains temporary-tool-auditing snapshot `224ac579fa62e5622facc89f2fb4eb8226ac8273` from the earlier #346 work. The live #346 head has since advanced to `f6b4fba3dd512e10d313628a18c3a4958232322d`; those later runtime, retention, and activation changes are not in #347.
+Implementation is authorized and published in PR #347. PR #346 merged into main at `88c02ec6804fd695e43bf6a632c61014a21738f4`. This branch now merges that main commit at `bca71e9640d0050e5656ce126997071928e206f7`; overlapping temporary-tool-auditing files were resolved to the merged main versions. The PR's current three-dot diff against `origin/main` therefore contains MARK-379's changes without reintroducing #346's audit implementation. The branch must be pushed before GitHub can recalculate its merge state. A fresh full-diff review and final exact-head hosted proof remain outstanding.
 
 MARK-379 did not install or activate audit instrumentation. The planned child-query capture was unavailable; the cited behavioral reports and parent reproductions do not independently witness each child's retrieval or every public query. These are explicit evidence limits and are not negative findings. No instrumentation, audit logs, or helper copies were created by MARK-379, so this slice has no teardown or purge obligation.
 
@@ -46,7 +46,7 @@ Self-inspection found two refinements: fix the review-basis link relative to its
 
 Merged dependency and canonical fixture checks: py -3 -m pytest skills/temporary-tool-auditing/tests skills/conducting-code-review/tests/scripts -q reported 211 passed, 2 skipped. The fixture payloads were reformatted at whitespace and logical newline boundaries, with parsed values unchanged; its three behavior tests passed again after that source-only readability refinement.
 
-Ruling: Publish an explicitly incomplete Draft for inspection. The user has since changed the merge order and requested #347 be made ready first. The #347 main-targeted range must therefore be reviewed as it stands, including its earlier temporary-tool-auditing snapshot. The separate #346 branch is expected to adapt after #347 lands.
+Ruling: Publish an explicitly incomplete Draft for inspection. The user directed #347 to follow #346. After #346 merged, integrate its mainline commit and review the resulting MARK-379 main-targeted diff. Do not reintroduce the superseded audit snapshot or claim that it remains part of the current PR diff.
 
 Independent whole-branch review at 043ab545 found two Important conflicts: the task template still discouraged checking unchanged context, and the selector treated common prepared-diff inputs as lens triggers. Both are accepted within this slice. The focused selection baseline selected seven profiles for a CSS padding edit; corrected fresh behavior selected no specialist for it, and scripts/security for the CLI-derived shell-command case. Both baseline and corrected task reviewers reproduced an unchanged caller's broken CLI behavior, so the targeted-context correction resolves conflicting instructions without claiming a witnessed baseline miss. Reusable pressure prompts live with the selecting-a-subagent and subagent-driven-development owners; run evidence stays off-repo. Fresh gpt-6-luna medium fix re-review at 0bed64de marked both findings ADDRESSED, checked their generated counterparts and found no new Critical/Important breakage. The pre-existing plan-only profile observation remains separately recorded with its actual severity.
 
@@ -57,7 +57,7 @@ Checklist disposition: Tasks 2-4 and the conducting-code-review authoring, fixtu
 ## Global Constraints
 
 - Implement MARK-379 only, in `Z:/_agent-worktrees/agent-asset-marketplace/codex/mark-379-reviewer-discovery` on `codex/mark-379-reviewer-discovery`.
-- PR #347 is intended to merge before #346. Review the actual main-targeted #347 diff, including any earlier MARK-377 snapshot it carries; the #346 owner will adapt the newer implementation after #347 lands.
+- PR #346 has merged to main at `88c02ec6804fd695e43bf6a632c61014a21738f4`; PR #347 follows it. Review the actual current main-targeted #347 diff after pushing the merge integration.
 - Protect reviewed source, index, HEAD, and branch state. Allow legitimate focused tests, reproductions, disposable scratch artifacts, and report writes. Installation, expensive validation, and live-service checks go to the dispatcher.
 - Fresh reviewers receive a self-contained brief and usable guidance/capability entrypoints, never the parent's conversation history. Discover relevant resources beyond those the dispatcher names.
 - REVIEW.md is an optional repository-owned entrypoint. Discover applicable code-style guidance and unslop profiles; apply evidence and false-positive boundaries rather than personal preference or token bans.
@@ -72,7 +72,7 @@ Checklist disposition: Tasks 2-4 and the conducting-code-review authoring, fixtu
 
 ## Sequencing evidence
 
-GitHub was checked on 2026-10-03. PR #347 targets main at `325a5c268d89673af81b941041ad4a495f505c05`; main `b481f98ae90aa45e5271d10fe1f7aaeb6c7047aa` is an ancestor. GitHub reports MERGEABLE/CLEAN, and hosted marketplace-validation run 37140122262 succeeded for that exact head. The current #347 diff contains temporary-tool-auditing at snapshot `224ac579fa62e5622facc89f2fb4eb8226ac8273`. PR #346 remains open at `f6b4fba3dd512e10d313628a18c3a4958232322d`; its newer source is outside #347 and will be reconciled by its owner after this PR lands. No #346 completion gate remains for #347.
+At the initial publication, #347 targeted main `b481f98ae90aa45e5271d10fe1f7aaeb6c7047aa` and included the earlier audit snapshot. The human then merged #346 at `88c02ec6804fd695e43bf6a632c61014a21738f4`. This branch now integrates that commit at `bca71e9640d0050e5656ce126997071928e206f7`, resolving overlap in favor of the merged main files. The resulting tree includes the merged implementation, while the PR's current main-targeted diff excludes changes already on main. GitHub still reports the previously published head as CONFLICTING until this merge is pushed; recheck mergeability and hosted validation on the pushed head.
 
 ## File responsibilities
 
@@ -184,9 +184,9 @@ def label_or_empty(load):
 
 - [x] Review spec coverage against Tasks 1-4 and the behavioral case results. Ensure each agreed behavior has observed evidence or an explicit unresolved limit. Run any changed fixture helper tests against their canonical owner; do not add fake instruction tests or re-run already-green suites without a new reason. Run `py -3 tools/build_marketplace.py --check` when needed to verify uncommitted generation state; normal commits use the full staged hook as the owner gate.
 - [x] Fetch main and inspect the current #346 and #347 GitHub states. Verify main is an ancestor of #347 and hosted validation covers its exact published head. The human selected #347-first sequencing, so review the included #346 snapshot rather than waiting for or pretending to integrate #346's newer head.
-- [ ] Obtain a fresh independent review of the complete current main-targeted diff, including the earlier temporary-tool-auditing snapshot. Review dispatch currently fails because Codex reports no available credits; prior partial-range reviews do not cover this diff. Resolve any Critical or Important findings and review their corrections.
+- [ ] Push the integration commit and inspect the recalculated main-targeted diff. Obtain fresh independent whole-diff and security-focused reviews with discovered repository/installed guidance and authoritative sources where relevant. Resolve any Critical or Important findings and review their corrections.
 - [ ] Update this plan and spec to `completed-awaiting-retirement` only after full-diff review and any agent-owned corrections are complete. Keep both artifacts in the completing PR and commit final updates through the tracked hook.
-- [x] Update the existing PR body for #347-first sequencing, the included snapshot, the current #346 head, review status, limits, and exact-head proof. Push the documentation update and verify GitHub MERGEABLE/CLEAN plus hosted marketplace-validation at the exact head.
+- [ ] Update the PR body and Linear issue for #346's completed merge and the current review status. Verify GitHub MERGEABLE/CLEAN and hosted marketplace-validation at the exact final head.
 - [ ] Update MARK-379 with the final post-review outcome and Ready preflight. Retain the worktree while the PR is under review.
 
 **Exit:** A fully reviewable PR to main with a fresh independent review of the actual final main-targeted diff, generated parity, exact-head validation evidence, and an accurate follow-on integration record for #346. This plan does not require #346 to merge first and does not authorize merging #347.

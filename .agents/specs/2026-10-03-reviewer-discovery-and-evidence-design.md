@@ -1,6 +1,6 @@
 # Reviewer discovery and evidence design
 
-Status: implementation is published in Draft PR #347. Prior fresh reviews cover the MARK-379 source changes and the isolated packaged workflow. Final handoff remains open pending a fresh independent review of the current full main-targeted diff and updated publication evidence. The human has changed the merge order: #347 goes first; #346 adapts after it. This branch carries the earlier temporary-tool-auditing snapshot at 224ac579fa62e5622facc89f2fb4eb8226ac8273. The open #346 head has since advanced to f6b4fba3dd512e10d313628a18c3a4958232322d with material runtime and data-minimization changes; do not imply that newer implementation is in #347. No runtime instrumentation was installed or activated by MARK-379. Retain this governing artifact through its completing PR.
+Status: implementation is published in Draft PR #347. Prior fresh reviews cover the MARK-379 source changes and the isolated packaged workflow. Final handoff remains open pending fresh independent reviews of the current main-targeted diff and updated publication evidence. PR #346 merged into main at 88c02ec6804fd695e43bf6a632c61014a21738f4. Branch codex/mark-379-reviewer-discovery integrates that commit at bca71e9640d0050e5656ce126997071928e206f7, resolving overlapping audit files to the merged main versions. The updated PR diff will exclude changes already on main; push the integration before reviewing GitHub's recalculated diff. No runtime instrumentation was installed or activated by MARK-379. Retain this governing artifact through its completing PR.
 
 Issue: [MARK-379](https://linear.app/harleys-workspace/issue/MARK-379/enable-reviewer-subagents-to-discover-skills-and-research)
 
@@ -28,7 +28,7 @@ The design was inspected against main at `b481f98ae90aa45e5271d10fe1f7aaeb6c7047
 - `skills/selecting-a-subagent/assets/reviewer-security.md` is currently a secrets and identifiers lens. General security review requires a broader remit and matching selection behavior.
 - The user reports `iterative-review` is broken and unused. Its source is retained for later refactoring, but it will be removed from the shipped Superpowers+ plugin in this slice. Its evolving review runtime is not an integration target for this design.
 
-The #347 source and profile seams are reviewed against the included snapshot. After #347 merges, the #346 owner will reconcile that newer work against current main. Do not attribute the later implementation to this design or branch.
+The #347 source and profile seams were reviewed against the audit snapshot present at initial publication. After #346 merged, its updated implementation became part of main and was integrated into this branch. The current pull request diff should be reviewed against current main without treating those already-merged audit files as MARK-379 changes.
 
 ## Reviewer inputs and entry
 
@@ -143,8 +143,6 @@ The implementation ran the focused owning behavior tests, regenerated marketplac
 
 ## Sequencing and current integration
 
-The human has directed PR #347 to merge before PR #346. PR #347 targets main and currently reports GitHub mergeability as MERGEABLE with a CLEAN merge state. Its main-targeted diff includes the temporary-tool-auditing files from the earlier PR #346 snapshot merged at 224ac579fa62e5622facc89f2fb4eb8226ac8273. This is part of the actual diff and must be reviewed as such.
+PR #346 merged into main at `88c02ec6804fd695e43bf6a632c61014a21738f4`. Branch `codex/mark-379-reviewer-discovery` integrates the merged commit in `bca71e9640d0050e5656ce126997071928e206f7`. Where both branches changed temporary-tool-auditing files, this integration uses the merged main versions. The current PR diff excludes changes already present on main and should be reviewed as the MARK-379 change against that base. GitHub's conflict state must be refreshed after the integration is pushed.
 
-PR #346 remains open at f6b4fba3dd512e10d313628a18c3a4958232322d and has since changed the audit architecture: stable user-wide dispatcher, temporary session/worktree activations, metadata-only default status records, bounded log storage, and revised lifecycle proof. Those changes are not present in #347. After #347 merges, the #346 owner will integrate with main and reconcile that newer implementation against the now-merged snapshot. Do not edit the #346 worktree or claim its later source/runtime evidence for this branch.
-
-For #347, the remaining agent-owned gates are independent review of the complete current main-targeted diff, resolution of any blocking findings, and exact-head publication checks after final documentation updates. A prior implementation review does not cover the included temporary-auditing snapshot or replace the required final full-diff review. Keep MARK-379 In Progress and preserve its worktree until these gates complete.
+For #347, the remaining agent-owned gates are fresh independent reviews of the complete current main-targeted diff, resolution of any blocking findings, and exact-head publication checks after final documentation updates. A prior implementation review does not replace review of the resulting current diff. Keep MARK-379 In Progress and preserve its worktree until these gates complete.
