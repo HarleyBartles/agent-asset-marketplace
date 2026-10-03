@@ -1,0 +1,3 @@
+# Focused fix review
+
+Read `<fixture-root>/fix-brief.md` and its prepared fix diff in the specified fixed-revision checkout. Verify the original finding and new breakage introduced by this fix. Apply `<conducting-code-review-entrypoint>` and discover relevant available guidance through repository entrypoints and `<fixture-root>/skill-catalog.md`. Use `<owned-proof-scratch>` for focused proofs and write per-finding verdicts, separate out-of-scope observations and assessment to `<report-path>`. Do not delegate or reopen whole-branch approval. Protect reviewed source, index, HEAD and branch. Do not read evaluator-only material or previous run reports.

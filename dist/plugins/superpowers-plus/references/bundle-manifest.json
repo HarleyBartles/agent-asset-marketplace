@@ -280,6 +280,17 @@
       "canonical_source_path": "skills/writing-skills",
       "local_path": "skills/writing-skills",
       "source_path": "skills/writing-skills/SKILL.md"
+    },
+    {
+      "canonical_name": "conducting-code-review",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "First-party reviewer workflow composition; domain expertise remains in applicable guidance and authoritative sources.",
+      "canonical_source_path": "skills/conducting-code-review",
+      "local_path": "skills/conducting-code-review",
+      "source_path": "skills/conducting-code-review/SKILL.md"
     }
   ]
 }

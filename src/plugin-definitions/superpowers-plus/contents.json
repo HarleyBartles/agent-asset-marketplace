@@ -252,6 +252,17 @@
         "copy_expectation": "byte_identical",
         "provenance_note": "First-party skill derived from the obra/superpowers v6.4.1 MIT upstream basis recorded in `SOURCE.md`."
       }
+    },
+    {
+      "name": "conducting-code-review",
+      "source": "conducting-code-review",
+      "provenance": {
+        "source_category": "first_party",
+        "content_mode": "verbatim",
+        "source_family": "first_party",
+        "copy_expectation": "byte_identical",
+        "provenance_note": "First-party reviewer workflow composition; domain expertise remains in applicable guidance and authoritative sources."
+      }
     }
   ]
 }

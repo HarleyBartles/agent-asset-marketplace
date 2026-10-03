@@ -1,6 +1,6 @@
 # Reviewer discovery and evidence design
 
-Status: settled design authorized for implementation planning on top of MARK-377 / PR #346. Skill implementation remains a subsequent authorized stage.
+Status: settled design authorized for implementation through the active goal. Implementation proceeds on the incorporated MARK-377 / PR #346 head; reconcile completed dependency delivery and latest main before Draft PR publication.
 
 Issue: [MARK-379](https://linear.app/harleys-workspace/issue/MARK-379/enable-reviewer-subagents-to-discover-skills-and-research)
 

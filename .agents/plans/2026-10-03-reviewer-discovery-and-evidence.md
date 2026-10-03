@@ -12,6 +12,18 @@
 
 **Execution Strategy:** `executing-plans`. The shared method, coordinator prompts, specialist profiles, and behavioral proofs depend on the same review contract. Inline sequential implementation preserves that context; use a fresh whole-branch reviewer after the complete change. The nearest alternative is subagent-driven-development, which adds fresh implementer/reviewer contexts per task but repeatedly reconstructs the shared contract.
 
+## Execution rulings and current evidence
+
+Implementation is authorized by the active human goal. Under the earlier permission to branch from PR #346, implementation base `47a2f03bec9ebe6bf7928cfdabc2a87b89030358` incorporates its open head `c1e0c4de0b0e64a151b0c776a969795df559bd30`. The dependency subsequently advanced to `224ac579fa62e5622facc89f2fb4eb8226ac8273`; completed delivery and latest-main integration remain publication gates. No claim that the dependency has merged is made.
+
+Audit instrumentation was not installed: human trust/restart, positive-control attribution and verified teardown are unavailable in this session. Do not create an instrumentation cleanup obligation that cannot be fulfilled. Behavioral reports and checked artifacts support narrower claims; child tool retrieval and public-query privacy are not independently witnessed. Record this limitation rather than treating empty logs as proof. No audit logs/helper copies were created by this slice, so there is no installed instrumentation to tear down or purge.
+
+The fixture creates a base/change repository and a separate clone with a third fixed revision, resolving the two-commit/fixed-checkout interface conflict. Evaluator-only expectations stay outside shipped output. Run evidence remains off-repo.
+
+The first fresh reviewer found both seeded defects and accepted the safe boundaries; RED is specifically its missing review-basis reporting. The fresh shared-workflow reviewer then reported applied local/installed guidance and unslop, applicable sources, focused proofs and limits. The parent independently reproduced unsafe/safe rendering and indistinguishable load results, and verified the original revision and only pre-existing cache state remained. Individual child tool calls remain unverified. The task-review baseline also found the defects and reported local guidance despite contradictory diff-only rules; reconcile that instruction conflict without claiming a witnessed discovery failure.
+
+The AOM adoption roadmap, eleven plans and spec were classified complete against their full recorded obligations, durable owners and live merged PR #345, then retired in the first substantive implementation commit. Retain this slice, MARK-377 and uncertain/active predecessor artifacts.
+
 ## Global Constraints
 
 - Implement MARK-379 only, in `Z:/_agent-worktrees/agent-asset-marketplace/codex/mark-379-reviewer-discovery` on `codex/mark-379-reviewer-discovery`.
