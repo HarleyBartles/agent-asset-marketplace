@@ -39,3 +39,7 @@ No role name alone authorizes Astra. If the live runtime no longer exposes these
 ## Vendor and third-party profiles
 
 Marketplace packs can ship third-party subagent `.md` profile assets under `assets/profiles/`. Codex MultiAgentV2 does not consume `.md` profile files directly; map a vendor profile name through the live runtime and shared role table. A repo-local override or a vendor profile that ships a Codex adapter note takes precedence over the default mapping. See `vendor-profile-packaging.md` for the packaging contract and the consumer search-path order.
+
+## Reviewer resources and tools
+
+Apply shared-policy.md's reviewer capability check before dispatch. Supply the actual conducting-code-review entrypoint, usable resource/catalog routes, reviewed checkout/revision, scope/lens, known access limits, owned proof scratch and report destination. Preserve fresh context without stripping relevant skills or research. Verify actual child access rather than assuming it follows the parent or profile metadata. If needed execution/retrieval is absent, select another adequate exposed access route or provide attributed dispatcher research; otherwise record material coverage limits and request the best available review. This does not change the model/reasoning policy above.

@@ -17,7 +17,7 @@ The runtime assigns the same model as the parent session. Do not encode current 
 - `subagent_explore` — read-only exploration, research, inventories, scans, technical review, code review, and any task that does not require file edits or command execution.
 - `subagent_general` — implementation, mutation, file edits, command execution, validation, and any task that requires write or exec access.
 
-A task that mixes read-heavy exploration with mutation is normally `subagent_general` with bounded mutation. Use `subagent_explore` only when the work is genuinely read-only.
+A task needing command execution or report/scratch writes is normally subagent_general with bounded actions. Use subagent_explore for review only when its actual reading/research surface suffices; focused proofs can require general access while reviewed code remains protected.
 
 ### Task routing
 
@@ -28,7 +28,7 @@ A task that mixes read-heavy exploration with mutation is normally `subagent_gen
 | Mechanical / approved implementation                   | `subagent_general`                                                                        |
 | Hidden root-cause bug                                  | `subagent_general` with broad investigation and bounded mutation                          |
 | Screenshot / frontend diagnosis                        | `subagent_general` if interactive tooling is needed, else `subagent_explore`              |
-| Technical code review                                  | `subagent_explore` with fresh context                                                     |
+| Technical code review                                  | Fresh context; `subagent_explore` only when its actual access suffices, otherwise `subagent_general` with bounded review actions |
 | Architecture / intent challenge                        | `subagent_explore` with a focused, non-overlapping prompt                                 |
 | Large repo / diff context pressure                     | Decompose across `subagent_explore` and `subagent_general`; there is no paid context tier |
 | Retry after a failed subagent                          | Refine the prompt, narrow scope, or decompose; do not retry by "changing model"           |
@@ -71,7 +71,11 @@ A repo-local `.devin/agents/<name>.md` override wins over a user-global or plugi
 ### What not to do
 
 - Do not specify a model name, version, reasoning level, context tier, or paid route. The tool has no such parameters.
-- Do not select `subagent_general` for purely read-only work; it broadens the permission surface unnecessarily.
+- Select `subagent_general` for review when focused execution or report/scratch writes require that actual tool surface; bound actions to review rather than implementation.
 - Do not select `subagent_explore` for tasks that must write files or run commands.
 - Do not treat `is_background` as a model or reasoning selector; it only controls parallel launch.
 - Do not request paid context; no such option exists.
+
+## Reviewer resources and tools
+
+Apply shared-policy.md's reviewer capability check before dispatch. Supply the actual conducting-code-review entrypoint, usable resource/catalog routes, reviewed checkout/revision, scope/lens, known access limits, owned proof scratch and report destination. Preserve fresh context without stripping relevant skills or research. Verify actual child access rather than assuming it follows the parent or profile metadata. If needed execution/retrieval is absent, select another adequate exposed access route or provide attributed dispatcher research; otherwise record material coverage limits and request the best available review. This does not change the model/reasoning policy above.

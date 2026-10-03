@@ -28,6 +28,12 @@ Task 1 delivery: `b2b12dc9cd119e4622bc21dbc6a41935d1756536`, new shared skill/so
 
 Task 2 evidence: current-template baseline found defects despite restrictive wording, so the change resolves a contract conflict without claiming a discovery failure. The updated fix template produced ADDRESSED with no new breakage, applied the remaining AGENTS route with REVIEW.md absent, and separated the unchanged loader issue without blocking the fix. The nominated unavailable documentation route failed both in the child report and a dispatcher web-tool verification; other official URLs were usable. The child continued with the best supported review and then attributed dispatcher-supplied research, which corroborated its findings without inventing a gap. This demonstrates failed-resource recovery, not a runtime with all internet access unavailable.
 
+Task 2 delivery: `8b44b8c93f1e9605e5f53e6bc7a55698553a3867`, coordinator/task/fix integration and triage. The complete tracked Windows hook passed with the same build/repository/shipping counts as Task 1.
+
+Task 3 evidence: all eight reviewer profile model fields were compared against Task 3 base `8b44b8c93f1e9605e5f53e6bc7a55698553a3867` and remain unchanged. A fresh Codex V2 gpt-6-sol medium security-lens child used the new method/resource entrypoints and returned the exact `reviewer-security: 2 issue(s)` terminal line after writing its report. Its report identifies applicable HTML-output and loader-failure risks, accepts the safe text-context companion and explicit optional-absence contract, and records supporting sources and focused proofs. The parent verified the original reviewed HEAD and tracked/index state. Devin execution is not exposed here: those assets were inspected for coherent action/report/stop contracts, not live-run or globally installed. Individual child lookup/query attribution remains unverified.
+
+The strong profile's mandatory legacy engine metrics/ledger precondition was removed while aligning its resource contract: ordinary review cannot depend on the workflow being unshipped in Task 4. Prior reports/resolution evidence remain optional claims to verify, and missing prepared packages retain the blocked outcome. This changes active routing, not retained iterative-review source.
+
 ## Global Constraints
 
 - Implement MARK-379 only, in `Z:/_agent-worktrees/agent-asset-marketplace/codex/mark-379-reviewer-discovery` on `codex/mark-379-reviewer-discovery`.
