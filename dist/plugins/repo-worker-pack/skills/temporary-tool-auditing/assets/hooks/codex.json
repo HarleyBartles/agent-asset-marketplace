@@ -1,0 +1,22 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {"matcher": "", "hooks": [{"type": "command", "command": "{{AUDIT_RECORDER_COMMAND}}", "commandWindows": "{{AUDIT_RECORDER_COMMAND_WINDOWS}}"}]}
+    ],
+    "PostToolUse": [
+      {"matcher": "", "hooks": [{"type": "command", "command": "{{AUDIT_RECORDER_COMMAND}}", "commandWindows": "{{AUDIT_RECORDER_COMMAND_WINDOWS}}"}]}
+    ],
+    "SubagentStart": [
+      {"matcher": "", "hooks": [{"type": "command", "command": "{{AUDIT_RECORDER_COMMAND}}", "commandWindows": "{{AUDIT_RECORDER_COMMAND_WINDOWS}}"}]}
+    ],
+    "SubagentStop": [
+      {"matcher": "", "hooks": [{"type": "command", "command": "{{AUDIT_RECORDER_COMMAND}}", "commandWindows": "{{AUDIT_RECORDER_COMMAND_WINDOWS}}"}]}
+    ],
+    "SessionStart": [
+      {"matcher": "", "hooks": [{"type": "command", "command": "{{AUDIT_RECORDER_COMMAND}}", "commandWindows": "{{AUDIT_RECORDER_COMMAND_WINDOWS}}"}]}
+    ],
+    "SessionEnd": [
+      {"matcher": "", "hooks": [{"type": "command", "command": "{{AUDIT_RECORDER_COMMAND}}", "commandWindows": "{{AUDIT_RECORDER_COMMAND_WINDOWS}}", "timeout": 3}]}
+    ]
+  }
+}
