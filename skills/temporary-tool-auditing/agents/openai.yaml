@@ -1,0 +1,22 @@
+version: 1
+metadata:
+  skill_name: temporary-tool-auditing
+  source_category: first_party
+  scope: Temporary project-local hook setup, bounded tool-use evidence, and verified teardown.
+  use_when:
+  - A scenario needs evidence that a selected agent did or did not attempt tools during a bounded run.
+  - Hook setup, restart, expiry, or cleanup must be tracked as part of the evidence.
+  do_not_use_when:
+  - General telemetry, permanent logging, policy enforcement, or tool authorization is needed.
+  - Hosted tools or unsupported runtime paths must be included in the claim.
+interface:
+  display_name: Temporary Tool Auditing
+  short_description: Capture bounded, sanitized tool-use evidence with temporary hooks.
+  default_prompt: Use temporary-tool-auditing to capture bounded tool-use evidence for a scenario and verify temporary hook teardown.
+policy:
+  products:
+  - chatgpt
+  - codex
+  - api
+  - atlas
+  allow_implicit_invocation: false
