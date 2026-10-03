@@ -2,12 +2,14 @@ import json
 import os
 import sys
 import time
+from concurrent.futures import ThreadPoolExecutor
+from threading import Event, Lock
 from pathlib import Path
 import pytest
 
 from auditctl import execute
 from record import record_event
-from store import append_record, load_manifest, save_manifest
+from store import AuditStoreError, append_record, load_manifest, save_manifest
 
 
 def base_run(path, **updates):
@@ -364,6 +366,35 @@ def test_teardown_probe_succeeds_when_direct_control_works_and_no_hook_fires(tmp
     assert not (run / "health.jsonl").exists()
 
 
+def test_failed_codex_renewal_restores_manifest_coverage_to_registry_state(tmp_path, monkeypatch):
+    import auditctl
+
+    run = tmp_path / "run"
+    base_run(
+        run,
+        capture_session_id="parent",
+        global_dispatcher=True,
+        activation_registry=str(tmp_path / "codex" / "tool-auditing" / "activations.json"),
+        expires_at=200,
+        armed=True,
+        activation_verified=True,
+        intervals=[{"start": 50, "end": None, "expires_at": 200}],
+    )
+    before = load_manifest(run)
+
+    def fail_renewal(*_args):
+        raise AuditStoreError("registry-write-failed")
+
+    monkeypatch.setattr(auditctl, "enable_activation", fail_renewal)
+    with pytest.raises(AuditStoreError, match="activation-renewal-failed"):
+        execute({"operation": "renew", "run_dir": str(run), "duration_minutes": 5, "apply": True}, now=101)
+
+    after = load_manifest(run)
+    assert after["expires_at"] == before["expires_at"]
+    assert after["intervals"] == before["intervals"]
+    assert after.get("renewals", []) == before.get("renewals", [])
+
+
 def test_purge_requires_verified_teardown_and_removes_audit_logs(tmp_path):
     run = tmp_path / "run"
     base_run(
@@ -401,6 +432,125 @@ def test_purge_requires_verified_teardown_and_removes_audit_logs(tmp_path):
     assert "question" not in final
     assert not final.get("controls")
     assert not scripts.exists()
+
+
+@pytest.mark.parametrize("state", ["teardown-verified", "cleaned"])
+def test_enable_rejects_terminal_run_states(tmp_path, monkeypatch, state):
+    import auditctl
+
+    run = tmp_path / "run"
+    home = tmp_path / "codex"
+    registry = home / "tool-auditing" / "activations.json"
+    base_run(
+        run,
+        registration_state=state,
+        cleanup_required=(state != "cleaned"),
+        activation_registry=str(registry),
+        capture_session_id="parent",
+        global_dispatcher=True,
+    )
+    monkeypatch.setattr(auditctl, "_codex_home", lambda: home)
+    monkeypatch.setattr(auditctl, "global_install_present", lambda _home: True)
+    monkeypatch.setattr(auditctl, "enable_activation", lambda *_args: pytest.fail("must reject before activation"))
+
+    with pytest.raises(Exception, match="lifecycle-terminal"):
+        execute({"operation": "enable", "run_dir": str(run), "apply": True}, now=101)
+
+
+@pytest.mark.parametrize("operation", ["install", "disable"])
+@pytest.mark.parametrize("state", ["teardown-verified", "cleaned"])
+def test_mutating_lifecycle_commands_preserve_terminal_receipt(tmp_path, monkeypatch, operation, state):
+    import auditctl
+
+    run = tmp_path / "run"
+    base_run(
+        run,
+        registration_state=state,
+        logs_purged=state == "cleaned",
+        cleanup_required=state != "cleaned",
+        teardown_verified_at=100,
+    )
+    monkeypatch.setattr(auditctl, "_codex_home", lambda: tmp_path / "codex")
+    monkeypatch.setattr(auditctl, "install_global", lambda *_args, **_kwargs: pytest.fail("must remain terminal"))
+    monkeypatch.setattr(auditctl, "disable_activation", lambda *_args: pytest.fail("must remain terminal"))
+
+    with pytest.raises(Exception, match="lifecycle-terminal"):
+        execute({"operation": operation, "run_dir": str(run), "apply": True}, now=101)
+    assert load_manifest(run)["registration_state"] == state
+
+
+def test_verify_teardown_serializes_with_enable(tmp_path, monkeypatch):
+    import auditctl
+
+    run = tmp_path / "run"
+    home = tmp_path / "codex"
+    registry = home / "tool-auditing" / "activations.json"
+    base_run(
+        run,
+        registration_state="removed",
+        cleanup_required=True,
+        activation_registry=str(registry),
+        capture_session_id="parent",
+        global_dispatcher=True,
+        teardown_probe_until=150,
+        teardown_event_baseline_count=0,
+        teardown_event_baseline_bytes=0,
+    )
+    monkeypatch.setattr(auditctl, "_codex_home", lambda: home)
+    monkeypatch.setattr(auditctl, "global_install_present", lambda _home: True)
+    activations = []
+    monkeypatch.setattr(auditctl, "enable_activation", lambda *_args: activations.append("enabled"))
+    original_registration_lock = auditctl.registration_lock
+    enable_lock_requested = Event()
+    request_count = 0
+    request_count_lock = Lock()
+
+    def observed_registration_lock(path):
+        nonlocal request_count
+        with request_count_lock:
+            request_count += 1
+            request_number = request_count
+        lock = original_registration_lock(path)
+
+        class ObservedLock:
+            def __enter__(self):
+                if request_number == 2:
+                    enable_lock_requested.set()
+                return lock.__enter__()
+
+            def __exit__(self, *args):
+                return lock.__exit__(*args)
+
+        return ObservedLock()
+
+    monkeypatch.setattr(auditctl, "registration_lock", observed_registration_lock)
+    original_save = auditctl.save_manifest
+    terminal_save_started = Event()
+    allow_terminal_save = Event()
+
+    def pause_terminal_save(path, manifest):
+        if manifest.get("registration_state") == "teardown-verified":
+            terminal_save_started.set()
+            assert allow_terminal_save.wait(5)
+        original_save(path, manifest)
+
+    monkeypatch.setattr(auditctl, "save_manifest", pause_terminal_save)
+    with ThreadPoolExecutor(max_workers=2) as pool:
+        teardown = pool.submit(
+            execute,
+            {"operation": "verify-teardown", "run_dir": str(run), "apply": True, "canary_performed": True},
+            101,
+        )
+        assert terminal_save_started.wait(5)
+        enable = pool.submit(execute, {"operation": "enable", "run_dir": str(run), "apply": True}, 102)
+        assert enable_lock_requested.wait(5)
+        assert not enable.done()
+        allow_terminal_save.set()
+        assert teardown.result(timeout=5)["teardown_verified"] is True
+        with pytest.raises(Exception, match="lifecycle-terminal"):
+            enable.result(timeout=5)
+    assert activations == []
+    assert load_manifest(run)["registration_state"] == "teardown-verified"
 
 
 def test_purge_rejects_unknown_bytecode_and_preserves_logs(tmp_path):

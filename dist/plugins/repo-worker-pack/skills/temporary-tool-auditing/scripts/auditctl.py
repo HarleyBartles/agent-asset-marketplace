@@ -16,7 +16,15 @@ from activation import disable as disable_activation, enable as enable_activatio
 from global_registration import global_install_present, install_global
 from registration import install, registration_absent, remove
 from sanitize import sanitize
-from store import AuditStoreError, append_record_if, create_manifest, load_manifest, save_manifest, update_manifest
+from store import (
+    AuditStoreError,
+    append_record_if,
+    create_manifest,
+    load_manifest,
+    registration_lock,
+    save_manifest,
+    update_manifest,
+)
 
 
 def _duration(value, default=30.0) -> float:
@@ -71,7 +79,7 @@ def _subject(value: str) -> dict:
     raise AuditStoreError("invalid-subject-selector")
 
 
-def execute(args: dict, now: float | None = None) -> dict:
+def execute(args: dict, now: float | None = None, *, _lifecycle_locked: bool = False) -> dict:
     now = time.time() if now is None else now
     operation = args.get("operation")
     run = Path(args["run_dir"]).resolve() if args.get("run_dir") else None
@@ -122,6 +130,31 @@ def execute(args: dict, now: float | None = None) -> dict:
         return {"applied": True, "run_id": manifest["run_id"], "expires_at": manifest["expires_at"]}
     if run is None:
         raise AuditStoreError("run-directory-required")
+    serialized_operations = {
+        "install",
+        "enable",
+        "disable",
+        "start",
+        "stop",
+        "disarm",
+        "renew",
+        "remove",
+        "verify-teardown",
+        "purge",
+    }
+    if apply and operation in serialized_operations:
+        if not _lifecycle_locked:
+            with registration_lock(run):
+                return execute(args, now, _lifecycle_locked=True)
+        current = load_manifest(run)
+        state = current.get("registration_state")
+        if current.get("logs_purged") or state in {"cleaned", "teardown-verified"}:
+            if operation == "purge" and current.get("logs_purged"):
+                return {"logs_purged": True, "cleanup_required": False, "already_purged": True}
+            if operation == "purge" and state == "teardown-verified":
+                pass
+            else:
+                raise AuditStoreError("lifecycle-terminal")
     if not apply and operation == "install":
         manifest = load_manifest(run)
         runtime = manifest.get("runtime")
@@ -152,6 +185,8 @@ def execute(args: dict, now: float | None = None) -> dict:
         return install(run, Path(manifest["project_root"]), manifest["runtime"])
     if operation == "enable":
         manifest = load_manifest(run)
+        if manifest.get("registration_state") in {"teardown-verified", "cleaned"} or manifest.get("logs_purged"):
+            raise AuditStoreError("lifecycle-terminal")
         home = _codex_home()
         if manifest.get("runtime") != "codex" or not global_install_present(home):
             raise AuditStoreError("global-dispatcher-not-installed")
@@ -445,13 +480,23 @@ def execute(args: dict, now: float | None = None) -> dict:
                 manifest["expires_at"] = now + duration * 60
                 manifest.setdefault("renewals", []).append({"at": now, "duration_minutes": duration})
 
+        previous_manifest = load_manifest(run) if operation == "renew" else None
         manifest, _ = update_manifest(run, transition)
         if (
             manifest.get("runtime") == "codex"
             and manifest.get("activation_registry")
             and manifest.get("capture_session_id")
         ):
-            enable_activation(Path(manifest["activation_registry"]), run, manifest["capture_session_id"])
+            try:
+                enable_activation(Path(manifest["activation_registry"]), run, manifest["capture_session_id"])
+            except Exception:
+                if operation != "renew":
+                    raise
+                try:
+                    save_manifest(run, previous_manifest)
+                except AuditStoreError:
+                    raise AuditStoreError("activation-renewal-rollback-failed") from None
+                raise AuditStoreError("activation-renewal-failed") from None
         return {
             "operation": operation,
             "applied": True,

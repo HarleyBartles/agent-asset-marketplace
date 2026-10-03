@@ -34,6 +34,11 @@ def test_append_rejects_path_traversal_without_leaking_payload(tmp_path):
     assert not (tmp_path.parent / "outside.jsonl").exists()
 
 
+def test_append_rejects_unmanaged_log_names(tmp_path):
+    with pytest.raises(AuditStoreError, match="invalid-record-name"):
+        append_record(tmp_path, "unbounded-extra", {"payload": "data"})
+
+
 def test_parallel_process_appends_are_complete_and_unique(tmp_path):
     store_file = Path(__file__).resolve().parents[2] / "scripts" / "store.py"
     code = (
@@ -92,3 +97,39 @@ def test_event_log_has_a_finite_storage_ceiling(tmp_path, monkeypatch):
     with pytest.raises(AuditStoreError, match="event-log-limit-reached"):
         append_record(tmp_path, "events", {"event": "pre", "tool_name": "Bash", "call_id": "two"})
     assert (tmp_path / "events.jsonl").stat().st_size <= 100
+
+
+def test_auxiliary_logs_are_bounded_with_reserved_cleanup_space(tmp_path, monkeypatch):
+    ordinary = {"code": "ordinary"}
+    cleanup = {"code": "recorder-health-control"}
+
+    probe = tmp_path / "probe"
+    append_record(probe, "controls", ordinary)
+    ordinary_size = (probe / "controls.jsonl").stat().st_size
+    probe_cleanup = tmp_path / "probe-cleanup"
+    append_record(probe_cleanup, "controls", cleanup)
+    cleanup_size = (probe_cleanup / "controls.jsonl").stat().st_size
+    monkeypatch.setattr(store, "CONTROL_LOG_CLEANUP_RESERVE_BYTES", cleanup_size)
+    monkeypatch.setattr(store, "MAX_CONTROL_LOG_BYTES", ordinary_size * 2 + cleanup_size)
+
+    append_record(tmp_path, "controls", ordinary)
+    append_record(tmp_path, "controls", ordinary)
+    with pytest.raises(AuditStoreError, match="control-log-limit-reached"):
+        append_record(tmp_path, "controls", ordinary)
+    append_record(tmp_path, "controls", cleanup)
+    assert (tmp_path / "controls.jsonl").stat().st_size <= store.MAX_CONTROL_LOG_BYTES
+
+
+def test_manifest_has_a_size_limit_and_cleanup_reserve(tmp_path, monkeypatch):
+    active = {"run_id": "x" * 90}
+    removed = {"run_id": "x" * 90, "registration_state": "removed"}
+    verified = {"run_id": "x" * 90, "registration_state": "teardown-verified"}
+    verified_size = len(store._safe_json(verified, "encode-failed")[0])
+    monkeypatch.setattr(store, "MAX_MANIFEST_BYTES", 200)
+    monkeypatch.setattr(store, "MANIFEST_CLEANUP_RESERVE_BYTES", 50)
+
+    with pytest.raises(AuditStoreError, match="manifest-size-limit-reached"):
+        save_manifest(tmp_path, active)
+    save_manifest(tmp_path, removed)
+    save_manifest(tmp_path, verified)
+    assert (tmp_path / "manifest.json").stat().st_size == verified_size

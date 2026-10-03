@@ -183,7 +183,9 @@ def test_windows_enable_disable_flips_owned_current_user_switch(tmp_path, monkey
         def __exit__(self, *_args):
             return False
 
-    def open_key(*_args):
+    def open_key(*args):
+        if len(args) == 4:
+            assert args[3] == (2 | 4)
         return FakeKey()
 
     def query_value(_key, _name):
@@ -200,6 +202,7 @@ def test_windows_enable_disable_flips_owned_current_user_switch(tmp_path, monkey
     fake_winreg = types.SimpleNamespace(
         HKEY_CURRENT_USER=1,
         KEY_SET_VALUE=2,
+        KEY_QUERY_VALUE=4,
         REG_EXPAND_SZ=3,
         OpenKey=open_key,
         QueryValueEx=query_value,

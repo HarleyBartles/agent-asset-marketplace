@@ -178,7 +178,7 @@ def test_expiry_does_not_complete_cleanup(expired_run):
 
 - [x] Add the skill with first-party verbatim provenance matching neighbouring entries. Read existing repository build/shipping assertions and extend only a genuine packaging gap; do not add filename or exact-copy change-detector tests.
 - [x] Run `py -3 tools/run.py marketplace --apply`, `py -3 tools/build_marketplace.py --check`, and `py -3 -m pytest skills/temporary-tool-auditing/tests/scripts -q`. Inspect generated diff and confirm installed relative helper/template paths work from the built package independently of the source tree.
-- [ ] Promote enduring runtime and evidence rules into skill references; mark this plan/spec `completed-awaiting-retirement` when all agent-owned items are complete. Preserve them through the completing PR. Do not retire unrelated active artifacts. The metadata-only default omits arguments/results, full-results is opt-in, and event logs have a 25 MiB ceiling. No predecessor cleanup was identified as eligible in the initial spec-only slice; reassess any subsequently landed completed artifacts against repository custody before adding removals.
+- [ ] Promote enduring runtime and evidence rules into skill references; mark this plan/spec `completed-awaiting-retirement` when all agent-owned items are complete. Preserve them through the completing PR. Do not retire unrelated active artifacts. The metadata-only default omits arguments/results, full-results is opt-in, and per-run event, health, control, and manifest storage is bounded. No predecessor cleanup was identified as eligible in the initial spec-only slice; reassess any subsequently landed completed artifacts against repository custody before adding removals.
 - [ ] Commit through the tracked hook, which owns complete apply/check gates. Do not redundantly run complete CI immediately before/after that successful commit or bypass the hook.
 - [ ] Obtain fresh whole-branch review through the installed requesting-code-review workflow. Correct actionable findings, re-run affected checks and obtain fresh review after correction; CI alone is insufficient review evidence.
 - [ ] When execution is authorised through publication, push the task branch and create a Draft PR with exact-file body text. Attach it to this chat; verify the remote head and hosted checks. Report remaining human Ready/merge actions as subsequent actions, not unchecked implementation steps. If publication is not authorised at execution time, retain completed local work and request that final concrete publication decision.
@@ -190,7 +190,7 @@ Checked items below record witnessed work on the earlier project-local design. T
 
 ## Review hardening follow-up
 
-The fresh whole-branch review at `5938683cf4d3b9e3c9ca183de7dc67413d67f2b9` found several evidence-integrity and cleanup gaps. The corrections below are implemented test-first; they need a fresh review at the new head before live runtime verification resumes.
+The fresh whole-branch review at `5938683cf4d3b9e3c9ca183de7dc67413d67f2b9` found several capture-correctness and cleanup gaps. The corrections below are implemented test-first; they need a fresh review at the new head before live runtime verification resumes. This capability is operational evidence for generally honest local agents; tamper resistance against same-account access is outside its threat model. The size cap, expiry, and purge bound disk use and stop stale recording.
 
 - [x] Redact full quoted credential values, including escaped quote forms, in CLI flags and assignments; verify sanitized on-disk records.
 - [x] Bind lifecycle controls to the exact installed helper path and run directory; namespace control identities by call, session, and agent so unrelated subject attempts remain visible.
@@ -213,6 +213,11 @@ The fresh whole-branch review at `5938683cf4d3b9e3c9ca183de7dc67413d67f2b9` foun
 - [x] Redact legacy CFID/CFTOKEN URL session tracking credentials before persistence.
 - [x] Preserve only explicitly supplied schema-defined audit attribution session-ID paths; redact same-named values in nested tool arguments and results.
 - [x] Cover structured personal, health, payment, and common secret identifiers, plus selected high-confidence free-text email, US SSN, JWT, and Luhn-valid payment-card patterns. Document that arbitrary private or commercial content cannot be detected comprehensively.
+- [x] Request both Windows registry query and write rights for activation, and test the current-user enable/disable path.
+- [x] Share the activation registry lock with helper refresh and refuse refresh while any engagement entry is active.
+- [x] Serialize mutating lifecycle operations per run, including teardown verification and purge; preserve cleaned receipts as terminal and test concurrent enable-versus-teardown.
+- [x] Bound health, control, and manifest storage alongside the 25 MiB event cap, preserve cleanup reserve, reject unmanaged log names, and report any storage-limit rejection as incomplete capture.
+- [x] Restore the prior manifest lease/coverage when an activation-registry renewal fails; test that a rejected extension cannot be reported as active coverage.
 - [x] Add post-assessment purge of event, health, and control logs plus known run-local recorder copies as a mandatory cleanup stage, gated on verified hook unload; preserve unknown files and keep cleanup pending until deletion is confirmed.
 - [x] Preflight the whole run directory before purging; leave root-level unknown files intact and cleanup pending without deleting logs.
 - [x] Reject symlink/junction helper directories and any resolved helper path outside the run before deleting logs or helper copies; verify with a Windows junction sentinel test.

@@ -82,7 +82,8 @@ def set_user_activation(path, enable):
     try:
         import winreg
 
-        key = winreg.OpenKey(winreg.HKEY_CURRENT_USER, "Environment", 0, winreg.KEY_SET_VALUE)
+        access = winreg.KEY_SET_VALUE | winreg.KEY_QUERY_VALUE
+        key = winreg.OpenKey(winreg.HKEY_CURRENT_USER, "Environment", 0, access)
         try:
             if enable:
                 try:

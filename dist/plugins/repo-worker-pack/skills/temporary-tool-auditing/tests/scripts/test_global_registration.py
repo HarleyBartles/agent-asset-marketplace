@@ -67,3 +67,19 @@ def test_install_refreshes_only_owned_helpers_when_source_changes(tmp_path):
     assert (home / "hooks.json").read_bytes() == config_before
     assert global_install_present(home)
     assert (home / "tool-auditing" / "record.py").read_bytes() == (source / "record.py").read_bytes()
+
+
+def test_install_refuses_helper_refresh_while_an_engagement_is_active(tmp_path):
+    home = tmp_path / "codex"
+    source = tmp_path / "source"
+    source.mkdir()
+    canonical = Path(__file__).resolve().parents[2] / "scripts"
+    for name in ("activation.py", "record.py", "runtime.py", "store.py", "sanitize.py"):
+        (source / name).write_bytes((canonical / name).read_bytes())
+    install_global(home, source)
+    root = home / "tool-auditing"
+    (root / "activations.json").write_text(json.dumps({"version": 1, "entries": [{"run_id": "active"}]}))
+    (source / "record.py").write_text((source / "record.py").read_text() + "\n# reviewed helper update\n")
+
+    with pytest.raises(AuditStoreError, match="global-helper-refresh-active-engagement"):
+        install_global(home, source, refresh_helpers=True)

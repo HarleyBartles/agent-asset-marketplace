@@ -65,7 +65,7 @@ def install_global(codex_home, source_dir, interpreter=None, *, refresh_helpers=
     dispatcher = root / "dispatch.py"
     interpreter = Path(interpreter or sys.executable).resolve()
     proposed = {event: _owned_entry(event, dispatcher, interpreter) for event in EVENTS}
-    with registration_lock(home):
+    with registration_lock(root):
         owner_path = root / "owner.json"
         if owner_path.exists():
             try:
@@ -88,6 +88,16 @@ def install_global(codex_home, source_dir, interpreter=None, *, refresh_helpers=
                 if changed and not refresh_helpers:
                     raise AuditStoreError("global-helper-refresh-requires-review")
                 if changed:
+                    registry_path = root / "activations.json"
+                    if registry_path.exists():
+                        try:
+                            registry = json.loads(registry_path.read_text(encoding="utf-8"))
+                        except (OSError, ValueError):
+                            raise AuditStoreError("global-activation-registry-invalid") from None
+                        if not isinstance(registry, dict) or not isinstance(registry.get("entries"), list):
+                            raise AuditStoreError("global-activation-registry-invalid")
+                        if registry["entries"]:
+                            raise AuditStoreError("global-helper-refresh-active-engagement")
                     for name in HELPERS:
                         shutil.copyfile(source / name, root / name)
                     shutil.copyfile(source / "activation.py", dispatcher)
