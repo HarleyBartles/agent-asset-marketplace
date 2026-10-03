@@ -3,6 +3,8 @@
 import argparse
 import json
 import math
+import subprocess
+import sys
 import time
 import uuid
 from pathlib import Path
@@ -10,7 +12,7 @@ from pathlib import Path
 from assessment import assess
 from registration import install, remove
 from sanitize import sanitize
-from store import AuditStoreError, append_record, load_manifest, save_manifest
+from store import AuditStoreError, create_manifest, load_manifest, save_manifest, update_manifest
 
 
 def _duration(value, default=30.0) -> float:
@@ -46,6 +48,8 @@ def execute(args: dict, now: float | None = None) -> dict:
     operation = args.get("operation")
     run = Path(args["run_dir"]).resolve() if args.get("run_dir") else None
     apply = bool(args.get("apply"))
+    if apply and args.get("check"):
+        raise AuditStoreError("conflicting-modes")
     if operation == "prepare":
         duration = _duration(args.get("duration_minutes"))
         detail = args.get("detail")
@@ -53,6 +57,9 @@ def execute(args: dict, now: float | None = None) -> dict:
         if runtime not in {"codex", "devin"} or detail not in {"status", "full-results"}:
             raise AuditStoreError("invalid-prepare-options")
         subject = _subject(args.get("subject", ""))
+        project = Path(args["project"]).resolve()
+        if run is None or run == project or project in run.parents:
+            raise AuditStoreError("run-directory-must-be-outside-project")
         question, redactions = sanitize(args.get("question", ""))
         if not apply:
             return {"applied": False, "runtime": runtime, "detail": detail, "duration_minutes": duration}
@@ -61,7 +68,7 @@ def execute(args: dict, now: float | None = None) -> dict:
             "run_id": str(uuid.uuid4()),
             "runtime": runtime,
             "runtime_version": args.get("runtime_version"),
-            "project_root": str(Path(args["project"]).resolve()),
+            "project_root": str(project),
             "registration_root": None,
             "subject": subject,
             "question": question,
@@ -77,7 +84,7 @@ def execute(args: dict, now: float | None = None) -> dict:
             "owned_entries": [],
             "redactions": redactions,
         }
-        save_manifest(run, manifest)
+        create_manifest(run, manifest)
         return {"applied": True, "run_id": manifest["run_id"], "expires_at": manifest["expires_at"]}
     if run is None:
         raise AuditStoreError("run-directory-required")
@@ -87,10 +94,12 @@ def execute(args: dict, now: float | None = None) -> dict:
         manifest = load_manifest(run)
         return install(run, Path(manifest["project_root"]), manifest["runtime"])
     if operation == "remove":
-        manifest = load_manifest(run)
-        manifest["armed"] = False
-        _close_interval(manifest, now)
-        save_manifest(run, manifest)
+
+        def disarm(manifest):
+            manifest["armed"] = False
+            _close_interval(manifest, now)
+
+        update_manifest(run, disarm)
         return remove(run)
     if operation == "status":
         manifest = load_manifest(run)
@@ -100,94 +109,118 @@ def execute(args: dict, now: float | None = None) -> dict:
             state = "recording" if manifest.get("armed") else "stopped"
         return {"recording_state": state, "cleanup_required": bool(manifest.get("cleanup_required")), **manifest}
     if operation == "verify":
-        manifest = load_manifest(run)
-        if manifest.get("registration_state") != "installed":
-            raise AuditStoreError("registration-unverified")
         control_id = args.get("control_call_id")
         if not control_id:
             if not apply:
                 return {"activation_probe": "not-started", "requires_apply": True}
-            if now >= manifest.get("expires_at", 0):
-                raise AuditStoreError("lease-expired-renew-first")
-            probe_until = min(manifest["expires_at"], now + 120)
-            manifest["activation_probe_until"] = probe_until
-            manifest["armed"] = True
-            manifest.setdefault("intervals", []).append(
-                {
-                    "start": now,
-                    "end": None,
-                    "detail": manifest.get("detail"),
-                    "expires_at": probe_until,
-                    "kind": "activation-probe",
-                }
-            )
-            save_manifest(run, manifest)
+
+            def begin_probe(manifest):
+                if manifest.get("registration_state") != "installed":
+                    raise AuditStoreError("registration-unverified")
+                if now >= manifest.get("expires_at", 0):
+                    raise AuditStoreError("lease-expired-renew-first")
+                if manifest.get("armed"):
+                    raise AuditStoreError("already-armed")
+                probe_until = min(manifest["expires_at"], now + 120)
+                manifest["activation_probe_until"] = probe_until
+                manifest["activation_probe_started_at"] = now
+                manifest["armed"] = True
+                manifest.setdefault("intervals", []).append(
+                    {
+                        "start": now,
+                        "end": None,
+                        "detail": manifest.get("detail"),
+                        "expires_at": probe_until,
+                        "kind": "activation-probe",
+                    }
+                )
+                return probe_until
+
+            manifest, probe_until = update_manifest(run, begin_probe)
             return {"activation_probe": "started", "expires_at": probe_until}
-        events_path = run / "events.jsonl"
-        events = (
-            [json.loads(row) for row in events_path.read_text(encoding="utf-8").splitlines()]
-            if events_path.exists()
-            else []
-        )
-        control = next(
-            (
-                item
-                for item in events
-                if item.get("call_id") == control_id
-                and item.get("run_id") == manifest.get("run_id")
-                and item.get("event") == "pre"
-            ),
-            None,
-        )
-        found = control is not None
-        if not found:
-            raise AuditStoreError("activation-control-not-captured")
-        if apply:
-            manifest["activation_verified"] = True
-            manifest.setdefault("controls", []).append(
-                {
-                    "call_id": control_id,
-                    "session_id": control.get("session_id"),
-                    "role": "positive",
-                    "verified_at": now,
-                }
+
+        def finish_probe(manifest):
+            if manifest.get("registration_state") != "installed":
+                raise AuditStoreError("registration-unverified")
+            events_path = run / "events.jsonl"
+            events = (
+                [json.loads(row) for row in events_path.read_text(encoding="utf-8").splitlines()]
+                if events_path.exists()
+                else []
             )
-            manifest.pop("activation_probe_until", None)
-            _close_interval(manifest, now)
-            manifest["armed"] = False
-            save_manifest(run, manifest)
+            control = next(
+                (
+                    item
+                    for item in events
+                    if item.get("call_id") == control_id
+                    and item.get("run_id") == manifest.get("run_id")
+                    and item.get("event") == "pre"
+                    and isinstance(item.get("received_at"), (int, float))
+                    and item["received_at"] >= manifest.get("activation_probe_started_at", float("inf"))
+                    and item["received_at"] <= manifest.get("activation_probe_until", float("-inf"))
+                ),
+                None,
+            )
+            if control is None:
+                raise AuditStoreError("activation-control-not-captured")
+            if apply:
+                manifest["activation_verified"] = True
+                manifest.setdefault("controls", []).append(
+                    {
+                        "call_id": control_id,
+                        "session_id": control.get("session_id"),
+                        "role": "positive",
+                        "verified_at": now,
+                    }
+                )
+                manifest.pop("activation_probe_until", None)
+                manifest.pop("activation_probe_started_at", None)
+                _close_interval(manifest, now)
+                manifest["armed"] = False
+            return control
+
+        manifest, control = update_manifest(run, finish_probe)
+        found = control is not None
         return {"activation_verified": found, "applied": apply}
     if operation in {"start", "stop", "disarm", "renew"}:
-        manifest = load_manifest(run)
         if operation == "start":
-            if not manifest.get("activation_verified"):
-                raise AuditStoreError("activation-unverified")
-            if now >= manifest.get("expires_at", 0):
-                raise AuditStoreError("lease-expired-renew-first")
-            if manifest.get("armed"):
-                raise AuditStoreError("already-armed")
-            manifest.setdefault("intervals", []).append(
-                {"start": now, "end": None, "detail": manifest.get("detail"), "expires_at": manifest["expires_at"]}
-            )
-            manifest["armed"] = True
+
+            def transition(manifest):
+                if not manifest.get("activation_verified"):
+                    raise AuditStoreError("activation-unverified")
+                if now >= manifest.get("expires_at", 0):
+                    raise AuditStoreError("lease-expired-renew-first")
+                if manifest.get("armed"):
+                    raise AuditStoreError("already-armed")
+                manifest.setdefault("intervals", []).append(
+                    {"start": now, "end": None, "detail": manifest.get("detail"), "expires_at": manifest["expires_at"]}
+                )
+                manifest["armed"] = True
         elif operation in {"stop", "disarm"}:
-            _close_interval(manifest, now)
-            manifest["armed"] = False
+
+            def transition(manifest):
+                _close_interval(manifest, now)
+                manifest["armed"] = False
+                if operation == "stop":
+                    manifest["subject_completed_at"] = now
+                    manifest["subject_completion_source"] = "operator-stop"
         else:
             duration = _duration(args.get("duration_minutes"))
-            was_expired = now >= manifest.get("expires_at", 0)
-            if was_expired:
-                prior_gaps = list(manifest.get("coverage_gaps", []))
-                _close_interval(manifest, now)
-                gap = {"start": manifest.get("expires_at"), "end": now}
-                if gap not in manifest.get("coverage_gaps", prior_gaps):
-                    manifest.setdefault("coverage_gaps", []).append(gap)
-                manifest["armed"] = False
-            elif manifest.get("armed") and manifest.get("intervals"):
-                manifest["intervals"][-1]["expires_at"] = now + duration * 60
-            manifest["expires_at"] = now + duration * 60
-            manifest.setdefault("renewals", []).append({"at": now, "duration_minutes": duration})
-        save_manifest(run, manifest)
+
+            def transition(manifest):
+                was_expired = now >= manifest.get("expires_at", 0)
+                if was_expired:
+                    _close_interval(manifest, now)
+                    gap = {"start": manifest.get("expires_at"), "end": now}
+                    if gap not in manifest.get("coverage_gaps", []):
+                        manifest.setdefault("coverage_gaps", []).append(gap)
+                    manifest["armed"] = False
+                elif manifest.get("armed") and manifest.get("intervals"):
+                    manifest["intervals"][-1]["expires_at"] = now + duration * 60
+                manifest["expires_at"] = now + duration * 60
+                manifest.setdefault("renewals", []).append({"at": now, "duration_minutes": duration})
+
+        manifest, _ = update_manifest(run, transition)
         return {
             "operation": operation,
             "applied": True,
@@ -225,11 +258,25 @@ def execute(args: dict, now: float | None = None) -> dict:
             raise AuditStoreError("teardown-canary-required")
         if not manifest.get("teardown_probe_started_at"):
             raise AuditStoreError("teardown-probe-not-started")
+        if now > manifest.get("teardown_probe_until", 0):
+            raise AuditStoreError("teardown-probe-expired")
         try:
-            # A direct sanitized recorder control proves the store remains healthy.
-            append_record(run, "controls", {"code": "teardown-direct-control", "received_at": now})
+            nonce = str(uuid.uuid4())
+            recorder = run / "scripts" / "record.py"
+            result = subprocess.run(
+                [sys.executable, str(recorder), "--run-dir", str(run), "--control-nonce", nonce],
+                capture_output=True,
+                text=True,
+                timeout=10,
+                check=False,
+            )
+            if result.returncode != 0:
+                raise RuntimeError("recorder-control-failed")
+            controls = (run / "controls.jsonl").read_text(encoding="utf-8") if (run / "controls.jsonl").exists() else ""
+            if not any(json.loads(line).get("nonce") == nonce for line in controls.splitlines() if line.strip()):
+                raise RuntimeError("recorder-control-missing")
             events = (run / "events.jsonl").read_text(encoding="utf-8") if (run / "events.jsonl").exists() else ""
-            since = manifest.get("teardown_probe_started_at", manifest.get("expires_at", now))
+            since = manifest["teardown_probe_started_at"]
             late = False
             for line in events.splitlines():
                 try:

@@ -8,7 +8,7 @@ import time
 from pathlib import Path
 
 from runtime import render_handlers
-from store import AuditStoreError, _locked, load_manifest, save_manifest
+from store import AuditStoreError, registration_lock, load_manifest, save_manifest
 
 
 def _read(path: Path) -> dict:
@@ -69,7 +69,14 @@ def install(run: Path, project: Path, runtime: str) -> dict:
     rendered = render_handlers(runtime, scripts / "record.py")
     rendered_events = rendered.get("hooks", rendered)
     owned = []
-    with _locked(root):
+    root_created = not root.exists()
+    prior_intent = manifest.get("owned_entries", [])
+    prior_pairs = {
+        (item.get("event"), json.dumps(item.get("entry"), sort_keys=True))
+        for item in prior_intent
+        if isinstance(item, dict)
+    }
+    with registration_lock(root):
         data = _read(config_path)
         if owner_path.exists():
             try:
@@ -88,7 +95,11 @@ def install(run: Path, project: Path, runtime: str) -> dict:
             for entry in entries:
                 if entry not in current:
                     current.append(entry)
-                owned.append({"event": event, "entry": entry})
+                    owned.append({"event": event, "entry": entry})
+                elif (event, json.dumps(entry, sort_keys=True)) in prior_pairs:
+                    owned.append({"event": event, "entry": entry})
+                else:
+                    raise AuditStoreError("registration-conflict")
 
         manifest.update(
             {
@@ -96,6 +107,7 @@ def install(run: Path, project: Path, runtime: str) -> dict:
                 "registration_state": "installing",
                 "cleanup_required": True,
                 "owned_entries": owned,
+                "registration_root_created": bool(manifest.get("registration_root_created") or root_created),
             }
         )
         save_manifest(run, manifest)  # durable intent precedes config mutation
@@ -122,7 +134,16 @@ def remove(run: Path) -> dict:
         raise AuditStoreError("registration-location-unknown")
     conflicts = []
     manifest["teardown_probe_started_at"] = time.time()
-    with _locked(root):
+    with registration_lock(root):
+        if owner.exists():
+            try:
+                current_owner = json.loads(owner.read_text(encoding="utf-8"))
+            except Exception:
+                raise AuditStoreError("registration-owner-invalid") from None
+            if current_owner.get("run_id") != manifest.get("run_id"):
+                raise AuditStoreError("registration-conflict")
+        elif manifest.get("owned_entries") and manifest.get("registration_state") != "removed":
+            raise AuditStoreError("registration-owner-missing")
         data = _read(config) if config.exists() else {"hooks": {}}
         hooks = data["hooks"]
         for owned in manifest.get("owned_entries", []):
@@ -150,14 +171,12 @@ def remove(run: Path) -> dict:
             else:
                 config.unlink()
         if owner.exists() and not conflicts:
+            owner.unlink()
+        if manifest.get("registration_root_created"):
             try:
-                current_owner = json.loads(owner.read_text(encoding="utf-8"))
-            except Exception:
-                current_owner = {}
-            if current_owner.get("run_id") == manifest.get("run_id"):
-                owner.unlink()
-            else:
-                conflicts.append("owner-marker")
+                root.rmdir()
+            except OSError:
+                pass
     manifest["registration_state"] = "removed" if not conflicts else "conflict"
     manifest["cleanup_required"] = True
     save_manifest(run, manifest)

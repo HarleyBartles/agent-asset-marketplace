@@ -1,5 +1,6 @@
 """Best-effort removal of common credentials from tool audit evidence."""
 
+import json
 import re
 from typing import Any
 
@@ -15,6 +16,12 @@ _PATTERNS = [
     (re.compile(r"(?i)([a-z][a-z0-9+.-]*://)[^/@\s:]+(?::[^/@\s]*)?@"), lambda m: f"{m.group(1)}{_REDACTED}@"),
     (
         re.compile(r"(?i)(\b(?:password|passwd|token|api[_-]?key|secret)\s*=\s*)([^\s;&]+)"),
+        lambda m: f"{m.group(1)}{_REDACTED}",
+    ),
+    (
+        re.compile(
+            r"(?i)(\b(?:x-)?(?:password|passwd|token|access[_-]?token|refresh[_-]?token|api[_-]?key|secret)\s*:\s*)([^\s,;&]+)"
+        ),
         lambda m: f"{m.group(1)}{_REDACTED}",
     ),
     (
@@ -54,11 +61,17 @@ def sanitize(value: object) -> tuple[object, list[str]]:
                 return _REDACTED
             active.add(identity)
             result = {}
-            for key, child in item.items():
-                safe_key = str(key)[:256]
+            for index, (key, child) in enumerate(item.items()):
+                raw_key = str(key)[:256]
+                safe_key, key_changed = _clean_text(raw_key)
+                if key_changed:
+                    safe_key = f"[REDACTED_KEY_{index}]"
                 child_path = f"{path}.{safe_key}"
                 normalized_key = re.sub(r"([a-z0-9])([A-Z])", r"\1_\2", safe_key).replace(" ", "_")
-                if _SECRET_KEYS.search(normalized_key):
+                if key_changed:
+                    result[safe_key] = _REDACTED
+                    redactions.append(child_path)
+                elif _SECRET_KEYS.search(normalized_key):
                     result[safe_key] = _REDACTED
                     redactions.append(child_path)
                 else:
@@ -75,6 +88,16 @@ def sanitize(value: object) -> tuple[object, list[str]]:
             active.remove(identity)
             return result
         if isinstance(item, str):
+            stripped = item.lstrip()
+            if stripped.startswith(("{", "[")):
+                try:
+                    parsed = json.loads(item)
+                except (json.JSONDecodeError, RecursionError):
+                    parsed = None
+                if isinstance(parsed, (dict, list)):
+                    cleaned = visit(parsed, path, depth + 1)
+                    if cleaned != parsed:
+                        return json.dumps(cleaned, ensure_ascii=False, separators=(",", ":"))
             cleaned, changed = _clean_text(item)
             if changed:
                 redactions.append(path)

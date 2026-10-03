@@ -1,4 +1,5 @@
 import json
+from unittest.mock import patch
 
 from registration import install, remove
 from store import load_manifest, save_manifest
@@ -82,3 +83,68 @@ def test_remove_recovers_an_interrupted_install_from_manifest_intent(tmp_path):
     assert result["registration_state"] == "removed"
     assert result["config_absent"] is True
     assert load_manifest(run)["cleanup_required"] is True
+
+
+def test_install_refuses_identical_unowned_hook_without_claiming_it(tmp_path):
+    project = tmp_path / "repo"
+    run = project / ".audit-runs" / "one"
+    config = project / ".codex" / "hooks.json"
+    entry = {"matcher": "", "hooks": [{"type": "command", "command": "owned-by-someone-else"}]}
+    config.parent.mkdir(parents=True)
+    config.write_text(json.dumps({"hooks": {"PreToolUse": [entry]}}))
+    save_manifest(run, {"run_id": "one", "runtime": "codex", "armed": False, "cleanup_required": False})
+    with patch("registration.render_handlers", return_value={"PreToolUse": [entry]}):
+        try:
+            install(run, project, "codex")
+        except Exception as error:
+            assert getattr(error, "code", None) == "registration-conflict"
+        else:
+            raise AssertionError("an identical unowned hook must not be adopted")
+    assert json.loads(config.read_text())["hooks"]["PreToolUse"] == [entry]
+    assert load_manifest(run).get("owned_entries", []) == []
+
+
+def test_remove_checks_owner_before_mutating_hook_configuration(tmp_path):
+    project = tmp_path / "repo"
+    run = project / ".audit-runs" / "one"
+    config = project / ".codex" / "hooks.json"
+    save_manifest(run, {"run_id": "one", "runtime": "codex", "armed": False, "cleanup_required": False})
+    install(run, project, "codex")
+    before = config.read_bytes()
+    owner = project / ".codex" / ".temporary-tool-auditing-owner.json"
+    owner.write_text(json.dumps({"run_id": "other", "run_dir": "elsewhere"}))
+    try:
+        remove(run)
+    except Exception as error:
+        assert getattr(error, "code", None) == "registration-conflict"
+    else:
+        raise AssertionError("removal must reject an owner mismatch")
+    assert config.read_bytes() == before
+
+
+def test_remove_fails_closed_when_owner_marker_is_missing(tmp_path):
+    project = tmp_path / "repo"
+    run = project / ".audit-runs" / "one"
+    save_manifest(run, {"run_id": "one", "runtime": "codex", "armed": False, "cleanup_required": False})
+    install(run, project, "codex")
+    config = project / ".codex" / "hooks.json"
+    before = config.read_bytes()
+    (project / ".codex" / ".temporary-tool-auditing-owner.json").unlink()
+    try:
+        remove(run)
+    except Exception as error:
+        assert getattr(error, "code", None) == "registration-owner-missing"
+    else:
+        raise AssertionError("removal without its owner marker must fail closed")
+    assert config.read_bytes() == before
+
+
+def test_removal_deletes_empty_registration_root_created_by_helper(tmp_path):
+    project = tmp_path / "repo"
+    run = project / ".audit-runs" / "one"
+    save_manifest(run, {"run_id": "one", "runtime": "codex", "armed": False, "cleanup_required": False})
+    install(run, project, "codex")
+    root = project / ".codex"
+    assert root.exists()
+    remove(run)
+    assert not root.exists()

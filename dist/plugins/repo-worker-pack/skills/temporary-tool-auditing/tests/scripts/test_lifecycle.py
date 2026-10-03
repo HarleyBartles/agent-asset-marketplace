@@ -3,7 +3,7 @@ import pytest
 
 from auditctl import execute
 from record import record_event
-from store import load_manifest, save_manifest
+from store import append_record, load_manifest, save_manifest
 
 
 def base_run(path, **updates):
@@ -27,12 +27,22 @@ def base_run(path, **updates):
     save_manifest(path, manifest)
 
 
+def install_test_recorder(run):
+    import shutil
+    from pathlib import Path
+
+    scripts = Path(__file__).parents[2] / "scripts"
+    (run / "scripts").mkdir()
+    for name in ("record.py", "runtime.py", "store.py", "sanitize.py"):
+        shutil.copyfile(scripts / name, run / "scripts" / name)
+
+
 def test_prepare_preview_does_not_mutate_and_apply_defaults_to_30_minutes(tmp_path):
     args = {
         "operation": "prepare",
         "run_dir": str(tmp_path / "run"),
         "runtime": "codex",
-        "project": str(tmp_path),
+        "project": str(tmp_path / "project"),
         "question": "Did the child avoid tools?",
         "subject": "session:s1",
         "detail": "status",
@@ -129,9 +139,123 @@ def test_activation_verification_requires_a_real_captured_probe_call(tmp_path):
     assert manifest["controls"][0]["session_id"] == "active-session"
 
 
+def test_activation_rejects_a_control_captured_before_the_current_probe(tmp_path):
+    run = tmp_path / "run"
+    base_run(run, registration_state="installed", activation_verified=False)
+    append_record(
+        run,
+        "events",
+        {"run_id": "run-1", "event": "pre", "call_id": "old-control", "session_id": "s1", "received_at": 99},
+    )
+    execute({"operation": "verify", "run_dir": str(run), "apply": True}, now=100)
+    with pytest.raises(Exception) as error:
+        execute(
+            {"operation": "verify", "run_dir": str(run), "control_call_id": "old-control", "apply": True},
+            now=101,
+        )
+    assert getattr(error.value, "code", None) == "activation-control-not-captured"
+    assert load_manifest(run)["activation_verified"] is False
+
+
+def test_stop_records_operator_completion_within_closed_coverage(tmp_path):
+    run = tmp_path / "run"
+    base_run(
+        run,
+        activation_verified=True,
+        armed=True,
+        controls=[{"call_id": "positive", "role": "positive"}],
+        intervals=[{"start": 50, "end": None, "expires_at": 500}],
+    )
+    record_event(
+        run,
+        {"hook_event_name": "PreToolUse", "session_id": "s1", "tool_use_id": "positive", "tool_name": "Bash"},
+        60,
+    )
+    execute({"operation": "stop", "run_dir": str(run), "apply": True}, now=100)
+    manifest = load_manifest(run)
+    assert manifest["subject_completed_at"] == 100
+    result = execute({"operation": "assess", "run_dir": str(run), "subject": "session:s1"}, now=101)
+    assert result["claim_supported"] is True
+
+
+def test_apply_and_check_together_are_rejected(tmp_path):
+    run = tmp_path / "run"
+    base_run(run)
+    with pytest.raises(Exception) as error:
+        execute({"operation": "stop", "run_dir": str(run), "apply": True, "check": True}, now=100)
+    assert getattr(error.value, "code", None) == "conflicting-modes"
+
+
+def test_prepare_rejects_run_directory_inside_project_and_existing_run(tmp_path):
+    base = {
+        "operation": "prepare",
+        "runtime": "codex",
+        "project": str(tmp_path / "project"),
+        "question": "Did the selected agent avoid tools?",
+        "subject": "session:s1",
+        "detail": "status",
+        "apply": True,
+    }
+    with pytest.raises(Exception) as error:
+        execute({**base, "run_dir": str(tmp_path / "project" / "audit-run")}, now=100)
+    assert getattr(error.value, "code", None) == "run-directory-must-be-outside-project"
+    run = tmp_path / "run"
+    execute({**base, "run_dir": str(run)}, now=100)
+    with pytest.raises(Exception) as error:
+        execute({**base, "run_dir": str(run)}, now=101)
+    assert getattr(error.value, "code", None) == "run-directory-exists"
+
+
+def test_prepare_run_directory_is_outside_project_and_private_on_posix(tmp_path):
+    import os
+
+    if os.name == "nt":
+        pytest.skip("POSIX permission bits are not authoritative on Windows")
+    project = tmp_path / "project"
+    run = tmp_path / "private-run"
+    execute(
+        {
+            "operation": "prepare",
+            "run_dir": str(run),
+            "runtime": "codex",
+            "project": str(project),
+            "question": "scenario",
+            "subject": "session:s1",
+            "detail": "status",
+            "apply": True,
+        },
+        now=100,
+    )
+    assert (run.stat().st_mode & 0o777) == 0o700
+    assert not project.exists()
+
+
+def test_lifecycle_start_transition_is_atomic_under_concurrency(tmp_path):
+    from concurrent.futures import ThreadPoolExecutor
+    from threading import Barrier
+
+    run = tmp_path / "run"
+    base_run(run, activation_verified=True, expires_at=500)
+    barrier = Barrier(2)
+
+    def start():
+        barrier.wait()
+        try:
+            execute({"operation": "start", "run_dir": str(run), "apply": True}, now=100)
+            return "started"
+        except Exception as error:
+            return getattr(error, "code", "unexpected")
+
+    with ThreadPoolExecutor(max_workers=2) as pool:
+        outcomes = list(pool.map(lambda _: start(), range(2)))
+    assert sorted(outcomes) == ["already-armed", "started"]
+    assert len(load_manifest(run)["intervals"]) == 1
+
+
 def test_teardown_probe_succeeds_when_direct_control_works_and_no_hook_fires(tmp_path):
     run = tmp_path / "run"
     base_run(run, registration_state="removed", cleanup_required=True)
+    install_test_recorder(run)
     begin = execute(
         {"operation": "verify-teardown", "run_dir": str(run), "phase": "begin", "apply": True},
         now=100,
@@ -159,6 +283,7 @@ def test_teardown_probe_succeeds_when_direct_control_works_and_no_hook_fires(tmp
 def test_teardown_probe_detects_cached_hook_and_leaves_cleanup_pending(tmp_path):
     run = tmp_path / "run"
     base_run(run, registration_state="removed", cleanup_required=True)
+    install_test_recorder(run)
     execute(
         {"operation": "verify-teardown", "run_dir": str(run), "phase": "begin", "apply": True},
         now=100,
@@ -188,4 +313,26 @@ def test_teardown_probe_detects_cached_hook_and_leaves_cleanup_pending(tmp_path)
     assert getattr(error.value, "code", None) == "cached-hook-still-active"
     manifest = load_manifest(run)
     assert manifest["armed"] is False
+    assert manifest["cleanup_required"] is True
+
+
+def test_teardown_requires_current_restart_probe_and_fails_closed_on_expiry(tmp_path):
+    run = tmp_path / "run"
+    base_run(run, registration_state="removed", cleanup_required=True)
+    install_test_recorder(run)
+    execute({"operation": "verify-teardown", "run_dir": str(run), "phase": "begin", "apply": True}, now=100)
+    with pytest.raises(Exception) as error:
+        execute(
+            {
+                "operation": "verify-teardown",
+                "run_dir": str(run),
+                "phase": "finish",
+                "restart_confirmed": True,
+                "canary_performed": True,
+                "apply": True,
+            },
+            now=221,
+        )
+    assert getattr(error.value, "code", None) == "teardown-probe-expired"
+    manifest = load_manifest(run)
     assert manifest["cleanup_required"] is True

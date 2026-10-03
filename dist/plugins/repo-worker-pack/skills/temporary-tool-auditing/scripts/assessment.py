@@ -31,6 +31,8 @@ def _selected(record: dict, subject: dict, runtime: str, limitations: set[str]) 
     if subject.get("agent_id") is not None:
         if runtime == "devin":
             return False
+        if record.get("event") not in {"pre", "post"}:
+            return False
         if record.get("agent_id") is None:
             limitations.add("missing-agent-id")
             return False
@@ -78,6 +80,34 @@ def assess(run: Path, subject: dict) -> dict:
     if not valid_intervals:
         limitations.add("no-verified-coverage")
     completion_at = manifest.get("subject_completed_at")
+    completion_source = manifest.get("subject_completion_source")
+    if runtime == "devin" and subject.get("kind") == "child":
+        dispatch_id = subject.get("dispatch_call_id")
+        matching_dispatch_post = next(
+            (
+                item
+                for item in records
+                if item.get("run_id") == manifest.get("run_id")
+                and item.get("call_id") == dispatch_id
+                and item.get("event") == "post"
+            ),
+            None,
+        )
+        completion_at = matching_dispatch_post.get("received_at") if matching_dispatch_post else None
+        completion_source = "matched-dispatch-post" if matching_dispatch_post else None
+    elif subject.get("agent_id") is not None:
+        matching_stop = next(
+            (
+                item
+                for item in records
+                if item.get("run_id") == manifest.get("run_id")
+                and item.get("agent_id") == subject.get("agent_id")
+                and item.get("event") == "subagentstop"
+            ),
+            None,
+        )
+        completion_at = matching_stop.get("received_at") if matching_stop else None
+        completion_source = "matched-subagent-stop" if matching_stop else None
     if isinstance(completion_at, (int, float)) and valid_intervals:
         if not any(item["start"] <= completion_at <= item["end"] for item in valid_intervals):
             limitations.add("completion-outside-coverage")
@@ -85,7 +115,7 @@ def assess(run: Path, subject: dict) -> dict:
         limitations.add("coverage-gap")
     if manifest.get("coverage_gaps"):
         limitations.add("coverage-gap")
-    if not manifest.get("subject_completed_at"):
+    if not isinstance(completion_at, (int, float)):
         limitations.add("subject-completion-unverified")
 
     manifest_controls = [item for item in manifest.get("controls", []) if isinstance(item, dict)]
@@ -163,7 +193,9 @@ def assess(run: Path, subject: dict) -> dict:
         subject_records = [
             item
             for item in records
-            if item.get("run_id") == manifest.get("run_id") and _selected(item, subject, runtime, limitations)
+            if item.get("run_id") == manifest.get("run_id")
+            and item.get("call_id") not in control_ids
+            and _selected(item, subject, runtime, limitations)
         ]
     for item in subject_records:
         if item.get("event") in {"pre", "post"} and not item.get("session_id"):
@@ -211,6 +243,7 @@ def assess(run: Path, subject: dict) -> dict:
     return {
         "claim_supported": supported,
         "claim_scope": "no observed tool attempts for the selected subject during verified coverage",
+        "completion_source": completion_source,
         "attempt_count": attempts,
         "paired_count": paired,
         "outcome_statuses": {

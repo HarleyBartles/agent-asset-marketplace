@@ -173,3 +173,30 @@ def test_devin_child_counts_tools_inside_one_serialized_dispatch(tmp_path):
     result = assess(tmp_path, {"dispatch_call_id": "dispatch-1", "kind": "child"})
     assert result["attempt_count"] == 1
     assert "devin-child-attribution-ambiguous" not in result["limitations"]
+
+
+def test_devin_child_completion_comes_from_matching_dispatch_post(tmp_path):
+    now = time.time()
+    make_run(
+        tmp_path,
+        [
+            event("pre", "control-1", "control-session"),
+            event("post", "control-1", "control-session"),
+            event("pre", "dispatch-1", tool_name="run_subagent", received_at=now - 8),
+            event("post", "dispatch-1", tool_name="run_subagent", received_at=now - 4),
+        ],
+        runtime="devin",
+    )
+    result = assess(tmp_path, {"dispatch_call_id": "dispatch-1", "kind": "child"})
+    assert result["claim_supported"] is True
+    assert result["completion_source"] == "matched-dispatch-post"
+
+
+def test_codex_agent_completion_requires_matching_subagent_stop(tmp_path):
+    make_run(
+        tmp_path,
+        [event("pre", "control-1", "control-session"), event("subagentstop", "stop-1", agent_id="agent-7")],
+    )
+    result = assess(tmp_path, {"agent_id": "agent-7"})
+    assert result["claim_supported"] is True
+    assert result["completion_source"] == "matched-subagent-stop"

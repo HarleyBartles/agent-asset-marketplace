@@ -32,7 +32,7 @@ Create these focused modules under `skills/temporary-tool-auditing/scripts/`:
 | File | Responsibility and exported interface |
 | --- | --- |
 | `sanitize.py` | `sanitize(value: object) -> tuple[object, list[str]]`; recursively remove known secret forms and report safe redaction paths. |
-| `store.py` | `load_manifest(run: Path) -> dict`, `save_manifest(run: Path, value: dict) -> None`, `append_record(run: Path, name: str, value: dict) -> None`; locked reads/writes and safe diagnostics. |
+| `store.py` | `load_manifest(run: Path) -> dict`, `save_manifest(run: Path, value: dict) -> None`, `create_manifest(...)`, atomic `update_manifest(...)`, `append_record(...)`; locked reads/writes and safe diagnostics. |
 | `runtime.py` | `normalize_event(runtime: str, payload: dict, detail: str) -> dict`, `render_handlers(runtime: str, recorder: Path) -> dict`; runtime field/status conversion and absolute interpreter command. |
 | `record.py` | `record_event(run: Path, payload: dict, now: float) -> bool`; lease/arming check, sanitisation, normalization, append and health handling; command entry reads stdin. |
 | `registration.py` | `install(run: Path, project: Path, runtime: str) -> dict`, `remove(run: Path) -> dict`; owned JSON handler mutation and guarded recovery. |
@@ -49,8 +49,8 @@ CLI: `auditctl.py <operation> --run-dir <absolute-path>`, with `--check` default
 
 ## Review Focus
 
-- Embedded credentials in free text, URLs, CLI flags and malformed JSON never reach disk or stderr: Task 1 and Task 2.
-- Interrupted config writes leave discoverable ownership; concurrent installers cannot stack runs: Task 3.
+- Credential patterns in free text, URLs, CLI flags, serialized JSON and common header forms are sanitized before persistence; pattern detection remains best-effort: Task 1 and Task 2.
+- Interrupted config writes leave discoverable ownership; concurrent installers cannot stack runs. Registration locks live in private user temp storage, not in the project hook directory: Task 3.
 - Late outcomes, lease gaps and missing call IDs cannot produce complete no-tools evidence: Task 4.
 - Devin interleaving cannot be guessed into child attribution: Task 4.
 - Cached hooks and a broken recorder cannot make silent teardown appear verified: Task 5 and Task 6.
@@ -166,7 +166,7 @@ def test_expiry_does_not_complete_cleanup(expired_run):
 
 **Interfaces:** Consumes the working CLI. Produces an agent-readable workflow with executable commands resolved from the installed skill path, all mutation/restart obligations, evidence detail choice, mandatory sanitisation, runtime trust review and preserved capability limits.
 
-- [ ] Write reusable behavioural prompts for interrupted/expired audits, untrusted hooks, missing coverage, ambiguous Devin child activity, tempting empty-log claims, result-detail selection and secret-bearing inputs. Evaluate decisions against the contract, not prose matches. Keep expected answers in evaluator-only material.
+- [x] Write reusable behavioural prompts for interrupted/expired audits, untrusted hooks, missing coverage, ambiguous Devin child activity, tempting empty-log claims, result-detail selection and secret-bearing inputs. Evaluate decisions against the contract, not prose matches. Keep expected answers in evaluator-only material. Fresh contexts selected status when sufficient, rejected real credentials, declined to fill expired coverage retroactively, and rejected the ambiguous Devin child claim; concise decision summaries are retained in scratch without transcripts or model metadata.
 - [x] Exercise the complete helper against disposable project configurations using `py -3 -m pytest skills/temporary-tool-auditing/tests/scripts -q`; fix failures through owning tasks rather than adding test-only overrides.
 - [ ] Run fresh Codex live controls in the canonical worktree with run data under `Z:/_agent-scratch/agent-asset-marketplace/codex-mark-377-temporary-tool-auditing/implementation-validation/`. Capture parent shell success/nonzero failure, paired child call, completed no-tools child, nested tool execution and an available MCP call, selected detail levels, short expiry and explicit renewal. Human reviews actual hook definitions; use restart handoffs where observed necessary. Do not expose credentials or print raw responses to verification artifacts.
 - [ ] Remove development registrations, disarm, restart if required and execute healthy armed unload canary before declaring teardown. Stop dependent completion if cleanup remains unresolved. Retain sanitized runtime evidence and result/coverage summaries in scratch, not source.
@@ -189,6 +189,6 @@ def test_expiry_does_not_complete_cleanup(expired_run):
 
 ## Execution entry and current baseline
 
-Use the existing canonical worktree `Z:/_agent-worktrees/agent-asset-marketplace/codex/mark-377-temporary-tool-auditing`, branch `codex/mark-377-temporary-tool-auditing`. Verify location, clean state and base before implementation; do not replace the committed spec with a new checkout. Current implementation is absent. The previous disposable spike is fully torn down; its scratch evidence is context, not production code.
+Use the existing canonical worktree `Z:/_agent-worktrees/agent-asset-marketplace/codex/mark-377-temporary-tool-auditing`, branch `codex/mark-377-temporary-tool-auditing`. The implementation and generated package are in place and under review; follow-up hardening changes address independent review findings. The previous disposable spike is fully torn down; its scratch evidence is context, not production code.
 
 Read `.agents/runbooks/implementing.md`, the approved spec, this plan, source custody doctrine, skill tests contract and tracked command contract before execution. Refresh upstream and inspect drift without overwriting the current approved artifacts. Do not recreate a worktree or discard pre-existing dirty state. Every task's commit uses the repository hook and all helper tests named above; execution updates checkboxes from witnessed evidence.

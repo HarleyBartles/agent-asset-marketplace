@@ -4,6 +4,7 @@ import argparse
 import json
 import sys
 import time
+import uuid
 from pathlib import Path
 
 from runtime import normalize_event
@@ -69,6 +70,7 @@ def _record_health(run: Path, code: str) -> None:
 def main(argv=None) -> int:
     parser = argparse.ArgumentParser(description="Append one sanitized hook observation. (mutating)")
     parser.add_argument("--run-dir")
+    parser.add_argument("--control-nonce")
     parser.add_argument("--check", action="store_true", help="validate invocation without recording")
     args = parser.parse_args(argv)
     if args.check:
@@ -76,6 +78,18 @@ def main(argv=None) -> int:
     if not args.run_dir:
         parser.error("--run-dir is required unless --check is used")
     try:
+        if args.control_nonce:
+            nonce = str(uuid.UUID(args.control_nonce))
+            append_record(
+                Path(args.run_dir),
+                "controls",
+                {
+                    "code": "recorder-direct-control",
+                    "nonce": nonce,
+                    "received_at": time.time(),
+                },
+            )
+            return 0
         payload = json.load(sys.stdin)
         if not isinstance(payload, dict):
             raise ValueError

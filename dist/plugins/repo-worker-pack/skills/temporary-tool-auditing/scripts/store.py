@@ -3,11 +3,12 @@
 import json
 import os
 import re
+import hashlib
 import tempfile
 import time
 from contextlib import contextmanager
 from pathlib import Path
-from typing import Iterator
+from typing import Any, Callable, Iterator
 
 from sanitize import sanitize
 
@@ -22,7 +23,9 @@ class AuditStoreError(Exception):
 
 @contextmanager
 def _locked(run: Path) -> Iterator[None]:
-    run.mkdir(parents=True, exist_ok=True)
+    run.mkdir(parents=True, exist_ok=True, mode=0o700)
+    if os.name != "nt":
+        os.chmod(run, 0o700)
     lock_path = run / ".audit.lock"
     handle = open(lock_path, "a+b")
     try:
@@ -102,28 +105,78 @@ def load_manifest(run: Path) -> dict:
         raise AuditStoreError("manifest-read-failed") from None
 
 
+def _write_manifest_locked(run: Path, path: Path, value: dict) -> None:
+    encoded, _ = _safe_json(value, "manifest-encode-failed")
+    descriptor, temporary = tempfile.mkstemp(prefix=".manifest-", suffix=".tmp", dir=run)
+    try:
+        if os.name != "nt":
+            os.chmod(temporary, 0o600)
+        with os.fdopen(descriptor, "wb") as stream:
+            stream.write(encoded)
+            stream.flush()
+            os.fsync(stream.fileno())
+        os.replace(temporary, path)
+    finally:
+        if os.path.exists(temporary):
+            os.unlink(temporary)
+
+
 def save_manifest(run: Path, value: dict) -> None:
     run = Path(run)
     path = run / "manifest.json"
-    encoded, _ = _safe_json(value, "manifest-encode-failed")
     try:
         with _locked(run):
-            descriptor, temporary = tempfile.mkstemp(prefix=".manifest-", suffix=".tmp", dir=run)
-            try:
-                if os.name != "nt":
-                    os.chmod(temporary, 0o600)
-                with os.fdopen(descriptor, "wb") as stream:
-                    stream.write(encoded)
-                    stream.flush()
-                    os.fsync(stream.fileno())
-                os.replace(temporary, path)
-            finally:
-                if os.path.exists(temporary):
-                    os.unlink(temporary)
+            _write_manifest_locked(run, path, value)
     except AuditStoreError:
         raise
     except Exception:
         raise AuditStoreError("manifest-write-failed") from None
+
+
+def create_manifest(run: Path, value: dict) -> None:
+    run = Path(run)
+    path = run / "manifest.json"
+    try:
+        existed = run.exists()
+        with _locked(run):
+            if existed or path.exists():
+                raise AuditStoreError("run-directory-exists")
+            _write_manifest_locked(run, path, value)
+    except AuditStoreError:
+        raise
+    except Exception:
+        raise AuditStoreError("manifest-write-failed") from None
+
+
+def update_manifest(run: Path, updater: Callable[[dict], Any]) -> tuple[dict, Any]:
+    """Atomically apply one lifecycle read-modify-write under the run lock."""
+    run = Path(run)
+    path = run / "manifest.json"
+    try:
+        with _locked(run):
+            manifest = json.loads(path.read_text(encoding="utf-8"))
+            if not isinstance(manifest, dict):
+                raise AuditStoreError("manifest-read-failed")
+            original = json.loads(json.dumps(manifest))
+            result = updater(manifest)
+            if manifest != original:
+                _write_manifest_locked(run, path, manifest)
+            return manifest, result
+    except AuditStoreError:
+        raise
+    except Exception:
+        raise AuditStoreError("manifest-write-failed") from None
+
+
+def registration_lock(root: Path):
+    """Return a cross-run lock outside the project registration directory."""
+    canonical = str(Path(root).resolve()).casefold().encode("utf-8")
+    digest = hashlib.sha256(canonical).hexdigest()
+    lock_root = Path(tempfile.gettempdir()) / "temporary-tool-auditing-locks"
+    lock_root.mkdir(mode=0o700, parents=True, exist_ok=True)
+    if os.name != "nt":
+        os.chmod(lock_root, 0o700)
+    return _locked(lock_root / digest)
 
 
 def append_record(run: Path, name: str, value: dict) -> dict:
