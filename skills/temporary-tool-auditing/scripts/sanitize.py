@@ -17,6 +17,7 @@ _PATTERNS = [
     (
         re.compile(
             r"(?i)([?&#](?:key|api[_-]?key|access[_-]?key|auth[_-]?token|refresh[_-]?token|token|jwt|id[_-]?token|"
+            r"session(?:[_-]?id)?|sid|phpsessid|jsessionid|asp\.net[_-]?sessionid|"
             r"oauth[_-]?token|code|client[_-]?secret|(?:x-amz-|x-goog-)?(?:signature|sig)|"
             r"x-amz-security-token|x-amz-credential)=)[^&#\s\"'<>]+"
         ),
