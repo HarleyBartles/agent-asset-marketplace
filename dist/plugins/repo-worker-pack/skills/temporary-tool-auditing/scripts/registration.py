@@ -2,7 +2,10 @@
 
 import json
 import os
+import re
+import shlex
 import shutil
+import subprocess
 import tempfile
 import sys
 import time
@@ -59,11 +62,81 @@ def _paths(project: Path, run: Path, runtime: str) -> tuple[Path, Path, Path]:
     return root, config, owner
 
 
+def _validate_registration_root(project: Path, root: Path) -> None:
+    try:
+        resolved_project = project.resolve(strict=False)
+        resolved_root = root.resolve(strict=False)
+        resolved_root.relative_to(resolved_project)
+    except (OSError, ValueError):
+        raise AuditStoreError("registration-root-outside-project") from None
+
+
+def _is_run_recorder_entry(runtime: str, event: str, entry: dict, run: Path) -> bool:
+    if runtime != "codex" or event not in {
+        "PreToolUse",
+        "PostToolUse",
+        "SubagentStart",
+        "SubagentStop",
+        "SessionStart",
+        "SessionEnd",
+    }:
+        return False
+    if set(entry) != {"matcher", "hooks"} or entry.get("matcher") != "":
+        return False
+    if not isinstance(entry.get("hooks"), list) or len(entry["hooks"]) != 1:
+        return False
+    handler = entry["hooks"][0]
+    if not isinstance(handler, dict) or handler.get("type") != "command":
+        return False
+    expected_keys = {"type", "command", "commandWindows"}
+    if event == "SessionEnd":
+        expected_keys.add("timeout")
+    if set(handler) != expected_keys or (event == "SessionEnd" and handler.get("timeout") != 3):
+        return False
+    recorder = Path(run) / "scripts" / "record.py"
+    run_dir = str(Path(run))
+    for bytecode_flag in (True, False):
+        args = (["-B"] if bytecode_flag else []) + [str(recorder), "--run-dir", run_dir]
+        command = handler.get("command")
+        command_windows = handler.get("commandWindows")
+        if not isinstance(command, str) or not isinstance(command_windows, str):
+            continue
+        try:
+            parsed = shlex.split(command, posix=True)
+        except ValueError:
+            continue
+        if not parsed:
+            continue
+        interpreter = parsed[0]
+        executable = interpreter.replace("\\", "/").rsplit("/", 1)[-1].lower()
+        if not re.fullmatch(r"python(?:3(?:\.\d+)?)?(?:\.exe)?", executable):
+            continue
+        full_argv = [interpreter, *args]
+        if parsed == full_argv and command == shlex.join(full_argv):
+            if command_windows != subprocess.list2cmdline(full_argv):
+                continue
+            return True
+    return False
+
+
+def _matching_run_entries(data: dict, runtime: str, run: Path) -> list[dict]:
+    matches = []
+    for event, entries in data.get("hooks", {}).items():
+        if isinstance(entries, list):
+            matches.extend(
+                {"event": event, "entry": entry}
+                for entry in entries
+                if isinstance(entry, dict) and _is_run_recorder_entry(runtime, event, entry, run)
+            )
+    return matches
+
+
 def install(run: Path, project: Path, runtime: str) -> dict:
     run, project = Path(run).resolve(), Path(project).resolve()
     if runtime not in {"codex", "devin-desktop"}:
         raise AuditStoreError("unsupported-runtime")
     root, config_path, owner_path = _paths(project, run, runtime)
+    _validate_registration_root(project, root)
     manifest = load_manifest(run)
     if manifest.get("runtime") != runtime:
         raise AuditStoreError("runtime-mismatch")
@@ -85,6 +158,7 @@ def install(run: Path, project: Path, runtime: str) -> dict:
         if isinstance(item, dict)
     }
     with registration_lock(root):
+        _validate_registration_root(project, root)
         manifest = load_manifest(run)
         if manifest.get("runtime") != runtime:
             raise AuditStoreError("runtime-mismatch")
@@ -173,7 +247,10 @@ def remove(run: Path) -> dict:
     run = Path(run).resolve()
     manifest = load_manifest(run)
     runtime = manifest.get("runtime")
-    project = Path(manifest.get("project_root", manifest.get("registration_root", "")))
+    project_value = manifest.get("project_root")
+    if not project_value and manifest.get("registration_root"):
+        project_value = str(Path(manifest["registration_root"]).parent)
+    project = Path(project_value or "")
     if manifest.get("registration_root"):
         root = Path(manifest["registration_root"])
         config = root / ("hooks.json" if runtime == "codex" else "hooks.v1.json")
@@ -182,12 +259,14 @@ def remove(run: Path) -> dict:
         root, config, owner = _paths(project, run, runtime)
     else:
         raise AuditStoreError("registration-location-unknown")
+    _validate_registration_root(project, root)
     conflicts = []
     with registration_lock(root):
         manifest = load_manifest(run)
         current_root = Path(manifest.get("registration_root") or _paths(project, run, runtime)[0])
         if current_root.resolve() != root.resolve():
             raise AuditStoreError("registration-location-changed")
+        _validate_registration_root(project, current_root)
         config = current_root / ("hooks.json" if runtime == "codex" else "hooks.v1.json")
         owner = current_root / ".temporary-tool-auditing-owner.json"
         manifest["teardown_probe_started_at"] = time.time()
@@ -200,13 +279,26 @@ def remove(run: Path) -> dict:
                 raise AuditStoreError("registration-owner-invalid") from None
             if current_owner.get("run_id") != manifest.get("run_id"):
                 raise AuditStoreError("registration-conflict")
-        elif (
-            manifest.get("owned_entries")
-            and manifest.get("registration_state") != "removed"
-            and _has_owned_config(config, manifest)
-        ):
-            raise AuditStoreError("registration-owner-missing")
+        elif manifest.get("registration_state") != "removed":
+            current_data = _read(config) if config.exists() else {"hooks": {}}
+            if _has_owned_config(config, manifest) or _matching_run_entries(current_data, runtime, run):
+                raise AuditStoreError("registration-owner-missing")
         data = _read(config) if config.exists() else {"hooks": {}}
+        existing_owned = {
+            (item.get("event"), json.dumps(item.get("entry"), sort_keys=True))
+            for item in manifest.get("owned_entries", [])
+            if isinstance(item, dict)
+        }
+        discovered = [
+            item
+            for item in _matching_run_entries(data, runtime, run)
+            if (item["event"], json.dumps(item["entry"], sort_keys=True)) not in existing_owned
+        ]
+        if discovered:
+            if not owner.exists():
+                raise AuditStoreError("registration-owner-missing")
+            manifest.setdefault("owned_entries", []).extend(discovered)
+            save_manifest(run, manifest)
         hooks = data["hooks"]
         for owned in manifest.get("owned_entries", []):
             event, entry = owned["event"], owned["entry"]
@@ -274,9 +366,21 @@ def registration_absent(run: Path, manifest: dict | None = None) -> bool:
     if not root_value:
         return manifest.get("registration_state") in {"not-installed", "removed", "teardown-verified"}
     root = Path(root_value)
+    try:
+        _validate_registration_root(Path(manifest.get("project_root", "")), root)
+    except AuditStoreError:
+        return False
     runtime = manifest.get("runtime")
     config = root / ("hooks.json" if runtime == "codex" else "hooks.v1.json")
     owner = root / ".temporary-tool-auditing-owner.json"
     if owner.exists():
         return False
-    return not _has_owned_config(config, manifest) and project_trust_absent(manifest.get("codex_trust"))
+    if _has_owned_config(config, manifest):
+        return False
+    if runtime == "codex" and config.exists():
+        try:
+            if _matching_run_entries(_read(config), runtime, run):
+                return False
+        except AuditStoreError:
+            return False
+    return project_trust_absent(manifest.get("codex_trust"))

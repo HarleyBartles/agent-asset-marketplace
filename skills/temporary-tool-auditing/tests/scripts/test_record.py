@@ -90,3 +90,29 @@ def test_explicit_disarm_makes_retained_recorder_inert(tmp_path):
         {"hook_event_name": "PostToolUse", "session_id": "s", "tool_use_id": "disarm-1", "tool_name": "Bash"},
         101,
     )
+
+
+def test_inflight_event_rechecks_disarm_before_append(tmp_path):
+    make_run(tmp_path, lifecycle_cli_path="C:/auditctl.py")
+
+    def disarm_during_normalization(*_args, **_kwargs):
+        make_run(
+            tmp_path,
+            armed=False,
+            late_outcomes_allowed=False,
+            registration_state="removed",
+            lifecycle_cli_path="C:/auditctl.py",
+        )
+        return {
+            "event": "pre",
+            "session_id": "s1",
+            "call_id": "inflight",
+            "tool_name": "Bash",
+            "arguments": {},
+            "outcome_status": "observed-unknown",
+        }
+
+    with patch("record.normalize_event", side_effect=disarm_during_normalization):
+        assert not record_event(tmp_path, {"hook_event_name": "PreToolUse"}, time.time())
+
+    assert not (tmp_path / "events.jsonl").exists()

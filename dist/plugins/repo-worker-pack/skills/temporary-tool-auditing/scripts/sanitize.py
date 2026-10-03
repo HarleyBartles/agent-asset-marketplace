@@ -14,6 +14,7 @@ _SECRET_KEYS = re.compile(
     r"address|postal[_-]?code|zip[_-]?code|first[_-]?name|last[_-]?name|full[_-]?name|username|"
     r"medical[_-]?record|health[_-]?record|health[_-]?data|patient[_-]?id|diagnosis|medical[_-]?history|"
     r"genetic[_-]?data|bank[_-]?account|account[_-]?number|routing[_-]?number|iban|swift|"
+    r"signature|sig|"
     r"pan|card[_-]?(?:number|no)|cardholder|credit[_-]?card|cvv|cvc|security[_-]?code|pin|track[_-]?data|"
     r"totp[_-]?(?:secret|seed)|otp[_-]?secret|mfa[_-]?secret|two[_-]?factor[_-]?(?:secret|code|seed)|"
     r"otp|one[_-]?time[_-]?(?:password|code)|mfa[_-]?code|recovery[_-]?code|backup[_-]?code|"
@@ -110,9 +111,10 @@ def _clean_text(value: str) -> tuple[str, bool]:
 
     def redact_sensitive_parameter(match: re.Match) -> str:
         key = unquote_plus(match.group(2))
-        normalized_key = re.sub(r"([a-z0-9])([A-Z])", r"\1_\2", key)
-        normalized_key = re.sub(r"[\[\]./\\]+", "_", normalized_key).replace(" ", "_")
-        if _SECRET_KEYS.search(normalized_key):
+        camel_normalized = re.sub(r"([a-z0-9])([A-Z])", r"\1_\2", key)
+        normalized_key = re.sub(r"[^a-z0-9]+", "_", camel_normalized.lower()).strip("_")
+        signature_key = normalized_key in {"sig", "signature", "x_amz_signature", "x_goog_signature"}
+        if _SECRET_KEYS.search(normalized_key) or signature_key:
             return f"{match.group(1)}{match.group(2)}{match.group(3)}{_REDACTED}"
         return match.group(0)
 

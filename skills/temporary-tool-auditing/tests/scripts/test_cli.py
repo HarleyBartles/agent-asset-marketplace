@@ -71,6 +71,19 @@ def test_invalid_duration_returns_safe_error_and_does_not_write(tmp_path, capsys
     assert not (tmp_path / "run").exists()
 
 
+def test_assessment_stdout_sanitizes_secret_shaped_subject_id(monkeypatch, capsys):
+    import auditctl
+
+    credential = "sk-proj-" + "A" * 30
+    monkeypatch.setattr(auditctl, "execute", lambda _args: {"subject": {"session_id": credential}})
+
+    assert auditctl.main(["assess", "--run-dir", "unused-run"]) == 0
+
+    output = capsys.readouterr().out
+    assert credential not in output
+    assert "[REDACTED]" in output
+
+
 def test_check_before_subcommand_cannot_be_overridden_into_apply(tmp_path, capsys):
     run = tmp_path / "run"
     code = main(

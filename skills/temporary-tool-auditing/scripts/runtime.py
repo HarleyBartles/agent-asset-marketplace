@@ -162,7 +162,9 @@ def render_handlers(runtime: str, recorder: Path) -> dict:
     runtime = runtime.lower()
     recorder = Path(recorder).resolve()
     run_dir = recorder.parent.parent if recorder.parent.name == "scripts" else recorder.parent
-    argv = [sys.executable, str(recorder), "--run-dir", str(run_dir)]
+    # Hook imports must not create __pycache__ under the temporary helper tree,
+    # because purge intentionally removes only the known, owned helper files.
+    argv = [sys.executable, "-B", str(recorder), "--run-dir", str(run_dir)]
     posix_command = shlex.join(argv)
     windows_command = subprocess.list2cmdline(argv)
     if runtime == "codex":

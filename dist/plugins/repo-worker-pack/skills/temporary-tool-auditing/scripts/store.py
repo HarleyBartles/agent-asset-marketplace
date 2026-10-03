@@ -192,6 +192,18 @@ def registration_lock(root: Path):
 
 
 def append_record(run: Path, name: str, value: dict) -> dict:
+    result = append_record_if(run, name, value, None)
+    if result is None:
+        raise AuditStoreError("record-write-failed")
+    return result
+
+
+def append_record_if(
+    run: Path,
+    name: str,
+    value: dict,
+    eligible: Callable[[dict, dict], bool] | None,
+) -> dict | None:
     if not isinstance(name, str) or not re.fullmatch(r"[A-Za-z0-9_-]{1,64}", name):
         raise AuditStoreError("invalid-record-name")
     safe_session_paths = {"$.session_id"} if name in {"events", "controls"} and "session_id" in value else set()
@@ -199,10 +211,17 @@ def append_record(run: Path, name: str, value: dict) -> dict:
     if not isinstance(cleaned, dict):
         raise AuditStoreError("record-encode-failed")
     cleaned["redactions"] = sorted(set(cleaned.get("redactions", [])) | set(redactions))
-    encoded, _ = _safe_json(cleaned, "record-encode-failed", safe_session_paths)
     run = Path(run)
     try:
         with _locked(run):
+            if eligible is not None:
+                try:
+                    manifest = json.loads((run / "manifest.json").read_text(encoding="utf-8"))
+                except Exception:
+                    raise AuditStoreError("manifest-read-failed") from None
+                if not eligible(manifest, cleaned):
+                    return None
+            encoded, _ = _safe_json(cleaned, "record-encode-failed", safe_session_paths)
             path = run / f"{name}.jsonl"
             fd = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_APPEND, 0o600)
             try:

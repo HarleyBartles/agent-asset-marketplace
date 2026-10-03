@@ -12,7 +12,7 @@ from assessment import assess
 from codex_trust import preview_project_trust
 from registration import install, registration_absent, remove
 from sanitize import sanitize
-from store import AuditStoreError, append_record, create_manifest, load_manifest, save_manifest, update_manifest
+from store import AuditStoreError, append_record_if, create_manifest, load_manifest, save_manifest, update_manifest
 
 
 def _duration(value, default=30.0) -> float:
@@ -327,7 +327,7 @@ def execute(args: dict, now: float | None = None) -> dict:
             subject = _subject(args["subject"]) if args.get("subject") else manifest.get("subject", {})
             if manifest.get("runtime") != "devin-desktop" or subject.get("kind") != "child":
                 raise AuditStoreError("parent-idle-attestation-only-for-devin-child")
-            append_record(
+            written = append_record_if(
                 run,
                 "controls",
                 {
@@ -336,7 +336,11 @@ def execute(args: dict, now: float | None = None) -> dict:
                     "run_id": manifest.get("run_id"),
                     "confirmed_at": now,
                 },
+                lambda current, _record: current.get("registration_state") not in {"teardown-verified", "cleaned"}
+                and not current.get("logs_purged"),
             )
+            if written is None:
+                raise AuditStoreError("control-write-window-closed")
         return assess(
             run,
             _subject(args["subject"]) if args.get("subject") else manifest.get("subject", {}),
@@ -381,7 +385,7 @@ def execute(args: dict, now: float | None = None) -> dict:
             if not isinstance(interpreter, str) or not Path(interpreter).is_file():
                 raise RuntimeError("hook-interpreter-unavailable")
             result = subprocess.run(
-                [interpreter, str(recorder), "--run-dir", str(run), "--control-nonce", nonce],
+                [interpreter, "-B", str(recorder), "--run-dir", str(run), "--control-nonce", nonce],
                 capture_output=True,
                 text=True,
                 timeout=10,
@@ -500,10 +504,12 @@ def main(argv=None) -> int:
         return 0
     try:
         result = execute(vars(args))
-        print(json.dumps(result, ensure_ascii=False, sort_keys=True))
+        safe_result, _ = sanitize(result, safe_session_paths={"$.subject.session_id"})
+        print(json.dumps(safe_result, ensure_ascii=False, sort_keys=True))
         return 0
     except AuditStoreError as error:
-        print(json.dumps({"error": error.code, **error.details}, sort_keys=True))
+        safe_error, _ = sanitize({"error": error.code, **error.details})
+        print(json.dumps(safe_error, sort_keys=True))
         return 1
     except Exception:
         print(json.dumps({"error": "operation-failed"}, sort_keys=True))

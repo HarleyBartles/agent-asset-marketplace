@@ -230,6 +230,33 @@ def test_devin_parent_idle_attestation_requires_apply_and_is_persisted(tmp_path)
     }
 
 
+def test_devin_parent_idle_attestation_cannot_recreate_purged_controls(tmp_path):
+    run = tmp_path / "run"
+    base_run(
+        run,
+        runtime="devin-desktop",
+        subject={"kind": "child", "dispatch_call_id": "dispatch-1"},
+        registration_state="cleaned",
+        logs_purged=True,
+        cleanup_required=False,
+    )
+
+    with pytest.raises(Exception) as error:
+        execute(
+            {
+                "operation": "assess",
+                "run_dir": str(run),
+                "subject": "child:dispatch-1",
+                "parent_idle_confirmed": True,
+                "apply": True,
+            },
+            now=101,
+        )
+
+    assert getattr(error.value, "code", None) == "control-write-window-closed"
+    assert not (run / "controls.jsonl").exists()
+
+
 def test_prepare_rejects_run_directory_inside_project_and_existing_run(tmp_path):
     base = {
         "operation": "prepare",
@@ -470,6 +497,7 @@ def test_teardown_fails_when_direct_control_log_works_but_event_log_does_not(tmp
     execute({"operation": "verify-teardown", "run_dir": str(run), "phase": "begin", "apply": True}, now=100)
 
     def controls_only(command, **_kwargs):
+        assert command[1] == "-B"
         nonce = command[-1]
         append_record(run, "controls", {"code": "recorder-direct-control", "nonce": nonce})
         return SimpleNamespace(returncode=0)

@@ -106,6 +106,7 @@ def test_handlers_use_absolute_interpreter_script_command(tmp_path):
     hook = handlers["PreToolUse"][0]["hooks"][0]
     command = hook["commandWindows"] if sys.platform == "win32" else hook["command"]
     assert sys.executable in command
+    assert "-B" in command
     assert str((tmp_path / "record.py").resolve()) in command
 
 
@@ -115,6 +116,7 @@ def test_devin_handlers_use_observed_v1_event_shape(tmp_path):
     entry = handlers["hooks"]["PreToolUse"][0]
     assert entry["matcher"] == ""
     assert entry["hooks"][0]["type"] == "command"
+    assert "-B" in entry["hooks"][0]["command"]
     assert str((tmp_path / "record.py").resolve()) in entry["hooks"][0]["command"]
 
 

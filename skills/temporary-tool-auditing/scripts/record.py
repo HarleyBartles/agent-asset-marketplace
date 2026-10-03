@@ -8,7 +8,7 @@ import uuid
 from pathlib import Path
 
 from runtime import normalize_event
-from store import AuditStoreError, append_record, load_manifest
+from store import AuditStoreError, append_record, append_record_if, load_manifest
 
 
 def record_event(run: Path, payload: dict, now: float) -> bool:
@@ -23,38 +23,6 @@ def record_event(run: Path, payload: dict, now: float) -> bool:
             run_dir=run,
             lifecycle_cli_path=manifest.get("lifecycle_cli_path"),
         )
-        active_until = manifest.get("expires_at")
-        if manifest.get("activation_probe_until") is not None:
-            active_until = min(active_until, manifest["activation_probe_until"])
-        if manifest.get("teardown_probe_until") is not None:
-            active_until = manifest["teardown_probe_until"]
-        in_window = manifest.get("armed") and now < active_until
-        late_outcome = False
-        if not in_window:
-            if (
-                not manifest.get("late_outcomes_allowed", True)
-                or manifest.get("registration_state") in {"removing", "removed", "teardown-verified"}
-                or normalized.get("event") != "post"
-                or not normalized.get("call_id")
-            ):
-                return False
-            events_path = Path(run) / "events.jsonl"
-            try:
-                previous = [json.loads(row) for row in events_path.read_text(encoding="utf-8").splitlines()]
-            except FileNotFoundError:
-                return False
-            except Exception:
-                _record_health(run, "event-log-unreadable")
-                return False
-            call_id = normalized["call_id"]
-            late_outcome = any(
-                item.get("event") == "pre"
-                and item.get("call_id") == call_id
-                and item.get("run_id") == manifest.get("run_id")
-                for item in previous
-            )
-            if not late_outcome:
-                return False
         normalized.update(
             {
                 "run_id": manifest.get("run_id"),
@@ -62,10 +30,44 @@ def record_event(run: Path, payload: dict, now: float) -> bool:
                 "runtime": manifest.get("runtime"),
             }
         )
-        if late_outcome:
-            normalized["late_outcome"] = True
-        append_record(run, "events", normalized)
-        return True
+
+        def currently_eligible(current: dict, event: dict) -> bool:
+            if not isinstance(current.get("expires_at"), (int, float)):
+                return False
+            event["run_id"] = current.get("run_id")
+            event["runtime"] = current.get("runtime")
+            active_until = current.get("expires_at")
+            if current.get("activation_probe_until") is not None:
+                active_until = min(active_until, current["activation_probe_until"])
+            if current.get("teardown_probe_until") is not None:
+                active_until = current["teardown_probe_until"]
+            if current.get("armed") and now < active_until:
+                return True
+            if (
+                not current.get("late_outcomes_allowed", True)
+                or current.get("registration_state") in {"removing", "removed", "teardown-verified", "cleaned"}
+                or event.get("event") != "post"
+                or not event.get("call_id")
+            ):
+                return False
+            try:
+                event_text = (Path(run) / "events.jsonl").read_text(encoding="utf-8")
+                previous = [json.loads(row) for row in event_text.splitlines()]
+            except FileNotFoundError:
+                return False
+            except Exception:
+                return False
+            paired = any(
+                item.get("event") == "pre"
+                and item.get("call_id") == event["call_id"]
+                and item.get("run_id") == current.get("run_id")
+                for item in previous
+            )
+            if paired:
+                event["late_outcome"] = True
+            return paired
+
+        return append_record_if(run, "events", normalized, currently_eligible) is not None
     except (AuditStoreError, ValueError, TypeError):
         _record_health(run, "record-failed")
         return False
@@ -73,7 +75,13 @@ def record_event(run: Path, payload: dict, now: float) -> bool:
 
 def _record_health(run: Path, code: str) -> None:
     try:
-        append_record(run, "health", {"code": code, "received_at": time.time()})
+        append_record_if(
+            run,
+            "health",
+            {"code": code, "received_at": time.time()},
+            lambda manifest, _record: manifest.get("registration_state") not in {"teardown-verified", "cleaned"}
+            and not manifest.get("logs_purged"),
+        )
     except AuditStoreError:
         pass
 

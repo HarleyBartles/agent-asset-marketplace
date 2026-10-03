@@ -33,6 +33,8 @@ from record import record_event
         ({"args": {"totp_secret": "second-factor-seed"}}, "second-factor-seed"),
         ({"Authorization": "Bearer bearer-SENTINEL"}, "bearer-SENTINEL"),
         ({"key": "sk-proj-abcdefghijklmnopqrstuvwxyz123456"}, "sk-proj-abcdefghijklmnopqrstuvwxyz123456"),
+        ({"signature": "structured-signature-SENTINEL"}, "structured-signature-SENTINEL"),
+        ({"sig": "structured-short-signature-SENTINEL"}, "structured-short-signature-SENTINEL"),
         (
             {"text": "id token eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjMifQ.signaturevalue"},
             "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjMifQ.signaturevalue",
@@ -56,12 +58,28 @@ from record import record_event
             {"url": "https://example.test/callback?user%5Bpassword%5D=bracket-password-SENTINEL"},
             "bracket-password-SENTINEL",
         ),
-        ({"url": "https://example.test/callback?oauth[access_token]=bracket-token-SENTINEL"}, "bracket-token-SENTINEL"),
+        (
+            {"url": "https://example.test/callback?oauth[access_token]=bracket-token-SENTINEL"},
+            "bracket-token-SENTINEL",
+        ),
+        (
+            {"url": "https://example.test/callback?oauth%5BaccessToken%5D=encoded-camel-token-SENTINEL"},
+            "encoded-camel-token-SENTINEL",
+        ),
+        (
+            {"url": "https://example.test/profile?customer.phoneNumber=camel-phone-SENTINEL"},
+            "camel-phone-SENTINEL",
+        ),
         ({"url": "https://example.test/profile?profile.email=dotted-email-SENTINEL"}, "dotted-email-SENTINEL"),
         ({"url": "https://example.test/maps?key=AIzaSyD-SENTINEL&zoom=3"}, "AIzaSyD-SENTINEL"),
         (
             {"url": "https://bucket.test/file?X-Amz-Signature=signature-SENTINEL&X-Amz-Security-Token=token-SENTINEL"},
             "signature-SENTINEL",
+        ),
+        ({"url": "https://bucket.test/file?%73ig=encoded-signature-SENTINEL"}, "encoded-signature-SENTINEL"),
+        (
+            {"url": "https://bucket.test/file?X%2dAmz%2dSignature=encoded-provider-signature-SENTINEL"},
+            "encoded-provider-signature-SENTINEL",
         ),
         ({"url": "https://bucket.test/file?X-Goog-Signature=google-signature-SENTINEL"}, "google-signature-SENTINEL"),
         ({"url": "https://api.example/resource?jwt=jwt-bearer-SENTINEL"}, "jwt-bearer-SENTINEL"),

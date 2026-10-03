@@ -1,4 +1,7 @@
 import json
+import os
+import shlex
+import subprocess
 import sys
 import tomllib
 from pathlib import Path
@@ -6,7 +9,7 @@ from unittest.mock import patch
 
 import pytest
 
-from registration import install, remove
+from registration import install, registration_absent, remove
 from store import load_manifest, save_manifest
 
 
@@ -17,6 +20,148 @@ def isolated_codex_home(tmp_path, monkeypatch):
 
 def handler_commands(path, event):
     return [entry["hooks"][0]["command"] for entry in json.loads(path.read_text())["hooks"][event]]
+
+
+def test_install_rejects_registration_root_symlink_outside_project(tmp_path):
+    project = tmp_path / "repo"
+    external = tmp_path / "global-hooks"
+    project.mkdir()
+    external.mkdir()
+    (external / "hooks.json").write_text('{"hooks": {}}', encoding="utf-8")
+    link = project / ".codex"
+    if os.name == "nt":
+        result = subprocess.run(["cmd", "/c", "mklink", "/J", str(link), str(external)], capture_output=True)
+        if result.returncode:
+            pytest.skip("directory junctions unavailable")
+    else:
+        link.symlink_to(external, target_is_directory=True)
+    run = project / ".audit-runs" / "run-1"
+    save_manifest(run, {"run_id": "run-1", "runtime": "codex", "armed": False, "cleanup_required": False})
+
+    with pytest.raises(Exception) as error:
+        install(run, project, "codex")
+
+    assert getattr(error.value, "code", None) == "registration-root-outside-project"
+    assert json.loads((external / "hooks.json").read_text(encoding="utf-8")) == {"hooks": {}}
+
+
+def test_remove_and_teardown_probe_reject_registration_root_retargeted_outside_project(tmp_path):
+    project = tmp_path / "repo"
+    external = tmp_path / "global-hooks"
+    project.mkdir()
+    external.mkdir()
+    (external / "hooks.json").write_text('{"hooks": {}}', encoding="utf-8")
+    link = project / ".codex"
+    if os.name == "nt":
+        result = subprocess.run(["cmd", "/c", "mklink", "/J", str(link), str(external)], capture_output=True)
+        if result.returncode:
+            pytest.skip("directory junctions unavailable")
+    else:
+        link.symlink_to(external, target_is_directory=True)
+    run = tmp_path / "audit-runs" / "run-1"
+    save_manifest(
+        run,
+        {
+            "run_id": "run-1",
+            "runtime": "codex",
+            "project_root": str(project),
+            "registration_root": str(project / ".codex"),
+            "registration_state": "installed",
+            "owned_entries": [],
+        },
+    )
+
+    assert not registration_absent(run)
+    with pytest.raises(Exception) as error:
+        remove(run)
+
+    assert getattr(error.value, "code", None) == "registration-root-outside-project"
+    assert json.loads((external / "hooks.json").read_text(encoding="utf-8")) == {"hooks": {}}
+
+
+def test_remove_reclaims_legacy_interpreter_variant_for_same_run(tmp_path):
+    from runtime import render_handlers
+
+    project = tmp_path / "repo with spaces"
+    run = tmp_path / "audit-runs" / "run 1"
+    root = project / ".codex"
+    root.mkdir(parents=True)
+    current_entry = render_handlers("codex", run / "scripts" / "record.py")["PreToolUse"][0]
+    with patch("runtime.sys.executable", r"C:\Python Versions\Python312\python.exe"):
+        legacy_entry = render_handlers("codex", run / "scripts" / "record.py")["PreToolUse"][0]
+    unrelated_entries = []
+    for executable in ("echo", r"C:\custom-tool.exe"):
+        unrelated_entry = json.loads(json.dumps(legacy_entry))
+        unrelated_handler = unrelated_entry["hooks"][0]
+        unrelated_argv = [executable, str(run / "scripts" / "record.py"), "--run-dir", str(run)]
+        unrelated_handler["command"] = shlex.join(unrelated_argv)
+        unrelated_handler["commandWindows"] = subprocess.list2cmdline(unrelated_argv)
+        unrelated_entries.append(unrelated_entry)
+    altered_metadata_entry = json.loads(json.dumps(legacy_entry))
+    altered_metadata_entry["description"] = "preserve"
+    config = root / "hooks.json"
+    event_entries = [legacy_entry, current_entry, *unrelated_entries, altered_metadata_entry]
+    config.write_text(
+        json.dumps({"hooks": {"PreToolUse": event_entries}}),
+        encoding="utf-8",
+    )
+    (root / ".temporary-tool-auditing-owner.json").write_text(
+        json.dumps({"run_id": "run-1", "run_dir": str(run)}),
+        encoding="utf-8",
+    )
+    save_manifest(
+        run,
+        {
+            "run_id": "run-1",
+            "runtime": "codex",
+            "project_root": str(project),
+            "registration_root": str(root),
+            "registration_state": "installed",
+            "registration_config_created": True,
+            "registration_root_created": True,
+            "owned_entries": [{"event": "PreToolUse", "entry": current_entry}],
+        },
+    )
+
+    assert not registration_absent(run)
+    result = remove(run)
+
+    assert result["registration_state"] == "removed"
+    assert registration_absent(run)
+    remaining = json.loads(config.read_text(encoding="utf-8"))["hooks"]["PreToolUse"]
+    assert remaining == [*unrelated_entries, altered_metadata_entry]
+
+
+@pytest.mark.parametrize("registration_state", ["installed", "removed"])
+def test_remove_does_not_adopt_legacy_variant_when_owner_marker_is_missing(tmp_path, registration_state):
+    from runtime import render_handlers
+
+    project = tmp_path / "repo"
+    run = tmp_path / "audit-runs" / "run-1"
+    root = project / ".codex"
+    root.mkdir(parents=True)
+    with patch("runtime.sys.executable", r"C:\Python312\python.exe"):
+        legacy_entry = render_handlers("codex", run / "scripts" / "record.py")["PreToolUse"][0]
+    config = root / "hooks.json"
+    config.write_text(json.dumps({"hooks": {"PreToolUse": [legacy_entry]}}), encoding="utf-8")
+    save_manifest(
+        run,
+        {
+            "run_id": "run-1",
+            "runtime": "codex",
+            "project_root": str(project),
+            "registration_root": str(root),
+            "registration_state": registration_state,
+            "owned_entries": [],
+        },
+    )
+    before = config.read_bytes()
+
+    with pytest.raises(Exception) as error:
+        remove(run)
+
+    assert getattr(error.value, "code", None) == "registration-owner-missing"
+    assert config.read_bytes() == before
 
 
 def test_install_preserves_existing_fields_and_remove_only_owned_entry(tmp_path):
