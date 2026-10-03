@@ -18,3 +18,7 @@ Apply these rules in every environment:
 - Do not use a stronger model to compensate for an underdefined task.
 
 If the user supplies a budget constraint, record it as user-provided policy. Otherwise, do not claim that a route is free, included, metered, or approved.
+
+## Reviewer capability adequacy
+
+Assess actual access separately from model, reasoning and context: repository reading, relevant skill/catalog discovery, authoritative online retrieval, focused execution/scratch proofs and report writing. Fresh context removes conversation history, not useful resources. Supply actual conducting-code-review and catalog/resource entrypoints when the child lacks the parent's catalog. Profile names, model names and prompt permissions do not enable absent tools. Choose an exposed route with adequate access where possible; otherwise record material limits and preserve the best supported review, with attributed dispatcher research or re-dispatch using actual available access. Protect reviewed code/index/revision rather than banning legitimate focused proofs.

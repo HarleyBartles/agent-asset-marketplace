@@ -11,7 +11,7 @@ This note applies to the active Codex distribution of the first-party Superpower
 ## Plugin contract
 
 - `superpowers-plus` is the first-party plugin bundle for the Superpowers+ workflow skill family.
-- The active plugin includes the first-party Superpowers+ skills, including the `using-superpowers-plus` workflow-selection entrypoint, plus the compositional helper skills (`handoff-gates`, `inspecting-the-environment`, `iterative-review`, `requesting-code-review`, `receiving-code-review`, `selecting-a-subagent`, `writing-roadmaps`).
+- The active plugin includes the first-party Superpowers+ skills, including the `using-superpowers-plus` workflow-selection entrypoint, plus the compositional helper skills (`handoff-gates`, `inspecting-the-environment`, `conducting-code-review`, `requesting-code-review`, `receiving-code-review`, `selecting-a-subagent`, `writing-roadmaps`).
 - `SOURCE.md` records the active `obra/superpowers` v6.4.1 MIT comparison basis and the audited v6.3.0 prior point. The upstream source tree is not vendored here.
 - Editable custody lives in the source repository's `skills/<name>/` tree. When a Superpowers+ skill needs to change, edit canonical skill source and rebuild the plugin.
 - The repo-specific adaptation text lives in canonical skill source and remains separate from the upstream comparison basis.
@@ -20,6 +20,7 @@ This note applies to the active Codex distribution of the first-party Superpower
 - Installation and export artifacts are built from canonical skill source and plugin definitions. Do not hand-edit generated packages, zips, or registry entries.
 - Frontmatter contract: [skill-frontmatter.md](https://github.com/HarleyBartles/agent-asset-marketplace/blob/main/.agents/contracts/skill-frontmatter.md)
 - OpenAI agent contract: [openai-agent-yaml.md](https://github.com/HarleyBartles/agent-asset-marketplace/blob/main/.agents/contracts/openai-agent-yaml.md)
+- conducting-code-review is a first-party workflow composition over the existing review entrypoints: applicable specialist resources and authoritative sources retain domain expertise. iterative-review source remains in the repository for later refactoring and is not exported by this plugin.
 - Do not place first-party expert or domain skills directly in the Superpowers+ plugin.
 - Do not use this plugin as a dumping ground for House Skills, project doctrine, verification experts, GitHub/Linear mechanics, or other first-party expert surfaces.
 - Do not use this plugin as a dumping ground for retired workflow doctrine; defer that routing to follow-up reworking instead.

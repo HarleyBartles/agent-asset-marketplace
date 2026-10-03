@@ -63,7 +63,7 @@ This is the repository-owned assessment of its selected standards. The structura
 - **Implementation:** `.agents/doctrine/completed-artifacts.md`, `.agents/runbooks/planning.md`, and `.agents/runbooks/pr.md` bind the portable semantic lifecycle to repository paths and delivery practice.
 - **Must preserve:** Keep active future plans; discover completion from whole-scope evidence; retain branch-only plans through their completing PR; promote durable knowledge before retirement. A marker may record state but does not decide completion.
 - **Drift controls:** Planning and PR agents classify artifacts at the next substantive slice. Review the current pinned definition when changing the local lifecycle.
-- **Evidence and limits:** The current plan and runbook instructions were reviewed against the pinned definition. The repository has not added an automatic semantic deletion checker.
+- **Evidence and limits:** The current plan and runbook instructions were reviewed against the pinned definition. MARK-379 classified the AOM adoption roadmap, eleven plans and specification against their completed scope, current durable skill/contract owners and merged PR #345 at `b481f98ae90aa45e5271d10fe1f7aaeb6c7047aa`, and retired them in its first substantive implementation commit. Active and uncertain predecessor work remains. The repository has not added an automatic semantic deletion checker.
 
 ## unslop
 

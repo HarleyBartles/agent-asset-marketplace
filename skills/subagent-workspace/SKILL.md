@@ -18,7 +18,6 @@ metadata:
     - the artifact must survive beyond the current task.
   related_skills:
     - subagent-driven-development
-    - iterative-review
     - selecting-a-subagent
 ---
 
@@ -52,11 +51,11 @@ For subagent-driven plans:
 4. Write the subagent prompt and report under the same workspace.
 5. When the task is done, the scratch directory can be discarded.
 
-For iterative review:
+For branch or PR review:
 
 1. Run `py -3 scripts/workspace.py --apply` with no plan file and capture the workspace path.
 2. Run `py -3 scripts/review_package.py --apply - <base> <head> <output-path>` to produce the UTF-8 diff package.
-3. Write `pr.json` and `review-log.md` under the same `iterative-review-<pr_number>` directory.
+3. Write `pr.json` and `review-log.md` under the same resolved review workspace. Existing legacy scratch directory names such as `iterative-review-<pr_number>` need not be renamed; they do not require that skill to be installed.
 
 ## Rules
 

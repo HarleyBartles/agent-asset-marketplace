@@ -1,6 +1,6 @@
 # Reviewer Prompt Template (prepared diff)
 
-Use this template for a branch or PR diff review after `selecting-a-subagent` has chosen the active runtime route. The orchestrator prepares the diff and description; the subagent only reads and evaluates.
+Use this template for a branch or PR diff review after `selecting-a-subagent` has chosen the active runtime route. The orchestrator prepares the diff and description; the subagent evaluates it using relevant resources and focused proofs.
 
 ```
 Subagent route: <selected-route>
@@ -13,12 +13,15 @@ prompt: |
 
   ## Invariants
 
-  - You are read-only. Do not modify files, create files, or run build/install/write commands.
-  - You may use `exec` for non-mutating `git` queries and canonical verification commands, and `mcp_call_tool` for non-mutating lookups. Use these only to resolve refs or confirm state — not to generate the diff, not to fetch a missing package, and not to install/change anything.
+  - Protect reviewed source, index, HEAD and branch. Guidance/skill discovery, authoritative retrieval, targeted Git queries and focused tests or scratch proofs are permitted under conducting-code-review. Do not patch reviewed code, install dependencies, run expensive validation or contact live services without dispatcher authorization. Account for test-generated outputs.
   - If the prepared diff package is missing or the `diff_path` is not a file, report that and stop; do not use `git` or `exec` to recreate it.
   - Cite specific files and line numbers for every issue you find.
   - If you cannot verify something, say so clearly rather than guessing.
   - Keep feedback focused, concrete, and actionable.
+
+  ## Reviewer method and resources
+
+  Apply conducting-code-review at <review_skill_entrypoint>, including its required workflow and report-basis references. Discover relevant resources beyond supplied suggestions through <resource_discovery_entrypoints>. Repository: <repo_path>. Known limits: <capability_limits>. Owned proof scratch: <proof_scratch>. Report: <review_report_path>. Disclose material missing access and give the best supported review; the dispatcher can supply attributed research or re-dispatch with actual access.
 
   ## Inputs the orchestrator must provide
 
@@ -48,7 +51,7 @@ prompt: |
   2. Read `<diff_path>`. If it truncates, use the overflow file or re-read with `offset` and `limit`.
   3. If the PR description references a design spec, implementation plan, or epic roadmap, read those before the diff. Do not invent expectations that contradict the provided description.
   4. Read the relevant files in the repository to verify the claims in the diff.
-  5. Use `grep` to cross-check patterns, references, and generated surfaces. `glob` may be used only for targeted pattern confirmation; do not enumerate the whole repository.
+  5. Discover and apply relevant review, style, skill and unslop resources. Use targeted searches and context checks proportionate to unresolved questions; do not crawl unrelated code.
   6. Identify correctness, style, consistency, and risk issues. Cite specific files and line numbers.
   7. If the diff is clean within its stated scope, say so explicitly and list the main things it gets right.
 
@@ -68,6 +71,14 @@ prompt: |
 
   [One line per set-aside behavior and reason, or `None`.]
 
+  ### Unrelated Existing Observations
+
+  [Separate surfaced existing issues without demanding scope expansion.]
+
+  ### Review Basis
+
+  [Applied guidance/skills/profiles, actual supporting sources, focused proofs/results and material gaps, including for a clean review.]
+
   ### Assessment
 
   **Ready to merge / proceed?** [Yes / No / With fixes]
@@ -75,6 +86,13 @@ prompt: |
 ```
 
 **Placeholders:**
+
+- `<review_skill_entrypoint>` - actual conducting-code-review/SKILL.md runtime location
+- `<resource_discovery_entrypoints>` - usable runtime/catalog and relevant repo resource routes, not an exhaustive allow-list
+- `<repo_path>` - checkout matching reviewed revision
+- `<capability_limits>` - actual known resource/network/execution limits, or None
+- `<proof_scratch>` - owned disposable proof location
+- `<review_report_path>` - substantive report destination
 
 - `<selected-route>` — the profile or model, reasoning, and context choice returned by `selecting-a-subagent` for the active runtime.
 - `<diff_path>` — the prepared diff file.

@@ -15,6 +15,10 @@ Subagent (general-purpose):
     not a merge review — a broad whole-branch review happens separately after
     all tasks are complete.
 
+    ## Reviewer method and resources
+
+    Apply conducting-code-review at [REVIEW_SKILL_ENTRYPOINT], including its required workflow and report-basis references. Discover relevant guidance beyond the coordinator's suggestions. Repository: [REPO_PATH]. Resource discovery entrypoints: [RESOURCE_DISCOVERY_ENTRYPOINTS]. Known capability limits: [CAPABILITY_LIMITS]. Owned proof scratch: [PROOF_SCRATCH]. Review report destination: [REVIEW_REPORT_PATH]. If a resource is inaccessible, give the best supported review and disclose material gaps; the dispatcher can supply attributed research or re-dispatch with actual access.
+
     ## What Was Requested
 
     Read the task brief: [BRIEF_FILE]
@@ -32,23 +36,16 @@ Subagent (general-purpose):
     **Head:** [HEAD_SHA]
     **Diff file:** [DIFF_FILE]
 
-    Read the diff file once — it contains the commit list, a stat summary,
-    and the full diff with surrounding context, and it is your view of the
-    change. The diff's context lines ARE the changed files: do not Read a
-    changed file separately unless a hunk you must judge is cut off
-    mid-function — and say so in your report. Do not re-run git commands.
+    Read the prepared diff, including its commit list, stat summary and context. Read relevant changed files, callers and repository guidance as needed to assess the task. Targeted non-mutating Git queries may verify revision or context; do not recreate the prepared package.
     If the diff file is missing, report that the package was not prepared and stop.
     If `read` truncates the file, continue with the overflow file or by re-reading
     with `offset` and `limit`.
-    Do not crawl the broader codebase. Inspect code outside the diff only
-    to evaluate a concrete risk you can name — one focused check per named
-    risk, and name both the risk and what you checked in your report.
+    Keep investigation proportionate to the task. Discover applicable review guidance, skills and profiles before limiting code checks to concrete risks. Explain material cross-file checks in the review basis; do not impose a one-call limit that prevents resolving the question.
     Cross-cutting changes are legitimate named risks: if the diff changes
     lock ordering, a function or API contract, or shared mutable state,
     checking the call sites is the right method.
 
-    Your review is read-only on this checkout. Do not mutate the working
-    tree, the index, HEAD, or branch state in any way.
+    Protect reviewed source, index, HEAD and branch. Relevant guidance/source lookup and focused tests or disposable scratch proofs are permitted under conducting-code-review. Installation, expensive validation, live services and implementation need dispatcher authorization; account for test-generated outputs.
 
     ## You Do Not Dispatch Subagents
 
@@ -106,9 +103,7 @@ Subagent (general-purpose):
     touches is a Missing finding, no matter how clean the rest of the
     batch looks.
 
-    If a requirement cannot be verified from this diff alone (it lives in
-    unchanged code or spans tasks), report it as a ⚠️ item instead of
-    broadening your search.
+    When a requirement depends on unchanged code or spans tasks, read the targeted caller, contract or relevant surrounding context needed to assess it. Report a cannot-verify item only if proportionate context checks still leave the requirement unverified, and name the missing evidence. Do not crawl unrelated code or silently expand the assigned task.
 
     ## Part 2: Code Quality
 
@@ -136,9 +131,7 @@ Subagent (general-purpose):
     it needs.
 
     Your final message is the report itself: begin directly with the
-    spec-compliance verdict. Every line is a verdict, a finding with
-    file:line, or a check you ran — no preamble, no process narration,
-    no closing summary.
+    spec-compliance verdict. Include verdicts, findings with file:line, relevant checks and the concise review basis; omit process narration.
 
     ## Calibration
 
@@ -178,6 +171,14 @@ Subagent (general-purpose):
     For each issue: file:line, what's wrong, why it matters, how to fix
     (if not obvious).
 
+    ### Review Basis
+
+    [Applied guidance/skills/profiles, actual supporting sources, focused proofs/results and material gaps, including for a clean review.]
+
+    ### Unrelated Existing Observations
+
+    [Separate surfaced pre-existing issues with actual severity and scope rationale, without requiring this task to expand scope.]
+
     ### Assessment
 
     **Task quality:** [Approved | Needs fixes]
@@ -186,6 +187,13 @@ Subagent (general-purpose):
 ```
 
 **Placeholders:**
+
+- `[REVIEW_SKILL_ENTRYPOINT]` - actual installed conducting-code-review/SKILL.md location
+- `[RESOURCE_DISCOVERY_ENTRYPOINTS]` - usable runtime/catalog and relevant repository entrypoints; suggestions are not an exhaustive allow-list
+- `[REPO_PATH]` - repository checkout matching the review revision
+- `[CAPABILITY_LIMITS]` - actual known skill, network or execution limits; use None when none are known
+- `[PROOF_SCRATCH]` - disposable location owned by this review for focused proofs
+- `[REVIEW_REPORT_PATH]` - destination for this review's substantive report, distinct from the implementer's report
 
 - `[MODEL]` — REQUIRED: reviewer model per SKILL.md Model Selection
 - `[BRIEF_FILE]` — REQUIRED: the task brief file (`py -3 subagent-workspace/scripts/task_brief.py --apply PLAN N` prints the path; same file the implementer worked from)
