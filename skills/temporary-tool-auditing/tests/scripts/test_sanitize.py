@@ -42,6 +42,11 @@ from record import record_event
         ({"text": "Proxy-Authorization: Digest proxy-SENTINEL"}, "proxy-SENTINEL"),
         ({"url": "https://example.test/?access_token=query-SENTINEL"}, "query-SENTINEL"),
         ({"url": "https://example.test/?password=query-password-SENTINEL"}, "query-password-SENTINEL"),
+        ({"url": "https://health.example/patient?dob=dob-SENTINEL"}, "dob-SENTINEL"),
+        ({"url": "https://travel.example/check?passport_number=passport-SENTINEL"}, "passport-SENTINEL"),
+        ({"url": "https://bank.example/transfer?iban=iban-SENTINEL"}, "iban-SENTINEL"),
+        ({"url": "https://health.example/patient?diagnosis=diagnosis-SENTINEL"}, "diagnosis-SENTINEL"),
+        ({"url": "https://bank.example/transfer?account_number=account-SENTINEL"}, "account-SENTINEL"),
         ({"url": "https://example.test/maps?key=AIzaSyD-SENTINEL&zoom=3"}, "AIzaSyD-SENTINEL"),
         (
             {"url": "https://bucket.test/file?X-Amz-Signature=signature-SENTINEL&X-Amz-Security-Token=token-SENTINEL"},
@@ -180,6 +185,11 @@ def test_recorder_never_persists_sentinels_from_json_or_header_strings(tmp_path,
                 "bank_account": "bank-account-SENTINEL",
                 "environment": "AWS_SECRET_ACCESS_KEY=env-secret-SENTINEL",
                 "credential_url": "https://example.test/?password=query-password-SENTINEL",
+                "dob_url": "https://health.example/patient?dob=dob-persisted-SENTINEL&next=summary",
+                "passport_url": "https://travel.example/check?passport_number=passport-persisted-SENTINEL",
+                "iban_url": "https://bank.example/transfer?iban=iban-persisted-SENTINEL",
+                "diagnosis_url": "https://health.example/patient?diagnosis=diagnosis-persisted-SENTINEL",
+                "account_url": "https://bank.example/transfer?account_number=account-persisted-SENTINEL",
                 "command": (
                     "tool --access-token cli-SENTINEL --refresh_token=refresh-SENTINEL "
                     '--password "example-secret has spaces" password="assignment secret with spaces"'
@@ -219,6 +229,11 @@ def test_recorder_never_persists_sentinels_from_json_or_header_strings(tmp_path,
         "bank-account-SENTINEL",
         "env-secret-SENTINEL",
         "query-password-SENTINEL",
+        "dob-persisted-SENTINEL",
+        "passport-persisted-SENTINEL",
+        "iban-persisted-SENTINEL",
+        "diagnosis-persisted-SENTINEL",
+        "account-persisted-SENTINEL",
     ):
         assert sentinel not in persisted
     persisted_event = json.loads(persisted)

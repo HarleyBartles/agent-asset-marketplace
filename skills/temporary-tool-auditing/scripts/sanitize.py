@@ -32,7 +32,12 @@ _PATTERNS = [
             r"(?i)([?&#](?:key|api[_-]?key|access[_-]?key|auth[_-]?token|refresh[_-]?token|token|jwt|id[_-]?token|"
             r"session(?:[_-]?id)?|sid|phpsessid|jsessionid|asp\.net[_-]?sessionid|cfid|cftoken|"
             r"oauth[_-]?token|code|password|passwd|pwd|credential|credentials|client[_-]?secret|"
-            r"email|phone|ssn|pan|card[_-]?number|"
+            r"email|e[_-]?mail|phone|mobile|telephone|ssn|social[_-]?security(?:[_-]?number)?|"
+            r"national[_-]?(?:id|identifier)|passport(?:[_-]?(?:number|no))?|date[_-]?of[_-]?birth|dob|"
+            r"address|postal[_-]?code|zip[_-]?code|first[_-]?name|last[_-]?name|full[_-]?name|username|"
+            r"medical[_-]?record|health[_-]?record|health[_-]?data|patient[_-]?id|diagnosis|medical[_-]?history|"
+            r"genetic[_-]?data|bank[_-]?account|account[_-]?number|routing[_-]?number|iban|swift|"
+            r"pan|card[_-]?(?:number|no)|cardholder|credit[_-]?card|cvv|cvc|security[_-]?code|pin|track[_-]?data|"
             r"(?:x-amz-|x-goog-)?(?:signature|sig)|"
             r"x-amz-security-token|x-amz-credential)=)[^&#\s\"'<>]+"
         ),
