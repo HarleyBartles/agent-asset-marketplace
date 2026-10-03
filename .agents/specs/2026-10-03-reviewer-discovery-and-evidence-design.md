@@ -1,6 +1,6 @@
 # Reviewer discovery and evidence design
 
-Status: source implementation and independent review complete; delivery remains in progress. Draft PR #347 stays explicitly incomplete pending completed MARK-377 delivery/main-range reconciliation. The source/profile/packaging changes, isolated copied-package evaluation, whole-branch review and scoped fix verification are delivered. Runtime trace and live Devin coverage limits are recorded in the plan; no instrumentation was installed by this slice. Retain this governing artifact through its completing PR.
+Status: implementation is published in Draft PR #347. Prior fresh reviews cover the MARK-379 source changes and the isolated packaged workflow. Final handoff remains open pending a fresh independent review of the current full main-targeted diff and updated publication evidence. The human has changed the merge order: #347 goes first; #346 adapts after it. This branch carries the earlier temporary-tool-auditing snapshot at 224ac579fa62e5622facc89f2fb4eb8226ac8273. The open #346 head has since advanced to f6b4fba3dd512e10d313628a18c3a4958232322d with material runtime and data-minimization changes; do not imply that newer implementation is in #347. No runtime instrumentation was installed or activated by MARK-379. Retain this governing artifact through its completing PR.
 
 Issue: [MARK-379](https://linear.app/harleys-workspace/issue/MARK-379/enable-reviewer-subagents-to-discover-skills-and-research)
 
@@ -28,7 +28,7 @@ The design was inspected against main at `b481f98ae90aa45e5271d10fe1f7aaeb6c7047
 - `skills/selecting-a-subagent/assets/reviewer-security.md` is currently a secrets and identifiers lens. General security review requires a broader remit and matching selection behavior.
 - The user reports `iterative-review` is broken and unused. Its source is retained for later refactoring, but it will be removed from the shipped Superpowers+ plugin in this slice. Its evolving review runtime is not an integration target for this design.
 
-Reinspect these seams when incorporating the dependency. Current file arrangements do not bind the plan to obsolete implementations.
+The #347 source and profile seams are reviewed against the included snapshot. After #347 merges, the #346 owner will reconcile that newer work against current main. Do not attribute the later implementation to this design or branch.
 
 ## Reviewer inputs and entry
 
@@ -139,12 +139,12 @@ Use a narrow witnessed behavioral proof before changing the skill behavior, then
 
 Each proof records the available resources, reviewed revision, observable actions, supporting sources, and resulting findings or non-findings. Hook instrumentation may be used when available with verified coverage, but this issue does not implement instrumentation or assume an empty log proves no tools were used.
 
-Later implementation must run focused owning behavior tests, regenerate marketplace artifacts, and satisfy the repository's staged hook and publication gates. The implementation plan chooses exact fixture mechanics, runtime checks, and commands against the proposed dependency delivery state, then reconciles them with actual delivered behavior before execution.
+The implementation ran the focused owning behavior tests, regenerated marketplace artifacts, and passed the repository staged hook. Final delivery still requires a fresh review of the complete current main-targeted diff and exact-head hosted proof after closeout edits.
 
-## Sequencing and open gate
+## Sequencing and current integration
 
-This worktree is reserved for specification, planning, and eventual implementation. The user authorized writing the plan before the dependency merges. Keep MARK-379 In Progress and preserve the worktree.
+The human has directed PR #347 to merge before PR #346. PR #347 targets main and currently reports GitHub mergeability as MERGEABLE with a CLEAN merge state. Its main-targeted diff includes the temporary-tool-auditing files from the earlier PR #346 snapshot merged at 224ac579fa62e5622facc89f2fb4eb8226ac8273. This is part of the actual diff and must be reviewed as such.
 
-MARK-377 is the delivery dependency, represented by [PR #346](https://github.com/HarleyBartles/agent-asset-marketplace/pull/346). Planning inspected its open head `ec393ac68e9ecfbffb7140ebcbff27685d978696`. Its plan is at `Z:/_agent-worktrees/agent-asset-marketplace/codex/mark-377-temporary-tool-auditing/.agents/plans/2026-10-03-temporary-tool-auditing.md`. Inspect GitHub and source for current behavior; its current skill requires verified teardown followed by purge, superseding the earlier evidence-retention proposal. Live activation and teardown remain pending according to the inspected PR body. Do not edit the dependency worktree or treat its pending runtime validation as complete.
+PR #346 remains open at f6b4fba3dd512e10d313628a18c3a4958232322d and has since changed the audit architecture: stable user-wide dispatcher, temporary session/worktree activations, metadata-only default status records, bounded log storage, and revised lifecycle proof. Those changes are not present in #347. After #347 merges, the #346 owner will integrate with main and reconcile that newer implementation against the now-merged snapshot. Do not edit the #346 worktree or claim its later source/runtime evidence for this branch.
 
-Planning may proceed now against delivery on top of PR #346 while this branch remains based on main. Before implementation, verify completed MARK-377 delivery and incorporate it by merge or rebase, reconcile this specification and the plan with the resulting contracts, and resolve conflicts. The requirement is a correct combined delivery and an eventual PR back to main without merge conflicts; no particular Git integration operation is mandated. Present material design changes for human resolution. Skill changes and iterative-review packaging removal occur during the subsequent authorized implementation stage.
+For #347, the remaining agent-owned gates are independent review of the complete current main-targeted diff, resolution of any blocking findings, and exact-head publication checks after final documentation updates. A prior implementation review does not cover the included temporary-auditing snapshot or replace the required final full-diff review. Keep MARK-379 In Progress and preserve its worktree until these gates complete.
