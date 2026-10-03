@@ -119,6 +119,19 @@ def execute(args: dict, now: float | None = None) -> dict:
             raise AuditStoreError("teardown-not-verified")
         if manifest.get("armed"):
             raise AuditStoreError("recorder-still-armed")
+        owned_run_entries = {
+            ".audit.lock",
+            "manifest.json",
+            "events.jsonl",
+            "health.jsonl",
+            "controls.jsonl",
+            "scripts",
+        }
+        try:
+            if any(entry.name not in owned_run_entries for entry in run.iterdir()):
+                raise AuditStoreError("run-purge-unowned-entry")
+        except OSError:
+            raise AuditStoreError("run-purge-inspection-failed") from None
         for name in ("events", "health", "controls"):
             path = run / f"{name}.jsonl"
             try:
