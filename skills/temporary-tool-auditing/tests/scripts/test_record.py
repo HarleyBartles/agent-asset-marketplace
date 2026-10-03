@@ -36,7 +36,7 @@ def test_record_event_sanitizes_and_persists_normalized_event(tmp_path):
     assert ok
     contents = (tmp_path / "events.jsonl").read_text()
     assert "pw-SENTINEL" not in contents
-    assert json.loads(contents)["arguments"]["password"] == "[REDACTED]"
+    assert "arguments" not in json.loads(contents)
 
 
 def test_expired_or_disarmed_run_does_not_record(tmp_path):

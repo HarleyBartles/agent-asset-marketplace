@@ -6,6 +6,7 @@ from pathlib import Path
 import pytest
 
 from store import AuditStoreError, append_record, load_manifest, save_manifest
+import store
 
 
 def test_manifest_round_trip_is_atomic_and_restrictive(tmp_path):
@@ -83,3 +84,11 @@ def test_lock_timeout_is_a_safe_error(tmp_path, monkeypatch):
     with pytest.raises(AuditStoreError) as error:
         load_manifest(tmp_path)
     assert error.value.code == "lock-timeout"
+
+
+def test_event_log_has_a_finite_storage_ceiling(tmp_path, monkeypatch):
+    monkeypatch.setattr(store, "MAX_EVENT_LOG_BYTES", 100)
+    append_record(tmp_path, "events", {"event": "pre", "tool_name": "Bash", "call_id": "one"})
+    with pytest.raises(AuditStoreError, match="event-log-limit-reached"):
+        append_record(tmp_path, "events", {"event": "pre", "tool_name": "Bash", "call_id": "two"})
+    assert (tmp_path / "events.jsonl").stat().st_size <= 100

@@ -281,5 +281,9 @@ def test_recorder_never_persists_sentinels_from_json_or_header_strings(tmp_path,
         assert sentinel not in persisted
     persisted_event = json.loads(persisted)
     assert persisted_event["session_id"] == "s1"
-    assert "view=summary" in persisted_event["arguments"]["nested_sensitive_url"]
-    assert persisted_event["redactions"]
+    if detail == "status":
+        assert "arguments" not in persisted_event
+    else:
+        assert "view=summary" in persisted_event["arguments"]["nested_sensitive_url"]
+    if detail == "full-results":
+        assert persisted_event["redactions"]

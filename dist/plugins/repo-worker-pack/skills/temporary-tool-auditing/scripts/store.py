@@ -12,6 +12,8 @@ from typing import Any, Callable, Iterator
 
 from sanitize import sanitize
 
+MAX_EVENT_LOG_BYTES = 25 * 1024 * 1024
+
 
 class AuditStoreError(Exception):
     """Safe storage failure identified by a non-sensitive error code."""
@@ -108,6 +110,8 @@ def load_manifest(run: Path) -> dict:
 
 def _write_manifest_locked(run: Path, path: Path, value: dict) -> None:
     safe_session_paths = set()
+    if isinstance(value, dict) and isinstance(value.get("capture_session_id"), str):
+        safe_session_paths.add("$.capture_session_id")
     subject = value.get("subject") if isinstance(value, dict) else None
     if isinstance(subject, dict) and "session_id" in subject:
         safe_session_paths.add("$.subject.session_id")
@@ -223,6 +227,10 @@ def append_record_if(
                     return None
             encoded, _ = _safe_json(cleaned, "record-encode-failed", safe_session_paths)
             path = run / f"{name}.jsonl"
+            if name == "events":
+                current_size = path.stat().st_size if path.exists() else 0
+                if current_size + len(encoded) + 1 > MAX_EVENT_LOG_BYTES:
+                    raise AuditStoreError("event-log-limit-reached")
             fd = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_APPEND, 0o600)
             try:
                 if os.name != "nt":

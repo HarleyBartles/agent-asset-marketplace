@@ -68,13 +68,21 @@ def record_event(run: Path, payload: dict, now: float) -> bool:
             return paired
 
         return append_record_if(run, "events", normalized, currently_eligible) is not None
-    except (AuditStoreError, ValueError, TypeError):
+    except AuditStoreError as error:
+        _record_health(run, error.code)
+        return False
+    except (ValueError, TypeError):
         _record_health(run, "record-failed")
         return False
 
 
 def _record_health(run: Path, code: str) -> None:
     try:
+        existing = Path(run) / "health.jsonl"
+        if existing.exists():
+            for line in existing.read_text(encoding="utf-8").splitlines():
+                if json.loads(line).get("code") == code:
+                    return
         append_record_if(
             run,
             "health",
@@ -90,6 +98,7 @@ def main(argv=None) -> int:
     parser = argparse.ArgumentParser(description="Append one sanitized hook observation. (mutating)")
     parser.add_argument("--run-dir")
     parser.add_argument("--control-nonce")
+    parser.add_argument("--health-control-nonce")
     parser.add_argument("--check", action="store_true", help="validate invocation without recording")
     args = parser.parse_args(argv)
     if args.check:
@@ -132,6 +141,23 @@ def main(argv=None) -> int:
                     "code": "recorder-direct-control",
                     "nonce": nonce,
                     "received_at": time.time(),
+                },
+            )
+            return 0
+        if args.health_control_nonce:
+            nonce = str(uuid.UUID(args.health_control_nonce))
+            run = Path(args.run_dir)
+            manifest = load_manifest(run)
+            if manifest.get("registration_state") not in {"removed", "installed"}:
+                raise AuditStoreError("health-control-window-closed")
+            append_record(
+                run,
+                "controls",
+                {
+                    "code": "recorder-health-control",
+                    "nonce": nonce,
+                    "received_at": time.time(),
+                    "run_id": manifest.get("run_id"),
                 },
             )
             return 0

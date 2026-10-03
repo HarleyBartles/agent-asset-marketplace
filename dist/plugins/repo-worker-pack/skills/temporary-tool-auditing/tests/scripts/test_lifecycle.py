@@ -191,7 +191,8 @@ def test_stop_records_operator_completion_within_closed_coverage(tmp_path):
     manifest = load_manifest(run)
     assert manifest["subject_completed_at"] == 100
     result = execute({"operation": "assess", "run_dir": str(run), "subject": "session:s1"}, now=101)
-    assert result["claim_supported"] is True
+    assert result["claim_supported"] is False
+    assert "missing-completion-control" in result["limitations"]
 
 
 def test_apply_and_check_together_are_rejected(tmp_path):
@@ -712,6 +713,112 @@ def test_teardown_uses_persisted_hook_interpreter_and_fails_closed_if_missing(tm
         )
     assert getattr(error.value, "code", None) == "teardown-control-failed"
     assert load_manifest(run)["cleanup_required"] is True
+
+
+def test_global_session_engagement_spans_multiple_rounds_then_disables_and_purges(tmp_path, monkeypatch):
+    import activation
+    from activation import dispatch
+    from auditctl import execute
+    import json
+
+    project = tmp_path / "project"
+    project.mkdir()
+    run = tmp_path / "run"
+    home = tmp_path / "codex-home"
+    monkeypatch.setenv("CODEX_HOME", str(home))
+    monkeypatch.setenv("CODEX_SESSION_ID", "parent-session")
+    monkeypatch.setattr(activation, "set_user_activation", lambda _path, _enable: None)
+    now = time.time() - 60
+    execute(
+        {
+            "operation": "prepare",
+            "run_dir": str(run),
+            "runtime": "codex",
+            "project": str(project),
+            "question": "bounded session audit",
+            "subject": "session:parent-session",
+            "detail": "status",
+            "apply": True,
+        },
+        now=now,
+    )
+    execute({"operation": "install", "run_dir": str(run), "apply": True}, now=now + 1)
+    with pytest.raises(Exception) as remove_error:
+        execute({"operation": "remove", "run_dir": str(run), "apply": True}, now=now + 1)
+    assert getattr(remove_error.value, "code", None) == "disable-engagement-global-hook-remains-installed"
+    execute({"operation": "enable", "run_dir": str(run), "apply": True}, now=now + 2)
+    execute({"operation": "verify", "run_dir": str(run), "apply": True}, now=now + 3)
+    registry = home / "tool-auditing" / "activations.json"
+    control_id = "activation-control"
+    assert dispatch(
+        registry,
+        {
+            "hook_event_name": "PreToolUse",
+            "session_id": "parent-session",
+            "cwd": str(project),
+            "tool_use_id": control_id,
+            "tool_name": "Bash",
+            "tool_input": {"command": "true"},
+        },
+        now + 4,
+    )
+    execute({"operation": "verify", "run_dir": str(run), "control_call_id": control_id, "apply": True}, now=now + 5)
+    for call_id in ("round-one", "round-two"):
+        execute({"operation": "start", "run_dir": str(run), "apply": True}, now=now + 6)
+        assert dispatch(
+            registry,
+            {
+                "hook_event_name": "PreToolUse",
+                "session_id": "parent-session",
+                "cwd": str(project),
+                "tool_use_id": call_id,
+                "agent_id": "child-one",
+                "tool_name": "Bash",
+            },
+            now + 7,
+        )
+        assert not dispatch(
+            registry,
+            {
+                "hook_event_name": "PreToolUse",
+                "session_id": "other-session",
+                "cwd": str(project),
+                "tool_use_id": "unrelated",
+                "tool_name": "Bash",
+            },
+            now + 7,
+        )
+        execute({"operation": "stop", "run_dir": str(run), "apply": True}, now=now + 8)
+    rows = [json.loads(line) for line in (run / "events.jsonl").read_text().splitlines()]
+    assert {item["call_id"] for item in rows} == {control_id, "round-one", "round-two"}
+    execute({"operation": "disable", "run_dir": str(run), "apply": True}, now=now + 9)
+    assert not dispatch(
+        registry,
+        {
+            "hook_event_name": "PreToolUse",
+            "session_id": "parent-session",
+            "cwd": str(project),
+            "tool_use_id": "post-disable",
+            "tool_name": "Bash",
+        },
+        now + 10,
+    )
+    execute({"operation": "verify-teardown", "run_dir": str(run), "phase": "begin", "apply": True}, now=now + 11)
+    execute(
+        {
+            "operation": "verify-teardown",
+            "run_dir": str(run),
+            "phase": "finish",
+            "canary_performed": True,
+            "apply": True,
+        },
+        now=now + 12,
+    )
+    assert execute({"operation": "purge", "run_dir": str(run), "apply": True}, now=now + 13)["logs_purged"]
+    assert json.loads((run / "manifest.json").read_text())["logs_purged"] is True
+    from global_registration import global_install_present
+
+    assert global_install_present(home)
 
 
 def test_explicit_disarm_disables_late_outcome_capture(tmp_path):

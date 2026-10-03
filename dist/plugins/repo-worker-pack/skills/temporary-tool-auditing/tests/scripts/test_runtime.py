@@ -21,6 +21,15 @@ def test_codex_pre_event_keeps_call_and_child_identity():
     assert event["session_id"] == "session-1"
     assert event["agent_id"] == "agent-2"
     assert event["call_id"] == "call-4"
+    assert "arguments" not in event
+
+
+def test_full_results_detail_includes_sanitizable_arguments():
+    event = normalize_event(
+        "codex",
+        {"hook_event_name": "PreToolUse", "tool_name": "Bash", "tool_input": {"command": "pwd"}},
+        "full-results",
+    )
     assert event["arguments"] == {"command": "pwd"}
 
 
