@@ -16,7 +16,7 @@
 
 - Implement MARK-377 only. No general hook framework, authorisation gate, secret-backed evidence fingerprints, or malicious-agent immutability claim.
 - Codex and Devin are supported with explicit runtime differences. Capture all covered agents; select the subject when assessing evidence.
-- Prefer worktree-local registration; record and explain checkout fallback. Never install global hooks or bypass human hook trust as normal skill behaviour.
+- Prefer worktree-local registration; record and explain checkout fallback. Never install global hooks or bypass human hook-definition review. For Codex only, preview and temporarily trust the exact project/worktree path in user config, preserve pre-existing trust, refuse an explicit untrusted entry, and remove only the entry this run added.
 - Record sanitized arguments, identifiers, and observed outcome status by default; full sanitized results are optional and chosen by the agent before observation.
 - Default lease is 30 minutes, adjustable with explicit renewal. Expiry never clears cleanup and renewal never fills a capture gap.
 - No raw payload spool, secret-bearing config backup, exception dump, or unsanitized diagnostic. Failure or ambiguity prevents a no-tools claim.
@@ -36,6 +36,7 @@ Create these focused modules under `skills/temporary-tool-auditing/scripts/`:
 | `runtime.py` | `normalize_event(runtime: str, payload: dict, detail: str) -> dict`, `render_handlers(runtime: str, recorder: Path) -> dict`; runtime field/status conversion and absolute interpreter command. |
 | `record.py` | `record_event(run: Path, payload: dict, now: float) -> bool`; lease/arming check, sanitisation, normalization, append and health handling; command entry reads stdin. |
 | `registration.py` | `install(run: Path, project: Path, runtime: str) -> dict`, `remove(run: Path) -> dict`; owned JSON handler mutation and guarded recovery. |
+| `codex_trust.py` | Preview and temporarily add/remove only the exact active Codex project/worktree trust entry, preserving unrelated user configuration and pre-existing trust. |
 | `assessment.py` | `assess(run: Path, subject: dict) -> dict`; counts and prerequisite/coverage/attribution limits. |
 | `auditctl.py` | User CLI, durable transitions, controls, expiry renewal and restart handoffs. |
 
@@ -50,6 +51,7 @@ CLI: `auditctl.py <operation> --run-dir <absolute-path>`, with `--check` default
 ## Review Focus
 
 - Credential patterns in free text, URLs, CLI flags, serialized JSON and common header forms are sanitized before persistence; pattern detection remains best-effort: Task 1 and Task 2.
+- Codex trust writes affect only the exact worktree entry, preserve unrelated user config and existing file security attributes, refuse explicit untrusted state, and leave no temporary trust after teardown: Task 3.
 - Interrupted config writes leave discoverable ownership; concurrent installers cannot stack runs. Registration locks live in private user temp storage, not in the project hook directory: Task 3.
 - Late outcomes, lease gaps and missing call IDs cannot produce complete no-tools evidence: Task 4.
 - Devin interleaving cannot be guessed into child attribution: Task 4.
@@ -101,9 +103,9 @@ def test_post_event_does_not_imply_success():
 
 ### Task 3: Owned project-local registration and recovery
 
-**Files:** Create `scripts/registration.py`, `tests/scripts/test_registration.py`; extend `store.py` transaction support only if required.
+**Files:** Create `scripts/registration.py`, `scripts/codex_trust.py`, `tests/scripts/test_registration.py`, `tests/scripts/test_codex_trust.py`; extend `store.py` transaction support only if required.
 
-**Interfaces:** Consumes `render_handlers` and locked store; produces `install`/`remove` results containing ownership state and safe conflicts. Existing inline Codex hooks may coexist; use local hooks.json and preserve both source types rather than rewriting unrelated TOML.
+**Interfaces:** Consumes `render_handlers` and locked store; produces `install`/`remove` results containing ownership state and safe conflicts. Use local hooks.json and preserve unrelated user config. For Codex, separately preview and manage the exact project trust entry in user config; do not trust a parent path or modify hook definitions in TOML.
 
 - [x] Test preservation of existing handlers and top-level fields, non-ASCII paths/spaces, worktree root selection, concurrent installer rejection, same-run idempotence, and ownership conflict on removal. Build an interrupted-install fixture with an intent journal but incomplete registration.
 
@@ -118,6 +120,7 @@ def test_remove_preserves_new_unrelated_handler(installed_run, config_path):
 - [x] Run `py -3 -m pytest skills/temporary-tool-auditing/tests/scripts/test_registration.py -q` to RED.
 - [x] Persist cleanup obligation and intended owned entries before config mutation. Use a registration-root lock and ownership marker containing only run location/ID, reject a second active run, and copy recorder dependencies into the run. Fingerprint owned handler entries without copying raw config. Recover by comparing intent against current entries after a crash. Remove unchanged owned entries only, never restore a whole-file backup. Detect malformed configs and changed owned entries as conflicts. Remove helper-created empty files/directories only; retain inert run assets.
 - [x] Re-run tests to GREEN; include crash points before config replace and before manifest finalisation, plus successful repeated cleanup.
+- [x] Add exact worktree trust setup/teardown with a read-only preview, cross-worktree config lock, pre-existing trust preservation, explicit-untrusted refusal, and conflict-safe cleanup; verify repeated installation does not lose trust ownership.
 - [x] Commit `feat: manage temporary audit registration custody`.
 
 ### Task 4: Evidence assessment and subject attribution

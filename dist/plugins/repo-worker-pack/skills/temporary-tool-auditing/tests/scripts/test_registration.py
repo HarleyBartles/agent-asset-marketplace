@@ -1,10 +1,18 @@
 import json
 import sys
+import tomllib
 from pathlib import Path
 from unittest.mock import patch
 
+import pytest
+
 from registration import install, remove
 from store import load_manifest, save_manifest
+
+
+@pytest.fixture(autouse=True)
+def isolated_codex_home(tmp_path, monkeypatch):
+    monkeypatch.setenv("CODEX_HOME", str(tmp_path / "codex-home"))
 
 
 def handler_commands(path, event):
@@ -55,6 +63,8 @@ def test_install_is_idempotent_and_conflicts_with_another_active_run(tmp_path):
         assert getattr(error, "code", None) == "registration-conflict"
     else:
         raise AssertionError("second run should be rejected")
+    remove(run)
+    assert not (tmp_path / "codex-home" / "config.toml").exists()
 
 
 def test_remove_keeps_modified_owned_entry_as_conflict(tmp_path):
@@ -206,6 +216,60 @@ def test_install_records_the_interpreter_used_by_hook_templates(tmp_path):
     manifest = load_manifest(run)
     assert manifest["hook_interpreter"] == sys.executable
     assert Path(manifest["lifecycle_cli_path"]).name == "auditctl.py"
+
+
+def test_codex_install_temporarily_trusts_exact_project_then_removes_it(tmp_path):
+    project = tmp_path / "worktrees" / "repo-feature"
+    run = tmp_path / "audit-runs" / "one"
+    codex_config = tmp_path / "codex-home" / "config.toml"
+    codex_config.parent.mkdir()
+    codex_config.write_text('model = "gpt-6.1-sol"\n')
+    save_manifest(run, {"run_id": "one", "runtime": "codex", "project_root": str(project), "armed": False})
+
+    installed = install(run, project, "codex")
+
+    assert installed["restart_required"] is True
+    assert installed["trust"] == "added"
+    parsed = tomllib.loads(codex_config.read_text())
+    assert parsed["projects"][str(project)]["trust_level"] == "trusted"
+    assert str(project.parent) not in parsed["projects"]
+    removed = remove(run)
+    assert removed["owned_trust_absent"] is True
+    assert removed["restart_required"] is True
+    assert tomllib.loads(codex_config.read_text()) == {"model": "gpt-6.1-sol"}
+
+
+def test_codex_install_refuses_to_replace_explicitly_untrusted_path(tmp_path):
+    project = tmp_path / "repo"
+    run = tmp_path / "audit-runs" / "one"
+    codex_home = tmp_path / "codex-home"
+    codex_home.mkdir()
+    config = codex_home / "config.toml"
+    config.write_text(f'[projects.{project.as_posix()!r}]\ntrust_level = "untrusted"\n')
+    before = config.read_bytes()
+    save_manifest(run, {"run_id": "one", "runtime": "codex", "project_root": str(project), "armed": False})
+
+    with pytest.raises(Exception) as error:
+        install(run, project, "codex")
+
+    assert getattr(error.value, "code", None) == "trust-conflict"
+    assert config.read_bytes() == before
+
+
+def test_codex_remove_preserves_preexisting_trusted_path(tmp_path):
+    project = tmp_path / "repo"
+    run = tmp_path / "audit-runs" / "one"
+    codex_home = tmp_path / "codex-home"
+    codex_home.mkdir()
+    config = codex_home / "config.toml"
+    config.write_text(f'[projects.{project.as_posix()!r}]\ntrust_level = "trusted"\n')
+    before = config.read_bytes()
+    save_manifest(run, {"run_id": "one", "runtime": "codex", "project_root": str(project), "armed": False})
+
+    assert install(run, project, "codex")["trust"] == "preexisting"
+    remove(run)
+
+    assert config.read_bytes() == before
 
 
 def test_remove_recovers_intent_journal_when_owner_and_config_were_not_written(tmp_path):

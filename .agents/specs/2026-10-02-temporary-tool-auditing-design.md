@@ -16,7 +16,7 @@ Before installing, the agent states the evidence question, subject, runtime, cap
 
 The agent prefers hook registration in its isolated worktree. It uses the repo checkout when runtime discovery requires that location, recording the actual registration root and affected scope. Capture covers every agent reached by that registration. Selecting a subject for assessment does not suppress other agents' records.
 
-The normal journey is prepare, install, obtain any required human trust review, restart or resume as required, verify a positive control, start observation, perform the task, end observation, assess evidence, disarm, remove registrations, restart or resume as required, verify teardown, and purge the logs. The agent completes this journey on cancellation and failure as well as success. A restart handoff includes the durable run location, next operation, and cleanup instructions.
+The normal journey is prepare, preview, inspect existing project-local Codex configuration, install, temporarily trust the exact Codex worktree path when needed, obtain human review of hook definitions, restart or resume as required, verify a positive control, start observation, perform the task, end observation, assess evidence, disarm, remove registrations and only the trust entry created by this run, restart or resume as required, verify teardown, and purge the logs. The agent completes this journey on cancellation and failure as well as success. It never trusts a parent or wildcard path and does not override an explicit untrusted entry. A restart handoff includes the durable run location, next operation, and cleanup instructions.
 
 ## Components and interfaces
 
@@ -52,7 +52,7 @@ The helper establishes evidence prerequisites and counts. The calling agent rema
 
 ## Runtime differences
 
-Codex uses `.codex/hooks.json` with a `hooks` wrapper, or compatible inline project configuration. It requires project trust and review of non-managed hook definitions. Record attempts/outcomes plus supported session and subagent lifecycle events. Our observed build pairs calls by `tool_use_id`; child tool records have `agent_id`, while `session_id` remains the parent's. Main-agent attribution uses the session and absence of a child identity only within verified coverage. Do not infer that every runtime version supplies these fields.
+Codex uses `.codex/hooks.json` with a `hooks` wrapper, or compatible inline project configuration. It requires project trust and review of non-managed hook definitions. Setup previews and adds only the exact worktree path to the active user `config.toml`; it preserves existing trust, refuses an explicit untrusted setting, and removes only the temporary entry it owns during teardown. This makes the local `.codex/` layer eligible for loading but does not approve hook definitions. Review any existing project-local Codex config and rules that become eligible when the path is trusted. Record attempts/outcomes plus supported session and subagent lifecycle events. Our observed build pairs calls by `tool_use_id`; child tool records have `agent_id`, while `session_id` remains the parent's. Main-agent attribution uses the session and absence of a child identity only within verified coverage. Do not infer that every runtime version supplies these fields.
 
 The Codex desktop spike established live discovery, human trust review, activation after restart, cached execution after file removal, and unload after a second restart. Worktree-local capture succeeded in a trusted fresh CLI session. The skill describes the required trust/restart handoff and always verifies actual activation and teardown rather than universalising the spike's restart behaviour. Hosted and specialised paths outside demonstrated hook coverage remain explicit limitations.
 
@@ -93,6 +93,7 @@ Rebuild marketplace projections from canonical sources and run the owning skill 
 - [OpenTelemetry URL semantic conventions](https://opentelemetry.io/docs/specs/semconv/url/), for scrubbing sensitive URL query values while retaining unrelated parameters.
 - [RFC 9110 section 17.9](https://datatracker.ietf.org/doc/html/rfc9110#section-17.9), for privacy risks from sensitive or user-provided URI data.
 - [Python `Path.is_junction`](https://docs.python.org/3.13/library/pathlib.html#pathlib.Path.is_junction) and [Microsoft reparse-point guidance](https://learn.microsoft.com/en-us/windows/win32/fileio/reparse-points), for detecting Windows directory aliases before purge.
+- [Microsoft `ReplaceFileW`](https://learn.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-replacefilew), for preserving the existing Windows Codex config file's ACLs and attributes during atomic update.
 - [CWE-59](https://cwe.mitre.org/data/definitions/59), for link-following/path-resolution risks.
 - [Official Codex hooks](https://learn.chatgpt.com/docs/hooks).
 - [Official Devin CLI hook configuration](https://docs.devin.ai/cli/extensibility/hooks/overview), used to define the unsupported CLI boundary.

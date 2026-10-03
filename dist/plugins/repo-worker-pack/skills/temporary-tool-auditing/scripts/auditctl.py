@@ -9,6 +9,7 @@ import uuid
 from pathlib import Path
 
 from assessment import assess
+from codex_trust import preview_project_trust
 from registration import install, registration_absent, remove
 from sanitize import sanitize
 from store import AuditStoreError, append_record, create_manifest, load_manifest, save_manifest, update_manifest
@@ -95,6 +96,11 @@ def execute(args: dict, now: float | None = None) -> dict:
         return {"applied": True, "run_id": manifest["run_id"], "expires_at": manifest["expires_at"]}
     if run is None:
         raise AuditStoreError("run-directory-required")
+    if not apply and operation == "install":
+        manifest = load_manifest(run)
+        runtime = manifest.get("runtime")
+        preview = preview_project_trust(Path(manifest["project_root"])) if runtime == "codex" else None
+        return {"applied": False, "operation": "install", "codex_trust": preview}
     if not apply and operation not in {"status", "assess", "verify"}:
         return {"applied": False, "operation": operation}
     if operation == "install":
@@ -140,7 +146,7 @@ def execute(args: dict, now: float | None = None) -> dict:
             if scripts.exists():
                 if not scripts.is_dir() or scripts.resolve(strict=True) != run.resolve(strict=True) / "scripts":
                     raise AuditStoreError("run-helper-purge-failed")
-                owned_helpers = {"record.py", "runtime.py", "store.py", "sanitize.py"}
+                owned_helpers = {"record.py", "runtime.py", "store.py", "sanitize.py", "codex_trust.py"}
                 if any(entry.name not in owned_helpers for entry in scripts.iterdir()):
                     raise AuditStoreError("run-helper-purge-failed")
         except OSError:
@@ -497,7 +503,7 @@ def main(argv=None) -> int:
         print(json.dumps(result, ensure_ascii=False, sort_keys=True))
         return 0
     except AuditStoreError as error:
-        print(json.dumps({"error": error.code}, sort_keys=True))
+        print(json.dumps({"error": error.code, **error.details}, sort_keys=True))
         return 1
     except Exception:
         print(json.dumps({"error": "operation-failed"}, sort_keys=True))

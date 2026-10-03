@@ -9,6 +9,13 @@ import time
 from pathlib import Path
 
 from runtime import render_handlers
+from codex_trust import (
+    add_project_trust,
+    project_trust_absent,
+    project_trust_level,
+    recover_pending_trust_write,
+    remove_project_trust,
+)
 from store import AuditStoreError, registration_lock, load_manifest, save_manifest
 
 
@@ -65,7 +72,7 @@ def install(run: Path, project: Path, runtime: str) -> dict:
     scripts = run / "scripts"
     scripts.mkdir(parents=True, exist_ok=True)
     source_scripts = Path(__file__).resolve().parent
-    for name in ("record.py", "runtime.py", "store.py", "sanitize.py"):
+    for name in ("record.py", "runtime.py", "store.py", "sanitize.py", "codex_trust.py"):
         shutil.copyfile(source_scripts / name, scripts / name)
     rendered = render_handlers(runtime, scripts / "record.py")
     rendered_events = rendered.get("hooks", rendered)
@@ -127,12 +134,39 @@ def install(run: Path, project: Path, runtime: str) -> dict:
             }
         )
         save_manifest(run, manifest)  # durable intent precedes config mutation
+        if runtime == "codex":
+
+            def persist_trust_intent(ownership):
+                current_manifest = load_manifest(run)
+                current_manifest["codex_trust"] = ownership
+                save_manifest(run, current_manifest)
+
+            prior_trust = manifest.get("codex_trust")
+            trust_config_path = Path(prior_trust["config_path"]) if prior_trust else None
+            if prior_trust and prior_trust.get("state") == "added":
+                prior_trust.setdefault("run_id", manifest.get("run_id"))
+                recover_pending_trust_write(prior_trust, persist_trust_intent)
+            if not prior_trust or project_trust_level(project, trust_config_path) != "trusted":
+                manifest["codex_trust"] = add_project_trust(
+                    project,
+                    trust_config_path,
+                    persist_intent=persist_trust_intent,
+                    run_id=manifest.get("run_id"),
+                )
+            else:
+                manifest["codex_trust"] = prior_trust
         if not owner_path.exists():
             _write(owner_path, owner)
         _write(config_path, data)
         manifest["registration_state"] = "installed"
         save_manifest(run, manifest)
-    return {"registration_state": "installed", "registration_root": str(root), "config_path": str(config_path)}
+    return {
+        "registration_state": "installed",
+        "registration_root": str(root),
+        "config_path": str(config_path),
+        "trust": manifest.get("codex_trust", {}).get("state") if runtime == "codex" else None,
+        "restart_required": runtime == "codex",
+    }
 
 
 def remove(run: Path) -> dict:
@@ -197,12 +231,24 @@ def remove(run: Path) -> dict:
                 root.rmdir()
             except OSError:
                 pass
+        if runtime == "codex" and manifest.get("codex_trust"):
+
+            def persist_trust_intent(ownership):
+                current_manifest = load_manifest(run)
+                current_manifest["codex_trust"] = ownership
+                save_manifest(run, current_manifest)
+
+            trust_result = remove_project_trust(manifest["codex_trust"], persist_trust_intent)
+            if trust_result.get("state") == "conflict":
+                conflicts.append("codex-trust")
     manifest["registration_state"] = "removed" if not conflicts else "conflict"
     manifest["cleanup_required"] = True
     save_manifest(run, manifest)
     return {
         "registration_state": manifest["registration_state"],
         "config_absent": not _has_owned_config(config, manifest),
+        "owned_trust_absent": project_trust_absent(manifest.get("codex_trust")),
+        "restart_required": runtime == "codex",
         "conflicts": sorted(set(conflicts)),
     }
 
@@ -233,4 +279,4 @@ def registration_absent(run: Path, manifest: dict | None = None) -> bool:
     owner = root / ".temporary-tool-auditing-owner.json"
     if owner.exists():
         return False
-    return not _has_owned_config(config, manifest)
+    return not _has_owned_config(config, manifest) and project_trust_absent(manifest.get("codex_trust"))
