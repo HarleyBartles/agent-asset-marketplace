@@ -3,6 +3,7 @@
 import argparse
 import json
 import math
+import re
 import subprocess
 import time
 import uuid
@@ -139,6 +140,12 @@ def execute(args: dict, now: float | None = None) -> dict:
         except OSError:
             raise AuditStoreError("run-purge-inspection-failed") from None
         scripts = run / "scripts"
+        cache = scripts / "__pycache__"
+        owned_bytecode_paths = []
+        owned_helpers = {"record.py", "runtime.py", "store.py", "sanitize.py", "codex_trust.py"}
+        owned_bytecode = re.compile(
+            r"(?:record|runtime|store|sanitize|codex_trust)(?:\.(?:cpython-\d+|pypy\d+|opt-\d+))*\.pyc"
+        )
         try:
             is_junction = getattr(scripts, "is_junction", lambda: False)()
             if scripts.is_symlink() or is_junction:
@@ -146,9 +153,31 @@ def execute(args: dict, now: float | None = None) -> dict:
             if scripts.exists():
                 if not scripts.is_dir() or scripts.resolve(strict=True) != run.resolve(strict=True) / "scripts":
                     raise AuditStoreError("run-helper-purge-failed")
-                owned_helpers = {"record.py", "runtime.py", "store.py", "sanitize.py", "codex_trust.py"}
-                if any(entry.name not in owned_helpers for entry in scripts.iterdir()):
-                    raise AuditStoreError("run-helper-purge-failed")
+                for entry in scripts.iterdir():
+                    if entry.name == "__pycache__":
+                        if (
+                            entry.is_symlink()
+                            or getattr(entry, "is_junction", lambda: False)()
+                            or not entry.is_dir()
+                            or entry.resolve(strict=True) != scripts.resolve(strict=True) / "__pycache__"
+                        ):
+                            raise AuditStoreError("run-helper-purge-failed")
+                        for bytecode in entry.iterdir():
+                            if (
+                                bytecode.is_symlink()
+                                or getattr(bytecode, "is_junction", lambda: False)()
+                                or not bytecode.is_file()
+                                or not owned_bytecode.fullmatch(bytecode.name)
+                            ):
+                                raise AuditStoreError("run-helper-purge-failed")
+                            owned_bytecode_paths.append(bytecode)
+                    elif (
+                        entry.name not in owned_helpers
+                        or entry.is_symlink()
+                        or getattr(entry, "is_junction", lambda: False)()
+                        or not entry.is_file()
+                    ):
+                        raise AuditStoreError("run-helper-purge-failed")
         except OSError:
             raise AuditStoreError("run-helper-purge-failed") from None
         for name in ("events", "health", "controls"):
@@ -160,6 +189,24 @@ def execute(args: dict, now: float | None = None) -> dict:
             if path.exists():
                 raise AuditStoreError("log-purge-failed")
         if scripts.exists():
+            for bytecode in owned_bytecode_paths:
+                if (
+                    bytecode.parent != cache
+                    or bytecode.is_symlink()
+                    or getattr(bytecode, "is_junction", lambda: False)()
+                    or not bytecode.is_file()
+                    or not owned_bytecode.fullmatch(bytecode.name)
+                ):
+                    raise AuditStoreError("run-helper-purge-failed")
+                try:
+                    bytecode.unlink()
+                except OSError:
+                    raise AuditStoreError("run-helper-purge-failed") from None
+            if cache.exists():
+                try:
+                    cache.rmdir()
+                except OSError:
+                    raise AuditStoreError("run-helper-purge-failed") from None
             for name in owned_helpers:
                 try:
                     (scripts / name).unlink(missing_ok=True)

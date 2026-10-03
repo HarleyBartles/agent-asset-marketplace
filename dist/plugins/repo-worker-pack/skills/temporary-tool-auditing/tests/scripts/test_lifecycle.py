@@ -379,6 +379,9 @@ def test_purge_requires_verified_teardown_and_removes_audit_logs(tmp_path):
     scripts.mkdir()
     for name in ("record.py", "runtime.py", "store.py", "sanitize.py"):
         (scripts / name).write_text("# owned recorder helper", encoding="utf-8")
+    cache = scripts / "__pycache__"
+    cache.mkdir()
+    (cache / "runtime.cpython-312.pyc").write_bytes(b"owned bytecode")
 
     with pytest.raises(Exception) as error:
         execute({"operation": "purge", "run_dir": str(run), "apply": True}, now=101)
@@ -397,6 +400,52 @@ def test_purge_requires_verified_teardown_and_removes_audit_logs(tmp_path):
     assert "question" not in final
     assert not final.get("controls")
     assert not scripts.exists()
+
+
+def test_purge_rejects_unknown_bytecode_and_preserves_logs(tmp_path):
+    run = tmp_path / "run"
+    base_run(run, registration_state="teardown-verified", cleanup_required=True, teardown_verified_at=100)
+    append_record(run, "events", {"call_id": "call-1"})
+    cache = run / "scripts" / "__pycache__"
+    cache.mkdir(parents=True)
+    unknown = cache / "unrelated.pyc"
+    unknown.write_bytes(b"unknown")
+
+    with pytest.raises(Exception) as error:
+        execute({"operation": "purge", "run_dir": str(run), "apply": True}, now=101)
+
+    assert getattr(error.value, "code", None) == "run-helper-purge-failed"
+    assert unknown.exists()
+    assert (run / "events.jsonl").exists()
+    assert load_manifest(run)["cleanup_required"] is True
+
+
+def test_purge_preserves_bytecode_added_after_preflight(tmp_path, monkeypatch):
+    run = tmp_path / "run"
+    base_run(run, registration_state="teardown-verified", cleanup_required=True, teardown_verified_at=100)
+    cache = run / "scripts" / "__pycache__"
+    cache.mkdir(parents=True)
+    owned = cache / "runtime.cpython-312.pyc"
+    owned.write_bytes(b"owned")
+    late = cache / "unrelated.pyc"
+    original_unlink = Path.unlink
+    injected = False
+
+    def inject_after_preflight(path, *args, **kwargs):
+        nonlocal injected
+        result = original_unlink(path, *args, **kwargs)
+        if path == owned and not injected:
+            late.write_bytes(b"unknown")
+            injected = True
+        return result
+
+    monkeypatch.setattr(Path, "unlink", inject_after_preflight)
+    with pytest.raises(Exception) as error:
+        execute({"operation": "purge", "run_dir": str(run), "apply": True}, now=101)
+
+    assert getattr(error.value, "code", None) == "run-helper-purge-failed"
+    assert late.exists()
+    assert load_manifest(run)["cleanup_required"] is True
 
 
 def test_purge_is_previewable_and_retries_missing_logs_idempotently(tmp_path):
