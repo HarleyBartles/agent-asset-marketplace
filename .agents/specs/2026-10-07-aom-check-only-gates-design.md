@@ -1,6 +1,6 @@
 # AOM candidate-preserving hook and CI gates
 
-Status: Design direction approved in chat on 2026-10-07; written specification awaiting human review before implementation planning.
+Status: Written specification approved by the human on 2026-10-07. Implementation planning is authorized; implementation awaits plan review.
 
 ## Purpose
 
