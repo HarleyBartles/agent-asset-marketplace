@@ -16,7 +16,7 @@ RECORD_PATH = ".agents/contracts/operating-standards.json"
 CERTIFICATION_PATH = ".agents/contracts/standards-certification.md"
 SOURCE_REPOSITORY = "https://github.com/HarleyBartles/agent-asset-marketplace.git"
 SOURCE_COMMIT = "3d59506dbd7a02266dedc9251b396dd60e5cc37d"
-HOOK_SOURCE_COMMIT = SOURCE_COMMIT
+HOOK_SOURCE_COMMIT = "513e06ac48de90b1658dd38b5a99a6538625f183"
 COMMIT_PATTERN = re.compile(r"^(?:[0-9a-f]{40}|[0-9a-f]{64})$")
 STANDARD_DEFINITIONS = {
     "root-agent-router": "skills/agents-routing/references/standard.md",

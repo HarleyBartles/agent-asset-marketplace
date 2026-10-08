@@ -32,7 +32,7 @@
       "id": "tracked-validation-hook",
       "source": {
         "repository": "https://github.com/HarleyBartles/agent-asset-marketplace.git",
-        "commit": "3d59506dbd7a02266dedc9251b396dd60e5cc37d",
+        "commit": "513e06ac48de90b1658dd38b5a99a6538625f183",
         "definition": "skills/tracked-repo-hooks/references/standard.md"
       },
       "certification": ".agents/contracts/standards-certification.md#tracked-validation-hook"

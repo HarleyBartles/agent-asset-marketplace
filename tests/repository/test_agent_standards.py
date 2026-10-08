@@ -12,7 +12,12 @@ REPO_ROOT = Path(__file__).resolve().parents[2]
 CHECKER = REPO_ROOT / "tools" / "check_agent_standards.py"
 SOURCE_REPOSITORY = "https://github.com/HarleyBartles/agent-asset-marketplace.git"
 SOURCE_COMMIT = "3d59506dbd7a02266dedc9251b396dd60e5cc37d"
-HOOK_SOURCE_COMMIT = SOURCE_COMMIT
+CURRENT_SUBSCRIPTION = json.loads(
+    (REPO_ROOT / ".agents" / "contracts" / "operating-standards.json").read_text(encoding="utf-8")
+)
+HOOK_SOURCE_COMMIT = next(
+    entry["source"]["commit"] for entry in CURRENT_SUBSCRIPTION["standards"] if entry["id"] == "tracked-validation-hook"
+)
 SELECTED_DEFINITIONS = {
     "root-agent-router": "skills/agents-routing/references/standard.md",
     "runbook-composition": "skills/runbook-composition/references/standard.md",
@@ -107,6 +112,25 @@ def test_valid_pins_and_incomplete_certification_are_structurally_accepted(
     assert result.returncode == 0, result.stderr
     assert "semantic certification is not assessed" in result.stdout
     assert "certified" not in result.stdout.lower()
+    pins = {entry["id"]: entry["source"]["commit"] for entry in load_subscriptions(adopting_repo)["standards"]}
+    assert pins["tracked-validation-hook"] == HOOK_SOURCE_COMMIT
+    assert {pin for standard_id, pin in pins.items() if standard_id != "tracked-validation-hook"} == {SOURCE_COMMIT}
+    assert HOOK_SOURCE_COMMIT != SOURCE_COMMIT
+
+
+def test_checked_in_tracked_hook_pin_resolves_its_definition() -> None:
+    hook = next(entry for entry in CURRENT_SUBSCRIPTION["standards"] if entry["id"] == "tracked-validation-hook")
+    source = hook["source"]
+    result = subprocess.run(
+        ["git", "show", f"{source['commit']}:{source['definition']}"],
+        cwd=REPO_ROOT,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+
+    assert result.returncode == 0, result.stderr
+    assert "disposable checkout" in result.stdout
 
 
 @pytest.mark.parametrize("unexpected_id", ["command-bus", "repo-plugin-subscriptions", "marketplace-registry"])
