@@ -12,6 +12,12 @@ REPO_ROOT = Path(__file__).resolve().parents[2]
 CHECKER = REPO_ROOT / "tools" / "check_agent_standards.py"
 SOURCE_REPOSITORY = "https://github.com/HarleyBartles/agent-asset-marketplace.git"
 SOURCE_COMMIT = "3d59506dbd7a02266dedc9251b396dd60e5cc37d"
+CURRENT_SUBSCRIPTION = json.loads(
+    (REPO_ROOT / ".agents" / "contracts" / "operating-standards.json").read_text(encoding="utf-8")
+)
+HOOK_SOURCE_COMMIT = next(
+    entry["source"]["commit"] for entry in CURRENT_SUBSCRIPTION["standards"] if entry["id"] == "tracked-validation-hook"
+)
 SELECTED_DEFINITIONS = {
     "root-agent-router": "skills/agents-routing/references/standard.md",
     "runbook-composition": "skills/runbook-composition/references/standard.md",
@@ -35,7 +41,7 @@ def adopting_repo(tmp_path: Path) -> Path:
                 "id": standard_id,
                 "source": {
                     "repository": SOURCE_REPOSITORY,
-                    "commit": SOURCE_COMMIT,
+                    "commit": HOOK_SOURCE_COMMIT if standard_id == "tracked-validation-hook" else SOURCE_COMMIT,
                     "definition": definition,
                 },
                 "certification": f".agents/contracts/standards-certification.md#{standard_id}",
@@ -45,13 +51,7 @@ def adopting_repo(tmp_path: Path) -> Path:
     }
     (contract_dir / "operating-standards.json").write_text(json.dumps(subscriptions), encoding="utf-8")
     (contract_dir / "repo-standards-commands.json").write_text(
-        json.dumps(
-            {
-                "apply": [["@python", "tools/run.py", "ci", "--apply"]],
-                "check": [["@python", "tools/run.py", "ci", "--check", "--diagnostics"]],
-                "generated_paths": [],
-            }
-        ),
+        json.dumps({"check": [["@python", "tools/run.py", "ci", "--check"]]}),
         encoding="utf-8",
     )
     certifications = ["# Standards certification", "", "Status: not yet certified.", ""]
@@ -112,6 +112,25 @@ def test_valid_pins_and_incomplete_certification_are_structurally_accepted(
     assert result.returncode == 0, result.stderr
     assert "semantic certification is not assessed" in result.stdout
     assert "certified" not in result.stdout.lower()
+    pins = {entry["id"]: entry["source"]["commit"] for entry in load_subscriptions(adopting_repo)["standards"]}
+    assert pins["tracked-validation-hook"] == HOOK_SOURCE_COMMIT
+    assert {pin for standard_id, pin in pins.items() if standard_id != "tracked-validation-hook"} == {SOURCE_COMMIT}
+    assert HOOK_SOURCE_COMMIT != SOURCE_COMMIT
+
+
+def test_checked_in_tracked_hook_pin_resolves_its_definition() -> None:
+    hook = next(entry for entry in CURRENT_SUBSCRIPTION["standards"] if entry["id"] == "tracked-validation-hook")
+    source = hook["source"]
+    result = subprocess.run(
+        ["git", "show", f"{source['commit']}:{source['definition']}"],
+        cwd=REPO_ROOT,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+
+    assert result.returncode == 0, result.stderr
+    assert "disposable checkout" in result.stdout
 
 
 @pytest.mark.parametrize("unexpected_id", ["command-bus", "repo-plugin-subscriptions", "marketplace-registry"])
@@ -177,18 +196,46 @@ def test_checker_rejects_unreadable_subscription_json(adopting_repo: Path) -> No
     assert "is not readable JSON" in result.stderr
 
 
-def test_checker_requires_hook_apply_and_check_to_use_the_same_ci_target(
-    adopting_repo: Path,
+def test_checker_accepts_the_check_only_hook_command_contract(adopting_repo: Path) -> None:
+    result = run_checker(adopting_repo)
+    assert result.returncode == 0, result.stderr
+
+
+@pytest.mark.parametrize(
+    ("mutation", "diagnostic"),
+    [
+        ({"apply": [["@python", "tools/run.py", "ci", "--apply"]]}, "unknown field(s): apply"),
+        ({"generated_paths": []}, "unknown field(s): generated_paths"),
+        ({"check": []}, "check must be a non-empty array"),
+        ({"check": [["python", "tools/run.py", "ci", "--check"]]}, "must be exactly"),
+        ({"check": [["@python", "tools/run.py", "ci", "--check", "--diagnostics"]]}, "must be exactly"),
+        ({"check": [["@python", "tools/run.py", "ci", "--apply"]]}, "must be exactly"),
+    ],
+)
+def test_checker_rejects_mutative_or_malformed_hook_command_contract(
+    adopting_repo: Path, mutation: dict[str, object], diagnostic: str
 ) -> None:
     path = adopting_repo / ".agents/contracts/repo-standards-commands.json"
-    declaration = json.loads(path.read_text(encoding="utf-8"))
-    declaration["check"] = [["@python", "tools/run.py", "validate", "--check"]]
-    path.write_text(json.dumps(declaration), encoding="utf-8")
+    path.write_text(json.dumps(mutation), encoding="utf-8")
 
     result = run_checker(adopting_repo)
 
     assert result.returncode != 0
-    assert "command contract check must invoke tools/run.py ci --check" in result.stderr
+    assert diagnostic in result.stderr
+
+
+def test_checker_rejects_a_forged_tracked_hook_pin(adopting_repo: Path) -> None:
+    record = load_subscriptions(adopting_repo)
+    hook = next(entry for entry in record["standards"] if entry["id"] == "tracked-validation-hook")
+    source = dict(hook["source"])
+    source["commit"] = "0" * 40
+    hook["source"] = source
+    save_subscriptions(adopting_repo, record)
+
+    result = run_checker(adopting_repo)
+
+    assert result.returncode != 0
+    assert "does not match the repository's certified pin" in result.stderr
 
 
 def test_checker_rejects_legacy_subscription_versions(adopting_repo: Path) -> None:

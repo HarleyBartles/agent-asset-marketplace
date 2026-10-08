@@ -16,6 +16,7 @@ RECORD_PATH = ".agents/contracts/operating-standards.json"
 CERTIFICATION_PATH = ".agents/contracts/standards-certification.md"
 SOURCE_REPOSITORY = "https://github.com/HarleyBartles/agent-asset-marketplace.git"
 SOURCE_COMMIT = "3d59506dbd7a02266dedc9251b396dd60e5cc37d"
+HOOK_SOURCE_COMMIT = "513e06ac48de90b1658dd38b5a99a6538625f183"
 COMMIT_PATTERN = re.compile(r"^(?:[0-9a-f]{40}|[0-9a-f]{64})$")
 STANDARD_DEFINITIONS = {
     "root-agent-router": "skills/agents-routing/references/standard.md",
@@ -126,7 +127,7 @@ def _subscription_findings(record: object) -> list[str]:
             commit = source.get("commit")
             if not isinstance(commit, str) or not COMMIT_PATTERN.fullmatch(commit):
                 findings.append(f"{label}.source.commit must be a full lowercase Git object ID")
-            elif commit != SOURCE_COMMIT:
+            elif commit != (HOOK_SOURCE_COMMIT if standard_id == "tracked-validation-hook" else SOURCE_COMMIT):
                 findings.append(f"{label}.source.commit does not match the repository's certified pin")
             definition = source.get("definition")
             findings.extend(f"{label}.source.{issue}" for issue in _relative_path_findings(definition))
@@ -163,26 +164,15 @@ def _check_hook_command_contract(repo_root: Path) -> list[str]:
     if not isinstance(declaration, dict):
         return [f"tracked-validation-hook: {relative} must be a JSON object"]
 
-    findings = _unknown_fields(declaration, {"apply", "check", "generated_paths"}, relative)
-    for mode in ("apply", "check"):
-        expected_flag = f"--{mode}"
-        commands = declaration.get(mode)
-        if not isinstance(commands, list):
-            findings.append(f"tracked-validation-hook: command contract {mode} must be an array")
-            continue
-        invokes_ci = False
-        for command in commands:
-            if not isinstance(command, list) or not all(isinstance(part, str) for part in command):
-                findings.append(f"tracked-validation-hook: command contract {mode} entries must be string arrays")
-                continue
-            if any(
-                command[index : index + 3] == ["tools/run.py", "ci", expected_flag] for index in range(len(command) - 2)
-            ):
-                invokes_ci = True
-        if not invokes_ci:
-            findings.append(
-                f"tracked-validation-hook: command contract {mode} must invoke tools/run.py ci {expected_flag}"
-            )
+    findings = _unknown_fields(declaration, {"check"}, relative)
+    commands = declaration.get("check")
+    expected = [["@python", "tools/run.py", "ci", "--check"]]
+    if not isinstance(commands, list) or not commands:
+        findings.append("tracked-validation-hook: command contract check must be a non-empty array")
+    elif commands != expected:
+        findings.append(
+            "tracked-validation-hook: command contract check must be exactly @python tools/run.py ci --check"
+        )
     return findings
 
 

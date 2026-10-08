@@ -1,15 +1,5 @@
 {
-  "apply": [
-    ["@python", "tools/run.py", "ci", "--apply"]
-  ],
   "check": [
-    ["@python", "tools/run.py", "ci", "--check", "--diagnostics"]
-  ],
-  "generated_paths": [
-    ".agents/skills/**",
-    "**/.provenance.json",
-    ".agents/plugins/marketplace.json",
-    "dist/plugin-roots.json",
-    "dist/manifest.json"
+    ["@python", "tools/run.py", "ci", "--check"]
   ]
 }

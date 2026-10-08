@@ -7,10 +7,10 @@ import subprocess
 import sys
 
 
-DESCRIPTION = "Run a repository-owned complete read-only gate command."
+DESCRIPTION = "Run a repository-owned complete candidate-preserving check command."
 SUPPORTED_MODES = ("check",)
 PREREQUISITES = ("Register this target in the repository's command bus and provide a complete check command.",)
-SIDE_EFFECTS = "Runs the supplied repository command; its check mode must not mutate maintained files."
+SIDE_EFFECTS = "Runs checks that may create disposable outputs but must preserve maintained files."
 
 
 def _help() -> int:
