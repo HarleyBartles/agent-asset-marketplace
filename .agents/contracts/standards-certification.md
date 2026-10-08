@@ -31,14 +31,14 @@ This is the repository-owned assessment of its selected standards. The structura
 
 ## tracked-validation-hook
 
-**Status:** Candidate-preserving implementation established; exact-head hosted proof is pending for this upgrade.
+**Status:** The repository integration implements the candidate-preserving hook contract; each candidate is verified by the local hook and hosted exact-head workflow.
 
 **Definition pin:** `skills/tracked-repo-hooks/references/standard.md` at `513e06ac48de90b1658dd38b5a99a6538625f183`.
 
 - **Implementation:** `githooks/pre-commit` materializes the original candidate in an isolated checkout and private index. `tools/hook_gate_adapter.sh` runs the candidate-owned `ci --check` declaration. `.github/workflows/marketplace-validation.yml` invokes the same hook against the exact detached hosted commit.
 - **Must preserve:** Keep the complete `tools/run.py ci --check` gate on Windows and Linux, fail fast from cheaper checks to expensive tests, report the exact failed check and repair/recheck lever, allow disposable build/test outputs, preserve maintained files and the candidate index, fail on missing prerequisites, and prohibit agents from bypassing the hook.
 - **Drift controls:** The check-only command declaration is structurally restricted by `tools/check_agent_standards.py`; the hook adapter rejects apply and aggregate-diagnostics commands. Portable and repository behavior tests exercise candidate ownership, mutation rejection, path-limited commits, and hosted/local parity. `.agents/runbooks/pr.md` and `.agents/doctrine/tools.md` prohibit bypassing the hook.
-- **Evidence and limits:** The test owners verify local and hosted entrypoint behavior and preserve original checkout state. Exact-head hosted Linux evidence remains pending until GitHub runs the migrated workflow for the published head. Local tests do not certify future candidates or substitute for that hosted run.
+- **Evidence and limits:** Local behavior tests cover candidate ownership, mutation rejection, path-limited commits, and hosted/local entrypoint parity. GitHub Actions workflow `Marketplace validation` checks the exact detached PR or commit head; its result is the hosted evidence for that candidate. Local tests do not certify future candidates or substitute for that hosted run.
 
 ## review-entrypoint
 
