@@ -553,12 +553,17 @@ def test_normalize_repair_and_recheck_preserve_newline_count_and_scope(tmp_path:
 def test_staged_lint_candidate_ignores_an_unstaged_repair(tmp_path: Path):
     source = _bus_fixture(tmp_path)
     candidate_file = source / "sample.py"
+    unrelated_file = source / "unrelated.py"
+    unrelated_file.write_text("value = 1\n", encoding="utf-8")
+    subprocess.run(["git", "add", "unrelated.py"], cwd=source, check=True)
+    subprocess.run(["git", "commit", "--quiet", "-m", "python base"], cwd=source, check=True)
     candidate_file.write_text("def check():\n    return undefined_name\n", encoding="utf-8")
     subprocess.run(["git", "add", "sample.py"], cwd=source, check=True)
     staged_tree = subprocess.run(
         ["git", "write-tree"], cwd=source, capture_output=True, text=True, check=True
     ).stdout.strip()
     candidate_file.write_text('def check():\n    return "repaired only in worktree"\n', encoding="utf-8")
+    unrelated_file.write_text("import os\n", encoding="utf-8")
     candidate = tmp_path / "isolated gate candidate"
     subprocess.run(["git", "clone", "--quiet", "--shared", "--no-checkout", str(source), str(candidate)], check=True)
     parent = subprocess.run(
@@ -581,7 +586,70 @@ def test_staged_lint_candidate_ignores_an_unstaged_repair(tmp_path: Path):
 
     assert result.returncode == 1, result.stdout + result.stderr
     assert "undefined_name" in result.stdout
+    repair = _hint(result.stderr, "Repair")
+    recheck = _hint(result.stderr, "Recheck")
+    assert "--files" in repair and "sample.py" in repair
+    assert "unrelated.py" not in repair
+    assert "--files" in recheck and "sample.py" in recheck
+    assert "unrelated.py" not in recheck
+    repaired = _run_rendered_command(repair, source)
+    assert repaired.returncode == 0, repaired.stdout + repaired.stderr
+    checked = _run_rendered_command(recheck, source)
+    assert checked.returncode == 0, checked.stdout + checked.stderr
+    assert unrelated_file.read_text(encoding="utf-8") == "import os\n"
     assert candidate_file.read_text(encoding="utf-8").endswith('return "repaired only in worktree"\n')
+
+
+def test_default_format_repair_is_scoped_to_failed_candidate_files(tmp_path: Path):
+    source = _bus_fixture(tmp_path)
+    candidate_file = source / "sample.py"
+    unrelated_file = source / "unrelated.py"
+    candidate_file.write_text("value = 1\n", encoding="utf-8")
+    unrelated_file.write_text("value = 1\n", encoding="utf-8")
+    subprocess.run(["git", "add", "sample.py", "unrelated.py"], cwd=source, check=True)
+    subprocess.run(["git", "commit", "--quiet", "-m", "python base"], cwd=source, check=True)
+
+    candidate_file.write_text("value=2\n", encoding="utf-8")
+    subprocess.run(["git", "add", "sample.py"], cwd=source, check=True)
+    staged_tree = subprocess.run(
+        ["git", "write-tree"], cwd=source, capture_output=True, text=True, check=True
+    ).stdout.strip()
+    unrelated_file.write_text("value=2\n", encoding="utf-8")
+
+    candidate = tmp_path / "isolated format candidate"
+    subprocess.run(["git", "clone", "--quiet", "--shared", "--no-checkout", str(source), str(candidate)], check=True)
+    parent = subprocess.run(
+        ["git", "-C", str(source), "rev-parse", "HEAD"], capture_output=True, text=True, check=True
+    ).stdout.strip()
+    subprocess.run(["git", "-C", str(candidate), "update-ref", "--no-deref", "HEAD", parent], check=True)
+    subprocess.run(["git", "-C", str(candidate), "update-ref", "refs/remotes/origin/main", parent], check=True)
+    subprocess.run(["git", "-C", str(candidate), "read-tree", staged_tree], check=True)
+    subprocess.run(["git", "-C", str(candidate), "checkout-index", "--all", "--force"], check=True)
+    env = _fixture_env()
+    env["REPO_STANDARDS_STAGED_SNAPSHOT"] = "1"
+
+    failed = subprocess.run(
+        [sys.executable, str(candidate / "tools" / "run.py"), "format", "--check", "--base-ref", "origin/main"],
+        cwd=candidate,
+        env=env,
+        capture_output=True,
+        text=True,
+    )
+
+    assert failed.returncode == 1, failed.stdout + failed.stderr
+    repair = _hint(failed.stderr, "Repair")
+    recheck = _hint(failed.stderr, "Recheck")
+    assert "--files" in repair and "sample.py" in repair
+    assert "unrelated.py" not in repair
+    assert "--files" in recheck and "sample.py" in recheck
+    assert "unrelated.py" not in recheck
+
+    repaired = _run_rendered_command(repair, source)
+    assert repaired.returncode == 0, repaired.stdout + repaired.stderr
+    checked = _run_rendered_command(recheck, source)
+    assert checked.returncode == 0, checked.stdout + checked.stderr
+    assert candidate_file.read_text(encoding="utf-8") == "value = 2\n"
+    assert unrelated_file.read_text(encoding="utf-8") == "value=2\n"
 
 
 def test_scope_validation_help_and_failed_python_launch_are_clear(tmp_path: Path, monkeypatch, capsys):

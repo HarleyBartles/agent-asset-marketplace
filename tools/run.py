@@ -56,6 +56,13 @@ class CommandStartError(Exception):
         )
 
 
+class ScopedCommandError(Exception):
+    def __init__(self, original: Exception, files: tuple[Path, ...]):
+        self.original = original
+        self.files = files
+        super().__init__(str(original))
+
+
 class RunnerError(Exception):
     def __init__(
         self,
@@ -111,8 +118,15 @@ def _run(cmd: list[str], ctx: Ctx, *, env: dict[str, str] | None = None) -> None
         print("+ " + " ".join(shlex.quote(part) for part in cmd))
     try:
         subprocess.run(cmd, cwd=ROOT, check=True, env=env)
+    except subprocess.CalledProcessError as exc:
+        if ctx.files:
+            raise ScopedCommandError(exc, ctx.files) from exc
+        raise
     except OSError as exc:
-        raise CommandStartError(cmd, exc) from exc
+        failure = CommandStartError(cmd, exc)
+        if ctx.files:
+            raise ScopedCommandError(failure, ctx.files) from exc
+        raise failure from exc
 
 
 def _ref_exists(ref: str) -> bool:
@@ -337,10 +351,11 @@ def _run_lint(ctx: Ctx) -> None:
         if not files:
             print("No selected Python files to lint.")
             return
+        scoped_ctx = dataclass_replace(ctx, files=tuple(files))
         command = [sys.executable, "-m", "ruff", "check"]
         if ctx.mode == "apply":
             command.append("--fix")
-        _run([*command, *map(str, files)], ctx)
+        _run([*command, *map(str, files)], scoped_ctx)
         return
     files = _changed_python_files(ctx.base_ref)
     if ctx.mode == "check" and not ctx.base_ref and os.environ.get("REPO_STANDARDS_STAGED_SNAPSHOT") != "1":
@@ -348,12 +363,14 @@ def _run_lint(ctx: Ctx) -> None:
     if not files:
         print("No changed Python files to lint.")
     elif ctx.mode == "check":
+        scoped_ctx = dataclass_replace(ctx, files=tuple(files))
         if ctx.base_ref:
-            _run([sys.executable, "tools/ruff_diff.py", "--changed-from", ctx.base_ref], ctx)
+            _run([sys.executable, "tools/ruff_diff.py", "--changed-from", ctx.base_ref], scoped_ctx)
         else:
-            _run([sys.executable, "-m", "ruff", "check", *map(str, files)], ctx)
+            _run([sys.executable, "-m", "ruff", "check", *map(str, files)], scoped_ctx)
     else:
-        _run([sys.executable, "-m", "ruff", "check", "--fix", *map(str, files)], ctx)
+        scoped_ctx = dataclass_replace(ctx, files=tuple(files))
+        _run([sys.executable, "-m", "ruff", "check", "--fix", *map(str, files)], scoped_ctx)
 
 
 def _run_format(ctx: Ctx) -> None:
@@ -361,10 +378,11 @@ def _run_format(ctx: Ctx) -> None:
     if not files:
         print("No changed Python files to format.")
         return
+    scoped_ctx = dataclass_replace(ctx, files=tuple(files))
     command = [sys.executable, "-m", "ruff", "format"]
     if ctx.mode == "check":
         command.append("--check")
-    _run([*command, *map(str, files)], ctx)
+    _run([*command, *map(str, files)], scoped_ctx)
 
 
 def _tracked_paths() -> list[Path]:
@@ -444,7 +462,11 @@ def _run_steps(
             raise
         except Exception as exc:
             repair_ctx = run_ctx
-            if isinstance(exc, ValidationFailure) and exc.files and not run_ctx.files:
+            failure = exc
+            if isinstance(exc, ScopedCommandError):
+                repair_ctx = dataclass_replace(run_ctx, files=exc.files)
+                failure = exc.original
+            elif isinstance(exc, ValidationFailure) and exc.files and not run_ctx.files:
                 repair_ctx = dataclass_replace(run_ctx, files=exc.files)
             if target in {"lint", "format", "normalize"}:
                 repair = _command_for(target, "apply", repair_ctx)
@@ -454,13 +476,14 @@ def _run_steps(
                 repair = f"No automatic repair is available for {target}; review the reported failure."
             recheck = _recheck_command(target, repair_ctx)
             failed_command = ""
-            if isinstance(exc, subprocess.CalledProcessError):
+            if isinstance(failure, subprocess.CalledProcessError):
                 failed_command = (
-                    f"\nFailed command: {_render_command([str(part) for part in exc.cmd])} (exit {exc.returncode})"
+                    f"\nFailed command: {_render_command([str(part) for part in failure.cmd])} "
+                    f"(exit {failure.returncode})"
                 )
-            elif isinstance(exc, CommandStartError):
-                failed_command = f"\nFailed command: {_render_command(exc.command)}"
-            wrapped = RunnerError(target, repair, exc, recheck=recheck)
+            elif isinstance(failure, CommandStartError):
+                failed_command = f"\nFailed command: {_render_command(failure.command)}"
+            wrapped = RunnerError(target, repair, failure, recheck=recheck)
             if failed_command:
                 wrapped.args = (str(wrapped) + failed_command,)
             raise wrapped from exc
