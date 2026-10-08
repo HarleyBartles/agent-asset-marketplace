@@ -80,7 +80,7 @@ def _setup_repo(tmp_path: Path, *, reject: bool = False) -> Path:
         "    if not source_git_dir:\n"
         "        raise SystemExit('source Git object database was not provided to candidate checks')\n"
         "    pinned = subprocess.check_output(\n"
-        "        ['git', '--git-dir', source_git_dir, 'show', 'HEAD:source-pin.txt'], text=True\n"
+        "        ['git', '--git-dir', source_git_dir, 'cat-file', 'blob', 'HEAD:source-pin.txt'], text=True\n"
         "    ).strip()\n"
         "    if pinned != 'pinned source definition':\n"
         "        raise SystemExit('source Git object database returned the wrong pinned content')\n"

@@ -127,7 +127,7 @@ def test_checked_in_tracked_hook_pin_resolves_its_definition() -> None:
     if source_git_dir:
         git_command.extend(["--git-dir", source_git_dir])
     result = subprocess.run(
-        [*git_command, "show", f"{source['commit']}:{source['definition']}"],
+        [*git_command, "cat-file", "blob", f"{source['commit']}:{source['definition']}"],
         cwd=REPO_ROOT,
         capture_output=True,
         text=True,
