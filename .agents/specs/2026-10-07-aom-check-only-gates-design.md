@@ -8,6 +8,8 @@ An agent should be able to attempt a commit cheaply, receive an exact explanatio
 
 The human confirmed that literal read-only execution is too restrictive for builds and tests. Disposable outputs are allowed; changes to maintained repository files or the intended index are not. This distinction governs the standards, skills, optional starter assets, and the Marketplace's own integration.
 
+The standard defines the shared hook/CI contract, not every repository-specific infrastructure requirement. It does not require submodule support. Repositories that use submodules include their treatment in their own gate and self-certification; the optional starter does not prescribe that behavior. This Marketplace repository does not use submodules, so this implementation adds no submodule-specific handling or tests.
+
 ## Existing behavior and ownership
 
 Canonical source is `skills/tracked-repo-hooks/` and `skills/command-bus/`. The hook standard currently permits normalization and generation inside the candidate. Its optional Bash starter runs an apply callback locally, stages its results, then runs the check callback; hosted mode runs only the check callback. The command-bus standard already distinguishes check from apply and permits disposable test/build outputs during checks.
@@ -48,7 +50,7 @@ Adapt the optional Bash hook to a check-only repository adapter seam in both loc
 
 The optional bus target and hosted workflow examples must describe the same candidate-preserving contract and disposable-output allowance. Their sample interfaces remain optional and independently replaceable. The normalizer, hook, workflow, and bus target do not become a mandatory bundle.
 
-Migrate the Marketplace's own hook and declared check command to this contract. Remove hook-side apply/staging, select fail-fast checks, put cheap independent checks before test suites, and expose truthful focused repair/recheck commands through its existing bus. Preserve the complete required Windows/Linux gate, staged input semantics, submodule protections, and hosted CI parity. Do not change unrelated bus targets or make formerly mandatory checks optional to improve speed.
+Migrate the Marketplace's own hook and declared check command to this contract. Remove hook-side apply/staging, select fail-fast checks, put cheap independent checks before test suites, and expose truthful focused repair/recheck commands through its existing bus. Preserve the complete required Windows/Linux gate, staged input semantics, and hosted CI parity. Do not change unrelated bus targets or make formerly mandatory checks optional to improve speed.
 
 Regenerate shipped packages through `tools/run.py marketplace --apply` after canonical source edits. Maintain the affected repository certification with honest current evidence and source-pin handling. A new subscription pin must reference an existing immutable source commit containing the revised definition; never fabricate a future commit or imply that an old pin incorporates new requirements. Updating other consumer repositories or installed user plugins is outside this slice.
 

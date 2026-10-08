@@ -85,10 +85,10 @@ git -C "$GATE_ROOT" checkout-index --all --force
 
 - [x] Delete clone-created origin refs and copy only the author's actual non-symbolic remote-tracking refs, without fetching or reconstructing refs.
 
-- [x] Load the adapter only from the materialized candidate and exclude author-side ignored/stale files. Resolve submodules from staged gitlinks and local initialized object stores only, with no fetch.
-- [x] Materialize root and nested submodules from NUL-safe index entries, require in-root source paths and exact local objects, and detect staged or working mutation in each private submodule.
+- [x] Load the adapter only from the materialized candidate and exclude author-side ignored/stale files.
+- [ ] Remove submodule-specific handling from the optional starter and its tests; repositories that use submodules own that requirement in their gate and self-certification. This Marketplace repository does not use submodules.
 - [x] Capture child status before mutation checks, compare private index/worktree against its initial candidate, allow ignored disposable outputs, preserve child status on combined failure, and reject other mutation. Cleanup verifies and reports the disposable path.
-- [x] Exercise local/hosted pass and fail, candidate adapter selection, temporary index, root candidate, missing adapter, unavailable submodule, mutation on callback failure, ignored output, and fail-fast diagnostics.
+- [x] Exercise local/hosted pass and fail, candidate adapter selection, temporary index, root candidate, missing adapter, mutation on callback failure, ignored output, and fail-fast diagnostics.
 - [x] Prove fail-fast through a consumer adapter with a named cheap check returning 17 and a later expensive callback writing an external marker. Assert the expensive marker does not exist, stderr contains the specific diagnostic and repair/recheck command, and the status is 17 in local and hosted modes. Update adoption scenarios to distinguish maintained regeneration from disposable builds and explicit repair from acceptance.
 - [x] Run `py -3 -m pytest -q skills/tracked-repo-hooks/tests/assets skills/command-bus/tests/assets`. GREEN requires original-state preservation, no apply callbacks, same gate behavior in both modes, disposable-output success, and meaningful diagnostic/status propagation. Keep run output transient. Do not commit yet.
 
@@ -146,7 +146,7 @@ def test_validation_failure_stops_before_tests(monkeypatch):
 
 - [x] Witness RED in `test_tracked_hook_candidate.py`; the migrated hook commits exactly the `git commit --only` candidate and preserves separately staged work.
 - [x] Exercise cheap local and hosted rejection with status 17, precise diagnostics, no expensive stage, and unchanged candidate state.
-- [x] Migrate the executable root hook to candidate isolation, staged adapter/declaration loading, and the original submodule state guard with repair/recheck guidance.
+- [ ] Remove submodule-specific guards and materialization from the Marketplace hook and its tests while preserving candidate/index behavior, candidate isolation, and staged adapter/declaration loading.
 - [x] Derive the disposable root from the Git common directory and main checkout under canonical `_agent-scratch/<repo>/`, create unique contained children, and clean only the verified candidate directory.
 - [x] Implement the check-only adapter with runtime discovery, candidate declaration loading, exact vector validation, and child status propagation.
 
@@ -160,7 +160,7 @@ for declared in commands:
 
 - [x] Replace the mutative command declaration with the exact check-only vector and reject apply, diagnostics, generated paths, malformed, empty, and contradictory command contracts while retaining structural/semantic distinction.
 - [x] Preserve standard selection and existing pins; prepare `HOOK_SOURCE_COMMIT` independently for the later adoption commit. Do not select command-bus as a standard.
-- [x] Cover staged adapter/declaration selection, mutation on success/failure, disposable ignored output, protected ignored state, submodule dirty/head drift/uninitialized states, and unavailable submodule objects.
+- [x] Cover staged adapter/declaration selection, mutation on success/failure, disposable ignored output, and protected ignored state.
 - [x] Run the hosted workflow fixture through the actual hook and adapter; prove exact SHA/clean/detached checks and missing-prerequisite failure before later work.
 - [x] Update repository tools/plans doctrine and certification to describe explicit repair, candidate-preserving checks, fail-fast guidance, and current proof boundaries.
 - [x] Run the Task 3 repository test command; 92 tests passed under the plan runner. Do not commit before Task 4 regenerates packages and obtains review.
@@ -173,7 +173,7 @@ for declared in commands:
 
 - [x] Read the [review runbook](../runbooks/code-review.md), [PR runbook](../runbooks/pr.md), and canonical publication/review capabilities before their steps. Review the diff against the approved spec and this plan, preserving source custody and the scope of the five directly affected skills. Do not retire unrelated active plans or touch their policy text just to remove search hits.
 - [x] Run focused tests from Tasks 1-3 and the existing package-build owners as needed for changed source. Run `py -3 tools/run.py marketplace --apply` explicitly outside the hook. Run `py -3 tools/run.py marketplace --check` and `py -3 -m pytest -q tests/shipping/test_aom_tracked_repo_hooks_assets.py tests/shipping/test_aom_command_bus_assets.py`. The packaged hook tests must execute from an isolated consumer without reaching canonical source or an installed cache. Fix source or the owning generator when packages disagree; never patch `dist/` by hand.
-- [x] Obtain a fresh independent whole-branch review covering Git state, path containment/cleanup, submodules, staged scope, child failures, exact repair invocations, cheap-check reachability, Windows/Linux parity, and package closure. Use the repository's review workflow; later execution may resolve the required independent review capability through the available reviewer tool or selecting-a-subagent. Re-run a fresh review after corrections. A green test run is not a review. Keep review work products transient outside the repository.
+- [x] Obtain a fresh independent whole-branch review covering Git state, path containment/cleanup, staged scope, child failures, exact repair invocations, cheap-check reachability, Windows/Linux parity, and package closure. Use the repository's review workflow; later execution may resolve the required independent review capability through the available reviewer tool or selecting-a-subagent. Re-run a fresh review after corrections. A green test run is not a review. Keep review work products transient outside the repository.
 - [ ] Stage the complete intended source, integration, generated outputs, and updated in-flight plan. Commit normally as `feat: make AOM gates preserve candidates and fail fast`. The migrated hook owns the complete staged gate. If it rejects, use its named focused repair/recheck path, inspect and stage the repair, and retry. Do not invoke apply automatically from the hook or skip it. Verify clean status, committed file list, and that the source definitions and generated package bytes are in this commit.
 - [ ] Capture the immutable source commit and prove the revised definition exists before using it as a pin:
 
