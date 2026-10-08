@@ -280,7 +280,17 @@ def test_submodule_state_rejection_precedes_gate_without_repair_or_fetch(tmp_pat
     elif submodule_state == "head-drift":
         (child / "module.txt").write_text("second module commit\n", encoding="utf-8")
         _git(child, "add", "module.txt")
-        _git(child, "commit", "--quiet", "-m", "second module commit")
+        _git(
+            child,
+            "-c",
+            "user.name=Module Test",
+            "-c",
+            "user.email=module@example.invalid",
+            "commit",
+            "--quiet",
+            "-m",
+            "second module commit",
+        )
     else:
         _git(repo, "submodule", "deinit", "--force", "--", "modules/child")
 
