@@ -325,37 +325,6 @@ def test_missing_candidate_adapter_fails_closed(tmp_path: Path) -> None:
     assert not list(scratch.iterdir())
 
 
-def test_candidate_with_unavailable_staged_submodule_object_fails_without_fetching(tmp_path: Path) -> None:
-    calls = tmp_path / "submodule gate calls.txt"
-    repo = _repo(tmp_path / "missing submodule object repo", check_body=f'printf "called\\n" >> {_external(calls)}')
-    module_path = repo / "modules" / "child"
-    module_path.mkdir(parents=True)
-    _git(module_path, "init", "--quiet")
-    _git(module_path, "config", "user.name", "Hook Test")
-    _git(module_path, "config", "user.email", "hook-test@example.invalid")
-    (module_path / "source.txt").write_text("local source", encoding="utf-8")
-    _git(module_path, "add", "source.txt")
-    _git(module_path, "commit", "--quiet", "-m", "local source")
-    unavailable = _git(repo, "rev-parse", "HEAD")
-    (repo / ".gitmodules").write_text(
-        '[submodule "child"]\n\tpath = modules/child\n\turl = https://example.invalid/missing.git\n',
-        encoding="utf-8",
-    )
-    _git(repo, "add", ".gitmodules")
-    _git(repo, "update-index", "--add", "--cacheinfo", f"160000,{unavailable},modules/child")
-    source_status = _git(module_path, "status", "--porcelain")
-    scratch = tmp_path / "missing submodule scratch"
-
-    result = _run_hook(repo, scratch=scratch)
-
-    assert result.returncode == 2, result.stdout + result.stderr
-    assert "submodule" in result.stderr.lower()
-    assert unavailable in result.stderr
-    assert not calls.exists()
-    assert _git(module_path, "status", "--porcelain") == source_status
-    assert not list(scratch.iterdir())
-
-
 def test_unborn_root_candidate_can_be_materialized_and_checked(tmp_path: Path) -> None:
     checked_tree = tmp_path / "root tree.txt"
     repo = tmp_path / "root candidate repo"

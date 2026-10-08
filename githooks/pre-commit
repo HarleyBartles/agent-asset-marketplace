@@ -37,23 +37,6 @@ else
   VALIDATION_PARENT=$(git rev-parse --verify HEAD 2>/dev/null || true)
 fi
 
-if ! SUBMODULE_STATUS=$(git submodule status --recursive 2>&1); then
-  fail "could not inspect required submodule source: $SUBMODULE_STATUS"
-fi
-SUBMODULE_HEAD_DRIFT=$(printf '%s\n' "$SUBMODULE_STATUS" | grep -E '^[+-U]' || true)
-SUBMODULE_WORKTREE_DRIFT=$(git submodule foreach --quiet --recursive '
-  unset GIT_INDEX_FILE
-  actual=$(git rev-parse HEAD) || exit 1
-  dirty=$(git status --porcelain --untracked-files=all) || exit 1
-  if [ "$actual" != "$sha1" ] || [ -n "$dirty" ]; then printf "%s\n" "$displaypath"; fi
-')
-if [[ -n "$SUBMODULE_HEAD_DRIFT" || -n "$SUBMODULE_WORKTREE_DRIFT" ]]; then
-  printf 'pre-commit: submodule state differs from the staged gitlink or has uncommitted content:\n%s\n%s\n' "$SUBMODULE_HEAD_DRIFT" "$SUBMODULE_WORKTREE_DRIFT" >&2
-  printf 'Repair: commit/stage the intended submodule state or restore it before retrying.\n' >&2
-  printf 'Recheck: git submodule status --recursive\n' >&2
-  exit 1
-fi
-
 ORIGIN_REFS=$(git for-each-ref --format='%(refname) %(objectname)' refs/remotes/origin)
 COMMON_DIR=$(git rev-parse --git-common-dir)
 if [[ "$COMMON_DIR" != /* && ! "$COMMON_DIR" =~ ^[A-Za-z]:[/\\] ]]; then COMMON_DIR="$SOURCE_ROOT/$COMMON_DIR"; fi
@@ -120,31 +103,6 @@ git -C "$GATE_ROOT" read-tree "$CANDIDATE_TREE" || fail 'cannot load candidate i
 git -C "$GATE_ROOT" checkout-index --all --force || fail 'cannot materialize candidate files'
 GATE_INITIAL_TREE=$(git -C "$GATE_ROOT" write-tree) || fail 'cannot snapshot disposable candidate index'
 
-GATE_SUBMODULES=()
-materialize_submodules() {
-  local source_repo=$1 gate_repo=$2 prefix=$3 entry meta path mode oid stage rel source_sub gate_sub resolved
-  while IFS= read -r -d '' entry; do
-    meta=${entry%%$'\t'*}; path=${entry#*$'\t'}
-    read -r mode oid stage <<< "$meta"
-    [[ "$mode" == 160000 ]] || continue
-    rel="$prefix$path"
-    source_sub="$source_repo/$path"
-    [[ -d "$source_sub/.git" || -f "$source_sub/.git" ]] || fail "submodule $rel is not initialized locally; refusing network fetch"
-    resolved=$(cd "$source_sub" && pwd -P) || fail "cannot resolve initialized submodule $rel"
-    case "$resolved/" in "$SOURCE_ROOT/"*) ;; *) fail "submodule $rel resolves outside the source checkout" ;; esac
-    git -C "$resolved" cat-file -e "$oid^{commit}" 2>/dev/null || fail "submodule $rel lacks candidate commit $oid locally; refusing network fetch"
-    gate_sub="$gate_repo/$path"
-    mkdir -p "$(dirname "$gate_sub")"
-    git clone --quiet --shared --no-checkout -- "$resolved" "$gate_sub" || fail "cannot materialize submodule $rel"
-    git -C "$gate_sub" update-ref --no-deref HEAD "$oid" || fail "cannot set submodule $rel candidate commit"
-    git -C "$gate_sub" read-tree "$oid^{tree}" || fail "cannot load submodule $rel candidate tree"
-    git -C "$gate_sub" checkout-index --all --force || fail "cannot checkout submodule $rel candidate tree"
-    GATE_SUBMODULES+=("$gate_sub|$oid|$rel")
-    materialize_submodules "$resolved" "$gate_sub" "$rel/"
-  done < <(git -C "$gate_repo" ls-files --stage -z)
-}
-materialize_submodules "$SOURCE_ROOT" "$GATE_ROOT" ""
-
 REPO_ROOT=$GATE_ROOT
 REPO_STANDARDS_STAGED_SNAPSHOT=1
 export REPO_ROOT REPO_STANDARDS_STAGED_SNAPSHOT
@@ -159,7 +117,7 @@ run_repository_check_gate
 GATE_STATUS=$?
 set -e
 
-if ! git -C "$GATE_ROOT" diff --quiet --ignore-submodules=none || [[ -n "$(git -C "$GATE_ROOT" ls-files --others --exclude-standard)" ]]; then
+if ! git -C "$GATE_ROOT" diff --quiet || [[ -n "$(git -C "$GATE_ROOT" ls-files --others --exclude-standard)" ]]; then
   printf 'pre-commit: check gate changed candidate files; checks must not modify maintained files\n' >&2
   GATE_MUTATED=1
 fi
@@ -167,14 +125,6 @@ if [[ "$(git -C "$GATE_ROOT" write-tree 2>/dev/null || true)" != "$GATE_INITIAL_
   printf 'pre-commit: check gate changed the candidate index\n' >&2
   GATE_MUTATED=1
 fi
-for record in "${GATE_SUBMODULES[@]}"; do
-  IFS='|' read -r sub oid path <<< "$record"
-  if [[ "$(git -C "$sub" rev-parse HEAD 2>/dev/null || true)" != "$oid" ]] || ! git -C "$sub" diff --quiet --ignore-submodules=none || ! git -C "$sub" diff --cached --quiet || [[ -n "$(git -C "$sub" ls-files --others --exclude-standard)" ]]; then
-    printf 'pre-commit: check gate changed submodule candidate %s\n' "$path" >&2
-    GATE_MUTATED=1
-  fi
-done
-
 if [[ $GATE_STATUS -ne 0 ]]; then exit "$GATE_STATUS"; fi
 if [[ $GATE_MUTATED -eq 1 ]]; then exit 1; fi
 exit 0

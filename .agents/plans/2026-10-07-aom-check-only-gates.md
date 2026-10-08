@@ -86,11 +86,11 @@ git -C "$GATE_ROOT" checkout-index --all --force
 - [x] Delete clone-created origin refs and copy only the author's actual non-symbolic remote-tracking refs, without fetching or reconstructing refs.
 
 - [x] Load the adapter only from the materialized candidate and exclude author-side ignored/stale files.
-- [ ] Remove submodule-specific handling from the optional starter and its tests; repositories that use submodules own that requirement in their gate and self-certification. This Marketplace repository does not use submodules.
+- [x] Remove submodule-specific handling from the optional starter and its tests; repositories that use submodules own that requirement in their gate and self-certification. This Marketplace repository does not use submodules.
 - [x] Capture child status before mutation checks, compare private index/worktree against its initial candidate, allow ignored disposable outputs, preserve child status on combined failure, and reject other mutation. Cleanup verifies and reports the disposable path.
 - [x] Exercise local/hosted pass and fail, candidate adapter selection, temporary index, root candidate, missing adapter, mutation on callback failure, ignored output, and fail-fast diagnostics.
 - [x] Prove fail-fast through a consumer adapter with a named cheap check returning 17 and a later expensive callback writing an external marker. Assert the expensive marker does not exist, stderr contains the specific diagnostic and repair/recheck command, and the status is 17 in local and hosted modes. Update adoption scenarios to distinguish maintained regeneration from disposable builds and explicit repair from acceptance.
-- [x] Run `py -3 -m pytest -q skills/tracked-repo-hooks/tests/assets skills/command-bus/tests/assets`. GREEN requires original-state preservation, no apply callbacks, same gate behavior in both modes, disposable-output success, and meaningful diagnostic/status propagation. Keep run output transient. Do not commit yet.
+- [x] Run `py -3 -m pytest -q skills/tracked-repo-hooks/tests/assets skills/command-bus/tests/assets`. GREEN requires original-state preservation, no apply callbacks, same gate behavior in both modes, disposable-output success, and meaningful diagnostic/status propagation. Keep run output transient.
 
 ## Task 2: Expose Cheap Checks and Exact Repair Levers in the Marketplace Bus
 
@@ -128,7 +128,7 @@ def test_validation_failure_stops_before_tests(monkeypatch):
 - [x] Add top-level discovery and target help with truthful mode, prerequisite, side-effect, and scope information; require explicit modes and retain wrappers.
 - [x] Exercise real bus repair/recheck commands for inventory, format, and normalization; selected space-containing paths leave other files unchanged.
 - [x] Reject outside-root and binary normalization scopes, retain launch failure command/prerequisite context, and prove staged candidate lint fails despite an unstaged repair.
-- [x] Run `py -3 -m pytest -q tests/repository/test_run_cli.py tests/repository/test_ruff_diff.py`; 52 tests passed. Do not commit yet.
+- [x] Run `py -3 -m pytest -q tests/repository/test_run_cli.py tests/repository/test_ruff_diff.py`.
 
 ## Task 3: Migrate the Marketplace Hook and Its Contract Together
 
@@ -146,7 +146,7 @@ def test_validation_failure_stops_before_tests(monkeypatch):
 
 - [x] Witness RED in `test_tracked_hook_candidate.py`; the migrated hook commits exactly the `git commit --only` candidate and preserves separately staged work.
 - [x] Exercise cheap local and hosted rejection with status 17, precise diagnostics, no expensive stage, and unchanged candidate state.
-- [ ] Remove submodule-specific guards and materialization from the Marketplace hook and its tests while preserving candidate/index behavior, candidate isolation, and staged adapter/declaration loading.
+- [x] Remove submodule-specific guards and materialization from the Marketplace hook and its tests while preserving candidate/index behavior, candidate isolation, and staged adapter/declaration loading.
 - [x] Derive the disposable root from the Git common directory and main checkout under canonical `_agent-scratch/<repo>/`, create unique contained children, and clean only the verified candidate directory.
 - [x] Implement the check-only adapter with runtime discovery, candidate declaration loading, exact vector validation, and child status propagation.
 
@@ -163,7 +163,7 @@ for declared in commands:
 - [x] Cover staged adapter/declaration selection, mutation on success/failure, disposable ignored output, and protected ignored state.
 - [x] Run the hosted workflow fixture through the actual hook and adapter; prove exact SHA/clean/detached checks and missing-prerequisite failure before later work.
 - [x] Update repository tools/plans doctrine and certification to describe explicit repair, candidate-preserving checks, fail-fast guidance, and current proof boundaries.
-- [x] Run the Task 3 repository test command; 92 tests passed under the plan runner. Do not commit before Task 4 regenerates packages and obtains review.
+- [x] Run the Task 3 repository test command after removing submodule-only scenarios.
 
 ## Task 4: Regenerate, Review, Publish, and Upgrade the Hook Pin
 
