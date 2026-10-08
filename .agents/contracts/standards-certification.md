@@ -33,7 +33,7 @@ This is the repository-owned assessment of its selected standards. The structura
 
 **Status:** The repository integration implements the candidate-preserving hook contract; each candidate is verified by the local hook and hosted exact-head workflow.
 
-**Definition pin:** `skills/tracked-repo-hooks/references/standard.md` at `513e06ac48de90b1658dd38b5a99a6538625f183`.
+**Definition pin:** `skills/tracked-repo-hooks/references/standard.md` at `a9d9f280316a87ac66cb2653384bc30a683603f0`.
 
 - **Implementation:** `githooks/pre-commit` materializes the original candidate in an isolated checkout and private index. `tools/hook_gate_adapter.sh` runs the candidate-owned `ci --check` declaration. `.github/workflows/marketplace-validation.yml` invokes the same hook against the exact detached hosted commit.
 - **Must preserve:** Keep the complete `tools/run.py ci --check` gate on Windows and Linux, fail fast from cheaper checks to expensive tests, report the exact failed check and repair/recheck lever, allow disposable build/test outputs, preserve maintained files and the candidate index, fail on missing prerequisites, and prohibit agents from bypassing the hook.
