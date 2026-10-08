@@ -29,6 +29,8 @@ After selecting the pinned authority, route to the smallest owner:
 | Runbook lifecycle stages and playbook concerns           | `repo-composition`         |
 | Repository plugin dependencies and local authored skills | `repo-agent-assets`        |
 | AGENTS.md routing                                        | `agents-routing`           |
+| Git branch and release routing                           | `gitflow`                  |
+| Product compatibility version and release identity      | `semver`                   |
 | Agent doctrine and contracts                             | `agent-doctrine-contracts` |
 | Tracked hook and hosted CI parity                        | `tracked-repo-hooks`       |
 | Named command targets                                    | `command-bus`              |

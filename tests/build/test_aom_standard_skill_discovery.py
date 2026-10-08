@@ -12,9 +12,11 @@ STANDARD_SKILLS = (
     "agent-doctrine-contracts",
     "completed-artifact-custody",
     "contribution-entrypoint",
+    "gitflow",
     "playbook-composition",
     "review-entrypoint",
     "runbook-composition",
+    "semver",
     "unslop",
 )
 
