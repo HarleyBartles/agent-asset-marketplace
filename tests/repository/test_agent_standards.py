@@ -134,7 +134,28 @@ def test_checked_in_tracked_hook_pin_resolves_its_definition() -> None:
         check=False,
     )
 
-    assert result.returncode == 0, result.stderr
+    diagnostic = ""
+    if result.returncode:
+        commit_type = subprocess.run(
+            [*git_command, "cat-file", "-t", source["commit"]],
+            cwd=REPO_ROOT,
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        tree_entry = subprocess.run(
+            [*git_command, "ls-tree", "-r", source["commit"], "--", source["definition"]],
+            cwd=REPO_ROOT,
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        diagnostic = (
+            f"\nsource git directory: {source_git_dir or 'repository discovered from candidate'}"
+            f"\ncommit object type: {commit_type.stdout.strip() or commit_type.stderr.strip()}"
+            f"\npinned tree entry: {tree_entry.stdout.strip() or tree_entry.stderr.strip()}"
+        )
+    assert result.returncode == 0, result.stderr + diagnostic
     assert "disposable checkout" in result.stdout
 
 
