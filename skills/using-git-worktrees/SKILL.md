@@ -91,6 +91,8 @@ py -3 <runtime-skill-path-for-using-git-worktrees>/scripts/new_worktree.py --app
 
 The preview exits nonzero when the worktree does not exist yet; read its proposed path. After creation, verify the returned path, branch, and Git registration against the consumer's policy before editing. If the script cannot create the canonical worktree, stop and report the blocker instead of choosing another creator or working in the shared checkout. Worktree and branch retirement belongs to `finishing-a-development-branch`.
 
+The default base is the latest tip of `origin`'s advertised default branch, such as `develop` in a Gitflow repository. Both preview and creation query `origin` and fetch that branch, updating its remote-tracking ref. If querying or fetching fails, the helper warns and uses the main checkout's `HEAD`. An accessible origin without an advertised default requires an explicit `--base-ref <ref>`; this override skips default discovery and fetching.
+
 ## Step 2: Project Setup
 
 The bundled script performs dependency setup. Check its result; do not repeat installation unless the consumer's guidance requires an additional step.
@@ -122,7 +124,7 @@ Ready to implement <feature-name>
 | ------------------------- | ------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ |
 | `scripts/new_worktree.py` | Create a linked worktree at the canonical sibling root | `py -3 scripts/new_worktree.py --check <branch>` then `py -3 scripts/new_worktree.py --apply <branch>` |
 
-All scripts support `--help` and classify each flag as `read-only` or `mutating`. `--check` is the default; `--apply` is required for any filesystem or git mutation.
+All scripts support `--help` and classify each flag. `--check` is the default and previews worktree creation; default-base resolution queries and fetches `origin` in either mode. `--apply` is required for worktree creation and setup.
 
 ## Quick Reference
 

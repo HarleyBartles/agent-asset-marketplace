@@ -225,7 +225,13 @@ def test_new_worktree_base_ref(tmp_path: Path) -> None:
     assert (worktree_root / marker).read_text(encoding="utf-8") == "from-base"
 
 
-def test_new_worktree_defaults_to_origin_main(tmp_path: Path) -> None:
+@pytest.mark.parametrize(
+    ("default_branch", "cached_head", "local_collision"),
+    [("main", None, False), ("develop", None, False), ("develop", "main", False), ("develop", "main", True)],
+)
+def test_new_worktree_defaults_to_remote_default_tip(
+    tmp_path: Path, default_branch: str, cached_head, local_collision: bool
+) -> None:
     remote = tmp_path / "origin-main-remote"
     remote.mkdir()
     subprocess.run(["git", "init", "--bare"], cwd=remote, check=True, capture_output=True)
@@ -240,24 +246,48 @@ def test_new_worktree_defaults_to_origin_main(tmp_path: Path) -> None:
     )
     # Push the initial commit; this also pins repo's local origin/main to that commit.
     subprocess.run(["git", "push", "origin", "main"], cwd=repo, check=True, capture_output=True)
+    if default_branch != "main":
+        subprocess.run(["git", "branch", default_branch], cwd=repo, check=True, capture_output=True)
+        subprocess.run(["git", "push", "origin", default_branch], cwd=repo, check=True, capture_output=True)
+    subprocess.run(
+        ["git", "symbolic-ref", "HEAD", f"refs/heads/{default_branch}"],
+        cwd=remote,
+        check=True,
+        capture_output=True,
+    )
+    if cached_head:
+        subprocess.run(
+            ["git", "symbolic-ref", "refs/remotes/origin/HEAD", f"refs/remotes/origin/{cached_head}"],
+            cwd=repo,
+            check=True,
+            capture_output=True,
+        )
+    if local_collision:
+        subprocess.run(["git", "branch", f"origin/{default_branch}"], cwd=repo, check=True, capture_output=True)
+    # Simulate a single-branch clone: ordinary fetch cannot update develop.
+    subprocess.run(
+        ["git", "config", "remote.origin.fetch", "+refs/heads/main:refs/remotes/origin/main"],
+        cwd=repo,
+        check=True,
+        capture_output=True,
+    )
 
-    # Add a second commit to the remote from a separate clone so that repo's
-    # origin/main becomes stale. new_worktree.py must fetch before it can base
-    # the new worktree branch on the latest origin/main tip.
+    # Advance the advertised default from another clone. The helper must fetch
+    # this tip, not choose local HEAD, main, or a cached remote-tracking tip.
     upstream = tmp_path / "upstream"
     subprocess.run(
-        ["git", "clone", "--branch", "main", str(remote), str(upstream)],
+        ["git", "clone", "--branch", default_branch, str(remote), str(upstream)],
         check=True,
         capture_output=True,
     )
     subprocess.run(["git", "config", "user.email", "test@test"], cwd=upstream, check=True, capture_output=True)
     subprocess.run(["git", "config", "user.name", "Test"], cwd=upstream, check=True, capture_output=True)
 
-    marker = "origin-main-marker.txt"
-    (upstream / marker).write_text("from-origin-main", encoding="utf-8")
+    marker = "default-branch-marker.txt"
+    (upstream / marker).write_text("from-remote-default", encoding="utf-8")
     subprocess.run(["git", "add", "-A"], cwd=upstream, check=True, capture_output=True)
     subprocess.run(["git", "commit", "-m", "marker"], cwd=upstream, check=True, capture_output=True)
-    subprocess.run(["git", "push", "origin", "main"], cwd=upstream, check=True, capture_output=True)
+    subprocess.run(["git", "push", "origin", default_branch], cwd=upstream, check=True, capture_output=True)
 
     expected_sha = subprocess.run(
         ["git", "rev-parse", "HEAD"],
@@ -286,7 +316,7 @@ def test_new_worktree_defaults_to_origin_main(tmp_path: Path) -> None:
         text=True,
     ).stdout.strip()
     assert worktree_head == expected_sha
-    assert (worktree_root / marker).read_text(encoding="utf-8") == "from-origin-main"
+    assert (worktree_root / marker).read_text(encoding="utf-8") == "from-remote-default"
 
     # Ensure the new branch does not silently track origin/main as its upstream.
     tracking = subprocess.run(
@@ -295,6 +325,37 @@ def test_new_worktree_defaults_to_origin_main(tmp_path: Path) -> None:
         capture_output=True,
     )
     assert tracking.returncode != 0, "new feature branch should not track a remote"
+
+
+def test_new_worktree_refuses_unadvertised_default_without_override(tmp_path: Path) -> None:
+    remote = tmp_path / "ambiguous-remote"
+    subprocess.run(["git", "init", "--bare", str(remote)], check=True, capture_output=True)
+    repo = _make_repo(tmp_path, "ambiguous-local")
+    subprocess.run(["git", "remote", "add", "origin", str(remote)], cwd=repo, check=True, capture_output=True)
+    subprocess.run(["git", "push", "origin", "HEAD:main"], cwd=repo, check=True, capture_output=True)
+    subprocess.run(["git", "symbolic-ref", "HEAD", "refs/heads/missing"], cwd=remote, check=True, capture_output=True)
+    worktree_root = tmp_path / "_agent-worktrees" / repo.name / "feature"
+    for mode in ("--check", "--apply"):
+        result = subprocess.run(
+            [sys.executable, str(NEW_WORKTREE), "feature", mode],
+            cwd=repo,
+            env=_stripped_env(),
+            capture_output=True,
+            text=True,
+        )
+        assert result.returncode != 0
+        assert "--base-ref" in result.stdout + result.stderr
+        assert not worktree_root.exists()
+    # A supplied base bypasses remote-default discovery entirely.
+    result = subprocess.run(
+        [sys.executable, str(NEW_WORKTREE), "feature", "--apply", "--base-ref", "HEAD"],
+        cwd=repo,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode == 0, result.stderr
+    assert (worktree_root / "README.md").read_text(encoding="utf-8") == "# test\n"
 
 
 def test_remove_worktree_resolves_by_full_ref_and_directory(tmp_path: Path) -> None:

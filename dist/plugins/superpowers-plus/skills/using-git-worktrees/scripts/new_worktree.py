@@ -364,15 +364,35 @@ def _configure_worktree(
 
 
 def _default_base_ref(main_repo_root: Path) -> tuple[str, bool]:
-    """Return the base ref to use and whether it was resolved from origin."""
+    """Fetch origin's advertised default branch, independent of cached origin/HEAD."""
+    advertised = subprocess.run(
+        ["git", "ls-remote", "--symref", "origin", "HEAD"],
+        cwd=main_repo_root,
+        env=_stripped_env(),
+        capture_output=True,
+        text=True,
+    )
+    if advertised.returncode != 0:
+        print("warning: origin is unavailable; using main checkout HEAD", file=sys.stderr)
+        return "HEAD", False
+    default_branch = None
+    for line in advertised.stdout.splitlines():
+        match = re.fullmatch(r"ref: refs/heads/(.+)\s+HEAD", line)
+        if match:
+            default_branch = match.group(1)
+            break
+    if default_branch is None:
+        raise RuntimeError("origin does not advertise a default branch; pass --base-ref explicitly")
+    base_ref = f"refs/remotes/origin/{default_branch}"
     fetch = subprocess.run(
-        ["git", "fetch", "origin"],
+        ["git", "fetch", "origin", f"+refs/heads/{default_branch}:{base_ref}"],
         cwd=main_repo_root,
         env=_stripped_env(),
         capture_output=True,
     )
     if fetch.returncode == 0:
-        return "origin/main", True
+        return base_ref, True
+    print("warning: fetching origin's default branch failed; using main checkout HEAD", file=sys.stderr)
     return "HEAD", False
 
 
@@ -411,18 +431,10 @@ def _check_worktree(
 
     effective_base = base_ref
     if effective_base is None:
-        effective_base, _ = _default_base_ref(main_repo_root)
-
-    if effective_base == "origin/main":
-        verify = subprocess.run(
-            ["git", "rev-parse", "--verify", "origin/main"],
-            cwd=main_repo_root,
-            env=_stripped_env(),
-            capture_output=True,
-            text=True,
-        )
-        if verify.returncode != 0:
-            return 1, "Would fail: origin/main is not available (fetch from origin failed or ref is missing)", ""
+        try:
+            effective_base, _ = _default_base_ref(main_repo_root)
+        except RuntimeError as exc:
+            return 1, f"Would fail: {exc}", ""
 
     return 1, f"Would create worktree {resolved} from {effective_base} (branch {branch})", effective_base
 
@@ -445,8 +457,8 @@ def _apply_worktree(
 
     cmd = ["git", "worktree", "add", "--no-track", "-b", branch, str(worktree_root), base_ref]
 
-    # Run from the main worktree so that the default base is origin/main, not the
-    # HEAD of any linked worktree the user may be invoking this script from.
+    # Run from the main worktree so that a HEAD fallback uses its commit rather
+    # than the HEAD of any linked worktree invoking this script.
     result = subprocess.run(cmd, cwd=main_repo_root, env=_stripped_env())
     if result.returncode != 0:
         return result.returncode
@@ -472,8 +484,8 @@ def _build_parser() -> argparse.ArgumentParser:
         "--base-ref",
         default=None,
         help=(
-            "base ref for the new branch (default: origin/main, or HEAD if origin/main is unavailable; "
-            "read-only during --check)"
+            "base ref for the new branch (default: latest origin default branch, or main checkout HEAD "
+            "if origin cannot be queried or fetched; --check also queries and fetches origin)"
         ),
     )
     parser.add_argument(
@@ -486,7 +498,7 @@ def _build_parser() -> argparse.ArgumentParser:
         "--check",
         action="store_true",
         default=True,
-        help="report what the script would do and exit 0 if no changes are needed (default, read-only)",
+        help="preview worktree creation; default-base resolution queries and fetches origin (default, mixed)",
     )
     mode.add_argument(
         "--apply",
@@ -510,7 +522,11 @@ def main(argv: Optional[list[str]] = None) -> int:
             return 2
         base_ref = args.base_ref
         if base_ref is None:
-            base_ref, _ = _default_base_ref(main_repo_root)
+            try:
+                base_ref, _ = _default_base_ref(main_repo_root)
+            except RuntimeError as exc:
+                print(f"error: {exc}", file=sys.stderr)
+                return 1
         return _apply_worktree(
             main_repo_root,
             branch,
