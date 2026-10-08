@@ -8,7 +8,7 @@
 
 - Derived from the specification: declaring a public API; normal and prerelease syntax; precedence; immutable released contents; major, minor, and patch meanings; initial development; and the relationship between prerelease and stable versions.
 - Original AOM additions: exactly one authored product-version source per independently versioned product; explicit build propagation to required identity copies; checks for missing, stale, malformed, conflicting, or separately authored product identities; and truthful self-certification.
-- Original joint Gitflow/SemVer additions: one `dev.N` identity per integration merge, no checkpoint on each commit inside a PR, unique checkpoint allocation, `rc.N` progression for changed qualified candidates, and reconciliation behavior that distinguishes the stable baseline from continuing development.
+- Original joint Gitflow/SemVer additions: one `dev.N` identity per ordinary development merge and per reconciliation into continuing development, no checkpoint on each commit inside a PR, unique checkpoint allocation, `rc.N` progression for changed qualified candidates, and reconciliation behavior that distinguishes the stable baseline from continuing development.
 - Independent schema, payload, dependency, and product versions retain their own authorities; the SemVer version of this product does not replace them.
 - Outside scope: a required branch model, file format, build tool, command bus, CI provider, tag prefix, artifact host, or shared versioning script.
 

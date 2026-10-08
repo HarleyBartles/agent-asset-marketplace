@@ -18,7 +18,7 @@ The repository communicates product compatibility through a declared public inte
 
 ## Conditional obligations
 
-- When the repository also adopts `gitflow`, use the joint cadence in the following section: each merge into the integration branch establishes a unique `MAJOR.MINOR.PATCH-dev.N` checkpoint; release candidates use `MAJOR.MINOR.PATCH-rc.N`. Gitflow branch routing remains owned by the Gitflow standard.
+- When the repository also adopts `gitflow`, each ordinary development merge into the integration branch establishes a unique `MAJOR.MINOR.PATCH-dev.N` checkpoint, and changed, qualified release candidates use `MAJOR.MINOR.PATCH-rc.N`. A release or hotfix reconciliation that leaves integration at the stable baseline keeps the stable version; reconciliation into continuing next-release work advances that line's checkpoint. Gitflow branch routing remains owned by the Gitflow standard.
 - SemVer alone does not require Gitflow, `develop`, branch-triggered checkpoint numbers, an RC naming convention, a particular tagging convention, a hosted release, or a particular artifact format. A repository declares how it publishes each release.
 - If the product has no published or otherwise declared public interface or compatibility expectation, determine whether SemVer has a useful subject before adopting it. Do not invent a public contract just to make the versioning label look complete.
 

@@ -8,11 +8,11 @@ authority:
   latest_check_url: https://semver.org/spec/v2.0.0.html
   revision: "2.0.0"
   retrieved_at: "2026-10-08"
-  content_sha256: a7884ff4795b266eea30a354a005a8b5e3fb1e83b09945b5277e31713e6b0b95
+  content_sha256: 248cf840b419b059ad12e11b1b6f4c30258cc80c942262f42e64301d73f89bf5
   license: "CC BY 3.0; no specification text copied"
   license_url: https://creativecommons.org/licenses/by/3.0/
 decomposition:
-  reconciled_against: a7884ff4795b266eea30a354a005a8b5e3fb1e83b09945b5277e31713e6b0b95
+  reconciled_against: 248cf840b419b059ad12e11b1b6f4c30258cc80c942262f42e64301d73f89bf5
   references:
   - path: references/standard.md
     source_sections:
