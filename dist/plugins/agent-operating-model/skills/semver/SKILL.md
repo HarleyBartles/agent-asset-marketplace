@@ -15,7 +15,7 @@ metadata:
     - assessing or certifying an explicit SemVer subscription.
   do_not_use_when:
     - the repository has not adopted SemVer and the human has not requested its assessment or adoption.
-    - the version belongs to a dependency, data schema, or independently versioned product.
+    - the version belongs to a dependency or independently versioned data schema rather than a product; assess each independently released product under its own compatibility contract.
 license: MIT
 ---
 

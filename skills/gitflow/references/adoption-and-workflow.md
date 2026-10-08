@@ -19,9 +19,9 @@ Use the repository's declared branch names and feature prefixes. Refresh from re
 
 ## Reconcile version and source state
 
-After promotion, compare integration with the verified released source and the intended next-release work. If integration is left at the stable baseline, its identity is the stable version. The first later development merge starts the next intended release's `dev.1` only when both Gitflow and SemVer are adopted.
+After promotion, compare integration source with the verified released source and preserve any intended next-release work. If no continuing development exists, reconciliation leaves integration at the released source baseline. If development continues, incorporate the promoted changes without discarding that work. Gitflow alone does not assign product versions or development checkpoints.
 
-If integration already contains the next release's development identity, preserve that line while incorporating a fix. For example, when `0.3.0-dev.4` exists and a `0.2.1` hotfix returns to integration, advance the integration checkpoint to `0.3.0-dev.5`; do not reset it to `0.2.1`. Refresh competing PRs from the new integration head and allocate a unique checkpoint to each resulting merge. Rebuild derived version identities and run the route's applicable validation before claiming the merge-back is ready.
+When both Gitflow and SemVer are adopted, also apply the joint version transitions in the SemVer standard. A merge-back that leaves integration at the stable baseline keeps the stable version; the first later development merge that diverges starts the selected next line at `dev.1`. If integration already contains the next release's development identity, preserve that line while incorporating a fix. For example, when `0.3.0-dev.4` exists and a `0.2.1` hotfix returns to integration, advance the integration checkpoint to `0.3.0-dev.5`; do not reset it to `0.2.1`. Refresh competing PRs from the new integration head and allocate a unique checkpoint to each ordinary development merge. Rebuild derived version identities and run the route's applicable validation before claiming the merge-back is ready.
 
 ## Joint release cadence
 
