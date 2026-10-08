@@ -1,8 +1,8 @@
-# SemVer 1.0.0 Contract Timing Correction
+# SemVer 1.0.0 Contract Timing and Draft CI Correction
 
-**Goal:** Remove the AOM SemVer adoption prerequisite to declare future `1.0.0` compatibility guarantees, while preserving an explicit current `0.y.z` policy and requiring a stable contract when preparing the first `1.0.0` release.
+**Goal:** Remove the AOM SemVer adoption prerequisite to declare future `1.0.0` compatibility guarantees, preserve an explicit current `0.y.z` policy, and skip hosted validation jobs for draft PR events.
 
-**Execution strategy:** Execute inline in this worktree. The two canonical references express one linked obligation and must be corrected together before the plugin is regenerated.
+**Execution strategy:** Execute inline in this worktree. The SemVer source and generated projection form one documentation change; the workflow guard remains isolated in its own file and the tracked commit hook validates the complete staged tree.
 
 Status: completed-awaiting-retirement.
 
@@ -21,3 +21,10 @@ Status: completed-awaiting-retirement.
 - [x] Run `py -3 tools/run.py marketplace --apply` and inspect the generated SemVer references.
 - [x] Run focused SemVer/skill-authority validation and the repository canonical `py -3 tools/run.py ci --check`.
 - [x] Confirm no remaining normative text makes advance declaration of future `1.0.0` guarantees an adoption or certification prerequisite.
+
+## Task 3: Skip hosted validation while a pull request is draft
+
+**Files:** `.github/workflows/marketplace-validation.yml`.
+
+- [x] Add a job condition that skips only `pull_request` events whose PR is draft while retaining validation for Ready PR events and non-PR events.
+- [x] Run the focused hosted workflow test and preserve the full repository check result from the tracked commit hook.
