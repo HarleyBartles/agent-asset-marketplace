@@ -41,6 +41,8 @@ ORIGIN_REFS=$(git for-each-ref --format='%(refname) %(objectname)' refs/remotes/
 COMMON_DIR=$(git rev-parse --git-common-dir)
 if [[ "$COMMON_DIR" != /* && ! "$COMMON_DIR" =~ ^[A-Za-z]:[/\\] ]]; then COMMON_DIR="$SOURCE_ROOT/$COMMON_DIR"; fi
 COMMON_DIR=$(cd "$COMMON_DIR" && pwd -P)
+REPO_STANDARDS_SOURCE_GIT_DIR="$COMMON_DIR"
+export REPO_STANDARDS_SOURCE_GIT_DIR
 SOURCE_OBJECTS="$COMMON_DIR/objects"
 MAIN_CHECKOUT=$(git worktree list --porcelain | sed -n 's/^worktree //p' | head -n 1)
 [[ -n "$MAIN_CHECKOUT" ]] || fail 'cannot identify the main checkout for scratch placement'

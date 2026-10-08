@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import os
 import subprocess
 import sys
 from pathlib import Path
@@ -121,8 +122,12 @@ def test_valid_pins_and_incomplete_certification_are_structurally_accepted(
 def test_checked_in_tracked_hook_pin_resolves_its_definition() -> None:
     hook = next(entry for entry in CURRENT_SUBSCRIPTION["standards"] if entry["id"] == "tracked-validation-hook")
     source = hook["source"]
+    source_git_dir = os.environ.get("REPO_STANDARDS_SOURCE_GIT_DIR")
+    git_command = ["git"]
+    if source_git_dir:
+        git_command.extend(["--git-dir", source_git_dir])
     result = subprocess.run(
-        ["git", "show", f"{source['commit']}:{source['definition']}"],
+        [*git_command, "show", f"{source['commit']}:{source['definition']}"],
         cwd=REPO_ROOT,
         capture_output=True,
         text=True,
