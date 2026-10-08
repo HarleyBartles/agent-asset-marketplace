@@ -11,6 +11,8 @@
     {"id": "review-entrypoint", "title": "Review entrypoint", "skill": "review-entrypoint", "definition": "skills/review-entrypoint/references/standard.md"},
     {"id": "contribution-entrypoint", "title": "Contribution entrypoint", "skill": "contribution-entrypoint", "definition": "skills/contribution-entrypoint/references/standard.md"},
     {"id": "completed-artifact-custody", "title": "Completed artifact custody", "skill": "completed-artifact-custody", "definition": "skills/completed-artifact-custody/references/standard.md"},
-    {"id": "unslop", "title": "Unslop profile maintenance", "skill": "unslop", "definition": "skills/unslop/references/standard.md"}
+    {"id": "unslop", "title": "Unslop profile maintenance", "skill": "unslop", "definition": "skills/unslop/references/standard.md"},
+    {"id": "gitflow", "title": "Gitflow branching and release workflow", "skill": "gitflow", "definition": "skills/gitflow/references/standard.md"},
+    {"id": "semver", "title": "Semantic versioning and release identity", "skill": "semver", "definition": "skills/semver/references/standard.md"}
   ]
 }

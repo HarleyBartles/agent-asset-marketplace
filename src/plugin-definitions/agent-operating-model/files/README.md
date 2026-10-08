@@ -16,6 +16,7 @@ This plugin makes first-party repository operating capabilities available to age
 - A standard skill carries its current definition, adoption and assessment guidance, and any optional starter assets. It may supply no deployable asset.
 - Repositories may take, adapt, replace, or omit optional starters. Adopted files and tools become repository-owned; matching AOM starter bytes is not a compliance requirement.
 - `repo-standards` helps agents select and assess focused capabilities. It does not make every repository capability mandatory by default.
+- The selectable standards catalog includes independent `gitflow` and `semver` choices. Gitflow supplies branch routes; SemVer supplies compatibility and one-source version identity. Only adopting both adds merge-triggered `dev.N` and release-candidate cadence.
 - Worker custody, worktrees, risk, and publication remain in the ambient `repo-worker-pack`.
 
 ## Install shape

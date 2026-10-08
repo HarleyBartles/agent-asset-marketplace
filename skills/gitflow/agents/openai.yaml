@@ -1,0 +1,10 @@
+version: 1
+metadata:
+  skill_name: gitflow
+  source_category: first_party
+interface:
+  display_name: Gitflow Standard
+  short_description: Assess or adopt Gitflow branch and release routing.
+  default_prompt: Use gitflow to assess or adopt the Gitflow standard in this repository.
+policy:
+  allow_implicit_invocation: true

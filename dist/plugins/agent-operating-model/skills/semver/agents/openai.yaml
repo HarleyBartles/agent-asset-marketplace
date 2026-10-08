@@ -1,0 +1,10 @@
+version: 1
+metadata:
+  skill_name: semver
+  source_category: first_party
+interface:
+  display_name: SemVer Standard
+  short_description: Assess or adopt Semantic Versioning and product version identity.
+  default_prompt: Use semver to assess or adopt the SemVer standard in this repository.
+policy:
+  allow_implicit_invocation: true

@@ -103,6 +103,28 @@
       "source_path": "skills/runbook-composition/SKILL.md"
     },
     {
+      "canonical_name": "gitflow",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Canonical optional Gitflow standard and workflow guide. (Gitflow Standard first-party skill)",
+      "canonical_source_path": "skills/gitflow",
+      "local_path": "skills/gitflow",
+      "source_path": "skills/gitflow/SKILL.md"
+    },
+    {
+      "canonical_name": "semver",
+      "source_category": "first_party",
+      "content_mode": "verbatim",
+      "source_family": "first_party",
+      "copy_expectation": "byte_identical",
+      "provenance_note": "Canonical optional SemVer standard and versioning guide. (Semantic Versioning Standard first-party skill)",
+      "canonical_source_path": "skills/semver",
+      "local_path": "skills/semver",
+      "source_path": "skills/semver/SKILL.md"
+    },
+    {
       "canonical_name": "python",
       "source_category": "first_party",
       "content_mode": "verbatim",

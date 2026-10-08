@@ -1,0 +1,35 @@
+schema_version: 1
+custody: marketplace
+lane: skills-with-citation
+authority:
+  title: Gitflow branching model
+  canonical_url: https://nvie.com/posts/a-successful-git-branching-model/
+  pinned_source_url: https://nvie.com/posts/a-successful-git-branching-model/
+  latest_check_url: https://nvie.com/posts/a-successful-git-branching-model/
+  revision: "2010-01-05 article; author reflection dated 2020-03-05"
+  retrieved_at: "2026-10-08"
+  content_sha256: 3fa5a21954cbd6087cc8814ac66e536ee49a9c1887196a6a8b86c55c651a4ffc
+  license: "No source text copied; see CITATIONS.md"
+  license_url: https://nvie.com/posts/a-successful-git-branching-model/
+decomposition:
+  reconciled_against: 3fa5a21954cbd6087cc8814ac66e536ee49a9c1887196a6a8b86c55c651a4ffc
+  references:
+  - path: references/standard.md
+    source_sections:
+    - "Author reflection: applicability and continuous-delivery caveat"
+    - "Main branches: stable and integration roles"
+    - "Feature branches: integration origin and target"
+    - "Release branches: stabilization, scope, and promotion"
+    - "Hotfix branches: production origin and forward reconciliation"
+    content_mode: first_party_synthesis
+    load_when:
+    - defining the branch roles and routes required by the optional AOM Gitflow standard.
+    - deciding whether Gitflow fits a repository with release stabilization or concurrent supported versions.
+  - path: references/adoption-and-workflow.md
+    source_sections:
+    - "Author reflection: workflow fit"
+    - "Feature, release, and hotfix route sections"
+    content_mode: first_party_synthesis
+    load_when:
+    - choosing or reviewing the origin and target for a feature, release, or hotfix.
+    - reconciling a promoted release or fix with ongoing integration work.

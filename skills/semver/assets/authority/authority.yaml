@@ -1,0 +1,34 @@
+schema_version: 1
+custody: marketplace
+lane: skills-with-citation
+authority:
+  title: Semantic Versioning 2.0.0
+  canonical_url: https://semver.org/spec/v2.0.0.html
+  pinned_source_url: https://semver.org/spec/v2.0.0.html
+  latest_check_url: https://semver.org/spec/v2.0.0.html
+  revision: "2.0.0"
+  retrieved_at: "2026-10-08"
+  content_sha256: a7884ff4795b266eea30a354a005a8b5e3fb1e83b09945b5277e31713e6b0b95
+  license: "CC BY 3.0; no specification text copied"
+  license_url: https://creativecommons.org/licenses/by/3.0/
+decomposition:
+  reconciled_against: a7884ff4795b266eea30a354a005a8b5e3fb1e83b09945b5277e31713e6b0b95
+  references:
+  - path: references/standard.md
+    source_sections:
+    - "Summary and version bump meanings"
+    - "Specification rules 1-11: public API, syntax, released immutability, 0.y.z, compatibility bumps, and prerelease/build metadata precedence"
+    - "FAQ: initial development, 1.0.0, and version tags"
+    content_mode: first_party_synthesis
+    load_when:
+    - declaring a public compatibility contract or classifying a product-version change.
+    - preparing a SemVer prerelease, stable version, tag, or artifact identity.
+  - path: references/adoption-and-versioning.md
+    source_sections:
+    - "Summary and version bump meanings"
+    - "Specification rules 1-11"
+    - "FAQ: initial development and 1.0.0"
+    content_mode: first_party_synthesis
+    load_when:
+    - resolving a product versioning decision during adoption, implementation, or release.
+    - tracing version ownership and propagation across a product build.

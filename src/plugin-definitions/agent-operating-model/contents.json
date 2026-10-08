@@ -89,6 +89,28 @@
       }
     },
     {
+      "name": "gitflow",
+      "source": "gitflow",
+      "provenance": {
+        "source_category": "first_party",
+        "content_mode": "verbatim",
+        "source_family": "first_party",
+        "copy_expectation": "byte_identical",
+        "provenance_note": "Canonical optional Gitflow standard and workflow guide. (Gitflow Standard first-party skill)"
+      }
+    },
+    {
+      "name": "semver",
+      "source": "semver",
+      "provenance": {
+        "source_category": "first_party",
+        "content_mode": "verbatim",
+        "source_family": "first_party",
+        "copy_expectation": "byte_identical",
+        "provenance_note": "Canonical optional SemVer standard and versioning guide. (Semantic Versioning Standard first-party skill)"
+      }
+    },
+    {
       "name": "python",
       "source": "python",
       "provenance": {
