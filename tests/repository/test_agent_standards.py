@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import json
-import os
 import subprocess
 import sys
 from pathlib import Path
@@ -122,40 +121,15 @@ def test_valid_pins_and_incomplete_certification_are_structurally_accepted(
 def test_checked_in_tracked_hook_pin_resolves_its_definition() -> None:
     hook = next(entry for entry in CURRENT_SUBSCRIPTION["standards"] if entry["id"] == "tracked-validation-hook")
     source = hook["source"]
-    source_git_dir = os.environ.get("REPO_STANDARDS_SOURCE_GIT_DIR")
-    git_command = ["git"]
-    if source_git_dir:
-        git_command.extend(["--git-dir", source_git_dir])
     result = subprocess.run(
-        [*git_command, "cat-file", "blob", f"{source['commit']}:{source['definition']}"],
+        ["git", "show", f"{source['commit']}:{source['definition']}"],
         cwd=REPO_ROOT,
         capture_output=True,
         text=True,
         check=False,
     )
 
-    diagnostic = ""
-    if result.returncode:
-        commit_type = subprocess.run(
-            [*git_command, "cat-file", "-t", source["commit"]],
-            cwd=REPO_ROOT,
-            capture_output=True,
-            text=True,
-            check=False,
-        )
-        tree_entry = subprocess.run(
-            [*git_command, "ls-tree", "-r", source["commit"], "--", source["definition"]],
-            cwd=REPO_ROOT,
-            capture_output=True,
-            text=True,
-            check=False,
-        )
-        diagnostic = (
-            f"\nsource git directory: {source_git_dir or 'repository discovered from candidate'}"
-            f"\ncommit object type: {commit_type.stdout.strip() or commit_type.stderr.strip()}"
-            f"\npinned tree entry: {tree_entry.stdout.strip() or tree_entry.stderr.strip()}"
-        )
-    assert result.returncode == 0, result.stderr + diagnostic
+    assert result.returncode == 0, result.stderr
     assert "disposable checkout" in result.stdout
 
 

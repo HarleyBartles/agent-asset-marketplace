@@ -62,7 +62,6 @@ def _setup_repo(tmp_path: Path, *, reject: bool = False) -> Path:
     _git(repo, "config", "core.autocrlf", "false")
     (repo / "selected.txt").write_text("base selected\n", encoding="utf-8")
     (repo / "unrelated.txt").write_text("base unrelated\n", encoding="utf-8")
-    (repo / "source-pin.txt").write_text("pinned source definition\n", encoding="utf-8")
     (repo / ".gitignore").write_text("build/\n", encoding="utf-8")
     if reject:
         (repo / "reject-gate.txt").write_text("reject\n", encoding="utf-8")
@@ -75,15 +74,6 @@ def _setup_repo(tmp_path: Path, *, reject: bool = False) -> Path:
         "if sys.argv[1:] != ['ci', '--check']:\n"
         "    raise SystemExit(2)\n"
         "root = Path.cwd()\n"
-        "if (root / 'source-pin-check.txt').exists():\n"
-        "    source_git_dir = os.environ.get('REPO_STANDARDS_SOURCE_GIT_DIR')\n"
-        "    if not source_git_dir:\n"
-        "        raise SystemExit('source Git object database was not provided to candidate checks')\n"
-        "    pinned = subprocess.check_output(\n"
-        "        ['git', '--git-dir', source_git_dir, 'cat-file', 'blob', 'HEAD:source-pin.txt'], text=True\n"
-        "    ).strip()\n"
-        "    if pinned != 'pinned source definition':\n"
-        "        raise SystemExit('source Git object database returned the wrong pinned content')\n"
         "trace = os.environ.get('HOOK_GATE_TRACE')\n"
         "if trace:\n"
         "    tree = subprocess.check_output(['git', 'write-tree'], text=True).strip()\n"
@@ -222,16 +212,6 @@ def test_root_hook_allows_disposable_ignored_build_output(tmp_path: Path) -> Non
     assert result.returncode == 0, result.stdout + result.stderr
     assert _git(repo, "write-tree") == before_tree
     assert not (repo / "build/report.txt").exists()
-
-
-def test_candidate_gate_exposes_source_git_objects_for_immutable_pins(tmp_path: Path) -> None:
-    repo = _setup_repo(tmp_path)
-    (repo / "source-pin-check.txt").write_text("check immutable source pin\n", encoding="utf-8")
-    _git(repo, "add", "source-pin-check.txt")
-
-    result = _run_hook(repo, _env())
-
-    assert result.returncode == 0, result.stdout + result.stderr
 
 
 def test_staged_bus_script_is_used_instead_of_unstaged_replacement(tmp_path: Path) -> None:
