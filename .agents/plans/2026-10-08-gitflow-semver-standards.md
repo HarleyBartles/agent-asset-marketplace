@@ -6,13 +6,13 @@
 
 **Architecture:** Two canonical standard skills, `gitflow` and `semver`, own their definitions and operational adoption guidance. The existing repo-standards catalog and AOM plugin composition expose both choices. Each standard stands alone; their definitions explicitly compose development checkpoint obligations when both are adopted. Consumers own their implementation, immutable subscriptions, and semantic certification.
 
-**Tech Stack:** Markdown, JSON, YAML, existing Python Marketplace builders and pytest shipping checks, isolated instruction-behavior evaluation.
+**Tech Stack:** Markdown, JSON, YAML, existing Python Marketplace builders, pytest distribution checks, and authored standard-selection cases.
 
 **Requirements:** The approved requirements and transition table below are the design basis for this plan. Read the [implementation runbook](../runbooks/implementing.md), [skill authoring playbook](../playbooks/skill-authoring.md), and [skill test contract](../contracts/skill-tests.md) before execution.
 
 **Execution Strategy:** `executing-plans`, inline in the same worktree. Both definitions share version transitions and adoption boundaries; sequential authoring and a whole-branch review preserve that contract without repeated implementation handoffs.
 
-Status: planned, awaiting execution.
+Status: completed-awaiting-retirement.
 
 ## Working Boundary
 
@@ -66,18 +66,18 @@ This repository publishes the standards and does not adopt either one in this sl
 
 **Consumes:** Approved requirements and transition table above, existing v2 adoption/certification method. **Produces:** The Gitflow definition, its independent adoption method, and conditional composition with SemVer.
 
-- [ ] Read `writing-skills` and its authoring checklist. Use a clean-room `skills-with-citation` lane, citing the original Gitflow description without copying its prose or diagram. Record the additional AOM checkpoint/reconciliation rules as original requirements from this approved design. Author `authority.yaml`, `source-map.yaml`, and `CITATIONS.md` from the actual operational references; the skill scaffolder creates only `SKILL.md` and `references/.gitkeep`.
-- [ ] Use the original Gitflow author’s applicability reflection as nuance: Gitflow is suited to explicitly versioned software or software that must support multiple deployed versions; it is a poor fit when forced onto continuous delivery. Present Gitflow as a selectable pattern with an explicit fit assessment, not a universal requirement.
-- [ ] Scaffold the skill shells:
+- [x] Read `writing-skills` and its authoring checklist. Use a clean-room `skills-with-citation` lane, citing the original Gitflow description without copying its prose or diagram. Record the additional AOM checkpoint/reconciliation rules as original requirements from this approved design. Author `authority.yaml`, `source-map.yaml`, and `CITATIONS.md` from the actual operational references; the skill scaffolder creates only `SKILL.md` and `references/.gitkeep`.
+- [x] Use the original Gitflow author’s applicability reflection as nuance: Gitflow is suited to explicitly versioned software or software that must support multiple deployed versions; it is a poor fit when forced onto continuous delivery. Present Gitflow as a selectable pattern with an explicit fit assessment, not a universal requirement.
+- [x] Scaffold the skill shells:
 
 ```powershell
 py -3 skills/writing-skills/scripts/new_skill.py --name gitflow --custody marketplace --lane skills-with-citation --check
 py -3 skills/writing-skills/scripts/new_skill.py --name gitflow --custody marketplace --lane skills-with-citation
 ```
 
-- [ ] Replace scaffold examples with useful discovery metadata and a concise router to detailed operational references. Author the Gitflow definition with pledge, applicability, branch roles and names, feature/release/hotfix origins and targets, release scope, promotion, hotfix return routes, merge strategy, checkpoint concurrency, and both reconciliation outcomes. Keep consumer implementation and semantic self-certification repository-owned. Link to SemVer for syntax and version authority. Do not infer adoption from existing branch names.
-- [ ] Keep the Gitflow-only obligation about branch lifecycle independent from SemVer. Put the dev.N/rc.N composition under an explicit both-adopted condition in the definition; cross-reference the identical condition in SemVer.
-- [ ] Ensure the skill helps agents apply the definition without repeating web research: explain branch identity and intent, routing checks, safe reconciliation, how the AOM conditions differ from classic Gitflow, and which hosting decisions remain local. Link the authoritative source record from the reference location that needs it. Treat primary references as grounding rather than copied material.
+- [x] Replace scaffold examples with useful discovery metadata and a concise router to detailed operational references. Author the Gitflow definition with pledge, applicability, branch roles and names, feature/release/hotfix origins and targets, release scope, promotion, hotfix return routes, merge strategy, checkpoint concurrency, and both reconciliation outcomes. Keep consumer implementation and semantic self-certification repository-owned. Link to SemVer for syntax and version authority. Do not infer adoption from existing branch names.
+- [x] Keep the Gitflow-only obligation about branch lifecycle independent from SemVer. Put the dev.N/rc.N composition under an explicit both-adopted condition in the definition; cross-reference the identical condition in SemVer.
+- [x] Ensure the skill helps agents apply the definition without repeating web research: explain branch identity and intent, routing checks, safe reconciliation, how the AOM conditions differ from classic Gitflow, and which hosting decisions remain local. Link the authoritative source record from the reference location that needs it. Treat primary references as grounding rather than copied material.
 
 ## Task 2: Ship the SemVer Standard and Single-Source Build Identity
 
@@ -85,29 +85,29 @@ py -3 skills/writing-skills/scripts/new_skill.py --name gitflow --custody market
 
 **Consumes:** Approved compatibility/version-authority requirements and Task 1's combined-adoption transition contract. **Produces:** The SemVer definition, version-ownership/build method, and independent adoption guidance.
 
-- [ ] Use the SemVer 2.0.0 specification as the normative definition of version syntax, precedence, prerelease identifiers, and compatibility bump meaning. Explain initial development and 1.0.0 accurately without turning FAQ suggestions into mandatory rules. Record these distinctions in authority assets; do not copy specification prose.
-- [ ] Scaffold with the same custody/lane as Gitflow:
+- [x] Use the SemVer 2.0.0 specification as the normative definition of version syntax, precedence, prerelease identifiers, and compatibility bump meaning. Explain initial development and 1.0.0 accurately without turning FAQ suggestions into mandatory rules. Record these distinctions in authority assets; do not copy specification prose.
+- [x] Scaffold with the same custody/lane as Gitflow:
 
 ```powershell
 py -3 skills/writing-skills/scripts/new_skill.py --name semver --custody marketplace --lane skills-with-citation --check
 py -3 skills/writing-skills/scripts/new_skill.py --name semver --custody marketplace --lane skills-with-citation
 ```
 
-- [ ] Author short discovery/adoption instructions and the definition. Cover public compatibility, initial development and 1.0.0, justified bump decisions, numeric prerelease ordering, stable/prerelease distinction, one authored product source, derived identities, explicit propagation, immutable source/artifact identity, and mechanical-versus-semantic certification limits.
-- [ ] Require consumers to identify all product-version destinations and the build/check measures that keep them derived and current. An equality-only check does not prove consolidation. For independently versioned products, document distinct authorities and scopes instead of forcing all products and dependencies onto one number.
-- [ ] Describe the combined dev.N and rc.N transitions consistently with Task 1, including stable-baseline reconciliation and future-development preservation. A SemVer-only adopter is not required to adopt Gitflow, create develop, or use this merge cadence.
-- [ ] Make the SemVer reference useful without repeating a web research task: explain which specification rules govern a release decision, the single-authority build pattern added by AOM, how to assess missing/stale derived identities, and which other version domains remain independent. Link to the authoritative source record without copying its text.
+- [x] Author short discovery/adoption instructions and the definition. Cover public compatibility, initial development and 1.0.0, justified bump decisions, numeric prerelease ordering, stable/prerelease distinction, one authored product source, derived identities, explicit propagation, immutable source/artifact identity, and mechanical-versus-semantic certification limits.
+- [x] Require consumers to identify all product-version destinations and the build/check measures that keep them derived and current. An equality-only check does not prove consolidation. For independently versioned products, document distinct authorities and scopes instead of forcing all products and dependencies onto one number.
+- [x] Describe the combined dev.N and rc.N transitions consistently with Task 1, including stable-baseline reconciliation and future-development preservation. A SemVer-only adopter is not required to adopt Gitflow, create develop, or use this merge cadence.
+- [x] Make the SemVer reference useful without repeating a web research task: explain which specification rules govern a release decision, the single-authority build pattern added by AOM, how to assess missing/stale derived identities, and which other version domains remain independent. Link to the authoritative source record without copying its text.
 
 ## Task 3: Expose, Package, Validate, and Publish the Standards
 
 **Files:** Modify `skills/repo-standards/references/standards-catalog.json`, `skills/repo-standards/SKILL.md`, `skills/repo-standards/tests/behavior/standard-selection.md`, `skills/repo-standards/tests/evaluator-only/standard-selection.md`, `src/plugin-definitions/agent-operating-model/contents.json`, and `src/plugin-definitions/agent-operating-model/files/README.md`. Extend `tests/build/test_aom_standard_skill_discovery.py` and `tests/shipping/test_aom_standard_authority.py` to apply their existing installed-discovery and isolated-reference contracts to both new skills. Regenerate generator-owned `dist/` and catalog projections. Update this plan through completion.
 
-**Consumes:** Complete canonical Gitflow and SemVer skill trees and definitions. **Produces:** Discoverable selectable catalog entries, self-contained AOM packages, passing validation, and a fully reviewable Draft PR into main.
+**Consumes:** Complete canonical Gitflow and SemVer skill trees and definitions. **Produces:** Discoverable selectable catalog entries, self-contained AOM packages, recorded local and hosted validation state, and a fully reviewable Draft PR into main.
 
-- [ ] Add catalog entries with IDs/skills `gitflow` and `semver` and definition paths `skills/gitflow/references/standard.md` and `skills/semver/references/standard.md`. Add the corresponding first-party skill inclusions to AOM contents using the existing provenance schema. Route branch/release concerns and version-identity concerns from repo-standards to their smallest owners.
-- [ ] Extend standard-selection behavior cases: SemVer only with no develop; Gitflow only with no SemVer cadence; both standards with the full transition table; installed capability with no adoption; existing older immutable pins; transitional implementation that cannot yet self-certify. Judge the decision, not exact prose.
-- [ ] Extend the existing discovery and installed-reference loops to the new owners rather than add a fixed-content detector. Build/distribution tests establish that an isolated installed package can discover both choices and resolve every normal reference inside its boundary. Do not introduce a generic versioning script, scaffolder, or consumer runtime unless a witnessed behavior gap makes it necessary and the scope is separately agreed.
-- [ ] Regenerate and run the focused distribution checks:
+- [x] Add catalog entries with IDs/skills `gitflow` and `semver` and definition paths `skills/gitflow/references/standard.md` and `skills/semver/references/standard.md`. Add the corresponding first-party skill inclusions to AOM contents using the existing provenance schema. Route branch/release concerns and version-identity concerns from repo-standards to their smallest owners.
+- [x] Extend standard-selection behavior cases: SemVer only with no develop; Gitflow only with no SemVer cadence; both standards with the full transition table; installed capability with no adoption; existing older immutable pins; transitional implementation that cannot yet self-certify. Judge the decision, not exact prose.
+- [x] Extend the existing discovery and installed-reference loops to the new owners rather than add a fixed-content detector. Build/distribution tests establish that an isolated installed package can discover both choices and resolve every normal reference inside its boundary. Do not introduce a generic versioning script, scaffolder, or consumer runtime unless a witnessed behavior gap makes it necessary and the scope is separately agreed.
+- [x] Regenerate and run the focused distribution checks:
 
 ```powershell
 py -3 tools/run.py marketplace --apply
@@ -115,15 +115,15 @@ py -3 tools/build_marketplace.py --check
 py -3 -m pytest tests/build/test_aom_standard_skill_discovery.py tests/shipping/test_aom_standard_authority.py -q
 ```
 
-- [ ] Inspect source, metadata, citation records, generated packages, and unchanged Marketplace subscriptions together. Reconcile generated changes through their owner; never hand-edit dist. Re-run focused checks only when new changes justify them.
-- [ ] Stage the intended source, tests, generated output, and plan. Commit normally with `feat: publish optional Gitflow and SemVer standards`; the tracked hook runs the complete staged gate. On failure, use the reported focused repair/recheck command, inspect/stage the repair, and retry. Never bypass the hook or repeat the complete gate around a successful normal commit.
-- [ ] Review the complete branch against the approved requirements and repository review runbook in fresh context. Correct actionable findings, regenerate when needed, rerun focused proofs, commit normally, and obtain a fresh review of each corrected final diff.
-- [ ] Complete agent-owned plan items and set this plan to `completed-awaiting-retirement` when the implementation is fully reviewable. Keep it through its completing PR. Durable consumer rules live in the two definitions and references, not in this plan.
-- [ ] Push `codex/gitflow-semver-standards`, create a Draft PR into `main`, attach it to this chat, and verify GitHub's exact head against local HEAD. The PR describes published optional standards, the version transitions and authority consolidation, validation, and unchanged consumer adoption. Wait for hosted checks at the actual final SHA; do not infer them from local success.
-- [ ] Report the PR URL, head SHA, focused behavior/distribution evidence, normal hooked commit and hosted check state, final review result, and material limitations. Ready, merge, and post-merge worktree retirement remain later human-owned actions. Keep this worktree for execution and handoff.
+- [x] Inspect source, metadata, citation records, generated packages, and unchanged Marketplace subscriptions together. Reconcile generated changes through their owner; never hand-edit dist. Re-run focused checks only when new changes justify them.
+- [x] Stage the intended source, tests, generated output, and plan. Commit normally with `feat: publish optional Gitflow and SemVer standards`; the tracked hook runs the complete staged gate. On failure, use the reported focused repair/recheck command, inspect/stage the repair, and retry. Never bypass the hook or repeat the complete gate around a successful normal commit.
+- [x] Review the complete branch against the approved requirements and repository review runbook in fresh context. Correct actionable findings, regenerate when needed, rerun focused proofs, commit normally, and obtain a fresh review of each corrected final diff.
+- [x] Complete agent-owned plan items and set this plan to `completed-awaiting-retirement` when the implementation is fully reviewable. Keep it through its completing PR. Durable consumer rules live in the two definitions and references, not in this plan.
+- [x] Push `codex/gitflow-semver-standards`, create a Draft PR into `main`, attach it to this chat, and verify GitHub's exact head against local HEAD. The PR describes published optional standards, the version transitions and authority consolidation, validation, and unchanged consumer adoption. Wait for hosted checks at the actual final SHA; do not infer them from local success.
+- [x] Report the PR URL, head SHA, focused behavior/distribution evidence, normal hooked commit and hosted check state, final review result, and material limitations. Ready, merge, and post-merge worktree retirement remain later human-owned actions. Keep this worktree for execution and handoff.
 
 ## Plan Ingress and Handoff
 
 Retire only the completed `2026-10-07-aom-check-only-gates` plan and design in this slice's first commit. Their full scope is on refreshed main through merged PR #348, and enduring behavior is owned by the canonical hook/bus standards, implementation, tests, and current repository doctrine. Preserve other active, mixed, or uncertain planning artifacts. No remaining tracked inbound references to this retired pair were found at ingress.
 
-This planning turn ends with the saved, normally committed plan. Execution remains in this worktree through `executing-plans` after human review. No implementation, consumer adoption, branch protection change, stable tag, or release publication is implied by writing the plan.
+Implementation, review, Draft PR publication, and exact-head hosted-check inspection are complete. The hosted Marketplace validation run failed in the unchanged `test_checked_in_tracked_hook_pin_resolves_its_definition`: its existing pin references commit `513e06ac48de90b1658dd38b5a99a6538625f183`, which is available in local object storage but not among the GitHub refs fetched by CI. This slice leaves that unrelated subscription untouched. The standards are not adopted by this repository. Retain this plan through its completing PR and retire it in a later slice.
