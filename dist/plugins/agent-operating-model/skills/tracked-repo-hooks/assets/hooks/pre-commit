@@ -1,218 +1,151 @@
 #!/usr/bin/env bash
-# Optional fail-closed seed. Adapt tools/hook_gate_adapter.sh to repository gates.
-# Ignored workspace files remain available; adapters must refresh or isolate ignored derived inputs.
 set -euo pipefail
 
 usage() {
   cat <<'EOF'
-Usage: pre-commit
-       pre-commit --hosted <commit>
-       pre-commit --help
-
-No arguments validates the staged candidate for a local commit.
---hosted validates the clean detached checkout of the named committed revision.
+Usage: pre-commit [--hosted <commit>] [--help]
+Run the candidate-preserving repository check gate.
 EOF
 }
 
-if [[ "$#" -eq 1 && "$1" == "--help" ]]; then
-  usage
-  exit 0
+if [[ "${1:-}" == "--help" ]]; then usage; exit 0; fi
+MODE=local
+REQUESTED_COMMIT=
+if [[ "${1:-}" == "--hosted" && $# -eq 2 ]]; then MODE=hosted; REQUESTED_COMMIT=$2
+elif [[ $# -ne 0 ]]; then usage >&2; exit 2
 fi
 
-if ! REPO_ROOT="$(git rev-parse --show-toplevel)"; then
-  echo "pre-commit: run from inside a Git repository" >&2
-  exit 2
-fi
-cd "$REPO_ROOT"
-while IFS= read -r git_variable; do
-  if [[ "$git_variable" != "GIT_INDEX_FILE" ]]; then
-    unset "$git_variable"
-  fi
-done < <(git rev-parse --local-env-vars)
-export REPO_ROOT
+fail() { printf 'pre-commit: %s\n' "$*" >&2; exit 2; }
+SOURCE_ROOT=$(git rev-parse --show-toplevel 2>/dev/null) || fail 'not inside a Git checkout'
+SOURCE_ROOT=$(cd "$SOURCE_ROOT" && pwd -P)
+cd "$SOURCE_ROOT"
 
-ADAPTER="$REPO_ROOT/tools/hook_gate_adapter.sh"
-
-run_repository_apply_gate() {
-  echo "pre-commit: run_repository_apply_gate is not configured in $ADAPTER" >&2
-  return 2
-}
-
-run_repository_check_gate() {
-  echo "pre-commit: run_repository_check_gate is not configured in $ADAPTER" >&2
-  return 2
-}
-
-load_repository_adapter() {
-  if [[ -f "$ADAPTER" ]]; then
-    # Load only after the candidate tree is materialized, so the adapter matches
-    # the staged commit locally and the clean commit in hosted mode.
-    # shellcheck source=/dev/null
-    source "$ADAPTER"
-  fi
-}
-
-run_hosted_gate() {
-  if [[ "$#" -ne 1 ]]; then
-    echo "pre-commit: --hosted requires exactly one commit" >&2
-    usage >&2
-    return 2
-  fi
-  if git symbolic-ref -q HEAD >/dev/null; then
-    echo "pre-commit: hosted mode requires a detached checkout" >&2
-    return 2
-  fi
-  local requested_commit head_commit before_tree after_tree status
-  if ! requested_commit="$(git rev-parse --verify "$1^{commit}")"; then
-    echo "pre-commit: hosted commit does not resolve: $1" >&2
-    return 2
-  fi
-  head_commit="$(git rev-parse HEAD)"
-  if [[ "$head_commit" != "$requested_commit" ]]; then
-    echo "pre-commit: hosted checkout HEAD does not match requested commit $requested_commit" >&2
-    return 2
-  fi
-  status="$(git status --porcelain --untracked-files=all)"
-  if [[ -n "$status" ]]; then
-    echo "pre-commit: hosted mode requires a clean checkout" >&2
-    return 2
-  fi
-  load_repository_adapter
-  before_tree="$(git write-tree)"
-  run_repository_check_gate
-  after_tree="$(git write-tree)"
-  status="$(git status --porcelain --untracked-files=all)"
-  if [[ "$before_tree" != "$after_tree" || -n "$status" ]]; then
-    echo "pre-commit: hosted check changed the committed candidate" >&2
-    return 1
-  fi
-}
-
-if [[ "$#" -gt 0 ]]; then
-  if [[ "$1" == "--hosted" ]]; then
-    shift
-    run_hosted_gate "$@"
-    exit $?
-  fi
-  echo "pre-commit: unsupported arguments" >&2
-  usage >&2
-  exit 2
+if [[ "$MODE" == hosted ]]; then
+  [[ -z "$(git status --porcelain --untracked-files=all)" ]] || fail 'hosted gate requires a clean checkout'
+  [[ "$(git symbolic-ref -q HEAD || true)" == "" ]] || fail 'hosted gate requires a detached checkout'
+  HEAD_COMMIT=$(git rev-parse HEAD) || fail 'hosted gate cannot resolve HEAD'
+  [[ "$HEAD_COMMIT" == "$REQUESTED_COMMIT" ]] || fail "hosted commit $REQUESTED_COMMIT does not match checkout HEAD $HEAD_COMMIT"
+  CANDIDATE_TREE=$(git rev-parse "$REQUESTED_COMMIT^{tree}") || fail 'hosted commit has no tree'
+  parent_line=$(git rev-list --parents -n 1 "$REQUESTED_COMMIT" 2>/dev/null || true)
+  read -r _ VALIDATION_PARENT <<< "$parent_line"
+else
+  CANDIDATE_TREE=$(git write-tree 2>/dev/null) || fail 'cannot snapshot the candidate index tree'
+  VALIDATION_PARENT=$(git rev-parse --verify HEAD 2>/dev/null || true)
 fi
 
-ORIGINAL_INDEX_TREE="$(git write-tree)"
-UNSTAGED_PATCH="$(mktemp)"
-UNTRACKED_DIR=""
-WORKTREE_RESET=0
-CANDIDATE_TOUCHED=0
-CANDIDATE_STAGED=0
-RESTORE_FAILED=0
+ORIGIN_REFS=$(git for-each-ref --format='%(refname) %(objectname)' refs/remotes/origin)
+SOURCE_COMMON_DIR=$(git rev-parse --git-common-dir)
+if [[ "$SOURCE_COMMON_DIR" != /* && ! "$SOURCE_COMMON_DIR" =~ ^[A-Za-z]:[/\\] ]]; then SOURCE_COMMON_DIR="$SOURCE_ROOT/$SOURCE_COMMON_DIR"; fi
+SOURCE_COMMON_DIR=$(cd "$SOURCE_COMMON_DIR" && pwd -P)
+SOURCE_OBJECTS="$SOURCE_COMMON_DIR/objects"
+TEMP_PARENT=${TMPDIR:-${TMP:-${TEMP:-/tmp}}}
+mkdir -p "$TEMP_PARENT" || fail "cannot create temporary parent $TEMP_PARENT"
+TEMP_PARENT=$(cd "$TEMP_PARENT" && pwd -P)
+case "$TEMP_PARENT/" in "$SOURCE_ROOT/"*) fail 'temporary gate directory must be outside the author checkout' ;; esac
+GATE_ROOT=$(mktemp -d "$TEMP_PARENT/tracked-hook-candidate.XXXXXX") || fail 'cannot create disposable candidate checkout'
+GATE_ROOT=$(cd "$GATE_ROOT" && pwd -P)
+case "$GATE_ROOT/" in "$TEMP_PARENT/tracked-hook-candidate."*) ;; *) fail 'temporary candidate path failed containment check' ;; esac
 
-restore_local_state() {
-  local exit_code=$? restore_index_tree="$ORIGINAL_INDEX_TREE"
+GATE_STATUS=0
+GATE_MUTATED=0
+cleanup() {
+  local prior=$?
   trap - EXIT
-
-  if [[ "$CANDIDATE_TOUCHED" -eq 1 ]]; then
-    if [[ "$CANDIDATE_STAGED" -eq 1 ]]; then
-      restore_index_tree="$CANDIDATE_TREE"
-    fi
-    if ! git read-tree "$restore_index_tree"; then
-      echo "pre-commit: could not restore the intended staged candidate $restore_index_tree" >&2
-      exit_code=1
-      RESTORE_FAILED=1
-    fi
-    if ! git checkout -- .; then
-      echo "pre-commit: could not restore the working tree from the candidate index" >&2
-      exit_code=1
-      RESTORE_FAILED=1
-    fi
-    if ! git clean -fd --quiet; then
-      echo "pre-commit: could not remove temporary untracked gate output" >&2
-      exit_code=1
-      RESTORE_FAILED=1
-    fi
-  elif [[ "$WORKTREE_RESET" -eq 1 ]]; then
-    if ! git checkout -- .; then
-      echo "pre-commit: could not restore the pre-candidate working tree" >&2
-      exit_code=1
-      RESTORE_FAILED=1
-    fi
-  fi
-
-  if [[ "$WORKTREE_RESET" -eq 1 && -s "$UNSTAGED_PATCH" ]]; then
-    if ! git apply --3way --binary --whitespace=nowarn "$UNSTAGED_PATCH"; then
-      echo "pre-commit: original unstaged edits could not be restored; recover them from $UNSTAGED_PATCH" >&2
-      exit_code=1
-      RESTORE_FAILED=1
-    fi
-  fi
-
-  if [[ "$WORKTREE_RESET" -eq 1 ]] && ! git read-tree "$restore_index_tree"; then
-    echo "pre-commit: could not restore the intended staged candidate $restore_index_tree" >&2
-    exit_code=1
-    RESTORE_FAILED=1
-  fi
-
-  if [[ -n "$UNTRACKED_DIR" ]]; then
-    for path in "${untracked_paths[@]}"; do
-      mkdir -p -- "$REPO_ROOT/$(dirname -- "$path")"
-      if ! mv -f -- "$UNTRACKED_DIR/$path" "$REPO_ROOT/$path"; then
-        echo "pre-commit: original untracked file could not be restored: $path" >&2
-        exit_code=1
-        RESTORE_FAILED=1
-      fi
-    done
-    if [[ "$RESTORE_FAILED" -eq 0 ]]; then
-      rm -rf -- "$UNTRACKED_DIR"
-    else
-      echo "pre-commit: recover remaining untracked files from $UNTRACKED_DIR" >&2
-    fi
-  fi
-
-  if [[ "$RESTORE_FAILED" -eq 0 ]]; then
-    rm -f "$UNSTAGED_PATCH"
-  fi
-  exit "$exit_code"
+  case "$GATE_ROOT/" in
+    "$TEMP_PARENT/tracked-hook-candidate."*)
+      if [[ -d "$GATE_ROOT" ]]; then rm -rf -- "$GATE_ROOT" || { printf 'pre-commit: could not remove disposable gate checkout %s; remove it manually\n' "$GATE_ROOT" >&2; prior=2; }; fi
+      ;;
+    *) printf 'pre-commit: refusing unsafe cleanup path %s\n' "$GATE_ROOT" >&2; prior=2 ;;
+  esac
+  if [[ $prior -eq 0 && $GATE_MUTATED -eq 1 ]]; then prior=1; fi
+  exit "$prior"
 }
+trap cleanup EXIT
 
-trap restore_local_state EXIT
+# The author index has already been snapshotted. Remove inherited repository context before operating on the gate clone.
+while IFS= read -r name; do unset "$name"; done < <(git rev-parse --local-env-vars)
 
-git diff --binary --no-ext-diff --full-index -- > "$UNSTAGED_PATCH"
-if [[ -s "$UNSTAGED_PATCH" ]]; then
-  WORKTREE_RESET=1
-  git checkout -- .
+if ! git clone --quiet --shared --no-checkout -- "$SOURCE_ROOT" "$GATE_ROOT" 2>/dev/null; then
+  # Git cannot clone an unborn repository. Initialize the isolated repository and point its objects at the source.
+  git -C "$GATE_ROOT" init --quiet || fail 'cannot initialize disposable candidate checkout'
+  mkdir -p "$GATE_ROOT/.git/objects/info"
+  printf '%s\n' "$SOURCE_OBJECTS" > "$GATE_ROOT/.git/objects/info/alternates"
 fi
-
-mapfile -d '' -t untracked_paths < <(git ls-files --others --exclude-standard -z)
-if [[ "${#untracked_paths[@]}" -gt 0 ]]; then
-  UNTRACKED_DIR="$(mktemp -d)"
-  for path in "${untracked_paths[@]}"; do
-    mkdir -p -- "$UNTRACKED_DIR/$(dirname -- "$path")"
-    mv -- "$REPO_ROOT/$path" "$UNTRACKED_DIR/$path"
-  done
+git -C "$GATE_ROOT" config core.autocrlf false
+while IFS= read -r ref; do
+  [[ -n "$ref" && "$ref" != refs/remotes/origin/HEAD ]] && git -C "$GATE_ROOT" update-ref -d "$ref"
+done < <(git -C "$GATE_ROOT" for-each-ref --format='%(refname)' refs/remotes/origin)
+while IFS= read -r refline; do
+  [[ -n "$refline" ]] || continue
+  read -r ref oid <<< "$refline"
+  [[ "$ref" == refs/remotes/origin/HEAD ]] && continue
+  git -C "$GATE_ROOT" update-ref "$ref" "$oid" || fail "cannot preserve source remote ref $ref"
+done <<< "$ORIGIN_REFS"
+if [[ -n "$VALIDATION_PARENT" ]]; then
+  git -C "$GATE_ROOT" update-ref --no-deref HEAD "$VALIDATION_PARENT" || fail 'cannot set candidate validation parent'
+else
+  git -C "$GATE_ROOT" symbolic-ref HEAD refs/heads/gate-unborn
+  git -C "$GATE_ROOT" update-ref -d refs/heads/gate-unborn
 fi
+git -C "$GATE_ROOT" read-tree "$CANDIDATE_TREE" || fail 'cannot load candidate index tree'
+git -C "$GATE_ROOT" checkout-index --all --force || fail 'cannot materialize candidate files'
+GATE_INITIAL_TREE=$(git -C "$GATE_ROOT" write-tree) || fail 'cannot snapshot disposable candidate index'
 
-load_repository_adapter
-CANDIDATE_TOUCHED=1
-run_repository_apply_gate
-if [[ "$(git write-tree)" != "$ORIGINAL_INDEX_TREE" ]]; then
-  echo "pre-commit: apply integration must not stage files directly" >&2
-  exit 2
-fi
+GATE_SUBMODULES=()
+materialize_submodules() {
+  local source_repo=$1 gate_repo=$2 prefix=$3 entry meta path mode oid stage rel source_sub gate_sub resolved
+  while IFS= read -r -d '' entry; do
+    meta=${entry%%$'\t'*}; path=${entry#*$'\t'}
+    read -r mode oid stage <<< "$meta"
+    [[ "$mode" == 160000 ]] || continue
+    rel="$prefix$path"
+    source_sub="$source_repo/$path"
+    [[ -d "$source_sub/.git" || -f "$source_sub/.git" ]] || fail "submodule $rel is not initialized locally; refusing network fetch"
+    resolved=$(cd "$source_sub" && pwd -P) || fail "cannot resolve initialized submodule $rel"
+    case "$resolved/" in "$SOURCE_ROOT/"*) ;; *) fail "submodule $rel resolves outside the source checkout" ;; esac
+    git -C "$resolved" cat-file -e "$oid^{commit}" 2>/dev/null || fail "submodule $rel lacks candidate commit $oid locally; refusing network fetch"
+    gate_sub="$gate_repo/$path"
+    mkdir -p "$(dirname "$gate_sub")"
+    git clone --quiet --shared --no-checkout -- "$resolved" "$gate_sub" || fail "cannot materialize submodule $rel"
+    git -C "$gate_sub" update-ref --no-deref HEAD "$oid" || fail "cannot set submodule $rel candidate commit"
+    git -C "$gate_sub" read-tree "$oid^{tree}" || fail "cannot load submodule $rel candidate tree"
+    git -C "$gate_sub" checkout-index --all --force || fail "cannot checkout submodule $rel candidate tree"
+    GATE_SUBMODULES+=("$gate_sub|$oid|$rel")
+    materialize_submodules "$resolved" "$gate_sub" "$rel/"
+  done < <(git -C "$gate_repo" ls-files --stage -z)
+}
+materialize_submodules "$SOURCE_ROOT" "$GATE_ROOT" ""
 
-git add -A -- .
-CANDIDATE_STAGED=1
-CANDIDATE_TREE="$(git write-tree)"
+REPO_ROOT=$GATE_ROOT
+REPO_STANDARDS_STAGED_SNAPSHOT=1
+export REPO_ROOT REPO_STANDARDS_STAGED_SNAPSHOT
+cd "$GATE_ROOT"
+ADAPTER="$GATE_ROOT/tools/hook_gate_adapter.sh"
+[[ -f "$ADAPTER" ]] || fail 'candidate hook gate adapter is not configured'
+source "$ADAPTER" || fail 'candidate hook gate adapter could not be loaded'
+declare -F run_repository_check_gate >/dev/null || fail 'candidate adapter must define run_repository_check_gate()'
+
+set +e
 run_repository_check_gate
+GATE_STATUS=$?
+set -e
 
-if [[ "$(git write-tree)" != "$CANDIDATE_TREE" ]]; then
-  echo "pre-commit: check integration changed the candidate index" >&2
-  exit 1
+if ! git -C "$GATE_ROOT" diff --quiet --ignore-submodules=none || [[ -n "$(git -C "$GATE_ROOT" ls-files --others --exclude-standard)" ]]; then
+  printf 'pre-commit: check gate changed candidate files; checks must not modify maintained files\n' >&2
+  GATE_MUTATED=1
 fi
-if ! git diff --quiet; then
-  echo "pre-commit: check integration changed tracked candidate files" >&2
-  exit 1
+if [[ "$(git -C "$GATE_ROOT" write-tree 2>/dev/null || true)" != "$GATE_INITIAL_TREE" ]]; then
+  printf 'pre-commit: check gate changed the candidate index\n' >&2
+  GATE_MUTATED=1
 fi
-if [[ -n "$(git ls-files --others --exclude-standard)" ]]; then
-  echo "pre-commit: check integration left untracked candidate files; ignore or remove its disposable outputs" >&2
-  exit 1
-fi
+for record in "${GATE_SUBMODULES[@]}"; do
+  IFS='|' read -r sub oid path <<< "$record"
+  if [[ "$(git -C "$sub" rev-parse HEAD 2>/dev/null || true)" != "$oid" ]] || ! git -C "$sub" diff --quiet --ignore-submodules=none || ! git -C "$sub" diff --cached --quiet || [[ -n "$(git -C "$sub" ls-files --others --exclude-standard)" ]]; then
+    printf 'pre-commit: check gate changed submodule candidate %s\n' "$path" >&2
+    GATE_MUTATED=1
+  fi
+done
+
+if [[ $GATE_STATUS -ne 0 ]]; then exit "$GATE_STATUS"; fi
+if [[ $GATE_MUTATED -eq 1 ]]; then exit 1; fi
+exit 0

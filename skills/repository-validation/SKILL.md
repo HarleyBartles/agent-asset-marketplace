@@ -15,6 +15,6 @@ license: MIT
 
 Distinguish focused developer checks from the complete repository gate. `--apply` may repair owned generated surfaces; the following `--check` must converge without mutation. A successful claim names the exact tree it proves.
 
-Normal commits rely on the tracked hook's staged-snapshot gate. Run the broad check separately only for uncommitted verification, diagnosis, or explicit CI parity. Consumer repositories own their command vectors and language stack.
+Normal commits rely on the tracked hook's candidate-preserving staged-snapshot gate. Run explicit bus preparation or repair commands, inspect and stage the result, then commit; the hook rejects or passes without repairing or staging. Run the broad check separately for uncommitted verification, diagnosis, or explicit CI parity. Consumer repositories own their command vectors and language stack.
 
 The repository's active command surface is recorded in `.agents/contracts/repo-standards-commands.json`. Follow that contract and its linked implementation; a Marketplace skill or ambient plugin does not own the consumer's command paths.

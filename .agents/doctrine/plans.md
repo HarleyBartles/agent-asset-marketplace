@@ -6,7 +6,7 @@ Defer to the repository root `AGENTS.md` for global repo and publication rules.
 
 - Keep an active plan current enough that another worker can distinguish finished work from the next action. Checkbox bookkeeping is an in-flight aid, not a publication artifact or permanent reporting duty.
 - Order implementation tasks so that all source and adapter/overlay edits are complete before any `tools/run * --apply` regeneration step. Run the relevant source and package validators before full Marketplace regeneration.
-- Do not run `tools/run ci --check` immediately before a normal commit or immediately after a successful hooked commit. Regenerate surfaces, stage the intended tree, commit, and let the pre-commit hook materialize the staged snapshot, run `ci --apply`, stage the owned generated surfaces, and run `ci --check --diagnostics`. Do not use `git commit --no-verify` to bypass the hook.
+- Do not run `tools/run ci --check` immediately before a normal commit or immediately after a successful hooked commit. Run explicit repair/regeneration targets, inspect and stage the intended tree, commit, and let the pre-commit hook check the candidate in isolation. The hook does not repair, stage, or collect every failure by default. Do not use `git commit --no-verify` to bypass the hook.
 - If a plan is intentionally incomplete or left open, say why inside the plan itself.
 - This is local worker guidance, not a future PR-blocker doctrine.
 - Do not invent receipt requirements.

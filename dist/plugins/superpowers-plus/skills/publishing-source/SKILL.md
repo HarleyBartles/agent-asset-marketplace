@@ -37,7 +37,7 @@ Owns the source-publication decision tree for this repo: pick the smallest suffi
 
 Run these in order. Stop at the first row that matches the change.
 
-1. **Validated?** If the committed tree would not pass the pre-commit hook (materialize staged snapshot, `ci --apply`, stage owned generated surfaces, `ci --check --diagnostics`), stop and finish `verification-before-completion` first. Do not run `ci --check` immediately before a normal commit. Publication is not a substitute for validation.
+1. **Validated?** If the committed tree would not pass the pre-commit hook, run the named bus repair or preparation target, inspect and stage its output, then let the hook check the staged candidate. The hook does not repair or stage. Do not run the complete gate immediately before a normal commit. Publication is not a substitute for validation.
 2. **Marketplace source edited?** If the consumer's canonical marketplace source, inventory, provenance, or bundle manifest changed, regenerate with the consumer repository's canonical marketplace-generation command before publishing. Do not assume a particular repository layout or command name.
 3. **Pick the surface.** Choose the smallest sufficient surface from [`references/publishing-decisions.md`](references/publishing-decisions.md).
 4. **Publish.** Hand off to the owning skill for the mechanics (`using-github-mcp` for GitHub surfaces, `release-engineering` for release pipelines, `finishing-a-development-branch` for branch closeout).
@@ -45,8 +45,8 @@ Run these in order. Stop at the first row that matches the change.
 
 ## Canonical sequences
 
-- **Direct-main commit (authorized only):** regenerate -> stage intended tree -> commit (pre-commit hook applies and checks) -> push -> record SHA.
-- **PR (default):** regenerate -> stage intended tree -> commit (pre-commit hook applies and checks) -> branch -> push -> open a **Draft** PR -> record the PR URL. Keep it Draft during local review and repair; move it to Ready only when the current committed state has the required evidence and review. Do not ask a second permission question when the publication route was already authorized.
+- **Direct-main commit (authorized only):** run explicit preparation/repair -> inspect and stage intended tree -> commit (pre-commit hook checks and passes or rejects) -> push -> record SHA.
+- **PR (default):** run explicit preparation/repair -> inspect and stage intended tree -> commit (pre-commit hook checks and passes or rejects) -> branch -> push -> open a **Draft** PR -> record the PR URL. Keep it Draft during local review and repair; move it to Ready only when the current committed state has the required evidence and review. Do not ask a second permission question when the publication route was already authorized.
 - **Tag/release:** finish the source change and merge -> tag the merged commit -> publish release notes -> record tag URL.
 - **Pack export:** regenerate marketplace -> validate -> export the pack archive -> record the export artifact and the source commit it was built from.
 

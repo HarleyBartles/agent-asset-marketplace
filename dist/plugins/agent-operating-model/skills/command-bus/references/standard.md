@@ -9,7 +9,7 @@ The repository implements a command bus CLI under `tools/` that exposes named ta
 ## Required implementation
 
 - Provide top-level `--help`, target discovery, and `<target> --help`. Help explains purpose, supported modes, prerequisites, side effects, and target-specific arguments without running target work.
-- Targets support the meaningful subset of `--check`, `--apply`, and optional `--dry-run`. Check assesses without correcting maintained repository files. Apply performs the documented changes. Dry-run previews mutation when meaningful; proposed changes alone do not make a dry-run fail. Disposable test/build outputs are compatible with check mode.
+- Targets support the meaningful subset of `--check`, `--apply`, and optional `--dry-run`. Check may run builds and tests and create disposable outputs, but must not alter maintained repository files. Apply performs documented preparation, formatting, normalization, generation, and other maintained-file changes. Dry-run previews mutation when meaningful; proposed changes alone do not make a dry-run fail. Put mutative commands in the bus so a failed gate can name the exact repair and recheck lever.
 - Require an explicit mode or help request for a selected target. Without one, show usage and exit nonzero. A bare bus invocation may show top-level help.
 - Reject unknown targets, conflicting modes, and unsupported modes before work starts. Never silently succeed without an operation.
 - Forward target-specific arguments faithfully. Preserve target output and exact exit status. Required failures or skipped work cannot be reported as success.

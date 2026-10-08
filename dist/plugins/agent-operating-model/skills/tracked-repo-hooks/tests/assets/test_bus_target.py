@@ -48,7 +48,7 @@ def test_target_help_declares_check_only_support_and_no_default_operation(tmp_pa
 
     assert help_result.returncode == 0
     assert "Supported modes: --check" in help_result.stdout
-    assert "repository-owned complete read-only gate command" in help_result.stdout
+    assert "repository-owned complete candidate-preserving check command" in help_result.stdout
     assert bare_result.returncode != 0
     assert "explicit --check" in bare_result.stderr
     assert apply_result.returncode != 0

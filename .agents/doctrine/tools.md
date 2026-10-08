@@ -15,11 +15,11 @@ The canonical task runner is `tools/run`. It composes the individual generator a
 - `tools/run --help` / `tools/run.ps1 --help` lists all targets and flags.
 - `py -3 tools/run.py` or `python tools/run.py` works on any platform as a fallback.
 
-Targets are: `inventory`, `marketplace`, `validate`, `review-preflight`, `runtime-agents`, `lint`, `repo-standards`, `ci`, `all`.
+Targets are: `normalize`, `lint`, `format`, `validate`, `repo-standards`, `tests-build`, `tests-repository`, `tests-shipping`, `inventory`, `marketplace`, `review-preflight`, `runtime-agents`, `ci`, and `all`.
 
 Codex plugin first.
 
-Use `--check` to validate the current generated surface without rewriting it. Mutating commands use their documented `--apply` boundary; repository worktree selection follows the worktree workflow.
+Use `--check` to validate without changing maintained files; builds and tests may create disposable ignored outputs. Use explicit `--apply` targets for formatting, normalization, generation, and other maintained-file repairs, then inspect and stage the result. The tracked hook checks the staged candidate in isolation and either rejects it with a focused repair/recheck command or passes it. It never repairs or stages repository content.
 
 `py -3 tools/validate_marketplace.py` verifies the plugin manifest, bundle manifest, and referenced surfaces for each plugin.
 
@@ -28,11 +28,11 @@ Use `--check` to validate the current generated surface without rewriting it. Mu
 - Any change to canonical plugin skills, bundle manifests, adapter files, or plugin manifests requires a full market regeneration followed by validation before a PR may be called green.
 - The canonical completion path is the full Marketplace regeneration stack.
 - Partial regeneration paths are fallback-only repair tools and should not be advertised as a normal completion route.
-- The expected local green-path proof is `tools/run marketplace --apply`.
+- The expected source-publication preparation is `tools/run.py marketplace --apply` followed by inspection and staging of the intended tree.
 - The expected CI green-path proof is `tools/run ci --check`.
-- After editing source, run the appropriate `tools/run <target> --apply` command to regenerate derived surfaces. Stage the intended tree and commit normally; the pre-commit hook materializes the staged snapshot, runs `ci --apply`, stages the owned generated surfaces, and then runs `ci --check --diagnostics`. Do not use `--no-verify` to bypass the hook.
+- After editing source, run the appropriate explicit `tools/run <target> --apply` command to repair or regenerate derived surfaces. Stage the intended tree and commit normally; the pre-commit hook checks that staged snapshot in a disposable checkout and does not mutate it. Do not use `--no-verify` to bypass the hook.
 - Do not run `tools/run ci --check` immediately before a normal commit or immediately after a successful hooked commit. Run `ci --check` only for an uncommitted verification, pipeline diagnosis, or explicit CI-parity work.
-- Both commands must be aligned so check mode fails if regeneration would be needed and write mode still performs the actual regeneration locally.
+- Apply mode performs maintained-file changes; check mode validates the staged candidate and may create disposable build/test outputs. Keep both interfaces aligned so hosted CI and the local hook run the same complete checks.
 - If a worker cannot run the full stack, it must say so explicitly instead of assuming CI will catch the missing regeneration.
 
 Deterministic pack rule: if a plugin pack lacks a manifest-driven generator/validator path, add one to `tools/` and wire it into the standard `tools/run` update/check entrypoints. Do not paper over missing pipeline support with a pack-specific one-off script or a hand-edited output surface. The editable source custody for Marketplace generation is the canonical plugin skill trees, adapter overlays, provenance records, and bundle manifests. Treat generated Marketplace manifests and bundle manifests as derived outputs. Consumer plugin payloads are fetched and cached by the harness, not copied into `.agents/skills/`.

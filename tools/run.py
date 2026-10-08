@@ -10,7 +10,7 @@ import shlex
 import shutil
 import subprocess
 import sys
-from dataclasses import dataclass
+from dataclasses import dataclass, replace as dataclass_replace
 from pathlib import Path
 from typing import Callable
 
@@ -28,6 +28,7 @@ class Ctx:
     base_ref: str | None
     verbose: bool
     diagnostics: bool = False
+    files: tuple[Path, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -35,21 +36,83 @@ class Task:
     deps: tuple[str, ...] = ()
     apply: tuple[Callable[[Ctx], None], ...] = ()
     check: tuple[Callable[[Ctx], None], ...] = ()
-    fix: str = ""
+    description: str = ""
+    prerequisites: tuple[str, ...] = ()
+    side_effects: str = ""
+
+
+class ValidationFailure(Exception):
+    def __init__(self, message: str, files: tuple[Path, ...] = ()):
+        self.files = files
+        super().__init__(message)
+
+
+class CommandStartError(Exception):
+    def __init__(self, command: list[str], original: OSError):
+        self.command = command
+        self.original = original
+        super().__init__(
+            f"Could not start command; confirm its executable and target prerequisites are available. {original}"
+        )
 
 
 class RunnerError(Exception):
-    def __init__(self, target: str, fix: str, original: Exception | None = None):
+    def __init__(
+        self,
+        target: str,
+        repair: str,
+        original: Exception | None = None,
+        *,
+        recheck: str = "",
+        exit_code: int | None = None,
+    ):
         self.target = target
-        self.fix = fix
+        self.repair = repair
         self.original = original
-        super().__init__(f"[tools/run] target '{target}' failed.\nFix: {fix}")
+        self.recheck = recheck
+        if exit_code is not None:
+            self.exit_code = exit_code
+        elif isinstance(original, subprocess.CalledProcessError):
+            self.exit_code = original.returncode or 1
+        elif isinstance(original, ValidationFailure):
+            self.exit_code = 1
+        else:
+            self.exit_code = 2
+        detail = f"\n{original}" if original is not None else ""
+        commands = f"\nRepair: {repair}" if repair else ""
+        if recheck:
+            commands += f"\nRecheck: {recheck}"
+        super().__init__(f"[tools/run] check '{target}' failed.{detail}{commands}")
+
+
+def _render_command(argv: list[str]) -> str:
+    if os.name == "nt":
+
+        def quote(value: str) -> str:
+            return "'" + value.replace("'", "''") + "'"
+
+        return "& " + " ".join(quote(part) for part in argv)
+    return shlex.join(argv)
+
+
+def _command_for(target: str, mode: str, ctx: Ctx) -> str:
+    command = (["py", "-3"] if os.name == "nt" else ["python3"]) + ["tools/run.py", target, f"--{mode}"]
+    if ctx.files:
+        command.extend(["--files", *(str(path) for path in ctx.files)])
+    return _render_command(command)
+
+
+def _recheck_command(target: str, ctx: Ctx) -> str:
+    return _command_for(target, "check", ctx)
 
 
 def _run(cmd: list[str], ctx: Ctx, *, env: dict[str, str] | None = None) -> None:
     if ctx.verbose:
         print("+ " + " ".join(shlex.quote(part) for part in cmd))
-    subprocess.run(cmd, cwd=ROOT, check=True, env=env)
+    try:
+        subprocess.run(cmd, cwd=ROOT, check=True, env=env)
+    except OSError as exc:
+        raise CommandStartError(cmd, exc) from exc
 
 
 def _ref_exists(ref: str) -> bool:
@@ -76,52 +139,50 @@ def _resolve_base_ref(args: argparse.Namespace) -> str | None:
 
 
 def _changed_python_files(base_ref: str | None) -> list[Path]:
-    if os.environ.get("REPO_STANDARDS_STAGED_SNAPSHOT") == "1":
-        diff = subprocess.run(
-            ["git", "diff", "--cached", "--name-only", "--diff-filter=ACMR"],
-            cwd=ROOT,
-            capture_output=True,
-            text=True,
-            check=True,
-        )
-        return [Path(p) for p in diff.stdout.splitlines() if p.endswith(".py") and (ROOT / p).is_file()]
-    if base_ref is None:
-        return _all_tracked_python_files()
-    diff = subprocess.run(
-        ["git", "diff", "--name-only", "--diff-filter=ACMR", f"{base_ref}...HEAD"],
-        cwd=ROOT,
-        capture_output=True,
-        text=True,
-        check=True,
-    )
-    return [Path(p) for p in diff.stdout.splitlines() if p.endswith(".py") and (ROOT / p).is_file()]
+    return [path for path in _candidate_paths(base_ref) if path.suffix == ".py"]
+
+
+def _git_paths(args: list[str]) -> list[Path]:
+    result = subprocess.run(["git", *args, "-z"], cwd=ROOT, capture_output=True, check=True)
+    return [Path(os.fsdecode(path)) for path in result.stdout.split(b"\0") if path]
+
+
+def _candidate_paths(base_ref: str | None) -> list[Path]:
+    paths: set[Path] = set()
+    staged_snapshot = os.environ.get("REPO_STANDARDS_STAGED_SNAPSHOT") == "1"
+    if base_ref is not None:
+        paths.update(_git_paths(["diff", "--name-only", "--diff-filter=ACMR", f"{base_ref}...HEAD"]))
+    paths.update(_git_paths(["diff", "--cached", "--name-only", "--diff-filter=ACMR"]))
+    if not staged_snapshot:
+        paths.update(_git_paths(["diff", "--name-only", "--diff-filter=ACMR"]))
+    return sorted((path for path in paths if (ROOT / path).is_file()), key=lambda path: str(path))
 
 
 def _all_tracked_python_files() -> list[Path]:
-    result = subprocess.run(
-        ["git", "ls-files", "--", "*.py"],
-        cwd=ROOT,
-        capture_output=True,
-        text=True,
-        check=True,
-    )
-    return [Path(p) for p in result.stdout.splitlines() if (ROOT / p).is_file()]
+    result = subprocess.run(["git", "ls-files", "-z", "--", "*.py"], cwd=ROOT, capture_output=True, check=True)
+    return [Path(os.fsdecode(p)) for p in result.stdout.split(b"\0") if p and (ROOT / os.fsdecode(p)).is_file()]
 
 
-def _run_ruff(files: list[Path], ctx: Ctx, *, fix: bool = False) -> None:
-    if not files:
-        return
-    file_args = [str(f) for f in files]
-    check_cmd = [sys.executable, "-m", "ruff", "check"]
-    if fix:
-        check_cmd.append("--fix")
-    check_cmd.extend(file_args)
-    _run(check_cmd, ctx)
-    fmt_cmd = [sys.executable, "-m", "ruff", "format"]
-    if not fix:
-        fmt_cmd.append("--check")
-    fmt_cmd.extend(file_args)
-    _run(fmt_cmd, ctx)
+def _validated_files(paths: tuple[Path, ...], *, text_only: bool = False) -> tuple[Path, ...]:
+    result: list[Path] = []
+    for path in paths:
+        candidate = (ROOT / path).resolve() if not path.is_absolute() else path.resolve()
+        try:
+            relative = candidate.relative_to(ROOT.resolve())
+        except ValueError as exc:
+            raise ValueError(f"selected path is outside the repository: {path}") from exc
+        if not candidate.is_file():
+            raise ValueError(f"selected path is not a file: {path}")
+        if text_only:
+            data = candidate.read_bytes()
+            if b"\0" in data:
+                raise ValueError(f"selected path is binary and cannot be normalized: {relative}")
+            try:
+                data.decode("utf-8")
+            except UnicodeDecodeError as exc:
+                raise ValueError(f"selected path is not UTF-8 text: {relative}") from exc
+        result.append(relative)
+    return tuple(dict.fromkeys(result))
 
 
 def _load_active_plugin_root_names() -> set[str]:
@@ -215,7 +276,6 @@ def _check_inventory(ctx: Ctx) -> None:
 
 
 def _run_validate(ctx: Ctx) -> None:
-    _check_tracked_line_endings()
     _run([sys.executable, "tools/validate_authority_assets.py"], ctx)
     _run([sys.executable, "tools/validate_agents_md.py"], ctx)
     _run([sys.executable, "tools/validate_markdown_links.py", "--check"], ctx)
@@ -224,25 +284,37 @@ def _run_validate(ctx: Ctx) -> None:
         _git_diff_check(ctx)
 
 
-def _check_tracked_line_endings() -> None:
-    """Catch text bytes that Git would silently normalize when committing."""
+def _tracked_line_ending_offenders(paths: tuple[Path, ...] | None = None) -> list[Path]:
+    command = ["git", "ls-files", "--eol", "-z"]
+    if paths is not None:
+        command.extend(["--", *(str(path) for path in paths)])
     result = subprocess.run(
-        ["git", "ls-files", "--eol", "-z"],
+        command,
         cwd=ROOT,
         capture_output=True,
         check=True,
     )
-    offenders: list[str] = []
+    selected = set(paths or ())
+    offenders: list[Path] = []
     for entry in result.stdout.split(b"\0"):
         if not entry:
             continue
         state, path = entry.split(b"\t", maxsplit=1)
+        relative = Path(os.fsdecode(path))
+        if selected and relative not in selected:
+            continue
         if b"eol=lf" not in state:
             continue
         if any(marker in state for marker in (b"i/crlf", b"i/mixed", b"w/crlf", b"w/mixed")):
-            offenders.append(path.decode("utf-8", errors="replace"))
+            offenders.append(relative)
+    return offenders
+
+
+def _check_tracked_line_endings() -> None:
+    """Catch text bytes that Git would silently normalize when committing."""
+    offenders = _tracked_line_ending_offenders()
     if offenders:
-        raise ValueError("tracked text must use LF line endings: " + ", ".join(offenders))
+        raise ValueError("tracked text must use LF line endings: " + ", ".join(map(str, offenders)))
     print("OK tracked text line endings: LF")
 
 
@@ -260,25 +332,66 @@ def _check_marketplace(ctx: Ctx) -> None:
 
 
 def _run_lint(ctx: Ctx) -> None:
-    if ctx.mode == "check":
+    if ctx.files:
+        files = [path for path in ctx.files if path.suffix == ".py"]
+        if not files:
+            print("No selected Python files to lint.")
+            return
+        command = [sys.executable, "-m", "ruff", "check"]
+        if ctx.mode == "apply":
+            command.append("--fix")
+        _run([*command, *map(str, files)], ctx)
+        return
+    files = _changed_python_files(ctx.base_ref)
+    if ctx.mode == "check" and not ctx.base_ref and os.environ.get("REPO_STANDARDS_STAGED_SNAPSHOT") != "1":
+        files = _all_tracked_python_files()
+    if not files:
+        print("No changed Python files to lint.")
+    elif ctx.mode == "check":
         if ctx.base_ref:
             _run([sys.executable, "tools/ruff_diff.py", "--changed-from", ctx.base_ref], ctx)
-            if os.environ.get("REPO_STANDARDS_STAGED_SNAPSHOT") == "1":
-                files = _changed_python_files(ctx.base_ref)
-                if files:
-                    _run([sys.executable, "-m", "ruff", "format", "--check", *map(str, files)], ctx)
         else:
-            print(
-                "warning: no base ref available for lint; linting all tracked .py files",
-                file=sys.stderr,
-            )
-            _run_ruff(_all_tracked_python_files(), ctx)
+            _run([sys.executable, "-m", "ruff", "check", *map(str, files)], ctx)
     else:
-        files = _changed_python_files(ctx.base_ref)
-        if not files:
-            print("No changed Python files to lint.")
-        else:
-            _run_ruff(files, ctx, fix=True)
+        _run([sys.executable, "-m", "ruff", "check", "--fix", *map(str, files)], ctx)
+
+
+def _run_format(ctx: Ctx) -> None:
+    files = list(ctx.files) if ctx.files else _changed_python_files(ctx.base_ref)
+    if not files:
+        print("No changed Python files to format.")
+        return
+    command = [sys.executable, "-m", "ruff", "format"]
+    if ctx.mode == "check":
+        command.append("--check")
+    _run([*command, *map(str, files)], ctx)
+
+
+def _tracked_paths() -> list[Path]:
+    result = subprocess.run(["git", "ls-files", "-z"], cwd=ROOT, capture_output=True, check=True)
+    return [Path(os.fsdecode(path)) for path in result.stdout.split(b"\0") if path]
+
+
+def _normalize_text_files(ctx: Ctx) -> None:
+    selected = _validated_files(ctx.files, text_only=True) if ctx.files else tuple(_tracked_paths())
+    offenders = (
+        [path for path in selected if b"\r" in (ROOT / path).read_bytes()]
+        if ctx.files
+        else _tracked_line_ending_offenders()
+    )
+    for path in offenders:
+        absolute = ROOT / path
+        data = absolute.read_bytes()
+        data.decode("utf-8")
+        if ctx.mode == "apply":
+            absolute.write_bytes(data.replace(b"\r\n", b"\n").replace(b"\r", b"\n"))
+    if offenders and ctx.mode == "check":
+        rendered = ", ".join(str(path) for path in offenders)
+        raise ValidationFailure(f"CRLF or bare CR line endings found: {rendered}", tuple(offenders))
+
+
+def _run_normalize(ctx: Ctx) -> None:
+    _normalize_text_files(ctx)
 
 
 def _validate_skill_scripts(ctx: Ctx) -> None:
@@ -327,9 +440,30 @@ def _run_steps(
     for step in steps:
         try:
             step(run_ctx)
+        except RunnerError:
+            raise
         except Exception as exc:
-            fix = _lint_fix(run_ctx) if target == "lint" else task.fix
-            raise RunnerError(target, fix, exc) from exc
+            repair_ctx = run_ctx
+            if isinstance(exc, ValidationFailure) and exc.files and not run_ctx.files:
+                repair_ctx = dataclass_replace(run_ctx, files=exc.files)
+            if target in {"lint", "format", "normalize"}:
+                repair = _command_for(target, "apply", repair_ctx)
+            elif task.apply:
+                repair = _command_for(target, "apply", repair_ctx)
+            else:
+                repair = f"No automatic repair is available for {target}; review the reported failure."
+            recheck = _recheck_command(target, repair_ctx)
+            failed_command = ""
+            if isinstance(exc, subprocess.CalledProcessError):
+                failed_command = (
+                    f"\nFailed command: {_render_command([str(part) for part in exc.cmd])} (exit {exc.returncode})"
+                )
+            elif isinstance(exc, CommandStartError):
+                failed_command = f"\nFailed command: {_render_command(exc.command)}"
+            wrapped = RunnerError(target, repair, exc, recheck=recheck)
+            if failed_command:
+                wrapped.args = (str(wrapped) + failed_command,)
+            raise wrapped from exc
 
 
 def _resolve_ci_deps() -> list[str]:
@@ -367,10 +501,11 @@ def _run_ci(ctx: Ctx) -> None:
             else:
                 raise
     if failures:
-        fixes = "\n".join(f"  {exc.target}: {exc.fix}" for exc in failures)
+        fixes = "\n".join(f"  {exc.target}: {exc.repair}\n  Recheck: {exc.recheck}" for exc in failures)
         raise RunnerError(
             "ci",
             f"one or more ci checks failed\n{fixes}",
+            exit_code=failures[0].exit_code,
         )
 
 
@@ -394,51 +529,104 @@ def _run_shipping_tests(ctx: Ctx) -> None:
 
 
 _TASKS: dict[str, Task] = {
-    "lint": Task(apply=(_run_lint,), check=(_run_lint,), fix="tools/run lint --apply"),
-    "tests-build": Task(check=(_run_build_tests,), fix="python -m pytest -q tests/build"),
-    "tests-repository": Task(check=(_run_repository_tests,), fix="python -m pytest -q tests/repository"),
-    "tests-shipping": Task(check=(_run_shipping_tests,), fix="python -m pytest -q tests/shipping"),
+    "normalize": Task(
+        check=(_run_normalize,),
+        apply=(_run_normalize,),
+        description="Check or normalize tracked text line endings.",
+        side_effects="Apply rewrites selected UTF-8 text line endings; check preserves maintained files.",
+    ),
+    "lint": Task(
+        apply=(_run_lint,),
+        check=(_run_lint,),
+        description="Check changed Python lines or apply Ruff lint fixes.",
+        side_effects="Apply may rewrite selected Python files.",
+    ),
+    "format": Task(
+        apply=(_run_format,),
+        check=(_run_format,),
+        description="Check or apply Ruff formatting to changed Python files.",
+        side_effects="Apply may rewrite selected Python files.",
+    ),
+    "validate": Task(
+        check=(_run_validate,),
+        description="Run repository authority, documentation, and CLI validators.",
+        side_effects="Check preserves maintained repository files.",
+    ),
     "repo-standards": Task(
-        apply=(_run_repo_standards,),
         check=(_run_repo_standards,),
-        fix="tools/run repo-standards --apply",
+        description="Validate adopted repository operating standards and skill scripts.",
+        side_effects="Check preserves maintained repository files.",
+    ),
+    "tests-build": Task(
+        check=(_run_build_tests,),
+        description="Run build-focused tests.",
+        prerequisites=("Python test dependencies are installed.",),
+        side_effects="May create disposable ignored test outputs.",
+    ),
+    "tests-repository": Task(
+        check=(_run_repository_tests,),
+        description="Run repository behavior tests.",
+        prerequisites=("Python test dependencies are installed.",),
+        side_effects="May create disposable ignored test outputs.",
+    ),
+    "tests-shipping": Task(
+        check=(_run_shipping_tests,),
+        description="Run packaged asset tests.",
+        prerequisites=("Python test dependencies are installed.",),
+        side_effects="May create disposable ignored test outputs.",
     ),
     "inventory": Task(
         apply=(_apply_inventory,),
         check=(_check_inventory,),
-        fix="tools/run inventory --apply",
+        description="Regenerate and validate the plugin-root inventory.",
+        side_effects="Apply updates generated inventory and prunes stale generated plugin roots.",
     ),
     "marketplace": Task(
         deps=("inventory",),
         apply=(_apply_marketplace,),
         check=(_check_marketplace,),
-        fix="tools/run marketplace --apply",
-    ),
-    "validate": Task(
-        apply=(_run_validate,),
-        check=(_run_validate,),
-        fix="tools/run validate --apply",
+        description="Build, generate, and validate Marketplace distributions.",
+        prerequisites=("Marketplace build dependencies are installed.",),
+        side_effects="Apply regenerates Marketplace distribution and vendor profile outputs.",
     ),
     "review-preflight": Task(
         check=(_check_review_preflight,),
-        fix="review-preflight findings are manual; run `tools/review_preflight.py --check` to see them",
+        description="Check review readiness and required evidence.",
+        side_effects="Check preserves maintained repository files.",
     ),
     # runtime-agents is intentionally excluded from `ci`; it stages profiles
     # into the main checkout for the local runtime.
     "runtime-agents": Task(
         apply=(_apply_runtime_agents,),
         check=(_check_runtime_agents,),
-        fix="tools/run runtime-agents --apply",
+        description="Synchronize repository profiles into the local agent runtime.",
+        side_effects="Apply writes local runtime profile files.",
     ),
     "ci": Task(
-        deps=("lint", "repo-standards", "tests-build", "tests-repository", "tests-shipping", "validate"),
+        deps=(
+            "normalize",
+            "lint",
+            "format",
+            "validate",
+            "repo-standards",
+            "inventory",
+            "marketplace",
+            "tests-build",
+            "tests-repository",
+            "tests-shipping",
+        ),
         apply=(_run_ci,),
         check=(_run_ci,),
-        fix="tools/run ci --apply",
+        description="Run the complete fail-fast repository gate in cheap-first order.",
+        prerequisites=("Declared repository gate prerequisites are installed.",),
+        side_effects="Check may create disposable ignored build/test outputs; apply runs mutative target operations.",
     ),
     "all": Task(
+        check=(_run_ci,),
+        apply=(_run_ci,),
         deps=("ci",),
-        fix="tools/run ci --apply",
+        description="Alias for the complete CI gate.",
+        side_effects="Same as ci.",
     ),
 }
 
@@ -475,15 +663,44 @@ def resolve_targets(requested: list[str]) -> list[str]:
     return order
 
 
-def _lint_fix(ctx: Ctx) -> str:
-    files = _changed_python_files(ctx.base_ref)
-    if not files:
-        return "tools/run lint --apply"
-    file_str = " ".join(str(f) for f in files)
-    return f"{sys.executable} -m ruff check --fix {file_str} && {sys.executable} -m ruff format {file_str}"
+def _supported_modes(task: Task) -> tuple[str, ...]:
+    return tuple(mode for mode, steps in (("check", task.check), ("apply", task.apply)) if steps)
+
+
+def _print_target_help(target: str) -> int:
+    task = _TASKS[target]
+    print(f"Target: {target}\n{task.description or 'Repository-owned task.'}")
+    print("Supported modes: " + (", ".join(f"--{mode}" for mode in _supported_modes(task)) or "none"))
+    print("Prerequisites: " + (" ".join(task.prerequisites) if task.prerequisites else "none"))
+    print("Side effects: " + (task.side_effects or "none declared"))
+    if target in {"lint", "format", "normalize"}:
+        print("Arguments: --files PATH [PATH ...] scopes work to repository files; paths with spaces are supported.")
+    return 0
+
+
+def _validate_invocation(targets: list[str], ctx: Ctx, *, diagnostics: bool) -> Ctx:
+    scoped_targets = {"lint", "format", "normalize"}
+    if ctx.files and any(target not in scoped_targets for target in targets):
+        raise ValueError("--files is supported only by lint, format, and normalize")
+    for target in targets:
+        task = _TASKS[target]
+        if ctx.mode not in _supported_modes(task):
+            supported = ", ".join(f"--{mode}" for mode in _supported_modes(task)) or "none"
+            raise ValueError(f"target {target} does not support --{ctx.mode}; supported: {supported}")
+    if diagnostics and (ctx.mode != "check" or targets != ["ci"]):
+        raise ValueError("--diagnostics is accepted only with ci/all --check")
+    if ctx.files:
+        files = _validated_files(ctx.files, text_only=False)
+        if any(path.suffix != ".py" for path in files if "normalize" not in targets):
+            raise ValueError("lint and format --files selections must be Python files")
+        if "normalize" in targets:
+            _validated_files(files, text_only=True)
+        ctx = dataclass_replace(ctx, files=files)
+    return ctx
 
 
 def run_targets(targets: list[str], ctx: Ctx) -> None:
+    ctx = _validate_invocation(targets, ctx, diagnostics=ctx.diagnostics)
     for target in targets:
         task = _TASKS[target]
         if ctx.mode == "apply":
@@ -494,23 +711,27 @@ def run_targets(targets: list[str], ctx: Ctx) -> None:
 
 def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Dependency-aware task runner for the agent-asset-marketplace. (mixed)",
+        description=(
+            "Repository command bus. Checks may create disposable ignored build/test outputs "
+            "while preserving maintained files."
+        ),
         epilog=(
             "Targets: " + ", ".join(_TASKS.keys()) + "\n"
-            "ci --check is the full fail-fast CI/PR verification gate.\n"
-            "ci --check --diagnostics reports every independent failing target.\n"
-            "ci --apply applies mechanical outputs; pair it with `ci --check` for a full gate.\n"
-            "For a single target, run `py -3 tools/run.py <target> --apply`. See .devin/rules/tools.md."
+            "ci --check is the full fail-fast gate in cheap-first order.\n"
+            "ci --check --diagnostics explicitly collects independent failures.\n"
+            "Use explicit apply targets for preparation and maintained-file repairs.\n"
+            "For a single target, run `py -3 tools/run.py <target> --check` or `--apply` when supported."
         ),
     )
     parser.add_argument(
         "targets",
-        nargs="+",
+        nargs="*",
         choices=tuple(_TASKS.keys()),
-        help="target(s) to run",
+        help="target(s) to run; omit targets to discover available commands",
     )
-    parser.add_argument("--check", action="store_true", help="non-mutating validation (default)")
-    parser.add_argument("--apply", action="store_true", help="regenerate outputs")
+    parser.add_argument("--check", action="store_true", help="run candidate-preserving checks")
+    parser.add_argument("--apply", action="store_true", help="run documented mutative operations")
+    parser.add_argument("--files", nargs="+", type=Path, help="scope lint, format, or normalize to selected paths")
     parser.add_argument(
         "--base-ref",
         default=None,
@@ -531,32 +752,45 @@ def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
 
 
 def main(argv: list[str] | None = None) -> int:
-    args = _parse_args(argv)
+    arguments = list(sys.argv[1:] if argv is None else argv)
+    if len(arguments) == 2 and arguments[0] in _TASKS and arguments[1] == "--help":
+        return _print_target_help(arguments[0])
+    args = _parse_args(arguments)
+    if not args.targets:
+        if args.check or args.apply or args.files or args.diagnostics:
+            print("error: select a target with an explicit mode", file=sys.stderr)
+            return 2
+        print("Available targets: " + ", ".join(_TASKS))
+        print("Use tools/run.py <target> --help for target details.")
+        return 0
     if not args.check and not args.apply:
-        args.check = True
+        print("error: selected targets require an explicit --check, --apply, or --help mode", file=sys.stderr)
+        return 2
     if args.apply and args.check:
         print("error: --apply and --check are mutually exclusive", file=sys.stderr)
-        return 1
+        return 2
     if args.diagnostics and args.apply:
         print("error: --diagnostics requires --check", file=sys.stderr)
-        return 1
-    base_ref = _resolve_base_ref(args)
+        return 2
     ctx = Ctx(
         mode="apply" if args.apply else "check",
-        base_ref=base_ref,
+        base_ref=None,
         verbose=args.verbose,
         diagnostics=args.diagnostics,
+        files=tuple(args.files or ()),
     )
     try:
         targets = resolve_targets(args.targets)
+        ctx = _validate_invocation(targets, ctx, diagnostics=args.diagnostics)
     except ValueError as exc:
         print(f"error: {exc}", file=sys.stderr)
-        return 1
+        return 2
+    ctx = dataclass_replace(ctx, base_ref=_resolve_base_ref(args))
     try:
         run_targets(targets, ctx)
     except RunnerError as exc:
         print(exc, file=sys.stderr)
-        return 1
+        return exc.exit_code
     print("[tools/run] all requested targets passed.")
     return 0
 

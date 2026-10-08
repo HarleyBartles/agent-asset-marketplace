@@ -67,7 +67,7 @@ For plan-readiness, rate the artifact against these items. Strengthen any that f
 
 - [ ] **Task ordering.** Schedule producers before consumers. In this repo, source and overlay edits precede regeneration and CI. In consumer repos, use the consumer's canonical regeneration and preflight commands.
 
-- [ ] **Clean CI gate.** Do not run the repo's canonical CI immediately before a normal commit or immediately after a successful hooked commit. Stage the intended tree and commit; the pre-commit hook will materialize the staged snapshot, run the repository's canonical apply gate, stage the owned generated surfaces, and run the repository's canonical check gate with diagnostics before allowing the commit. Use the consumer's canonical check command only for an uncommitted verification, pipeline diagnosis, or explicit CI-parity work. Do not use `git commit --no-verify` to bypass the pre-commit hook.
+- [ ] **Clean CI gate.** Do not run the repo's canonical CI immediately before a normal commit or immediately after a successful hooked commit. Run explicit bus preparation or repair targets, inspect and stage the intended tree, then commit; the pre-commit hook checks the staged candidate in isolation and either rejects it with a focused repair/recheck command or allows it. Use the consumer's canonical check command for uncommitted verification, pipeline diagnosis, or explicit CI-parity work. Do not use `git commit --no-verify` to bypass the pre-commit hook.
 
 - [ ] **Explicit verification.** Each regeneration or distribution task names the exact consumer command and any follow-up CI check. Do not assume a particular repository helper or command exists in every consumer repo.
 
